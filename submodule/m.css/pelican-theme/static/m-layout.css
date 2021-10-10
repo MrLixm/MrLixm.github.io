@@ -25,7 +25,7 @@
 /* Header navigation */
 body > header > nav {
   width: 100%;
-  background-color: var(--header-background-color);
+  background: var(--header-background-color);
   min-height: 3rem;
 }
 body > header > nav.m-navbar-landing,
@@ -354,7 +354,7 @@ article section > h4 a, article section > h5 a, article section > h6 a {
   background-position: center center;
   background-repeat: no-repeat;
   margin-top: -4rem;
-  padding-top: 5rem;
+  padding-top: 15rem;
 }
 #m-landing-image {
   color: #ffffff;

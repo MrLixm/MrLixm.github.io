@@ -21,10 +21,10 @@ DELETE_OUTPUT_DIRECTORY = True
 # THEME
 
 # as recommended in the doc we use the compiled version
-M_CSS_FILES = [
-    'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600',
-    '/static/m-dark.compiled.css'
-]
+# M_CSS_FILES = [
+#     'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600',
+#     '/static/m-dark.compiled.css'
+# ]
 
 
 # Following items are often useful when publishing

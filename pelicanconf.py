@@ -10,50 +10,122 @@ pelican configuration file
 
 """
 AUTHOR = 'Liam Collod'
-SITENAME = "Liam Collod's Blog"
+SITENAME = "Liam Collod Website"
 SITEURL = ''
 
-PATH = 'content'
-
 TIMEZONE = 'Europe/Paris'
-
 DEFAULT_LANG = 'en'
 
+PATH = 'content'
 PLUGIN_PATHS = []
 PLUGINS = []
+
+# -- PAGE
+PAGE_PATHS = ['']
+# PAGE_EXCLUDES = []
+PAGE_URL = '{slug}/'
+PAGE_SAVE_AS = '{slug}/index.html'
+# -- ARTICLE
+ARTICLE_PATHS = ['blog']
+ARTICLE_URL = 'blog/{slug}/'  # category/ is part of the slug
+ARTICLE_SAVE_AS = 'blog/{slug}/index.html'
+# ARTICLE_EXCLUDES = []
+# -- STATIC
+STATIC_PATHS = ['images']
+STATIC_URL = 'static/{path}'
+STATIC_SAVE_AS = 'static/{path}'
+
+
+DEFAULT_PAGINATION = 10
+
+PATH_METADATA = '(blog/)?(?P<slug>.+).rst'
+SLUGIFY_SOURCE = 'basename'
+SLUG_REGEX_SUBSTITUTIONS = [
+        (r'[^\w\s-]', ''),  # remove non-alphabetical/whitespace/'-' chars
+        (r'(?u)\A\s*', ''),  # strip leading whitespace
+        (r'(?u)\s*\Z', ''),  # strip trailing whitespace
+        (r'[-\s]+', '-'),  # reduce multiple whitespace or '-' to single '-'
+        (r'C\+\+', 'cpp'),
+]
 
 """___________________________________________________________________________
 
  THEME
 
 """
-# # m.css config
+# m.css config
 THEME = 'submodule/m.css/pelican-theme'
 THEME_STATIC_DIR = 'static'
 DIRECT_TEMPLATES = ['index']
+
+PLUGIN_PATHS.append('submodule/m.css/plugins')
+PLUGINS.extend(
+    [
+        'm.abbr',
+        'm.alias',
+        'm.components',
+        'm.dox',
+        'm.filesize',
+        'm.gh',
+        'm.gl',
+        'm.htmlsanity',
+        'm.images',
+        'm.link',
+        'm.metadata',
+        'm.sphinx',
+        'm.vk'
+    ]
+)
+FORMATTED_FIELDS = ['summary', 'description', 'landing', 'badge', 'header', 'footer']
+
+# theme related configuration
 
 M_CSS_FILES = [
     'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600',
     '/static/m-dark.css'
 ]
-M_THEME_COLOR = '#22272e'
 
-PLUGIN_PATHS.append('submodule/m.css/plugins')
-PLUGINS.append('m.htmlsanity')
+M_BLOG_NAME = "Liam Collod's Blog"
+M_BLOG_URL = 'blog/'
 
-M_FAVICON = ("images/global/logo.mrlixm.png", 'image/x-ico')
-M_SITE_LOGO = "images/global/logo.mrlixm.png"
-M_SITE_LOGO_TEXT = "Liam Collod's Blog"
+M_THEME_COLOR = '#20FC8F'
+M_FAVICON = ("{static}/images/global/logo.lixm.base.png", 'image/x-ico')
+# M_BLOG_FAVICON = ('favicon-blog.png', 'image/png')
+M_SITE_LOGO = "{static}/images/global/logo.lixm.base.png"
+M_SITE_LOGO_TEXT = "Liam Collod Personal Website"
+
+# SOCIAL
+M_SOCIAL_TWITTER_SITE = '@MrLixm'
+M_SOCIAL_TWITTER_SITE_ID = 713068621203914752
+M_SOCIAL_BLOG_SUMMARY = "Personal website & blog for Liam Collod (MrLixm)"
+
+# M_HTML_HEADER = ""
+M_LINKS_NAVBAR1 = [
+    ('Features', 'features/', 'features', []),
+    ('Blog', M_BLOG_URL, '[blog]', []),
+    ('Contact', 'pages/contact', 'contact', [])
+]
+
+
+# Index page
+M_NEWS_ON_INDEX = ("Latest blog posts", 5)
+
 # M_LINKS_FOOTER1 = [
 #     ('Contact', ''),
 #     ('e-mail', 'mailto:lcollod@gmail.com'),
 #     ('twitter', 'https://twitter.com/MrLixm')
 # ]
+
 M_FINE_PRINT = """
 Copyright © `Liam Collod <mailto:lcollod@gmail.com>`_ - 2021. All rights
 reserved. Made with `Pelican <https://blog.getpelican.com/>`_ and
 `m.css <https://mcss.mosra.cz/>`_ .
 """
+
+# DATA ORGANISATION
+M_METADATA_AUTHOR_PATH = 'metadata/authors'
+M_METADATA_CATEGORY_PATH = 'metadata/categories'
+M_METADATA_TAG_PATH = 'metadata/tags'
 
 """___________________________________________________________________________
 
@@ -67,5 +139,3 @@ CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
-
-DEFAULT_PAGINATION = False
