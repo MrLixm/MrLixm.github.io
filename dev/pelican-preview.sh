@@ -1,0 +1,2 @@
+cd ..
+pelican --autoreload --listen
