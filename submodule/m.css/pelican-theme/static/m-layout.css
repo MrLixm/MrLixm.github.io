@@ -40,6 +40,7 @@ body > header > nav.m-navbar-cover {
   background-color: var(--header-background-color-jumbo);
   opacity: 1;
 }
+/*
 body > header > nav.m-navbar-landing:hover,
 body > header > nav.m-navbar-cover:hover {
   background-color: var(--header-background-color-landing);
@@ -50,6 +51,7 @@ body> header > nav.m-navbar-cover:target {
   background-color: var(--header-background-color);
   opacity: 1;
 }
+*/
 body > header > nav.m-navbar-landing #m-navbar-brand.m-navbar-brand-hidden {
   visibility: hidden;
 }

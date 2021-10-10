@@ -21,10 +21,10 @@ PLUGIN_PATHS = []
 PLUGINS = []
 
 # -- PAGE
-PAGE_PATHS = ['']
+PAGE_PATHS = ['pages']
 # PAGE_EXCLUDES = []
 PAGE_URL = '{slug}/'
-PAGE_SAVE_AS = '{slug}/index.html'
+PAGE_SAVE_AS = 'pages/{slug}/index.html'
 # -- ARTICLE
 ARTICLE_PATHS = ['blog']
 ARTICLE_URL = 'blog/{slug}/'  # category/ is part of the slug
@@ -34,19 +34,19 @@ ARTICLE_SAVE_AS = 'blog/{slug}/index.html'
 STATIC_PATHS = ['images']
 STATIC_URL = 'static/{path}'
 STATIC_SAVE_AS = 'static/{path}'
-
+# EXTRA_PATH_METADATA = {}
 
 DEFAULT_PAGINATION = 10
 
-PATH_METADATA = '(blog/)?(?P<slug>.+).rst'
-SLUGIFY_SOURCE = 'basename'
-SLUG_REGEX_SUBSTITUTIONS = [
-        (r'[^\w\s-]', ''),  # remove non-alphabetical/whitespace/'-' chars
-        (r'(?u)\A\s*', ''),  # strip leading whitespace
-        (r'(?u)\s*\Z', ''),  # strip trailing whitespace
-        (r'[-\s]+', '-'),  # reduce multiple whitespace or '-' to single '-'
-        (r'C\+\+', 'cpp'),
-]
+# PATH_METADATA = '(blog/)?(?P<slug>.+).rst'
+# SLUGIFY_SOURCE = 'basename'
+# SLUG_REGEX_SUBSTITUTIONS = [
+#         (r'[^\w\s-]', ''),  # remove non-alphabetical/whitespace/'-' chars
+#         (r'(?u)\A\s*', ''),  # strip leading whitespace
+#         (r'(?u)\s*\Z', ''),  # strip trailing whitespace
+#         (r'[-\s]+', '-'),  # reduce multiple whitespace or '-' to single '-'
+#         (r'C\+\+', 'cpp'),
+# ]
 
 """___________________________________________________________________________
 
@@ -89,10 +89,10 @@ M_BLOG_NAME = "Liam Collod's Blog"
 M_BLOG_URL = 'blog/'
 
 M_THEME_COLOR = '#20FC8F'
-M_FAVICON = ("{static}/images/global/logo.lixm.base.png", 'image/x-ico')
+M_FAVICON = ("static/images/global/logo.png", 'image/x-ico')
 # M_BLOG_FAVICON = ('favicon-blog.png', 'image/png')
-M_SITE_LOGO = "{static}/images/global/logo.lixm.base.png"
-M_SITE_LOGO_TEXT = "Liam Collod Personal Website"
+M_SITE_LOGO = "static/images/global/logo.png"
+M_SITE_LOGO_TEXT = "Liam Collod"
 
 # SOCIAL
 M_SOCIAL_TWITTER_SITE = '@MrLixm'
