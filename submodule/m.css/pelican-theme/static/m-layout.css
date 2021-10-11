@@ -72,8 +72,9 @@ body > header > nav a {
   color: var(--header-link-color);
 }
 body > header > nav #m-navbar-brand, body > header > nav a#m-navbar-show, body > header > nav a#m-navbar-hide {
+  font-family: 'Georama', sans-serif;
   font-weight: var(--heading-font-weight);
-  font-size: 1.125rem;
+  font-size: 1.2rem;
   padding-left: 1rem;
   padding-right: 1rem;
 }
@@ -368,9 +369,9 @@ article section > h4 a, article section > h5 a, article section > h6 a {
 #m-landing-cover h1 {
   font-size: 2.8rem;
   margin-top: -0.5rem;
-  padding-left: var(--paragraph-indent);
+  /*padding-left: var(--paragraph-indent);*/
   padding-bottom: 1rem;
-  text-transform: var(--landing-header-case);
+  /*text-transform: var(--landing-header-case);*/
 }
 #m-landing-cover {
   padding-bottom: 10rem;

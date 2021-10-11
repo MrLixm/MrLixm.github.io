@@ -48,8 +48,8 @@
   --background-color: #2f363f;
   --color: #dcdcdc;
   --line-color: #405363;
-  --link-color: #5b9dd9;
-  --link-active-color: #a5c9ea;
+  --link-color: #56D9A4;
+  --link-active-color: #73EAA9;
   --mark-color: #2f83cc;
   --mark-background-color: #c7cf2f;
   --code-color: #e6e6e6;
@@ -70,12 +70,12 @@
 /*
   --header-background-color: rgb(34,150,116);
 */
-  --header-background-color: linear-gradient(90deg, rgba(34,150,116,1) 0%, rgba(34,102,83,1) 7%, rgba(28,79,66,1) 13%, rgba(28,68,58,1) 20%, rgba(27,35,42,1) 100%);
+  --header-background-color: linear-gradient(90deg, rgba(34,151,100,1) 0%, rgba(34,102,83,1) 7%, rgba(28,79,66,1) 13%, rgba(25,60,51,1) 20%, rgba(17,30,31,1) 44%, rgba(6,8,9,1) 100%);
   --header-background-color-landing: #170F11;
   --header-background-color-jumbo: #170F11;
   --header-link-color: #ffffff;
-  --header-link-active-color: #a5c9ea;
-  --header-link-current-color: #5b9dd9;
+  --header-link-active-color: #73EAA9;
+  --header-link-current-color: #56D9A4;
   --header-link-active-background-color: #292f37;
   --header-link-active-background-color-semi: rgba(41, 47, 55, 0.5);
 
@@ -84,7 +84,7 @@
   --footer-color: #c5c5c5;
   --footer-background-color: #444e5c;
   --footer-link-color: #ffffff;
-  --footer-link-active-color: #a5c9ea;
+  --footer-link-active-color: #73EAA9;
 
   /* Cover image */
   --cover-image-background-color: #0f1217;
@@ -96,12 +96,12 @@
   /* Article */
   --article-header-color: #f0f0f0;
   --article-footer-color: #c5c5c5;
-  --article-heading-color: #a5c9ea;
+  --article-heading-color: #73EAA9;
   --article-heading-active-color: #dcdcdc;
 
   /* Right navigation panel */
   --navpanel-link-color: #ffffff;
-  --navpanel-link-active-color: #a5c9ea;
+  --navpanel-link-active-color: #73EAA9;
 
   /* Plots */
   --plot-background-color: #34424d;
@@ -109,13 +109,13 @@
 
   /* Colored components */
   --default-color: #dcdcdc;
-  --default-link-active-color: #a5c9ea;
+  --default-link-active-color: #56D9A4;
   --default-filled-color: #dcdcdc;
   --default-filled-background-color: #34424d;
   --default-filled-link-color: #5b9dd9;
-  --default-filled-link-active-color: #a5c9ea;
+  --default-filled-link-active-color: #73EAA9;
 
-  --primary-color: #a5c9ea;
+  --primary-color: #73EAA9;
   --primary-link-active-color: #dcdcdc;
   --primary-filled-color: #2f363f;
   --primary-filled-background-color: #a5c2db;

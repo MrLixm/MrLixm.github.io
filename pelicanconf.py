@@ -76,12 +76,12 @@ PLUGINS.extend(
         'm.vk'
     ]
 )
-FORMATTED_FIELDS = ['summary', 'description', 'landing', 'badge', 'header', 'footer']
+FORMATTED_FIELDS = ['summary', 'description', 'landing', 'badge', 'header', 'footer', 'scale']
 
 # theme related configuration
-
 M_CSS_FILES = [
-    'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600',
+    'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700%7CSource+Code+Pro:400,400i,600',
+    "https://fonts.googleapis.com/css2?family=Georama:wght@400;600&",
     '/static/m-dark.css'
 ]
 
@@ -101,7 +101,6 @@ M_SOCIAL_BLOG_SUMMARY = "Personal website & blog for Liam Collod (MrLixm)"
 
 # M_HTML_HEADER = ""
 M_LINKS_NAVBAR1 = [
-    ('Features', 'features/', 'features', []),
     ('Blog', M_BLOG_URL, '[blog]', []),
     ('Contact', 'pages/contact', 'contact', [])
 ]
