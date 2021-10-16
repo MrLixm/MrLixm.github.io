@@ -9,9 +9,6 @@ Status: published
 
 This is the first content of my blog.
 
-
-
-
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer scelerisque faucibus nunc, vel accumsan ligula. Sed sollicitudin ante leo, eu iaculis est molestie vitae. Vestibulum hendrerit vehicula mauris vitae cursus. Quisque vel enim a massa laoreet imperdiet. Nam vel nisl id arcu accumsan feugiat. Morbi egestas elit eu convallis sodales. Proin ut erat ultricies, fermentum augue at, elementum risus.
 
 Morbi non venenatis lorem. Nunc aliquam pharetra urna, in consequat tellus varius vitae. Suspendisse lacus lacus, faucibus sed ante nec, dictum viverra mauris. Sed id libero vestibulum, auctor urna vel, dignissim erat. In vel egestas erat, vel euismod orci. Ut nec tortor a ligula rutrum vestibulum. Aliquam eu purus a quam laoreet ultricies sed nec arcu. Quisque id ante lectus. Donec vitae mauris sapien. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam ultricies faucibus purus, vel gravida sapien placerat in. Quisque tempor ligula dui, a eleifend lacus varius non. Aenean magna libero, euismod vel eleifend et, venenatis ut enim. Nunc mollis viverra nulla, maximus blandit mi aliquet id. Pellentesque sit amet pretium sapien. Donec et auctor odio, dignissim dictum ex.

@@ -17,14 +17,17 @@ TIMEZONE = 'Europe/Paris'
 DEFAULT_LANG = 'en'
 
 PATH = 'content'
-PLUGIN_PATHS = []
-PLUGINS = []
+PLUGIN_PATHS = []  # empty for init
+PLUGINS = []  # empty for init
 
 # -- PAGE
 PAGE_PATHS = ['pages']
 # PAGE_EXCLUDES = []
 PAGE_URL = '{slug}/'
 PAGE_SAVE_AS = 'pages/{slug}/index.html'
+# -- Archives (blog postr listing)
+ARCHIVES_URL = 'blog/'
+ARCHIVES_SAVE_AS = 'blog/index.html'
 # -- ARTICLE
 ARTICLE_PATHS = ['blog']
 ARTICLE_URL = 'blog/{slug}/'  # category/ is part of the slug
@@ -39,7 +42,7 @@ STATIC_SAVE_AS = 'static/{path}'
 DEFAULT_PAGINATION = 10
 
 # PATH_METADATA = '(blog/)?(?P<slug>.+).rst'
-# SLUGIFY_SOURCE = 'basename'
+SLUGIFY_SOURCE = 'basename'  # the {slug} is generated from the file name instead of the file title tag
 # SLUG_REGEX_SUBSTITUTIONS = [
 #         (r'[^\w\s-]', ''),  # remove non-alphabetical/whitespace/'-' chars
 #         (r'(?u)\A\s*', ''),  # strip leading whitespace
@@ -56,7 +59,21 @@ DEFAULT_PAGINATION = 10
 # m.css config
 THEME = 'submodule/m.css/pelican-theme'
 THEME_STATIC_DIR = 'static'
-DIRECT_TEMPLATES = ['index']
+DIRECT_TEMPLATES = ['archives']
+PAGINATED_TEMPLATES = {
+    'archives': None,
+    'tag': None,
+    'category': None,
+    'author': None
+}
+
+# M_HTML_HEADER = ""
+M_LINKS_NAVBAR1 = [
+    ('Work', "pages/work", "work", []),
+    ('Blog', "/blog/", '[blog]', []),
+    ('Contact', 'pages/contact', 'contact', []),
+]
+
 
 PLUGIN_PATHS.append('submodule/m.css/plugins')
 PLUGINS.extend(
@@ -86,7 +103,7 @@ M_CSS_FILES = [
 ]
 
 M_BLOG_NAME = "Liam Collod's Blog"
-M_BLOG_URL = 'blog/'
+M_BLOG_URL = '/blog'
 
 M_THEME_COLOR = '#20FC8F'
 M_FAVICON = ("static/images/global/logo.png", 'image/x-ico')
@@ -98,13 +115,6 @@ M_SITE_LOGO_TEXT = "Liam Collod"
 M_SOCIAL_TWITTER_SITE = '@MrLixm'
 M_SOCIAL_TWITTER_SITE_ID = 713068621203914752
 M_SOCIAL_BLOG_SUMMARY = "Personal website & blog for Liam Collod (MrLixm)"
-
-# M_HTML_HEADER = ""
-M_LINKS_NAVBAR1 = [
-    ('Blog', M_BLOG_URL, '[blog]', []),
-    ('Contact', 'pages/contact', 'contact', [])
-]
-
 
 # Index page
 M_NEWS_ON_INDEX = ("Latest blog posts", 5)

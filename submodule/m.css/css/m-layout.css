@@ -141,7 +141,7 @@ body > header > nav #m-navbar-collapse li:hover {
 body > header > nav #m-navbar-collapse li a:hover,
 body > header > nav #m-navbar-collapse li a:focus,
 body > header > nav #m-navbar-collapse li a:active {
-  border-color: var(--header-link-active-color);
+  /*border-color: var(--header-link-active-color);*/
   background-color: var(--header-link-active-background-color);
 }
 body > header > nav.m-navbar-landing #m-navbar-collapse li a:hover,
