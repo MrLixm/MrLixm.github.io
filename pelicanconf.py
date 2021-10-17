@@ -117,7 +117,7 @@ M_SOCIAL_TWITTER_SITE_ID = 713068621203914752
 M_SOCIAL_BLOG_SUMMARY = "Personal website & blog for Liam Collod (MrLixm)"
 
 # Index page
-M_NEWS_ON_INDEX = ("Latest blog posts", 5)
+M_NEWS_ON_INDEX = ("Latest posts", 5)
 
 # M_LINKS_FOOTER1 = [
 #     ('Contact', ''),

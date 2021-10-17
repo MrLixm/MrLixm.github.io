@@ -45,7 +45,7 @@
   --border-radius: 0.2rem;
 
   /* Basics */
-  --background-color: #2f363f;
+  --background-color: #2e2e35;
   --color: #dcdcdc;
   --line-color: #405363;
   --link-color: #56D9A4;
@@ -82,7 +82,7 @@
   /* Footer */
   --footer-font-size: 0.85rem;
   --footer-color: #c5c5c5;
-  --footer-background-color: #444e5c;
+  --footer-background-color: #15151a;
   --footer-link-color: #ffffff;
   --footer-link-active-color: #73EAA9;
 
@@ -111,7 +111,7 @@
   --default-color: #dcdcdc;
   --default-link-active-color: #56D9A4;
   --default-filled-color: #dcdcdc;
-  --default-filled-background-color: #34424d;
+  --default-filled-background-color: #2a2931;
   --default-filled-link-color: #5b9dd9;
   --default-filled-link-active-color: #73EAA9;
 
