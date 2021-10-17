@@ -126,7 +126,8 @@
     </div>
     {% if page.save_as == 'index.html' and not page.url and M_NEWS_ON_INDEX %}
     <div class="m-row">
-      <div class="m-col-l-8 m-push-l-2">
+      <div class="m-col-l-none">
+        <h1 style="font-family:'Georama', sans-serif;margin-bottom:2rem;">Blog:</h1>
         <div><div class="m-note m-default m-landing-news">
           <h3><a href="{{ M_BLOG_URL|format_siteurl|e }}">{{ M_NEWS_ON_INDEX[0]|e }} &raquo;</a></h3>
           <ul class="m-unstyled">
