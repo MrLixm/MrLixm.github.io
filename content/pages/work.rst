@@ -1,7 +1,7 @@
 Work
 #################
 
-:summary: Legal info, third party licenses and contributor credits
-:modified: 2021-10-16 19:07
+:summary: Summary of my work.
+:modified: 2021-10-17 19:00
 
-fzpoejfzpih
+Coming Soon.

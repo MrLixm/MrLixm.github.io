@@ -20,6 +20,8 @@ PATH = 'content'
 PLUGIN_PATHS = []  # empty for init
 PLUGINS = []  # empty for init
 
+READERS = {'html': None}  # avoid processing .html files
+
 # -- PAGE
 PAGE_PATHS = ['pages']
 # PAGE_EXCLUDES = []
@@ -39,6 +41,14 @@ STATIC_URL = 'static/{path}'
 STATIC_SAVE_AS = 'static/{path}'
 # EXTRA_PATH_METADATA = {}
 
+DIRECT_TEMPLATES = ['archives']
+PAGINATED_TEMPLATES = {
+    'archives': None,
+    'tag': None,
+    'category': None,
+    'author': None
+}
+
 DEFAULT_PAGINATION = 10
 
 # PATH_METADATA = '(blog/)?(?P<slug>.+).rst'
@@ -56,16 +66,12 @@ SLUGIFY_SOURCE = 'basename'  # the {slug} is generated from the file name instea
  THEME
 
 """
+
+_THEME_ROOT = "extensions/m.css"
+
 # m.css config
-THEME = 'submodule/m.css/pelican-theme'
+THEME = f'{_THEME_ROOT}/pelican-theme'
 THEME_STATIC_DIR = 'static'
-DIRECT_TEMPLATES = ['archives']
-PAGINATED_TEMPLATES = {
-    'archives': None,
-    'tag': None,
-    'category': None,
-    'author': None
-}
 
 # M_HTML_HEADER = ""
 M_LINKS_NAVBAR1 = [
@@ -75,7 +81,7 @@ M_LINKS_NAVBAR1 = [
 ]
 
 
-PLUGIN_PATHS.append('submodule/m.css/plugins')
+PLUGIN_PATHS.append(f'{_THEME_ROOT}/plugins')
 PLUGINS.extend(
     [
         'm.abbr',
@@ -101,6 +107,7 @@ M_CSS_FILES = [
     "https://fonts.googleapis.com/css2?family=Georama:wght@400;600&",
     '/static/m-dark.css'
 ]
+CSS_FILE = "/static/m-dark.css"
 
 M_BLOG_NAME = "Liam Collod's Blog"
 M_BLOG_URL = '/blog'
