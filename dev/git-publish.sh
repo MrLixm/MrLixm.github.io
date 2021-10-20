@@ -6,7 +6,7 @@ then
     exit 1
 fi
 
-read -p "Give a name to this commit (change made): " cname
+read -p "Give a name to this commit (change made): " "cname"
 
 cd ..
 echo $PWD

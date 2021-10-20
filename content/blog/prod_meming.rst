@@ -65,7 +65,7 @@ short-movies at `CpasDec. <https://liamcollod.notion.site/CPasDec-Association-41
 
    {static}/images/blog/prodm/Blendshape_hell.png Blendshape hell
    {static}/images/blog/prodm/Some_special_kind_of_leaves.png Some special kind of leaves
-   {static}/images/blog/prodm/Tired_level_max.png Tired level max
+   {static}/images/blog/prodm/Mondays_be_like.png Mondays be like
 
    {static}/images/blog/prodm/Maya_+_Xgen.png Maya + Xgen
    {static}/images/blog/prodm/He_have_ASCENDED.png He have ASCENDED
@@ -85,7 +85,9 @@ short-movies at `CpasDec. <https://liamcollod.notion.site/CPasDec-Association-41
    {static}/images/blog/prodm/Grandma_where_are_your_clothes_-1-1-1.png Grandma where are your clothes ???
 
    {static}/images/blog/prodm/Checking_your_weekend_renders_be_like.png Checking your weekend renders be like
-   {static}/images/blog/prodm/Mondays_be_like.png Mondays be like
+   {static}/images/blog/prodm/Tired_level_max.png Tired level max
+
+   {static}/images/blog/prodm/omw2doUrMom.gif omw2doUrMom
    {static}/images/blog/prodm/Oh_you_have_games_on_your_phone_-1-1.png Oh you have games on your phone ??
 
    {static}/images/blog/prodm/Blendshape_from_hell.png Blendshape from hell
@@ -105,6 +107,7 @@ short-movies at `CpasDec. <https://liamcollod.notion.site/CPasDec-Association-41
    {static}/images/blog/prodm/Why_is_my_hair_flying_-1_Wish_I_knew_child_....png Why is my hair flying ? Wish I knew child ...
 
    {static}/images/blog/prodm/The_berth-bike.png The berth-bike
+   {static}/images/blog/prodm/boom.gif boom
 
    {static}/images/blog/prodm/CharaDesign_at_his_best.png CharaDesign at his best
    {static}/images/blog/prodm/Join_church_we_have_cookies.png Join church we have cookies
@@ -127,7 +130,9 @@ short-movies at `CpasDec. <https://liamcollod.notion.site/CPasDec-Association-41
 
    {static}/images/blog/prodm/Yeeeesh.png Yeeeesh
    {static}/images/blog/prodm/-5_Stare_at_you_-5_OwO.png * Stare at you * OwO
+
    {static}/images/blog/prodm/Groom_issue_n°45636.PNG Groom issue n°45636
+   {static}/images/blog/prodm/hahaCFXFUN.gif hahaCFXFUN
 
    {static}/images/blog/prodm/shrink.png shrink
    {static}/images/blog/prodm/bonk.png bonk
@@ -158,4 +163,5 @@ short-movies at `CpasDec. <https://liamcollod.notion.site/CPasDec-Association-41
    {static}/images/blog/prodm/The_crossover.png The crossover
    {static}/images/blog/prodm/we_used_this_as_a_texture.png we used this as a texture
 
+   {static}/images/blog/prodm/ThisIsFine.gif ThisIsFine
 ..
