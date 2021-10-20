@@ -132,7 +132,7 @@
   --warning-color: #c7cf2f;
   --warning-link-active-color: #e9ecae;
   --warning-filled-color: #e9ecae;
-  --warning-filled-background-color: #6d702a;
+  --warning-filled-background-color: rgba(201,183,44,0.2);
   --warning-filled-link-color: #b8bf2b;
   --warning-filled-link-active-color: #e9ecae;
 
