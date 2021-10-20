@@ -1036,7 +1036,11 @@ figure.m-figure:not(.m-flat) > svg.m-graph:first-child {
 .m-text.m-dim a:hover, .m-text.m-dim a:focus, .m-text.m-dim a:active {
   color: var(--dim-link-active-color);
 }
-.m-block.m-flat { border-color: transparent; }
+.m-block.m-flat {
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+}
 .m-block.m-flat h3, .m-block.m-flat h4, .m-block.m-flat h5, .m-block.m-flat h6 {
   color: var(--default-color);
 }
