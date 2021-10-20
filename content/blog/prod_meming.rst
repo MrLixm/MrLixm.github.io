@@ -2,7 +2,7 @@ When cgi-production goes wrong.
 ###############################
 
 :date: 2021-10-16 20:00
-:category: CGI
+:category: breakdown
 :tags: production, memes, wtf
 :description: test
 :summary: Producing content using a computer can lead sometimes to unexcepted results,
