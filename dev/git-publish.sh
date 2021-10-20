@@ -11,4 +11,8 @@ echo $PWD
 
 pelican content  # build to the /output directory using pelicanconf.py
 
-ghp-import output
+ghp-import output -b temp
+
+git push origin temp:master
+
+echo "Site published to master"
