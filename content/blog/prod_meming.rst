@@ -8,6 +8,7 @@ When cgi-production goes wrong.
 :summary: Producing content using a computer can lead sometimes to unexcepted results,
     wether it's the user fault or the software one. And this is especially true when
     working on 3d animated movies ...
+:status: hidden
 
 
 Enjoy this compilation of no-context pictures from the production of
