@@ -7,7 +7,9 @@ Index
 :summary: "Personal website & blog for Liam Collod (MrLixm)"
 :hide_navbar_brand: False
 :cover: {static}/images/global/blurbg.jpg
+
 :landing:
+
     .. container:: m-row
 
         .. raw:: html
@@ -81,20 +83,16 @@ Index
 
                 .. raw:: html
 
-                    <div style="padding:56.25% 0 0% 0%;position:relative;">
+                    <div style="padding:56.25% 0 0% 0%;position:relative;margin-bottom:15px;">
                     <iframe src="https://player.vimeo.com/video/579603827?h=5ddae9d51f&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" title="LiamCollod.Demoreel.2021.Surfacing-Lighting-TD.v6">
                     </iframe>
                     </div>
 
-        .. container:: m-col-l-none
+        .. block-primary:: 💼 Availability
 
-            .. raw:: html
+            I am available from December 2021.
 
-                <h1 style="font-family:'Georama', sans-serif;margin-top:2rem;">Availability:</h1>
+            .. note-warning::
 
-        .. note-default::
-
-            I am avalailable from December 2021.
-
-            Remote work only.
+                Remote work only.
 
