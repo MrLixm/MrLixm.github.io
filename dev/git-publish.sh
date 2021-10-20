@@ -6,17 +6,21 @@ then
     exit 1
 fi
 
+read -p "Give a name to this commit (change made): " cname
+
 cd ..
 echo $PWD
 
 pelican content  # build to the /output directory using pelicanconf.py
 
-<<<<<<< HEAD
-ghp-import output -b temp
+ghp-import -m "publish: $cname" -b master output # push /output to master
 
-git push origin temp:master
+git push origin master  # push master
 
-echo "Site published to master"
-=======
-ghp-import output
->>>>>>> parent of a08055d... Update documentation
+echo "[master] Site published to master. commit: $cname"
+
+git add .
+git commit -m "published version: $cname"
+git push origin dev
+
+echo "[dev] dev branch pushed remotely"
