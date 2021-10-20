@@ -75,18 +75,15 @@ Index
                     :target: https://www.youtube.com/c/LiamCollod
 
 
-        .. container:: m-col-l-none
+        .. raw:: html
 
-                .. raw:: html
-
-                    <h1 style="font-family:'Georama';margin-top:2rem;, sans-serif;">Demoreel:</h1>
-
-                .. raw:: html
-
-                    <div style="padding:56.25% 0 0% 0%;position:relative;margin-bottom:15px;">
-                    <iframe src="https://player.vimeo.com/video/579603827?h=5ddae9d51f&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" title="LiamCollod.Demoreel.2021.Surfacing-Lighting-TD.v6">
-                    </iframe>
-                    </div>
+            <div class="m-button m-success m-fullwidth">
+            <a style="background-image:url('/static/images/global/demoreel.jpg');background-size:cover;background-position:center;filter: drop-shadow(0 0 1rem rgba(0,0,0,0.5));" href="https://vimeo.com/579603827">
+            <h1 style="font-family:'Georama';color:#F8F8F8;margin:0;padding:0;filter: drop-shadow(0 0 1rem black);">
+                Demoreel
+            </h1>
+            </a>
+            </div>
 
         .. block-primary:: 💼 Availability
 
