@@ -226,6 +226,8 @@ body > header > nav:target #m-navbar-hide {
 /* Footer navigation */
 body > footer {
   width: 100%;
+  position: fixed;
+  bottom: 0;
 }
 body > footer > nav {
   padding-top: 1rem;
