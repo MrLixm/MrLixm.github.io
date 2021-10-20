@@ -11,8 +11,12 @@ echo $PWD
 
 pelican content  # build to the /output directory using pelicanconf.py
 
+<<<<<<< HEAD
 ghp-import output -b temp
 
 git push origin temp:master
 
 echo "Site published to master"
+=======
+ghp-import output
+>>>>>>> parent of a08055d... Update documentation
