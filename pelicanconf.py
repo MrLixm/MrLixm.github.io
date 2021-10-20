@@ -4,6 +4,9 @@
 pelican configuration file
 """
 
+CACHE_CONTENT = True
+LOAD_CONTENT_CACHE = True
+
 """___________________________________________________________________________
 
  Basic config
