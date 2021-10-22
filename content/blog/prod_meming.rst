@@ -1,18 +1,21 @@
 When cgi-production goes wrong.
 ###############################
 
-:date: 2021-10-16 20:00
-:category: breakdown
-:tags: production, memes, wtf
-:description: test
 :summary: Producing content using a computer can lead sometimes to unexcepted results,
     wether it's the user fault or the software one. And this is especially true when
     working on 3d animated movies ...
-:status: hidden
+:cover: {static}/images/blog/prodm/cover/cover.jpg
+
+:status: published
+:date: 2021-10-16 20:00
+:modified: 2021-10-22 13:02
+
+:category: breakdown
+:tags: production, memes
 
 
 Enjoy this compilation of no-context pictures from the production of
-short-movies at `CpasDec. <https://liamcollod.notion.site/CPasDec-Association-4105082a881e499b9e385d84f6da933d>`_
+short-movies at `CpasDec <https://liamcollod.notion.site/CPasDec-Association-4105082a881e499b9e385d84f6da933d>`_.
 
 
 .. image-grid::
@@ -31,7 +34,7 @@ short-movies at `CpasDec. <https://liamcollod.notion.site/CPasDec-Association-41
    {static}/images/blog/prodm/Merfi.PNG Merfi
    {static}/images/blog/prodm/CHONK_UVs.png CHONK UVs
 
-   {static}/images/blog/prodm/Oh_no_I_added_to_much_-101.png Oh no I added to much ?01
+   {static}/images/blog/prodm/Oh_no_I_added_to_much_-101.png Oh no I added to much a̵̵̢̡͉͉̟̒̾͑͆̚̕͜b̴̵̢͍̼͚̙̿̔͒̓͌͜b̸̴̡̻̘͙͙̺͑͑̀͌͠͝e̴̸̡̦͉̺̫̫͌̓̒̽͠r̸̵̡̺̟̫̦̈́̾̾̚͠͠a̴̸͙̘̦̺̙̺͊̒̔͝͝͝t̵̵͔͇̫͚̾͒̔̕͜͜͠i̵̸͔̞̪̠̝̪̐̐̕̚͝o̸̴͚͚͎͕̻͛͋̈́̚͠͝n̸̴̦͎̪̘̫̺͋̽͐̔͌͝
    {static}/images/blog/prodm/ahhhhhhhhh.png ahhhhhhhhh
 
    {static}/images/blog/prodm/Curvature_being_affected_by_gravity.png Curvature being affected by gravity
@@ -74,7 +77,7 @@ short-movies at `CpasDec. <https://liamcollod.notion.site/CPasDec-Association-41
    {static}/images/blog/prodm/Next_level_of_tired.png Next level of tired
    {static}/images/blog/prodm/Can_I_get_uuuuh_..._your_soul_-1.png Can I get uuuuh ... your soul ?
 
-   {static}/images/blog/prodm/romain0564654.png romain0564654
+   {static}/images/blog/prodm/romain0564654.png production ready
    {static}/images/blog/prodm/Bro_I_can't_stand_being_unwrapped_anymore_…_please.png Bro I can't stand being unwrapped anymore … please
 
    {static}/images/blog/prodm/Render_MotionBlur_in_Render_plz.png Render MotionBlur in Render plz
@@ -99,7 +102,7 @@ short-movies at `CpasDec. <https://liamcollod.notion.site/CPasDec-Association-41
    {static}/images/blog/prodm/Ficello_le_fromage_trop_rigolo.png Ficello, le fromage trop rigolo
 
    {static}/images/blog/prodm/Cmpositing.png.png Cmpositing.png
-   {static}/images/blog/prodm/Oh_no_my_-100_dropped.png Oh no my ?00 dropped
+   {static}/images/blog/prodm/Oh_no_my_-100_dropped.png Oh no my m̴͕̪̼̒́̐o̵̠̺̟̒͝o̴͎̻̺͐̽d̵̘̪͓͆͠ dropped
    {static}/images/blog/prodm/Stoned.png.png Stoned.png
 
    {static}/images/blog/prodm/He_can_see_your_sins.png He can see your sins
