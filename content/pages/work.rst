@@ -9,5 +9,7 @@ Work
 
     .. class:: m-text-center m-noindent
 
-        🚧 Coming Soon.  🚧
+        🚧 Coming Soon. 🚧
+
+        Have a look at my `Artstation <https://www.artstation.com/monsieur_lixm>`_ in the meanwhile.
 
