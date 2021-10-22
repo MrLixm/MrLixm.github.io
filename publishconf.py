@@ -24,10 +24,13 @@ DELETE_OUTPUT_DIRECTORY = True
 _THEME_CSS = '/static/m-dark.css'
 
 # as recommended in the doc we use the compiled version
-M_CSS_FILES = [
-    'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600',
+M_CSS_FILES.append(
+    'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600'
+)
+M_CSS_FILES.append(
     _THEME_CSS
-]
+)
+
 THEME_STATIC_PATHS = [_THEME_CSS]
 
 # Following items are often useful when publishing
