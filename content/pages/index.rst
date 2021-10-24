@@ -74,6 +74,12 @@ Index
                     :width: 40px
                     :target: https://www.youtube.com/c/LiamCollod
 
+            .. container:: m-col-t-2 m-col-l-1
+
+                .. image:: {static}/images/global/social/gumroad.svg
+                    :alt: gumroad
+                    :width: 35px
+                    :target: https://gumroad.com/liam_collod
 
         .. raw:: html
 
