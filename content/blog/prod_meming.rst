@@ -9,6 +9,7 @@ When cgi-production goes wrong.
 :status: published
 :date: 2021-10-16 20:00
 :modified: 2021-10-22 13:02
+:author: Liam Collod
 
 :category: breakdown
 :tags: production, memes
@@ -27,7 +28,7 @@ short-movies at `CpasDec <https://liamcollod.notion.site/CPasDec-Association-410
    {static}/images/blog/prodm/BONJOUR.PNG BONJOUR
    {static}/images/blog/prodm/Aways_a_funny_one_to_Lookdev.png Aways a funny one to Lookdev
 
-   {static}/images/blog/prodm/He_got_too_much_ketamine.png He got too much ketamine
+   {static}/images/blog/prodm/He_got_too_much_ketamine.png He saw things ...
    {static}/images/blog/prodm/A_famous_French_politician_....PNG A famous French politician ...
    {static}/images/blog/prodm/Somebody_toucha_my_spaghet.png Somebody toucha my spaghet
 
