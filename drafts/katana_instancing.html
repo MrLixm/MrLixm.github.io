@@ -5,9 +5,11 @@
   <title>Instancing in Katana | Liam Collod&#39;s Blog</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Georama:wght@400;600&amp;" />
-  <link rel="stylesheet" href="/static/m-dark.css" />
-  <link rel="icon" href="/static/images/global/logo.png" type="image/x-ico" />
-  <link rel="canonical" href="/drafts/katana_instancing.html" />
+  <link rel="stylesheet" href="https://mrlixm.github.io/static/m-dark.css" />
+  <link rel="icon" href="https://mrlixm.github.io/static/images/global/logo.png" type="image/x-ico" />
+  <link rel="canonical" href="https://mrlixm.github.io/drafts/katana_instancing.html" />
+  <link href="https://mrlixm.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Liam Collod Website" />
+  <link href="https://mrlixm.github.io/feeds/software.atom.xml" type="application/atom+xml" rel="alternate" title="Liam Collod Website | software" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#20FC8F" />
   <meta name="twitter:site" content="@MrLixm" />
@@ -15,11 +17,11 @@
   <meta property="og:site_name" content="Liam Collod&#39;s Blog" />
   <meta property="og:title" content="Instancing in Katana" />
   <meta name="twitter:title" content="Instancing in Katana" />
-  <meta property="og:url" content="/drafts/katana_instancing.html" />
+  <meta property="og:url" content="https://mrlixm.github.io/drafts/katana_instancing.html" />
   <meta property="og:description" content="Let&#39;s see how to produce a flexible solution for instancing." />
   <meta name="twitter:description" content="Let&#39;s see how to produce a flexible solution for instancing." />
-  <meta property="og:image" content="/static/images/global/cover_social.jpg" />
-  <meta name="twitter:image" content="/static/images/global/cover_social.jpg" />
+  <meta property="og:image" content="https://mrlixm.github.io/static/images/global/cover_social.jpg" />
+  <meta name="twitter:image" content="https://mrlixm.github.io/static/images/global/cover_social.jpg" />
   <meta name="twitter:card" content="summary" />
   <meta property="og:type" content="article" />
 </head>
@@ -27,15 +29,15 @@
 <header><nav id="navigation">
   <div class="m-container">
     <div class="m-row">
-      <a href="/" id="m-navbar-brand" class="m-col-t-9 m-col-m-none m-left-m"><img src="/static/images/global/logo.png" alt="" />Liam Collod</a>
+      <a href="https://mrlixm.github.io/" id="m-navbar-brand" class="m-col-t-9 m-col-m-none m-left-m"><img src="https://mrlixm.github.io/static/images/global/logo.png" alt="" />Liam Collod</a>
       <a id="m-navbar-show" href="#navigation" title="Show navigation" class="m-col-t-3 m-hide-m m-text-right"></a>
       <a id="m-navbar-hide" href="#" title="Hide navigation" class="m-col-t-3 m-hide-m m-text-right"></a>
       <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
         <div class="m-row">
           <ol class="m-col-t-12 m-col-m-none">
-            <li><a href="/pages/work">Work</a></li>
-            <li><a href="/blog/" id="m-navbar-current">Blog</a></li>
-            <li><a href="/pages/contact">Contact</a></li>
+            <li><a href="https://mrlixm.github.io/pages/work">Work</a></li>
+            <li><a href="https://mrlixm.github.io/blog/" id="m-navbar-current">Blog</a></li>
+            <li><a href="https://mrlixm.github.io/pages/contact">Contact</a></li>
           </ol>
         </div>
       </div>
@@ -47,7 +49,7 @@
   <div class="m-row">
     <article class="m-col-m-10 m-nopadb">
       <header>
-        <h1><a href="/drafts/katana_instancing.html" rel="bookmark" title="Permalink to Instancing in Katana">
+        <h1><a href="https://mrlixm.github.io/drafts/katana_instancing.html" rel="bookmark" title="Permalink to Instancing in Katana">
           <time class="m-date" datetime="2021-10-23T14:58:00+02:00">
             Oct <span class="m-date-day">23</span> 2021
           </time>
@@ -92,7 +94,7 @@ a location with a defined list of attributes understanded by your render-engine.
 You can as such create an instance with a simple <code>LocationCreate + AttributeSet</code>
 (if you have time to loose) but we will be using OpScripts to do so.</p>
 <p>Here is a quick diagram that could resume how an instance can be created :</p>
-<img alt="instancing principle" class="m-image" src="/static/images/blog/katana_instancing/diagram.png" />
+<img alt="instancing principle" class="m-image" src="https://mrlixm.github.io/static/images/blog/katana_instancing/diagram.png" />
 <p>The basic principle is that an instance links at least to an <code>instance source</code> (a location).
 The instance will create a &quot;copy&quot; of this instance source. You can then set
 transformations overrides that will allow the instance having a different
@@ -184,29 +186,29 @@ all the issues I found as discussed <a href="https://redshift.maxon.net/topic/33
 </section>
 <!-- /content -->
       <footer>
-        <p>Posted by <a href="/author/liam-collod.html">Liam Collod</a> on <time datetime="2021-10-23T14:58:00+02:00">Sat 23 October 2021</time> in <a href="/category/software.html">software</a>. <span class="m-label m-dim">draft</span></p>
+        <p>Posted by <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a> on <time datetime="2021-10-23T14:58:00+02:00">Sat 23 October 2021</time> in <a href="https://mrlixm.github.io/category/software.html">software</a>. <span class="m-label m-dim">draft</span></p>
       </footer>
     </article>
     <nav class="m-navpanel m-col-m-2">
       <h3>Categories</h3>
       <ol class="m-block-bar-m">
-        <li><a href="/category/breakdown.html">breakdown</a></li>
-        <li><a href="/category/coding.html">coding</a></li>
-        <li><a href="/category/meta.html">meta</a></li>
+        <li><a href="https://mrlixm.github.io/category/breakdown.html">breakdown</a></li>
+        <li><a href="https://mrlixm.github.io/category/coding.html">coding</a></li>
+        <li><a href="https://mrlixm.github.io/category/meta.html">meta</a></li>
       </ol>
       <h3>Tag cloud</h3>
       <ul class="m-tagcloud">
-        <li class="m-tag-5"><a href="/tag/discord.html">discord</a></li>
-        <li class="m-tag-5"><a href="/tag/katana.html">katana</a></li>
-        <li class="m-tag-5"><a href="/tag/lua.html">lua</a></li>
-        <li class="m-tag-5"><a href="/tag/mari.html">mari</a></li>
-        <li class="m-tag-5"><a href="/tag/maya.html">maya</a></li>
-        <li class="m-tag-5"><a href="/tag/memes.html">memes</a></li>
-        <li class="m-tag-5"><a href="/tag/osl.html">osl</a></li>
-        <li class="m-tag-5"><a href="/tag/production.html">production</a></li>
-        <li class="m-tag-5"><a href="/tag/python.html">python</a></li>
-        <li class="m-tag-5"><a href="/tag/qt.html">qt</a></li>
-        <li class="m-tag-5"><a href="/tag/resources.html">resources</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/discord.html">discord</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/katana.html">katana</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/lua.html">lua</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/mari.html">mari</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/maya.html">maya</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/memes.html">memes</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/osl.html">osl</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/production.html">production</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/python.html">python</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/qt.html">qt</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/resources.html">resources</a></li>
       </ul>
     </nav>
   </div>
