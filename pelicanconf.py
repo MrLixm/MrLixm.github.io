@@ -102,7 +102,7 @@ PLUGINS.extend(
         'm.vk'
     ]
 )
-FORMATTED_FIELDS = ['summary', 'description', 'landing', 'badge', 'header', 'footer', 'scale']
+FORMATTED_FIELDS = ['summary', 'description', 'landing', 'badge', 'header', 'footer', 'scale', 'thumbnail']
 
 # theme related configuration
 M_CSS_FILES = [
@@ -125,6 +125,7 @@ M_SITE_LOGO_TEXT = "Liam Collod"
 M_SOCIAL_TWITTER_SITE = '@MrLixm'
 M_SOCIAL_TWITTER_SITE_ID = 713068621203914752
 M_SOCIAL_BLOG_SUMMARY = "Personal website & blog for Liam Collod (MrLixm)"
+M_SOCIAL_IMAGE = "/static/images/global/cover_social.jpg"
 
 # Index page
 M_NEWS_ON_INDEX = ("Latest posts", 5)
