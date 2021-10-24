@@ -328,6 +328,7 @@ article > header h1::after {
 }
 article > footer {
   color: var(--article-footer-color);
+  padding-bottom: 1.75rem;
 }
 article > footer p {
   font-style: italic;
