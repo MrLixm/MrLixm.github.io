@@ -41,13 +41,18 @@
   <meta property="og:description" content="{{ page.summary|dehyphenate|striptags|e }}" />
   <meta name="twitter:description" content="{{ page.summary|dehyphenate|striptags|e }}" />
   {% endif %}
-  {% if page.cover %}
-  <meta property="og:image" content="{{ page.cover|expand_link(page)|e }}" />
-  <meta name="twitter:image" content="{{ page.cover|expand_link(page)|e }}" />
+  {% if page.thumbnail %}
+  <meta property="og:image" content="{{ page.thumbnail|striptags|expand_link(page)|e }}" />
+  <meta name="twitter:image" content="{{ page.thumbnail|striptags|expand_link(page)|e }}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  {% elif page.cover %}
+  <meta property="og:image" content="{{ page.cover|expand_link(page)|e|format_siteurl }}" />
+  <meta name="twitter:image" content="{{ page.cover|expand_link(page)|e|format_siteurl }}" />
   <meta name="twitter:card" content="summary_large_image" />
   {% elif M_SOCIAL_IMAGE %}
-  <meta property="og:image" content="{{ M_SOCIAL_IMAGE|format_siteurl }}" />
-  <meta name="twitter:image" content="{{ M_SOCIAL_IMAGE|format_siteurl }}" />
+  <meta property="og:image" content="{{ SITEURL }}{{ M_SOCIAL_IMAGE }}" />
+  <meta name="twitter:image" content="{{ SITEURL }}{{ M_SOCIAL_IMAGE }}" />
+  <meta name="twitter:card" content="summary" />
   {% endif %}
   {% if not page.cover %}
   <meta name="twitter:card" content="summary" />

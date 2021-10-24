@@ -39,7 +39,6 @@
   <meta property="og:image" content="{{ article.thumbnail|striptags|expand_link(article)|e }}" />
   <meta name="twitter:image" content="{{ article.thumbnail|striptags|expand_link(article)|e }}" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="thumn" content="{{ article.thumbnail|striptags|expand_link(article)|e }}" />
   {% elif article.cover %}
   <meta property="og:image" content="{{ article.cover|expand_link(article)|e|format_siteurl }}" />
   <meta name="twitter:image" content="{{ article.cover|expand_link(article)|e|format_siteurl }}" />

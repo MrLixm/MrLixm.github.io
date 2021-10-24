@@ -11,7 +11,7 @@ read -p "Give a name to this commit (change made): " "cname"
 cd ..
 echo $PWD
 
-pelican content content -o output -s publishconf.py
+pelican content -o output -s publishconf.py
 
 ghp-import -m "publish: $cname" -b master output # push /output to master
 
