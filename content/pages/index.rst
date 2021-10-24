@@ -6,6 +6,7 @@ Index
 :description: "Personal website & blog for Liam Collod (MrLixm)"
 :summary: "Personal website & blog for Liam Collod (MrLixm)"
 :hide_navbar_brand: False
+:thumbnail: {static}/images/global/cover_social.jpg
 :cover: {static}/images/global/blurbg.jpg
 
 :landing:
