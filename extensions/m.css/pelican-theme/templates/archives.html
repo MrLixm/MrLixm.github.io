@@ -59,12 +59,6 @@
             article.content and loop.first and (not articles_page or articles_page.number == 1) and
             ((article.collapse_first is defined and article.collapse_first != 'True') or
              (article.collapse_first is not defined and not M_COLLAPSE_FIRST_ARTICLE)) %}
-        {% if show_content %}
-        <div class="m-clearfix-l"></div>
-<!-- content -->
-{{ article.content|trim }}
-<!-- /content -->
-        {% endif %}
         <footer>
           {% macro footer() %}{% include "article_footer.html" %}{% endmacro %}
           {{ footer()|rtrim|indent(10) }}
