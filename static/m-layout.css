@@ -319,7 +319,8 @@ article > header .m-date-day {
 }
 article > header p {
   color: var(--article-header-color);
-  font-size: 1.125rem;
+  font-size: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 article > header h1::after {
   content: " ";
@@ -328,6 +329,7 @@ article > header h1::after {
 }
 article > footer {
   color: var(--article-footer-color);
+  padding-bottom: 1.75rem;
 }
 article > footer p {
   font-style: italic;

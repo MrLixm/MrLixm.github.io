@@ -22,6 +22,12 @@
     DEALINGS IN THE SOFTWARE.
 */
 
+/*
+
+green (desat): #60C68E
+
+*/
+
 :root {
   /* Text properties */
   --font: 'Source Sans Pro', sans-serif;
@@ -45,7 +51,7 @@
   --border-radius: 0.2rem;
 
   /* Basics */
-  --background-color: #2e2e35;
+  --background-color: rgb(12, 15, 17);
   --color: #dcdcdc;
   --line-color: #405363;
   --link-color: #56D9A4;
@@ -96,7 +102,7 @@
   /* Article */
   --article-header-color: #f0f0f0;
   --article-footer-color: #c5c5c5;
-  --article-heading-color: #73EAA9;
+  --article-heading-color: #60C68E;
   --article-heading-active-color: #dcdcdc;
 
   /* Right navigation panel */
