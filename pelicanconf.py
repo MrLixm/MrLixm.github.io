@@ -129,6 +129,7 @@ M_SOCIAL_IMAGE = "/static/images/global/cover_social.jpg"
 
 # Index page
 M_NEWS_ON_INDEX = ("Latest posts", 5)
+M_COLLAPSE_FIRST_ARTICLE = True
 
 # M_LINKS_FOOTER1 = [
 #     ('Contact', ''),

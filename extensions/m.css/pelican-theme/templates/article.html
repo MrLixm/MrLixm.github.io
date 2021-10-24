@@ -65,10 +65,16 @@
         <div id="m-jumbo-cover">
           <div class="m-container">
             <div class="m-row">
-              <div class="{% if article.authors %}m-col-t-6 m-col-s-5{% else %}m-col-t-12 m-col-s-10{% endif %} m-push-s-1 m-text-left">{{ article.locale_date|e }}{% if article.status == 'draft' %} <span class="m-label m-dim">draft</span>{% endif %}</div>
-              {% if article.authors %}
-              <div class="m-col-t-6 m-col-s-5 m-push-s-1 m-text-right">{% for author in article.authors %}<a href="{{ author.url|format_siteurl|e }}">{{ author|e }}</a>{% endfor %}</div>
-              {% endif %}
+              <div class="m-col-l-6 m-push-l-3">{% if article.status == 'draft' %} <span class="m-label m-dim">draft</span>{% endif %}
+                <div style="background-color:rgba(0,0,0, 0.8); margin:auto; width:15%; padding: 2%; border-radius: 0.5rem; border: #F4F4F4 0.13rem solid;">
+                  <time class="m-date" datetime="{{ article.date.isoformat() }}" style="width:initial; float:initial; border:0; padding:0; margin:0; font-size:1rem;">
+                  {% set month = article.date.strftime('%b') %}
+                  {% set day = article.date.strftime('%d') %}
+                  {% set year = article.date.strftime('%Y') %}
+                  {{ month }} <span class="m-date-day" style="font-size:1.6rem;">{{ day }}</span> {{ year }}
+                  </time>
+                </div>
+              </div>
             </div>
             <div class="m-row">
               <div class="m-col-t-12 m-col-s-10 m-push-s-1 m-col-m-8 m-push-m-2">
@@ -78,6 +84,13 @@
                 <h2>{{ title[1] }}</h2>
                 {% endif %}
               </div>
+              {% if article.authors %}
+              <div class="m-col-m-10 m-push-m-1 m-text-center">
+                {% for author in article.authors %}
+                <a href="{{ author.url|format_siteurl|e }}">{{ author|e }} {% if not loop.last %}-{% endif %}</a>
+                {% endfor %}
+              </div>
+              {% endif %}
             </div>
           </div>
         </div>
