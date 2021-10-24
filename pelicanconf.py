@@ -130,6 +130,9 @@ M_SOCIAL_IMAGE = "/static/images/global/cover_social.jpg"
 # Index page
 M_NEWS_ON_INDEX = ("Latest posts", 5)
 M_COLLAPSE_FIRST_ARTICLE = True
+M_HTMLSANITY_HYPHENATION = True
+M_HTMLSANITY_SMART_QUOTES = True
+M_HTMLSANITY_FORMATTED_FIELDS = ["thumbnail"]
 
 # M_LINKS_FOOTER1 = [
 #     ('Contact', ''),

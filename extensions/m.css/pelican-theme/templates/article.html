@@ -36,9 +36,10 @@
   <meta name="twitter:description" content="{{ article.summary|dehyphenate|striptags|e }}" />
   {% endif %}
   {% if article.thumbnail %}
-  <meta property="og:image" content="{{ article.thumbnail|expand_link(article)|e|format_siteurl }}" />
-  <meta name="twitter:image" content="{{ article.thumbnail|expand_link(article)|e|format_siteurl }}" />
+  <meta property="og:image" content="{{ article.thumbnail|striptags|expand_link(article)|e }}" />
+  <meta name="twitter:image" content="{{ article.thumbnail|striptags|expand_link(article)|e }}" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="thumn" content="{{ article.thumbnail|striptags|expand_link(article)|e }}" />
   {% elif article.cover %}
   <meta property="og:image" content="{{ article.cover|expand_link(article)|e|format_siteurl }}" />
   <meta name="twitter:image" content="{{ article.cover|expand_link(article)|e|format_siteurl }}" />
@@ -48,8 +49,8 @@
   <meta name="twitter:image" content="{{ article.category.image|expand_link(article)|e }}" />
   <meta name="twitter:card" content="summary" />
   {% elif M_SOCIAL_IMAGE %}
-  <meta property="og:image" content="{{ M_SOCIAL_IMAGE|format_siteurl|e|format_siteurl }}" />
-  <meta name="twitter:image" content="{{ M_SOCIAL_IMAGE|format_siteurl|e|format_siteurl }}" />
+  <meta property="og:image" content="{{ SITEURL }}{{ M_SOCIAL_IMAGE }}" />
+  <meta name="twitter:image" content="{{ SITEURL }}{{ M_SOCIAL_IMAGE }}" />
   <meta name="twitter:card" content="summary" />
   {% endif %}
   <meta property="og:type" content="article" />

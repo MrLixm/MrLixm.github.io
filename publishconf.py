@@ -6,32 +6,18 @@
 
 import os
 import sys
-from pelicanconf import *
-
 sys.path.append(os.curdir)
+from pelicanconf import *
 
 # If your site is available via HTTPS, make sure SITEURL begins with https://
 SITEURL = 'https://mrlixm.github.io'
-RELATIVE_URLS = True
+
+M_SOCIAL_IMAGE = "/static/images/global/cover_social.jpg"
 
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
 CATEGORY_FEED_ATOM = 'feeds/{slug}.atom.xml'
 
 DELETE_OUTPUT_DIRECTORY = True
-
-# THEME
-
-_THEME_CSS = '/static/m-dark.css'
-
-# as recommended in the doc we use the compiled version
-M_CSS_FILES.append(
-    'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600'
-)
-M_CSS_FILES.append(
-    _THEME_CSS
-)
-
-THEME_STATIC_PATHS = [_THEME_CSS]
 
 # Following items are often useful when publishing
 
