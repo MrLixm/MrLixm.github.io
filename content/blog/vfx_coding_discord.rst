@@ -5,6 +5,7 @@ A Discord server for Coding in VFX/CGI
 :category: coding
 :summary: *" A bunch of resources you don't want to miss "*
 :status: published
+:thumbnail: {static}/images/blog/vfx_coding_discord/cover.png
 
 .. image:: {static}/images/blog/vfx_coding_discord/cover.png
     :target: {static}/images/blog/vfx_coding_discord/cover.png
