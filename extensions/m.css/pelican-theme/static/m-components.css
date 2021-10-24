@@ -126,6 +126,7 @@ pre, code {
   font-size: var(--code-font-size);
   color: var(--code-color);
   background-color: var(--code-background-color);
+  border-radius:0.2rem
 }
 pre.m-console, code.m-console {
   color: var(--console-color);
@@ -142,7 +143,8 @@ pre.m-console-wrap {
   word-break: break-all;
 }
 code {
-  padding: 0.125rem;
+  padding-left: 0.15rem;
+  padding-right: 0.15rem;
 }
 
 /* Focus outline on link, canvas and input: match the focused header item. */
