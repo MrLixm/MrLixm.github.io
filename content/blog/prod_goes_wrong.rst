@@ -167,5 +167,8 @@ short-movies at `CpasDec <https://liamcollod.notion.site/CPasDec-Association-410
    {static}/images/blog/prodm/The_crossover.png The crossover
    {static}/images/blog/prodm/we_used_this_as_a_texture.png we used this as a texture
 
+   {static}/images/blog/prodm/From_child_safe_to_horror_movie.png From child safe to horror movie
+   {static}/images/blog/prodm/Money_in_the_bag_NOW.png Money in the bag NOW
+
    {static}/images/blog/prodm/ThisIsFine.gif ThisIsFine
 ..
