@@ -43,8 +43,8 @@ This means that for CGI, you are familiar with a "scene-linear workflow" :
     output [jpg,...]
 
 | Then the OpenDRT implementation is only available as a Nuke Gizmo and
-    through Davinci Resolve DCTL feature and this imply you are using one
-    of these dccs.
+    through Davinci Resolve DCTL (in paid licenses) feature which imply you
+    are using one of these dccs.
 | No OCIO support, this means you will have with your traditional workflow in
     your rendering DCC and only be able to preview the final image in your
     post-prod one which is not an ideal one.
@@ -140,13 +140,13 @@ If we add smartphones to the equation, thing will get messy ...
 I'm still digging on the subject trying to gather more info and as such will
 close the topic
 
-So for now, using the presets is I think a good practice.
+So for now, using the presets is, I think a good practice.
 
 Nuke
 ----
 
-*(For now i'm only going to show how you can use it in Nuke as I'm not that
-familiar with Resolve yet.)*
+*(For now i'm only going to show how you can use it in Nuke as I don't have
+a Resolve License)*
 
 1. `Download the .nk file <https://raw.githubusercontent.com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk>`_
    (Right click on the page > save as > save it somewhere)
@@ -162,7 +162,9 @@ Things will now get a bit complicated at first. The issue is that has the
 OpenDRT handle the scene -> display conversion, this will collide with Nuke
 that try to do the same in the view-transform.
 
-I found 3 different solutions that achieve the same result :
+I found 4 different solutions that achieve the same result. I think the last
+one is recommend to use but it's good to have other example that might help to
+understand how everything works.
 
 .. note-warning::
 
@@ -224,7 +226,7 @@ previewing.
 
 We don't actually need the node used as input-process to be connected to
 anything but here I'm making sure it's connected before the write node, so
-it get exported.
+OpenDRT get baked in at export.
 
 
 Workflow
@@ -240,7 +242,7 @@ Conclusion
 If you tried to compare the result to an ACES processed image you would have
 probably notice that the image-formation produce much more "excepted" result,
 among others, in strong colored highlights, which make OpenDRT a solid
-candidate at better image-formation and peak of what could be used in the
+candidate at better image-formation and a peak of what could be used in the
 future.
 
 Even if it's current form kind of break the purpose of a consistant

@@ -1,10 +1,14 @@
 Instancing in Katana
 ####################
 
-:date: 2021-10-23 14:58
-:category: software
 :summary: Let's see how to produce a flexible solution for instancing.
+
 :status: draft
+:date: 2021-10-23 14:58
+
+:category: software
+:tags: katana, instancing, lua
+
 
 Katana doesn't offers "ready to go" solution for instancing (as for most things)
 , if you add the fact that you render-engine might need a different
