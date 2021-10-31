@@ -7,8 +7,6 @@ import msvcrt
 import subprocess
 from pathlib import Path
 
-import ghp_import
-
 
 OUTPUT_TARGET = "master"  # branch name
 
