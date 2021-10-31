@@ -13,8 +13,9 @@ OpenDRT : a nice (experimental) alternative to ACES
 
 With the Academy Color Encoding System (ACES) becoming omnipresent more and
 more, it would be worth keeping in mind that it's not the only solution to have
-a good color-managed pipeline. I'm not going to try to go too far and stick to
-the title even tho there is a lot to discuss on the topic.
+a good color-managed pipeline (let's keep that for a future article) .
+I'm not going to try to go too far and stick to the title even tho there is
+a lot to discuss on the topic.
 
 If most people get into ACES, it's mainly for its "filmic" looks (provided by
 the RRT), rather than having a full color-managed workflow.
