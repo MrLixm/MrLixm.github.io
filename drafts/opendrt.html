@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+<head>
+  <meta charset="UTF-8" />
+  <title>OpenDRT : a nice (experimental) alternative to ACES | Liam Collod&#39;s Blog</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Georama:wght@400;600&amp;" />
+  <link rel="stylesheet" href="https://mrlixm.github.io/static/m-dark.css" />
+  <link rel="icon" href="https://mrlixm.github.io/static/images/global/logo.png" type="image/x-ico" />
+  <link rel="canonical" href="https://mrlixm.github.io/drafts/opendrt.html" />
+  <link href="https://mrlixm.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Liam Collod Website" />
+  <link href="https://mrlixm.github.io/feeds/color-science.atom.xml" type="application/atom+xml" rel="alternate" title="Liam Collod Website | color-science" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#20FC8F" />
+  <meta name="twitter:site" content="@MrLixm" />
+  <meta name="twitter:site:id" content="713068621203914752" />
+  <meta property="og:site_name" content="Liam Collod&#39;s Blog" />
+  <meta property="og:title" content="OpenDRT : a nice (experimental) alternative to ACES" />
+  <meta name="twitter:title" content="OpenDRT : a nice (experimental) alternative to ACES" />
+  <meta property="og:url" content="https://mrlixm.github.io/drafts/opendrt.html" />
+  <meta property="og:description" content="An open-source alternative to convert scene-linear data to SDR or HDR display image." />
+  <meta name="twitter:description" content="An open-source alternative to convert scene-linear data to SDR or HDR display image." />
+  <meta property="og:image" content="https://mrlixm.github.io/static/images/global/cover_social.jpg" />
+  <meta name="twitter:image" content="https://mrlixm.github.io/static/images/global/cover_social.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:type" content="article" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="https://mrlixm.github.io/" id="m-navbar-brand" class="m-col-t-9 m-col-m-none m-left-m"><img src="https://mrlixm.github.io/static/images/global/logo.png" alt="" />Liam Collod</a>
+      <a id="m-navbar-show" href="#navigation" title="Show navigation" class="m-col-t-3 m-hide-m m-text-right"></a>
+      <a id="m-navbar-hide" href="#" title="Hide navigation" class="m-col-t-3 m-hide-m m-text-right"></a>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-12 m-col-m-none">
+            <li><a href="https://mrlixm.github.io/pages/work">Work</a></li>
+            <li><a href="https://mrlixm.github.io/blog/" id="m-navbar-current">Blog</a></li>
+            <li><a href="https://mrlixm.github.io/pages/contact">Contact</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main>
+<div class="m-container">
+  <div class="m-row">
+    <article class="m-col-m-10 m-nopadb">
+      <header>
+        <h1><a href="https://mrlixm.github.io/drafts/opendrt.html" rel="bookmark" title="Permalink to OpenDRT : a nice (experimental) alternative to ACES">
+          <time class="m-date" datetime="2021-10-25T13:54:00+02:00">
+            Oct <span class="m-date-day">25</span> 2021
+          </time>
+          OpenDRT : a nice (experimental) alternative to ACES
+          <span class="m-label m-dim">draft</span>
+        </a></h1>
+        <p>An open-source alternative to convert scene-linear data to SDR or
+        HDR display image.</p>
+      </header>
+      <div class="m-clearfix-l"></div>
+<!-- content -->
+<p>With the Academy Color Encoding System (ACES) becoming omnipresent more and
+more, it would be worth keeping in mind that it’s not the only solution to have
+a good color-managed pipeline (let’s keep that for a future article) .
+I’m not going to try to go too far and stick to the title even tho there is
+a lot to discuss on the topic.</p>
+<p>If most people get into ACES, it’s mainly for its “filmic” looks (provided by
+the RRT), rather than having a full color-managed workflow.
+And that is understandable, as individual artists, you most of the time, only
+care about having the prettiest image possible at the end.</p>
+<p>So what if you got a well-formed and pleasing image at the end without having
+to go through the complexity of ACES ?</p>
+<aside class="contents m-block m-default" id="contents">
+<h3>Contents</h3>
+<ul>
+<li><a href="#who-s-this-for" id="id1">Who’s this for ?</a></li>
+<li><a href="#node-knobs" id="id2">Node knobs</a></li>
+<li><a href="#nuke" id="id3">Nuke</a><ul>
+<li><a href="#node-setup" id="id4">Node Setup</a><ul>
+<li><a href="#revert-display" id="id5">Revert Display</a></li>
+<li><a href="#nuke-display-encoding-disable" id="id6">Nuke Display-encoding disable</a></li>
+<li><a href="#opendrt-no-display-encoding" id="id7">OpenDRT no Display-encoding</a></li>
+<li><a href="#opendrt-with-viewer-input-process" id="id8">OpenDRT with Viewer Input Process</a></li>
+</ul>
+</li>
+<li><a href="#workflow" id="id9">Workflow</a></li>
+</ul>
+</li>
+<li><a href="#conclusion" id="id10">Conclusion</a></li>
+</ul>
+</aside>
+<section id="who-s-this-for">
+<h2><a href="#id1">Who’s this for ?</a></h2>
+<p>My post mainly targets the VFX-CGI audience but OpenDRT work on any
+open-domain/scene-referred data, including photography and cinematography.
+(as long as the data is not in a closed-display-domain).</p>
+<p>This means that for CGI, you are familiar with a “scene-linear workflow” :</p>
+<pre>Render -[EXR]&gt; compositing/postprod(linear) -&gt; display-refered final
+output [jpg,...]</pre>
+<p>
+Then the OpenDRT implementation is only available as a Nuke Gizmo and
+through Davinci Resolve DCTL (in paid licenses) feature which imply you
+are using one of these dccs.<br />
+No OCIO support, this means you will have with your traditional workflow in
+your rendering DCC and only be able to preview the final image in your
+post-prod one which is not an ideal one.<br />
+</p>
+<p>With all of that , this mean <strong>my post is aimed at individual artist doing
+personal projects that would like a quick solution for proper SDR-HDR export.</strong>
+(OpenDRT is probably aimed at additionals goal)</p>
+<p class="m-transition">~</p>
+<aside class="m-block m-primary">
+<h3>OpenDRT Repository</h3>
+<p>Download on Github: <a class="m-link-wrap" href="https://github.com/jedypod/open-display-transform">https://github.com/jedypod/open-display-transform</a></p>
+</aside>
+<p>First, please have a look at the above repository, read Jed’s explanations and
+the tool’s documentation.</p>
+<p>Before diving into the setup I think it’s important to remind the target
+of OpenDRT:</p>
+<blockquote>
+The tool as for goal the faithful conversion of open-domain /
+scene-referred data to a closed-domain which is the display. This mean
+<strong>no creative transformations are applied</strong>. As such the output’s result
+can look very neutral and should be graded.</blockquote>
+</section>
+<section id="node-knobs">
+<h2><a href="#id2">Node knobs</a></h2>
+<p>As the tool is constantly changing, Jed’s documentation is not up to date,
+and thus this post will also probably be.</p>
+<div class="m-row">
+<div class="m-container-inflate m-col-l-5 m-left-l">
+<div class="m-image">
+<a href="https://mrlixm.github.io/static/images/blog/opendrt/nuke.opendrt.png"><img alt="OpenDRT global overview" src="https://mrlixm.github.io/static/images/blog/opendrt/nuke.opendrt.png" style="width: 286px" /></a>
+</div>
+</div>
+<div class="m-col-l-7">
+<p>
+First thing, tell the tool in which gamut your input is.<br />
+I assume the input should be Linearly encoded.<br />
+</p>
+<p>You then have a bunch of presets that will tweak the knobs for you
+based on your target display encoding.</p>
+<p><code>Lw</code> : this is the nits level of the target display and shouldn’t be
+used as a creative adjustment.</p>
+<ul>
+<li>100nits is the value defined as per the
+<a href="https://www.itu.int/dms_pubrec/itu-r/rec/bt/R-REC-BT.2035-0-201307-I!!PDF-E.pdf">ITU-R  BT.2035</a>
+specifications and should represent the peak-white value of a
+display in a dim surround.</li>
+</ul>
+<p><code>surround</code> : the luminance level of the viewing environment.</p>
+<ul>
+<li><code>dark</code> : theatrical viewing environment.</li>
+<li><code>dim</code>: “home theater” (low light condition).</li>
+<li><code>average</code>: desktop/office average surround.</li>
+</ul>
+<p><code>dechroma</code> : this one is more subjective, allowing to control
+the amount of chrominance compression that should be applied on values
+reaching display maximum (R,G,B=1.0).</p>
+</div>
+</div>
+<p><code>saturation</code> : .. TODO</p>
+<p><code>whitepoint</code> : (from doc) Sets the creative whitepoint. This allows
+you to creatively set the whitepoint of your display rendering if
+you want it to be different than the technical whitepoint of your
+display device. For example, if you set this to D55, neutral colors will
+be rendered as a warmer hue compared to the default D65.</p>
+<p><code>display encoding</code> : This part will be addressed under.</p>
+<p>To adjust these settings properly <strong>you have to know the target display</strong>
+<strong>+ user</strong> :</p>
+<p>Issue is that with today range of displays, this is a rather difficult one
+to average (until you have the control on the display the image is going to
+be viewed on )</p>
+<p>In the case of web publishing, for example, the average user will probably have
+a SDR display, sRGB encoded, with an average white peak of 100 nits and used
+in an office environment that can be brighter than a <code>dim</code> surround.
+If we add smartphones to the equation, thing will get messy …
+I’m still digging on the subject trying to gather more info and as such will
+close the topic</p>
+<p>So for now, using the presets is, I think a good practice.</p>
+</section>
+<section id="nuke">
+<h2><a href="#id3">Nuke</a></h2>
+<p><em>(For now i’m only going to show how you can use it in Nuke as I don’t have
+a Resolve License)</em></p>
+<ol>
+<li><a href="https://raw.githubusercontent.com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk">Download the .nk file</a>
+(Right click on the page &gt; save as &gt; save it somewhere)</li>
+<li>Import the .nk file: File &gt; Insert Comp Nodes</li>
+</ol>
+<p>Alright, you now have the OpenDRT node.</p>
+<section id="node-setup">
+<h3><a href="#id4">Node Setup</a></h3>
+<p>Things will now get a bit complicated at first. The issue is that has the
+OpenDRT handle the scene -&gt; display conversion, this will collide with Nuke
+that try to do the same in the view-transform.</p>
+<p>I found 4 different solutions that achieve the same result. I think the last
+one is recommend to use but it’s good to have other example that might help to
+understand how everything works.</p>
+<aside class="m-note m-warning">
+I didn’t test any of these solutions with HDR display-encoding so
+further investigation needs to be done.</aside>
+<section id="revert-display">
+<h4><a href="#id5">Revert Display</a></h4>
+<p>We let the DRT handle everything (with display-encoding), then we apply the
+invert transform that applied by Nuke:</p>
+<div class="m-image">
+<a href="https://mrlixm.github.io/static/images/blog/opendrt/nuke.revert.png"><img alt="Revert Display method in Nuke" src="https://mrlixm.github.io/static/images/blog/opendrt/nuke.revert.png" /></a>
+</div>
+<p>Writing the data is as before. You just have to be sure that the <code>Colorspace</code>
+node has the same <code>in</code> parameters as the <code>colorspace</code> one on the write node.</p>
+</section>
+<section id="nuke-display-encoding-disable">
+<h4><a href="#id6">Nuke Display-encoding disable</a></h4>
+<p>We disable Nuke’s handling of the display-encoding. The DRT is the last step.</p>
+<div class="m-image">
+<a href="https://mrlixm.github.io/static/images/blog/opendrt/nuke.nuke_no-de.png"><img alt="Method with Nuke display-encoding disable" src="https://mrlixm.github.io/static/images/blog/opendrt/nuke.nuke_no-de.png" /></a>
+</div>
+<p>This means the Nuke view-transform is always off which can be incovenient
+when you need to preview a node upstream.</p>
+</section>
+<section id="opendrt-no-display-encoding">
+<h4><a href="#id7">OpenDRT no Display-encoding</a></h4>
+<p>One good solution: the OpenDRT doesn’t handle the display
+encoding but output closed-domain data ready for the display.
+Nuke apply the display-encoding as usually, writing data is the regular
+workflow.</p>
+<div class="m-image">
+<a href="https://mrlixm.github.io/static/images/blog/opendrt/nuke.drt_no-de.png"><img alt="Method with OpenDRT display-encoding disable." src="https://mrlixm.github.io/static/images/blog/opendrt/nuke.drt_no-de.png" /></a>
+</div>
+</section>
+<section id="opendrt-with-viewer-input-process">
+<h4><a href="#id8">OpenDRT with Viewer Input Process</a></h4>
+<p>This is probably the best solution :</p>
+<p>OpenDRT handle everything, we disable Nuke view-transform but we will be
+using its <a href="https://learn.foundry.com/nuke/content/getting_started/using_interface/guides_masks_modes.html#InputProcessandViewerProcessControls">input process feature</a>.
+This will allow to always have the OpenDRT active no matter what node we are
+previewing.</p>
+<div class="m-image">
+<a href="https://mrlixm.github.io/static/images/blog/opendrt/nuke.ip.png"><img alt="Method with OpenDRT + Nuke Input Process" src="https://mrlixm.github.io/static/images/blog/opendrt/nuke.ip.png" /></a>
+</div>
+<p>We don’t actually need the node used as input-process to be connected to
+anything but here I’m making sure it’s connected before the write node, so
+OpenDRT get baked in at export.</p>
+</section>
+</section>
+<section id="workflow">
+<h3><a href="#id9">Workflow</a></h3>
+</section>
+</section>
+<section id="conclusion">
+<h2><a href="#id10">Conclusion</a></h2>
+<p>If you tried to compare the result to an ACES processed image you would have
+probably notice that the image-formation produce much more “excepted” result,
+among others, in strong colored highlights, which make OpenDRT a solid
+candidate at better image-formation and a peak of what could be used in the
+future.</p>
+<p>Even if it’s current form kind of break the purpose of a consistant
+color-managed system across DCCs, it is a nice solution for individuals and
+looks very promising.</p>
+<p>Make sure to star <a href="https://github.com/jedypod/open-display-transform">Jed’s repository</a>
+on Github !</p>
+</section>
+<!-- /content -->
+      <footer>
+        <p>Posted by <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a> on <time datetime="2021-10-25T13:54:00+02:00">Mon 25 October 2021</time> in <a href="https://mrlixm.github.io/category/color-science.html">color-science</a>. <span class="m-label m-dim">draft</span> Tags: <a href="https://mrlixm.github.io/tag/nuke.html">nuke</a>, <a href="https://mrlixm.github.io/tag/resolve.html">resolve</a>, <a href="https://mrlixm.github.io/tag/aces.html">ACES</a>, <a href="https://mrlixm.github.io/tag/tonemapping.html">tonemapping</a>.</p>
+      </footer>
+    </article>
+    <nav class="m-navpanel m-col-m-2">
+      <h3>Categories</h3>
+      <ol class="m-block-bar-m">
+        <li><a href="https://mrlixm.github.io/category/breakdown.html">breakdown</a></li>
+        <li><a href="https://mrlixm.github.io/category/coding.html">coding</a></li>
+        <li><a href="https://mrlixm.github.io/category/meta.html">meta</a></li>
+      </ol>
+      <h3>Tag cloud</h3>
+      <ul class="m-tagcloud">
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/discord.html">discord</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/katana.html">katana</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/lua.html">lua</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/mari.html">mari</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/maya.html">maya</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/memes.html">memes</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/osl.html">osl</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/production.html">production</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/python.html">python</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/qt.html">qt</a></li>
+        <li class="m-tag-5"><a href="https://mrlixm.github.io/tag/resources.html">resources</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+</main>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Copyright © <a href="mailto:lcollod&#64;gmail.com">Liam Collod</a> - 2021. All rights
+        reserved. Made with <a href="https://blog.getpelican.com/">Pelican</a> and
+        <a href="https://mcss.mosra.cz/">m.css</a> .</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

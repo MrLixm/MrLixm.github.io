@@ -18,8 +18,8 @@
   <meta property="og:title" content="Instancing in Katana" />
   <meta name="twitter:title" content="Instancing in Katana" />
   <meta property="og:url" content="https://mrlixm.github.io/drafts/katana_instancing.html" />
-  <meta property="og:description" content="Let&#39;s see how to produce a flexible solution for instancing." />
-  <meta name="twitter:description" content="Let&#39;s see how to produce a flexible solution for instancing." />
+  <meta property="og:description" content="Let’s see how to produce a flexible solution for instancing." />
+  <meta name="twitter:description" content="Let’s see how to produce a flexible solution for instancing." />
   <meta property="og:image" content="https://mrlixm.github.io/static/images/global/cover_social.jpg" />
   <meta name="twitter:image" content="https://mrlixm.github.io/static/images/global/cover_social.jpg" />
   <meta name="twitter:card" content="summary" />
@@ -56,11 +56,11 @@
           Instancing in Katana
           <span class="m-label m-dim">draft</span>
         </a></h1>
-        <p>Let's see how to produce a flexible solution for instancing.</p>
+        <p>Let’s see how to produce a flexible solution for instancing.</p>
       </header>
       <div class="m-clearfix-l"></div>
 <!-- content -->
-<p>Katana doesn't offers &quot;ready to go&quot; solution for instancing (as for most things)
+<p>Katana doesn’t offers “ready to go” solution for instancing (as for most things)
 , if you add the fact that you render-engine might need a different
 configuration, having a working solution can become hard depending of your industry knowledge.</p>
 <p>I will explain my solution to have a flexible enough instancing system,
@@ -96,7 +96,7 @@ You can as such create an instance with a simple <code>LocationCreate + Attribut
 <p>Here is a quick diagram that could resume how an instance can be created :</p>
 <img alt="instancing principle" class="m-image" src="https://mrlixm.github.io/static/images/blog/katana_instancing/diagram.png" />
 <p>The basic principle is that an instance links at least to an <code>instance source</code> (a location).
-The instance will create a &quot;copy&quot; of this instance source. You can then set
+The instance will create a “copy” of this instance source. You can then set
 transformations overrides that will allow the instance having a different
 position, rotation, etc, than the source.
 Aditional attributes can also be set and used for shading to make the
@@ -109,12 +109,12 @@ render-engine may even have some aditional/modified ones.</p>
 <section id="leaf-level">
 <h3><a href="#id3">Leaf-level</a></h3>
 <p>(Never used this one)</p>
-<p>The Katana documentation is pretty clear so I'm not going to re-explain anything.</p>
+<p>The Katana documentation is pretty clear so I’m not going to re-explain anything.</p>
 <div class="m-row">
 <div class="m-col-s-6">
 <aside class="m-block m-danger">
 <h3>cons</h3>
-<p>Major drawbacks is that you can't have a location with children locations (to verify),
+<p>Major drawbacks is that you can’t have a location with children locations (to verify),
 and well it seems every render-engine has a way to decide which location is the first one to instance 🙂.</p>
 </aside>
 </div>
@@ -174,19 +174,19 @@ locations with children when using the <code>hierarchical</code> method.)</p>
 <h2><a href="#id6">Application</a></h2>
 <p>The goal will be to create a node (a group) where, using the same parameters,
 you could conveniently switch between different instancing methods.
-I am going to forget about Leaf-level as I'm not familiar with it.</p>
+I am going to forget about Leaf-level as I’m not familiar with it.</p>
 </section>
 <section id="redshift">
 <h2><a href="#id7">Redshift</a></h2>
 <p>The production where I had to look for instancing was using Redshift,
 and unfortunately it seems that, at that time, the instancing features where
-&quot;minimally&quot; implemented and some stuff was missing/broken.
-Fortunately, Redshift developer's Juanjo was very responsive and very quickly, fixed
+“minimally” implemented and some stuff was missing/broken.
+Fortunately, Redshift developer’s Juanjo was very responsive and very quickly, fixed
 all the issues I found as discussed <a href="https://redshift.maxon.net/topic/33461/more-documentation-for-instancing-in-katana?_=1634997159560">in this thread</a>.</p>
 </section>
 <!-- /content -->
       <footer>
-        <p>Posted by <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a> on <time datetime="2021-10-23T14:58:00+02:00">Sat 23 October 2021</time> in <a href="https://mrlixm.github.io/category/software.html">software</a>. <span class="m-label m-dim">draft</span></p>
+        <p>Posted by <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a> on <time datetime="2021-10-23T14:58:00+02:00">Sat 23 October 2021</time> in <a href="https://mrlixm.github.io/category/software.html">software</a>. <span class="m-label m-dim">draft</span> Tags: <a href="https://mrlixm.github.io/tag/katana.html">katana</a>, <a href="https://mrlixm.github.io/tag/instancing.html">instancing</a>, <a href="https://mrlixm.github.io/tag/lua.html">lua</a>.</p>
       </footer>
     </article>
     <nav class="m-navpanel m-col-m-2">
