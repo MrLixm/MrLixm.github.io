@@ -7,8 +7,8 @@ OpenDRT : a nice (experimental) alternative to ACES
 :status: draft
 :date: 2021-10-25 13:54
 
-:category: color-science
-:tags: nuke, resolve, ACES, tonemapping
+:category: tutorial
+:tags: nuke, resolve, ACES, tonemapping, color-science
 
 
 With the Academy Color Encoding System (ACES) becoming omnipresent more and

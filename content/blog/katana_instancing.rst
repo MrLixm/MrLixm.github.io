@@ -6,8 +6,8 @@ Instancing in Katana
 :status: draft
 :date: 2021-10-23 14:58
 
-:category: software
-:tags: katana, instancing, lua
+:category: tutorial
+:tags: katana, instancing, lua, software
 
 
 Katana doesn't offers "ready to go" solution for instancing (as for most things)
