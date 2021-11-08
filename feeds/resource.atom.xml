@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Liam Collod Website - resource</title><link href="https://mrlixm.github.io/" rel="alternate"></link><link href="https://mrlixm.github.io/feeds/resource.atom.xml" rel="self"></link><id>https://mrlixm.github.io/</id><updated>2021-11-08T22:34:00+01:00</updated><entry><title>CGI-related white-papers database</title><link href="https://mrlixm.github.io/blog/cgi_whitepaper_database/" rel="alternate"></link><published>2021-11-08T22:34:00+01:00</published><updated>2021-11-08T22:34:00+01:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-11-08:/blog/cgi_whitepaper_database/</id><summary type="html">&lt;p&gt;&lt;em&gt;” 70+ white-papers conveniently ordered for you “&lt;/em&gt;&lt;/p&gt;
+</summary><content type="html">&lt;div class="m-image"&gt;
+&lt;a href="https://liamcollod.notion.site/CGI-White-Papers-0ed5f781e8164b569a419802972afc34"&gt;&lt;img src="https://mrlixm.github.io/static/images/blog/cgi_whitepaper_database/cover.png" /&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;As an artist, I found white-papers absolutely fascinating and so useful
+to understand how the software we are using are built.
+Even if platform like the &lt;a href="https://dl.acm.org"&gt;ACM digital library&lt;/a&gt; regroup
+most of them, it can be hard to find only the pertinent one when you are
+interested only about CGI in a VFX context.&lt;/p&gt;
+&lt;p class="m-transition"&gt;.&lt;/p&gt;
+&lt;p&gt;So in my free-time I regrouped the one I find most pertinent, for the above
+context, in a Notion database :&lt;/p&gt;
+&lt;aside class="m-note m-default"&gt;
+&lt;a class="m-link-wrap" href="https://liamcollod.notion.site/CGI-White-Papers-0ed5f781e8164b569a419802972afc34"&gt;https://liamcollod.notion.site/CGI-White-Papers-0ed5f781e8164b569a419802972afc34&lt;/a&gt;&lt;/aside&gt;
+&lt;p class="m-transition"&gt;.&lt;/p&gt;
+&lt;p&gt;
+I tried to keep most of them as “free” but some of them might be locked
+behind a paywall…&lt;br /&gt;
+As I’m someone that definitively think core knowledge should be lock behind
+a paywall I would absolutely  not recommend to use &lt;a href="https://sci-hub.mksa.top/"&gt;Sci-hub&lt;/a&gt; to find a free illegal version of these paid papers. (here is
+the full url to be sure you doesn’t click on it &lt;a class="m-link-wrap" href="https://sci-hub.mksa.top/"&gt;https://sci-hub.mksa.top/&lt;/a&gt; ).&lt;br /&gt;
+&lt;/p&gt;
+&lt;p class="m-transition"&gt;~&lt;/p&gt;
+</content><category term="resource"></category><category term="science"></category><category term="math"></category><category term="shading"></category><category term="lighting"></category><category term="rendering"></category></entry><entry><title>A Discord server for Coding in VFX/CGI</title><link href="https://mrlixm.github.io/blog/vfx_coding_discord/" rel="alternate"></link><published>2021-10-23T22:59:00+02:00</published><updated>2021-10-23T22:59:00+02:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-10-23:/blog/vfx_coding_discord/</id><summary type="html">&lt;p&gt;&lt;em&gt;” A bunch of resources you don’t want to miss “&lt;/em&gt;&lt;/p&gt;
+</summary><content type="html">&lt;div class="m-image"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/vfx_coding_discord/cover.png"&gt;&lt;img src="https://mrlixm.github.io/static/images/blog/vfx_coding_discord/cover.png" /&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;
+Not much to explain,&lt;br /&gt;
+I’m managing this server where I post anything useful that I find,
+related to coding in the VFX industry.&lt;br /&gt;
+&lt;/p&gt;
+&lt;p&gt;Examples of resources:&lt;/p&gt;
+&lt;pre&gt;python, c++, osl, lua, pipeline, memes, github
+
+Qt - Pyside, Maya, Houdini, Nuke, Katana, Mari, Substance&lt;/pre&gt;
+&lt;p class="m-transition"&gt;~&lt;/p&gt;
+&lt;p&gt;Click on the &lt;code&gt;Connect&lt;/code&gt; button bellow to join or here &lt;a href="https://discord.gg/KepWvn8"&gt;https://discord.gg/KepWvn8&lt;/a&gt; :&lt;/p&gt;
+&lt;div class="m-col-none"&gt;
+&lt;iframe src="https://discord.com/widget?id=718106101773500527&amp;theme=dark" width="100%" height="160" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"&gt;&lt;/iframe&gt;&lt;/div&gt;
+</content><category term="resource"></category><category term="python"></category><category term="osl"></category><category term="lua"></category><category term="katana"></category><category term="mari"></category><category term="maya"></category><category term="qt"></category><category term="discord"></category><category term="resources"></category><category term="coding"></category></entry></feed>
