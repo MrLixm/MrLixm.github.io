@@ -112,11 +112,17 @@ and thus this post will also probably be.
 
         - ``average``: desktop/office average surround.
 
-        ``dechroma`` : this one is more subjective, allowing to control
+        ``dechroma`` : this one is more "subjective", allowing to control
         the amount of chrominance compression that should be applied on values
-        reaching display maximum (R,G,B=1.0).
+        reaching display maximum (R,G,B=1.0). If HDR imagery needs to be
+        produced, this can be lowered (as teh target domain (hdr) has more
+        volume to express chroma)
 
-``saturation`` : .. TODO
+``saturation`` : Expand chroma on the bottom values after the compression by
+the dechroma.
+See more `here <https://community
+.acescentral.com/t/proposal-for-resolving-the-conflict-beween-swappable-core
+-rendering-vs-doing-everything-in-lmt/4012/9>`_ .
 
 ``whitepoint`` : (from doc) Sets the creative whitepoint. This allows
 you to creatively set the whitepoint of your display rendering if

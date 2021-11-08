@@ -28,7 +28,7 @@ class InfoFile:
     def version(self, version_value):
         new = self.data
         new["VERSION"] = version_value
-        self.path.write_text(json.dumps(new), encoding='utf-8')
+        self.path.write_text(json.dumps(new, indent=4), encoding='utf-8')
         return
 
     @property
