@@ -94,7 +94,7 @@ Index
 
         .. block-primary:: 💼 Availability
 
-            I am available from December 2021.
+            I am not available before April 2022 for full-time work.
 
             .. note-warning::
 
