@@ -6,10 +6,13 @@ OpenDRT : a nice (experimental) alternative to ACES
 
 :status: draft
 :date: 2021-10-25 13:54
+:modified:  2021-11-11 17:35
 
 :category: tutorial
 :tags: nuke, resolve, ACES, tonemapping, color-science
 
+.. role:: warning
+    :class: m-text m-warning
 
 With the Academy Color Encoding System (ACES) becoming omnipresent more and
 more, it would be worth keeping in mind that it's not the only solution to have
@@ -44,7 +47,7 @@ This means that for CGI, you are familiar with a "scene-linear workflow" :
     output [jpg,...]
 
 | Then the OpenDRT implementation is only available as a Nuke Gizmo and
-    through Davinci Resolve DCTL (in paid licenses) feature which imply you
+    through Davinci Resolve DCTL feature (on paid licenses) which imply you
     are using one of these dccs.
 | No OCIO support, this means you will have with your traditional workflow in
     your rendering DCC and only be able to preview the final image in your
@@ -81,8 +84,8 @@ and thus this post will also probably be.
 
     .. container:: m-container-inflate m-col-l-5 m-left-l
 
-        .. image:: {static}/images/blog/opendrt/nuke.opendrt.png
-            :target: {static}/images/blog/opendrt/nuke.opendrt.png
+        .. image:: {static}/images/blog/0004/nuke.opendrt.png
+            :target: {static}/images/blog/0004/nuke.opendrt.png
             :alt: OpenDRT global overview
             :scale: 69%
 
@@ -103,6 +106,7 @@ and thus this post will also probably be.
             specifications and should represent the peak-white value of a
             display in a dim surround.
 
+        ``contrast`` : .. TODO
 
         ``surround`` : the luminance level of the viewing environment.
 
@@ -112,11 +116,11 @@ and thus this post will also probably be.
 
         - ``average``: desktop/office average surround.
 
-        ``dechroma`` : this one is more "subjective", allowing to control
-        the amount of chrominance compression that should be applied on values
-        reaching display maximum (R,G,B=1.0). If HDR imagery needs to be
-        produced, this can be lowered (as teh target domain (hdr) has more
-        volume to express chroma)
+``dechroma`` : this one is more "subjective", allowing to control
+the amount of chrominance compression that should be applied on values
+reaching display maximum (R,G,B=1.0). If HDR imagery needs to be
+produced, this can be lowered (as the target domain (hdr) has more
+volume to express chroma)
 
 ``saturation`` : Expand chroma on the bottom values after the compression by
 the dechroma.
@@ -145,7 +149,7 @@ a SDR display, sRGB encoded, with an average white peak of 100 nits and used
 in an office environment that can be brighter than a ``dim`` surround.
 If we add smartphones to the equation, thing will get messy ...
 I'm still digging on the subject trying to gather more info and as such will
-close the topic
+close this topic.
 
 So for now, using the presets is, I think a good practice.
 
@@ -184,8 +188,8 @@ ______________
 We let the DRT handle everything (with display-encoding), then we apply the
 invert transform that applied by Nuke:
 
-.. image:: {static}/images/blog/opendrt/nuke.revert.png
-    :target: {static}/images/blog/opendrt/nuke.revert.png
+.. image:: {static}/images/blog/0004/nuke.revert.png
+    :target: {static}/images/blog/0004/nuke.revert.png
     :alt: Revert Display method in Nuke
 
 Writing the data is as before. You just have to be sure that the ``Colorspace``
@@ -196,8 +200,8 @@ _____________________________
 
 We disable Nuke's handling of the display-encoding. The DRT is the last step.
 
-.. image:: {static}/images/blog/opendrt/nuke.nuke_no-de.png
-    :target: {static}/images/blog/opendrt/nuke.nuke_no-de.png
+.. image:: {static}/images/blog/0004/nuke.nuke_no-de.png
+    :target: {static}/images/blog/0004/nuke.nuke_no-de.png
     :alt: Method with Nuke display-encoding disable
 
 This means the Nuke view-transform is always off which can be incovenient
@@ -211,36 +215,36 @@ encoding but output closed-domain data ready for the display.
 Nuke apply the display-encoding as usually, writing data is the regular
 workflow.
 
-.. image:: {static}/images/blog/opendrt/nuke.drt_no-de.png
-    :target: {static}/images/blog/opendrt/nuke.drt_no-de.png
+Be careful as OpenDRT still handle the gamut conversion from the input to the
+output. Write node colorspace need to be choosen with this is mind.
+
+.. image:: {static}/images/blog/0004/nuke.drt_no-de.png
+    :target: {static}/images/blog/0004/nuke.drt_no-de.png
     :alt: Method with OpenDRT display-encoding disable.
 
-OpenDRT with Viewer Input Process
-_________________________________
+OpenDRT with Viewer Input Process (recommended)
+_______________________________________________
 
 This is probably the best solution :
 
-OpenDRT handle everything, we disable Nuke view-transform but we will be
-using its `input process feature <https://learn.foundry.com/nuke/content/
-getting_started/using_interface/
-guides_masks_modes.html#InputProcessandViewerProcessControls>`_.
-This will allow to always have the OpenDRT active no matter what node we are
-previewing.
+| OpenDRT handle everything, we disable Nuke view-transform but we will be
+ using its `input process feature <https://learn.foundry.com/nuke/content/
+ getting_started/using_interface/
+ guides_masks_modes.html#InputProcessandViewerProcessControls>`_.
+| This will allow to always have the OpenDRT active no matter what node we are
+ previewing :warning:`(this can be inconvenient when viewing scalar data like
+ alpha, think to disable the input-process in that case.)`
 
-.. image:: {static}/images/blog/opendrt/nuke.ip.png
-    :target: {static}/images/blog/opendrt/nuke.ip.png
+.. image:: {static}/images/blog/0004/nuke.ip.png
+    :target: {static}/images/blog/0004/nuke.ip.png
     :alt: Method with OpenDRT + Nuke Input Process
 
 We don't actually need the node used as input-process to be connected to
-anything but here I'm making sure it's connected before the write node, so
+anything but here **I'm making sure it's connected before the write node**, so
 OpenDRT get baked in at export.
 
-
-Workflow
-========
-
-
-
+As OpenDRT handled the display encoding we can turn it off on the write node
+by checking ``raw data``.
 
 
 Conclusion
@@ -255,6 +259,8 @@ future.
 Even if it's current form kind of break the purpose of a consistant
 color-managed system across DCCs, it is a nice solution for individuals and
 looks very promising.
+(Jed told me it could be actually pretty simple to create an OCIO config so
+we can only hope he finds time to !).
 
 Make sure to star `Jed's repository <https://github.com/jedypod/open-display-transform>`_
 on Github !

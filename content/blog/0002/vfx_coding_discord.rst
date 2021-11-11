@@ -2,7 +2,7 @@ A Discord server for Coding in VFX/CGI
 ######################################
 
 :summary: *" A bunch of resources you don't want to miss "*
-:thumbnail: {static}/images/blog/vfx_coding_discord/cover.png
+:thumbnail: {static}/images/blog/0002/cover.png
 
 :status: published
 :date: 2021-10-23 22:59
@@ -10,8 +10,8 @@ A Discord server for Coding in VFX/CGI
 :category: resource
 :tags: python, osl, lua, katana, mari, maya, qt, discord, resources, coding
 
-.. image:: {static}/images/blog/vfx_coding_discord/cover.png
-    :target: {static}/images/blog/vfx_coding_discord/cover.png
+.. image:: {static}/images/blog/0002/cover.png
+    :target: {static}/images/blog/0002/cover.png
 
 | Not much to explain,
 | I'm managing this server where I post anything useful that I find,

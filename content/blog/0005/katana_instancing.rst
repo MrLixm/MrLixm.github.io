@@ -42,7 +42,7 @@ You can as such create an instance with a simple ``LocationCreate + AttributeSet
 
 Here is a quick diagram that could resume how an instance can be created :
 
-.. image:: {static}/images/blog/katana_instancing/diagram.png
+.. image:: {static}/images/blog/0005/diagram.png
     :alt: instancing principle
 
 The basic principle is that an instance links at least to an ``instance source`` (a location).
