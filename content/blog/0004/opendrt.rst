@@ -43,8 +43,7 @@ This means that for CGI, you are familiar with a "scene-linear workflow" :
 
 ::
 
-    Render -[EXR]> compositing/postprod(linear) -> display-refered final
-    output [jpg,...]
+    Render -[EXR]> compositing/postprod(linear) -> display-refered final output [jpg,...]
 
 | Then the OpenDRT implementation is only available as a Nuke Gizmo and
     through Davinci Resolve DCTL feature (on paid licenses) which imply you
@@ -69,8 +68,8 @@ the tool's documentation.
 Before diving into the setup I think it's important to remind the target
 of OpenDRT:
 
-    The tool as for goal the faithful conversion of open-domain /
-    scene-referred data to a closed-domain which is the display. This mean
+    The tool has for goal the faithful conversion of open-domain /
+    scene-referred data to a closed-domain : the display. This mean
     **no creative transformations are applied**. As such the output's result
     can look very neutral and should be graded.
 
@@ -79,6 +78,10 @@ Node knobs
 
 As the tool is constantly changing, Jed's documentation is not up to date,
 and thus this post will also probably be.
+
+.. note-default::
+
+    All the examples are using Opendrt version ``0.0.90b2``
 
 .. container:: m-row
 
@@ -91,7 +94,7 @@ and thus this post will also probably be.
 
     .. container:: m-col-l-7
 
-        | First thing, tell the tool in which gamut your input is.
+        | First thing, tell the tool in which ``gamut`` your input is.
         | I assume the input should be Linearly encoded.
 
         You then have a bunch of presets that will tweak the knobs for you
@@ -105,8 +108,6 @@ and thus this post will also probably be.
             `ITU-R  BT.2035 <https://www.itu.int/dms_pubrec/itu-r/rec/bt/R-REC-BT.2035-0-201307-I!!PDF-E.pdf>`_
             specifications and should represent the peak-white value of a
             display in a dim surround.
-
-        ``contrast`` : .. TODO
 
         ``surround`` : the luminance level of the viewing environment.
 
@@ -134,22 +135,34 @@ you want it to be different than the technical whitepoint of your
 display device. For example, if you set this to D55, neutral colors will
 be rendered as a warmer hue compared to the default D65.
 
-``display encoding`` : This part will be addressed under.
+``display encoding`` : *This part will be re-addressed under.*
 
+- | The ``eotf`` should correspond to the transfer-function used by the
+    targeted display.
 
-To adjust these settings properly **you have to know the target display**
+    | `BT.1886 <https://www.itu.int/dms_pubrec/itu-r/rec/bt/R-REC-BT.1886-0-201103-I!!PDF-E.pdf>`_
+        , the default value, correspond to a 2.4 power function,
+        which is the standard for Rec.709.
+    | For the average of user display you should use ``sRGB Display``.
+
+- | The ``gamut`` correspond once again to the gamut that the targeted display
+    is calibrated to. (reminder that sRGB use the same gamut as Rec.709)
+
+.. transition:: .
+
+To adjust these settings properly **you have to know the targeted display**
 **+ user** :
 
-Issue is that with today range of displays, this is a rather difficult one
-to average (until you have the control on the display the image is going to
-be viewed on )
+The issue is that with today range of displays, this is a rather difficult one
+to average (until you have the full-control on the display the image is
+going to be viewed on )
 
-In the case of web publishing, for example, the average user will probably have
-a SDR display, sRGB encoded, with an average white peak of 100 nits and used
-in an office environment that can be brighter than a ``dim`` surround.
-If we add smartphones to the equation, thing will get messy ...
-I'm still digging on the subject trying to gather more info and as such will
-close this topic.
+| In the case of web publishing, for example, the average user will probably
+ have a SDR display, sRGB encoded, with an average white peak of 100 nits and
+ used in an office environment that can be brighter than a ``dim`` surround.
+ If we add smartphones to the equation, thing will get messy ...
+| I'm still digging on the subject trying to gather more info and as such will
+ close this topic.
 
 So for now, using the presets is, I think a good practice.
 
@@ -159,10 +172,19 @@ Nuke
 *(For now i'm only going to show how you can use it in Nuke as I don't have
 a Resolve License)*
 
-1. `Download the .nk file <https://raw.githubusercontent.com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk>`_
-   (Right click on the page > save as > save it somewhere)
+1. `Download the .nk file <https://raw.githubusercontent
+.com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk>`_
+(Right click on the page > save as > save it somewhere)
 
 2. Import the .nk file: File > Insert Comp Nodes
+
+Or alternatively :
+
+1. `Open the .nk <https://raw.githubusercontent
+.com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk>`_
+file and copy all of his content ``(ctrl+a, ctrl+c)``
+
+2. Paste in Nuke ``(ctrl+v)``
 
 Alright, you now have the OpenDRT node.
 
@@ -181,6 +203,11 @@ understand how everything works.
 
     I didn't test any of these solutions with HDR display-encoding so
     further investigation needs to be done.
+
+.. note-info::
+
+    I will keep the defaut ``BT.1886`` value for the eotf, but to match the
+    nuke's default config I should have use ``sRGB Display``.
 
 Revert Display
 ______________
