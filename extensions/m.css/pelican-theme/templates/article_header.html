@@ -1,16 +1,15 @@
 <header>
-  <h1><a href="{{ article.url|format_siteurl|e }}" rel="bookmark" title="Permalink to {{ article.title }}">
-    <time class="m-date" datetime="{{ article.date.isoformat() }}">
-      {% set month = article.date.strftime('%b') %}
-      {% set day = article.date.strftime('%d') %}
-      {% set year = article.date.strftime('%Y') %}
-      {{ month }} <span class="m-date-day">{{ day }}</span> {{ year }}
-    </time>
-    {{ article.title }}
-    {% if article.status == 'draft' %}
-    <span class="m-label m-dim">draft</span>
-    {% endif %}
-  </a></h1>
+  <h1>
+    <a href="{{ article.url|format_siteurl|e }}" rel="bookmark" title="Permalink to {{ article.title }}">
+      <time class="m-date" datetime="{{ article.date.isoformat() }}">
+        {% set month = article.date.strftime('%b') %}
+        {% set day = article.date.strftime('%d') %}
+        {% set year = article.date.strftime('%Y') %}
+        {{ month }} <span class="m-date-day">{{ day }}</span> {{ year }}
+      </time>
+      {{ article.title }}
+    </a>
+  </h1>
   {# Display summary only if:
     - we're on article listing page (either the articles_page is defined by
       Pelican the article_list is defined by our archive/index page and the
@@ -29,4 +28,36 @@
         (article.hide_summary is not defined and not M_HIDE_ARTICLE_SUMMARY)) %}
   {{ article.summary|trim|indent(2) }}
   {% endif %}
+  <div class="l-context">
+    {% if article.status == 'draft' %}
+      <span class="m-label m-dim">draft</span>
+    {% endif %}
+    Posted{% if article.authors %} by {% for author in article.authors %}
+      <a href="{{ author.url|format_siteurl|e }}">{{ author|e }}</a>
+    {% endfor %}{% endif %}
+    on
+    <time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time>
+    in
+    <a href="{{ article.category.url|format_siteurl|e }}">{{ article.category|e }}</a>
+    .
+    {% if article.modified %}
+      &nbsp;
+      <span class="m-label m-success">updated
+        <time datetime="{{ article.modified.isoformat() }}">{{ article.locale_modified }}</time>
+      </span>
+    {% endif %}
+    {% if article.tags %}
+      <br>
+      Tags:
+      {% for tag in article.tags %}
+        <a href="{{ tag.url|format_siteurl|e }}">{{ tag|e }}</a>
+        {% if not loop.last %}
+          ,
+        {% endif %}
+      {% endfor %}
+      .
+    {% endif %}
+
+  </div>
 </header>
+

@@ -273,6 +273,9 @@ article h1 .m-breadcrumb a:hover, article h1 a:focus, article h1 a:active {
 }
 
 /* Article elements */
+article > header {
+  padding-bottom: 2rem;
+}
 article > header h1 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
@@ -321,21 +324,27 @@ article > header .m-date-day {
 article > header p {
   color: var(--article-header-color);
   font-size: 1.25rem;
-  padding-bottom: 1.25rem;
 }
 article > header h1::after {
   content: " ";
   clear: both;
   display: table;
 }
+article > header .l-context {
+  font-style: italic;
+  font-size: 0.85rem;
+  text-indent: 0;
+}
 article > footer {
   color: var(--article-footer-color);
-  padding-bottom: 1.75rem;
+  margin-bottom: 1.75rem;
+  margin-top: 3rem;
 }
 article > footer p {
   font-style: italic;
   font-size: 0.85rem;
   text-indent: 0;
+  text-align: center;
 }
 
 article h1 {

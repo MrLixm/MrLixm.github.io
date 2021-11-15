@@ -65,10 +65,6 @@
 {{ article.content|trim }}
 <!-- /content -->
         {% endif %}
-        <footer>
-          {% macro footer() %}{% include "article_footer.html" %}{% endmacro %}
-          {{ footer()|rtrim|indent(10) }}
-        </footer>
         {% if not show_content %}
         <div class="m-clearfix-l"></div>
         {% endif %}

@@ -370,6 +370,7 @@ div.m-button a .m-small:last-child {
   font-weight: normal;
   padding: 0.125rem 0.25rem;
   vertical-align: 7.5%;
+  white-space: nowrap;
 }
 .m-label.m-flat {
   border-width: 0.0625rem;
