@@ -102,8 +102,8 @@ green (desat): #60C68E
   /* Article */
   --article-header-color: #f0f0f0;
   --article-footer-color: #c5c5c5;
-  --article-heading-color: #60C68E;
-  --article-heading-active-color: #dcdcdc;
+  --article-heading-color: #f0f0f0;
+  --article-heading-active-color: #60C68E;
 
   /* Right navigation panel */
   --navpanel-link-color: #ffffff;
