@@ -1,38 +1,54 @@
-<hr>
-<p>
-    Posted{% if article.authors %} by {% for author in article.authors %}
-        <a href="{{ author.url|format_siteurl|e }}">{{ author|e }}</a>
-    {% endfor %}{% endif %}
-    on
-    <time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time>
-    in
+<header class="l-post-context l-mrg-xs" title="Post Context" id="post-context-header">
+  <span class="l-category">
     <a href="{{ article.category.url|format_siteurl|e }}">{{ article.category|e }}</a>
-    .
-    {% if article.modified %}
-        &nbsp;
-        <span class="m-label m-success">updated
-            <time datetime="{{ article.modified.isoformat() }}">{{ article.locale_modified }}</time>
-        </span>
-    {% endif %}
-    {% if article.archived == 'True' %}
-        &nbsp;
-        <span class="m-label m-warning">archived</span>
-    {% endif %}
-    {% if article.status == 'draft' %}
-        &nbsp;
-        <span class="m-label m-dim">draft</span>
-    {% endif %}
-</p>
-<p>
-    {% if article.tags %}
-        <br>
-        Tags:
-            {% for tag in article.tags %}
-                <a href="{{ tag.url|format_siteurl|e }}">{{ tag|e }}</a>
-                {% if not loop.last %}
-                    ,
-                {% endif %}
-            {% endfor %}
-        .
-    {% endif %}
-</p>
+  </span>
+  {% if article.tags %}
+    &nbsp;
+    &nbsp;
+    {% for tag in article.tags %}
+      <span class="l-tag l-flex-item" title="tag">
+        <a href="{{ tag.url|format_siteurl|e }}">{{ tag|e }}</a>
+      </span>
+      {% if not loop.last %}
+        <!--Invisible to the use but picked when copy/pasting-->
+        <span class="l-txt-invisible">,</span>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+</header>
+<footer class="l-post-context" id="post-context-footer">
+  <span class="l-time l-flex-item" title="Date Created">
+    <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
+    <time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time>
+  </span>
+  {% if article.modified %}
+    <span class="l-modified l-flex-item" title="Last Modified">
+      updated
+      <time datetime="{{ article.modified.isoformat() }}">&nbsp;{{ article.locale_modified }}</time>
+    </span>
+  {% endif %}
+  {% if article.authors %}
+  <span class="l-box-author l-flex-item" title="List of Authors">
+    <img src="/static/images/global/icons/account.svg" alt="Author icon" >
+    <span class="l-author" title="A post Author">
+      {% for author in article.authors %}
+        <a href="{{ author.url|format_siteurl|e }}">{{ author|e }}</a>
+        {% if not loop.last %}
+          -
+        {% endif %}
+      {% endfor %}
+    </span>
+  </span>
+  {% endif %}
+  <div class="l-filler"></div>
+  {% if article.status == 'draft' %}
+    <span class="l-status l-bgc-yellow-l l-c-ldark l-flex-item" id="s-draft" title="Post status">
+      draft
+    </span>
+  {% endif %}
+  {% if article.archived == 'True' %}
+    <span class="l-status l-bgc-red-l l-c-ldark l-flex-item" id="s-archived" title="Post status">
+      archived
+    </span>
+  {% endif %}
+</footer>

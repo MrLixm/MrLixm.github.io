@@ -281,6 +281,12 @@ article > header h1 {
   margin-bottom: 0.5rem;
   margin-top:0;
 }
+@media screen and (max-width: 576px) {
+    article > header h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+}
 article h1 a, article > header h1, article > header h1 a,
 article section > h2, article section > h2 a,
 article section > h3, article section > h3 a,
@@ -324,16 +330,17 @@ article > header .m-date-day {
 article > header p {
   color: var(--article-header-color);
   font-size: 1.25rem;
+  font-style: italic;
+}
+@media screen and (max-width: 576px) {
+    article > header p {
+        font-size: 1.1rem;
+    }
 }
 article > header h1::after {
   content: " ";
   clear: both;
   display: table;
-}
-article > header .l-context {
-  font-style: italic;
-  font-size: 0.85rem;
-  text-indent: 0;
 }
 article > footer {
   color: var(--article-footer-color);
@@ -518,7 +525,10 @@ article section:target figure.m-code-figure, article section:target figure.m-con
 }
 
 /* Spacing after every block element, but not after the last */
-article, article > header, article section { margin-bottom: 1rem; }
+article, article > header, article section {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
 article:last-child, article section:last-child { margin-bottom: 0; }
 
 /* Active sections in inflatable content affect left border of some components
