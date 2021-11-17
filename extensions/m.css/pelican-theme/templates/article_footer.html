@@ -1,5 +1,15 @@
 <div class="l-line-xs" title="Footer Separator"></div>
 <header class="l-post-context l-mrg-xs" title="Post Context" id="post-context-header">
+  {% if article.status == 'draft' %}
+    <span class="l-status l-bgc-yellow-l l-c-ldark l-flex-item" id="s-draft" title="Post status">
+      draft
+    </span>
+  {% endif %}
+  {% if article.archived == 'True' %}
+    <span class="l-status l-bgc-red-l l-c-ldark l-flex-item" id="s-archived" title="Post status">
+      archived
+    </span>
+  {% endif %}
   <span class="l-category">
     <a href="{{ article.category.url|format_siteurl|e }}">{{ article.category|e }}</a>
   </span>
@@ -40,16 +50,5 @@
       {% endfor %}
     </span>
   </span>
-  {% endif %}
-  <div class="l-filler"></div>
-  {% if article.status == 'draft' %}
-    <span class="l-status l-bgc-yellow-l l-c-ldark l-flex-item" id="s-draft" title="Post status">
-      draft
-    </span>
-  {% endif %}
-  {% if article.archived == 'True' %}
-    <span class="l-status l-bgc-red-l l-c-ldark l-flex-item" id="s-archived" title="Post status">
-      archived
-    </span>
   {% endif %}
 </footer>
