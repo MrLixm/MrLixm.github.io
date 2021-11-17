@@ -135,11 +135,11 @@ green (desat): #60C68E
   --success-filled-link-color: #3bd267;
   --success-filled-link-active-color: #acecbe;
 
-  --warning-color: #c7cf2f;
+  --warning-color: #e5cc6f;
   --warning-link-active-color: #e9ecae;
   --warning-filled-color: #e9ecae;
   --warning-filled-background-color: rgba(201,183,44,0.2);
-  --warning-filled-link-color: #b8bf2b;
+  --warning-filled-link-color: #a99339;
   --warning-filled-link-active-color: #e9ecae;
 
   --danger-color: #cd3431;
@@ -152,7 +152,7 @@ green (desat): #60C68E
   --info-color: #2f83cc;
   --info-link-active-color: #5297d7;
   --info-filled-color: #a5caeb;
-  --info-filled-background-color: #2a4f70;
+  --info-filled-background-color: rgba(42, 79, 112, 0.5);
   --info-filled-link-color: #5297d7;
   --info-filled-link-active-color: #a5caeb;
 
