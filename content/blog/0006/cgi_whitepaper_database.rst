@@ -36,5 +36,3 @@ context, in a Notion database :
  a paywall I would absolutely  not recommend to use `Sci-hub <https://sci-hub
  .mksa.top/>`_ to find a free illegal version of these paid papers. (here is
  the full url to be sure you doesn't click on it https://sci-hub.mksa.top/ ).
-
-.. transition:: ~

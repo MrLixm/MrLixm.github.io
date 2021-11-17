@@ -228,4 +228,16 @@ The table of content of the article
 #contents a {
     text-decoration: none;
 }
+/*
+l-line-xs
+A simple thin solid line
+*/
+.l-line-xs {
+    display: inherit;
+    border-top: solid 0.1rem rgba(255,255,255,0.1);
+    margin: 0.9rem 0 0.9rem;
+}
+footer .l-line-xs {
+    margin: 1.5rem 0 1.5rem;
+}
 
