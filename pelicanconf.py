@@ -17,6 +17,7 @@ SITENAME = "Liam Collod Website"
 SITEURL = ''
 
 TIMEZONE = 'Europe/Paris'
+DEFAULT_DATE_FORMAT = "%d %B %Y"
 DEFAULT_LANG = 'en'
 
 PATH = 'content'
@@ -116,9 +117,9 @@ M_BLOG_NAME = "Liam Collod's Blog"
 M_BLOG_URL = '/blog'
 
 M_THEME_COLOR = '#20FC8F'
-M_FAVICON = ("static/images/global/logo.png", 'image/x-ico')
+M_FAVICON = ("static/images/global/icons/lixm.svg", 'image/x-ico')
 # M_BLOG_FAVICON = ('favicon-blog.png', 'image/png')
-M_SITE_LOGO = "static/images/global/logo.png"
+M_SITE_LOGO = "static/images/global/icons/lixm.svg"
 M_SITE_LOGO_TEXT = "Liam Collod"
 
 # SOCIAL
