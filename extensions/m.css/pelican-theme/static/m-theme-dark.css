@@ -82,7 +82,7 @@ green (desat): #60C68E
   --header-link-color: #ffffff;
   --header-link-active-color: #73EAA9;
   --header-link-current-color: #56D9A4;
-  --header-link-active-background-color: #292f37;
+  --header-link-active-background-color: rgba(41, 47, 55, 0.5);
   --header-link-active-background-color-semi: rgba(41, 47, 55, 0.5);
 
   /* Footer */

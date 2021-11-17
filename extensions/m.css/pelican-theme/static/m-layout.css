@@ -114,6 +114,7 @@ body > header > nav #m-navbar-collapse li {
 body > header > nav #m-navbar-collapse li a {
   border-style: solid;
   border-color: transparent;
+  border-radius: 0.1rem;
   line-height: 1.5rem;
   margin-left: -0.25rem;
   padding-left: 0.75rem;
