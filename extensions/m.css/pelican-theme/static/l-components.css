@@ -1,0 +1,145 @@
+
+/* ----------------------------------------------------------------------------
+LAYOUT
+*/
+
+/*.l-post-context
+change display to flex
+*/
+.l-post-context {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+}
+.l-post-context img{
+    display: inherit;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+    width: 20px;
+}
+.l-post-context time{
+    display: inherit;
+}
+.l-post-context a{
+    display: inherit;
+}
+
+
+/*.l-mrg-m
+add a bottom margin with a medium size
+*/
+.l-mrg-m {
+    margin-bottom: 1rem;
+}
+
+/* ----------------------------------------------------------------------------
+STYLING
+*/
+
+.l-bgc-grey {
+    background-color: rgb(176,176,176);
+}
+.l-c-ldark {
+    color: rgb(16,16,16)
+}
+
+/* l-tag
+tags are <a> with a defined style.
+They have a big round corner with a green tint background.
+*/
+.l-tag {
+    background-color: rgba(96, 198, 142, 0.3);
+    border-radius: 2rem;
+    padding: 0.07rem 0.6rem;
+    margin:0.2rem;
+    white-space: nowrap;
+    font-style: normal;
+    font-size: 0.8rem;
+}
+.l-tag > a {
+    text-decoration: none;
+}
+.l-tag > a:hover {
+    text-decoration: underline;
+}
+@media screen and (max-width: 576px) {
+    .l-tag {
+        font-size: 0.65rem;
+    }
+}
+/* l-category
+special text styling used for post category
+background filled in grey with no corner
+*/
+.l-category {
+    background-color: rgb(176,176,176);
+    border-radius: 0;
+    padding-left: 0.3rem;
+    padding-right: 0.8rem;
+    font-weight: 700;
+    font-size: 1.15rem;
+}
+.l-category > a {
+    color: rgb(20,20,20);
+    text-decoration: none;
+}
+.l-category > a:hover {
+    text-decoration: underline;
+}
+/* l-author
+*/
+.l-author {
+    display: inherit;
+}
+.l-author a {
+    display: inherit;
+    color: var(--color);
+    text-decoration: none;
+}
+
+/* l-txt-invisible
+Turn text to non-visible by setting its size to 0
+*/
+.l-txt-invisible {
+    font-size: 0;
+}
+/*l-time
+Style the article date (with the icon)
+*/
+.l-time{
+    display: inherit;
+}
+/*l-modified
+Used to display the lats modified time for the article.
+circle corner witha dark green background and white text.
+*/
+.l-modified {
+    display: inherit;
+    background-color: rgba(96, 198, 142, 0.3);
+    border-radius: 1rem;
+    padding: 0.07rem 0.6rem;
+    margin:0.2rem;
+    white-space: nowrap;
+    font-style: normal;
+    font-size: 0.8rem;
+}
+
+article > header .l-context {
+  font-style: italic;
+  font-size: 0.85rem;
+  text-indent: 0;
+}
+/*l-status
+Used to display a status message in a rounded corner box
+*/
+.l-status {
+    display: inherit;
+    border-radius: 0.1rem;
+    padding:0.2rem;
+    white-space: nowrap;
+    font-style: normal;
+    font-size: 0.8rem;
+}
+
