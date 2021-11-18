@@ -39,17 +39,20 @@
 {% endblock %}
 
 {% block content %}
-    <div class="m-col-m-10">
+    {% macro filters() %}{% include "blog_filters.html" %}{% endmacro %}
+    {{ filters()|rtrim|indent(4) }}
+    <div class="l-line-xs"></div>
+    <div class="m-col-l-none">
       {% if articles_page %}
       {% set article_list = articles_page.object_list %}
       {% else %}
       {% set article_list = articles %}
       {% endif %}
       {% if not article_list %}
-      <div class="m-note m-success">
-        <h3>{{ "Congratulations!"|hyphenate(lang='en') }}</h3>
-        {{ "The m.css theme is alive and kicking! Now, feed it some articles so it doesn't feel so empty :)"|hyphenate(lang='en') }}
-      </div>
+        <div class="m-note m-success">
+          <h3>{{ "Congratulations!"|hyphenate(lang='en') }}</h3>
+          {{ "The m.css theme is alive and kicking! Now, feed it some articles so it doesn't feel so empty :)"|hyphenate(lang='en') }}
+        </div>
       {% endif %}
       {% for article in article_list %}
       <article>

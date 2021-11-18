@@ -1,0 +1,24 @@
+<header title="Articles filters" id="search-filters">
+  <div class="l-box-filters m-col-l-none">
+    <div class="l-txt-titleA l-flex-item"><p>Categories</p></div>
+    <div class="l-flex-item l-nomrg" title="All available Categories" id="filter-categories">
+      {% for cat, null in categories %}
+        <span class="l-category l-flex-item" title="category">
+          <a href="{{ cat.url|format_siteurl|e }}">{{ cat|e|hyphenate }}</a>
+        </span>
+      {% endfor %}
+    </div>
+  </div>
+  {% if tags %}
+  <div class="l-box-filters m-col-l-none">
+    <div class="l-txt-titleA l-flex-item"><p>Tags</p></div>
+    <div class="l-flex-item l-nomrg" title="All available Tags" id="filter-tags">
+      {% for tag, articles in tags|sort(attribute='0') %}
+        <span class="l-tag l-flex-item l-flex-item-s" title="tag">
+          <a href="{{ tag.url|format_siteurl|e }}">{{ tag|e }}</a>
+        </span>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</header>

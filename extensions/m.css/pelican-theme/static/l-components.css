@@ -1,3 +1,12 @@
+/*
+Aditional css for m.css
+
+s&r variables :
+    --screen-small : 500px;
+
+*/
+
+
 
 /* ----------------------------------------------------------------------------
     1. LAYOUT
@@ -30,6 +39,36 @@ use flex-box
 .l-post-context a{
     display: inherit;
 }
+/*
+l-box-filters
+Hold the filters used for articles display.
+*/
+.l-box-filters {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+@media screen and (max-width: 500px) {
+    .l-box-filters {
+        flex-direction: row;
+    }
+}
+.l-box-filters > .l-flex-item {
+    flex-basis: 100%;
+}
+#filter-tags, #filter-categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+#search-filters {
+    padding: 1rem;
+}
+#search-filters .l-line-xs {
+    margin: 0.1rem 0 0.1rem;
+}
 
 /* ===================
     1.2 Layout Widgets
@@ -37,15 +76,21 @@ use flex-box
 
 /*
 l-flex-item
+Should correspond to the direct child of a flexbox.
 */
 .l-flex-item {
     margin: 0.5rem 0.4rem 0.5rem;
 }
 @media screen and (max-width: 500px) {
     .l-flex-item {
-        margin: 0.5rem 0.2rem 0.5rem;
+        margin: 0.3rem 0.2rem 0.3rem;
     }
 }
+/*this version has a smaller margin*/
+.l-flex-item-s {
+    margin: 0.5rem 0.2rem 0.5rem;
+}
+
 /*
 l-filler
 empty object used to align items
@@ -59,6 +104,13 @@ empty object used to align items
     1.3 Margins
 =============*/
 
+/*
+.l-nomrg
+Remove margin
+ */
+.l-nomrg {
+    margin: unset;
+}
 /*
 .l-mrg-s
 add a bottom/top margin with a very small size
@@ -103,6 +155,14 @@ add a  bottom/top margin with a medium size
     color: rgb(16,16,16)
 }
 
+/*
+    TEXT STYLING
+ */
+.l-txt-titleA {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
 /* ============
     2.2 Widgets
 =============*/
@@ -143,6 +203,12 @@ background filled in grey with no corner and dark text
     padding-right: 0.8rem;
     font-weight: 700;
     font-size: 1.15rem;
+}
+@media screen and (max-width: 500px) {
+    .l-category {
+        font-size: 1rem;
+        padding-right: 0.6rem;
+    }
 }
 .l-category > a {
     color: rgb(20,20,20);
@@ -233,11 +299,24 @@ l-line-xs
 A simple thin solid line
 */
 .l-line-xs {
-    display: inherit;
     border-top: solid 0.1rem rgba(255,255,255,0.1);
     margin: 0.9rem 0 0.9rem;
+    width: 100%;
 }
 footer .l-line-xs {
     margin: 1.5rem 0 1.5rem;
 }
-
+@media screen and (max-width: 500px) {
+    .l-line-xs {
+        width: 90%;
+    }
+}
+/*
+#filter-tags, #filter-categories
+ */
+#filter-tags, #filter-categories {
+    background-color: rgb(239 221 251 / 5%);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid rgb(255,255,255,0.02);
+}
