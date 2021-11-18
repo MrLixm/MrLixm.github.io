@@ -107,6 +107,7 @@ FORMATTED_FIELDS = ['summary', 'description', 'landing', 'badge', 'header', 'foo
 
 # theme related configuration
 M_CSS_FILES = [
+    "https://fonts.googleapis.com/css2?family=Lato:wght@100;400;700;900&display=swap"
     'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700%7CSource+Code+Pro:400,400i,600',
     "https://fonts.googleapis.com/css2?family=Georama:wght@400;600&",
     '/static/m-dark.css'
