@@ -63,10 +63,10 @@ Hold the filters used for articles display.
     flex-wrap: wrap;
     justify-content: flex-start;
 }
-#search-filters {
+#filters {
     padding: 1rem;
 }
-#search-filters .l-line-xs {
+#filters .l-line-xs {
     margin: 0.1rem 0 0.1rem;
 }
 
