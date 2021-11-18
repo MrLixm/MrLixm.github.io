@@ -309,6 +309,7 @@ footer .l-line-xs {
 @media screen and (max-width: 500px) {
     .l-line-xs {
         width: 90%;
+        margin: 0.9rem 0.9rem 0.9rem;
     }
 }
 /*
