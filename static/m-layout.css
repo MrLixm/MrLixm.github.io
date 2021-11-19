@@ -23,202 +23,10 @@
 */
 
 /* Header navigation */
-body > header > nav {
+body > header {
   width: 100%;
-  background: var(--header-background-color);
-  min-height: 3rem;
-}
-body > header > nav.m-navbar-landing,
-body > header > nav.m-navbar-cover {
-  background-color: transparent;
-  position: relative;
-}
-body > header > nav.m-navbar-landing {
-  opacity: 1;
-}
-body > header > nav.m-navbar-cover {
-  background-color: var(--header-background-color-jumbo);
-  opacity: 1;
-}
-/*
-body > header > nav.m-navbar-landing:hover,
-body > header > nav.m-navbar-cover:hover {
-  background-color: var(--header-background-color-landing);
-  opacity: 1;
-}
-body> header > nav.m-navbar-landing:target,
-body> header > nav.m-navbar-cover:target {
-  background-color: var(--header-background-color);
-  opacity: 1;
-}
-*/
-body > header > nav.m-navbar-landing #m-navbar-brand.m-navbar-brand-hidden {
-  visibility: hidden;
-}
-body > header > nav.m-navbar-landing:target #m-navbar-brand.m-navbar-brand-hidden {
-  visibility: visible;
-}
-body > header > nav {
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--header-color);
-}
-body > header > nav a {
-  text-decoration: var(--link-decoration-nav);
-  text-transform: var(--nav-menu-case);
-  display: inline-block;
-  vertical-align: middle;
-  line-height: 2.75rem;
-  color: var(--header-link-color);
-}
-body > header > nav #m-navbar-brand, body > header > nav a#m-navbar-show, body > header > nav a#m-navbar-hide {
-  font-family: 'Georama', sans-serif;
-  font-weight: var(--heading-font-weight);
-  font-size: 1.2rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-body > header > nav a#m-navbar-brand, body > header > nav #m-navbar-brand a {
-  text-transform: var(--nav-brand-case);
-}
-body > header > nav a#m-navbar-brand img, body > header > nav #m-navbar-brand a img {
-  /* unfortuately, with SVGs, unless the size is hardcoded like this, it will
-     cause ugly jumps during loading :( */
-  width: 1.75rem;
-  height: 1.75rem;
-  vertical-align: inherit;
-  margin-right: 0.5rem;
-}
-body > header > nav #m-navbar-brand a {
-  padding-left: 0;
-  padding-right: 0;
-}
-body > header > nav #m-navbar-brand .m-thin {
-  font-weight: normal;
-}
-body > header > nav #m-navbar-brand .m-breadcrumb {
-  color: var(--header-breadcrumb-color);
-}
-body > header > nav a#m-navbar-show:before, body > header > nav a#m-navbar-hide:before {
-  content:'\2630';
-}
-body > header > nav #m-navbar-collapse {
-  padding-bottom: 1rem;
-}
-body > header > nav #m-navbar-collapse li {
-  border-style: solid;
-  border-color: transparent;
-  border-width: 0 0 0 0.25rem;
-  margin-left: -1rem;
-}
-body > header > nav #m-navbar-collapse li a {
-  border-style: solid;
-  border-color: transparent;
-  line-height: 1.5rem;
-  margin-left: -0.25rem;
-  padding-left: 0.75rem;
-  border-width: 0 0 0 0.25rem;
-  width: 100%;
-}
-body > header > nav #m-navbar-collapse li a#m-navbar-current {
-  color: var(--header-link-current-color);
-}
-body > header > nav ol {
-  list-style-type: none;
-  margin: 0;
-}
-body > header > nav ol ol {
-  padding-left: 1.5rem;
-}
-body > header > nav .m-row > [class*='m-col-'] {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-body > header > nav a:hover, body > header > nav a:focus, body > header > nav a:active {
-  color: var(--header-link-active-color);
-}
-body > header > nav #m-navbar-collapse li:hover {
-  border-color: var(--header-link-active-color);
-}
-body > header > nav #m-navbar-collapse li a:hover,
-body > header > nav #m-navbar-collapse li a:focus,
-body > header > nav #m-navbar-collapse li a:active {
-  background-color: var(--header-link-active-background-color);
-}
-body > header > nav.m-navbar-landing #m-navbar-collapse li a:hover,
-body > header > nav.m-navbar-cover #m-navbar-collapse li a:hover,
-body > header > nav.m-navbar-landing #m-navbar-collapse li a:focus,
-body > header > nav.m-navbar-cover #m-navbar-collapse li a:focus,
-body > header > nav.m-navbar-landing #m-navbar-collapse li a:active,
-body > header > nav.m-navbar-cover #m-navbar-collapse li a:active {
-  background-color: var(--header-link-active-background-color-semi);
-}
-
-/* Header navigation -- collapsible part */
-body > header > nav #m-navbar-hide {
-  display: none;
-}
-body > header > nav:target #m-navbar-collapse {
-  display: block;
-}
-body > header > nav:target #m-navbar-show {
-  display: none;
-}
-body > header > nav:target #m-navbar-hide {
-  display: inline-block;
-}
-
-/* Header navigation -- 768px and up (tablets, desktops) */
-@media screen and (min-width: 768px) {
-  body > header > nav #m-navbar-show, body > header > nav #m-navbar-hide,
-  body > header > nav:target #m-navbar-show, body > header > nav:target #m-navbar-hide {
-    display: none;
-  }
-  body > header > nav #m-navbar-collapse li a {
-    line-height: 2.75rem;
-  }
-  body > header > nav a, body > header > nav #m-navbar-collapse li a {
-    margin-left: 0;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    white-space: nowrap;
-  }
-  body > header > nav #m-navbar-collapse {
-    padding-bottom: 0;
-  }
-  body > header > nav #m-navbar-collapse li ol {
-    background-color: var(--header-background-color);
-  }
-  body > header > nav #m-navbar-collapse ol ol li {
-    margin-left: 0;
-    padding-left: 0;
-    border-left-width: 0;
-  }
-  body > header > nav #m-navbar-collapse ol ol li a {
-    padding-left: 0.75rem;
-  }
-  body > header > nav #m-navbar-collapse > .m-row > ol > li {
-    margin-left: 0;
-    border-left-width: 0;
-  }
-  body > header > nav #m-navbar-collapse > .m-row > ol > li > a {
-    border-width: var(--header-border-width);
-  }
-  body > header > nav #m-navbar-collapse ol {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  body > header > nav #m-navbar-collapse > .m-row > ol, body > header > nav #m-navbar-collapse > .m-row > ol > li {
-    float: left;
-  }
-  body > header > nav #m-navbar-collapse ol ol {
-    z-index: 99999;
-    position: absolute;
-    visibility: hidden;
-  }
-  body > header > nav #m-navbar-collapse li:hover ol {
-    visibility: visible;
-  }
+  z-index: 999;
+  background: var(--background-color);/*var(--header-background-color);*/
 }
 
 /* Footer navigation */
@@ -273,9 +81,19 @@ article h1 .m-breadcrumb a:hover, article h1 a:focus, article h1 a:active {
 }
 
 /* Article elements */
+article > header {
+  padding-bottom: 2rem;
+}
 article > header h1 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
+  margin-top:0;
+}
+@media screen and (max-width: 576px) {
+    article > header h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
 }
 article h1 a, article > header h1, article > header h1 a,
 article section > h2, article section > h2 a,
@@ -320,7 +138,12 @@ article > header .m-date-day {
 article > header p {
   color: var(--article-header-color);
   font-size: 1.25rem;
-  padding-bottom: 1.25rem;
+  font-style: italic;
+}
+@media screen and (max-width: 576px) {
+    article > header p {
+        font-size: 1.1rem;
+    }
 }
 article > header h1::after {
   content: " ";
@@ -329,12 +152,36 @@ article > header h1::after {
 }
 article > footer {
   color: var(--article-footer-color);
-  padding-bottom: 1.75rem;
+  margin-bottom: 1.75rem;
+  margin-top: 3rem;
 }
 article > footer p {
   font-style: italic;
   font-size: 0.85rem;
   text-indent: 0;
+  text-align: center;
+}
+
+article h1 {
+  margin-top: 5rem;
+}
+article h2 {
+  margin-top: 4rem;
+}
+
+article h3 {
+  margin-top: 3rem;
+}
+article h4 {
+  margin-top: 2rem;
+}
+article .m-block h2, article .m-block h3, article .m-block h4,
+article .m-note h1, article .m-note h2, article .m-note h3, article .m-note h4{
+  margin-top: 0;
+}
+/* exclude above modif from landing page */
+#m-landing-cover h1, #m-landing-cover h2, #m-landing-cover h3, #m-landing-cover h4 {
+    margin-top: 0;
 }
 
 /* Article -- dynamic section headers */
@@ -486,7 +333,10 @@ article section:target figure.m-code-figure, article section:target figure.m-con
 }
 
 /* Spacing after every block element, but not after the last */
-article, article > header, article section { margin-bottom: 1rem; }
+article, article > header, article section {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
 article:last-child, article section:last-child { margin-bottom: 0; }
 
 /* Active sections in inflatable content affect left border of some components

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Liam Collod Website - meta</title><link href="https://mrlixm.github.io/" rel="alternate"></link><link href="https://mrlixm.github.io/feeds/meta.atom.xml" rel="self"></link><id>https://mrlixm.github.io/</id><updated>2021-10-10T19:00:00+02:00</updated><entry><title>First Post</title><link href="https://mrlixm.github.io/blog/first_post/" rel="alternate"></link><published>2021-10-10T19:00:00+02:00</published><updated>2021-10-10T19:00:00+02:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-10-10:/blog/first_post/</id><summary type="html">&lt;p&gt;Gotta start somewhere huh ?&lt;/p&gt;
-</summary><content type="html">&lt;p&gt;You might want to have a look at my &lt;a href="https://vimeo.com/579603827"&gt;demoreel&lt;/a&gt; 👀.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;You might want to have a look at my &lt;a href="https://vimeo.com/579603827"&gt;demoreel&lt;/a&gt; instead 👀.&lt;/p&gt;
 </content><category term="meta"></category></entry></feed>

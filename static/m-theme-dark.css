@@ -76,13 +76,13 @@ green (desat): #60C68E
 /*
   --header-background-color: rgb(34,150,116);
 */
-  --header-background-color: linear-gradient(90deg, rgba(34,151,100,1) 0%, rgba(34,102,83,1) 7%, rgba(28,79,66,1) 13%, rgba(25,60,51,1) 20%, rgba(17,30,31,1) 44%, rgba(6,8,9,1) 100%);
+  --header-background-color: linear-gradient(-90deg, rgba(34,150,106,1) 0%, rgba(34,102,83,1) 7%, rgba(28,79,66,1) 13%, rgba(25,60,51,1) 20%, rgba(17,30,31,1) 44%, rgba(6,8,9,1) 100%);
   --header-background-color-landing: #170F11;
   --header-background-color-jumbo: #170F11;
   --header-link-color: #ffffff;
   --header-link-active-color: #73EAA9;
   --header-link-current-color: #56D9A4;
-  --header-link-active-background-color: #292f37;
+  --header-link-active-background-color: rgba(41, 47, 55, 0.5);
   --header-link-active-background-color-semi: rgba(41, 47, 55, 0.5);
 
   /* Footer */
@@ -102,8 +102,8 @@ green (desat): #60C68E
   /* Article */
   --article-header-color: #f0f0f0;
   --article-footer-color: #c5c5c5;
-  --article-heading-color: #60C68E;
-  --article-heading-active-color: #dcdcdc;
+  --article-heading-color: #f0f0f0;
+  --article-heading-active-color: #60C68E;
 
   /* Right navigation panel */
   --navpanel-link-color: #ffffff;
@@ -135,11 +135,11 @@ green (desat): #60C68E
   --success-filled-link-color: #3bd267;
   --success-filled-link-active-color: #acecbe;
 
-  --warning-color: #c7cf2f;
+  --warning-color: #e5cc6f;
   --warning-link-active-color: #e9ecae;
   --warning-filled-color: #e9ecae;
   --warning-filled-background-color: rgba(201,183,44,0.2);
-  --warning-filled-link-color: #b8bf2b;
+  --warning-filled-link-color: #a99339;
   --warning-filled-link-active-color: #e9ecae;
 
   --danger-color: #cd3431;
@@ -152,7 +152,7 @@ green (desat): #60C68E
   --info-color: #2f83cc;
   --info-link-active-color: #5297d7;
   --info-filled-color: #a5caeb;
-  --info-filled-background-color: #2a4f70;
+  --info-filled-background-color: rgba(42, 79, 112, 0.5);
   --info-filled-link-color: #5297d7;
   --info-filled-link-active-color: #a5caeb;
 

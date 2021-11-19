@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Liam Collod Website - resource</title><link href="https://mrlixm.github.io/" rel="alternate"></link><link href="https://mrlixm.github.io/feeds/resource.atom.xml" rel="self"></link><id>https://mrlixm.github.io/</id><updated>2021-11-08T22:34:00+01:00</updated><entry><title>CGI-related white-papers database</title><link href="https://mrlixm.github.io/blog/cgi_whitepaper_database/" rel="alternate"></link><published>2021-11-08T22:34:00+01:00</published><updated>2021-11-08T22:34:00+01:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-11-08:/blog/cgi_whitepaper_database/</id><summary type="html">&lt;p&gt;&lt;em&gt;” 70+ white-papers conveniently ordered for you “&lt;/em&gt;&lt;/p&gt;
 </summary><content type="html">&lt;div class="m-image"&gt;
-&lt;a href="https://liamcollod.notion.site/CGI-White-Papers-0ed5f781e8164b569a419802972afc34"&gt;&lt;img src="https://mrlixm.github.io/static/images/blog/cgi_whitepaper_database/cover.png" /&gt;&lt;/a&gt;
+&lt;a href="https://liamcollod.notion.site/CGI-White-Papers-0ed5f781e8164b569a419802972afc34"&gt;&lt;img src="https://mrlixm.github.io/static/images/blog/0006/cover.png" /&gt;&lt;/a&gt;
 &lt;/div&gt;
 &lt;p&gt;As an artist, I found white-papers absolutely fascinating and so useful
 to understand how the software we are using are built.
@@ -21,10 +21,9 @@ As I’m someone that definitively think core knowledge should be lock behind
 a paywall I would absolutely  not recommend to use &lt;a href="https://sci-hub.mksa.top/"&gt;Sci-hub&lt;/a&gt; to find a free illegal version of these paid papers. (here is
 the full url to be sure you doesn’t click on it &lt;a class="m-link-wrap" href="https://sci-hub.mksa.top/"&gt;https://sci-hub.mksa.top/&lt;/a&gt; ).&lt;br /&gt;
 &lt;/p&gt;
-&lt;p class="m-transition"&gt;~&lt;/p&gt;
 </content><category term="resource"></category><category term="science"></category><category term="math"></category><category term="shading"></category><category term="lighting"></category><category term="rendering"></category></entry><entry><title>A Discord server for Coding in VFX/CGI</title><link href="https://mrlixm.github.io/blog/vfx_coding_discord/" rel="alternate"></link><published>2021-10-23T22:59:00+02:00</published><updated>2021-10-23T22:59:00+02:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-10-23:/blog/vfx_coding_discord/</id><summary type="html">&lt;p&gt;&lt;em&gt;” A bunch of resources you don’t want to miss “&lt;/em&gt;&lt;/p&gt;
 </summary><content type="html">&lt;div class="m-image"&gt;
-&lt;a href="https://mrlixm.github.io/static/images/blog/vfx_coding_discord/cover.png"&gt;&lt;img src="https://mrlixm.github.io/static/images/blog/vfx_coding_discord/cover.png" /&gt;&lt;/a&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0002/cover.png"&gt;&lt;img src="https://mrlixm.github.io/static/images/blog/0002/cover.png" /&gt;&lt;/a&gt;
 &lt;/div&gt;
 &lt;p&gt;
 Not much to explain,&lt;br /&gt;

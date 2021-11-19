@@ -42,12 +42,13 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
   font-weight: var(--heading-font-weight);
 }
-h1 {
-  margin-bottom: 1rem;
-}
 h2, h3, h4, h5, h6 {
   margin-bottom: 0.5rem;
 }
+h1 {
+  margin-bottom: 1rem;
+}
+
 p, ul, ol, dl {
   margin-top: 0;
 }
@@ -102,6 +103,25 @@ abbr {
 }
 a {
   color: var(--link-color);
+  text-decoration: none;
+}
+article section a:before, article p a:before {
+    content: "";
+    background: url("/static/images/global/icons/link-vertical.svg") no-repeat bottom;
+    width: 0.8rem;
+    height: 0.7rem;
+    display: inline-block;
+}
+article section .m-image a:before,
+article section h1 a:before,
+article section h2 a:before,
+article section h3 a:before,
+article section h4 a:before,
+article section h5 a:before,
+article section h6 a:before
+{
+    content: none;
+    background: none;
 }
 a.m-flat {
   text-decoration: none;
@@ -369,6 +389,7 @@ div.m-button a .m-small:last-child {
   font-weight: normal;
   padding: 0.125rem 0.25rem;
   vertical-align: 7.5%;
+  white-space: nowrap;
 }
 .m-label.m-flat {
   border-width: 0.0625rem;
