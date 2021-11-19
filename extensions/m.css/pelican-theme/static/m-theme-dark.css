@@ -76,7 +76,7 @@ green (desat): #60C68E
 /*
   --header-background-color: rgb(34,150,116);
 */
-  --header-background-color: linear-gradient(90deg, rgba(34,150,106,1) 0%, rgba(34,102,83,1) 7%, rgba(28,79,66,1) 13%, rgba(25,60,51,1) 20%, rgba(17,30,31,1) 44%, rgba(6,8,9,1) 100%);
+  --header-background-color: linear-gradient(-90deg, rgba(34,150,106,1) 0%, rgba(34,102,83,1) 7%, rgba(28,79,66,1) 13%, rgba(25,60,51,1) 20%, rgba(17,30,31,1) 44%, rgba(6,8,9,1) 100%);
   --header-background-color-landing: #170F11;
   --header-background-color-jumbo: #170F11;
   --header-link-color: #ffffff;

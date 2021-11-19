@@ -26,7 +26,7 @@
 body > header {
   width: 100%;
   z-index: 999;
-  background: var(--header-background-color);
+  background: var(--background-color);/*var(--header-background-color);*/
 }
 
 /* Footer navigation */
