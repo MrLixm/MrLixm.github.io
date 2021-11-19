@@ -44,11 +44,18 @@
 </head>
 <body>
 <header id="header">
-  <nav id="navigation">
+  <nav id="nav-box">
     <a href="{{ SITEURL }}/" id="logo" class="">
       <img src="{{ M_SITE_LOGO|format_siteurl|e }}" alt="" id="logo-img"/>
-      <p id="logo-txt">{{- (M_SITE_LOGO_TEXT or SITENAME)|e -}}</p>
+      <span class="logo-txt">Liam Collod</span>
     </a>
+    <div class="l-nav-menu" id="nav-menu">
+      <ol>
+        {% for title, link, slug, sub in M_LINKS_NAVBAR1 %}
+          <li><a href="{{ link|format_siteurl|e }}"{% if (page and page.highlight == slug) or slug == page_slug %} class="l-nav-active"{% endif %}>{{ title|e }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
   </nav>
 </header>
 <main>

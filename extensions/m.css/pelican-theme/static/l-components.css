@@ -17,25 +17,33 @@ s&r variables :
 =====================*/
 
 
-#navigation {
+/* ====================
+1.2.1 HEADER
+=====================*/
+
+#nav-box {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    margin: 0 3rem 0;
 }
 #logo {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
-    margin: 0.9rem;
+    justify-content: flex-start;
+    flex-grow: 1;
+    margin: 0.6rem;
 }
 #logo-img {
-    margin-bottom: 0.3rem;
-    width: 25px;
-    height: 25px;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    opacity: 0.1;
+    margin: 0 2rem 0;
     overflow: hidden;
     transition-duration: 0.8s;
     transition-property: transform;
@@ -45,13 +53,46 @@ s&r variables :
     transform: rotate(360deg);
     -webkit-transform: rotate(360deg);
 }
-#logo-txt {
+.logo-txt {
     color: rgba(243, 243, 243, 1);
+    font-family: Lato, sans-serif;
+    font-weight: 100;
+    font-size: 1.9rem;
+    text-transform: uppercase;
+}
+.l-nav-menu {
+    margin: 1rem 0 1rem;
+}
+.l-nav-menu ol {
+    all: unset;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.l-nav-menu li {
+    all: unset;
+    margin: 0.5rem;
+}
+.l-nav-menu a {
+    color: rgba(243, 243, 243, 0.95);
     font-family: Lato, sans-serif;
     font-weight: 100;
     font-size: 1.5rem;
     text-transform: uppercase;
 }
+.l-nav-menu a:hover {
+    color: var(--link-active-color);
+}
+/*class shoudl be assigned to the menu currently active (user clicked on it)*/
+.l-nav-menu .l-nav-active {
+    color: var(--link-active-color);
+    font-weight: 600;
+    opacity: 0.7;
+}
+
 
 /*
 l-post-context
