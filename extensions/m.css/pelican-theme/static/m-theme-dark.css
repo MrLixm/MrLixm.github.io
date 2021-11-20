@@ -29,139 +29,142 @@ green (desat): #60C68E
 */
 
 :root {
-  /* Text properties */
-  --font: 'Source Sans Pro', sans-serif;
-  --code-font: 'Source Code Pro', monospace;
-  --font-size: 16px;
-  --code-font-size: 0.9em; /* *not* rem, so it follows surrounding font size */
-  --line-height: normal;
-  --paragraph-indent: 1.5rem;
-  --paragraph-align: justify;
-  --link-decoration: underline;
-  --link-decoration-nav: none;
-  --link-decoration-heading: none;
-  --nav-brand-case: uppercase;
-  --nav-menu-case: none;
-  --nav-heading-case: uppercase;
-  --nav-categories-case: lowercase;
-  --landing-header-case: lowercase;
-  --heading-font-weight: 600;
+    /* Text properties */
+    --font: 'Source Sans Pro', sans-serif;
+    --code-font: 'Source Code Pro', monospace;
+    --font-size: 16px;
+    --code-font-size: 0.9em; /* *not* rem, so it follows surrounding font size */
+    --line-height: normal;
+    --paragraph-indent: 1.5rem;
+    --paragraph-align: justify;
+    --link-decoration: underline;
+    --link-decoration-nav: none;
+    --link-decoration-heading: none;
+    --nav-brand-case: uppercase;
+    --nav-menu-case: none;
+    --nav-heading-case: uppercase;
+    --nav-categories-case: lowercase;
+    --landing-header-case: lowercase;
+    --heading-font-weight: 600;
 
-  /* Shapes */
-  --border-radius: 0.2rem;
+    /* Shapes */
+    --border-radius: 0.2rem;
 
-  /* Basics */
-  --background-color: rgb(12, 15, 17);
-  --color: #dcdcdc;
-  --line-color: #405363;
-  --link-color: #56D9A4;
-  --link-active-color: #73EAA9;
-  --mark-color: #2f83cc;
-  --mark-background-color: #c7cf2f;
-  --code-color: #e6e6e6;
-  --code-inverted-color: rgba(230, 230, 230, 0.33);
-  --console-color: var(--code-color);
-  --console-inverted-color: var(--code-inverted-color);
-  /* This is simply color-picked --code-note-background-color on top of
-     --background-color */
-  --code-background-color: #282e36;
-  --code-note-background-color: rgba(34, 39, 46, 0.5);
-  --console-background-color: #1a1c1d;
-  --button-background-color: #22272e;
+    /* Basics */
+    --background-color: rgb(12, 15, 17);
+    --color: #dcdcdc;
+    --line-color: #405363;
+    --link-color: #56D9A4;
+    --link-active-color: #73EAA9;
+    --mark-color: #2f83cc;
+    --mark-background-color: #c7cf2f;
+    --code-color: #e6e6e6;
+    --code-inverted-color: rgba(230, 230, 230, 0.33);
+    --console-color: var(--code-color);
+    --console-inverted-color: var(--code-inverted-color);
+    /* This is simply color-picked --code-note-background-color on top of
+       --background-color */
+    --code-background-color: #282e36;
+    --code-note-background-color: rgba(34, 39, 46, 0.5);
+    --console-background-color: #1a1c1d;
+    --button-background-color: #22272e;
 
-  /* Header */
-  --header-border-width: 0 0 0.25rem 0;
-  --header-color: #ffffff;
-  --header-breadcrumb-color: #747474; /* same as --dim-color */
+    /* Header */
+    --header-border-width: 0 0 0.25rem 0;
+    --header-color: #ffffff;
+    --header-breadcrumb-color: #747474; /* same as --dim-color */
 /*
-  --header-background-color: rgb(34,150,116);
+    --header-background-color: rgb(34,150,116);
 */
-  --header-background-color: linear-gradient(-90deg, rgba(34,150,106,1) 0%, rgba(34,102,83,1) 7%, rgba(28,79,66,1) 13%, rgba(25,60,51,1) 20%, rgba(17,30,31,1) 44%, rgba(6,8,9,1) 100%);
-  --header-background-color-landing: #170F11;
-  --header-background-color-jumbo: #170F11;
-  --header-link-color: #ffffff;
-  --header-link-active-color: #73EAA9;
-  --header-link-current-color: #56D9A4;
-  --header-link-active-background-color: rgba(41, 47, 55, 0.5);
-  --header-link-active-background-color-semi: rgba(41, 47, 55, 0.5);
+    --header-background-color: linear-gradient(-90deg, rgba(34,150,106,1) 0%, rgba(34,102,83,1) 7%, rgba(28,79,66,1) 13%, rgba(25,60,51,1) 20%, rgba(17,30,31,1) 44%, rgba(6,8,9,1) 100%);
+    --header-background-color-landing: #170F11;
+    --header-background-color-jumbo: #170F11;
+    --header-link-color: #ffffff;
+    --header-link-active-color: #73EAA9;
+    --header-link-current-color: #56D9A4;
+    --header-link-active-background-color: rgba(41, 47, 55, 0.5);
+    --header-link-active-background-color-semi: rgba(41, 47, 55, 0.5);
 
-  /* Footer */
-  --footer-font-size: 0.85rem;
-  --footer-color: #c5c5c5;
-  --footer-background-color: #15151a;
-  --footer-link-color: #ffffff;
-  --footer-link-active-color: #73EAA9;
+    /* Footer */
+    --footer-font-size: 0.85rem;
+    --footer-color: #c5c5c5;
+    --footer-background-color: #15151a;
+    --footer-link-color: #ffffff;
+    --footer-link-active-color: #73EAA9;
 
-  /* Cover image */
-  --cover-image-background-color: #0f1217;
+    /* Cover image */
+    --cover-image-background-color: #0f1217;
 
-  /* Search (used only by m-documentation.css) */
-  --search-overlay-color: var(--header-background-color-landing);
-  --search-background-color: var(--header-background-color);
+    /* Search (used only by m-documentation.css) */
+    --search-overlay-color: var(--header-background-color-landing);
+    --search-background-color: var(--header-background-color);
 
-  /* Article */
-  --article-header-color: #f0f0f0;
-  --article-footer-color: #c5c5c5;
-  --article-heading-color: #f0f0f0;
-  --article-heading-active-color: #60C68E;
+    /* Article */
+    --article-header-color: #f0f0f0;
+    --article-footer-color: #c5c5c5;
+    --article-heading-color: #f0f0f0;
+    --article-heading-active-color: #60C68E;
 
-  /* Right navigation panel */
-  --navpanel-link-color: #ffffff;
-  --navpanel-link-active-color: #73EAA9;
+    /* Right navigation panel */
+    --navpanel-link-color: #ffffff;
+    --navpanel-link-active-color: #73EAA9;
 
-  /* Plots */
-  --plot-background-color: #34424d;
-  --plot-error-color: #ffffff;
+    /* Plots */
+    --plot-background-color: #34424d;
+    --plot-error-color: #ffffff;
 
-  /* Colored components */
-  --default-color: #dcdcdc;
-  --default-link-active-color: #56D9A4;
-  --default-filled-color: #dcdcdc;
-  --default-filled-background-color: #2a2931;
-  --default-filled-link-color: #5b9dd9;
-  --default-filled-link-active-color: #73EAA9;
+    /* Colored components */
+    --default-color: #dcdcdc;
+    --default-link-active-color: #56D9A4;
+    --default-filled-color: #dcdcdc;
+    --default-filled-background-color: #2a2931;
+    --default-filled-link-color: #5b9dd9;
+    --default-filled-link-active-color: #73EAA9;
 
-  --primary-color: #73EAA9;
-  --primary-link-active-color: #dcdcdc;
-  --primary-filled-color: #2f363f;
-  --primary-filled-background-color: #a5c2db;
-  --primary-filled-link-color: #2a75b6;
-  --primary-filled-link-active-color: #2f363f;
+    --primary-color: #73EAA9;
+    --primary-link-active-color: #dcdcdc;
+    --primary-filled-color: #2f363f;
+    --primary-filled-background-color: #a5c2db;
+    --primary-filled-link-color: #2a75b6;
+    --primary-filled-link-active-color: #2f363f;
 
-  --success-color: #3bd267;
-  --success-link-active-color: #acecbe;
-  --success-filled-color: #acecbe;
-  --success-filled-background-color: #2a703f;
-  --success-filled-link-color: #3bd267;
-  --success-filled-link-active-color: #acecbe;
+    --success-color: #3bd267;
+    --success-link-active-color: #acecbe;
+    --success-filled-color: #acecbe;
+    --success-filled-background-color: #2a703f;
+    --success-filled-link-color: #3bd267;
+    --success-filled-link-active-color: #acecbe;
 
-  --warning-color: #e5cc6f;
-  --warning-link-active-color: #e9ecae;
-  --warning-filled-color: #e9ecae;
-  --warning-filled-background-color: rgba(201,183,44,0.2);
-  --warning-filled-link-color: #a99339;
-  --warning-filled-link-active-color: #e9ecae;
+    --warning-color: #e5cc6f;
+    --warning-link-active-color: #e9ecae;
+    --warning-filled-color: #e9ecae;
+    --warning-filled-background-color: rgba(201,183,44,0.2);
+    --warning-filled-link-color: #a99339;
+    --warning-filled-link-active-color: #e9ecae;
 
-  --danger-color: #cd3431;
-  --danger-link-active-color: #ff9391;
-  --danger-filled-color: #ff9391;
-  --danger-filled-background-color: #702b2a;
-  --danger-filled-link-color: #d85c59;
-  --danger-filled-link-active-color: #ff9391;
+    --danger-color: #cd3431;
+    --danger-link-active-color: #ff9391;
+    --danger-filled-color: #ff9391;
+    --danger-filled-background-color: #702b2a;
+    --danger-filled-link-color: #d85c59;
+    --danger-filled-link-active-color: #ff9391;
 
-  --info-color: #2f83cc;
-  --info-link-active-color: #5297d7;
-  --info-filled-color: #a5caeb;
-  --info-filled-background-color: rgba(42, 79, 112, 0.5);
-  --info-filled-link-color: #5297d7;
-  --info-filled-link-active-color: #a5caeb;
+    --info-color: #2f83cc;
+    --info-link-active-color: #5297d7;
+    --info-filled-color: #a5caeb;
+    --info-filled-background-color: rgba(42, 79, 112, 0.5);
+    --info-filled-link-color: #5297d7;
+    --info-filled-link-active-color: #a5caeb;
 
-  --dim-color: #747474;
-  --dim-link-color: #acacac;
-  --dim-link-active-color: #747474;
-  --dim-filled-color: #747474;
-  --dim-filled-background-color: #2d3236;
-  --dim-filled-link-color: #acacac;
-  --dim-filled-link-active-color: #747474;
-  --dim-button-active-color: #acacac;
+    --dim-color: #747474;
+    --dim-link-color: #acacac;
+    --dim-link-active-color: #747474;
+    --dim-filled-color: #747474;
+    --dim-filled-background-color: #2d3236;
+    --dim-filled-link-color: #acacac;
+    --dim-filled-link-active-color: #747474;
+    --dim-button-active-color: #acacac;
+
+    /* CUSTOM VARIABLES */
+    --l-gradient-main: linear-gradient(270deg, rgba(34,150,106,1) 0%, rgba(34,102,83,1) 7%, rgba(28,79,66,1) 13%, rgba(25,60,51,1) 20%, rgba(17,30,31,1) 44%, rgba(6,8,9,1) 100%);
 }
