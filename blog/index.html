@@ -45,78 +45,94 @@
   <div class="m-container">
     <div class="m-row">
     <header title="Articles filters" id="filters">
-      <div class="l-box-filters m-col-l-none">
-        <div class="l-txt-titleA l-flex-item"><p>Categories</p></div>
-        <div class="l-flex-item l-nomrg" title="All available Categories" id="filter-categories">
-            <span class="l-category l-flex-item" title="category">
-              <a href="https://mrlixm.github.io/category/breakdown.html">breakdown</a>
-            </span>
-            <span class="l-category l-flex-item" title="category">
-              <a href="https://mrlixm.github.io/category/meta.html">meta</a>
-            </span>
-            <span class="l-category l-flex-item" title="category">
-              <a href="https://mrlixm.github.io/category/resource.html">resource</a>
-            </span>
-        </div>
-      </div>
-      <div class="l-box-filters m-col-l-none">
-        <div class="l-txt-titleA l-flex-item"><p>Tags</p></div>
-        <div class="l-flex-item l-nomrg" title="All available Tags" id="filter-tags">
-            <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-              <a href="https://mrlixm.github.io/tag/coding.html">coding</a>
-            </span>
-            <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-              <a href="https://mrlixm.github.io/tag/discord.html">discord</a>
-            </span>
-            <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-              <a href="https://mrlixm.github.io/tag/katana.html">katana</a>
-            </span>
-            <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-              <a href="https://mrlixm.github.io/tag/lighting.html">lighting</a>
-            </span>
-            <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-              <a href="https://mrlixm.github.io/tag/lua.html">lua</a>
-            </span>
-            <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-              <a href="https://mrlixm.github.io/tag/mari.html">mari</a>
-            </span>
-            <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-              <a href="https://mrlixm.github.io/tag/math.html">math</a>
-            </span>
-            <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-              <a href="https://mrlixm.github.io/tag/maya.html">maya</a>
-            </span>
-            <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-              <a href="https://mrlixm.github.io/tag/memes.html">memes</a>
-            </span>
-            <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-              <a href="https://mrlixm.github.io/tag/osl.html">osl</a>
-            </span>
-            <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-              <a href="https://mrlixm.github.io/tag/production.html">production</a>
-            </span>
-            <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-              <a href="https://mrlixm.github.io/tag/python.html">python</a>
-            </span>
-            <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-              <a href="https://mrlixm.github.io/tag/qt.html">qt</a>
-            </span>
-            <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-              <a href="https://mrlixm.github.io/tag/rendering.html">rendering</a>
-            </span>
-            <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-              <a href="https://mrlixm.github.io/tag/resources.html">resources</a>
-            </span>
-            <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-              <a href="https://mrlixm.github.io/tag/science.html">science</a>
-            </span>
-            <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-              <a href="https://mrlixm.github.io/tag/shading.html">shading</a>
-            </span>
+      <div class="l-line-v-s"></div>
+      <div class="l-filters-box m-col-l-none">
+        <input class="l-radio-none" id="filter-A" name="filter-radio" type="radio">
+        <input class="l-radio-none" id="filter-B" name="filter-radio" type="radio">
+        <input class="l-radio-none" id="filter-C" name="filter-radio" type="radio">
+        <input class="l-radio-none" id="filter-D" name="filter-radio" type="radio">
+        <form class="l-filters-toolbar">
+          <span class="l-filters-title">Filters</span>
+          <label class="l-filters-tab" id="filter-tab-A" for="filter-A">Categories</label>
+          <label class="l-filters-tab" id="filter-tab-B" for="filter-B">Tags</label>
+          <label class="l-filters-tab" id="filter-tab-C" for="filter-C">Authors</label>
+          <label class="l-filters-tab" id="filter-tab-D" for="filter-D" title="Hide filters">X</label>
+        </form>
+        <div class="l-filters-panels-box">
+          <div class="l-filters-panel" id="filter-panel-A" title="Categories list">
+              <span class="l-category l-flex-item" title="category">
+                <a href="https://mrlixm.github.io/category/breakdown.html">breakdown</a>
+              </span>
+              <span class="l-category l-flex-item" title="category">
+                <a href="https://mrlixm.github.io/category/meta.html">meta</a>
+              </span>
+              <span class="l-category l-flex-item" title="category">
+                <a href="https://mrlixm.github.io/category/resource.html">resource</a>
+              </span>
+          </div>
+          <div class="l-filters-panel" id="filter-panel-B" title="Tags list">
+                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
+                  <a href="https://mrlixm.github.io/tag/coding.html">coding</a>
+                </span>
+                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
+                  <a href="https://mrlixm.github.io/tag/discord.html">discord</a>
+                </span>
+                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
+                  <a href="https://mrlixm.github.io/tag/katana.html">katana</a>
+                </span>
+                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
+                  <a href="https://mrlixm.github.io/tag/lighting.html">lighting</a>
+                </span>
+                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
+                  <a href="https://mrlixm.github.io/tag/lua.html">lua</a>
+                </span>
+                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
+                  <a href="https://mrlixm.github.io/tag/mari.html">mari</a>
+                </span>
+                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
+                  <a href="https://mrlixm.github.io/tag/math.html">math</a>
+                </span>
+                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
+                  <a href="https://mrlixm.github.io/tag/maya.html">maya</a>
+                </span>
+                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
+                  <a href="https://mrlixm.github.io/tag/memes.html">memes</a>
+                </span>
+                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
+                  <a href="https://mrlixm.github.io/tag/osl.html">osl</a>
+                </span>
+                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
+                  <a href="https://mrlixm.github.io/tag/production.html">production</a>
+                </span>
+                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
+                  <a href="https://mrlixm.github.io/tag/python.html">python</a>
+                </span>
+                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
+                  <a href="https://mrlixm.github.io/tag/qt.html">qt</a>
+                </span>
+                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
+                  <a href="https://mrlixm.github.io/tag/rendering.html">rendering</a>
+                </span>
+                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
+                  <a href="https://mrlixm.github.io/tag/resources.html">resources</a>
+                </span>
+                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
+                  <a href="https://mrlixm.github.io/tag/science.html">science</a>
+                </span>
+                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
+                  <a href="https://mrlixm.github.io/tag/shading.html">shading</a>
+                </span>
+          </div>
+          <div class="l-filters-panel" id="filter-panel-C" title="Authors list">
+                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
+                  <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a>
+                </span>
+          </div>
+          <div class="l-filters-panel" id="filter-panel-D" title="Hide filter panel">
+          </div>
         </div>
       </div>
     </header>
-    <div class="l-line-xs"></div>
     <div class="m-col-l-none">
       <article>
         <header>
