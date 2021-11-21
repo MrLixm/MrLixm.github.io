@@ -62,6 +62,7 @@ s&r variables :
     font-weight: 100;
     font-size: 1.9rem;
     text-transform: uppercase;
+    letter-spacing: 0.2rem;
 }
 .l-nav-menu {
     margin: 1rem 0 1rem;
@@ -85,15 +86,19 @@ s&r variables :
     font-weight: 100;
     font-size: 1.5rem;
     text-transform: uppercase;
+    letter-spacing: 1px;
 }
 .l-nav-menu a:hover {
-    color: var(--link-active-color);
+    /*color: var(--link-active-color);*/
+    font-weight: 600;
+    letter-spacing: 0;
 }
 /*class shoudl be assigned to the menu currently active (user clicked on it)*/
 .l-nav-menu .l-nav-active {
-    color: var(--link-active-color);
+    color: var(--color);
     font-weight: 600;
-    opacity: 0.7;
+    letter-spacing: 0;
+    opacity: 1;
 }
 
 /*LIGHT THEME*/
@@ -151,17 +156,6 @@ Hold the filters used for articles display.
 }
 .l-box-filters > .l-flex-item {
     flex-basis: 100%;
-}
-#filter-tags, #filter-categories {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-}
-#filters {
-    padding: 1rem;
-}
-#filters .l-line-xs {
-    margin: 0.1rem 0 0.1rem;
 }
 
 
@@ -272,6 +266,7 @@ add a  bottom/top margin with a medium size
 /*-------------
     2.2 Widgets
 -------------*/
+
 
 /*
 l-tag
@@ -411,7 +406,7 @@ The table of content of the article
 }
 /*
 l-line-xs
-A simple thin solid line
+A simple very thin solid line
 */
 .l-line-xs {
     border-top: solid 0.1rem rgba(255,255,255,0.1);
@@ -428,20 +423,119 @@ footer .l-line-xs {
     }
 }
 /*
-#filter-tags, #filter-categories
- */
-#filter-tags, #filter-categories {
-    background-color: rgb(239 221 251 / 5%);
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    border: 1px solid rgb(255,255,255,0.02);
+l-line-v-xs
+vertical thin solid line
+*/
+.l-line-v-s {
+    border-right: solid 0.2rem rgba(255,255,255,1);
+    margin: 0 0.9rem 0;
+}
+#filters .l-line-v-s {
+    border-color: var(--primary-color);
 }
 /*
 l-img-btn-a
+TODO rename class
  */
 .l-img-btn-a {
     transition: transform .2s;
 }
 .l-img-btn-a:hover {
     transform: scale(1.2);
+}
+
+/*------------------------------
+    2.2.1 Article Filter Widgets
+    from: https://codepen.io/Wendy-Ho/pen/MWWBvmd?editors=1100
+------------------------------*/
+
+#filters {
+    display: flex;
+    flex-direction: row;
+    margin: 2rem 0 2rem;
+}
+#filters .l-line-xs {
+    margin: 0.1rem 0 0.1rem;
+}
+
+.l-filters-title {
+    padding: 0.3rem 0.8rem 0.3rem;
+    background-color: rgb(44,47,52);
+    border-radius: 0.2rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0.1rem;
+}
+.l-filters-title:before {
+    content: "";
+    background: url("/static/images/global/icons/filter.svg") no-repeat bottom;
+    background-size: 14px;
+    width: 1rem;
+    height: 1rem;
+    display: inline-block;
+}
+
+.l-filters-box {
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-grow: 1;
+    background-color: rgb(12,12,12);
+    border-radius: 0.8rem;
+    box-shadow: 0 0 1.5rem rgba(0,0,0,0.8);
+}
+
+.l-radio-none {
+    display: none;
+}
+
+.l-filters-tab {
+    cursor: pointer;
+    display:inline-block;
+    font-weight: 700;
+    font-size: 1rem;
+    margin: 0.5rem;
+}
+#filter-tab-D {
+    font-family: Montserrat, sans-serif;
+    font-weight: 100;
+}
+
+.l-filters-tab:hover {
+    transform: scale(1.1);
+}
+
+.l-filters-panels-box {
+    overflow: hidden;
+}
+
+.l-filters-panel {
+    display: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin: 0.5rem;
+    animation: fadein 0.8s;
+}
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+/*the part after ~ must be relative to the position of the radio
+this explain the .some-class before the id.
+*/
+#filter-A:checked ~ .l-filters-panels-box #filter-panel-A,
+#filter-B:checked ~ .l-filters-panels-box #filter-panel-B,
+#filter-C:checked ~ .l-filters-panels-box #filter-panel-C {
+  display: flex;
+}
+#filter-A:checked ~ .l-filters-toolbar #filter-tab-A,
+#filter-B:checked ~ .l-filters-toolbar #filter-tab-B,
+#filter-C:checked ~ .l-filters-toolbar #filter-tab-C
+{
+  color: var(--primary-color);
 }

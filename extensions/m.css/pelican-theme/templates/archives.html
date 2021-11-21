@@ -41,7 +41,6 @@
 {% block content %}
     {% macro filters() %}{% include "blog_filters.html" %}{% endmacro %}
     {{ filters()|rtrim|indent(4) }}
-    <div class="l-line-xs"></div>
     <div class="m-col-l-none">
       {% if articles_page %}
       {% set article_list = articles_page.object_list %}
