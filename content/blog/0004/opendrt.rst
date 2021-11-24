@@ -3,10 +3,11 @@ OpenDRT : a nice (experimental) alternative to ACES
 
 :summary: An open-source alternative to convert scene-linear data to SDR or
     HDR display image.
+:thumbnail: {static}/images/blog/0004/cover.png
 
-:status: draft
-:date: 2021-10-25 13:54
-:modified:  2021-11-11 17:35
+:status: published
+:date-created: 2021-10-25 13:54
+:date: 2021-11-24 19:02
 
 :category: tutorial
 :tags: nuke, resolve, ACES, tonemapping, color-science
