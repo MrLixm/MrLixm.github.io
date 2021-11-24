@@ -59,80 +59,43 @@
 
 {% block content %}
   {% if article.cover %}
-  <article id="m-jumbo"{% if article.class %} class="{{ article.class }}"{% endif %}>
-    <header>
-      <div id="m-jumbo-image" style="background-image: url('{{ article.cover|expand_link(article)|e }}');">
-        <div id="m-jumbo-cover">
-          <div class="m-container">
-            <div class="m-row">
-              <div class="m-col-l-6 m-push-l-3">{% if article.status == 'draft' %} <span class="m-label m-dim">draft</span>{% endif %}
-                <div style="background-color:rgba(0,0,0, 0.8); margin:auto; width:15%; padding: 2%; border-radius: 0.5rem; border: #F4F4F4 0.13rem solid;">
-                  <time class="m-date" datetime="{{ article.date.isoformat() }}" style="width:initial; float:initial; border:0; padding:0; margin:0; font-size:1rem;">
-                  {% set month = article.date.strftime('%b') %}
-                  {% set day = article.date.strftime('%d') %}
-                  {% set year = article.date.strftime('%Y') %}
-                  {{ month }} <span class="m-date-day" style="font-size:1.6rem;">{{ day }}</span> {{ year }}
-                  </time>
-                </div>
-              </div>
-            </div>
-            <div class="m-row">
-              <div class="m-col-t-12 m-col-s-10 m-push-s-1 m-col-m-8 m-push-m-2">
-                {% set title = article.title.split(' — ') %}
-                <h1><a href="{{ article.url|format_siteurl|e }}" rel="bookmark" title="Permalink to {{ article.title }}">{{ title[0] }}</a></h1>
-                {% if title|length >= 2 %}
-                <h2>{{ title[1] }}</h2>
-                {% endif %}
-              </div>
-              {% if article.authors %}
-              <div class="m-col-m-10 m-push-m-1 m-text-center">
-                {% for author in article.authors %}
-                <a href="{{ author.url|format_siteurl|e }}">{{ author|e }} {% if not loop.last %}-{% endif %}</a>
-                {% endfor %}
-              </div>
-              {% endif %}
-            </div>
+    <article id="m-jumbo"{% if article.class %} class="{{ article.class }}"{% endif %}>
+      <header>
+        <div class="m-container">
+          <div id="cover-img" style="
+            background-image: url('{{ article.cover|expand_link(article)|e }}');
+            {% if article.cover_size %}background-size: {{ article.cover_size|striptags|e }};{% endif %}">
           </div>
+          {% macro header() %}{% include "article_header.html" %}{% endmacro %}
+          {{ header()|rtrim|indent(6) }}
         </div>
-      </div>
-      {% if article.summary and
-            ((article.hide_summary is defined and article.hide_summary != 'True') or
-             (article.hide_summary is not defined and not M_HIDE_ARTICLE_SUMMARY)) %}
-      <div class="m-container">
+      </header>
+      {% if article.content %}
+      <div class="m-container m-container-inflatable">
         <div class="m-row">
-          <div class="m-col-m-10 m-push-m-1 m-nopady">
-            {{ article.summary|trim|indent(12) }}
+          <div class="m-col-l-none m-nopady">
+            {% if article.archived == 'True' and M_ARCHIVED_ARTICLE_BADGE %}
+            {{ M_ARCHIVED_ARTICLE_BADGE|render_rst|replace('{year}', article.date.year)|indent(8) }}
+            {% endif %}
+  <!-- content -->
+  {{ article_content_block() }}
+  <!-- /content -->
+            {% if article.category.badge or (article.author and article.author.badge) %}
+            {{ badges()|rtrim|indent(10) }}
+            {% endif %}
           </div>
         </div>
       </div>
       {% endif %}
-    </header>
-    {% if article.content %}
-    <div class="m-container m-container-inflatable">
-      <div class="m-row">
-        <div class="m-col-m-10 m-push-m-1 m-nopady">
-          {% if article.archived == 'True' and M_ARCHIVED_ARTICLE_BADGE %}
-          {{ M_ARCHIVED_ARTICLE_BADGE|render_rst|replace('{year}', article.date.year)|indent(8) }}
-          {% endif %}
-<!-- content -->
-{{ article_content_block() }}
-<!-- /content -->
-          {% if article.category.badge or (article.author and article.author.badge) %}
-          {{ badges()|rtrim|indent(10) }}
-          {% endif %}
+      <footer>
+        <div class="m-container">
+          <div class="m-col-l-none m-nopadb">
+            {% macro footer() %}{% include "article_footer.html" %}{% endmacro %}
+            {{ footer()|rtrim|indent(10) }}
+          </div>
         </div>
-      </div>
-    </div>
-    {% endif %}
-    <footer class="m-container">
-      <div class="m-row">
-        <div class="m-col-m-10 m-push-m-1 m-nopadb">
-          {% macro footer() %}{% include "article_footer.html" %}{% endmacro %}
-          {{ footer()|rtrim|indent(10) }}
-        </div>
-      </div>
-    </footer>
-  </article>
+      </footer>
+    </article>
   {% else %}
     <article class="m-col-l-none m-nopadb">
       {% macro header() %}{% include "article_header.html" %}{% endmacro %}

@@ -103,7 +103,17 @@ PLUGINS.extend(
         'm.vk'
     ]
 )
-FORMATTED_FIELDS = ['summary', 'description', 'landing', 'badge', 'header', 'footer', 'scale', 'thumbnail']
+FORMATTED_FIELDS = [
+    'summary',
+    'description',
+    'landing',
+    'badge',
+    'header',
+    # 'size',
+    'footer',
+    'thumbnail',
+    'cover_size'
+]
 
 # theme related configuration
 M_CSS_FILES = [

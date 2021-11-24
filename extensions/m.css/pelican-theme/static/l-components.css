@@ -139,6 +139,27 @@ use flex-box
     display: inherit;
 }
 /*
+l-article-header
+post context + h1 + summary
+ */
+.l-article-header {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+#m-jumbo .l-article-header {
+    align-items: center;
+}
+#m-jumbo .l-article-header h1 {
+    text-align: center;
+}
+#m-jumbo .l-article-header p {
+    text-align: center;
+}
+
+/*
 l-box-filters
 Hold the filters used for articles display.
 */
@@ -443,6 +464,20 @@ TODO rename class
 .l-img-btn-a:hover {
     transform: scale(1.2);
 }
+/*
+jumbo article header
+*/
+#cover-img {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-radius: 0.5rem;
+    padding-top: 22rem;
+    margin: 2rem 0 2rem;
+}
+article#m-jumbo h1 {
+    font-size: 4rem;
+}
 
 /*------------------------------
     2.2.1 Article Filter Widgets
@@ -539,3 +574,4 @@ this explain the .some-class before the id.
 {
   color: var(--primary-color);
 }
+/*--- END 2.2.1 ---*/
