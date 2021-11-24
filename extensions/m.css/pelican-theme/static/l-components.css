@@ -475,9 +475,22 @@ jumbo article header
     padding-top: 22rem;
     margin: 2rem 0 2rem;
 }
+
+@media screen and (max-width: 500px) {
+    #cover-img {
+        padding-top: 15rem;
+    }
+}
+
 article#m-jumbo h1 {
     font-size: 4rem;
 }
+@media screen and (max-width: 500px) {
+    article#m-jumbo h1 {
+        font-size: 3rem;
+    }
+}
+
 
 /*------------------------------
     2.2.1 Article Filter Widgets
