@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Liam Collod Website - tutorial</title><link href="https://mrlixm.github.io/" rel="alternate"></link><link href="https://mrlixm.github.io/feeds/tutorial.atom.xml" rel="self"></link><id>https://mrlixm.github.io/</id><updated>2021-11-24T19:02:00+01:00</updated><entry><title>OpenDRT : a nice (experimental) alternative to ACES</title><link href="https://mrlixm.github.io/blog/opendrt/" rel="alternate"></link><published>2021-11-24T19:02:00+01:00</published><updated>2021-11-24T19:02:00+01:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-11-24:/blog/opendrt/</id><summary type="html">&lt;p&gt;An open-source alternative to convert scene-linear data to SDR or
+HDR display image.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;With the Academy Color Encoding System (ACES) becoming omnipresent more and
+more, it would be worth keeping in mind that it’s not the only solution to have
+a good color-managed pipeline (let’s keep that for a future article) .
+I’m not going to try to go too far and stick to the title even tho there is
+a lot to discuss on the topic.&lt;/p&gt;
+&lt;p&gt;If most people get into ACES, it’s mainly for its “filmic” looks (provided by
+the RRT), rather than having a full color-managed workflow.
+And that is understandable, as individual artists, you most of the time, only
+care about having the prettiest image possible at the end.&lt;/p&gt;
+&lt;p&gt;So what if you got a well-formed and pleasing image at the end without having
+to go through the complexity of ACES ?&lt;/p&gt;
+&lt;aside class="contents m-block m-default" id="contents"&gt;
+&lt;h3&gt;Contents&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="#who-s-this-for" id="id1"&gt;Who’s this for ?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#node-knobs" id="id2"&gt;Node knobs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#nuke" id="id3"&gt;Nuke&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#node-setup" id="id4"&gt;Node Setup&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#revert-display" id="id5"&gt;Revert Display&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#nuke-display-encoding-disable" id="id6"&gt;Nuke Display-encoding disable&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#opendrt-no-display-encoding" id="id7"&gt;OpenDRT no Display-encoding&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#opendrt-with-viewer-input-process-recommended" id="id8"&gt;OpenDRT with Viewer Input Process (recommended)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#conclusion" id="id9"&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/aside&gt;
+&lt;section id="who-s-this-for"&gt;
+&lt;h2&gt;&lt;a href="#id1"&gt;Who’s this for ?&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;My post mainly targets the VFX-CGI audience but OpenDRT work on any
+open-domain/scene-referred data, including photography and cinematography.
+(as long as the data is not in a closed-display-domain).&lt;/p&gt;
+&lt;p&gt;This means that for CGI, you are familiar with a “scene-linear workflow” :&lt;/p&gt;
+&lt;pre&gt;Render -[EXR]&amp;gt; compositing/postprod(linear) -&amp;gt; display-refered final output [jpg,...]&lt;/pre&gt;
+&lt;p&gt;
+Then the OpenDRT implementation is only available as a Nuke Gizmo and
+through Davinci Resolve DCTL feature (on paid licenses) which imply you
+are using one of these dccs.&lt;br /&gt;
+No OCIO support, this means you will have with your traditional workflow in
+your rendering DCC and only be able to preview the final image in your
+post-prod one which is not an ideal one.&lt;br /&gt;
+&lt;/p&gt;
+&lt;p&gt;With all of that , this mean &lt;strong&gt;my post is aimed at individual artist doing
+personal projects that would like a quick solution for proper SDR-HDR export.&lt;/strong&gt;
+(OpenDRT is probably aimed at additionals goal)&lt;/p&gt;
+&lt;p class="m-transition"&gt;~&lt;/p&gt;
+&lt;aside class="m-block m-primary"&gt;
+&lt;h3&gt;OpenDRT Repository&lt;/h3&gt;
+&lt;p&gt;Download on Github: &lt;a class="m-link-wrap" href="https://github.com/jedypod/open-display-transform"&gt;https://github.com/jedypod/open-display-transform&lt;/a&gt;&lt;/p&gt;
+&lt;/aside&gt;
+&lt;p&gt;First, please have a look at the above repository, read Jed’s explanations and
+the tool’s documentation.&lt;/p&gt;
+&lt;p&gt;Before diving into the setup I think it’s important to remind the target
+of OpenDRT:&lt;/p&gt;
+&lt;blockquote&gt;
+The tool has for goal the faithful conversion of open-domain /
+scene-referred data to a closed-domain : the display. This mean
+&lt;strong&gt;no creative transformations are applied&lt;/strong&gt;. As such the output’s result
+can look very neutral and should be graded.&lt;/blockquote&gt;
+&lt;/section&gt;
+&lt;section id="node-knobs"&gt;
+&lt;h2&gt;&lt;a href="#id2"&gt;Node knobs&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;As the tool is constantly changing, Jed’s documentation is not up to date,
+and thus this post will also probably be.&lt;/p&gt;
+&lt;aside class="m-note m-default"&gt;
+All the examples are using Opendrt version &lt;code&gt;0.0.90b2&lt;/code&gt;&lt;/aside&gt;
+&lt;div class="m-row"&gt;
+&lt;div class="m-container-inflate m-col-l-5 m-left-l"&gt;
+&lt;div class="m-image"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0004/nuke.opendrt.png"&gt;&lt;img alt="OpenDRT global overview" src="https://mrlixm.github.io/static/images/blog/0004/nuke.opendrt.png" style="width: 280px" /&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="m-col-l-7"&gt;
+&lt;p&gt;
+First thing, tell the tool in which &lt;code&gt;gamut&lt;/code&gt; your input is.&lt;br /&gt;
+I assume the input should be Linearly encoded.&lt;br /&gt;
+&lt;/p&gt;
+&lt;p&gt;You then have a bunch of presets that will tweak the knobs for you
+based on your target display encoding.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Lw&lt;/code&gt; : this is the nits level of the target display and shouldn’t be
+used as a creative adjustment.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;100nits is the value defined as per the
+&lt;a href="https://www.itu.int/dms_pubrec/itu-r/rec/bt/R-REC-BT.2035-0-201307-I!!PDF-E.pdf"&gt;ITU-R  BT.2035&lt;/a&gt;
+specifications and should represent the peak-white value of a
+display in a dim surround.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;surround&lt;/code&gt; : the luminance level of the viewing environment.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;dark&lt;/code&gt; : theatrical viewing environment.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dim&lt;/code&gt;: “home theater” (low light condition).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;average&lt;/code&gt;: desktop/office average surround.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;dechroma&lt;/code&gt; : this one is more “subjective”, allowing to control
+the amount of chrominance compression that should be applied on values
+reaching display maximum (R,G,B=1.0). If HDR imagery needs to be
+produced, this can be lowered (as the target domain (hdr) has more
+volume to express chroma)&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;saturation&lt;/code&gt; : Expand chroma on the bottom values after the compression by
+the dechroma.
+See more &lt;a href="https://community.acescentral.com/t/proposal-for-resolving-the-conflict-beween-swappable-core-rendering-vs-doing-everything-in-lmt/4012/9"&gt;here&lt;/a&gt; .&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;whitepoint&lt;/code&gt; : (from doc) Sets the creative whitepoint. This allows
+you to creatively set the whitepoint of your display rendering if
+you want it to be different than the technical whitepoint of your
+display device. For example, if you set this to D55, neutral colors will
+be rendered as a warmer hue compared to the default D65.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;display encoding&lt;/code&gt; : &lt;em&gt;This part will be re-addressed under.&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;
+The &lt;code&gt;eotf&lt;/code&gt; should correspond to the transfer-function used by the
+targeted display.&lt;br /&gt;
+&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;a href="https://www.itu.int/dms_pubrec/itu-r/rec/bt/R-REC-BT.1886-0-201103-I!!PDF-E.pdf"&gt;BT.1886&lt;/a&gt;
+, the default value, correspond to a 2.4 power function,
+which is the standard for Rec.709.&lt;br /&gt;
+For the average of user display you should use &lt;code&gt;sRGB Display&lt;/code&gt;.&lt;br /&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;
+The &lt;code&gt;gamut&lt;/code&gt; correspond once again to the gamut that the targeted display
+is calibrated to. (reminder that sRGB use the same gamut as Rec.709)&lt;br /&gt;
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p class="m-transition"&gt;.&lt;/p&gt;
+&lt;p&gt;To adjust these settings properly &lt;strong&gt;you have to know the targeted display&lt;/strong&gt;
+&lt;strong&gt;+ user&lt;/strong&gt; :&lt;/p&gt;
+&lt;p&gt;The issue is that with today range of displays, this is a rather difficult one
+to average (until you have the full-control on the display the image is
+going to be viewed on )&lt;/p&gt;
+&lt;p&gt;
+In the case of web publishing, for example, the average user will probably
+have a SDR display, sRGB encoded, with an average white peak of 100 nits and
+used in an office environment that can be brighter than a &lt;code&gt;dim&lt;/code&gt; surround.
+If we add smartphones to the equation, thing will get messy …&lt;br /&gt;
+I’m still digging on the subject trying to gather more info and as such will
+close this topic.&lt;br /&gt;
+&lt;/p&gt;
+&lt;p&gt;So for now, using the presets is, I think a good practice.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="nuke"&gt;
+&lt;h2&gt;&lt;a href="#id3"&gt;Nuke&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;(For now i’m only going to show how you can use it in Nuke as I don’t have
+a Resolve License)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;1. &lt;a href="https://raw.githubusercontent.com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk"&gt;Download the .nk file&lt;/a&gt;
+(Right click on the page &amp;gt; save as &amp;gt; save it somewhere)&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;Import the .nk file: File &amp;gt; Insert Comp Nodes&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Or alternatively :&lt;/p&gt;
+&lt;p&gt;1. &lt;a href="https://raw.githubusercontent.com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk"&gt;Open the .nk&lt;/a&gt;
+file and copy all of his content &lt;code&gt;(ctrl+a, ctrl+c)&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;Paste in Nuke &lt;code&gt;(ctrl+v)&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Alright, you now have the OpenDRT node.&lt;/p&gt;
+&lt;section id="node-setup"&gt;
+&lt;h3&gt;&lt;a href="#id4"&gt;Node Setup&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Things will now get a bit complicated at first. The issue is that has the
+OpenDRT handle the scene -&amp;gt; display conversion, this will collide with Nuke
+that try to do the same in the view-transform.&lt;/p&gt;
+&lt;p&gt;I found 4 different solutions that achieve the same result. I think the last
+one is recommend to use but it’s good to have other example that might help to
+understand how everything works.&lt;/p&gt;
+&lt;aside class="m-note m-warning"&gt;
+I didn’t test any of these solutions with HDR display-encoding so
+further investigation needs to be done.&lt;/aside&gt;
+&lt;aside class="m-note m-info"&gt;
+I will keep the defaut &lt;code&gt;BT.1886&lt;/code&gt; value for the eotf, but to match the
+nuke’s default config I should have use &lt;code&gt;sRGB Display&lt;/code&gt;.&lt;/aside&gt;
+&lt;section id="revert-display"&gt;
+&lt;h4&gt;&lt;a href="#id5"&gt;Revert Display&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;We let the DRT handle everything (with display-encoding), then we apply the
+invert transform that applied by Nuke:&lt;/p&gt;
+&lt;div class="m-image"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0004/nuke.revert.png"&gt;&lt;img alt="Revert Display method in Nuke" src="https://mrlixm.github.io/static/images/blog/0004/nuke.revert.png" /&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;Writing the data is as before. You just have to be sure that the &lt;code&gt;Colorspace&lt;/code&gt;
+node has the same &lt;code&gt;in&lt;/code&gt; parameters as the &lt;code&gt;colorspace&lt;/code&gt; one on the write node.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="nuke-display-encoding-disable"&gt;
+&lt;h4&gt;&lt;a href="#id6"&gt;Nuke Display-encoding disable&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;We disable Nuke’s handling of the display-encoding. The DRT is the last step.&lt;/p&gt;
+&lt;div class="m-image"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0004/nuke.nuke_no-de.png"&gt;&lt;img alt="Method with Nuke display-encoding disable" src="https://mrlixm.github.io/static/images/blog/0004/nuke.nuke_no-de.png" /&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;This means the Nuke view-transform is always off which can be incovenient
+when you need to preview a node upstream.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="opendrt-no-display-encoding"&gt;
+&lt;h4&gt;&lt;a href="#id7"&gt;OpenDRT no Display-encoding&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;One good solution: the OpenDRT doesn’t handle the display
+encoding but output closed-domain data ready for the display.
+Nuke apply the display-encoding as usually, writing data is the regular
+workflow.&lt;/p&gt;
+&lt;p&gt;Be careful as OpenDRT still handle the gamut conversion from the input to the
+output. Write node colorspace need to be choosen with this is mind.&lt;/p&gt;
+&lt;div class="m-image"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0004/nuke.drt_no-de.png"&gt;&lt;img alt="Method with OpenDRT display-encoding disable." src="https://mrlixm.github.io/static/images/blog/0004/nuke.drt_no-de.png" /&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+&lt;section id="opendrt-with-viewer-input-process-recommended"&gt;
+&lt;h4&gt;&lt;a href="#id8"&gt;OpenDRT with Viewer Input Process (recommended)&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;This is probably the best solution :&lt;/p&gt;
+&lt;p&gt;
+OpenDRT handle everything, we disable Nuke view-transform but we will be
+using its &lt;a href="https://learn.foundry.com/nuke/content/getting_started/using_interface/guides_masks_modes.html#InputProcessandViewerProcessControls"&gt;input process feature&lt;/a&gt;.&lt;br /&gt;
+This will allow to always have the OpenDRT active no matter what node we are
+previewing &lt;span class="m-text m-warning"&gt;(this can be inconvenient when viewing scalar data like
+alpha, think to disable the input-process in that case.)&lt;/span&gt;&lt;br /&gt;
+&lt;/p&gt;
+&lt;div class="m-image"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0004/nuke.ip.png"&gt;&lt;img alt="Method with OpenDRT + Nuke Input Process" src="https://mrlixm.github.io/static/images/blog/0004/nuke.ip.png" /&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;We don’t actually need the node used as input-process to be connected to
+anything but here &lt;strong&gt;I’m making sure it’s connected before the write node&lt;/strong&gt;, so
+OpenDRT get baked in at export.&lt;/p&gt;
+&lt;p&gt;As OpenDRT handled the display encoding we can turn it off on the write node
+by checking &lt;code&gt;raw data&lt;/code&gt;.&lt;/p&gt;
+&lt;/section&gt;
+&lt;/section&gt;
+&lt;/section&gt;
+&lt;section id="conclusion"&gt;
+&lt;h2&gt;&lt;a href="#id9"&gt;Conclusion&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;If you tried to compare the result to an ACES processed image you would have
+probably notice that the image-formation produce much more “excepted” result,
+among others, in strong colored highlights, which make OpenDRT a solid
+candidate at better image-formation and a peak of what could be used in the
+future.&lt;/p&gt;
+&lt;p&gt;Even if it’s current form kind of break the purpose of a consistant
+color-managed system across DCCs, it is a nice solution for individuals and
+looks very promising.
+(Jed told me it could be actually pretty simple to create an OCIO config so
+we can only hope he finds time to !).&lt;/p&gt;
+&lt;p&gt;Make sure to star &lt;a href="https://github.com/jedypod/open-display-transform"&gt;Jed’s repository&lt;/a&gt;
+on Github !&lt;/p&gt;
+&lt;/section&gt;
+</content><category term="tutorial"></category><category term="nuke"></category><category term="resolve"></category><category term="ACES"></category><category term="tonemapping"></category><category term="color-science"></category></entry></feed>
