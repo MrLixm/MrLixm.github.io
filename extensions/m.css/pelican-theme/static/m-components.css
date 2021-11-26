@@ -112,6 +112,7 @@ article section a:before, article p a:before {
     height: 0.7rem;
     display: inline-block;
 }
+article section .m-figure a:before,
 article section .m-image a:before,
 article section h1 a:before,
 article section h2 a:before,
