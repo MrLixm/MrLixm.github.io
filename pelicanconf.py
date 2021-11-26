@@ -38,7 +38,7 @@ ARCHIVES_SAVE_AS = 'blog/index.html'
 ARTICLE_PATHS = ['blog']
 ARTICLE_URL = 'blog/{slug}/'  # category/ is part of the slug
 ARTICLE_SAVE_AS = 'blog/{slug}/index.html'
-# ARTICLE_EXCLUDES = []
+ARTICLE_EXCLUDES = ["blog/_template"]
 # -- STATIC
 STATIC_PATHS = ['images']
 STATIC_URL = 'static/{path}'
@@ -89,6 +89,7 @@ PLUGIN_PATHS.append(f'{_THEME_ROOT}/plugins')
 PLUGINS.extend(
     [
         'm.abbr',
+        'm.code',
         'm.alias',
         'm.components',
         'm.dox',
@@ -109,7 +110,7 @@ FORMATTED_FIELDS = [
     'landing',
     'badge',
     'header',
-    # 'size',
+    'size',
     'footer',
     'thumbnail',
     'cover_size'
