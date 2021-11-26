@@ -65,7 +65,7 @@ green (desat): #60C68E
     /* This is simply color-picked --code-note-background-color on top of
        --background-color */
     --code-background-color: #282e36;
-    --code-note-background-color: rgba(34, 39, 46, 0.5);
+    --code-note-background-color: rgba(12, 12, 14, 0.7);
     --console-background-color: #1a1c1d;
     --button-background-color: #22272e;
 
