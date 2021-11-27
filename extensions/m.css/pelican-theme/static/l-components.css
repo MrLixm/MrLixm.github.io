@@ -179,6 +179,15 @@ Hold the filters used for articles display.
     flex-basis: 100%;
 }
 
+/*
+.l-flex-center
+*/
+.l-flex-center-c {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}
 
 /*--------------------
     1.2 Layout Widgets
@@ -246,6 +255,9 @@ add a  bottom/top margin with a medium size
 .l-mrg-m {
     margin: 1rem 0 1rem;
 }
+.l-mrg-l {
+    margin: 2rem 0 2rem;
+}
 
 
 /* ============================================================================
@@ -269,7 +281,10 @@ add a  bottom/top margin with a medium size
     background-color: var(--danger-filled-color);
 }
 .l-c-ldark {
-    color: rgb(16,16,16)
+    color: rgb(16,16,16);
+}
+.l-c-color {
+    color: var(--color);
 }
 
 
