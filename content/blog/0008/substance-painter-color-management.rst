@@ -14,9 +14,16 @@ Color-management in Substance Painter with OCIO
 .. role:: text-danger
     :class: m-text m-danger
 
+.. role:: text-green
+    :class: m-text m-primary
+
 It's there ! After so much time, Substance-Painter finally saw it-self getting
 a shiny new color-management system with OCIO support. We're going to dive
-deeper inside and see how it works :
+deeper inside and see how it works.
+
+The article is divided in two parts. You got the theory first and then the
+"how to do it" at the end. Is is strongly recommend to read the theory part but
+you could just read the "how-to" part to get the quickest answers.
 
 .. note-info::
 
@@ -31,7 +38,7 @@ deeper inside and see how it works :
 
 .. contents::
 
-New project
+New Project
 -----------
 
 .. image:: {static}/images/blog/0008/sp-project-legacy.png
@@ -178,8 +185,8 @@ This is not a recommended solution as you polute your environment variable + if
 you decide to switch the config for an other one all your previous project
 will be broken.
 
-Setted localy at startup
-""""""""""""""""""""""""
+Set localy at startup
+"""""""""""""""""""""
 
 You defined the environment variable in a start-up script.
 This is the cleanest way to do it but means you can't use the Windows shortcut
@@ -219,7 +226,7 @@ Default parameters for OCIO configs
 
 
 This correspond to all the section bellow the color-management mode. It allow
-to configure on inputs reacts with the OCIO config, i.e which colorspace is
+to configure how inputs reacts with the OCIO config, i.e which colorspace is
 being assigned by default.
 
 Usually in other software this section is configured using the `OCIO roles
@@ -230,4 +237,144 @@ using the ``working colorspace`` as a default colorspace everywhere, which mean
 :text-danger:`you have to manually setup this section` to get correct result
 with the auto settings.
 
-If you look at the above image
+If you look at the above image, this is how it supposed to look when picking
+the Substance config. By default 8 and 16 bit images are supposed to be
+considered as ``sRGB``, same goes for substance materials.
+
+Make sure these options are properly configured with the intended colorspaces
+for each format if you want all the ``auto`` options to work properly.
+
+Vist the `ACES setup`_ section to find how this should be considered if you
+are using the ACES config.
+
+Conclusion
+==========
+
+Alright, to recap' everything for a new project you need :
+
+1. Change the color-management mode to OCIO
+2. Choose the OCIO config (already choosen if env variable set)
+3. Edit the OCIO options to have the correct default colorspaces working.
+
+And of course setting the other paramaters realted to your texturing.
+Now you we are good to start the texturing workflow.
+
+
+Color-managed Workflow
+----------------------
+
+| Now that the project is properly configured, we will see how to keep your
+ workflow properly color-managed.
+| This require a bit of theory first :
+
+We can break the workflow in 4 sections : ``Input``, ``Workspace``, ``Display``
+and ``Output``
+
+.. container:: l-c-color l-mrg-l l-flex-center-c
+
+    .. raw:: html
+        :file: diagramA.svg
+
+
+You transfer ``data`` between each of this section. Data that must be
+potentialy decoded and then encoded, depending of what the section require.
+In Substance Painter this ``data`` is most of the time pixels, encoded
+with the RGB system.
+
+All of this data-transfers allow me to introduce the first core rule:
+:text-green:`you always need to know where you start to know where you are
+going`.
+As an example, in the above diagram, to convert the ``Input`` data to the
+``Workspace`` data, we need to know how the ``Input`` data is encoded (in our
+case, which colorspace).
+
+Data types: Color and Scalar
+============================
+
+"Where you start" means first, what type of data are you manipulating ?
+
+There is only two types : ``color`` and ``scalar``.
+
+This is important what type the data you are manipulating
+belongs to, because it will allow, in a case, to skip all the mess that
+color-transformations can be.
+
+Scalar
+______
+
+Scalar data has no means to be displayed directly, the data store numbers
+that can be used to drive other type of data. We are only interested by the
+original value of these numbers and as such this kind of data **must never
+be altered by color-transformations.**
+
+To get to more concrete examples scalar data include but is not limited to:
+roughness, normals, masks, displacement, vectors, ...
+
+.. note-warning::
+
+    This is not because the data , when displayed, is not grayscale , that it
+    is color data. For example normal maps, even if colored, ARE scalar data.
+
+Color
+_____
+
+Everything that is not scalar. Values stored are intented to be displayed
+directly. These values are always encoded in some colorspace and require to be
+decoded properly.
+
+This include but is not limited to : diffuse/albedo/base-color, subsurface
+color, specular color, refraction color, every image displayed on the web, ...
+
+In Substance
+____________
+
+In Substance you will find this separations depending of the channel you
+are working on. `The full list of color-managed channels is available here.
+<https://substance3d.adobe.com/documentation/spdoc/color-management
+-223053233.html#section5>`_
+
+As Substance is aware if the channel need to be color-managed, some operations
+will be adjusted/skipped. An application of this is the ``view transform``
+that will be disabled when viewing a scalar channel.
+
+This notion will be also applied by yourself when needed to specify the
+colorspace encoding of a resource (images, alphas, materials, ...).
+If you import a roughness texture, as it is scalar data you will have to
+specify the "colorspace" as "raw", so no special decoding is applied.
+
+Workflow Sections
+=================
+
+.. container:: l-c-color l-mrg-l l-flex-center-c
+
+    .. raw:: html
+        :file: diagramA.svg
+
+Input
+_____
+
+Data that need to be processed, this can be anything but in our case it is
+pixel data, like an image texture, a brush stroke, a procedural noise, ...
+
+If it is scalar, we don't need to decode it. We must specify that we doesn't
+want color-transformations by specifying for example the colorspace="raw".
+
+If it is color this mean that **the data has been mandatory encoded in a given
+colorspace**. You can hope that this encoding is specified somewhere, like in
+the name, in the metadata, ... But as color-management is a big mess still in
+2021 most of the time we will assume that it's in sRGB colorspace with
+a transfer-function depending of the file format used. But we will get back
+to it later. .. TODO link section
+
+Workspace
+_________
+
+It is an intermedariy section where we know exactly what it will output so
+we can know how to convert all its inputs properly. In our context this is
+the "Working color space". In OCIO term it correspond to the
+
+
+ACES setup
+----------
+
+.. TODO
