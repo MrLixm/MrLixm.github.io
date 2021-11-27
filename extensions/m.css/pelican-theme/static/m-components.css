@@ -540,43 +540,15 @@ img.m-image.m-badge, div.m-image.m-badge img {
 
 /* Figure. Ensure everything is done for both <img> and <svg>. */
 figure.m-figure {
-  max-width: 100%;
-  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   margin-left: auto;
   margin-right: auto;
   position: relative;
-  display: table;
-}
-figure.m-figure:before {
-  position: absolute;
-  content: ' ';
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: -1; /* so it doesn't make the contents inactive */
-  border-style: solid;
-  border-width: 0.125rem;
-  border-radius: var(--border-radius);
-  border-color: var(--line-color);
 }
 figure.m-figure.m-flat:before {
   border-color: transparent;
-}
-figure.m-figure > * {
-  margin-left: 1rem;
-  margin-right: 1rem;
-  display: table-caption;
-  caption-side: bottom;
-}
-figure.m-figure > *:first-child {
-  /* otherwise figure with clickable image is centered differently */
-  display: inline;
-}
-figure.m-figure > *:last-child {
-  /* Need !important so the :last-child margin reset doesn't have higher
-     priority than this */
-  margin-bottom: 1rem !important;
 }
 figure.m-figure img, figure.m-figure svg {
   position: relative; /* so it's above the border */
@@ -590,10 +562,6 @@ figure.m-figure img, figure.m-figure svg {
 figure.m-figure.m-flat img, figure.m-figure.m-flat svg {
   border-bottom-left-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
-}
-figure.m-figure a img, figure.m-figure a svg {
-  margin-left: -1rem;
-  margin-right: -1rem;
 }
 figure.m-figure.m-fullwidth, figure.m-figure.m-fullwidth > * {
   /* Using inline for the content would lose the margin on wrapped lines */
@@ -666,8 +634,9 @@ figure.m-figure.m-fullwidth:after {
 figure.m-figure figcaption, .m-code-figure figcaption, .m-console-figure figcaption {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+  color: var(--code-inverted-color);
   font-weight: var(--heading-font-weight);
-  font-size: 1.17rem; /* taken from webkit defaults for h3 */
+  font-size: 1rem;
 }
 figure.m-figure figcaption a, .m-code-figure figcaption a, .m-console-figure figcaption a {
   text-decoration: var(--link-decoration-heading);
