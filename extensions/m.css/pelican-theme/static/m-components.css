@@ -543,6 +543,8 @@ figure.m-figure {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
   margin-left: auto;
   margin-right: auto;
   position: relative;
@@ -632,11 +634,10 @@ figure.m-figure.m-fullwidth:after {
 
 /* Figure caption */
 figure.m-figure figcaption, .m-code-figure figcaption, .m-console-figure figcaption {
-  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   color: var(--code-inverted-color);
-  font-weight: var(--heading-font-weight);
-  font-size: 1rem;
+  font-weight: 400;
+  font-size: 0.9rem;
 }
 figure.m-figure figcaption a, .m-code-figure figcaption a, .m-console-figure figcaption a {
   text-decoration: var(--link-decoration-heading);
