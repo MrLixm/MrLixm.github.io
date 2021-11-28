@@ -195,7 +195,6 @@ Simple flexbox, row orientation,
 .l-flex-r {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
 }
 /*
 Used to configure a flexbox container
@@ -215,6 +214,25 @@ Used to configure a flexbox container
 .l-gap-2 {
     gap: 2rem;
 }
+.l-flex-shrink-0 {
+    flex-shrink: 0;
+}
+.l-flex-shrink-1 {
+    flex-shrink: 1;
+}
+.l-flex-shrink-2 {
+    flex-shrink: 2;
+}
+.l-flex-grow-0 {
+    flex-grow: 0;
+}
+.l-flex-grow-1 {
+    flex-grow: 1;
+}
+.l-flex-grow-2 {
+    flex-grow: 2;
+}
+
 
 /*
 .l-invisble
@@ -476,6 +494,18 @@ The table of content of the article
 #contents a {
     text-decoration: none;
 }
+#contents li {
+    margin: 0.2rem 0 0;
+}
+#contents > ul > li > a {
+    font-weight: 600;
+}
+#contents > ul > li > ul > li > ul > li > a,
+#contents > ul > li > ul > li > ul > li > ul > li > a
+{
+    font-size: 0.9rem;
+}
+
 /*
 l-line-xs
 A simple very thin solid line
@@ -639,3 +669,4 @@ this explain the .some-class before the id.
   color: var(--primary-color);
 }
 /*--- END 2.2.1 ---*/
+
