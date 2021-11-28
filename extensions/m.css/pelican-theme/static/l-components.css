@@ -180,14 +180,50 @@ Hold the filters used for articles display.
 }
 
 /*
-.l-flex-center
+.l-flex-c
+Simple flexbox, column orientation,
 */
-.l-flex-center-c {
+.l-flex-c {
     display: flex;
     flex-direction: column;
-    align-items: center;
     flex-wrap: wrap;
 }
+/*
+.l-flex-r
+Simple flexbox, row orientation,
+*/
+.l-flex-r {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+/*
+Used to configure a flexbox container
+*/
+.l-flex-center {
+    align-items: center;
+}
+.l-flex-left {
+    align-items: flex-start;
+}
+.l-flex-right {
+    align-items: flex-end;
+}
+.l-gap-1 {
+    gap: 1rem;
+}
+.l-gap-2 {
+    gap: 2rem;
+}
+
+/*
+.l-invisble
+make content not visible
+*/
+.l-invisible {
+    display: none;
+}
+
 
 /*--------------------
     1.2 Layout Widgets
