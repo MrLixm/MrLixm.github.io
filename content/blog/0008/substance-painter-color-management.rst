@@ -742,6 +742,21 @@ solution to compensate this issue.
 
     *(most common case would be to pick data in a scalar channel)*
 
+Environment
+___________
+
+There is no direct option to modify the environment image colorspace.
+
+Your options are :
+
+-
+    Modify the default ``Linear`` colorspace in the project settings. The
+    environments maps will use it.
+
+-
+    Pre-convert the hdris to the working colorspace and import them.
+
+The pre-integrated HDRIs are encoded under a ``linear - sRGB`` colorspace.
 
 
 Output Setup in Sp
@@ -754,6 +769,8 @@ ACES setup
 ----------
 
 .. TODO
+
+I'm not going to get into the what and the why, only the how.
 
 
 OCIO Implementation Issues
@@ -962,6 +979,11 @@ adressing the issues.
     colorspace changing depending where its used !
 
 -
+    There is no option to change the environment image colorspace. Having
+    the above suggestion implemented, would solve this one too.
+    (only option for now is to change the default colorspace for linear images)
+
+-
     Color-picker : modifying the top colorspace should affect the editable
     values. Where the top colorspace represent the colorspace used to enter
     values so they can be converted to the working colorspace behind the scene.
@@ -976,6 +998,7 @@ adressing the issues.
      ``view-transform``. (and no transform should be applied when the
      view-transform is disabled)
     | (see `picker`_ section)
+
 
 
 
