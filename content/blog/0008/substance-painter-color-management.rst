@@ -17,6 +17,7 @@ Color-management in Substance Painter with OCIO
 .. role:: text-green
     :class: m-text m-primary
 
+
 It's there ! After so much time, Substance-Painter finally saw it-self getting
 a shiny new color-management system with OCIO support. We're going to dive
 deeper inside and see how it works.
@@ -55,7 +56,7 @@ Color-managed Workflow
 We can break the workflow in 4 sections : ``Input``, ``Workspace``, ``Display``
 and ``Output``
 
-.. container:: l-c-color l-mrg-l l-flex-center-c
+.. container:: l-c-color l-mrg-l l-flex-c l-flex-center
 
     .. raw:: html
         :file: diagramA.svg
@@ -130,7 +131,7 @@ specify the "colorspace" as "raw", so no special decoding is applied.
 Workflow Sections
 =================
 
-.. container:: l-c-color l-mrg-l l-flex-center-c
+.. container:: l-c-color l-mrg-l l-flex-c l-flex-center
 
     .. raw:: html
         :file: diagramA.svg
@@ -490,7 +491,7 @@ considered as ``sRGB``, same goes for substance materials.
 Make sure these options are properly configured with the intended colorspaces
 for each format if you want all the ``auto`` options to work properly.
 
-Vist the `ACES setup`_ section to find how this should be considered if you
+Visit the `ACES setup`_ section to find how this should be considered if you
 are using the ACES config.
 
 New Project : Conclusion
@@ -504,21 +505,295 @@ Alright, to recap' everything for a new project you need :
 
 And of course setting the other parameters related to your texturing.
 
-Now you we are good to start the texturing workflow.
+Now you we are good to start the texturing workflow. The workflow will be
+divided in the same sections explained in the theoratical part of this
+article (see `Color-managed Workflow`_).
 
-The Workspace
-=============
+The Workspace in Sp
+===================
 
 The Workspace, in software is actually an "abstract" section. It just represent
 the colorspace used as a reference, target or source for every color
 transformations. It is defined in the OCIO config and cannot be changed outside
-of it. In the OCIO config it correspond to the ``scene_linear`` role.
+of it.
+
+.. note-info::
+
+    In the OCIO config it correspond to the ``scene_linear`` role.
 
 .. figure:: {static}/images/blog/0008/sp-project-ocio-workspace.png
     :target: {static}/images/blog/0008/sp-project-ocio-workspace.png
     :alt: The Working Colorspace displayed in the Color-management tab.
 
-    Using the ACES 1.2 OCIO config
+    Visible in the Project's Color-management section (Using the ACES 1.2 OCIO
+    config here)
+
+It is just good to know what is the colorspace being used here.
+
+The Display in Sp
+=================
+
+.. image:: {static}/images/blog/0008/sp-odt-default.png
+    :target: {static}/images/blog/0008/sp-odt-default.png
+    :alt: View-transform screenshot.
+
+A good first step before working is to make sure the Display part is
+properly configured so you don't start texturing while viewing wrong colors.
+This Display part can be configured using what we usually called a
+`view-transform` menu. In sp, you can find it at the top-right of your
+viewport.
+
+What you have to remember is that :text-green:`you need to choose the option
+that correspond to your display.` If your display is calibrated to the
+Display P3 colorspace (Apple displays), choose the Display P3 option.
+
+But what if I don't know what my display is calibrated to ?
+
+    A safe choice would the be to assume you are using a sRGB-like display.
+
+.. _the rec709 transfer-function issue:
+
+I see some people using Rec.709 instead of sRGB, why ?
+
+    sRGB and Rec.709 share the same primaries, so you can use both without
+    seeing color-shift due to different primaries. What change is the
+    transfer function being used. But fasten your seat-bealt, here come the
+    mess : Rec.709 only defined an :abbr:`OETF <opto-electrical transfer function>`
+    which is intended for camera signal encoding, not data display encoding !
+    For display encoding with the Rec.709 colorspace, one should use the
+    `BT.1886 <https://www.itu.int/dms_pubrec/itu-r/rec/bt/R-REC-BT.1886-0-201103-I!!PDF-E.pdf>`_
+    standard which can be resumed as a simple 2.4
+    :abbr:`power-function <= gamma>`.
+
+    So how to know which one of this two is being used ? Simple, if when
+    compared to sRGB, the image looks darker, it's the OETF, if it's looks less
+    contrasty, it's BT.1886.
+
+    If you do the test, the Substance config use the OETF (which should not
+    be used), while the ACES config use BT.1886.
+
+You didn't answered to my question !? I'm just more confused now !
+
+    As written previously, you need to choose the option that correspond to
+    your display, so if your display is not calibrated to Rec.709+BT.1886
+    don't use it. But some people like the look of it, being less contrasty,
+    that's why its being choosed. But the display should not be a creative
+    choice. If you like a less contrasty look, you should apply it in the Look
+    (see under).
+
+    Just to add more of confusion, the BT.1886 difference with sRGB can
+    actually be used as a viewing environment compensation. So it can actually
+    justify why using Rec709+BT.1886 instead of sRGB.
+
+Anyways, I'm going too far from the subject, and someone already
+wrote about this topic, I let you read this mind-blowing article from
+Chris Brejon `OCIO, Display Transforms and Misconceptions <https://chrisbrejon
+.com/articles/ocio-display-transforms-and-misconceptions/>`_.
+
+
+
+
+
+
+OCIO Implementation Issues
+--------------------------
+
+.. note-default::
+
+    The goal here is not to denigrate the dev team's works but rather to offer
+    explanations and solutions at what could be better.
+
+Display Issues
+==============
+
+This explanations were made possible thanks to the Chris Brejon's article
+`OCIO, Display Transforms and Misconceptions`_.
+
+Display components mismatch
+___________________________
+
+OCIO divide the Display section in 3 components :
+
+-
+    ``Display`` : the physical hardware you are using (monitor, TV, phone, ...).
+
+-
+    ``View`` : a way to encode the data for a specific viewing purpose.
+
+-
+    ``Look`` : a creative layer of modification on the data. ex: a grade.
+
+Why does I explain you this ? Because these components are often mismatched
+or forgot. Unfortunately Substance make no exception here.
+
+.. image:: {static}/images/blog/0008/sp-odt-default.png
+    :target: {static}/images/blog/0008/sp-odt-default.png
+    :alt: View-transform screenshot.
+
+If you look at the view-transform screenshot above, you can see that each
+option has the the ``Default`` prefix.
+If we have a look at the ``config.ocio`` file from the Substance config,
+we can see why :
+
+.. figure:: {static}/images/blog/0008/config-substance-displays.png
+    :target: {static}/images/blog/0008/config-substance-displays.png
+    :alt: Screenshot of the displays part of the Substance Ocio config.
+
+What should be a ``display`` or a separate ``view`` is actually all merged
+into a single ``view`` component !
+
+.. _substance-config-displays-fixed:
+
+Here is how it should look :
+
+.. code:: yaml
+
+    displays:
+      sRGB:
+        - !<View> {name: Display, colorspace: sRGB}
+        - !<View> {name: ACES, colorspace: ACES sRGB}
+        - !<View> {name: False Color, colorspace: False Color}
+        - !<View> {name: Raw, colorspace: Raw}
+      Display P3:
+        - !<View> {name: Display, colorspace: Display P3}
+          - !<View> {name: False Color, colorspace: False Color}
+        - !<View> {name: Raw, colorspace: Raw}
+      Rec709 :
+        - !<View> {name: Display, colorspace: Rec709}
+        - !<View> {name: False Color, colorspace: False Color}
+        - !<View> {name: Raw, colorspace: Raw}
+      Rec2020 :
+        - !<View> {name: Display, colorspace: Rec2020}
+        - !<View> {name: False Color, colorspace: False Color}
+        - !<View> {name: Raw, colorspace: Raw}
+
+Here is the result of the above in Substance Painter :
+
+.. image:: {static}/images/blog/0008/config-substance-fixed-sp.png
+    :target: {static}/images/blog/0008/config-substance-fixed-sp.png
+    :alt: Screenshot of the displays part of the Substance Ocio config.
+
+And if we want to use a new OCIO v2 feature :
+
+.. code:: yaml
+
+    shared_views:
+      - !<View> {name: False Color, colorspace: False Color}
+      - !<View> {name: Raw, colorspace: Raw}
+
+    displays:
+      sRGB:
+        - !<View> {name: Display, colorspace: sRGB}
+        - !<View> {name: ACES, colorspace: ACES sRGB}
+      DisplayP3:
+        - !<View> {name: Display, colorspace: Display P3}
+      Rec709:
+        - !<View> {name: Display, colorspace: Rec709}
+      Rec2020:
+        - !<View> {name: Display, colorspace: Rec2020}
+
+But again unfortunately, even if the above example is valid, it doesn't work
+on sp and we can't select the ``Raw`` and ``False Color`` views. (even thought
+sp use OCIO v2)
+
+Partial Look support
+____________________
+
+If go back to the above explanations where I mention OCIO Display is build with
+3 components, we see that I didn't mention the last one yet: Looks.
+
+Looks is a color-tansformation performed in any colorspace aimed at
+modifying the data in a creative way. This would allow for example the
+artist to have a first look at how it's render could looks like after the
+:abbr:`di <Digital Intermediate = grading process>` pass.
+
+Usually Looks are defined similar to colorspaces, as a list, but you can also
+make a Look available in a display view:
+
+.. code:: yaml
+
+    displays:
+        sRGB:
+            - !<View> {name: Display, colorspace: sRGB-Display}
+            - !<View> {name: Display Grade A, colorspace: sRGB-Display, looks: gradeA}
+
+    looks:
+    - !<Look>
+      name: gradeA
+      process_space: rclg16
+      transform: !<FileTransform> {src: look_A.cc, interpolation: linear}
+
+In the best case we shoould have a dropdown menu that would allow us to combine
+the current ``view-transform`` with any Look defined. A good example of this
+is Blender :
+
+.. figure:: {static}/images/blog/0008/blender-cm.png
+    :target: {static}/images/blog/0008/blender-cm.png
+    :alt: Screenshot of Blender color-management menu.
+
+    Notice how it respects the 3 components of an OCIO display.
+
+Unfortunately, sp didn't implemented this feature yet. So we can only rely
+on merging the look in a display view for now.
+
+A good way to test this is using the `Filmic <https://github
+.com/sobotka/filmic-blender>`_ OCIO config by Troy Sobotka.
+The filmic encoding is correctly available in a ``View`` but require an
+extra step to be correctly displayed. By default it is a flat log
+representation, and require to choose a Look with the desired contrast amount.
+
+To have it working in sp, it is requires to merge the Look in a new ``View``.
+
+.. code:: yaml
+
+    displays:
+        sRGB:
+            - !<View> {name: sRGB OETF, colorspace: sRGB OETF}
+            ...
+            - !<View> {name: Filmic Very High Contrast, colorspace: Filmic Log Encoding, look: +Very High Contrast}
+            ...
+
+.. _sp-odt-name-cropped:
+
+Which in sp, if we kept all the contrast amount, give us a very long list of
+cropped name 😬 But at least it's working.
+
+.. image:: {static}/images/blog/0008/sp-odt-filmic.png
+    :target: {static}/images/blog/0008/sp-odt-filmic.png
+    :alt: Screenshot of sp view-transform with filmic view.
+
+
+
+Issues Recap
+============
+
+This list aim at helping the potential Substance dev team members reading this
+adressing the issues.
+
+-
+    Substance config use the wrong Rec.709 display encoding.
+    (see `the rec709 transfer-function issue`_)
+
+-
+    Substance config miss simple P3 colorspaces while it offer a Rec2020 one
+    (who would use it ??)
+
+-
+    Substance config ``displays`` key is not properly build.
+    (see `substance-config-displays-fixed`_ )
+
+-
+    OCIO v2 feature ``shared_views`` is not supported.
+
+-
+    OCIO roles are not supported, as such default configuration for
+    project is wrong and can confuse artists.
+
+-
+    The view-transform dropdown is too small in width. When selecting long
+    ``display`` names, they got cropped. (see `sp-odt-name-cropped`_)
+
+
 
 ACES setup
 ----------
