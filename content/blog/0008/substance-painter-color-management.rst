@@ -284,6 +284,15 @@ already is.
     encoded for an sRGB Display, we cannot use the Output encoded for a DCI-P3
     Display.
 
+----
+
+You made it yay ! Color-science is a complex topic, so don't worry if you
+don't get everything the first time. You will find additional resources to
+continue your exploration at the end of this article.
+
+Now, let's put in practice the theory ...
+
+
 Substance Setup & Workflow
 --------------------------
 
@@ -377,8 +386,6 @@ You will still have enough control to have a proper color-managed workflow.
 
 Let's now see how you could load a custom OCIO config.
 
-.. transition:: ~
-
 Custom config
 _____________
 
@@ -408,14 +415,14 @@ Environment variable
 ____________________
 
 The above might be enough for indivual artist but being in a pipeline
-environement will require other way to set OCIO automaticaly.
+environment will require other ways to set OCIO automaticaly.
 
 .. note-info::
 
     If the OCIO environment variable is present and has a valid configuration
     file it will take over to override and disable the UI settings.
 
-On Windows you have 2 way to set environment variable :
+On Windows you have 2 way to set environment variables :
 
 Global Settings
 """""""""""""""
@@ -509,8 +516,8 @@ Now you we are good to start the texturing workflow. The workflow will be
 divided in the same sections explained in the theoratical part of this
 article (see `Color-managed Workflow`_).
 
-The Workspace in Sp
-===================
+Workspace Setup in Sp
+=====================
 
 The Workspace, in software is actually an "abstract" section. It just represent
 the colorspace used as a reference, target or source for every color
@@ -530,8 +537,8 @@ of it.
 
 It is just good to know what is the colorspace being used here.
 
-The Display in Sp
-=================
+Display Setup in Sp
+===================
 
 .. image:: {static}/images/blog/0008/sp-odt-default.png
     :target: {static}/images/blog/0008/sp-odt-default.png
@@ -590,9 +597,163 @@ wrote about this topic, I let you read this mind-blowing article from
 Chris Brejon `OCIO, Display Transforms and Misconceptions <https://chrisbrejon
 .com/articles/ocio-display-transforms-and-misconceptions/>`_.
 
+Displaying Color and Scalar data
+________________________________
+
+Sp will handle it for you automatically, depending of the channel you
+are previewing.
+
+`The full list of color-managed channels is available here.
+<https://substance3d.adobe.com/documentation/spdoc/color-management
+-223053233.html#section5>`_
+
+For example, selecting the Roughness channel for preview, will disable the
+view-transform :
+
+.. image:: {static}/images/blog/0008/sp-odt-off.png
+    :target: {static}/images/blog/0008/sp-odt-off.png
+    :alt: View-transform screenshot, when scalar data is selected.
+
+If you are using custom ``User`` channel, you will have to manually specify if
+the channel is color-managed thought. (By default they are not)
+
+
+Input Setup in Sp
+=================
+
+Texturing is all about mixing already existing images, with some carefully
+crafted paint stroke, and funky procedurals resources. All of these, if they
+are color-data, have been created and saved with a specific colorspace.
+We will need to know and then specify this colorspace to sp so the OCIO
+processor can know if it need conversion to the Workspace colorspace.
+
+Shelf Resources
+_______________
+
+In Sp this manipulation takes place, weirdly, on the images slots of each
+layer. You will not find any option to specify the colorspace in the shelf.
+
+.. image:: {static}/images/blog/0008/sp-in-bobross.png
+    :target: {static}/images/blog/0008/sp-in-bobross.png
+    :alt: Screenshots of the Input colorspace option for layers.
+
+By default , it is set to ``auto``, which will use the settings specified in the
+project color-management settings explained above.
+(`Substance parameters for OCIO configs`_).
+
+I recommend to always modify this option to the proper colorspace to be sure
+the resource is properly color-managed.
+
+The color-picker
+________________
+
+.. container:: l-flex-r l-flex-start l-gap-1
+
+    .. image:: {static}/images/blog/0008/sp-colorpicker.png
+        :target: {static}/images/blog/0008/sp-colorpicker.png
+        :alt: Screenshots of the color picker.
+
+    .. container:: l-flex-shrink-2
+
+        As used as feared by artist. It never react how the artist wants and looks
+        to be made out of dark-magic (at least in Mari 🙃 ). Did the sp
+        implementation brings any good news ? Let's see.
+
+        Abbreviations used:
+
+        -
+            ``tcd`` : top colorspace dropdown
+        -
+            ``eds`` : editable sliders, where you can manually enter your color
+            components.
+
+        First really good feature is the little info icon, explaining
+        explicitly how the widget works. But the info it give bring some bad
+        news ; if we have a look at the info message next to the tcd :
+
+            This is the display color space used for displaying the on-screen
+            image. The editable color values are specified within the project's
+            working color space.
+
+        What this mean is that in the values sliders under, the value entered
+        are always in the colorspace defined by the the project's working
+        color space. So you could change the tcd but
+        this won't modify the value entered.
+
+        **The tcd only modify how the color is displayed in the
+        interface.** (you can see this displayed value under the eds)
+
+        .. note-info::
+
+            As such it is recommended to set the tds to the same colorspace
+            being used in the view-transform.
+
+.. _picker:
+
+What about the actual picker ?
+
+    Same thing, the value that is being picked is expressed in the working
+    colorspace. It is not affected by the tds.
+
+    First the color-picker pick the value at display *(the value will be
+    different if you enable or disable the view-transform )*
+
+    Then the color-picker ALWAYS apply an extra color-transformation step :
+    It apply the inverse transform defined in the colorspace used in
+    the ``color-picking`` OCIO role.
+
+Here is a quick drawing :
+
+.. figure:: {static}/images/blog/0008/diagramC.jpg
+    :target: {static}/images/blog/0008/diagramC.jpg
+    :alt: Color-picking process as a diagram.
+
+    Using the Substance config
+
+.. figure:: {static}/images/blog/0008/diagramC-ACES.jpg
+    :target: {static}/images/blog/0008/diagramC-ACES.jpg
+    :alt: Color-picking process as a diagram.
+
+    Using the ACES 1.2 config
+
+.. note-warning::
+
+    You need to also take in consideration the color-picker precision issues.
+    Applying an invert color-transformations can lead in some case to
+    imprecision but it seems the color-picker already has some precison
+    issues by itself.
+
+This mean the colorpicker is unfortunately again, broken. But there is a
+solution to compensate this issue.
+
+.. block-primary:: In the case you want to reverse the color-picker
+    color-transformation :
+
+    -
+        Set the tcd to the same colorspace used by the ``color_picking`` role.
+        (by default it should be the first view-transform but check the config)
+
+    -
+        Pick your value.
+
+    -
+        Look at the values in the ``Display colorspace`` widget, and copy
+        them in the eds.
+
+    *(most common case would be to pick data in a scalar channel)*
 
 
 
+Output Setup in Sp
+===================
+
+.. TODO
+
+
+ACES setup
+----------
+
+.. TODO
 
 
 OCIO Implementation Issues
@@ -708,7 +869,7 @@ artist to have a first look at how it's render could looks like after the
 :abbr:`di <Digital Intermediate = grading process>` pass.
 
 Usually Looks are defined similar to colorspaces, as a list, but you can also
-make a Look available in a display view:
+make a Look available in a display's view:
 
 .. code:: yaml
 
@@ -723,7 +884,7 @@ make a Look available in a display view:
       process_space: rclg16
       transform: !<FileTransform> {src: look_A.cc, interpolation: linear}
 
-In the best case we shoould have a dropdown menu that would allow us to combine
+In the best case we should have a dropdown menu that would allow us to combine
 the current ``view-transform`` with any Look defined. A good example of this
 is Blender :
 
@@ -767,35 +928,77 @@ cropped name 😬 But at least it's working.
 Issues Recap
 ============
 
-This list aim at helping the potential Substance dev team members reading this
+This list aim at helping the potential Substance dev team members reading this,
 adressing the issues.
 
 -
-    Substance config use the wrong Rec.709 display encoding.
-    (see `the rec709 transfer-function issue`_)
+    | Substance config use the wrong Rec.709 display encoding.
+    | (see `the rec709 transfer-function issue`_)
 
 -
     Substance config miss simple P3 colorspaces while it offer a Rec2020 one
     (who would use it ??)
 
 -
-    Substance config ``displays`` key is not properly build.
-    (see `substance-config-displays-fixed`_ )
+    | Substance config ``displays`` key is not properly build.
+    | (see `substance-config-displays-fixed`_ )
 
 -
     OCIO v2 feature ``shared_views`` is not supported.
 
 -
-    OCIO roles are not supported, as such default configuration for
-    project is wrong and can confuse artists.
+    | OCIO roles are not supported, as such default configuration for
+     project is wrong and can confuse artists.
+    | (see `Substance parameters for OCIO configs`_)
 
 -
-    The view-transform dropdown is too small in width. When selecting long
-    ``display`` names, they got cropped. (see `sp-odt-name-cropped`_)
+    | The view-transform dropdown is too small in width. When selecting long
+     ``display`` names, they got cropped.
+    | (see `sp-odt-name-cropped`_)
+
+-
+    Colorspace on resources (images, ...) should be performable from the shelf
+    and not from a layer's slot. A resource doesn't have its original
+    colorspace changing depending where its used !
+
+-
+    Color-picker : modifying the top colorspace should affect the editable
+    values. Where the top colorspace represent the colorspace used to enter
+    values so they can be converted to the working colorspace behind the scene.
+
+-
+    With the above, add a way to see what value are being used in the
+    workspace.
+
+-
+    | Color-picker: the picker should not use the ``color_picking`` role as an
+     invert transform. It should be the colorspace used by the
+     ``view-transform``. (and no transform should be applied when the
+     view-transform is disabled)
+    | (see `picker`_ section)
 
 
 
-ACES setup
-----------
 
-.. TODO
+Resources
+---------
+
+.. block-default:: The Hitchhiker's Guide to Digital Colour
+
+    https://hg2dc.com/
+
+.. block-default:: Chris Brejon
+
+    https://chrisbrejon.com/cg-cinematography/chapter-1-color-management
+
+.. block-default:: ACES Central
+
+    https://community.acescentral.com/
+
+.. block-default:: Cinematic Color
+
+    https://cinematiccolor.org/
+
+.. block-default:: A Color-Science Discord server
+
+    https://discord.gg/jk6u3eB
