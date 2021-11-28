@@ -167,19 +167,19 @@ article h1 {
 }
 article h2 {
     font-size: 1.8rem;
-    margin-top: 4rem;
+    margin-top: 5rem;
 }
 article h3 {
     font-size: 1.4rem;
-    margin-top: 3rem;
+    margin-top: 3.5rem;
 }
 article h4 {
     font-size: 1.2rem;
-    margin-top: 2rem;
+    margin-top: 2.5rem;
 }
 article h5 {
     font-size: 1rem;
-    margin-top: 2rem;
+    margin-top: 2.5rem;
 }
 
 article .m-block h2, article .m-block h3, article .m-block h4,
