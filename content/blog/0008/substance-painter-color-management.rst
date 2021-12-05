@@ -18,14 +18,14 @@ Color-management in Substance Painter with OCIO
     :class: m-text m-primary
 
 
-It's there ! After so much time, Substance-Painter finally saw it-self getting
+It's there ! After so much time, Substance-Painter finally saw itself getting
 a shiny new color-management system with OCIO support. We're going to dive
 deeper inside and see how it works.
 
-The article is divided in two parts.
-You got first a theoratical part that will try to explain how
+The article is divided into two parts.
+You got first a theoretical part that will try to explain how
 color-management works. This can help you debug issues and just not tweak
-settings like a blind machine. This part is not mandatory thought. You can
+settings like a blind machine. This part is not mandatory though. You can
 skip straight to the `Substance Setup & Workflow`_ section if desired.
 
 .. note-info::
@@ -46,15 +46,15 @@ Color-managed Workflow
 
 .. note-info::
 
-    This part is aimed at beginners, but this is a too vast topic for this
-    article. I recommend to read
+    This part is aimed at beginners, but introduce a too vast topic for this
+    article. I recommend reading
     `Chris Brejon article's section about colorspaces
     <https://chrisbrejon.com/cg-cinematography/chapter-1-color-management
     #rgb-colorspace-and-its-components>`_ first, to be sure you understand
-    some of the technical vocabulary employed.
+    some of the technical vocabularies employed.
 
-We can break the workflow in 4 sections : ``Input``, ``Workspace``, ``Display``
-and ``Output``
+We can break the workflow into 4 sections : ``Input``, ``Workspace``,
+``Display`` and ``Output``
 
 .. container:: l-c-color l-mrg-l l-flex-c l-flex-center
 
@@ -62,12 +62,12 @@ and ``Output``
         :file: diagramA.svg
 
 
-You transfer ``data`` between each of this section. Data that must be
-potentialy decoded and then encoded, depending of what the section require.
+You transfer ``data`` between each of these section. Data that must be
+potentially decoded and then encoded, depending on what the section required.
 In Substance Painter this ``data`` is most of the time pixels, encoded
 using the RGB color model.
 
-All of this data-transfers allow me to introduce the first core rule:
+All of these data-transfers allow me to introduce the most important rule:
 :text-green:`you always need to know where you start to know where you are
 going`.
 As an example, in the above diagram, to convert the ``Input`` data to the
@@ -79,7 +79,7 @@ Data types: Color and Scalar
 
 "Where you start" means first, what type of data are you manipulating ?
 
-There is only two types : ``color`` and ``scalar``.
+There are only two types : ``color`` and ``scalar``.
 
 It is important to know which one your data belongs to because the scalar
 one doesn't require your data to be color-managed and as such skip a
@@ -89,7 +89,7 @@ Scalar
 ______
 
 Scalar data has no means to be displayed directly, the data store numbers
-that can be used to drive other type of data. We are only interested by the
+that can be used to drive other types of data. We are only interested in the
 original value of these numbers and as such this kind of data **must never
 be altered by color-transformations.**
 
@@ -98,13 +98,13 @@ roughness, normals, masks, displacement, vectors, ...
 
 .. note-warning::
 
-    This is not because the data , when displayed, is not grayscale , that it
+    This is not because the data, when displayed, is not grayscale, that it
     is color data. For example normal maps, even if colored, ARE scalar data.
 
 Color
 _____
 
-Everything that is not scalar. Values stored are intented to be displayed
+Everything that is not scalar. Values stored are intended to be displayed
 directly. These values are always encoded in some colorspace and require to be
 decoded properly.
 
@@ -114,12 +114,12 @@ color, specular color, refraction color, every image displayed on the web, ...
 In Substance
 ____________
 
-In Substance you will find this separations depending of the channel you
+In Substance you will find this separation depending on the channel you
 are working on. `The full list of color-managed channels is available here.
 <https://substance3d.adobe.com/documentation/spdoc/color-management
 -223053233.html#section5>`_
 
-As Substance is aware if the channel need to be color-managed, some operations
+As Substance is aware if the channel needs to be color-managed, some operations
 will be adjusted/skipped. An application of this is the ``view transform``
 that will be disabled when viewing a scalar channel.
 
@@ -139,38 +139,38 @@ Workflow Sections
 Input
 _____
 
-Data that need to be processed, this can be anything but in our case it is
-pixel data, like an image texture, a brush stroke, a procedural noise, ...
+Data that need to be processed, can be anything but in our case it is
+pixel data, like an image texture, a brushstroke, a procedural noise, ...
 
-If it is scalar, we don't need to decode it. We must specify that we doesn't
+If it is scalar, we don't need to decode it. We must specify that we don't
 want color-transformations by specifying for example the colorspace="raw".
 
-If it is color this mean that **the data has been mandatory encoded in a given
+If it is color this means that **the data has been mandatorily encoded in a given
 colorspace**. You can hope that this encoding is specified somewhere, like in
 the name, in the metadata, ... But as color-management is a big mess still in
 2021 most of the time we will assume that it's in sRGB colorspace with
-a transfer-function depending of the file format used.
+a transfer-function depending on the file format used.
 
 In sp the Input section can be found on the image slot of each layer.
-.. TODO link section
+See `Input Setup in Sp`_ ..
 
 Workspace
 _________
 
 Everything you create, modify go through it. We define how it is configured
 so we can always know "where to go" when transforming an Input.
-In sp this is the "Working color space". In OCIO term it correspond the
+In sp this is the "Working color space". In OCIO term it corresponds the
 ``scene_linear`` role (also the ``reference`` one).
 
-Even thought sp doesn't support OCIO role, it actually read the
+Even though sp doesn't support OCIO role, it read the
 ``scene_linear`` one to use it as the Working Colorspace.
 
 Display
 _______
 
-Once the data as been processed through the Workspace you might want to
+Once the data has been processed through the Workspace you might want to
 preview it. To do so, everybody will be using some kind of hardware display,
-usually a computer monitor. This might sounds dumb but it is a critical step.
+usually a computer monitor. This might sound dumb but it is a critical step.
 So here we need to convert the Workspace data to Display data, and there is a
 lot to do here.
 
@@ -178,9 +178,9 @@ We can see the Workspace as an "open-domain", where data can
 be stored in some fancy colorspaces, reach some very high values, ... (it
 can also be closed with data being already closer to the Display domain).
 We can then see the Display as a "closed-domain", it except a kind of
-particulary encoded signal and has limits clearly defined. Knowing the
+particularly encoded signal and has limits clearly defined. Knowing the
 source (Workspace) we can define the transformations required to convert it
-to the target (Display). This involve at his core, colorspace primaries
+to the target (Display). This involved at his core, colorspace primaries
 conversion (if Workspace colorspace is different from the Display ones),
 transfer-function encoding/re-encoding (to convert a linear Workspace to
 a Display requiring the sRGB transfer-function), and at a more advanced stage,
@@ -188,33 +188,33 @@ a dynamic-range conversion (still if required). This last step is usually
 called "tonemapping" where we try to make the open-domain that is the Workspace
 fit into the Display closed-domain.
 
-Damn that's a complicated one, but anyways, what you have to keep in mind is
+Damn that's a complicated one, but anyway, what you have to keep in mind is
 we are encoding data for a delimited domain defined by the display you are
 using.
 
 In sp the Display section is handled by the ``view-transform`` dropdown, that
 you can find at the top-right of your viewport.
-.. TODO link section
+See `Display Setup in Sp`_ .
 
 Output
 ______
 
 But isn't the Display the Output ? Yes, it can be, if you are at the end of the
 chain. But here in sp, the end of the chain is our exported texture files. The
-Display only allow us to a preview at how they could look.
+Display only allow us to have a preview of how they could look.
 
 So here, we will encode the Workspace data, has it is required for the next
-pipeline step. Encoding will depend of what you need in the next step and what
-container (image format) you choosed.
+pipeline step. Encoding will depend on what you need in the next step and what
+container (image format) you chose.
 
 In sp the Output section happens during the textures export process.
-.. TODO link section
+See `Output Setup in Sp`_ .
 
 Example
 _______
 
 To illustrate the theory here is a diagram representing a section of a
-potential VFX-pipeline. I hope this will not confused more than this topic
+potential VFX-pipeline. I hope this will not confuse you more than this topic
 already is.
 
 .. figure:: {static}/images/blog/0008/diagramB.jpg
@@ -225,11 +225,11 @@ already is.
     used for each section.
 
 -
-    I voluntary choosed different colorspace across departements and sections to
+    I voluntary chose different colorspace across departments and sections to
     accentuate potential transformations.
 
 -
-    It has been choosed to work with ACES for the color-management.
+    It has been chose to work with ACES for the color-management.
 
 -
     Let's assume all the users working on this pipeline have access to the
@@ -237,10 +237,10 @@ already is.
 
 .. block-danger:: Substance Painter
 
-    If we look at the Substance Painter departement, we can see that our workspace
+    If we look at the Substance Painter department, we can see that our workspace
     is ``linear - sRGB``. The artist decided to not bother working with ``ACEScg``
     colorspace but instead is using ``sRGB`` primaries.
-    This mean that for the Display, the chain of color-transformation is the
+    This means that for the Display, the chain of color-transformation is the
     following :
 
     ::
@@ -260,7 +260,7 @@ already is.
 
         .. container:: m-col-l-8
 
-            And all of this transformation are magically handled by the OCIO
+            And all of these transformation are magically handled by the OCIO
             config, the artist only specify what display is he using by
             modifying the view-transform colorspace.
 
@@ -269,20 +269,21 @@ already is.
 .. block-primary:: Maya
 
     | Now we are in Maya. We need to apply the textures on the asset and the
-     end-goal is to create a render of it. The Workspace is now ``ACEScg`` .
+     end goal is to create a render out of it.
+     The Workspace is now ``ACEScg`` .
      This mean we need to convert our texture which are in sRGB to this
      colorspace. The Display is the same, only the source colorspace
      change, which is now ACEScg.
-    | Let's skip quickly to the last departement.
+    | Let's skip quickly to the last department.
 
 .. block-warning:: Nuke
 
     Nuke keep the same Workspace as Maya, as our Input render is already in ACEScg
-    we don't need conversion. As this is the end of the pipeline we have few
-    more possibilites here for the Output. Here we want to also be able to see the
-    composited render on a sRGB Display. As such this mean the Output need to be
-    encoded for an sRGB Display, we cannot use the Output encoded for a DCI-P3
-    Display.
+    we don't need conversion. As this is the end of the pipeline we have a few
+    more possibilities here for the Output. Here we want to also be able to
+    see the composited render on an sRGB Display. As such this mean the
+    Output needs to be encoded for an sRGB Display, we cannot use the Output
+    encoded for a DCI-P3 Display.
 
 ----
 
@@ -290,7 +291,7 @@ You made it yay ! Color-science is a complex topic, so don't worry if you
 don't get everything the first time. You will find additional resources to
 continue your exploration at the end of this article.
 
-Now, let's put in practice the theory ...
+Now, let's put into practice the theory ...
 
 
 Substance Setup & Workflow
@@ -300,14 +301,14 @@ Substance Setup & Workflow
     :target: {static}/images/blog/0008/sp-project-legacy.png
     :alt: New project window with color-management tab
 
-Color-management is not application-dependant but project-dependant.
+Color-management is not application-dependent but project-dependant.
 As such, you will not find any options in the applications settings but in
-the project one.
+project ones.
 
 New Project
 ===========
 
-The first occurence of these new option can be fin on the ``New project``
+The first occurrence of these new options can be found on the ``New project``
 window. You will find a ``Color Management`` sub-menu at the bottom.
 
 .. image:: {static}/images/blog/0008/sp-project-cm-options.png
@@ -318,11 +319,11 @@ window. You will find a ``Color Management`` sub-menu at the bottom.
 
     You can change all the color-management settings at any moment in
     the project settings. Keep in mind that big changes could break your
-    project thought.
+    project though.
 
 You will be offered between two modes ``Legacy`` and ``OpenColorIO``.
 ``Legacy`` corresponds to the pre-release way sp was working with. We will
-skip this mode as it not usefull anymore.
+skip this mode as it is not useful anymore.
 
 .. note-info::
 
@@ -340,7 +341,7 @@ OCIO config
 But wait, wait ... what is OCIO ? Why should I use it ?
 
 `OCIO <https://opencolorio.readthedocs.io>`_
-is a color-management solution developed originaly by Sony Picture Imageworks
+is a color-management solution developed originally by Sony Picture Imageworks
 aiming at enforcing color-management consistency between DCCs.
 I recommend `having a read at the documentation <https://opencolorio
 .readthedocs.io/en/latest/concepts/overview/overview.html>`_ .
@@ -348,16 +349,16 @@ I recommend `having a read at the documentation <https://opencolorio
 OCIO itself only define standards of utilisation and give you the tools to work
 but the core of the system is the **OCIO config** (a ``.ocio`` file).
 This is where all the color-transforms and options are defined.
-For example ACES is a color-management system on his own but ship a version
+For example, ACES is a color-management system on his own but ship a version
 through OCIO.
 
-Main advantage is that OCIO is supported by most software (even if the
-implementation wildy differs between each 😬 ) so you could get the same look
+The main advantage is that OCIO is supported by most software (even if the
+implementation wildly differs between each 😬 ) so you could get the same look
 through all of your DCCs (in theory).
 
 .. transition:: ~
 
-For our convenience sp already ship with 3 OCIO configs :
+For our convenience sp already ships with 3 OCIO configs :
 
 - Substance
 - ACES 1.0.3
@@ -369,18 +370,18 @@ You can find them in the sp installation folder like this one :
 
     C:\Program Files\Allegorithmic\Adobe Substance 3D Painter\resources\ocio
 
-Honestly I don't know why did they included two ACES version, only the last
+Honestly, I don't know why did they include two ACES versions, only the last
 one was needed, but it is awesome to have a default "Substance" config.
 
-| Lot of flexibility here. First option being to use the shipped configs.
- On my opinion only the ``Substance`` config is interesting here.
-| The 2 ACES one are the "default" dev configs with the hundred of
+| Lot of flexibility here. First option is to use the shipped configs.
+ In my opinion only the ``Substance`` config is interesting here.
+| The 2 ACES ones are the "default" dev configs with the hundred of
  colorspaces you will never need. It is better to use a lightweight ACES
  config like `the one from CAVE academy <https://caveacademy
- .com/product/cave-cg-animation-aces-ocio-config/>`_. (see `ACES Setup`_
+ .com/product/cave-cg-animation-aces-ocio-config/>`_. (see `ACES Workflow`_
  section)
 
-The ``Substance`` config will be a good fit if you are using the tradional
+The ``Substance`` config will be a good fit if you are using the traditional
 sRGB linear workflow and do not wish to use an OCIO config in every DCC.
 You will still have enough control to have a proper color-managed workflow.
 
@@ -393,15 +394,16 @@ _____________
     :target: {static}/images/blog/0008/sp-project-ocio-custom.png
     :alt: New project window with OCIO option set with a custom config.
 
-The first option is to use the ``Custom`` option and the manually look for
+The first option is to use the ``Custom`` option and manually look for
 the path to the ``config.ocio`` file on your disk.
 
 
 .. block-warning:: Only a reference to the config path is saved in the project.
 
-    When submiting a OCIO config through the ``Custom`` option, **the config is always
-    loaded live from the disk**. This mean if you share a substance project with
-    someone that doesn't have the OCIO config at the same exact path you will
+    When submitting a OCIO config through the ``Custom`` option, **the
+    config is always loaded live from the disk**.
+    This means if you share a substance project with
+    someone that doesn't have the OCIO config at the exact same path, you will
     see this message pop up :
 
     .. image:: {static}/images/blog/0008/sp-project-ocio-custom-error.png
@@ -414,15 +416,15 @@ the setup.
 Environment variable
 ____________________
 
-The above might be enough for indivual artist but being in a pipeline
-environment will require other ways to set OCIO automaticaly.
+The above might be enough for individual artists but being in a pipeline
+environment requires other ways to set OCIO automatically.
 
 .. note-info::
 
     If the OCIO environment variable is present and has a valid configuration
     file it will take over to override and disable the UI settings.
 
-On Windows you have 2 way to set environment variables :
+On Windows you have 2 ways to set environment variables :
 
 Global Settings
 """""""""""""""
@@ -433,14 +435,14 @@ Global Settings
 
 You create a new variable named OCIO with the path to the config.
 This variable will be used by ALL software that can read it. (unless
-overriden).
+overridden).
 
-This is not a recommended solution as you polute your environment variable + if
-you decide to switch the config for an other one all your previous project
+This is not a recommended solution as you pollute your environment variable
++ if you decide to switch the config for another one all your previous project
 will be broken.
 
-Set localy at startup
-"""""""""""""""""""""
+Set locally at startup
+""""""""""""""""""""""
 
 You defined the environment variable in a start-up script.
 This is the cleanest way to do it but means you can't use the Windows shortcut
@@ -453,7 +455,8 @@ that will set the OCIO variable and then launch sp.
 
     set "OCIO=C:\aces_1.1\config.ocio"
 
-    "C:\Program Files\Allegorithmic\Adobe Substance 3D Painter\Adobe Substance 3D Painter.exe"
+    start "" "C:\Program Files\Allegorithmic\Adobe Substance 3D Painter\Adobe
+    Substance 3D Painter.exe"
 
 .. note-default::
 
@@ -461,13 +464,13 @@ that will set the OCIO variable and then launch sp.
     modify it with the path to your config, save it, and then just replace
     the ``.txt`` with ``.bat`` in the file's name.
 
-| This mean that to launch Substance you will have to always use this .bat.
+| This means that to launch Substance you will have to always use this .bat.
  No "double-clicking" on file to open them either.
 | You can have a look on internet at `how to pin a .bat to the taskbar
  <https://superuser.com/questions/656611/how-to-pin-a-batch-file-to-the
  -taskbar-quicklaunch/656649>`_ .
 
-But this guarantee a very robust software configuration per project.
+But this guarantees a very robust software configuration per project.
 
 Substance parameters for OCIO configs
 _____________________________________
@@ -479,26 +482,27 @@ _____________________________________
     OCIO with Substance config properly configured.
 
 
-This correspond to all the section bellow the color-management mode. It allow
-to configure how inputs reacts with the OCIO config, i.e which colorspace is
+It corresponds to all the sections below the color-management mode. It allows
+to configure how inputs react with the OCIO config, i.e which colorspace is
 being assigned by default.
 
-Usually in other software this section is configured using the `OCIO roles
+Usually, in other software, this section is configured using the `OCIO roles
 <https://opencolorio.readthedocs.io/en/latest/guides/authoring/overview
 .html#roles>`_ defined in the OCIO configuration.
-:text-danger:`But currently sp doesn't support OCIO roles.` Instead it is
+:text-danger:`But currently sp doesn't support OCIO roles.` Instead, it is
 using the ``working colorspace`` as a default colorspace everywhere, which mean
-:text-danger:`you have to manually setup this section` to get correct result
+:text-danger:`you have to manually setup this section` to get a correct result
 with the auto settings.
 
-If you look at the above image, this is how it supposed to look when picking
+If you look at the above image, this is how it is supposed to look when picking
 the Substance config. By default 8 and 16 bit images are supposed to be
-considered as ``sRGB``, same goes for substance materials.
+considered as ``sRGB``, **same goes for substance materials**.
 
 Make sure these options are properly configured with the intended colorspaces
-for each format if you want all the ``auto`` options to work properly.
+for each format if you want all the ``auto`` options to work properly. Most of 
+them (except Export ones) can be changed in context.
 
-Visit the `ACES setup`_ section to find how this should be considered if you
+Visit the `ACES Workflow`_ section to find how this should be considered if you
 are using the ACES config.
 
 New Project : Conclusion
@@ -507,26 +511,26 @@ New Project : Conclusion
 Alright, to recap' everything for a new project you need :
 
 1. Change the color-management mode to OCIO
-2. Choose the OCIO config (already choosen if env variable set)
+2. Choose the OCIO config (already chosen if env variable set)
 3. Edit the OCIO options to have the correct default colorspaces working.
 
-And of course setting the other parameters related to your texturing.
+And of course, setting the other parameters related to your texturing.
 
-Now you we are good to start the texturing workflow. The workflow will be
-divided in the same sections explained in the theoratical part of this
+Now you are good to start the texturing workflow. The workflow will be
+divided into the same sections explained in the theoretical part of this
 article (see `Color-managed Workflow`_).
 
 Workspace Setup in Sp
 =====================
 
-The Workspace, in software is actually an "abstract" section. It just represent
-the colorspace used as a reference, target or source for every color
-transformations. It is defined in the OCIO config and cannot be changed outside
+The Workspace, in software is actually an "abstract" section. It just
+represents the colorspace used as a reference, target or source for every color
+transformation. It is defined in the OCIO config and cannot be changed outside
 of it.
 
 .. note-info::
 
-    In the OCIO config it correspond to the ``scene_linear`` role.
+    In the OCIO config it corresponds to the ``scene_linear`` role.
 
 .. figure:: {static}/images/blog/0008/sp-project-ocio-workspace.png
     :target: {static}/images/blog/0008/sp-project-ocio-workspace.png
@@ -545,26 +549,26 @@ Display Setup in Sp
     :alt: View-transform screenshot.
 
 A good first step before working is to make sure the Display part is
-properly configured so you don't start texturing while viewing wrong colors.
-This Display part can be configured using what we usually called a
+properly configured so you don't start texturing while viewing the wrong
+colors. This Display part can be configured using what we usually called a
 `view-transform` menu. In sp, you can find it at the top-right of your
 viewport.
 
 What you have to remember is that :text-green:`you need to choose the option
-that correspond to your display.` If your display is calibrated to the
+that corresponds to your display.` If your display is calibrated to the
 Display P3 colorspace (Apple displays), choose the Display P3 option.
 
 But what if I don't know what my display is calibrated to ?
 
-    A safe choice would the be to assume you are using a sRGB-like display.
+    A safe choice would be to assume you are using an sRGB-like display.
 
 .. _the rec709 transfer-function issue:
 
 I see some people using Rec.709 instead of sRGB, why ?
 
     sRGB and Rec.709 share the same primaries, so you can use both without
-    seeing color-shift due to different primaries. What change is the
-    transfer function being used. But fasten your seat-bealt, here come the
+    seeing color-shift due to different primaries. What does change is the
+    transfer function being used. But fasten your seat-belt, here comes the
     mess : Rec.709 only defined an :abbr:`OETF <opto-electrical transfer function>`
     which is intended for camera signal encoding, not data display encoding !
     For display encoding with the Rec.709 colorspace, one should use the
@@ -572,23 +576,23 @@ I see some people using Rec.709 instead of sRGB, why ?
     standard which can be resumed as a simple 2.4
     :abbr:`power-function <= gamma>`.
 
-    So how to know which one of this two is being used ? Simple, if when
-    compared to sRGB, the image looks darker, it's the OETF, if it's looks less
-    contrasty, it's BT.1886.
+    So how to know which one of these two is being used ? Simple, if when
+    compared to sRGB, the image looks darker, it's the OETF, if it's looking
+    less contrasty, it's BT.1886.
 
     If you do the test, the Substance config use the OETF (which should not
-    be used), while the ACES config use BT.1886.
+    be used), while the ACES config uses BT.1886.
 
-You didn't answered to my question !? I'm just more confused now !
+You didn't answer my question !? I'm just more confused now !
 
-    As written previously, you need to choose the option that correspond to
+    As written previously, you need to choose the option that corresponds to
     your display, so if your display is not calibrated to Rec.709+BT.1886
     don't use it. But some people like the look of it, being less contrasty,
-    that's why its being choosed. But the display should not be a creative
+    that's why it's being chosen. But the display should not be a creative
     choice. If you like a less contrasty look, you should apply it in the Look
     (see under).
 
-    Just to add more of confusion, the BT.1886 difference with sRGB can
+    Just to add more confusion, the BT.1886 difference with sRGB can
     actually be used as a viewing environment compensation. So it can actually
     justify why using Rec709+BT.1886 instead of sRGB.
 
@@ -600,32 +604,32 @@ Chris Brejon `OCIO, Display Transforms and Misconceptions <https://chrisbrejon
 Displaying Color and Scalar data
 ________________________________
 
-Sp will handle it for you automatically, depending of the channel you
+Sp will handle it for you automatically, depending on the channel you
 are previewing.
 
 `The full list of color-managed channels is available here.
 <https://substance3d.adobe.com/documentation/spdoc/color-management
 -223053233.html#section5>`_
 
-For example, selecting the Roughness channel for preview, will disable the
+For example, selecting the Roughness channel for preview will disable the
 view-transform :
 
 .. image:: {static}/images/blog/0008/sp-odt-off.png
     :target: {static}/images/blog/0008/sp-odt-off.png
     :alt: View-transform screenshot, when scalar data is selected.
 
-If you are using custom ``User`` channel, you will have to manually specify if
-the channel is color-managed thought. (By default they are not)
+If you are using a custom ``User`` channel, you will have to manually
+specify if the channel is color-managed though. (By default they are not)
 
 
 Input Setup in Sp
 =================
 
 Texturing is all about mixing already existing images, with some carefully
-crafted paint stroke, and funky procedurals resources. All of these, if they
+crafted paint stroke, and funky procedural resources. All of these, if they
 are color-data, have been created and saved with a specific colorspace.
 We will need to know and then specify this colorspace to sp so the OCIO
-processor can know if it need conversion to the Workspace colorspace.
+processor can know if it needs conversion to the Workspace colorspace.
 
 Shelf Resources
 _______________
@@ -637,12 +641,18 @@ layer. You will not find any option to specify the colorspace in the shelf.
     :target: {static}/images/blog/0008/sp-in-bobross.png
     :alt: Screenshots of the Input colorspace option for layers.
 
-By default , it is set to ``auto``, which will use the settings specified in the
+By default, it is set to ``auto``, which will use the settings specified in the
 project color-management settings explained above.
 (`Substance parameters for OCIO configs`_).
 
-I recommend to always modify this option to the proper colorspace to be sure
+I recommend always modifying this option to the proper colorspace to be sure
 the resource is properly color-managed.
+
+Another option is to have the source colorspace specified in the file name.
+That's in my opinion a bit messy because the colorspace has to be the exact
+name used in the config. If 2 configs used a different name, your image will
+only work for one. If I take for example a colorspace name used in the ACES
+config this could give: ``bricks_wall_albedo_Utility - Linear - sRGB.exr``.
 
 The color-picker
 ________________
@@ -655,9 +665,9 @@ ________________
 
     .. container:: l-flex-shrink-2
 
-        As used as feared by artist. It never react how the artist wants and looks
-        to be made out of dark-magic (at least in Mari 🙃 ). Did the sp
-        implementation brings any good news ? Let's see.
+        As used as feared by artists. It never react how the artist wants
+        and looks to be made out of dark magic (at least in Mari 🙃 ).
+        Did the sp implementation bring any good news ? Let's see.
 
         Abbreviations used:
 
@@ -668,15 +678,15 @@ ________________
             components.
 
         First really good feature is the little info icon, explaining
-        explicitly how the widget works. But the info it give bring some bad
-        news ; if we have a look at the info message next to the tcd :
+        explicitly how the widget works. But the info it gives bring some bad
+        news; if we have a look at the info message next to the tcd :
 
             This is the display color space used for displaying the on-screen
             image. The editable color values are specified within the project's
             working color space.
 
-        What this mean is that in the values sliders under, the value entered
-        are always in the colorspace defined by the the project's working
+        What this means is that in the values sliders under, the value entered
+        are always in the colorspace defined by the project's working
         color space. So you could change the tcd but
         this won't modify the value entered.
 
@@ -699,7 +709,7 @@ What about the actual picker ?
     different if you enable or disable the view-transform )*
 
     Then the color-picker ALWAYS apply an extra color-transformation step :
-    It apply the inverse transform defined in the colorspace used in
+    It applies the inverse transform defined in the colorspace used in
     the ``color-picking`` OCIO role.
 
 Here is a quick drawing :
@@ -718,13 +728,13 @@ Here is a quick drawing :
 
 .. note-warning::
 
-    You need to also take in consideration the color-picker precision issues.
-    Applying an invert color-transformations can lead in some case to
-    imprecision but it seems the color-picker already has some precison
+    You need to also take into consideration the color-picker precision issues.
+    Applying an invert color-transformations can lead in some cases to
+    imprecisions but it seems the color-picker already has some precision
     issues by itself.
 
-This mean the colorpicker is unfortunately again, broken. But there is a
-solution to compensate this issue.
+This means the colorpicker is unfortunately again, broken. But there is a
+solution to compensate for this issue.
 
 .. block-primary:: In the case you want to reverse the color-picker
     color-transformation :
@@ -754,23 +764,221 @@ Your options are :
     environments maps will use it.
 
 -
-    Pre-convert the hdris to the working colorspace and import them.
+    Include the source colorspace in the name of the HDRI. It has to be the
+    **exact same name** as defined in the config. Example :
+    ``myhdri_ACES - ACEScg.exr``.
 
-The pre-integrated HDRIs are encoded under a ``linear - sRGB`` colorspace.
+The pre-integrated HDRIs are encoded with a ``linear - sRGB`` colorspace.
 
 
 Output Setup in Sp
 ===================
 
-.. TODO
+The Export Textures window didn't got much new. We doesn't have any options
+to apply a color-transformation at export time in the Window. The only options
+are the one available into the project settings.
+
+.. image:: {static}/images/blog/0008/sp-project-export.png
+    :target: {static}/images/blog/0008/sp-project-export.png
+    :alt: Sp project settings export options.
+
+Basically, integer format should be sRGB display encoded. Floating point format
+should use the same working colorspace.
+
+What's new though is the ``$colorspace`` token in the Output Templates tab.
+
+.. image:: {static}/images/blog/0008/sp-export-template.png
+    :target: {static}/images/blog/0008/sp-export-template.png
+    :alt: Sp Export window, Output template tab.
+
+Which is simply replaced by the colorspace defined in the project settings.
+(You can have a preview of the file name in the ``LIST OF EXPORT`` tab).
+
+I'm personaly not fan of this option as this might introduce special characters
+in the file's name, depending on how the colorspace is named. It is, I think,
+a better option to have the texture name without the colorspace, but exported
+in a directory with the colorspace name.
+
+For scalar channels, sp will not apply any color-transformation
+and consider them using the colorspace ``raw`` (no matter the config).
+Interstingly, this colorspace ``raw`` doesn't get written into the
+``$colorspace`` token as it should.
+
+ACES Workflow
+-------------
+
+I'm not going to get into the what and the why, only the how. Let's keep this
+for a potential next article ?
+
+ACES - Config setup
+===================
+
+You could use the one shipped with Substance but I wouldn't recommend so.
+They are the ones with the hundred colorspaces that will just slow you down
+when you need to choose one.
+
+Instead, it would be smarter to use a config with only what you need like
+`the one from CAVE academy`_.
+
+Then you will need to configure the default colorspaces. Using the Cave config
+(which have the same nomenclature as the official ACES ones) here is what I
+recommend :
+
+.. image:: {static}/images/blog/0008/sp-aces-project.png
+    :target: {static}/images/blog/0008/sp-aces-project.png
+    :alt: Substance project window with ACES setuped properly.
+
+Import settings are the usual stuff, most of the 8bit texture, if not all
+are sRGB display encoded files so ``Utility - sRGB - Texture`` correspond.
+Floating point images like EXRs should always be linear so the alternative
+version ``Utility - Linear - sRGB`` is the right choice. Remember these options
+are just applied by default (with the ``auto`` colorspace) but can be
+changed anytime.
+
+I choose ``Utility - sRGB - Texture`` for ``Substance materials`` because
+it seems the output is always sRGB display encoded as the screenshot under
+show. (colorspace options can be modified on the material anyway).
+
+.. figure:: {static}/images/blog/0008/sp-mat-colorspace.png
+    :target: {static}/images/blog/0008/sp-mat-colorspace.png
+    :alt: Substance viewport screenshot with different default for materials.
+
+    Model by `Emmanuel-Xuân Dubois <https://www.artstation.com/ashimara>`_
+
+Now for the output my choice is not the only option. To me, you shouldn't
+export ACEScg 8bit files, that why I re-encode them back to sRGB by using
+``Utility - sRGB - Texture``. The right option is to export EXRs (floating
+point images) in the same working colorspace: ACEScg. And don't worry for
+scalar channel they will be handled automatically at export. These options
+are the only ones that can't be modified per-case though; this is the only
+place you can change them.
+
+ACES - What to do when working
+==============================
+
+I'm only going to give detailed explanations when something is specific to
+ACES. Meanwhile the explanations given in `Substance Setup & Workflow`_ still
+apply so make sure you properly understood this section.
+
+ACES - Display
+______________
+
+Not much new, use the view-transform that correspond to the display you are
+using. (In my case ``ACES - sRGB``, that behind the scene, uses ``Output -
+sRGB``)
 
 
-ACES setup
-----------
+ACES - Inputs
+_____________
 
-.. TODO
+For every external resource you import, you need to assign the correct
+input colorspace if the automatic one doesn't correspond. The usual rules
+for the ACES workflow apply.
 
-I'm not going to get into the what and the why, only the how.
+ACES - Environment
+""""""""""""""""""
+
+There is unfortunately no direct options to change environment's colorspace.
+But they follow default colorspace rules. And as they are floating point image
+they use the pre-defined ``Utility - Linear - sRGB`` colorspace. As such, as
+long as they are sRGB - linear encoded, they will be properly displayed.
+
+But what if I want to import an already converted ACEScg HDRI ?
+
+    There is a way to have it working. You can specify the colorspace in the
+    file name. The colorspace has to be **the exact same name** as the one
+    defined in the config. An example would be: ``myhdri_ACES - ACEScg.exr``.
+
+    Left one is sRGB encoded, middle and right ACEScg encoded. Right one
+    doesn't get properly converted and looks shifted.
+
+    .. figure:: {static}/images/blog/0008/sp-aces-hdri-comparison.png
+        :target: {static}/images/blog/0008/sp-aces-hdri-comparison.png
+        :alt: Sp viewport screenshot with hdri comparison.
+
+        Model and texturing by `Emmanuel-Xuân Dubois`_
+
+
+ACES - Colorpicker
+__________________
+
+The colorpicker by default and in my case use the same colorspace as the
+first view_transform. This means the color I see in the picker is the same in
+the viewport. As mentioned in `The color-picker`_ section the sliders values
+are expressed in the working-colorspace, in our case ACEScg.
+
+Consider the following example :
+
+.. figure:: {static}/images/blog/0008/sp-aces-colorpicker.png
+    :target: {static}/images/blog/0008/sp-aces-colorpicker.png
+    :alt: Substance colorpicker with ACES workflow.
+
+    Model by `Emmanuel-Xuân Dubois`_
+
+I have an ACEScg value of (1,0,0) which is damn too saturated
+and no object except laser are that saturated.
+
+.. note-warning::
+
+    This mean you have to be careful
+    when picking values, and always keep a look at the scene-refered ACEScg
+    values.
+
+What if I want to apply a color we gave me as hexadecimal ?
+
+    Consider my brand's green picked from https://coolors.co .
+
+    .. figure:: {static}/images/blog/0008/sp-aces-colorpicker-hex.png
+        :target: {static}/images/blog/0008/sp-aces-colorpicker-hex.png
+        :alt: Substance colorpicker with ACES workflow.
+
+        Model by `Emmanuel-Xuân Dubois`_
+
+    Well ... the less brain-damaging solution would be to just eyeball the
+    color.
+
+    The first issue here is that the color is probably sRGB display
+    encoded and need to first be linearized, then converted to ACEScg.
+
+    .. image:: {static}/images/blog/0008/sp-aces-colorpicker-conversion.png
+        :target: {static}/images/blog/0008/sp-aces-colorpicker-conversion.png
+        :alt: Nuke screenshot to convert sRGB hex value to ACEScg
+
+    The above should give you an idea of how to achieve this with Nuke.
+    The ACEScg values can be found at the bottom right of the image.
+    But as you can see the viewer color (with the ACES ODT applied) is still
+    different from the preview on coolors website !
+
+    Keep this in mind: :text-green:`you will never be able to match the look
+    of the sRGB workflow with the ACES workflow.` (unless cheating).
+
+    I'm not going to dive into further explanations as there is `enough threads
+    on this subject <https://community.acescentral.com/t/preserving-logos-and-graphics-in-aces/2861>`_
+    on ACES central and Chris `is already explaining it here
+    <https://chrisbrejon.com/cg-cinematography/chapter-1-5-academy-color
+    -encoding-system-aces/#inverted-odt-workflow>`_.
+
+ACES - Output
+_____________
+
+Do yourself a favour here and only care about EXR. `You don't need anything
+else <https://www.elsksa.me/scientia/cgi-offline-rendering/file-format
+-debunk>`_ and this is the file format recommended by the Academy for ACES
+data encoding.
+
+If you choose EXR, you have nothing to care about. Color channel will be
+exported in ``ACEScg`` while scalar channel will bypass any
+color-transform encoding. Simple as that.
+
+.. figure:::: {static}/images/blog/0008/sp-aces-export.png
+    :target: {static}/images/blog/0008/sp-aces-export.png
+    :alt: Substance Export window screenshot.
+
+    You can check the LIST OF EXPORTS tab to see how it's going to be exported.
+
+Reminder that you can choose to remove the ``$colorspace`` token in your
+export template map name to avoid unwanted special characters in your file
+name. (and instead export the textures in a folder named ACEScg)
 
 
 OCIO Implementation Issues
@@ -779,18 +987,18 @@ OCIO Implementation Issues
 .. note-default::
 
     The goal here is not to denigrate the dev team's works but rather to offer
-    explanations and solutions at what could be better.
+    explanations and solutions to what could be better.
 
 Display Issues
 ==============
 
-This explanations were made possible thanks to the Chris Brejon's article
+These explanations were made possible thanks to the Chris Brejon's article
 `OCIO, Display Transforms and Misconceptions`_.
 
 Display components mismatch
 ___________________________
 
-OCIO divide the Display section in 3 components :
+OCIO divide the Display section into 3 components :
 
 -
     ``Display`` : the physical hardware you are using (monitor, TV, phone, ...).
@@ -801,15 +1009,15 @@ OCIO divide the Display section in 3 components :
 -
     ``Look`` : a creative layer of modification on the data. ex: a grade.
 
-Why does I explain you this ? Because these components are often mismatched
-or forgot. Unfortunately Substance make no exception here.
+Why do I explain you this ? Because these components are often mismatched
+or forgotten. Unfortunately, Substance makes no exception here.
 
 .. image:: {static}/images/blog/0008/sp-odt-default.png
     :target: {static}/images/blog/0008/sp-odt-default.png
     :alt: View-transform screenshot.
 
 If you look at the view-transform screenshot above, you can see that each
-option has the the ``Default`` prefix.
+option has the ``Default`` prefix.
 If we have a look at the ``config.ocio`` file from the Substance config,
 we can see why :
 
@@ -834,7 +1042,7 @@ Here is how it should look :
         - !<View> {name: Raw, colorspace: Raw}
       Display P3:
         - !<View> {name: Display, colorspace: Display P3}
-          - !<View> {name: False Color, colorspace: False Color}
+        - !<View> {name: False Color, colorspace: False Color}
         - !<View> {name: Raw, colorspace: Raw}
       Rec709 :
         - !<View> {name: Display, colorspace: Rec709}
@@ -851,41 +1059,28 @@ Here is the result of the above in Substance Painter :
     :target: {static}/images/blog/0008/config-substance-fixed-sp.png
     :alt: Screenshot of the displays part of the Substance Ocio config.
 
-And if we want to use a new OCIO v2 feature :
+Using OCIO v2 there are other ways to improve how the config is built.
+Heads up to `Improving the Substance OCIO config`_ to see how.
 
-.. code:: yaml
-
-    shared_views:
-      - !<View> {name: False Color, colorspace: False Color}
-      - !<View> {name: Raw, colorspace: Raw}
-
-    displays:
-      sRGB:
-        - !<View> {name: Display, colorspace: sRGB}
-        - !<View> {name: ACES, colorspace: ACES sRGB}
-      DisplayP3:
-        - !<View> {name: Display, colorspace: Display P3}
-      Rec709:
-        - !<View> {name: Display, colorspace: Rec709}
-      Rec2020:
-        - !<View> {name: Display, colorspace: Rec2020}
-
-But again unfortunately, even if the above example is valid, it doesn't work
-on sp and we can't select the ``Raw`` and ``False Color`` views. (even thought
-sp use OCIO v2)
+But even with this fix, it's not very friendly to have a long list of merged
+(display + view) while you would only need one Display most of the time. **The
+best solution here would be to have 2 dropdowns** :
+One to choose the Display, and one to choose the corresponding available View.
+We should even get a third one for looks as we are going to see in the next
+section :
 
 Partial Look support
 ____________________
 
-If go back to the above explanations where I mention OCIO Display is build with
-3 components, we see that I didn't mention the last one yet: Looks.
+In above explanations where I mention OCIO Display is build with
+3 components, we now see that I didn't mention the last one yet: Looks.
 
 Looks is a color-tansformation performed in any colorspace aimed at
 modifying the data in a creative way. This would allow for example the
-artist to have a first look at how it's render could looks like after the
+artist to have a first look at how its renders could looks like after the
 :abbr:`di <Digital Intermediate = grading process>` pass.
 
-Usually Looks are defined similar to colorspaces, as a list, but you can also
+Usually, Looks are defined similar to colorspaces, as a list, but you can also
 make a Look available in a display's view:
 
 .. code:: yaml
@@ -901,7 +1096,7 @@ make a Look available in a display's view:
       process_space: rclg16
       transform: !<FileTransform> {src: look_A.cc, interpolation: linear}
 
-In the best case we should have a dropdown menu that would allow us to combine
+In the best case, we should have a dropdown menu that would allow us to combine
 the current ``view-transform`` with any Look defined. A good example of this
 is Blender :
 
@@ -911,16 +1106,16 @@ is Blender :
 
     Notice how it respects the 3 components of an OCIO display.
 
-Unfortunately, sp didn't implemented this feature yet. So we can only rely
+Unfortunately, sp didn't implement this feature yet. So we can only rely
 on merging the look in a display view for now.
 
 A good way to test this is using the `Filmic <https://github
 .com/sobotka/filmic-blender>`_ OCIO config by Troy Sobotka.
 The filmic encoding is correctly available in a ``View`` but require an
 extra step to be correctly displayed. By default it is a flat log
-representation, and require to choose a Look with the desired contrast amount.
+representation, and require choosing a Look with the desired contrast amount.
 
-To have it working in sp, it is requires to merge the Look in a new ``View``.
+To have it working in sp, it is required to merge the Look in a new ``View``.
 
 .. code:: yaml
 
@@ -941,31 +1136,51 @@ cropped name 😬 But at least it's working.
     :alt: Screenshot of sp view-transform with filmic view.
 
 
+Improving the Substance OCIO config
+===================================
+
+The Substance OCIO config is an OCIO v1 configuration. I don't know
+what is the reason they decided to not use the v2 for their config because
+it could really helped having a cleaner and better config (even if the artist
+wouldn't see that much of a difference).
+
+By curiosity I tried to put my hand on OCIO v2 and create a config that could
+be a substitution of the Substance config. Documentation was pretty straight
+forward and I manage to build a nice config using python. You can find the
+result here :
+
+https://github.com/MrLixm/OCIO.Liam
+
+I called it ``Versatile``. It only misses the ``false color`` view from the
+Substance config. Have a look at the
+`config.ocio <https://github.com/MrLixm/OCIO.Liam/blob/main/versatile/config/config.ocio>`_
+file to see the new features.
+
 
 Issues Recap
 ============
 
 This list aim at helping the potential Substance dev team members reading this,
-adressing the issues.
+addressing the issues.
 
 -
-    | Substance config use the wrong Rec.709 display encoding.
+    | Substance config uses the wrong Rec.709 display encoding.
     | (see `the rec709 transfer-function issue`_)
 
 -
-    Substance config miss simple P3 colorspaces while it offer a Rec2020 one
+    Substance config miss simple P3 colorspaces while it offers a Rec2020 one
     (who would use it ??)
 
 -
-    | Substance config ``displays`` key is not properly build.
+    | Substance config ``displays`` key is not properly built.
     | (see `substance-config-displays-fixed`_ )
 
 -
-    OCIO v2 feature ``shared_views`` is not supported.
+    The Substance config could overall, benefits from using OCIO v2 features.
 
 -
     | OCIO roles are not supported, as such default configuration for
-     project is wrong and can confuse artists.
+     projects is wrong and can confuse artists.
     | (see `Substance parameters for OCIO configs`_)
 
 -
@@ -974,22 +1189,27 @@ adressing the issues.
     | (see `sp-odt-name-cropped`_)
 
 -
-    Colorspace on resources (images, ...) should be performable from the shelf
-    and not from a layer's slot. A resource doesn't have its original
-    colorspace changing depending where its used !
+    | The view-transform dropdown could be split into 2 dropdowns. One for
+     Displays and one for Views.
+    | (see `substance-config-displays-fixed`_ )
 
 -
-    There is no option to change the environment image colorspace. Having
-    the above suggestion implemented, would solve this one too.
-    (only option for now is to change the default colorspace for linear images)
+    Colorspace on resources (images, ...) should be performable from the shelf
+    and not from a layer's slot. A resource doesn't have its original
+    colorspace changing depending on where it's used !
+
+-
+    | There is no option to change the environment image colorspace. Having
+     the above suggestion implemented would solve this one too.
+    | (see `Environment`_ )
 
 -
     Color-picker : modifying the top colorspace should affect the editable
-    values. Where the top colorspace represent the colorspace used to enter
+    values. Where the top colorspace represents the colorspace used to enter
     values so they can be converted to the working colorspace behind the scene.
 
 -
-    With the above, add a way to see what value are being used in the
+    With the above, add a way to see what values are being used in the
     workspace.
 
 -
@@ -999,9 +1219,22 @@ adressing the issues.
      view-transform is disabled)
     | (see `picker`_ section)
 
+-
+    No options to set a specific colorspace for textures at export time.
 
+Conclusion
+----------
 
+Damn that was a long one. Congrats if you stick to the end, I hope you
+now have an idea of how you could use OCIO in SubstancePainter. If not,
+don't hesitate to `contact </pages/contact>`_ me to suggest how this
+article could be improved.
 
+If you like this post and wish to support me you could buy some of my
+scripts on `my Gumroad <https://app.gumroad.com/pyco>`_.
+
+I see you in the next one that would probably be on the same topic but on
+Mari. 👋
 
 Resources
 ---------
