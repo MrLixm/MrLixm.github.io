@@ -3,9 +3,9 @@ Color-management in Substance Painter with OCIO
 
 :summary: The long-awaited OCIO feature is here, now we gotta find how it works.
 
-:status: draft
+:status: published
 :date-created: 2021-11-24 23:33
-:date: 2021-11-24 23:33
+:date: 2021-12-08 19:03
 :cover: {static}/images/blog/0008/cover.jpg
 
 :category: tutorial
@@ -1239,7 +1239,8 @@ Conclusion
 Damn that was a long one. Congrats if you stick to the end, I hope you
 now have an idea of how you could use OCIO in SubstancePainter. If not,
 don't hesitate to `contact </pages/contact>`_ me to suggest how this
-article could be improved.
+article could be improved. (you can also join the discord, click on the purple
+button at the bottom of this page)
 
 If you like this post and wish to support me you could buy some of my
 scripts on `my Gumroad <https://app.gumroad.com/pyco>`_.
