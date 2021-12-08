@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;700;900" />
   <link rel="stylesheet" href="https://mrlixm.github.io/static/m-dark.css" />
   <link rel="icon" href="https://mrlixm.github.io/static/images/global/icons/lixm.svg" type="image/x-ico" />
-  <link rel="canonical" href="https://mrlixm.github.io/drafts/substance-painter-color-management.html" />
+  <link rel="canonical" href="https://mrlixm.github.io/blog/substance-painter-color-management/" />
   <link href="https://mrlixm.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Liam Collod Website" />
   <link href="https://mrlixm.github.io/feeds/tutorial.atom.xml" type="application/atom+xml" rel="alternate" title="Liam Collod Website | tutorial" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,12 +18,12 @@
   <meta property="og:site_name" content="Liam Collod&#39;s Blog" />
   <meta property="og:title" content="Color-management in Substance Painter with OCIO" />
   <meta name="twitter:title" content="Color-management in Substance Painter with OCIO" />
-  <meta property="og:url" content="https://mrlixm.github.io/drafts/substance-painter-color-management.html" />
-  <meta property="og:description" content="The long-awaited OCIO feature is here, let’s see how it works." />
-  <meta name="twitter:description" content="The long-awaited OCIO feature is here, let’s see how it works." />
-  <meta property="og:image" content="https://mrlixm.github.io/static/images/global/cover_social.jpg" />
-  <meta name="twitter:image" content="https://mrlixm.github.io/static/images/global/cover_social.jpg" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://mrlixm.github.io/blog/substance-painter-color-management/" />
+  <meta property="og:description" content="The long-awaited OCIO feature is here, now we gotta find how it works." />
+  <meta name="twitter:description" content="The long-awaited OCIO feature is here, now we gotta find how it works." />
+  <meta property="og:image" content="https://mrlixm.github.io/static/images/blog/0008/cover.jpg" />
+  <meta name="twitter:image" content="https://mrlixm.github.io/static/images/blog/0008/cover.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta property="og:type" content="article" />
 </head>
 <body>
@@ -44,14 +44,15 @@
   <div class="l-gradient-line"></div>
 </header>
 <main>
-  <div class="m-container">
-    <div class="m-row">
-    <article class="m-col-l-none m-nopadb">
-      <header class="l-article-header" id="article-header">
+    <article id="m-jumbo">
+      <header>
+        <div class="m-container">
+          <div id="cover-img" style="
+            background-image: url('https://mrlixm.github.io/static/images/blog/0008/cover.jpg');
+">
+          </div>
+          <header class="l-article-header" id="article-header">
         <header class="l-post-context l-mrg-m" title="Post Context" id="post-context-header">
-            <span class="l-status l-bgc-yellow-l l-c-ldark l-flex-item" id="s-draft" title="Post status">
-              draft
-            </span>
           <span class="l-category">
             <a href="https://mrlixm.github.io/category/tutorial.html">tutorial</a>
           </span>
@@ -77,15 +78,15 @@
               </span>
         </header>
         <h1 title="Article title">
-          <a href="https://mrlixm.github.io/drafts/substance-painter-color-management.html" rel="bookmark" title="Permalink to Color-management in Substance Painter with OCIO">
+          <a href="https://mrlixm.github.io/blog/substance-painter-color-management/" rel="bookmark" title="Permalink to Color-management in Substance Painter with OCIO">
             Color-management in Substance Painter with OCIO
           </a>
         </h1>
-        <p>The long-awaited OCIO feature is here, let’s see how it works.</p>
+        <p>The long-awaited OCIO feature is here, now we gotta find how it works.</p>
         <footer class="l-post-context" id="post-context-footer">
           <span class="l-time l-flex-item" title="Date Created">
             <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-            <time datetime="2021-11-24T23:33:00+01:00">24 November 2021</time>
+            <time datetime="2021-12-08T19:03:00+01:00">08 December 2021</time>
           </span>
           <span class="l-box-author l-flex-item" title="List of Authors">
             <img src="/static/images/global/icons/account.svg" alt="Author icon" >
@@ -95,9 +96,13 @@
           </span>
         </footer>
       </header>
-      <div class="m-clearfix-l"></div>
-<!-- content -->
-<p>It’s there ! After so much time, Substance-Painter finally saw itself getting
+        </div>
+      </header>
+      <div class="m-container m-container-inflatable">
+        <div class="m-row">
+          <div class="m-col-l-none m-nopady">
+  <!-- content -->
+  <p>It’s there ! After so much time, Substance-Painter finally saw itself getting
 a shiny new color-management system with OCIO support. We’re going to dive
 deeper inside and see how it works.</p>
 <p>The article is divided into two parts.
@@ -732,42 +737,43 @@ Did the sp implementation bring any good news ? Let’s see.</p>
 <li><code>eds</code> : editable sliders, where you can manually enter your color
 components.</li>
 </ul>
-<p>First really good feature is the little info icon, explaining
-explicitly how the widget works. But the info it gives bring some bad
-news; if we have a look at the info message next to the tcd :</p>
+<p>First really good feature is the little info icon, giving explicit
+info on how the widget works. But the given info brings some bad
+news; if we have a look at the info message next to the <code>tcd</code> :</p>
 <blockquote>
 This is the display color space used for displaying the on-screen
 image. The editable color values are specified within the project’s
 working color space.</blockquote>
 <p>What this means is that in the values sliders under, the value entered
 are always in the colorspace defined by the project’s working
-color space. So you could change the tcd but
+color space. So you could change the <code>tcd</code> but
 this won’t modify the value entered.</p>
-<p><strong>The tcd only modify how the color is displayed in the
-interface.</strong> (you can see this displayed value under the eds)</p>
+<p><strong>The “tcd“ only modify how the color is displayed in the
+interface.</strong> (you can see this displayed value under the <code>eds</code>)</p>
 <aside class="m-note m-info">
-As such it is recommended to set the tds to the same colorspace
+As such it is recommended to set the <code>tcd</code> to the same colorspace
 being used in the view-transform.</aside>
 </div>
 </div>
 <p id="picker">What about the actual picker ?</p>
 <blockquote>
 <p>Same thing, the value that is being picked is expressed in the working
-colorspace. It is not affected by the tds.</p>
+colorspace. It is not affected by the <code>tcd</code>.</p>
 <p>First the color-picker pick the value at display <em>(the value will be
 different if you enable or disable the view-transform )</em></p>
 <p>Then the color-picker ALWAYS apply an extra color-transformation step :
 It applies the inverse transform defined in the colorspace used in
 the <code>color-picking</code> OCIO role.</p>
 </blockquote>
-<p>Here is a quick drawing :</p>
+<p>To make things clearer, what best than an image ?</p>
 <figure class="m-figure">
 <a href="https://mrlixm.github.io/static/images/blog/0008/diagramC.jpg"><img alt="Color-picking process as a diagram." src="https://mrlixm.github.io/static/images/blog/0008/diagramC.jpg" /></a>
 <figcaption>Using the Substance config</figcaption>
 </figure>
 <figure class="m-figure">
 <a href="https://mrlixm.github.io/static/images/blog/0008/diagramC-ACES.jpg"><img alt="Color-picking process as a diagram." src="https://mrlixm.github.io/static/images/blog/0008/diagramC-ACES.jpg" /></a>
-<figcaption>Using the ACES 1.2 config</figcaption>
+<figcaption>Using the ACES 1.2 config (the end-result could be even more broken if
+we were using another view_transform)</figcaption>
 </figure>
 <aside class="m-note m-warning">
 You need to also take into consideration the color-picker precision issues.
@@ -780,11 +786,12 @@ solution to compensate for this issue.</p>
 <h3>In the case you want to reverse the color-picker
 color-transformation :</h3>
 <ul>
-<li>Set the tcd to the same colorspace used by the <code>color_picking</code> role.
-(by default it should be the first view-transform but check the config)</li>
+<li>Set the <code>tcd</code> to the same colorspace used by the <code>color_picking</code>
+role. (by default it should be the first view-transform but check
+the config)</li>
 <li>Pick your value.</li>
 <li>Look at the values in the <code>Display colorspace</code> widget, and copy
-them in the eds.</li>
+them in the <code>eds</code>.</li>
 </ul>
 <p><em>(most common case would be to pick data in a scalar channel)</em></p>
 </aside>
@@ -798,7 +805,8 @@ them in the eds.</li>
 environments maps will use it.</li>
 <li>Include the source colorspace in the name of the HDRI. It has to be the
 <strong>exact same name</strong> as defined in the config. Example :
-<code>myhdri_ACES - ACEScg.exr</code>.</li>
+<code>myhdri_ACES - ACEScg.exr</code>. (you can find an example in <a href="#aces-environment">ACES -
+Environment</a>)</li>
 </ul>
 <p>The pre-integrated HDRIs are encoded with a <code>linear - sRGB</code> colorspace.</p>
 </section>
@@ -831,8 +839,8 @@ Interstingly, this colorspace <code>raw</code> doesn’t get written into the
 </section>
 <section id="aces-workflow">
 <h2><a href="#id30">ACES Workflow</a></h2>
-<p>I’m not going to get into the what and the why, only the how. Let’s keep this
-for a potential next article ?</p>
+<p>I’m not going to get into the what and the why, only the how. Let’s keep the
+rest for a next (potential) article ?</p>
 <section id="aces-config-setup">
 <h3><a href="#id31">ACES - Config setup</a></h3>
 <p>You could use the one shipped with Substance but I wouldn’t recommend so.
@@ -883,6 +891,9 @@ sRGB</code>)</p>
 <p>For every external resource you import, you need to assign the correct
 input colorspace if the automatic one doesn’t correspond. The usual rules
 for the ACES workflow apply.</p>
+<div class="m-image">
+<a href="https://mrlixm.github.io/static/images/blog/0008/diagram-aces-idt.jpg"><img alt="ACES IDT Cheatsheet." src="https://mrlixm.github.io/static/images/blog/0008/diagram-aces-idt.jpg" /></a>
+</div>
 <section id="aces-environment">
 <h5><a href="#id35">ACES - Environment</a></h5>
 <p>There is unfortunately no direct options to change environment’s colorspace.
@@ -1087,8 +1098,12 @@ file to see the new features.</p>
 </section>
 <section id="issues-recap">
 <h3><a href="#id43">Issues Recap</a></h3>
-<p>This list aim at helping the potential Substance dev team members reading this,
-addressing the issues.</p>
+<p>
+This list aim at helping the potential Substance dev team members reading
+this, addressing the issues.<br />
+<em>Keep in mind that this is my personal opinion, i’m not a color-scientist
+nor a profesional developer.</em><br />
+</p>
 <ul>
 <li><p>
 Substance config uses the wrong Rec.709 display encoding.<br />
@@ -1128,8 +1143,8 @@ and not from a layer’s slot. A resource doesn’t have its original
 colorspace changing depending on where it’s used !</p>
 </li>
 <li><p>
-There is no option to change the environment image colorspace. Having
-the above suggestion implemented would solve this one too.<br />
+There is no direct option to change the environment image colorspace.
+Having the above suggestion implemented would solve this one too.<br />
 (see <a href="#environment">Environment</a> )<br />
 </p>
 </li>
@@ -1158,7 +1173,8 @@ view-transform is disabled)<br />
 <p>Damn that was a long one. Congrats if you stick to the end, I hope you
 now have an idea of how you could use OCIO in SubstancePainter. If not,
 don’t hesitate to <a href="/pages/contact">contact</a> me to suggest how this
-article could be improved.</p>
+article could be improved. (you can also join the discord, click on the purple
+button at the bottom of this page)</p>
 <p>If you like this post and wish to support me you could buy some of my
 scripts on <a href="https://app.gumroad.com/pyco">my Gumroad</a>.</p>
 <p>I see you in the next one that would probably be on the same topic but on
@@ -1187,53 +1203,64 @@ Mari. 👋</p>
 <p><a class="m-link-wrap" href="https://discord.gg/jk6u3eB">https://discord.gg/jk6u3eB</a></p>
 </aside>
 </section>
-<!-- /content -->
+  <!-- /content -->
+          </div>
+        </div>
+      </div>
       <footer>
-        <div class="l-line-xs" title="Footer Separator"></div>
-        <header class="l-post-context l-mrg-xs" title="Post Context" id="post-context-header">
-            <span class="l-status l-bgc-yellow-l l-c-ldark l-flex-item" id="s-draft" title="Post status">
-              draft
+        <div class="m-container">
+          <div class="m-col-l-none m-nopadb">
+            <div class="l-line-xs" title="Footer Separator"></div>
+          <header class="l-post-context l-mrg-xs" title="Post Context" id="post-context-header">
+            <span class="l-category">
+              <a href="https://mrlixm.github.io/category/tutorial.html">tutorial</a>
             </span>
-          <span class="l-category">
-            <a href="https://mrlixm.github.io/category/tutorial.html">tutorial</a>
-          </span>
-            &nbsp;
-            &nbsp;
-              <span class="l-tag l-flex-item" title="tag">
-                <a href="https://mrlixm.github.io/tag/substance-painter.html">substance-painter</a>
-              </span>
-                <!--Invisible to the use but picked when copy/pasting-->
-                <span class="l-txt-invisible">,</span>
-              <span class="l-tag l-flex-item" title="tag">
-                <a href="https://mrlixm.github.io/tag/color-science.html">color-science</a>
-              </span>
-                <!--Invisible to the use but picked when copy/pasting-->
-                <span class="l-txt-invisible">,</span>
-              <span class="l-tag l-flex-item" title="tag">
-                <a href="https://mrlixm.github.io/tag/ocio.html">OCIO</a>
-              </span>
-                <!--Invisible to the use but picked when copy/pasting-->
-                <span class="l-txt-invisible">,</span>
-              <span class="l-tag l-flex-item" title="tag">
-                <a href="https://mrlixm.github.io/tag/aces.html">ACES</a>
-              </span>
-        </header>
-        <footer class="l-post-context" id="post-context-footer">
-          <span class="l-time l-flex-item" title="Date Created">
-            <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-            <time datetime="2021-11-24T23:33:00+01:00">24 November 2021</time>
-          </span>
-          <span class="l-box-author l-flex-item" title="List of Authors">
-            <img src="/static/images/global/icons/account.svg" alt="Author icon" >
-            <span class="l-author" title="A post Author">
-                <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a>
+              &nbsp;
+              &nbsp;
+                <span class="l-tag l-flex-item" title="tag">
+                  <a href="https://mrlixm.github.io/tag/substance-painter.html">substance-painter</a>
+                </span>
+                  <!--Invisible to the use but picked when copy/pasting-->
+                  <span class="l-txt-invisible">,</span>
+                <span class="l-tag l-flex-item" title="tag">
+                  <a href="https://mrlixm.github.io/tag/color-science.html">color-science</a>
+                </span>
+                  <!--Invisible to the use but picked when copy/pasting-->
+                  <span class="l-txt-invisible">,</span>
+                <span class="l-tag l-flex-item" title="tag">
+                  <a href="https://mrlixm.github.io/tag/ocio.html">OCIO</a>
+                </span>
+                  <!--Invisible to the use but picked when copy/pasting-->
+                  <span class="l-txt-invisible">,</span>
+                <span class="l-tag l-flex-item" title="tag">
+                  <a href="https://mrlixm.github.io/tag/aces.html">ACES</a>
+                </span>
+          </header>
+          <footer class="l-post-context" id="post-context-footer">
+            <span class="l-time l-flex-item" title="Date Created">
+              <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
+              <time datetime="2021-12-08T19:03:00+01:00">08 December 2021</time>
             </span>
-          </span>
-        </footer>
+            <span class="l-box-author l-flex-item" title="List of Authors">
+              <img src="/static/images/global/icons/account.svg" alt="Author icon" >
+              <span class="l-author" title="A post Author">
+                  <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a>
+              </span>
+            </span>
+          </footer>
+          <div class="l-box-discord">
+            <p>No comment system yet so instead :</p>
+            <div class="l-btn-discord  l-flex-r l-flex-center">
+              <a  class="l-btn-discord-img" href="https://discord.gg/47ySGqMEAj">
+                <img src="/static/images/global/social/discord.svg" alt="Discord Icon">
+              </a>
+              <a href="https://discord.gg/47ySGqMEAj">Join the Discord to discuss</a>
+            </div>
+          </div>
+          </div>
+        </div>
       </footer>
     </article>
-    </div>
-  </div>
 </main>
 <footer><nav>
   <div class="m-container">
