@@ -1,11 +1,12 @@
 Color-management in Substance Painter with OCIO
 ###############################################
 
-:summary: The long-awaited OCIO feature is here, let's see how it works.
+:summary: The long-awaited OCIO feature is here, now we gotta find how it works.
 
 :status: draft
 :date-created: 2021-11-24 23:33
 :date: 2021-11-24 23:33
+:cover: {static}/images/blog/0008/cover.jpg
 
 :category: tutorial
 :tags: substance-painter, color-science, OCIO, ACES
@@ -677,9 +678,9 @@ ________________
             ``eds`` : editable sliders, where you can manually enter your color
             components.
 
-        First really good feature is the little info icon, explaining
-        explicitly how the widget works. But the info it gives bring some bad
-        news; if we have a look at the info message next to the tcd :
+        First really good feature is the little info icon, giving explicit
+        info on how the widget works. But the given info brings some bad
+        news; if we have a look at the info message next to the ``tcd`` :
 
             This is the display color space used for displaying the on-screen
             image. The editable color values are specified within the project's
@@ -687,15 +688,15 @@ ________________
 
         What this means is that in the values sliders under, the value entered
         are always in the colorspace defined by the project's working
-        color space. So you could change the tcd but
+        color space. So you could change the ``tcd`` but
         this won't modify the value entered.
 
-        **The tcd only modify how the color is displayed in the
-        interface.** (you can see this displayed value under the eds)
+        **The ``tcd`` only modify how the color is displayed in the
+        interface.** (you can see this displayed value under the ``eds``)
 
         .. note-info::
 
-            As such it is recommended to set the tds to the same colorspace
+            As such it is recommended to set the ``tcd`` to the same colorspace
             being used in the view-transform.
 
 .. _picker:
@@ -703,7 +704,7 @@ ________________
 What about the actual picker ?
 
     Same thing, the value that is being picked is expressed in the working
-    colorspace. It is not affected by the tds.
+    colorspace. It is not affected by the ``tcd``.
 
     First the color-picker pick the value at display *(the value will be
     different if you enable or disable the view-transform )*
@@ -712,7 +713,7 @@ What about the actual picker ?
     It applies the inverse transform defined in the colorspace used in
     the ``color-picking`` OCIO role.
 
-Here is a quick drawing :
+To make things clearer, what best than an image ?
 
 .. figure:: {static}/images/blog/0008/diagramC.jpg
     :target: {static}/images/blog/0008/diagramC.jpg
@@ -724,7 +725,8 @@ Here is a quick drawing :
     :target: {static}/images/blog/0008/diagramC-ACES.jpg
     :alt: Color-picking process as a diagram.
 
-    Using the ACES 1.2 config
+    Using the ACES 1.2 config (the end-result could be even more broken if
+    we were using another view_transform)
 
 .. note-warning::
 
@@ -740,15 +742,16 @@ solution to compensate for this issue.
     color-transformation :
 
     -
-        Set the tcd to the same colorspace used by the ``color_picking`` role.
-        (by default it should be the first view-transform but check the config)
+        Set the ``tcd`` to the same colorspace used by the ``color_picking``
+        role. (by default it should be the first view-transform but check
+        the config)
 
     -
         Pick your value.
 
     -
         Look at the values in the ``Display colorspace`` widget, and copy
-        them in the eds.
+        them in the ``eds``.
 
     *(most common case would be to pick data in a scalar channel)*
 
@@ -766,7 +769,8 @@ Your options are :
 -
     Include the source colorspace in the name of the HDRI. It has to be the
     **exact same name** as defined in the config. Example :
-    ``myhdri_ACES - ACEScg.exr``.
+    ``myhdri_ACES - ACEScg.exr``. (you can find an example in `ACES -
+    Environment`_)
 
 The pre-integrated HDRIs are encoded with a ``linear - sRGB`` colorspace.
 
@@ -807,8 +811,8 @@ Interstingly, this colorspace ``raw`` doesn't get written into the
 ACES Workflow
 -------------
 
-I'm not going to get into the what and the why, only the how. Let's keep this
-for a potential next article ?
+I'm not going to get into the what and the why, only the how. Let's keep the
+rest for a next (potential) article ?
 
 ACES - Config setup
 ===================
@@ -874,6 +878,11 @@ _____________
 For every external resource you import, you need to assign the correct
 input colorspace if the automatic one doesn't correspond. The usual rules
 for the ACES workflow apply.
+
+.. image:: {static}/images/blog/0008/diagram-aces-idt.jpg
+    :target: {static}/images/blog/0008/diagram-aces-idt.jpg
+    :alt: ACES IDT Cheatsheet.
+
 
 ACES - Environment
 """"""""""""""""""
@@ -1160,8 +1169,10 @@ file to see the new features.
 Issues Recap
 ============
 
-This list aim at helping the potential Substance dev team members reading this,
-addressing the issues.
+| This list aim at helping the potential Substance dev team members reading
+ this, addressing the issues.
+| *Keep in mind that this is my personal opinion, i'm not a color-scientist
+ nor a profesional developer.*
 
 -
     | Substance config uses the wrong Rec.709 display encoding.
@@ -1199,8 +1210,8 @@ addressing the issues.
     colorspace changing depending on where it's used !
 
 -
-    | There is no option to change the environment image colorspace. Having
-     the above suggestion implemented would solve this one too.
+    | There is no direct option to change the environment image colorspace.
+     Having the above suggestion implemented would solve this one too.
     | (see `Environment`_ )
 
 -
