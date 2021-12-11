@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Liam Collod Website</title><link href="https://mrlixm.github.io/" rel="alternate"></link><link href="https://mrlixm.github.io/feeds/all.atom.xml" rel="self"></link><id>https://mrlixm.github.io/</id><updated>2021-12-08T19:03:00+01:00</updated><entry><title>Color-management in Substance Painter with OCIO</title><link href="https://mrlixm.github.io/blog/substance-painter-color-management/" rel="alternate"></link><published>2021-12-08T19:03:00+01:00</published><updated>2021-12-08T19:03:00+01:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-12-08:/blog/substance-painter-color-management/</id><summary type="html">&lt;p&gt;The long-awaited OCIO feature is here, now we gotta find how it works.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Liam Collod Website</title><link href="https://mrlixm.github.io/" rel="alternate"></link><link href="https://mrlixm.github.io/feeds/all.atom.xml" rel="self"></link><id>https://mrlixm.github.io/</id><updated>2021-12-09T16:01:00+01:00</updated><entry><title>Color-management in Substance Painter with OCIO</title><link href="https://mrlixm.github.io/blog/substance-painter-color-management/" rel="alternate"></link><published>2021-12-08T19:03:00+01:00</published><updated>2021-12-09T16:01:00+01:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-12-08:/blog/substance-painter-color-management/</id><summary type="html">&lt;p&gt;The long-awaited OCIO feature is here, now we gotta find how it works.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;It’s there ! After so much time, Substance-Painter finally saw itself getting
 a shiny new color-management system with OCIO support. We’re going to dive
 deeper inside and see how it works.&lt;/p&gt;
@@ -59,37 +59,38 @@ have changed since.&lt;/p&gt;
 &lt;li&gt;&lt;a href="#shelf-resources" id="id26"&gt;Shelf Resources&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#the-color-picker" id="id27"&gt;The color-picker&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#environment" id="id28"&gt;Environment&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#masks" id="id29"&gt;Masks&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#output-setup-in-sp" id="id29"&gt;Output Setup in Sp&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#output-setup-in-sp" id="id30"&gt;Output Setup in Sp&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#aces-workflow" id="id30"&gt;ACES Workflow&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#aces-config-setup" id="id31"&gt;ACES - Config setup&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#aces-what-to-do-when-working" id="id32"&gt;ACES - What to do when working&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#aces-display" id="id33"&gt;ACES - Display&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#aces-inputs" id="id34"&gt;ACES - Inputs&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#aces-environment" id="id35"&gt;ACES - Environment&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#aces-workflow" id="id31"&gt;ACES Workflow&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#aces-config-setup" id="id32"&gt;ACES - Config setup&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#aces-what-to-do-when-working" id="id33"&gt;ACES - What to do when working&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#aces-display" id="id34"&gt;ACES - Display&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#aces-inputs" id="id35"&gt;ACES - Inputs&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#aces-environment" id="id36"&gt;ACES - Environment&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#aces-colorpicker" id="id36"&gt;ACES - Colorpicker&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#aces-output" id="id37"&gt;ACES - Output&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#aces-colorpicker" id="id37"&gt;ACES - Colorpicker&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#aces-output" id="id38"&gt;ACES - Output&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#ocio-implementation-issues" id="id38"&gt;OCIO Implementation Issues&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#display-issues" id="id39"&gt;Display Issues&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#display-components-mismatch" id="id40"&gt;Display components mismatch&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#partial-look-support" id="id41"&gt;Partial Look support&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#ocio-implementation-issues" id="id39"&gt;OCIO Implementation Issues&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#display-issues" id="id40"&gt;Display Issues&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#display-components-mismatch" id="id41"&gt;Display components mismatch&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#partial-look-support" id="id42"&gt;Partial Look support&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#improving-the-substance-ocio-config" id="id42"&gt;Improving the Substance OCIO config&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#issues-recap" id="id43"&gt;Issues Recap&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#improving-the-substance-ocio-config" id="id43"&gt;Improving the Substance OCIO config&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#issues-recap" id="id44"&gt;Issues Recap&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#conclusion" id="id44"&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#resources" id="id45"&gt;Resources&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#conclusion" id="id45"&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#resources" id="id46"&gt;Resources&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/aside&gt;
 &lt;section id="color-managed-workflow"&gt;
@@ -708,9 +709,15 @@ Environment&lt;/a&gt;)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;The pre-integrated HDRIs are encoded with a &lt;code&gt;linear - sRGB&lt;/code&gt; colorspace.&lt;/p&gt;
 &lt;/section&gt;
+&lt;section id="masks"&gt;
+&lt;h4&gt;&lt;a href="#id29"&gt;Masks&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;When you right-click on a mask you have the option to &lt;code&gt;Export mask as File&lt;/code&gt;.
+Don’t worry, mask seems to always be considered as scalar and exported
+without any treatment.&lt;/p&gt;
+&lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="output-setup-in-sp"&gt;
-&lt;h3&gt;&lt;a href="#id29"&gt;Output Setup in Sp&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#id30"&gt;Output Setup in Sp&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;The Export Textures window didn’t got much new. We doesn’t have any options
 to apply a color-transformation at export time in the Window. The only options
 are the one available into the project settings.&lt;/p&gt;
@@ -736,11 +743,11 @@ Interstingly, this colorspace &lt;code&gt;raw&lt;/code&gt; doesn’t get written
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="aces-workflow"&gt;
-&lt;h2&gt;&lt;a href="#id30"&gt;ACES Workflow&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#id31"&gt;ACES Workflow&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;I’m not going to get into the what and the why, only the how. Let’s keep the
 rest for a next (potential) article ?&lt;/p&gt;
 &lt;section id="aces-config-setup"&gt;
-&lt;h3&gt;&lt;a href="#id31"&gt;ACES - Config setup&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#id32"&gt;ACES - Config setup&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;You could use the one shipped with Substance but I wouldn’t recommend so.
 They are the ones with the hundred colorspaces that will just slow you down
 when you need to choose one.&lt;/p&gt;
@@ -774,18 +781,18 @@ are the only ones that can’t be modified per-case though; this is the only
 place you can change them.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="aces-what-to-do-when-working"&gt;
-&lt;h3&gt;&lt;a href="#id32"&gt;ACES - What to do when working&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#id33"&gt;ACES - What to do when working&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;I’m only going to give detailed explanations when something is specific to
 ACES. Meanwhile the explanations given in &lt;a href="#substance-setup-workflow"&gt;Substance Setup &amp;amp; Workflow&lt;/a&gt; still
 apply so make sure you properly understood this section.&lt;/p&gt;
 &lt;section id="aces-display"&gt;
-&lt;h4&gt;&lt;a href="#id33"&gt;ACES - Display&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#id34"&gt;ACES - Display&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;Not much new, use the view-transform that correspond to the display you are
 using. (In my case &lt;code&gt;ACES - sRGB&lt;/code&gt;, that behind the scene, uses &lt;code&gt;Output -
 sRGB&lt;/code&gt;)&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="aces-inputs"&gt;
-&lt;h4&gt;&lt;a href="#id34"&gt;ACES - Inputs&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#id35"&gt;ACES - Inputs&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;For every external resource you import, you need to assign the correct
 input colorspace if the automatic one doesn’t correspond. The usual rules
 for the ACES workflow apply.&lt;/p&gt;
@@ -793,7 +800,7 @@ for the ACES workflow apply.&lt;/p&gt;
 &lt;a href="https://mrlixm.github.io/static/images/blog/0008/diagram-aces-idt.jpg"&gt;&lt;img alt="ACES IDT Cheatsheet." src="https://mrlixm.github.io/static/images/blog/0008/diagram-aces-idt.jpg" /&gt;&lt;/a&gt;
 &lt;/div&gt;
 &lt;section id="aces-environment"&gt;
-&lt;h5&gt;&lt;a href="#id35"&gt;ACES - Environment&lt;/a&gt;&lt;/h5&gt;
+&lt;h5&gt;&lt;a href="#id36"&gt;ACES - Environment&lt;/a&gt;&lt;/h5&gt;
 &lt;p&gt;There is unfortunately no direct options to change environment’s colorspace.
 But they follow default colorspace rules. And as they are floating point image
 they use the pre-defined &lt;code&gt;Utility - Linear - sRGB&lt;/code&gt; colorspace. As such, as
@@ -813,7 +820,7 @@ doesn’t get properly converted and looks shifted.&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="aces-colorpicker"&gt;
-&lt;h4&gt;&lt;a href="#id36"&gt;ACES - Colorpicker&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#id37"&gt;ACES - Colorpicker&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;The colorpicker by default and in my case use the same colorspace as the
 first view_transform. This means the color I see in the picker is the same in
 the viewport. As mentioned in &lt;a href="#the-color-picker"&gt;The color-picker&lt;/a&gt; section the sliders values
@@ -855,7 +862,7 @@ on ACES central and Chris &lt;a href="https://chrisbrejon.com/cg-cinematography/
 &lt;/blockquote&gt;
 &lt;/section&gt;
 &lt;section id="aces-output"&gt;
-&lt;h4&gt;&lt;a href="#id37"&gt;ACES - Output&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#id38"&gt;ACES - Output&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;Do yourself a favour here and only care about EXR. &lt;a href="https://www.elsksa.me/scientia/cgi-offline-rendering/file-format-debunk"&gt;You don’t need anything
 else&lt;/a&gt; and this is the file format recommended by the Academy for ACES
 data encoding.&lt;/p&gt;
@@ -869,16 +876,16 @@ name. (and instead export the textures in a folder named ACEScg)&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="ocio-implementation-issues"&gt;
-&lt;h2&gt;&lt;a href="#id38"&gt;OCIO Implementation Issues&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#id39"&gt;OCIO Implementation Issues&lt;/a&gt;&lt;/h2&gt;
 &lt;aside class="m-note m-default"&gt;
 The goal here is not to denigrate the dev team’s works but rather to offer
 explanations and solutions to what could be better.&lt;/aside&gt;
 &lt;section id="display-issues"&gt;
-&lt;h3&gt;&lt;a href="#id39"&gt;Display Issues&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#id40"&gt;Display Issues&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;These explanations were made possible thanks to the Chris Brejon’s article
 &lt;a href="https://chrisbrejon.com/articles/ocio-display-transforms-and-misconceptions/"&gt;OCIO, Display Transforms and Misconceptions&lt;/a&gt;.&lt;/p&gt;
 &lt;section id="display-components-mismatch"&gt;
-&lt;h4&gt;&lt;a href="#id40"&gt;Display components mismatch&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#id41"&gt;Display components mismatch&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;OCIO divide the Display section into 3 components :&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;Display&lt;/code&gt; : the physical hardware you are using (monitor, TV, phone, …).&lt;/li&gt;
@@ -932,7 +939,7 @@ We should even get a third one for looks as we are going to see in the next
 section :&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="partial-look-support"&gt;
-&lt;h4&gt;&lt;a href="#id41"&gt;Partial Look support&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#id42"&gt;Partial Look support&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;In above explanations where I mention OCIO Display is build with
 3 components, we now see that I didn’t mention the last one yet: Looks.&lt;/p&gt;
 &lt;p&gt;Looks is a color-tansformation performed in any colorspace aimed at
@@ -979,7 +986,7 @@ cropped name 😬 But at least it’s working.&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="improving-the-substance-ocio-config"&gt;
-&lt;h3&gt;&lt;a href="#id42"&gt;Improving the Substance OCIO config&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#id43"&gt;Improving the Substance OCIO config&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;The Substance OCIO config is an OCIO v1 configuration. I don’t know
 what is the reason they decided to not use the v2 for their config because
 it could really helped having a cleaner and better config (even if the artist
@@ -995,7 +1002,7 @@ Substance config. Have a look at the
 file to see the new features.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="issues-recap"&gt;
-&lt;h3&gt;&lt;a href="#id43"&gt;Issues Recap&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#id44"&gt;Issues Recap&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;
 This list aim at helping the potential Substance dev team members reading
 this, addressing the issues.&lt;br /&gt;
@@ -1063,11 +1070,15 @@ view-transform is disabled)&lt;br /&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;No options to set a specific colorspace for textures at export time.&lt;/p&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p&gt;When use the following OCIO v2 colorspace name token, an error is logged:&lt;/p&gt;
+&lt;pre class="m-code"&gt;[ColorManagement] Error while creating OpenColorIO colorspace transform: Color space &amp;#39;&amp;lt;USE_DISPLAY_NAME&amp;gt;&amp;#39; could not be found&lt;/pre&gt;
+&lt;p&gt;But displays still manage to work without issues.&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="conclusion"&gt;
-&lt;h2&gt;&lt;a href="#id44"&gt;Conclusion&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#id45"&gt;Conclusion&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Damn that was a long one. Congrats if you stick to the end, I hope you
 now have an idea of how you could use OCIO in SubstancePainter. If not,
 don’t hesitate to &lt;a href="/pages/contact"&gt;contact&lt;/a&gt; me to suggest how this
@@ -1079,7 +1090,7 @@ scripts on &lt;a href="https://app.gumroad.com/pyco"&gt;my Gumroad&lt;/a&gt;.&lt
 Mari. 👋&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="resources"&gt;
-&lt;h2&gt;&lt;a href="#id45"&gt;Resources&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#id46"&gt;Resources&lt;/a&gt;&lt;/h2&gt;
 &lt;aside class="m-block m-default"&gt;
 &lt;h3&gt;The Hitchhiker’s Guide to Digital Colour&lt;/h3&gt;
 &lt;p&gt;&lt;a class="m-link-wrap" href="https://hg2dc.com/"&gt;https://hg2dc.com/&lt;/a&gt;&lt;/p&gt;
