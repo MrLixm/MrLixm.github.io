@@ -6,6 +6,7 @@ Color-management in Substance Painter with OCIO
 :status: published
 :date-created: 2021-11-24 23:33
 :date: 2021-12-08 19:03
+:modified: 2021-12-09 16:01
 :cover: {static}/images/blog/0008/cover.jpg
 
 :category: tutorial
@@ -775,6 +776,14 @@ Your options are :
 The pre-integrated HDRIs are encoded with a ``linear - sRGB`` colorspace.
 
 
+Masks
+_____
+
+When you right-click on a mask you have the option to ``Export mask as File``.
+Don't worry, mask seems to always be considered as scalar and exported
+without any treatment.
+
+
 Output Setup in Sp
 ===================
 
@@ -1232,6 +1241,15 @@ Issues Recap
 
 -
     No options to set a specific colorspace for textures at export time.
+
+-
+    When use the following OCIO v2 colorspace name token, an error is logged:
+
+    .. code:: text
+
+        [ColorManagement] Error while creating OpenColorIO colorspace transform: Color space '<USE_DISPLAY_NAME>' could not be found
+
+    But displays still manage to work without issues.
 
 Conclusion
 ----------
