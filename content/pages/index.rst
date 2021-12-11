@@ -80,7 +80,7 @@ Index
                 .. image:: {static}/images/global/social/gumroad.svg
                     :alt: gumroad
                     :width: 35px
-                    :target: https://gumroad.com/liam_collod
+                    :target: https://gumroad.com/pyco
 
         .. raw:: html
 
