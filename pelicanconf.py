@@ -104,6 +104,10 @@ PLUGINS.extend(
         'm.vk'
     ]
 )
+
+# PLUGIN_PATHS.append("extensions/plugins")
+# PLUGINS.append("jinja2content")
+
 FORMATTED_FIELDS = [
     'summary',
     'description',
@@ -113,13 +117,14 @@ FORMATTED_FIELDS = [
     'size',
     'footer',
     'thumbnail',
-    'cover_size'
+    'cover_size',
+    'title_disable'
 ]
 
 # theme related configuration
 M_CSS_FILES = [
     'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700%7CSource+Code+Pro:400,400i,600',
-    "https://fonts.googleapis.com/css2?family=Georama:wght@400;600&",
+    "https://fonts.googleapis.com/css2?family=Georama:wght@400;600;700",
     "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;700;900",
     '/static/m-dark.css'
 ]

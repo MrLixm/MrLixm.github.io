@@ -711,3 +711,95 @@ this explain the .some-class before the id.
 }
 /*--- END 2.2.1 ---*/
 
+
+/*============================
+
+    index.hmtl custom widgets
+
+===========================*/
+
+.indexA {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 70vh;
+    overflow: hidden;
+}
+.indexA .l-content {
+    max-width: 35rem;
+    margin-left: 50%;
+    margin-right: 5rem;
+}
+.indexA .l-content p {
+    font-family: Georama, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin: 0;
+    text-align: unset;
+}
+.indexA .l-content .l01 {
+    font-weight: 700;
+    font-size: 4rem;
+    text-transform: uppercase;
+}
+.indexA .l-content .l02 {
+    font-weight: 700;
+    font-size: 2.25rem;
+}
+.indexA .l-content .ldescription {
+    margin-top: 0.6rem;
+    margin-bottom: 0.8rem;
+}
+.indexA .l-content .lsocial {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.indexA .l-content .lsocial .l-social-image {
+    opacity: 0.8;
+    transition: 0.25s;
+}
+.indexA .l-content .lsocial .l-social-image:hover,
+.indexA .l-content .lsocial .l-social-image:focus
+{
+    opacity: 1;
+    transform: scale(1.2);
+}
+.indexA video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+/*________
+    indexB
+*/
+.indexB {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 20vh;
+    overflow: hidden;
+}
+.indexB button {
+    background-color: unset;
+    color: var(--color);
+    font-family: Georama, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: 1px solid rgba(170, 183, 229, 0.2);
+    border-radius: 0.1rem;
+    padding: 1rem 4rem 1rem;
+    cursor: pointer;
+    transition: 0.25s;
+}
+.indexB button:hover {
+    transform: scale(1.2);
+}
