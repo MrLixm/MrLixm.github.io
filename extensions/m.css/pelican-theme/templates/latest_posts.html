@@ -1,9 +1,11 @@
-<h3><a href="{{ M_BLOG_URL|format_siteurl|e }}">{{ M_NEWS_ON_INDEX[0]|e }} &raquo;</a></h3>
-<ul class="m-unstyled">
-  {% for article in articles[0:M_NEWS_ON_INDEX[1]] %}
-    <li>
-      <time class="m-text m-dim" datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time>
-      <a href="{{ article.url }}">{{ article.title|e }}</a>
-    </li>
-  {% endfor %}
-</ul>
+<div class="l-latest-posts">
+  <h3><a href="{{ M_BLOG_URL|format_siteurl|e }}">{{ M_NEWS_ON_INDEX[0]|e }} &raquo;</a></h3>
+  <ul class="m-unstyled">
+    {% for article in articles[0:M_NEWS_ON_INDEX[1]] %}
+      <li>
+        <time class="m-text m-dim" datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time>
+        <a href="{{ article.url }}">{{ article.title|e }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>

@@ -1,8 +1,10 @@
-<section class="indexA">
+<h1 style="display:none;">Index</h1>
+<section class="indexA" aria-label="Introduction">
   <video muted loop autoplay>
     <source src="/static/images/global/backgroundA.mp4" type="video/mp4">
   </video>
   <div class="l-content">
+    <h2 style="display:none;">Introduction</h2>
     <p class="l01">Liam Collod</p>
     <p class="l02">Surfacing - Lighting - TD</p>
     <p class="ldescription">
@@ -49,10 +51,14 @@
     </div>
   </div>
 </section>
-<section class="indexB">
+<section class="indexB" aria-label="Demoreel">
     <div class="l-embed">
       <iframe src="https://player.vimeo.com/video/579603827?h=5ddae9d51f&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
     </div>
     <script src="https://player.vimeo.com/api/player.js"></script>
-    <a class="lid-title" href="https://vimeo.com/579603827">Demoreel</a>
+    <h2><a class="l-index-h2" href="https://vimeo.com/579603827">Demoreel</a></h2>
+</section>
+<section class="indexC" aria-label="Blog">
+  <h2><a href="{{ M_BLOG_URL|format_siteurl|e }}">Blog</a></h2>
+  {% include 'latest_posts.html' %}
 </section>
