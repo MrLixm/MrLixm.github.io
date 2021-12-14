@@ -60,11 +60,6 @@ body > footer > nav a:hover, body > footer > nav a:focus, body > footer > nav a:
   color: var(--footer-link-active-color);
 }
 
-/* Main content */
-body > main {
-  padding-top: 1rem;
-}
-
 /* Page heading (not in <header>), breadcrumb naviation on pages */
 article h1 {
   font-size: 1.75rem;
