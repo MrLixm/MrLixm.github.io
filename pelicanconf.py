@@ -124,7 +124,7 @@ FORMATTED_FIELDS = [
 # theme related configuration
 M_CSS_FILES = [
     'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700%7CSource+Code+Pro:400,400i,600',
-    "https://fonts.googleapis.com/css2?family=Georama:wght@400;600;700",
+    "https://fonts.googleapis.com/css2?family=Georama:wght@400;500;600;700",
     "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;700;900",
     '/static/m-dark.css'
 ]
@@ -136,7 +136,7 @@ M_BLOG_URL = '/blog'
 M_THEME_COLOR = '#20FC8F'
 M_FAVICON = ("static/images/global/icons/lixm.svg", 'image/x-ico')
 # M_BLOG_FAVICON = ('favicon-blog.png', 'image/png')
-M_SITE_LOGO = "static/images/global/icons/lixm.svg"
+M_SITE_LOGO = "static/images/global/icons/lixm-outline.svg"
 M_SITE_LOGO_TEXT = "Liam Collod"
 
 # SOCIAL
