@@ -1,5 +1,5 @@
 $title
-$title-footer
+$tfooter
 
 :summary: $summary
 :cover: {static}/images/blog/$id/

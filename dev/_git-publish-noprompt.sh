@@ -13,6 +13,9 @@ echo "[_git-publish-noprompt.sh] Working directory: $PWD"
 
 pelican content -o output -s publishconf.py
 
+# copy the README to output before commit so it's pushed to master
+cp -v README.md output/README.md
+
 ghp-import -m "$MASTER_COMMIT" -b master output # push ./output to local master
 
 git push origin master  # push local master to remote

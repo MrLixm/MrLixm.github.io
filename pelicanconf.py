@@ -29,7 +29,7 @@ READERS = {'html': None}  # avoid processing .html files
 
 # -- PAGE
 PAGE_PATHS = ['pages']
-PAGE_EXCLUDES = []
+PAGE_EXCLUDES = ["pages/work/projects/_template"]
 PAGE_URL = '{proot}/{slug}'  # proot is only defined in EXTRA_PATH_METADATA
 PAGE_SAVE_AS = '{proot}/{slug}/index.html'
 # -- Archives (blog post listing)
