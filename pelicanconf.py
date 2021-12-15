@@ -26,12 +26,13 @@ PLUGINS = []  # empty for init
 
 READERS = {'html': None}  # avoid processing .html files
 
+
 # -- PAGE
 PAGE_PATHS = ['pages']
-# PAGE_EXCLUDES = []
-PAGE_URL = '{slug}/'
-PAGE_SAVE_AS = 'pages/{slug}/index.html'
-# -- Archives (blog postr listing)
+PAGE_EXCLUDES = []
+PAGE_URL = '{proot}/{slug}'  # proot is only defined in EXTRA_PATH_METADATA
+PAGE_SAVE_AS = '{proot}/{slug}/index.html'
+# -- Archives (blog post listing)
 ARCHIVES_URL = 'blog/'
 ARCHIVES_SAVE_AS = 'blog/index.html'
 # -- ARTICLE
@@ -43,9 +44,27 @@ ARTICLE_EXCLUDES = ["blog/_template"]
 STATIC_PATHS = ['images']
 STATIC_URL = 'static/{path}'
 STATIC_SAVE_AS = 'static/{path}'
-# EXTRA_PATH_METADATA = {}
 
-DIRECT_TEMPLATES = ['archives']
+# regular expresion that only get the parent dir path
+# PATH_METADATA = r'(?P<proot>.*)/(\w|-)+\..+$'
+
+# we repath the work related pages
+EXTRA_PATH_METADATA = {
+    r'pages/work.rst': {"proot": "work", "slug": ""},
+    r'pages': {"proot": "pages"},
+    r'pages/work': {"proot": "work"},
+    r'pages/work/projects': {"proot": "work/projects"}
+}
+
+TEMPLATE_PAGES = None
+TEMPLATE_EXTENSIONS = ['.html']
+DIRECT_TEMPLATES = [
+    'archives',
+    "custom_pages/work"
+]
+
+DEFAULT_PAGINATION = 10
+# if value set to None, use the above
 PAGINATED_TEMPLATES = {
     'archives': None,
     'tag': None,
@@ -53,7 +72,6 @@ PAGINATED_TEMPLATES = {
     'author': None
 }
 
-DEFAULT_PAGINATION = 10
 
 # PATH_METADATA = '(blog/)?(?P<slug>.+).rst'
 SLUGIFY_SOURCE = 'basename'  # the {slug} is generated from the file name instead of the file title tag
@@ -79,8 +97,8 @@ THEME_STATIC_DIR = 'static'
 
 # M_HTML_HEADER = ""
 M_LINKS_NAVBAR1 = [
-    ('Work', "pages/work", "work", []),
-    ('Blog', "/blog/", '[blog]', []),
+    ('Work', "work", "work", []),
+    ('Blog', "blog", '[blog]', []),
     ('Contact', 'pages/contact', 'contact', []),
 ]
 
