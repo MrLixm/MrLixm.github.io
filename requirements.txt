@@ -1,0 +1,3 @@
+ghp-import==2.0.2
+pelican==4.7.0
+Pygments==2.10.0

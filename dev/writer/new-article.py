@@ -84,20 +84,30 @@ def run():
     article_file_name = get_n_verify_input("Give the article rst file name :\n")
 
     # create article directory
+
+    # # find the next article id
     existing_articles = os.listdir(str(PPATHS.articles))
     regex = re.compile(r"\d\d\d\d")
     existing_articles = list(filter(regex.match, existing_articles))
     existing_articles.sort()
     article_id = int(existing_articles[-1]) + 1
     article_id = str(article_id).zfill(4)  # str like "0007"
-
+    # # build the article dir
     article_dir = PPATHS.articles / article_id
     if article_dir.exists():
         raise RuntimeError(
             f"[Unexcepted Error] The directory <{article_dir}> already exists."
         )
-    # create dir with id
+    # # create dir with id
     article_dir.mkdir()
+
+    article_img_dir = PPATHS.images / "blog" / article_id
+    if article_img_dir.exists():
+        raise RuntimeError(
+            f"[Unexcepted Error] The directory <{article_img_dir}> already exists."
+        )
+    # # create dir with id
+    article_img_dir.mkdir()
 
     # duplicate the template file inside
     shutil.copy2(PPATHS.article_template, article_dir)
