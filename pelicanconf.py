@@ -2,6 +2,16 @@
 # -*- coding: utf-8 -*- #
 """
 pelican configuration file
+
+# Conventions
+
+## Prefixes
+
+none: no prefix means pelican native content
+_ : only used to build an other object, not directly
+M_ : m.css content
+L_ : liam customized content, added myself to extend m.css
+
 """
 
 CACHE_CONTENT = True
@@ -26,12 +36,15 @@ PLUGINS = []  # empty for init
 
 READERS = {'html': None}  # avoid processing .html files
 
+L_PROJECTS_PATH = "pages/work/projects"
 
 # -- PAGE
 PAGE_PATHS = ['pages']
-PAGE_EXCLUDES = ["pages/work/projects/_template"]
 PAGE_URL = '{proot}/{slug}'  # proot is only defined in EXTRA_PATH_METADATA
 PAGE_SAVE_AS = '{proot}/{slug}/index.html'
+PAGE_EXCLUDES = [
+    "pages/work/projects/_template",  # this fucker doesn't work ???
+]
 # -- Archives (blog post listing)
 ARCHIVES_URL = 'blog/'
 ARCHIVES_SAVE_AS = 'blog/index.html'
@@ -45,7 +58,7 @@ STATIC_PATHS = ['images']
 STATIC_URL = 'static/{path}'
 STATIC_SAVE_AS = 'static/{path}'
 
-# regular expresion that only get the parent dir path
+# # regular expression that only get the parent dir path
 # PATH_METADATA = r'(?P<proot>.*)/(\w|-)+\..+$'
 
 # we repath the work related pages
@@ -53,14 +66,13 @@ EXTRA_PATH_METADATA = {
     r'pages/work.rst': {"proot": "work", "slug": ""},
     r'pages': {"proot": "pages"},
     r'pages/work': {"proot": "work"},
-    r'pages/work/projects': {"proot": "work/projects"}
+    f'{L_PROJECTS_PATH}': {"proot": "work/projects"}
 }
 
 TEMPLATE_PAGES = None
 TEMPLATE_EXTENSIONS = ['.html']
 DIRECT_TEMPLATES = [
     'archives',
-    "custom_pages/work"
 ]
 
 DEFAULT_PAGINATION = 10
