@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Liam Collod Website</title><link href="https://mrlixm.github.io/" rel="alternate"></link><link href="https://mrlixm.github.io/feeds/all.atom.xml" rel="self"></link><id>https://mrlixm.github.io/</id><updated>2021-12-09T16:01:00+01:00</updated><entry><title>Color-management in Substance Painter with OCIO</title><link href="https://mrlixm.github.io/blog/substance-painter-color-management/" rel="alternate"></link><published>2021-12-08T19:03:00+01:00</published><updated>2021-12-09T16:01:00+01:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-12-08:/blog/substance-painter-color-management/</id><summary type="html">&lt;p&gt;The long-awaited OCIO feature is here, now we gotta find how it works.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Liam Collod Website</title><link href="https://mrlixm.github.io/" rel="alternate"></link><link href="https://mrlixm.github.io/feeds/all.atom.xml" rel="self"></link><id>https://mrlixm.github.io/</id><updated>2021-12-17T23:46:00+01:00</updated><entry><title>Color-management in Substance Painter with OCIO</title><link href="https://mrlixm.github.io/blog/substance-painter-color-management/" rel="alternate"></link><published>2021-12-08T19:03:00+01:00</published><updated>2021-12-17T23:46:00+01:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-12-08:/blog/substance-painter-color-management/</id><summary type="html">&lt;p&gt;The long-awaited OCIO feature is here, now we gotta find how it works.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;It’s there ! After so much time, Substance-Painter finally saw itself getting
 a shiny new color-management system with OCIO support. We’re going to dive
 deeper inside and see how it works.&lt;/p&gt;
@@ -11,7 +11,8 @@ skip straight to the &lt;a href="#substance-setup-workflow"&gt;Substance Setup &
 &lt;aside class="m-note m-info"&gt;
 &lt;p&gt;OCIO was introduced in &lt;a href="https://substance3d.adobe.com/documentation/spdoc/version-7-4-223053247.html"&gt;Substance-Painter version 7.4&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;This is the version used through this article and some features might
-have changed since.&lt;/p&gt;
+changed at the time you are reading this. I will try to keep the article
+updated thought.&lt;/p&gt;
 &lt;/aside&gt;
 &lt;aside class="m-block m-info"&gt;
 &lt;h3&gt;Official Documentation&lt;/h3&gt;
@@ -91,6 +92,7 @@ have changed since.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;a href="#conclusion" id="id45"&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#resources" id="id46"&gt;Resources&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#changelog" id="id47"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/aside&gt;
 &lt;section id="color-managed-workflow"&gt;
@@ -656,43 +658,61 @@ being used in the view-transform.&lt;/aside&gt;
 &lt;/div&gt;
 &lt;p id="picker"&gt;What about the actual picker ?&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;Same thing, the value that is being picked is expressed in the working
-colorspace. It is not affected by the &lt;code&gt;tcd&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;First the color-picker pick the value at display &lt;em&gt;(the value will be
-different if you enable or disable the view-transform )&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Then the color-picker ALWAYS apply an extra color-transformation step :
-It applies the inverse transform defined in the colorspace used in
-the &lt;code&gt;color-picking&lt;/code&gt; OCIO role.&lt;/p&gt;
+&lt;p&gt;
+Same thing, the value that is being picked is expressed in the working
+colorspace. It is not affected by the &lt;code&gt;tcd&lt;/code&gt;.&lt;br /&gt;
+But there is a &lt;span class="m-text m-s"&gt;little&lt;/span&gt; huge twist !&lt;br /&gt;
+&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;To make things clearer, what best than an image ?&lt;/p&gt;
-&lt;figure class="m-figure"&gt;
-&lt;a href="https://mrlixm.github.io/static/images/blog/0008/diagramC.jpg"&gt;&lt;img alt="Color-picking process as a diagram." src="https://mrlixm.github.io/static/images/blog/0008/diagramC.jpg" /&gt;&lt;/a&gt;
-&lt;figcaption&gt;Using the Substance config&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;figure class="m-figure"&gt;
-&lt;a href="https://mrlixm.github.io/static/images/blog/0008/diagramC-ACES.jpg"&gt;&lt;img alt="Color-picking process as a diagram." src="https://mrlixm.github.io/static/images/blog/0008/diagramC-ACES.jpg" /&gt;&lt;/a&gt;
-&lt;figcaption&gt;Using the ACES 1.2 config (the end-result could be even more broken if
-we were using another view_transform)&lt;/figcaption&gt;
-&lt;/figure&gt;
+&lt;p&gt;After &lt;a href="https://liamcollod.notion.site/Substance-Painter-Color-Picker-Issue-1d1cdeeb0e2846ba977ebc453e5ae56b"&gt;some extensive testing&lt;/a&gt;,
+I can unfortunately say that the picker is not
+consistent depending of the OCIO config you are using. It works in some
+cases and it is broken in others. I’m still not sure about what the issue
+actually is but here is what I have :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;Case 1&lt;/code&gt; : You are using an OCIO v2 config that &lt;strong&gt;uses Display
+colorspaces and Shared Views&lt;/strong&gt; (OCIO v2 new features) :&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The picker take the value at the display (after the
+view-transform is applied) and return it.&lt;/p&gt;
+&lt;p&gt;This only work when there is, well …, no view-transform, i.e. is
+it is disabled or use a display with a “passtrough/raw” encoding. If
+you are viewing color data with the proper view-transform, the
+picked value will not correspond to the original value you used.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;Case 2&lt;/code&gt; : You are using an OCIO v1 config or v2 without the new
+features :&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The picker take the value at display (with the view-transform), then
+apply an inverse display transform. It pick the default one, i.e. the
+first defined in the config or in the &lt;code&gt;active_displays&lt;/code&gt; key.
+And as the sliders don’t go above 1, the result is clamped between the
+0-1 range 🙂&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;aside class="m-note m-warning"&gt;
 You need to also take into consideration the color-picker precision issues.
 Applying an invert color-transformations can lead in some cases to
-imprecisions but it seems the color-picker already has some precision
-issues by itself.&lt;/aside&gt;
-&lt;p&gt;This means the colorpicker is unfortunately again, broken. But there is a
-solution to compensate for this issue.&lt;/p&gt;
+imprecisions + the picking operation has precisions
+issues by itself&lt;/aside&gt;
+&lt;p&gt;This means the colorpicker is unfortunately again, broken. But
+with the above in mind, it is still possible to get back the correct values.&lt;/p&gt;
 &lt;aside class="m-block m-primary"&gt;
-&lt;h3&gt;In the case you want to reverse the color-picker
-color-transformation :&lt;/h3&gt;
+&lt;h3&gt;For &lt;code&gt;Case 1&lt;/code&gt; :&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;Set the &lt;code&gt;tcd&lt;/code&gt; to the same colorspace used by the &lt;code&gt;color_picking&lt;/code&gt;
-role. (by default it should be the first view-transform but check
-the config)&lt;/li&gt;
+&lt;li&gt;Disable the view-transform whenever you want to pick a value.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/aside&gt;
+&lt;aside class="m-block m-primary"&gt;
+&lt;h3&gt;For &lt;code&gt;Case 2&lt;/code&gt; :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Set the &lt;code&gt;tcd&lt;/code&gt; to the default view-transform colorspace.&lt;/li&gt;
 &lt;li&gt;Pick your value.&lt;/li&gt;
 &lt;li&gt;Look at the values in the &lt;code&gt;Display colorspace&lt;/code&gt; widget, and copy
 them in the &lt;code&gt;eds&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;em&gt;(most common case would be to pick data in a scalar channel)&lt;/em&gt;&lt;/p&gt;
 &lt;/aside&gt;
 &lt;/section&gt;
 &lt;section id="environment"&gt;
@@ -739,7 +759,7 @@ in a directory with the colorspace name.&lt;/p&gt;
 &lt;p&gt;For scalar channels, sp will not apply any color-transformation
 and consider them using the colorspace &lt;code&gt;raw&lt;/code&gt; (no matter the config).
 Interstingly, this colorspace &lt;code&gt;raw&lt;/code&gt; doesn’t get written into the
-&lt;code&gt;$colorspace&lt;/code&gt; token as it should.&lt;/p&gt;
+&lt;code&gt;$colorspace&lt;/code&gt; token as it should. &lt;em&gt;(fixed in 7.4.1)&lt;/em&gt;&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="aces-workflow"&gt;
@@ -879,7 +899,7 @@ name. (and instead export the textures in a folder named ACEScg)&lt;/p&gt;
 &lt;h2&gt;&lt;a href="#id39"&gt;OCIO Implementation Issues&lt;/a&gt;&lt;/h2&gt;
 &lt;aside class="m-note m-default"&gt;
 The goal here is not to denigrate the dev team’s works but rather to offer
-explanations and solutions to what could be better.&lt;/aside&gt;
+explanations and solutions for improving the software.&lt;/aside&gt;
 &lt;section id="display-issues"&gt;
 &lt;h3&gt;&lt;a href="#id40"&gt;Display Issues&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;These explanations were made possible thanks to the Chris Brejon’s article
@@ -1061,11 +1081,9 @@ values so they can be converted to the working colorspace behind the scene.&lt;/
 workspace.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;
-Color-picker: the picker should not use the &lt;code&gt;color_picking&lt;/code&gt; role as an
-invert transform. It should be the colorspace used by the
-&lt;code&gt;view-transform&lt;/code&gt;. (and no transform should be applied when the
-view-transform is disabled)&lt;br /&gt;
-(see &lt;a href="#picker"&gt;picker&lt;/a&gt; section)&lt;br /&gt;
+Color-picker is broken. It react differently depending of the OCIO
+config version use.&lt;br /&gt;
+(see &lt;a href="#picker"&gt;picker&lt;/a&gt; section for details)&lt;br /&gt;
 &lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;No options to set a specific colorspace for textures at export time.&lt;/p&gt;
@@ -1111,6 +1129,12 @@ Mari. 👋&lt;/p&gt;
 &lt;h3&gt;A Color-Science Discord server&lt;/h3&gt;
 &lt;p&gt;&lt;a class="m-link-wrap" href="https://discord.gg/jk6u3eB"&gt;https://discord.gg/jk6u3eB&lt;/a&gt;&lt;/p&gt;
 &lt;/aside&gt;
+&lt;/section&gt;
+&lt;section id="changelog"&gt;
+&lt;h2&gt;&lt;a href="#id47"&gt;Changelog&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;17-12-2021&lt;/code&gt;: fixed &lt;a href="#the-color-picker"&gt;The color-picker&lt;/a&gt; section. &lt;a href="https://community.acescentral.com/t/aces-and-substance-painter/2299/42"&gt;Discussion available here&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/section&gt;
 </content><category term="tutorial"></category><category term="substance-painter"></category><category term="color-science"></category><category term="OCIO"></category><category term="ACES"></category></entry><entry><title>OpenDRT : a nice (experimental) alternative to ACES</title><link href="https://mrlixm.github.io/blog/opendrt/" rel="alternate"></link><published>2021-11-24T19:02:00+01:00</published><updated>2021-11-24T19:02:00+01:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-11-24:/blog/opendrt/</id><summary type="html">&lt;p&gt;An open-source alternative to convert scene-linear data to SDR or
 HDR display image.&lt;/p&gt;

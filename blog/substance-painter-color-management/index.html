@@ -35,8 +35,8 @@
     </a>
     <div class="l-nav-menu" id="nav-menu">
       <ol>
-          <li><a href="https://mrlixm.github.io/pages/work">Work</a></li>
-          <li><a href="https://mrlixm.github.io/blog/" class="l-nav-active">Blog</a></li>
+          <li><a href="https://mrlixm.github.io/work">Work</a></li>
+          <li><a href="https://mrlixm.github.io/blog" class="l-nav-active">Blog</a></li>
           <li><a href="https://mrlixm.github.io/pages/contact">Contact</a></li>
       </ol>
     </div>
@@ -90,7 +90,7 @@
           </span>
             <span class="l-modified l-flex-item" title="Last Modified">
               updated
-              <time datetime="2021-12-09T16:01:00+01:00">&nbsp;09 December 2021</time>
+              <time datetime="2021-12-17T23:46:00+01:00">&nbsp;17 December 2021</time>
             </span>
           <span class="l-box-author l-flex-item" title="List of Authors">
             <img src="/static/images/global/icons/account.svg" alt="Author icon" >
@@ -117,7 +117,8 @@ skip straight to the <a href="#substance-setup-workflow">Substance Setup &amp; W
 <aside class="m-note m-info">
 <p>OCIO was introduced in <a href="https://substance3d.adobe.com/documentation/spdoc/version-7-4-223053247.html">Substance-Painter version 7.4</a></p>
 <p>This is the version used through this article and some features might
-have changed since.</p>
+changed at the time you are reading this. I will try to keep the article
+updated thought.</p>
 </aside>
 <aside class="m-block m-info">
 <h3>Official Documentation</h3>
@@ -197,6 +198,7 @@ have changed since.</p>
 </li>
 <li><a href="#conclusion" id="id45">Conclusion</a></li>
 <li><a href="#resources" id="id46">Resources</a></li>
+<li><a href="#changelog" id="id47">Changelog</a></li>
 </ul>
 </aside>
 <section id="color-managed-workflow">
@@ -762,43 +764,61 @@ being used in the view-transform.</aside>
 </div>
 <p id="picker">What about the actual picker ?</p>
 <blockquote>
-<p>Same thing, the value that is being picked is expressed in the working
-colorspace. It is not affected by the <code>tcd</code>.</p>
-<p>First the color-picker pick the value at display <em>(the value will be
-different if you enable or disable the view-transform )</em></p>
-<p>Then the color-picker ALWAYS apply an extra color-transformation step :
-It applies the inverse transform defined in the colorspace used in
-the <code>color-picking</code> OCIO role.</p>
+<p>
+Same thing, the value that is being picked is expressed in the working
+colorspace. It is not affected by the <code>tcd</code>.<br />
+But there is a <span class="m-text m-s">little</span> huge twist !<br />
+</p>
 </blockquote>
-<p>To make things clearer, what best than an image ?</p>
-<figure class="m-figure">
-<a href="https://mrlixm.github.io/static/images/blog/0008/diagramC.jpg"><img alt="Color-picking process as a diagram." src="https://mrlixm.github.io/static/images/blog/0008/diagramC.jpg" /></a>
-<figcaption>Using the Substance config</figcaption>
-</figure>
-<figure class="m-figure">
-<a href="https://mrlixm.github.io/static/images/blog/0008/diagramC-ACES.jpg"><img alt="Color-picking process as a diagram." src="https://mrlixm.github.io/static/images/blog/0008/diagramC-ACES.jpg" /></a>
-<figcaption>Using the ACES 1.2 config (the end-result could be even more broken if
-we were using another view_transform)</figcaption>
-</figure>
+<p>After <a href="https://liamcollod.notion.site/Substance-Painter-Color-Picker-Issue-1d1cdeeb0e2846ba977ebc453e5ae56b">some extensive testing</a>,
+I can unfortunately say that the picker is not
+consistent depending of the OCIO config you are using. It works in some
+cases and it is broken in others. I’m still not sure about what the issue
+actually is but here is what I have :</p>
+<ul>
+<li><p><code>Case 1</code> : You are using an OCIO v2 config that <strong>uses Display
+colorspaces and Shared Views</strong> (OCIO v2 new features) :</p>
+<blockquote>
+<p>The picker take the value at the display (after the
+view-transform is applied) and return it.</p>
+<p>This only work when there is, well …, no view-transform, i.e. is
+it is disabled or use a display with a “passtrough/raw” encoding. If
+you are viewing color data with the proper view-transform, the
+picked value will not correspond to the original value you used.</p>
+</blockquote>
+</li>
+<li><p><code>Case 2</code> : You are using an OCIO v1 config or v2 without the new
+features :</p>
+<blockquote>
+<p>The picker take the value at display (with the view-transform), then
+apply an inverse display transform. It pick the default one, i.e. the
+first defined in the config or in the <code>active_displays</code> key.
+And as the sliders don’t go above 1, the result is clamped between the
+0-1 range 🙂</p>
+</blockquote>
+</li>
+</ul>
 <aside class="m-note m-warning">
 You need to also take into consideration the color-picker precision issues.
 Applying an invert color-transformations can lead in some cases to
-imprecisions but it seems the color-picker already has some precision
-issues by itself.</aside>
-<p>This means the colorpicker is unfortunately again, broken. But there is a
-solution to compensate for this issue.</p>
+imprecisions + the picking operation has precisions
+issues by itself</aside>
+<p>This means the colorpicker is unfortunately again, broken. But
+with the above in mind, it is still possible to get back the correct values.</p>
 <aside class="m-block m-primary">
-<h3>In the case you want to reverse the color-picker
-color-transformation :</h3>
+<h3>For <code>Case 1</code> :</h3>
 <ul>
-<li>Set the <code>tcd</code> to the same colorspace used by the <code>color_picking</code>
-role. (by default it should be the first view-transform but check
-the config)</li>
+<li>Disable the view-transform whenever you want to pick a value.</li>
+</ul>
+</aside>
+<aside class="m-block m-primary">
+<h3>For <code>Case 2</code> :</h3>
+<ul>
+<li>Set the <code>tcd</code> to the default view-transform colorspace.</li>
 <li>Pick your value.</li>
 <li>Look at the values in the <code>Display colorspace</code> widget, and copy
 them in the <code>eds</code>.</li>
 </ul>
-<p><em>(most common case would be to pick data in a scalar channel)</em></p>
 </aside>
 </section>
 <section id="environment">
@@ -845,7 +865,7 @@ in a directory with the colorspace name.</p>
 <p>For scalar channels, sp will not apply any color-transformation
 and consider them using the colorspace <code>raw</code> (no matter the config).
 Interstingly, this colorspace <code>raw</code> doesn’t get written into the
-<code>$colorspace</code> token as it should.</p>
+<code>$colorspace</code> token as it should. <em>(fixed in 7.4.1)</em></p>
 </section>
 </section>
 <section id="aces-workflow">
@@ -985,7 +1005,7 @@ name. (and instead export the textures in a folder named ACEScg)</p>
 <h2><a href="#id39">OCIO Implementation Issues</a></h2>
 <aside class="m-note m-default">
 The goal here is not to denigrate the dev team’s works but rather to offer
-explanations and solutions to what could be better.</aside>
+explanations and solutions for improving the software.</aside>
 <section id="display-issues">
 <h3><a href="#id40">Display Issues</a></h3>
 <p>These explanations were made possible thanks to the Chris Brejon’s article
@@ -1167,11 +1187,9 @@ values so they can be converted to the working colorspace behind the scene.</p>
 workspace.</p>
 </li>
 <li><p>
-Color-picker: the picker should not use the <code>color_picking</code> role as an
-invert transform. It should be the colorspace used by the
-<code>view-transform</code>. (and no transform should be applied when the
-view-transform is disabled)<br />
-(see <a href="#picker">picker</a> section)<br />
+Color-picker is broken. It react differently depending of the OCIO
+config version use.<br />
+(see <a href="#picker">picker</a> section for details)<br />
 </p>
 </li>
 <li><p>No options to set a specific colorspace for textures at export time.</p>
@@ -1218,6 +1236,12 @@ Mari. 👋</p>
 <p><a class="m-link-wrap" href="https://discord.gg/jk6u3eB">https://discord.gg/jk6u3eB</a></p>
 </aside>
 </section>
+<section id="changelog">
+<h2><a href="#id47">Changelog</a></h2>
+<ul>
+<li><code>17-12-2021</code>: fixed <a href="#the-color-picker">The color-picker</a> section. <a href="https://community.acescentral.com/t/aces-and-substance-painter/2299/42">Discussion available here</a></li>
+</ul>
+</section>
   <!-- /content -->
           </div>
         </div>
@@ -1258,7 +1282,7 @@ Mari. 👋</p>
             </span>
               <span class="l-modified l-flex-item" title="Last Modified">
                 updated
-                <time datetime="2021-12-09T16:01:00+01:00">&nbsp;09 December 2021</time>
+                <time datetime="2021-12-17T23:46:00+01:00">&nbsp;17 December 2021</time>
               </span>
             <span class="l-box-author l-flex-item" title="List of Authors">
               <img src="/static/images/global/icons/account.svg" alt="Author icon" >

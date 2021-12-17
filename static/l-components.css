@@ -236,14 +236,33 @@ Used to configure a flexbox container
 .l-flex-grow-2 {
     flex-grow: 2;
 }
-
-
 /*
 .l-invisble
 make content not visible
 */
 .l-invisible {
     display: none;
+}
+/*
+l-scale-w
+*/
+.l-scale-w-10 {
+    width: 10%;
+}
+.l-scale-w-20 {
+    width: 20%;
+}
+.l-scale-w-30 {
+    width: 30%;
+}
+.l-scale-w-40 {
+    width: 40%;
+}
+.l-scale-w-50 {
+    width: 50%;
+}
+.l-scale-w-60 {
+    width: 60%;
 }
 
 
