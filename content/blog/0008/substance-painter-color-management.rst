@@ -6,7 +6,7 @@ Color-management in Substance Painter with OCIO
 :status: published
 :date-created: 2021-11-24 23:33
 :date: 2021-12-08 19:03
-:modified: 2021-12-09 16:01
+:modified: 2021-12-17 23:46
 :cover: {static}/images/blog/0008/cover.jpg
 
 :category: tutorial
@@ -19,6 +19,8 @@ Color-management in Substance Painter with OCIO
 .. role:: text-green
     :class: m-text m-primary
 
+.. role:: strike
+    :class: m-text m-s
 
 It's there ! After so much time, Substance-Painter finally saw itself getting
 a shiny new color-management system with OCIO support. We're going to dive
@@ -35,7 +37,8 @@ skip straight to the `Substance Setup & Workflow`_ section if desired.
     OCIO was introduced in `Substance-Painter version 7.4 <https://substance3d.adobe.com/documentation/spdoc/version-7-4-223053247.html>`_
 
     This is the version used through this article and some features might
-    have changed since.
+    changed at the time you are reading this. I will try to keep the article
+    updated thought.
 
 .. block-info:: Official Documentation
 
@@ -704,48 +707,60 @@ ________________
 
 What about the actual picker ?
 
-    Same thing, the value that is being picked is expressed in the working
-    colorspace. It is not affected by the ``tcd``.
+    | Same thing, the value that is being picked is expressed in the working
+     colorspace. It is not affected by the ``tcd``.
+    | But there is a :strike:`little` huge twist !
 
-    First the color-picker pick the value at display *(the value will be
-    different if you enable or disable the view-transform )*
+After `some extensive testing <https://liamcollod.notion
+.site/Substance-Painter-Color-Picker-Issue-1d1cdeeb0e2846ba977ebc453e5ae56b>`_,
+I can unfortunately say that the picker is not
+consistent depending of the OCIO config you are using. It works in some
+cases and it is broken in others. I'm still not sure about what the issue
+actually is but here is what I have :
 
-    Then the color-picker ALWAYS apply an extra color-transformation step :
-    It applies the inverse transform defined in the colorspace used in
-    the ``color-picking`` OCIO role.
+-
+    ``Case 1`` : You are using an OCIO v2 config that **uses Display
+    colorspaces and Shared Views** (OCIO v2 new features) :
 
-To make things clearer, what best than an image ?
+        The picker take the value at the display (after the
+        view-transform is applied) and return it.
 
-.. figure:: {static}/images/blog/0008/diagramC.jpg
-    :target: {static}/images/blog/0008/diagramC.jpg
-    :alt: Color-picking process as a diagram.
+        This only work when there is, well ..., no view-transform, i.e. is
+        it is disabled or use a display with a "passtrough/raw" encoding. If
+        you are viewing color data with the proper view-transform, the
+        picked value will not correspond to the original value you used.
 
-    Using the Substance config
+-
+    ``Case 2`` : You are using an OCIO v1 config or v2 without the new
+    features :
 
-.. figure:: {static}/images/blog/0008/diagramC-ACES.jpg
-    :target: {static}/images/blog/0008/diagramC-ACES.jpg
-    :alt: Color-picking process as a diagram.
+        The picker take the value at display (with the view-transform), then
+        apply an inverse display transform. It pick the default one, i.e. the
+        first defined in the config or in the ``active_displays`` key.
+        And as the sliders don't go above 1, the result is clamped between the
+        0-1 range 🙂
 
-    Using the ACES 1.2 config (the end-result could be even more broken if
-    we were using another view_transform)
 
 .. note-warning::
 
     You need to also take into consideration the color-picker precision issues.
     Applying an invert color-transformations can lead in some cases to
-    imprecisions but it seems the color-picker already has some precision
-    issues by itself.
+    imprecisions + the picking operation has precisions
+    issues by itself
 
-This means the colorpicker is unfortunately again, broken. But there is a
-solution to compensate for this issue.
+This means the colorpicker is unfortunately again, broken. But
+with the above in mind, it is still possible to get back the correct values.
 
-.. block-primary:: In the case you want to reverse the color-picker
-    color-transformation :
+.. block-primary:: For ``Case 1`` :
 
     -
-        Set the ``tcd`` to the same colorspace used by the ``color_picking``
-        role. (by default it should be the first view-transform but check
-        the config)
+        Disable the view-transform whenever you want to pick a value.
+
+
+.. block-primary:: For ``Case 2`` :
+
+    -
+        Set the ``tcd`` to the default view-transform colorspace.
 
     -
         Pick your value.
@@ -754,7 +769,8 @@ solution to compensate for this issue.
         Look at the values in the ``Display colorspace`` widget, and copy
         them in the ``eds``.
 
-    *(most common case would be to pick data in a scalar channel)*
+
+
 
 Environment
 ___________
@@ -815,7 +831,7 @@ in a directory with the colorspace name.
 For scalar channels, sp will not apply any color-transformation
 and consider them using the colorspace ``raw`` (no matter the config).
 Interstingly, this colorspace ``raw`` doesn't get written into the
-``$colorspace`` token as it should.
+``$colorspace`` token as it should. *(fixed in 7.4.1)*
 
 ACES Workflow
 -------------
@@ -1005,7 +1021,7 @@ OCIO Implementation Issues
 .. note-default::
 
     The goal here is not to denigrate the dev team's works but rather to offer
-    explanations and solutions to what could be better.
+    explanations and solutions for improving the software.
 
 Display Issues
 ==============
@@ -1233,11 +1249,9 @@ Issues Recap
     workspace.
 
 -
-    | Color-picker: the picker should not use the ``color_picking`` role as an
-     invert transform. It should be the colorspace used by the
-     ``view-transform``. (and no transform should be applied when the
-     view-transform is disabled)
-    | (see `picker`_ section)
+    | Color-picker is broken. It react differently depending of the OCIO
+        config version use.
+    | (see `picker`_ section for details)
 
 -
     No options to set a specific colorspace for textures at export time.
@@ -1288,3 +1302,10 @@ Resources
 .. block-default:: A Color-Science Discord server
 
     https://discord.gg/jk6u3eB
+
+Changelog
+---------
+
+-
+    ``17-12-2021``: fixed `The color-picker`_ section. `Discussion available here
+    <https://community.acescentral.com/t/aces-and-substance-painter/2299/42>`_
