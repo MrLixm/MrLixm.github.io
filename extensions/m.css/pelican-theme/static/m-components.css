@@ -70,15 +70,15 @@ main p.m-noindent, li > p, dd > p, table.m-table td > p {
 blockquote {
   margin-top: 0;
   margin-left: 1rem;
-  margin-right: 1rem;
-  padding: 1rem;
+  margin-right: 0rem;
+  padding: 1rem 0rem 1rem 2rem;
   border-left-style: solid;
-  border-left-width: 0.25rem;
+  border-left-width: 0.15rem;
 }
 hr {
   width: 75%;
-  border-width: 0.0625rem;
-  border-style: solid;
+  border: unset;
+  border-top: 1px solid;
 }
 blockquote, hr {
   border-color: var(--line-color);
@@ -331,8 +331,10 @@ dl.m-footnote dd span.m-footnote a {
   background-color: rgba(0,0,0,0.4);
   border-style: solid;
   border-width: 0.0rem;
-  border-left-width: 0.25rem;
+  border-left-width: 0.15rem;
   border-radius: var(--border-radius);
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
   border-color: var(--line-color);
   padding: 0.9375rem 0.9375rem 0.9375rem 0.75rem;
 }
@@ -729,46 +731,28 @@ figure.m-figure figcaption a, .m-code-figure figcaption a, .m-console-figure fig
 }
 
 /* Inflatable content */
-.m-container-inflatable > .m-row > [class*='m-col-'] > .m-note,
 .m-container-inflatable > .m-row > [class*='m-col-'] > .m-frame,
-.m-container-inflatable > .m-row > [class*='m-col-'] > .m-block,
 .m-container-inflatable > .m-row > [class*='m-col-'] > .m-imagegrid,
-.m-container-inflatable > .m-row > [class*='m-col-'] > pre,
 .m-container-inflatable > .m-row > [class*='m-col-'] > .m-code-figure,
 .m-container-inflatable > .m-row > [class*='m-col-'] > .m-console-figure,
-.m-container-inflatable > .m-row > [class*='m-col-'] section > .m-note,
 .m-container-inflatable > .m-row > [class*='m-col-'] section > .m-frame,
-.m-container-inflatable > .m-row > [class*='m-col-'] section > .m-block,
 .m-container-inflatable > .m-row > [class*='m-col-'] section > .m-imagegrid,
-.m-container-inflatable > .m-row > [class*='m-col-'] section > pre,
 .m-container-inflatable > .m-row > [class*='m-col-'] section > .m-code-figure,
 .m-container-inflatable > .m-row > [class*='m-col-'] section > .m-console-figure,
-.m-container-inflatable [class*='m-center-'] > .m-note,
 .m-container-inflatable [class*='m-center-'] > .m-frame,
-.m-container-inflatable [class*='m-center-'] > .m-block,
 .m-container-inflatable [class*='m-center-'] > .m-imagegrid,
-.m-container-inflatable [class*='m-center-'] > pre,
 .m-container-inflatable [class*='m-center-'] > .m-code-figure,
 .m-container-inflatable [class*='m-center-'] > .m-console-figure,
-.m-container-inflatable [class*='m-left-'] > .m-note,
 .m-container-inflatable [class*='m-left-'] > .m-frame,
-.m-container-inflatable [class*='m-left-'] > .m-block,
 .m-container-inflatable [class*='m-left-'] > .m-imagegrid,
-.m-container-inflatable [class*='m-left-'] > pre,
 .m-container-inflatable [class*='m-left-'] > .m-code-figure,
 .m-container-inflatable [class*='m-left-'] > .m-console-figure,
-.m-container-inflatable [class*='m-right-'] > .m-note,
 .m-container-inflatable [class*='m-right-'] > .m-frame,
-.m-container-inflatable [class*='m-right-'] > .m-block,
 .m-container-inflatable [class*='m-right-'] > .m-imagegrid,
-.m-container-inflatable [class*='m-right-'] > pre,
 .m-container-inflatable [class*='m-right-'] > .m-code-figure,
 .m-container-inflatable [class*='m-right-'] > .m-console-figure,
-.m-container-inflatable .m-container-inflate > .m-note,
 .m-container-inflatable .m-container-inflate > .m-frame,
-.m-container-inflatable .m-container-inflate > .m-block,
 .m-container-inflatable .m-container-inflate > .m-imagegrid,
-.m-container-inflatable .m-container-inflate > pre,
 .m-container-inflatable .m-container-inflate > .m-code-figure,
 .m-container-inflatable .m-container-inflate > .m-console-figure
 {
