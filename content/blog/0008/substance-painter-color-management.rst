@@ -769,6 +769,8 @@ with the above in mind, it is still possible to get back the correct values.
         Look at the values in the ``Display colorspace`` widget, and copy
         them in the ``eds``.
 
+If you are curious I made a bug report on the forum here :
+https://community.adobe.com/t5/substance-3d-painter-discussions/color-picker-doesn-t-behave-consistent-across-ocio-configs/td-p/12603389
 
 
 
