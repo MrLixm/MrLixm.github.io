@@ -116,8 +116,8 @@ main article p {
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: flex-start;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
 }
 #m-jumbo .l-article-header {
     align-items: center;
