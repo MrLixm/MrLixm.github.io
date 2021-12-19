@@ -45,7 +45,7 @@
 [class*='m-col-'] > [class*='m-col-t-']:not(.m-left-t):not(.m-right-t):not(.m-center-t),
 [class*='m-col-'] > [class*='m-col-s-']:not(.m-left-t):not(.m-right-t):not(.m-center-t):not(.m-left-s):not(.m-right-s):not(.m-center-s),
 [class*='m-col-'] > [class*='m-col-m-']:not(.m-left-t):not(.m-right-t):not(.m-center-t):not(.m-left-s):not(.m-right-s):not(.m-center-s):not(.m-left-m):not(.m-right-m):not(.m-center-m),
-[class*='m-col-'] > [class*='m-col-l-']:not([class*='m-left-'):not([class*='m-right-'):not([class*='m-center-']),
+[class*='m-col-'] > [class*='m-col-l-']:not([class*='m-left-']):not([class*='m-right-']):not([class*='m-center-']),
 
 /* m-center and m-fullwidth together is most probably a mistake */
 .m-center.m-fullwidth,

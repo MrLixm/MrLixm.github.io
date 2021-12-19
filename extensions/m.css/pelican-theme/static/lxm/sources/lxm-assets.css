@@ -1,0 +1,250 @@
+/*
+Aditional css for m.css
+
+s&r variables :
+    --screen-small : 500px;
+
+*/
+/*-----------------------------------------------------------------------------
+
+    Background colors & text colors
+
+--------------------------------*/
+.l-bgc-grey {
+    background-color: rgb(176,176,176);
+}
+.l-bgc-yellow-l {
+    background-color: var(--warning-color);
+}
+.l-bgc-red-l {
+    background-color: var(--danger-filled-color);
+}
+.l-c-ldark {
+    color: rgb(16,16,16);
+}
+.l-c-color {
+    color: var(--color);
+}
+/* ----------------------------------------------------------------------------
+
+    TEXT STYLING
+
+ -------------*/
+.l-txt-titleA {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+/*-----------------------------------------------------------------------------
+
+    Widgets
+
+--------*/
+/*
+    l-tag
+    tags are <a> with a defined style.
+    They have a big round corner with a green tint background.
+*/
+.l-tag {
+    background-color: rgba(96, 198, 142, 0.3);
+    border-radius: 2rem;
+    padding: 0.07rem 0.6rem;
+    white-space: nowrap;
+    font-style: normal;
+    font-size: 0.8rem;
+}
+.l-tag > a {
+    text-decoration: none;
+}
+.l-tag > a:hover {
+    text-decoration: underline;
+}
+@media screen and (max-width: 500px) {
+    .l-tag {
+        font-size: 0.65rem;
+    }
+}
+/*
+    l-category
+    special text styling used for post category (in title header)
+    background filled in grey with no corner and dark text
+*/
+.l-category {
+    background-color: rgb(176,176,176);
+    border-radius: 0;
+    padding-left: 0.3rem;
+    padding-right: 0.8rem;
+    font-weight: 700;
+    font-size: 1.15rem;
+}
+@media screen and (max-width: 500px) {
+    .l-category {
+        font-size: 1rem;
+        padding-right: 0.6rem;
+    }
+}
+.l-category > a {
+    color: rgb(20,20,20);
+    text-decoration: none;
+}
+.l-category > a:hover {
+    text-decoration: underline;
+}
+/*
+    l-box-author
+    A box to layout authors items
+*/
+.l-box-author {
+    display: inherit;
+}
+/*
+    l-author
+    Represent an article's author
+*/
+.l-author {
+    display: inherit;
+}
+.l-author a {
+    display: inherit;
+    color: var(--color);
+    text-decoration: none;
+}
+.l-author a:hover {
+    color: var(--link-color);
+    text-decoration: underline;
+}
+/*
+    l-txt-invisible
+    Turn text to non-visible by setting its size to 0
+*/
+.l-txt-invisible {
+    font-size: 0;
+}
+/*
+    l-time
+    the article creation date (with the icon)
+*/
+.l-time{
+    display: inherit;
+    margin-right:0.5rem;
+}
+/*
+    l-modified
+    Used to display the last modified time for the article.
+    circle corner witha dark green background and white text.
+*/
+.l-modified {
+    display: inherit;
+    background-color: rgba(96, 198, 142, 0.3);
+    border-radius: 1rem;
+    padding: 0.07rem 0.6rem;
+    margin-right:0.5rem;
+    white-space: nowrap;
+    font-style: normal;
+    font-size: 0.8rem;
+}
+/*
+    l-status
+    Used to display a status message in a rounded corner box (slightly)
+    text is in in italic, bgc to be defined using additional classes.
+*/
+.l-status {
+    display: inherit;
+    border-radius: 0.15rem;
+    padding:0.2rem 0.4rem 0.2rem;
+    margin-right:0.5rem;
+    white-space: nowrap;
+    font-style: normal;
+    font-size: 0.8rem;
+}
+/*
+    l-gradient-line
+    Used on header for now
+ */
+.l-gradient-line {
+    background: var(--l-gradient-main);
+    width: 100%;
+    height: 2px;
+}
+/*-----------------------------------------------------------------------------
+
+    lines
+
+-------*/
+/*
+    l-line-xs
+    A simple very thin solid line
+*/
+.l-line-xs {
+    border-top: solid 0.1rem rgba(255,255,255,0.1);
+    margin: 0.9rem 0 0.9rem;
+    width: 100%;
+}
+footer .l-line-xs {
+    margin: 1.5rem 0 1.5rem;
+}
+@media screen and (max-width: 500px) {
+    .l-line-xs {
+        width: 90%;
+        margin: 0.9rem 0.9rem 0.9rem;
+    }
+}
+/*
+    l-line-v-xs
+    vertical thin solid line
+*/
+.l-line-v-s {
+    border-right: solid 0.2rem rgba(255,255,255,1);
+    margin: 0 0.9rem 0;
+}
+/*-----------END lines-------------------------------------------------------*/
+/*
+    l-img-btn-a
+    used on contact page
+    TODO rename class
+*/
+.l-img-btn-a {
+    transition: transform .2s;
+}
+.l-img-btn-a:hover {
+    transform: scale(1.2);
+}
+/*
+    l-btn-discord
+*/
+.l-btn-discord {
+    border-radius: 0.5rem;
+    background-color: rgb(88, 101, 242);
+    padding: 0.5rem;
+}
+.l-btn-discord:hover {
+    background-color: rgb(125, 136, 242);
+}
+.l-btn-discord > a{
+    color: var(--color);
+    font-weight: 800;
+    font-size: 1rem;
+    text-decoration: none;
+}
+.l-btn-discord-img {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin: 0 0.4rem 0;
+}
+/*
+    l-box-discord
+*/
+.l-box-discord {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    background-color: rgba(88,101,242,0.5);
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 1rem;
+}
+.l-box-discord p {
+    margin: 0 0 0.2rem;
+}
+
