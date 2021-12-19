@@ -15,16 +15,6 @@
 {% endblock %}
 
 {% block main %}
-{% if article and article.cover %}
-{% else %}
-  <div class="m-container">
-    <div class="m-row">
-{% endif %}
-{% block content %}
-{% endblock %}
-{% if article and article.cover %}
-{% else %}
-    </div>
-  </div>
-{% endif %}
+  {% block content %}
+  {% endblock %}
 {% endblock %}

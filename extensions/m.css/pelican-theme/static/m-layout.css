@@ -76,16 +76,13 @@ article h1 .m-breadcrumb a:hover, article h1 a:focus, article h1 a:active {
 }
 
 /* Article elements */
-article > header {
-  padding-bottom: 2rem;
-}
-article > header h1 {
+article header h1 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
   margin-top:0;
 }
 @media screen and (max-width: 576px) {
-    article > header h1 {
+    article header h1 {
         font-size: 1.5rem;
         font-weight: 700;
     }
@@ -281,6 +278,7 @@ article section:target figure.m-code-figure, article section:target figure.m-con
 }
 
 /* Spacing after every block element, but not after the last */
+/*TODO clean article > header*/
 article, article > header, article section {
     margin-top: 1rem;
     margin-bottom: 1rem;

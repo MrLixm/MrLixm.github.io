@@ -39,21 +39,21 @@
 {% endblock %}
 
 {% block content %}
+  <section class="m-container m-container-inflatable">
     {% macro filters() %}{% include "blog_filters.html" %}{% endmacro %}
     {{ filters()|rtrim|indent(4) }}
-    <div class="m-col-l-none">
-      {% if articles_page %}
+    {% if articles_page %}
       {% set article_list = articles_page.object_list %}
-      {% else %}
+    {% else %}
       {% set article_list = articles %}
-      {% endif %}
-      {% if not article_list %}
-        <div class="m-note m-success">
-          <h3>{{ "Congratulations!"|hyphenate(lang='en') }}</h3>
-          {{ "The m.css theme is alive and kicking! Now, feed it some articles so it doesn't feel so empty :)"|hyphenate(lang='en') }}
-        </div>
-      {% endif %}
-      {% for article in article_list %}
+    {% endif %}
+    {% if not article_list %}
+      <div class="m-note m-success">
+        <h3>{{ "Congratulations!"|hyphenate(lang='en') }}</h3>
+        {{ "The m.css theme is alive and kicking! Now, feed it some articles so it doesn't feel so empty :)"|hyphenate(lang='en') }}
+      </div>
+    {% endif %}
+    {% for article in article_list %}
       <article>
         {% macro header() %}{% include "article_header.html" %}{% endmacro %}
         {{ header()|rtrim|indent(8) }}
@@ -62,19 +62,19 @@
             ((article.collapse_first is defined and article.collapse_first != 'True') or
              (article.collapse_first is not defined and not M_COLLAPSE_FIRST_ARTICLE)) %}
         {% if show_content %}
-        <div class="m-clearfix-l"></div>
-<!-- content -->
-{{ article.content|trim }}
-<!-- /content -->
+          <div class="m-clearfix-l"></div>
+          <!-- content -->
+          {{ article.content|trim }}
+          <!-- /content -->
         {% endif %}
         {% if not show_content %}
-        <div class="m-clearfix-l"></div>
+          <div class="m-clearfix-l"></div>
         {% endif %}
-      </article>
+        </article>
       {% endfor %}
       {% if articles_page and articles_page.has_other_pages() %}
-      {% macro pagination() %}{% include 'pagination.html' %}{% endmacro %}
-      {{ pagination()|rtrim|indent(6) }}
+        {% macro pagination() %}{% include 'pagination.html' %}{% endmacro %}
+        {{ pagination()|rtrim|indent(6) }}
       {% endif %}
-    </div>
+    </section>
 {% endblock %}

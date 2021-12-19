@@ -19,19 +19,19 @@
 {% endblock %}
 
 {% block content %}
-    <div class="m-col-l-none">
-      {% block content_title %}
-      {% endblock content_title %}
-      {% for article in articles_page.object_list %}
+  <section class="m-container m-container-inflatable">
+    {% block content_title %}
+    {% endblock content_title %}
+    {% for article in articles_page.object_list %}
       <article>
         {% macro header() %}{% include "article_header.html" %}{% endmacro %}
         {{ header()|rtrim|indent(8) }}
         <div class="m-clearfix-l"></div>
       </article>
-      {% endfor %}
-      {% if articles_page.has_other_pages() %}
+    {% endfor %}
+    {% if articles_page.has_other_pages() %}
       {% macro pagination() %}{% include 'pagination.html' %}{% endmacro %}
       {{ pagination()|rtrim|indent(6) }}
-      {% endif %}
-    </div>
+    {% endif %}
+  </section>
 {% endblock %}

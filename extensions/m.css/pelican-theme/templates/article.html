@@ -71,21 +71,17 @@
         </div>
       </header>
       {% if article.content %}
-      <div class="m-container m-container-inflatable">
-        <div class="m-row">
-          <div class="m-col-l-none m-nopady">
-            {% if article.archived == 'True' and M_ARCHIVED_ARTICLE_BADGE %}
-            {{ M_ARCHIVED_ARTICLE_BADGE|render_rst|replace('{year}', article.date.year)|indent(8) }}
-            {% endif %}
-  <!-- content -->
-  {{ article_content_block() }}
-  <!-- /content -->
-            {% if article.category.badge or (article.author and article.author.badge) %}
-            {{ badges()|rtrim|indent(10) }}
-            {% endif %}
-          </div>
+        <div class="m-container m-container-inflatable">
+          {% if article.archived == 'True' and M_ARCHIVED_ARTICLE_BADGE %}
+          {{ M_ARCHIVED_ARTICLE_BADGE|render_rst|replace('{year}', article.date.year)|indent(8) }}
+          {% endif %}
+          <!-- content -->
+          {{ article_content_block() }}
+          <!-- /content -->
+          {% if article.category.badge or (article.author and article.author.badge) %}
+          {{ badges()|rtrim|indent(10) }}
+          {% endif %}
         </div>
-      </div>
       {% endif %}
       <footer>
         <div class="m-container">
@@ -97,25 +93,27 @@
       </footer>
     </article>
   {% else %}
-    <article class="m-col-l-none m-nopadb">
-      {% macro header() %}{% include "article_header.html" %}{% endmacro %}
-      {{ header()|rtrim|indent(6) }}
-      <div class="m-clearfix-l"></div>
-      {% if article.archived == 'True' and M_ARCHIVED_ARTICLE_BADGE %}
-      {{ M_ARCHIVED_ARTICLE_BADGE|render_rst|replace('{year}', article.date.year)|rtrim|indent(6) }}
-      {% endif %}
-      {% if article.content %}
-<!-- content -->
-{{ article_content_block() }}
-<!-- /content -->
-      {% endif %}
-      {% if article.category.badge or (article.author and article.author.badge) %}
-      {{ badges()|rtrim|indent(6) }}
-      {% endif %}
-      <footer>
-        {% macro footer() %}{% include "article_footer.html" %}{% endmacro %}
-        {{ footer()|rtrim|indent(8) }}
-      </footer>
+    <article id="blog-simple">
+      <div class="m-container m-container-inflatable">
+        {% macro header() %}{% include "article_header.html" %}{% endmacro %}
+        {{ header()|rtrim|indent(6) }}
+        <div class="m-clearfix-l"></div>
+        {% if article.archived == 'True' and M_ARCHIVED_ARTICLE_BADGE %}
+          {{ M_ARCHIVED_ARTICLE_BADGE|render_rst|replace('{year}', article.date.year)|rtrim|indent(6) }}
+        {% endif %}
+        {% if article.content %}
+          <!-- content -->
+          {{ article_content_block() }}
+          <!-- /content -->
+        {% endif %}
+        {% if article.category.badge or (article.author and article.author.badge) %}
+          {{ badges()|rtrim|indent(6) }}
+        {% endif %}
+        <footer>
+          {% macro footer() %}{% include "article_footer.html" %}{% endmacro %}
+          {{ footer()|rtrim|indent(8) }}
+        </footer>
+      </div>
     </article>
     {% endif %}
 {% endblock %}
