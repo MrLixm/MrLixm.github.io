@@ -649,13 +649,13 @@ working color space.&lt;/blockquote&gt;
 are always in the colorspace defined by the project’s working
 color space. So you could change the &lt;code&gt;tcd&lt;/code&gt; but
 this won’t modify the value entered.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;The “tcd“ only modify how the color is displayed in the
 interface.&lt;/strong&gt; (you can see this displayed value under the &lt;code&gt;eds&lt;/code&gt;)&lt;/p&gt;
 &lt;aside class="m-note m-info"&gt;
 As such it is recommended to set the &lt;code&gt;tcd&lt;/code&gt; to the same colorspace
 being used in the view-transform.&lt;/aside&gt;
-&lt;/div&gt;
-&lt;/div&gt;
 &lt;p id="picker"&gt;What about the actual picker ?&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;

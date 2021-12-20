@@ -153,12 +153,14 @@ add a  bottom/top margin with a small size
 add a  bottom/top margin with a medium size
 */
 .l-mrg-m {
-    margin: 1rem 0 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 /*
 .l-mrg-l
 add a  bottom/top margin with a large size
 */
 .l-mrg-l {
-    margin: 2rem 0 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }

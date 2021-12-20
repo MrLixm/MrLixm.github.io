@@ -307,7 +307,7 @@ body { margin: 0; }
 
 /* 12-column layout -- L, 992px and up (desktops, very large tablets) */
 @media screen and (min-width: 992px) {
-  .m-container { width: 960px; }
+  .m-container { width: 900px; }
 
   .m-container-inflatable .m-col-l-10 .m-container-inflate:not([class*='m-left-']):not([class*='m-right-']) {
     margin-left: -10%;
