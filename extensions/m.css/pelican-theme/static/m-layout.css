@@ -61,9 +61,6 @@ body > footer > nav a:hover, body > footer > nav a:focus, body > footer > nav a:
 }
 
 /* Page heading (not in <header>), breadcrumb naviation on pages */
-article h1 {
-  font-size: 1.75rem;
-}
 article h1 .m-breadcrumb {
   color: var(--dim-color);
   font-weight: normal;
@@ -75,18 +72,6 @@ article h1 .m-breadcrumb a:hover, article h1 a:focus, article h1 a:active {
   color: var(--article-heading-active-color);
 }
 
-/* Article elements */
-article header h1 {
-  font-size: 2rem;
-  margin-bottom: 0;
-  margin-top:0;
-}
-@media screen and (max-width: 576px) {
-    article header h1 {
-        font-size: 1.5rem;
-        font-weight: 700;
-    }
-}
 article h1 a, article > header h1, article > header h1 a,
 article section > h2, article section > h2 a,
 article section > h3, article section > h3 a,
@@ -152,26 +137,6 @@ article > footer p {
   font-size: 0.85rem;
   text-indent: 0;
   text-align: center;
-}
-
-article h1 {
-  margin-top: 8rem;
-}
-article h2 {
-    font-size: 1.8rem;
-    margin-top: 7rem;
-}
-article h3 {
-    font-size: 1.4rem;
-    margin-top: 6rem;
-}
-article h4 {
-    font-size: 1.2rem;
-    margin-top: 5rem;
-}
-article h5 {
-    font-size: 1rem;
-    margin-top: 4rem;
 }
 
 article .m-block h2, article .m-block h3, article .m-block h4,
