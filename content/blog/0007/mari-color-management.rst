@@ -1,7 +1,7 @@
 Color-management in Mari
 ########################
 
-:summary: Trying to shine some light on a big issues source for artists.
+:summary: Trying to shine some light on a big source of issues for artists.
 
 
 :status: draft
@@ -12,9 +12,3 @@ Color-management in Mari
 :tags: mari, color-science, OCIO, ACES
 :author: Liam Collod
 
-..
-
-    :cover: {static}/images/blog/0007/
-    :cover_size: 100%
-
-First line.
