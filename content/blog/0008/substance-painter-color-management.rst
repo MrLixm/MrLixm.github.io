@@ -695,13 +695,13 @@ ________________
         color space. So you could change the ``tcd`` but
         this won't modify the value entered.
 
-        **The ``tcd`` only modify how the color is displayed in the
-        interface.** (you can see this displayed value under the ``eds``)
+**The ``tcd`` only modify how the color is displayed in the
+interface.** (you can see this displayed value under the ``eds``)
 
-        .. note-info::
+.. note-info::
 
-            As such it is recommended to set the ``tcd`` to the same colorspace
-            being used in the view-transform.
+    As such it is recommended to set the ``tcd`` to the same colorspace
+    being used in the view-transform.
 
 .. _picker:
 
