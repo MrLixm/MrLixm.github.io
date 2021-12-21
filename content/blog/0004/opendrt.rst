@@ -30,7 +30,6 @@ So what if you got a well-formed and pleasing image at the end without having
 to go through the complexity of ACES ?
 
 .. contents::
-        :class: m-block m-default
 
 
 Who's this for ?
@@ -173,19 +172,23 @@ Nuke
 *(For now i'm only going to show how you can use it in Nuke as I don't have
 a Resolve License)*
 
-1. `Download the .nk file <https://raw.githubusercontent
-.com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk>`_
-(Right click on the page > save as > save it somewhere)
+1.
+    `Download the .nk file <https://raw.githubusercontent
+    .com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk>`_
+    (Right click on the page > save as > save it somewhere)
 
-2. Import the .nk file: File > Insert Comp Nodes
+2.
+    Import the .nk file: File > Insert Comp Nodes
 
 Or alternatively :
 
-1. `Open the .nk <https://raw.githubusercontent
-.com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk>`_
-file and copy all of his content ``(ctrl+a, ctrl+c)``
+1.
+    `Open the .nk <https://raw.githubusercontent
+    .com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk>`_
+    file and copy all of his content ``(ctrl+a, ctrl+c)``
 
-2. Paste in Nuke ``(ctrl+v)``
+2.
+    Paste in Nuke ``(ctrl+v)``
 
 Alright, you now have the OpenDRT node.
 
