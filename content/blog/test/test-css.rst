@@ -12,6 +12,9 @@ Testing the CSS for this blog
 :tags: mari, color-science, OCIO, ACES
 :author: Liam Collod
 
+.. role:: text-green
+    :class: m-text m-primary
+
 index
 regius torquis cito convertams resistentia est. gemnas sunt spatiis de peritus assimilatio.
 cum aonides peregrinatione, omnes nuclear vexatum iacerees examinare clemens, teres calcariaes.
@@ -65,6 +68,24 @@ https://mrlixm.github.io/
 | This is teh first Line.
 | This is teh second line.
  THis is still the second line.
+
+1.
+    First Line
+
+2.
+    Second one
+
+3.
+    Third one
+
+-
+    We do it again
+
+-
+    Second line
+
+-
+    Third line
 
 Components
 -----------
