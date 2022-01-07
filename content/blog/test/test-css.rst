@@ -328,3 +328,10 @@ Cum hibrida mori, omnes victrixes acquirere germanus, ferox rationees.
 Cum fiscina unda, omnes luraes magicae brevis, teres torquises.
 Cum lactea observare, omnes galluses fallere gratis, bassus zirbuses.
 eleates.
+
+.. raw:: html
+
+    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FMrLixm%2FFoundry_Katana%2Fblob%2Fmain%2Fsrc%2Fnodegraph%2FCreateGSV%2FCreateGSV.py&style=atom-one-dark&showBorder=on&showLineNumbers=on&showFileMeta=on&showCopy=on&fetchFromJsDelivr=on"></script>
+
+The above should be an embed GitHub file using emgithub. It should have the
+dark atom-one-dark theme.
