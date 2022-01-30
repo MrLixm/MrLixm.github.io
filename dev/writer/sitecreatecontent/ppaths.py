@@ -63,11 +63,11 @@ class PPaths(object):
 
     @property
     def article_template(self):
-        return self.articles / "_template" / "template.rst"
+        return self.articles / "__template" / "template.rst"
 
     @property
     def work_projects_template(self):
-        return self.work_projects / "_template" / "template.rst"
+        return self.work_projects / "__template" / "template.rst"
 
 
 # register the class holding the variables as a module

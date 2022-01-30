@@ -14,8 +14,8 @@ L_ : liam customized content, added myself to extend m.css
 
 """
 
-CACHE_CONTENT = True
-LOAD_CONTENT_CACHE = True
+CACHE_CONTENT = False
+LOAD_CONTENT_CACHE = False
 
 """___________________________________________________________________________
 
@@ -38,13 +38,17 @@ READERS = {'html': None}  # avoid processing .html files
 
 L_PROJECTS_PATH = "pages/work/projects"
 
+IGNORE_FILES = [
+    ".#*",  # ignore emack lock files (default)
+    "__*"  # ignore dir/files starting with __
+]
+
 # -- PAGE
 PAGE_PATHS = ['pages']
 PAGE_URL = '{proot}/{slug}'  # proot is only defined in EXTRA_PATH_METADATA
 PAGE_SAVE_AS = '{proot}/{slug}/index.html'
-PAGE_EXCLUDES = [
-    "pages/work/projects/_template",  # this fucker doesn't work ???
-]
+# this fucker doesn't work ???, instead i'm using IGNORE_FILES
+PAGE_EXCLUDES = ["pages/work/projects/_template"]
 # -- Archives (blog post listing)
 ARCHIVES_URL = 'blog/'
 ARCHIVES_SAVE_AS = 'blog/index.html'
@@ -52,6 +56,7 @@ ARCHIVES_SAVE_AS = 'blog/index.html'
 ARTICLE_PATHS = ['blog']
 ARTICLE_URL = 'blog/{slug}/'  # category/ is part of the slug
 ARTICLE_SAVE_AS = 'blog/{slug}/index.html'
+# this fucker doesn't work ???, instead i'm using IGNORE_FILES
 ARTICLE_EXCLUDES = ["blog/_template"]
 # -- STATIC
 STATIC_PATHS = ['images']
@@ -131,7 +136,8 @@ PLUGINS.extend(
         'm.link',
         'm.metadata',
         'm.sphinx',
-        'm.vk'
+        'm.vk',
+        "lxm.rst_content"
     ]
 )
 

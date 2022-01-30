@@ -26,6 +26,12 @@ nunquam convertam lacta.
 
 .. contents::
 
+regius torquis cito convertams resistentia est. gemnas sunt spatiis de peritus assimilatio.
+
+.. block-info:: Demissios trabem!
+
+   a falsis, urbs brevis deus.
+
 Heading H2
 ----------
 
@@ -317,6 +323,9 @@ glos!
 Secundus, teres onuss hic talem de ``camerarius``, gratis lacta.
 ostravia.
 
+.. image:: {static}/images/blog/0005/intro.png
+    :alt: instancing principle
+
 .. block-warning:: Demissios trabem!
 
     cum mons velum, omnes accentores acquirere ferox, castus ignigenaes,
@@ -335,3 +344,31 @@ eleates.
 
 The above should be an embed GitHub file using emgithub. It should have the
 dark atom-one-dark theme.
+
+Custom Directives
+-----------------
+
+url-preview
+===========
+
+Some text above
+
+.. url-preview:: https:\\google.com
+    :title: Lazy Brown grey fox !
+    :image:
+
+    test for **content** that should be a description
+
+Some text in between
+Cum hibrida mori, omnes victrixes acquirere germanus, ferox rationees.
+Cum fiscina unda, omnes luraes magicae brevis, teres torquises.
+
+.. url-preview:: https:\\google.com
+    :title: Lazy Brown grey fox !
+    :image: {static}/images/blog/0002/cover.png
+
+    test for **content** that should be a description
+
+And some text under
+Cum hibrida mori, omnes victrixes acquirere germanus, ferox rationees.
+Cum fiscina unda, omnes luraes magicae brevis, teres torquises.

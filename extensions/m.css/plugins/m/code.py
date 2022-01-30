@@ -40,10 +40,11 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-import ansilexer
+from . import ansilexer
 
 filters_pre = None
 filters_post = None
+
 
 def _highlight(code, language, options, *, is_block, filters=[]):
     # Use our own lexer for ANSI
