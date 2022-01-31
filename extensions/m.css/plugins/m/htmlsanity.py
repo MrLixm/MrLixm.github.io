@@ -432,6 +432,8 @@ class SaneHtmlTranslator(HTMLTranslator):
     # Containers don't need those stupid "docutils" class names
     def visit_container(self, node):
         atts = {}
+        if node.get("style"):
+            atts["style"] = node.get("style")
         self.body.append(self.starttag(node, 'div', **atts))
 
     def depart_container(self, node):

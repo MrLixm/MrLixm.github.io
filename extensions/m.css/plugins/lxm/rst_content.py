@@ -1,9 +1,14 @@
+import os
+import pprint
 import sys
+from pathlib import Path
 
 import docutils
 import docutils.nodes
+import docutils.io
 from docutils.parsers import rst
 from docutils.parsers.rst import directives
+from pelican import signals
 
 
 class UrlPreview(rst.Directive):
@@ -21,6 +26,13 @@ class UrlPreview(rst.Directive):
     * ``Title`` is a directive :title: option
     * ``Description`` is the directive's content.
 
+    Here is the rst syntax:
+    ::
+
+        .. url-preview:: https://mysuperlink.xyz
+            :title: Check my super link !
+            :image: {static}/img/myimg.jpg
+
     """
 
     final_argument_whitespace = True
@@ -29,17 +41,20 @@ class UrlPreview(rst.Directive):
     optional_arguments = 0
     option_spec = {
         "title": directives.unchanged,
-        "image": directives.unchanged
+        "image": directives.unchanged,
+        "svg": directives.unchanged,
+        "color": directives.unchanged,
     }
 
-    # used to change the icon/displayed style
-    __type = ""
-
+    # a circle with a carved "link" icon inside
     __default_icon = """
 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path fill-rule="evenodd" clip-rule="evenodd" d="M32 64C49.6731 64 64 49.6731 64 32C64 14.3269 49.6731 0 32 0C14.3269 0 0 14.3269 0 32C0 49.6731 14.3269 64 32 64ZM25.8761 22.825C21.6565 27.0446 21.6565 33.9042 25.8761 38.1239C26.72 38.9678 28.1049 38.9678 28.9489 38.1239C29.8361 37.28 29.8361 35.8951 28.9489 35.0511C26.3955 32.5193 26.3955 28.4079 28.9489 25.8761L36.5875 18.2375C39.1193 15.6841 43.2307 15.6841 45.7625 18.2375C48.3159 20.7693 48.3159 24.8807 45.7625 27.4125L44.7455 28.4512C45.3514 30.139 45.6327 31.9134 45.611 33.6879L48.8353 30.4636C53.0549 26.244 53.0549 19.3844 48.8353 15.1647C44.6156 10.9451 37.756 10.9451 33.5364 15.1647L25.8761 22.825ZM38.1239 25.8761C37.28 25.0322 35.8951 25.0322 35.0511 25.8761C34.1639 26.72 34.1639 28.1049 35.0511 28.9489C37.6045 31.4807 37.6045 35.5921 35.0511 38.1239L27.4125 45.7625C24.8807 48.3159 20.7693 48.3159 18.2375 45.7625C15.6841 43.2307 15.6841 39.1193 18.2375 36.5875L19.2545 35.5705C18.6486 33.861 18.3673 32.0866 18.389 30.3121L15.1647 33.5364C10.9451 37.756 10.9451 44.6156 15.1647 48.8353C19.3844 53.0549 26.244 53.0549 30.4636 48.8353L38.1239 41.175C42.3435 36.9554 42.3435 30.0958 38.1239 25.8761Z" fill="currentColor"/>
 </svg>
     """
+
+    # this should be set on registering to allow using pelican setup.
+    pelican = None
 
     def run(self):
 
@@ -76,16 +91,43 @@ class UrlPreview(rst.Directive):
             node_content
         )
 
-        img_path = self.options.get("image")
-        img_uri = directives.uri(img_path)
-        if not img_path:
+        # we determine wht's going to be use in the image section
+        # if path to image file is given
+        if "image" in self.options and self.options.get("image"):
+            img_path = self.options.get("image")
+            img_path = directives.uri(img_path)
+            node_img = docutils.nodes.image()
+            node_img["uri"] = img_path
+
+        # if instead we give a svg, read the svg file content
+        elif "svg" in self.options and self.options.get("svg"):
+            # build the path as it might use the {static} or {filename} token.
+            svg_uri = directives.uri(self.options.get("svg"))
+            root = Path().cwd() / Path(self.pelican.settings['PATH'])
+            svg_path = root / Path(svg_uri.format(filename=root, static=root))
+            # read the svg file
+            try:
+                svg_file = docutils.io.FileInput(source_path=str(svg_path))
+                svg_data = svg_file.read()
+            except Exception as excp:
+                raise self.severe(
+                    f"[{self.name}] Can't read file <{svg_path}>: {excp}"
+                )
+
+            node_img = docutils.nodes.raw(
+                '', svg_data, format='html'
+            )
+
+            if "color" in self.options and self.options.get("color"):
+                node_bimage["style"] = f"color: {self.options.get('color')};"
+
+        # else use default icon wich is a svg representing a link in a circle.
+        else:
             node_img = docutils.nodes.raw(
                 '', self.__default_icon, format='html'
             )
-        else:
-            node_img = docutils.nodes.image()
-            node_img["uri"] = img_uri
 
+        # build node tree
         node_master += node_url
         node_master += node_bimage
         node_master += node_bdetail
@@ -98,11 +140,20 @@ class UrlPreview(rst.Directive):
         return [node_master]
 
 
+def __register(pelican_object):
+    """
+    Called by Pelican signal
+    """
+    UrlPreview.pelican = pelican_object
+    rst.directives.register_directive('url-preview', UrlPreview)
+
+    return
+
+
 def register():
     """
     For Pelican
     """
-
-    rst.directives.register_directive('url-preview', UrlPreview)
+    signals.initialized.connect(__register)
 
     return
