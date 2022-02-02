@@ -21,9 +21,10 @@ interested only about CGI in a VFX context.
 So in my free-time I regrouped the one I find most pertinent, for the above
 context, in a Notion database :
 
-.. note-default::
+.. url-preview:: https://liamcollod.notion.site/CGI-White-Papers-0ed5f781e8164b569a419802972afc34
+    :title: CGI-White-Papers
+    :image: https://images.pexels.com/photos/240163/pexels-photo-240163.jpeg
 
-    https://liamcollod.notion.site/CGI-White-Papers-0ed5f781e8164b569a419802972afc34
 
 .. transition:: .
 

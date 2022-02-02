@@ -1,5 +1,6 @@
 import os
 import pprint
+import re
 import sys
 from pathlib import Path
 
@@ -9,6 +10,81 @@ import docutils.io
 from docutils.parsers import rst
 from docutils.parsers.rst import directives
 from pelican import signals
+
+
+def set_svg_size(svg, width, height=None):
+    """
+    Quick & dirty way to modify the width height attribute of an svg.
+
+    Args:
+        svg(str): svg as string.
+        width(int or str):
+        height(int or str or None):
+
+    Returns:
+        str:
+            svg with the updated width & height attributes.
+    """
+
+    if not height:
+        height = width
+
+    # update the width attribute
+    new_svg = re.sub(
+        pattern="""width=["-'](\\d+)["-']""",
+        repl=f"""width=\"{width}\"""",
+        string=svg
+    )
+    # the width attribute was not existing, add it.
+    if new_svg == svg:
+        new_svg = re.sub(
+            pattern="""<svg""",
+            repl=f"""<svg width=\"{width}\"""",
+            string=new_svg
+        )
+
+    # update the height attribute
+    new_svg = re.sub(
+        pattern="""height=["-'](\\d+)["-']""",
+        repl=f"""height=\"{height}\"""",
+        string=new_svg
+    )
+    # the height attribute was not existing, add it.
+    if new_svg == svg:
+        new_svg = re.sub(
+            pattern="""<svg""",
+            repl=f"""<svg height=\"{height}\"""",
+            string=new_svg
+        )
+
+    return new_svg
+
+
+def size_argument(argument):
+    """
+    Args:
+        argument(str): directive option argument
+
+    Returns:
+        tuple:
+            tuple of 2 avlue, with width at index 0 and height at 1
+    """
+    if not argument:
+        return argument
+
+    if "px" in argument or "%" in argument:
+        raise ValueError(
+            "[size_argument] The argument passed should cannot have 'px' or"
+            " '%', it should be made of floats or ints."
+        )
+
+    size = argument.split(" ", 1)
+    if len(size) == 2:
+        output = tuple(size)
+    else:
+        output = (size[0], size[0])
+
+    return output
 
 
 class UrlPreview(rst.Directive):
@@ -40,10 +116,11 @@ class UrlPreview(rst.Directive):
     required_arguments = 1
     optional_arguments = 0
     option_spec = {
-        "title": directives.unchanged,
-        "image": directives.unchanged,
-        "svg": directives.unchanged,
+        "title": directives.unchanged_required,
+        "image": directives.uri,
+        "svg": directives.uri,
         "color": directives.unchanged,
+        "svg-size": size_argument,
     }
 
     # a circle with a carved "link" icon inside
@@ -114,12 +191,21 @@ class UrlPreview(rst.Directive):
                     f"[{self.name}] Can't read file <{svg_path}>: {excp}"
                 )
 
+            # process options :
+
+            # add color option to stylsheet of the image container
+            if "color" in self.options and self.options.get("color"):
+                node_bimage["style"] = f"color: {self.options.get('color')};"
+
+            # modify the width/height attribute of the svg if specified
+            if "svg-size" in self.options and self.options.get("svg-size"):
+                size = self.options.get('svg-size')
+                # overwrite svg_data with the updated one
+                svg_data = set_svg_size(svg_data, width=size[0], height=size[1])
+
             node_img = docutils.nodes.raw(
                 '', svg_data, format='html'
             )
-
-            if "color" in self.options and self.options.get("color"):
-                node_bimage["style"] = f"color: {self.options.get('color')};"
 
         # else use default icon wich is a svg representing a link in a circle.
         else:

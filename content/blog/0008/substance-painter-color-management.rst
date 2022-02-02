@@ -40,9 +40,11 @@ skip straight to the `Substance Setup & Workflow`_ section if desired.
     changed at the time you are reading this. I will try to keep the article
     updated thought.
 
-.. block-info:: Official Documentation
+.. url-preview:: https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html
+    :title: Official Documentation
+    :image: https://substance3d.adobe.com/documentation/spdoc/_/7F00010101777233846FC8EC6B4E4F33/1638375621662/resources/unfurl/splash_pt.jpg
 
-    https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html
+
 
 .. contents::
 
@@ -1185,7 +1187,11 @@ be a substitution of the Substance config. Documentation was pretty straight
 forward and I manage to build a nice config using python. You can find the
 result here :
 
-https://github.com/MrLixm/OCIO.Liam
+.. url-preview:: https://github.com/MrLixm/OCIO.Liam
+    :title: OCIO.Liam
+    :image: https://repository-images.githubusercontent.com/433153908/03fa53a5-a654-4728-a5ed-60ab1ac6babd
+
+    Personal OCIO resources, including configs.
 
 I called it ``Versatile``. It only misses the ``false color`` view from the
 Substance config. Have a look at the
@@ -1285,25 +1291,43 @@ Mari. 👋
 Resources
 ---------
 
-.. block-default:: The Hitchhiker's Guide to Digital Colour
+.. url-preview:: https://hg2dc.com/
+    :title: The Hitchhiker's Guide to Digital Colour
+    :image: https://hg2dc.files.wordpress.com/2019/12/hg2dc-header-1.png
 
-    https://hg2dc.com/
+    The step by step guidebook for digital pixel pushers trying to get a firm
+    grasp on colour to get sh*t done…
 
-.. block-default:: Chris Brejon
+.. url-preview:: https://chrisbrejon.com/cg-cinematography/chapter-1-color-management
+    :title: Chris Brejon's Book
+    :image: https://i0.wp.com/news.umbc.edu/wp-content/uploads/2016/02/mantis-shrimp.jpg?resize=1920%2C768&ssl=1
 
-    https://chrisbrejon.com/cg-cinematography/chapter-1-color-management
+    CG Cinematography Color Management is about this beautiful yet annoying
+    and essential topic of gamut. Definitely not the easiest way to start.
 
-.. block-default:: ACES Central
 
-    https://community.acescentral.com/
+.. url-preview:: https://community.acescentral.com/
+    :title: ACES Central
+    :image: https://community.acescentral.com/uploads/default/original/2X/c/cd5dcf316e1618c7bff0c0e4bd3b01825010b554.png
 
-.. block-default:: Cinematic Color
+    ACES Community Forum
 
-    https://cinematiccolor.org/
+.. url-preview:: https://cinematiccolor.org/
+    :title: Cinematic Color
+    :image: https://pbs.twimg.com/profile_banners/75077867/1516422798/1080x360
 
-.. block-default:: A Color-Science Discord server
+    This paper from 2012 presents an introduction to the color pipelines
+    behind modern feature-film visual-effects and animation.
 
-    https://discord.gg/jk6u3eB
+.. url-preview:: https://discord.gg/jk6u3eB
+    :title: Digital Imaging | Discord Server
+    :svg: {static}/images/global/social/discord.svg
+    :svg-size: 60
+
+    A Discord server centered around digital imaging - from CGI to digital
+    cinematography and photography and more.
+
+
 
 Changelog
 ---------

@@ -272,7 +272,7 @@ article .l-article-header h1 {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
-    margin: 0.5rem 3rem 0.5rem;
+    margin: 0.5rem 0 1rem;
     transition: 0.25s;
 }
 .l-url-box:hover {
@@ -301,6 +301,12 @@ article .l-article-header h1 {
     color: var(--color-disable);
     max-width: 160px;
 }
+@media screen and (max-width: 500px) {
+    .l-url-box-image {
+        max-width: 90px;
+    }
+}
+
 .l-url-box-image img{
     border-radius: 0.5rem;
     object-fit: cover;

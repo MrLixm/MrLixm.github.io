@@ -355,7 +355,6 @@ Some text above
 
 .. url-preview:: https:\\google.com
     :title: Lazy Brown grey fox !
-    :image:
 
     test for **content** that should be a description
 
@@ -378,6 +377,17 @@ Cum fiscina unda, omnes luraes magicae brevis, teres torquises.
     :title: Sources Files Download
     :svg: {static}/images/global/social/mega.svg
     :color: rgb(254, 71, 65)
+
+Dexter, altus orexiss rare imitari de grandis, secundus plasmator.
+Cum exsul favere, omnes aususes convertam grandis, albus fortises.
+
+.. url-preview:: https://discord.gg/jk6u3eB
+    :title: Digital Imaging | Discord Server
+    :svg: {static}/images/global/social/discord.svg
+    :svg-size: 60
+
+    A Discord server centered around digital imaging - from CGI to digital
+    cinematography and photography and more.
 
 Dexter, altus orexiss rare imitari de grandis, secundus plasmator.
 Cum exsul favere, omnes aususes convertam grandis, albus fortises.
