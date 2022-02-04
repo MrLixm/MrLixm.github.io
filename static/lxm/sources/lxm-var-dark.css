@@ -1,8 +1,9 @@
 :root {
-
     --font-B: Montserrat, sans-serif;
     --font-C: Georama, sans-serif;
     --font-article-size: 1.1rem;
 
     --color-article-main: rgb(190, 190, 190);
+    --color-article-darker: rgb(140,140,140);
+    --color-disable: rgb(80,80,80);
 }

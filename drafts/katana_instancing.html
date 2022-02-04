@@ -19,8 +19,8 @@
   <meta property="og:title" content="Instancing in Katana" />
   <meta name="twitter:title" content="Instancing in Katana" />
   <meta property="og:url" content="https://mrlixm.github.io/drafts/katana_instancing.html" />
-  <meta property="og:description" content="Let’s see how to produce a flexible solution for instancing." />
-  <meta name="twitter:description" content="Let’s see how to produce a flexible solution for instancing." />
+  <meta property="og:description" content="How OpScript can be used for instancing with flexible setup." />
+  <meta name="twitter:description" content="How OpScript can be used for instancing with flexible setup." />
   <meta property="og:image" content="https://mrlixm.github.io/static/images/global/cover_social.jpg" />
   <meta name="twitter:image" content="https://mrlixm.github.io/static/images/global/cover_social.jpg" />
   <meta name="twitter:card" content="summary" />
@@ -80,7 +80,7 @@
             Instancing in Katana
           </a>
         </h1>
-        <p>Let’s see how to produce a flexible solution for instancing.</p>
+        <p>How OpScript can be used for instancing with flexible setup.</p>
         <footer class="l-post-context" id="post-context-footer">
           <span class="l-time l-flex-item" title="Date Created">
             <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
@@ -96,13 +96,15 @@
       </header>
         <div class="m-clearfix-l"></div>
           <!-- content -->
-          <p>Katana doesn’t offers “ready to go” solution for instancing (as for most things)
-, if you add the fact that you render-engine might need a different
-configuration, having a working solution can become hard depending of your industry knowledge.</p>
-<p>I will explain my solution to have a flexible enough instancing system,
-in hopes that this will save you some time.</p>
-<p>You will also find a paragraph specific to <a href="#redshift">Redshift</a> where I had some troubles guessing what it needed.</p>
-<aside class="contents m-block m-default" id="contents">
+          <p>Katana, as its usual, doesn’t offers “ready to go” solution for instancing.
+This initial complexity can be overcome by the fact that we can create an
+instancing solution that exactly suits our needs. But we have to first
+understand how it works.</p>
+<p>Adtionnaly I will explain how I tried to create a flexible solution for
+instancing called <code>kui</code>.</p>
+<p>And lastly you will find a paragraph specific to <a href="#redshift">Redshift</a> where I had some
+troubles guessing what it needed to work.</p>
+<aside class="contents" id="contents">
 <h3>Contents</h3>
 <ul>
 <li><a href="#intro" id="id1">Intro</a></li>
@@ -112,26 +114,36 @@ in hopes that this will save you some time.</p>
 <li><a href="#array" id="id5">Array</a></li>
 </ul>
 </li>
-<li><a href="#application" id="id6">Application</a></li>
-<li><a href="#redshift" id="id7">Redshift</a></li>
+<li><a href="#instancing-in-practice" id="id6">Instancing in Practice</a><ul>
+<li><a href="#scene-preparation" id="id7">Scene-Preparation</a></li>
+<li><a href="#opscript-preparation" id="id8">OpScript-Preparation</a></li>
+</ul>
+</li>
+<li><a href="#katana-uber-instancing" id="id9">Katana Uber Instancing</a><ul>
+<li><a href="#r-d" id="id10">R&amp;D</a></li>
+<li><a href="#opscript-getting-what-we-need" id="id11">OpScript-Getting What We Need</a></li>
+</ul>
+</li>
+<li><a href="#redshift" id="id12">Redshift</a></li>
 </ul>
 </aside>
 <aside class="m-block m-warning">
 <h3>Disclaimer</h3>
-<p>My explanations reflects the experience I had with this subject and may not be
-totally accurate. Be sure to contact me if you spot big mistakes.</p>
+<p>My explanations reflects the experience I had with this subject and may
+not be totally accurate in other production contexts. Be sure to contact me
+if you spot big mistakes /  things to improve.</p>
 </aside>
 <section id="intro">
 <h2><a href="#id1">Intro</a></h2>
-<p>As a first step, please read the Katana documentation on this subject:
-<a href="https://support.foundry.com/hc/en-us/articles/360006999219">Q100518: Instancing Overview</a></p>
 <p>An instance is not a magical object. It is just
-a location with a defined list of attributes understanded by your render-engine.
-You can as such create an instance with a simple <code>LocationCreate + AttributeSet</code>
-(if you have time to loose) but we will be using OpScripts to do so.</p>
-<p>Here is a quick diagram that could resume how an instance can be created :</p>
-<img alt="instancing principle" class="m-image" src="https://mrlixm.github.io/static/images/blog/0005/diagram.png" />
-<p>The basic principle is that an instance links at least to an <code>instance source</code> (a location).
+a location with a defined list of attributes understood by your render-engine.
+You can as such create an instance with a simple
+<code>LocationCreate + AttributeSet</code> (if you have time to loose) but we will be
+using OpScripts to do so.</p>
+<p>Here is a quick diagram that could resume how an instance is built :</p>
+<img alt="instancing principle" class="m-image" src="https://mrlixm.github.io/static/images/blog/0005/intro.png" style="width: 94px" />
+<p>The basic principle is that an <code>instance</code> links at least to one
+<code>instance source</code> (a scene-graph location).
 The instance will create a “copy” of this instance source. You can then set
 transformations overrides that will allow the instance having a different
 position, rotation, etc, than the source.
@@ -140,25 +152,31 @@ instance even more different than the source.</p>
 </section>
 <section id="instancing-methods">
 <h2><a href="#id2">Instancing Methods</a></h2>
-<p>Instancing comes in different flavor, with ups and down for each one. And your
-render-engine may even have some aditional/modified ones.</p>
+<p>Instancing comes in different flavor, that, similarly to all things, have
+specific ups and down. You render-engine may also supply alternative ways to
+produce instances so be sure to check its documentation on the topic.</p>
+<p>Here is what the Katana documentation say about this:
+<a href="https://support.foundry.com/hc/en-us/articles/360006999219">Q100518: Instancing Overview</a></p>
 <section id="leaf-level">
 <h3><a href="#id3">Leaf-level</a></h3>
-<p>(Never used this one)</p>
-<p>The Katana documentation is pretty clear so I’m not going to re-explain anything.</p>
+<p><em>(Never used this one)</em></p>
+<p><a href="https://support.foundry.com/hc/en-us/articles/360006999259">The Katana documentation</a> is pretty explicit.</p>
 <div class="m-row">
 <div class="m-col-s-6">
 <aside class="m-block m-danger">
 <h3>cons</h3>
-<p>Major drawbacks is that you can’t have a location with children locations (to verify),
-and well it seems every render-engine has a way to decide which location is the first one to instance 🙂.</p>
+<p>Major drawback is that you can’t have a location with children
+locations (to verify),
+and well it seems every render-engine has a way to decide which
+location is the first one to instance 🙂.</p>
 </aside>
 </div>
 <div class="m-col-s-6">
 <aside class="m-block m-success">
 <h3>pros</h3>
 <p>You just have to set a single attribute.</p>
-<p>You can easily apply modification on a single instance (ex: a transform3D)</p>
+<p>You can easily apply modification on a single instance.
+<em>(ex: a Transform3D)</em></p>
 </aside>
 </div>
 </div>
@@ -166,25 +184,28 @@ and well it seems every render-engine has a way to decide which location is the 
 </section>
 <section id="hierarchical">
 <h3><a href="#id4">Hierarchical</a></h3>
-<p>Each instance = one location.</p>
+<p>Each instance = one scene-graph location.</p>
 <div class="m-row">
 <div class="m-col-s-6">
 <aside class="m-block m-danger">
 <h3>cons</h3>
-<p>With too much instances (&gt;~100 000) you will start to see performance issues</p>
+<p>Too much instances (&gt;~100 000) will lead you to performances
+issues. (pre-render)</p>
 </aside>
 </div>
 <div class="m-col-s-6">
 <aside class="m-block m-success">
 <h3>pros</h3>
-<p>You can easily apply modification on a single instance (ex: a transform3D)</p>
+<p>You can easily apply modification on a single instance.
+<em>(ex: a Transform3D)</em></p>
 </aside>
 </div>
 </div>
 </section>
 <section id="array">
 <h3><a href="#id5">Array</a></h3>
-<p>One single location where each instance correspond to an index on each attribute.</p>
+<p>One single scene-graph location where each instance correspond to an index
+on each attribute.</p>
 <div class="m-row">
 <div class="m-col-s-6">
 <aside class="m-block m-danger">
@@ -199,26 +220,136 @@ and well it seems every render-engine has a way to decide which location is the 
 </aside>
 </div>
 </div>
-<p class="m-transition">.</p>
+<p class="m-transition">~</p>
 <p>And there is probably some aditional pro/cons inheritent to your render-engine
-so check the documentation and test stuff.</p>
-<p>(For example , when I started to explore instancing, Redshift was not supporting
-locations with children when using the <code>hierarchical</code> method.)</p>
+so again, check the documentation, and test stuff.
+(For example , when I started to explore instancing, Redshift was not supporting
+locations with children when using the <code>array</code> method.)</p>
 </section>
 </section>
-<section id="application">
-<h2><a href="#id6">Application</a></h2>
-<p>The goal will be to create a node (a group) where, using the same parameters,
-you could conveniently switch between different instancing methods.
-I am going to forget about Leaf-level as I’m not familiar with it.</p>
+<section id="instancing-in-practice">
+<h2><a href="#id6">Instancing in Practice</a></h2>
+<p>To start, there is a nice small example on the <a href="https://learn.foundry.com/katana/Content/ug/instancing/rendering_instances.html">official Katana documentation</a>
+. It explains how to create instance using mostly Katana nodes and one small
+OpScript to avoid stacking numerous <code>AttributeSet</code> nodes.
+This approach is pretty basic : we manually set how much instances we want to
+create and we need to manually move them. The setup also
+take times to build and is not very scalable.</p>
+<p>A more widely used solution depends on <code>point-clouds</code> : a type of location
+composed of visual abstract “points” in the 3d space that can hold an
+arbitrary number of attributes based on the point index.</p>
+<p>You use each individual point’s attribute to create an instance. For example,
+each point can specify what kind of instance source it is representing, …
+Furthermore it’s “abstract” aspect make it very convenient for transfering data
+between DCCs.</p>
+<p>A convenient way to create scene graph locations based on a source object like
+a point-cloud, is to use the <a href="https://learn.foundry.com/katana/Content/ug/working_with_attributes/opscript_nodes.html">OpScript</a> feature. It is an entry door to use scripting while
+staying in the Katana nodegraph system. Usage of OpScript require to learn
+the <a href="https://en.wikipedia.org/wiki/Lua_(programming_language)">lua language</a>
+. But don’t worry, if you don’t want to get your hands dirty you will be able
+to use a premade script/node shared in the <a href="#katana-uber-instancing">Katana Uber Instancing</a> section.</p>
+<p>To create scene graph location we need to know how it must be structured.
+For this what’s better than having a look at the documentation :
+<a href="https://learn.foundry.com/katana/4.5/dev-guide/AttributeConventions/Instancing.html">AttributesConventions/Instancing</a>. You notice that we
+find the 3 instancing methods described again.</p>
+<p>Let’s now start building the scene.</p>
+<section id="scene-preparation">
+<h3><a href="#id7">Scene-Preparation</a></h3>
+<p>For you to follow the tutorial, I will be providing you some assets. Actually
+only a point-cloud, as to keep it simple, instances sources will be
+primitives.</p>
+<div class="l-url-box">
+<a class="l-url-a" href="https://mega.nz/folder/uooQzJJR#5aguo_c3gLXPrkEnN62ZBg"></a>
+<div class="l-url-box-image">
+<svg role="img" width="64" height="64" viewBox="0 0 24 24"
+     xmlns="http://www.w3.org/2000/svg">
+    <title>MEGA</title>
+    <path fill="currentColor"
+          d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm6.23 16.244a.371.371 0 0 1-.373.372H16.29a.371.371 0 0 1-.372-.372v-4.828c0-.04-.046-.06-.08-.033l-3.32 3.32a.742.742 0 0 1-1.043 0l-3.32-3.32c-.027-.027-.08-.007-.08.033v4.828a.371.371 0 0 1-.372.372H6.136a.371.371 0 0 1-.372-.372V7.757c0-.206.166-.372.372-.372h1.076a.75.75 0 0 1 .525.22l4.13 4.13a.18.18 0 0 0 .26 0l4.13-4.13c.14-.14.325-.22.525-.22h1.075c.206 0 .372.166.372.372z"/>
+</svg></div>
+<div class="l-url-box-details">
+<p class="l-url-title">Sources Files Download</p>
+<div class="l-url-subtitle">
+<a class="m-link-wrap" href="https://mega.nz/folder/uooQzJJR#5aguo_c3gLXPrkEnN62ZBg">https://mega.nz/folder/uooQzJJR#5aguo_c3gLXPrkEnN62ZBg</a>
+</div>
+<p class="l-url-description">15KB folder on mega.nz</p>
+</div>
+</div>
+</section>
+<section id="opscript-preparation">
+<h3><a href="#id8">OpScript-Preparation</a></h3>
+<p>We are going to manipulate a lot of inputs and data and at some point we
+will need to see what X variable equal to, what the result of X operation, etc
+to just be able to know where we need to go scripting-wise. Usually this is
+done by using the <code>print()</code> function. But this is very basic and can led to
+various limitations.</p>
+<p>To have a more robust way of debugging OpScript I made myself a small
+logging module in lua. Kind of similar to what Python logging module does.
+It add a bunch of line to your script but will allow more flexibility in the
+way data will be displayed to you.</p>
+<p>On top of a freshly created <code>.lua</code> file let’s paste the content of this
+file :</p>
+<blockquote>
+<a class="m-link-wrap" href="https://raw.githubusercontent.com/MrLixm/Foundry_Katana/main/src/utility/lua_logger/lllogger.lua">https://raw.githubusercontent.com/MrLixm/Foundry_Katana/main/src/utility/lua_logger/lllogger.lua</a></blockquote>
+<p>We will then be able to use the logger methods to output message to the
+console. <em>(This just wrap the “print()“ function which in Katana, output the
+result in the console that should be opened alongside your Katana)</em></p>
+<pre class="m-code"><span class="n">logger</span><span class="p">:</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;any object&quot;</span><span class="p">)</span>
+<span class="n">logger</span><span class="p">:</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;any object&quot;</span><span class="p">)</span>
+<span class="n">logger</span><span class="p">:</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;any object&quot;</span><span class="p">)</span>
+<span class="n">logger</span><span class="p">:</span><span class="nb">error</span><span class="p">(</span><span class="s2">&quot;any object&quot;</span><span class="p">)</span></pre>
+<aside class="m-note m-info">
+Alternatively, to avoid having to paste so much code you can use it as a
+lua module. See the <a href="https://github.com/MrLixm/Foundry_Katana/tree/main/src/utility/lua_logger">README.md</a> for instructions.</aside>
+<p>All this steps <strong>are not mandatory</strong>. They just help for faster debugging.</p>
+</section>
+</section>
+<section id="katana-uber-instancing">
+<h2><a href="#id9">Katana Uber Instancing</a></h2>
+<p>As we just saw, instancing can require in some cases quite some work before
+having a result. That’s why I tried to produce a solution that would be very
+flexible with a vrey straightforward setup.</p>
+<p>The goal here will be to create an ‘uber’ instancing node (just a group node
+actually) where, using the same parameters, you could conveniently switch
+between different instancing methods and have a lot flexibility on inputs.
+(Leaf-level will be excluded as I’m not familiar with it.)</p>
+<section id="r-d">
+<h3><a href="#id10">R&amp;D</a></h3>
+<p>Let’s first think at what could be the <code>source</code> of the instances data. A most
+common case would be to use a point-cloud. We could also see an even more
+flexible solution by allowing to use any location, like a locator.</p>
+<p>The next step will be to extract the <code>source</code> attributes and convert them to
+individual instances attributes. That’s where we will meet a new issue :</p>
+<p>
+We know the destination of these attributes : scale, rotation, index, color,
+…, we know that at least one of them will be present.
+But what is very variable is how they are named, what are the one that we
+actually need, etc. The first way to fix this issue is to define pipeline
+conventions, where X type of attribute should have X name, and so teh X name
+is hardcoded into your script. But production needs change often, and we can
+agree that having a script with as minimal hardcoded conventions as possible
+is better.<br />
+The second solution is to have a way to specify to the script the name of
+the attributes present on the <code>source</code> and how to behave with them.
+We could do this using user arguments on the OpScript but I feel we can
+have an even more logicial solution that would be to have these infos on the
+<code>source</code> itself.<br />
+</p>
+<p>So the <code>source</code> would have a bunch of attributes which have a fixed naming
+convention (we can’t escape it) that will gave the script the info require
+to process the <code>source</code>. It will be more clear when applied to the script.</p>
+</section>
+<section id="opscript-getting-what-we-need">
+<h3><a href="#id11">OpScript-Getting What We Need</a></h3>
+</section>
 </section>
 <section id="redshift">
-<h2><a href="#id7">Redshift</a></h2>
+<h2><a href="#id12">Redshift</a></h2>
 <p>The production where I had to look for instancing was using Redshift,
 and unfortunately it seems that, at that time, the instancing features where
 “minimally” implemented and some stuff was missing/broken.
 Fortunately, Redshift developer’s Juanjo was very responsive and very quickly, fixed
-all the issues I found as discussed <a href="https://redshift.maxon.net/topic/33461/more-documentation-for-instancing-in-katana?_=1634997159560">in this thread</a>.</p>
+all the issues I found. Discussion can be found <a href="https://redshift.maxon.net/topic/33461/more-documentation-for-instancing-in-katana?_=1634997159560">in this thread</a>.</p>
 </section>
           <!-- /content -->
         <footer>

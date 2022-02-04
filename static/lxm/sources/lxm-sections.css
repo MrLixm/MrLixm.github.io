@@ -239,7 +239,12 @@ article .l-article-header h1 {
 
 */
 #contents {
+    margin-bottom: 2rem;
 }
+#contents h3 {
+    margin-top: 2rem;
+}
+
 #contents a {
     text-decoration: none;
 }
@@ -253,6 +258,81 @@ article .l-article-header h1 {
 #contents > ul > li > ul > li > ul > li > ul > li > a
 {
     font-size: 0.9rem;
+}
+.m-block p {
+    text-align: left;
+}
+/*
+
+    url-preview directive
+
+*/
+.l-url-box {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    margin: 0.5rem 0 1rem;
+    transition: 0.25s;
+}
+.l-url-box:hover {
+    transform: scale(1.05);
+}
+.l-url-a {
+    /*trick from https://stackoverflow.com/a/67156294/13806195 */
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.l-url-box-details{
+    width: 100%;
+    /*border: 1px solid var(--color-disable);*/
+    background-color: rgba(255,255,255,0.05);
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+.l-url-box-image {
+    display: flex;
+    align-items: center;
+    /*border: 1px solid var(--color-disable);*/
+    border-radius: 0.5rem;
+    color: var(--color-disable);
+    max-width: 160px;
+}
+@media screen and (max-width: 500px) {
+    .l-url-box-image {
+        max-width: 90px;
+    }
+}
+
+.l-url-box-image img{
+    border-radius: 0.5rem;
+    object-fit: cover;
+    min-height: 100%;
+    width: 100%;
+}
+.l-url-title {
+    font-weight: 800;
+    margin: 0;
+}
+.l-url-subtitle {
+    display: flex;
+    margin-bottom: 0.5rem;
+}
+.l-url-subtitle a {
+    font-size: 0.8rem;
+    color: var(--color-disable);
+}
+.l-url-subtitle a::before {
+    all: initial;
+}
+
+.l-url-description {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--color-article-darker);
 }
 /*------------END article----------------------------------------------------*/
 /*-----------------------------------------------------------------------------

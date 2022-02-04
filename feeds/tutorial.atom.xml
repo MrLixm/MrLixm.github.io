@@ -14,10 +14,19 @@ skip straight to the &lt;a href="#substance-setup-workflow"&gt;Substance Setup &
 changed at the time you are reading this. I will try to keep the article
 updated thought.&lt;/p&gt;
 &lt;/aside&gt;
-&lt;aside class="m-block m-info"&gt;
-&lt;h3&gt;Official Documentation&lt;/h3&gt;
-&lt;p&gt;&lt;a class="m-link-wrap" href="https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html"&gt;https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html&lt;/a&gt;&lt;/p&gt;
-&lt;/aside&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;img src="https://substance3d.adobe.com/documentation/spdoc/_/7F00010101777233846FC8EC6B4E4F33/1638375621662/resources/unfurl/splash_pt.jpg" /&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;Official Documentation&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html"&gt;https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;aside class="contents" id="contents"&gt;
 &lt;h3&gt;Contents&lt;/h3&gt;
 &lt;ul&gt;
@@ -1017,7 +1026,19 @@ wouldn’t see that much of a difference).&lt;/p&gt;
 be a substitution of the Substance config. Documentation was pretty straight
 forward and I manage to build a nice config using python. You can find the
 result here :&lt;/p&gt;
-&lt;p&gt;&lt;a class="m-link-wrap" href="https://github.com/MrLixm/OCIO.Liam"&gt;https://github.com/MrLixm/OCIO.Liam&lt;/a&gt;&lt;/p&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://github.com/MrLixm/OCIO.Liam"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;img src="https://repository-images.githubusercontent.com/433153908/03fa53a5-a654-4728-a5ed-60ab1ac6babd" /&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;OCIO.Liam&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://github.com/MrLixm/OCIO.Liam"&gt;https://github.com/MrLixm/OCIO.Liam&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;Personal OCIO resources, including configs.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;p&gt;I called it &lt;code&gt;Versatile&lt;/code&gt;. It only misses the &lt;code&gt;false color&lt;/code&gt; view from the
 Substance config. Have a look at the
 &lt;a href="https://github.com/MrLixm/OCIO.Liam/blob/main/versatile/config/config.ocio"&gt;config.ocio&lt;/a&gt;
@@ -1111,26 +1132,77 @@ Mari. 👋&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="resources"&gt;
 &lt;h2&gt;&lt;a href="#id46"&gt;Resources&lt;/a&gt;&lt;/h2&gt;
-&lt;aside class="m-block m-default"&gt;
-&lt;h3&gt;The Hitchhiker’s Guide to Digital Colour&lt;/h3&gt;
-&lt;p&gt;&lt;a class="m-link-wrap" href="https://hg2dc.com/"&gt;https://hg2dc.com/&lt;/a&gt;&lt;/p&gt;
-&lt;/aside&gt;
-&lt;aside class="m-block m-default"&gt;
-&lt;h3&gt;Chris Brejon&lt;/h3&gt;
-&lt;p&gt;&lt;a class="m-link-wrap" href="https://chrisbrejon.com/cg-cinematography/chapter-1-color-management"&gt;https://chrisbrejon.com/cg-cinematography/chapter-1-color-management&lt;/a&gt;&lt;/p&gt;
-&lt;/aside&gt;
-&lt;aside class="m-block m-default"&gt;
-&lt;h3&gt;ACES Central&lt;/h3&gt;
-&lt;p&gt;&lt;a class="m-link-wrap" href="https://community.acescentral.com/"&gt;https://community.acescentral.com/&lt;/a&gt;&lt;/p&gt;
-&lt;/aside&gt;
-&lt;aside class="m-block m-default"&gt;
-&lt;h3&gt;Cinematic Color&lt;/h3&gt;
-&lt;p&gt;&lt;a class="m-link-wrap" href="https://cinematiccolor.org/"&gt;https://cinematiccolor.org/&lt;/a&gt;&lt;/p&gt;
-&lt;/aside&gt;
-&lt;aside class="m-block m-default"&gt;
-&lt;h3&gt;A Color-Science Discord server&lt;/h3&gt;
-&lt;p&gt;&lt;a class="m-link-wrap" href="https://discord.gg/jk6u3eB"&gt;https://discord.gg/jk6u3eB&lt;/a&gt;&lt;/p&gt;
-&lt;/aside&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://hg2dc.com/"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;img src="https://hg2dc.files.wordpress.com/2019/12/hg2dc-header-1.png" /&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;The Hitchhiker’s Guide to Digital Colour&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://hg2dc.com/"&gt;https://hg2dc.com/&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;The step by step guidebook for digital pixel pushers trying to get a firm
+grasp on colour to get sh*t done…&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://chrisbrejon.com/cg-cinematography/chapter-1-color-management"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;img src="https://i0.wp.com/news.umbc.edu/wp-content/uploads/2016/02/mantis-shrimp.jpg?resize=1920%2C768&amp;amp;ssl=1" /&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;Chris Brejon’s Book&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://chrisbrejon.com/cg-cinematography/chapter-1-color-management"&gt;https://chrisbrejon.com/cg-cinematography/chapter-1-color-management&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;CG Cinematography Color Management is about this beautiful yet annoying
+and essential topic of gamut. Definitely not the easiest way to start.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://community.acescentral.com/"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;img src="https://community.acescentral.com/uploads/default/original/2X/c/cd5dcf316e1618c7bff0c0e4bd3b01825010b554.png" /&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;ACES Central&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://community.acescentral.com/"&gt;https://community.acescentral.com/&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;ACES Community Forum&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://cinematiccolor.org/"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;img src="https://pbs.twimg.com/profile_banners/75077867/1516422798/1080x360" /&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;Cinematic Color&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://cinematiccolor.org/"&gt;https://cinematiccolor.org/&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;This paper from 2012 presents an introduction to the color pipelines
+behind modern feature-film visual-effects and animation.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://discord.gg/jk6u3eB"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;svg width="60" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"&gt;
+    &lt;title&gt;Discord&lt;/title&gt;
+    &lt;path fill="#fefefe" d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/&gt;
+&lt;/svg&gt;&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;Digital Imaging | Discord Server&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://discord.gg/jk6u3eB"&gt;https://discord.gg/jk6u3eB&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;A Discord server centered around digital imaging - from CGI to digital
+cinematography and photography and more.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/section&gt;
 &lt;section id="changelog"&gt;
 &lt;h2&gt;&lt;a href="#id47"&gt;Changelog&lt;/a&gt;&lt;/h2&gt;
@@ -1151,7 +1223,7 @@ And that is understandable, as individual artists, you most of the time, only
 care about having the prettiest image possible at the end.&lt;/p&gt;
 &lt;p&gt;So what if you got a well-formed and pleasing image at the end without having
 to go through the complexity of ACES ?&lt;/p&gt;
-&lt;aside class="contents m-block m-default" id="contents"&gt;
+&lt;aside class="contents" id="contents"&gt;
 &lt;h3&gt;Contents&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="#who-s-this-for" id="id1"&gt;Who’s this for ?&lt;/a&gt;&lt;/li&gt;
@@ -1188,10 +1260,26 @@ post-prod one which is not an ideal one.&lt;br /&gt;
 personal projects that would like a quick solution for proper SDR-HDR export.&lt;/strong&gt;
 (OpenDRT is probably aimed at additionals goal)&lt;/p&gt;
 &lt;p class="m-transition"&gt;~&lt;/p&gt;
-&lt;aside class="m-block m-primary"&gt;
-&lt;h3&gt;OpenDRT Repository&lt;/h3&gt;
-&lt;p&gt;Download on Github: &lt;a class="m-link-wrap" href="https://github.com/jedypod/open-display-transform"&gt;https://github.com/jedypod/open-display-transform&lt;/a&gt;&lt;/p&gt;
-&lt;/aside&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://github.com/jedypod/open-display-transform"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!DOCTYPE svg PUBLIC
+        "-//W3C//DTD SVG 1.1//EN"
+        "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
+&lt;svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="64"
+     height="64" viewBox="0 0 24 24"&gt;
+    &lt;path fill="#fafafa"
+          d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"/&gt;
+&lt;/svg&gt;&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;OpenDRT repository.&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://github.com/jedypod/open-display-transform"&gt;https://github.com/jedypod/open-display-transform&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;Download on github.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;p&gt;First, please have a look at the above repository, read Jed’s explanations and
 the tool’s documentation.&lt;/p&gt;
 &lt;p&gt;Before diving into the setup I think it’s important to remind the target
@@ -1291,15 +1379,15 @@ close this topic.&lt;br /&gt;
 &lt;h2&gt;&lt;a href="#id3"&gt;Nuke&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;&lt;em&gt;(For now i’m only going to show how you can use it in Nuke as I don’t have
 a Resolve License)&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;1. &lt;a href="https://raw.githubusercontent.com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk"&gt;Download the .nk file&lt;/a&gt;
-(Right click on the page &amp;gt; save as &amp;gt; save it somewhere)&lt;/p&gt;
-&lt;ol start="2"&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://raw.githubusercontent.com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk"&gt;Download the .nk file&lt;/a&gt;
+(Right click on the page &amp;gt; save as &amp;gt; save it somewhere)&lt;/li&gt;
 &lt;li&gt;Import the .nk file: File &amp;gt; Insert Comp Nodes&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Or alternatively :&lt;/p&gt;
-&lt;p&gt;1. &lt;a href="https://raw.githubusercontent.com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk"&gt;Open the .nk&lt;/a&gt;
-file and copy all of his content &lt;code&gt;(ctrl+a, ctrl+c)&lt;/code&gt;&lt;/p&gt;
-&lt;ol start="2"&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://raw.githubusercontent.com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk"&gt;Open the .nk&lt;/a&gt;
+file and copy all of his content &lt;code&gt;(ctrl+a, ctrl+c)&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;Paste in Nuke &lt;code&gt;(ctrl+v)&lt;/code&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Alright, you now have the OpenDRT node.&lt;/p&gt;
