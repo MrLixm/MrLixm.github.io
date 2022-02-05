@@ -244,6 +244,11 @@ Code-blocks
     if __name__ == '__main__':
         run()
 
+Produced wih the include directive
+
+.. include:: tests_include.lua
+    :code: lua
+
 
 Fake-test-section
 -----------------
