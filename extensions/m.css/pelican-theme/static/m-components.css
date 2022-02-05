@@ -166,8 +166,8 @@ pre.m-console-wrap {
   word-break: break-all;
 }
 code {
-  padding-left: 0.15rem;
-  padding-right: 0.15rem;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
 }
 
 /* Focus outline on link, canvas and input: match the focused header item. */
