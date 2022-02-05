@@ -262,6 +262,14 @@ article .l-article-header h1 {
 .m-block p {
     text-align: left;
 }
+/*inline crumbed list*/
+article section dd {
+    margin-inline-start: 0;
+    margin-top: 0.5rem;
+}
+article section dt {
+    margin-top: 0.5rem;
+}
 /*
 
     url-preview directive
@@ -306,7 +314,6 @@ article .l-article-header h1 {
         max-width: 90px;
     }
 }
-
 .l-url-box-image img{
     border-radius: 0.5rem;
     object-fit: cover;
@@ -328,7 +335,6 @@ article .l-article-header h1 {
 .l-url-subtitle a::before {
     all: initial;
 }
-
 .l-url-description {
     margin: 0;
     font-size: 0.9rem;
