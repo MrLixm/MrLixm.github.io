@@ -1,23 +1,24 @@
 Instancing in Katana
 ####################
 
-:summary: How OpScript can be used for instancing with flexible setup.
+:summary: How OpScript can be used to create a flexible solution for
+    instancing.
 
 :status: draft
 :date: 2021-10-23 14:58
+:date-created: 2021-10-23 14:58
 
 :category: tutorial
 :tags: katana, instancing, lua, software
+:author: Liam Collod
 
 
 Katana, as its usual, doesn't offers "ready to go" solution for instancing.
 This initial complexity can be overcome by the fact that we can create an
-instancing solution that exactly suits our needs. But we have to first
-understand how it works.
-
-Adtionnaly I will explain how I tried to create a flexible solution for
+instancing solution that exactly suits our needs. And that is what what we
+are going to adress in this post.
+Additionnaly I will explain how I tried to create a flexible solution for
 instancing called ``kui``.
-
 And lastly you will find a paragraph specific to `Redshift`_ where I had some
 troubles guessing what it needed to work.
 
@@ -29,22 +30,26 @@ troubles guessing what it needed to work.
     not be totally accurate in other production contexts. Be sure to contact me
     if you spot big mistakes /  things to improve.
 
+.. block-info:: Target-Audience
+
+    | This post is targeted towards beginners with Kanata itself.
+    | If you are a more advanced user you can check `Katana Uber Instancing`_.
 
 
 Intro
 -----
 
-An instance is not a magical object. It is just
-a location with a defined list of attributes understood by your render-engine.
+As the Katana's motto states : *It’s all just a bunch of Attributes.* And it's
+apply to instances too. They are just a bunch of location with a defined
+list of attributes understood by your render-engine.
 You can as such create an instance with a simple
-``LocationCreate + AttributeSet`` (if you have time to loose) but we will be
-using OpScripts to do so.
+``LocationCreate + AttributeSet`` setup *(if you have time to loose)*. But we
+will be using OpScripts to do so.
 
 Here is a quick diagram that could resume how an instance is built :
 
 .. image:: {static}/images/blog/0005/intro.png
     :alt: instancing principle
-    :scale: 10%
 
 The basic principle is that an ``instance`` links at least to one
 ``instance source`` (a scene-graph location).
@@ -63,8 +68,11 @@ specific ups and down. You render-engine may also supply alternative ways to
 produce instances so be sure to check its documentation on the topic.
 
 Here is what the Katana documentation say about this:
-`Q100518: Instancing Overview
-<https://support.foundry.com/hc/en-us/articles/360006999219>`_
+
+.. url-preview:: https://support.foundry.com/hc/en-us/articles/360006999219
+    :title: Q100518: Instancing Overview
+    :image: https://www.foundry.com/sites/default/files/2021-12/Katana%205.0%20Webpage%20Header%20-%201920x500.jpg
+
 
 
 Leaf-level
@@ -94,7 +102,6 @@ Leaf-level
 
             You can easily apply modification on a single instance.
             *(ex: a Transform3D)*
-
 
 
 *Would love to know in what case this one can be more pertinent than the other methods.*
@@ -198,7 +205,67 @@ primitives.
 
     15KB folder on mega.nz
 
+This point-cloud has been generated from Mash (see `mash2pointcloud
+<https://github.com/MrLixm/Autodesk_Maya/tree/main/src/mash2pointcloud>`_)
+and contains the most-commonly used attributes.
 
+Here is what it looked like in Maya :
+
+.. image-grid::
+
+    {static}/images/blog/0005/demo-maya-01.png
+    {static}/images/blog/0005/demo-maya-02.png
+
+And here is the instances-sources mapping list :
+::
+
+    0: cube
+    1: cone
+    2: sphere
+
+
+Here it is imported in Katana :
+
+.. image:: {static}/images/blog/0005/demo-katana-01.png
+    :alt: Katana Interface screenshot.
+
+I also used a small OpScript that allow me to set the viewer size of the
+points. You can `grab the OpScript here <https://github.com/MrLixm/
+Foundry_Katana/tree/main/src/viewer/PointcloudWidth>`_.
+
+In the ``Attributes`` tab we can see what are the attributes stored on the
+point-cloud. This one has :
+
+- ``arbitrary``
+    - ``scale`` : XYZ per-point scale attribute.
+    - ``rotation``: XYZ per-point rotation attribute
+    - ``objectIndex``: per-point index to use for instance-source
+    - ``colorRandom``: per-point random color
+- ``point``
+    - ``P`` : XYZ per-point transform
+    - ``v`` : per-point velocity
+    - ``width`` : added via the OpScript for viewer size.
+
+All the attributes in the ``arbitrary`` section doesn't really have a naming
+convention. You must know which name corresponds to which type of data for when
+you are creating the OpScript that produce the instances.
+
+.. block-info:: PointCloud Instancing without OpScript
+
+    Depending of your render-engine , it might actually supports directly
+    rendering the point-cloud and generating the instances on the fly !
+    Like Arnold does `as explained here <https://docs.arnoldrenderer
+    .com/display/A5KTN/pointcloud+and+instance+array>`_. But it excepts
+    specific attributes in the ``point`` group.
+
+For the instance-sources we will be using simple primitives as detailed above.
+You can use ``PrimitiveCreate`` node to create them. My final "initial"
+nodegraph is looking like this :
+
+.. image:: {static}/images/blog/0005/demo-katana-02.png
+    :alt: Katana Interface screenshot.
+
+Now it's time to have a look at OpScripting.
 
 OpScript-Preparation
 ====================
@@ -209,15 +276,19 @@ to just be able to know where we need to go scripting-wise. Usually this is
 done by using the ``print()`` function. But this is very basic and can led to
 various limitations.
 
-To have a more robust way of debugging OpScript I made myself a small
+To have a more robust way of debugging OpScripts I made myself a small
 logging module in lua. Kind of similar to what Python logging module does.
 It add a bunch of line to your script but will allow more flexibility in the
 way data will be displayed to you.
 
-On top of a freshly created ``.lua`` file let's paste the content of this
-file :
+On top of a freshly created ``.lua`` file paste the content of this file :
 
-    https://raw.githubusercontent.com/MrLixm/Foundry_Katana/main/src/utility/lua_logger/lllogger.lua
+.. url-preview:: https://raw.githubusercontent.com/MrLixm/Foundry_Katana/main/src/utility/lua_logger/lllogger.lua
+    :title: llloger.lua
+    :image: https://github.com/MrLixm/Foundry_Katana/raw/main/src/utility/lua_logger/cover.png
+
+    A simple lua logging module based on Python one.
+
 
 We will then be able to use the logger methods to output message to the
 console. *(This just wrap the ``print()`` function which in Katana, output the
@@ -237,7 +308,70 @@ result in the console that should be opened alongside your Katana)*
     /tree/main/src/utility/lua_logger>`_ for instructions.
 
 All this steps **are not mandatory**. They just help for faster debugging.
+*(And pertinent if you want to write lua code by yourself.)*
 
+Producing Instances : Initial OpScript
+======================================
+
+For a first try we will be using the OpScript provided on the Foundry's
+documentation. It's the most basic you can do which will be perfect for an
+introduction. It's the one for the hierarchical method.
+
+Create an OpScript node and paste the bottom script inside the ``script.lua``
+parameter
+
+.. include:: opscript.hierarchical.foundry.lua
+    :code: lua
+
+If you look at the first lines you can see that we are getting some
+``OpArg`` values. On OpScript nodes this correspond to ``user`` parameters.
+This means we will need to create two of them.
+
+.. image:: {static}/images/blog/0005/demo-katana-03.png
+    :alt: Katana Interface screenshot: OpScript parameters.
+
+You should have noticed the first script's limitation, we can only give one
+instance-source for now. But let's keep that for later. Set the 2 created user
+parameters value with their corresponding locations. *(! the pointcloud is the
+location of type* ``pointcloud`` *, not its parent "group".)*
+
+| We need to provide one
+ last input, the target destination for our instances. For this, change the
+ ``applyWhere`` parameter to ``atSpecificLocation`` and then in the CEL param,
+ submit the desired target location for your instances.
+| I will be using ``/root/world/geo/instancing/demo``.
+
+Now let's view the OpScript node, and expand the target location in the
+SceneGraph to see our instances.
+
+.. image:: {static}/images/blog/0005/demo-katana-04.png
+    :alt: Katana Interface screenshot:SceneGraph instances.
+
+Yay, that was quick to have something working. But check the Attributes on one
+of the instance.
+
+.. image:: {static}/images/blog/0005/demo-katana-05.png
+    :alt: Katana Interface screenshot: Instance Attributes.
+    :scale: 80%
+
+If you have a look at the ``xform.interactive`` attributes, we can see that
+only the ``translate`` attribute has non-default values. This is because our
+current OpScript only read the ``P`` attribute on the point-cloud which
+correspond to the instance translations.
+
+| You can notice that all the ``geometry`` attributes from the instance-source
+ have also been copied. This is because the script copy all the root attributes
+ of the instance-source :
+
+.. code:: lua
+
+    24  gb:set("childAttrs", Interface.GetAttr("", instanceSourceLocation))
+
+This would allow to have the bounds attribute on the instance to get at least
+some primitive representation in the viewer. But the ``geometry`` attributes
+are not needed because they are copied from the instance-source at render-time.
+To fix this, the instance-source location would need to be a group with the
+mesh inside.
 
 Katana Uber Instancing
 ----------------------
