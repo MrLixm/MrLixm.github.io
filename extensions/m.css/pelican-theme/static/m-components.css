@@ -156,7 +156,7 @@ pre.m-console, code.m-console {
   background-color: var(--console-background-color);
 }
 pre {
-  padding: 0.5rem 1rem;
+  padding: 1.2rem;
   border-radius: var(--border-radius);
   overflow-x: auto;
   margin-top: 0; /* stupid defaults */
