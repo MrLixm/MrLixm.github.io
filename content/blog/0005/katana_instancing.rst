@@ -201,7 +201,7 @@ primitives.
 
 .. url-preview:: https://mega.nz/folder/uooQzJJR#5aguo_c3gLXPrkEnN62ZBg
     :title: Sources Files Download
-    :svg: {static}/images/global/social/mega.svg
+    :svg: {static}/images/global/icons/mega.svg
 
     15KB folder on mega.nz
 
@@ -310,8 +310,8 @@ result in the console that should be opened alongside your Katana)*
 All this steps **are not mandatory**. They just help for faster debugging.
 *(And pertinent if you want to write lua code by yourself.)*
 
-Producing Instances : Initial OpScript
-======================================
+Basic Instancing : Hierarchical
+===============================
 
 For a first try we will be using the OpScript provided on the Foundry's
 documentation. It's the most basic you can do which will be perfect for an
@@ -337,7 +337,8 @@ location of type* ``pointcloud`` *, not its parent "group".)*
 
 | We need to provide one
  last input, the target destination for our instances. For this, change the
- ``applyWhere`` parameter to ``atSpecificLocation`` and then in the CEL param,
+ ``applyWhere`` parameter to ``atSpecificLocation`` and then in the
+ ``location`` param at top,
  submit the desired target location for your instances.
 | I will be using ``/root/world/geo/instancing/demo``.
 
@@ -346,6 +347,18 @@ SceneGraph to see our instances.
 
 .. image:: {static}/images/blog/0005/demo-katana-04.png
     :alt: Katana Interface screenshot:SceneGraph instances.
+
+.. block-info:: Instances preview in the Viewer
+
+    Since **Katana 4.5**, it is now possible to view instances in the Viewer.
+    You need to set instance-source location ``type`` to ``instance source``
+    *(more on that below)* and make sure the instance-sources and the
+    instances are set to be viewed in the Viewer.
+
+    Be careful thought, as if your instance-sources are heavy meshes, you
+    might end-up with an unresponsive Viewer.
+
+    More details `in this video <https://youtu.be/VYRjWw6biEQ>`_.
 
 Yay, that was quick to have something working. But check the Attributes on one
 of the instance.
@@ -367,18 +380,201 @@ correspond to the instance translations.
 
     24  gb:set("childAttrs", Interface.GetAttr("", instanceSourceLocation))
 
-This would allow to have the bounds attribute on the instance to get at least
-some primitive representation in the viewer. But the ``geometry`` attributes
-are not needed because they are copied from the instance-source at render-time.
-To fix this, the instance-source location would need to be a group with the
-mesh inside.
+This would allow to have the bounds attribute on the instance, so we have at
+least some primitive representation in the viewer. But the ``geometry``
+attributes are not needed because they are copied from the instance-source
+at render-time. To fix this, the instance-source location would need to be a
+group with the mesh inside.
+
+Now, what we should not forget, is cleaning the scene for rendering. This
+means :
+
+| 1. Hide the pointcloud (cause you render-engine will probably render the
+ points as spheres).
+| You can use a ``VisibilityAssign`` node for this.
+
+| 2. Hide the instances-sources.
+| This can be graciously done by setting the type of the instance-source
+ location to ``instance source``.
+| You can use an ``AttributeSet`` node for this.
+
+.. note-info::
+
+    Setting a location type to ``instance source`` will make it invisible in
+    the viewer, in the render and allow to preview the instances in the viewer
+    (with Katana >= 4.5).
+
+.. image:: {static}/images/blog/0005/demo-katana-06.png
+    :alt: Katana Interface screenshot: AttributeSet node.
+
+Annnnd, we can try to fire-up a render to see our instancing result.
+Nothing very exciting, using primitives doesn't looks very impressive. You
+can have a try with any asset, just instance it's top-most location. Here is
+the result with an "heavy" asset :
+
+.. figure:: {static}/images/blog/0005/demo-katana-07.gif
+    :alt: Katana Viewer GIF: rendering house instances.
+
+    100 x 3.2 mi vertices house asset, 1920x1080, 3Delight
+
+And if you need it, here is the Katana file :
+
+.. url-preview:: {static}/blog/0005/demo.hierarchical.basic.katana
+    :title: Download sources files.
+    :svg: {static}/images/global/icons/file-katana.svg
+    :svg-size: 60
+
+
+Basic Instancing : Array
+========================
+
+
+Before trying to go further with hierarchical we are going to have a look with
+the ``array`` method. Keep the same scene, we will only need to change the
+OpScript.
+
+And here it is. It's a slightly modified version from the one on
+Foundry's website. (better readability + bugs fixed)
+
+.. include:: opscript.array.foundry.lua
+    :code: lua
+
+You still need to create 2 ``user`` parameters on the OpScript node, but
+this time ``user.instancesSourceLocations`` must be a string array of scene
+graph-locations.
+
+.. image:: {static}/images/blog/0005/demo-katana-08.gif
+    :alt: Katana Interface screenshot: OpScript user paramaters.
+
+And of course the same ``user.pointCloudLocation`` one. The ``location``
+parameter still define where the instance is created but this time it's not
+the group holding the instances, but directly the full location of the instance
+(array instance is only one scene-graph location).
+
+Make sure the OpScript is running and then check the attribute on the
+``instance array`` location created.
+
+.. image:: {static}/images/blog/0005/demo-katana-09.png
+    :alt: Katana Interface screenshot: Instance Array Attributes.
+
+This time we are able to use our different instance-sources and not only one
+and we have an ``InstanceIndex`` attribute that specify which
+instance-source to use per-point. But if we look at more closely at the
+OpScript lua script, we notice the index are generated mathematically
+instead of using our point-cloud's ``objectIndex`` attribute. This will need
+to be adressed later of course.
+
+We can also notice that we are not using the traditional "translate" attribute,
+but a matrix one. Matrices have the advantages of replacing 4 attributes
+with 1 (translations, rotations(X, Y, Z)) but are harder to modify
+"on-the-fly". In the ends choose what suits you bets for your workflow.
+
+To know what kind of attributes are supposed to be supported by each
+instancing method, we can have a look at the documentation:
+
+.. url-preview:: https://learn.foundry.com/katana/4.5/dev-guide/AttributeConventions/Instancing.html
+    :title: Instancing -- Katana Developer Guide
+    :svg: {static}/images/global/icons/katana.svg
+    :svg-size: 60
+
+Only the Array method require specific attributes as all instances are
+represented by one scene-graph location.
+
+Full Instancing
+===============
+
+Aight' that was a quick first look at instancing, but as mentioned, we were
+not using all the exported attributes on our point-cloud. Supporting them
+require extending the basics OpScripts we used but this will be too long
+for this blog-post. Instead I'm just going to give the code logic you could
+be using if you want to go down that road. Else you will find a fully working
+solution in the `Katana Uber Instancing`_ section.
+
+Full Instancing : Hierarchical
+==============================
+
+Hierarchical using single location per-instance, they can use the commonly
+used attributes for locations like ``xform``. This transformation attributes
+are described in the docs : `dev-guide/AttributeConventions/Transformations
+<https://learn.foundry.com/katana/4.5/dev-guide/AttributeConventions/
+Transformations.html>`_. So pretty easy to implement, in pseudo-code :
+
+.. include:: pseudo_code.hierarchical.01.lua
+    :code: lua
+
+
+If you are now wondering who to determine which instanceSource to use, the
+logic is pretty simple :
+
+.. include:: pseudo_code.hierarchical.02.lua
+    :code: lua
+
+And you could then do the same for abitrary attributes like ``colorRandom``.
+The only difference could be the target destination on the instance. You
+must check your render-engine documentation for that, but usually it's :
+
+.. include:: pseudo_code.hierarchical.03.lua
+    :code: lua
+
+And finally just as ""educational"" purposes, here is the code I used on
+a Redshift production. It's not that documented and is probably not very clean
+so use it at you own risks. Again i recommend to instead have a look at ``kui``.
+
+.. url-preview:: {static}/blog/0005/opscript.hierarchical.liam.lua
+    :title: OpScript | Hierarchical | Redshift
+    :svg: {static}/images/global/icons/file-code.svg
+    :svg-size: 60
+
+
+
+Advanced workflows
+==================
+
+Modifying point-clouds | Transforms
+___________________________________
+
+You might stumble apon the case where you can't re-generate the point-cloud and
+you have to move it in Katana. But we can't use our good old ``Transform3D``
+friend here because , well, the transformations data is stored in geometry
+attributes, and the ``Transform3D`` only modify the ``xform`` attribute !
+
+But no need to worry I got u a solution on my GitHub :
+
+.. url-preview:: https://github.com/MrLixm/Foundry_Katana/tree/main/src/viewer/PointcloudXform2P
+    :title: PointcloudXform2P
+    :image: https://github.com/MrLixm/Foundry_Katana/raw/main/src/viewer/PointcloudXform2P/demo.gif
+
+    Allow merging xform transformations on a pointcloud location to
+    the geometry.point.P attribute.
+
+As mentioned, the OpScript only modify the ``P`` attribute , this mean only
+the ``translation`` and ``rotation`` from the ``Transform3D`` are applied.
+
+
+.. note-info::
+
+    But you might not need this as your render-engine probably supports the
+    use of ``Transform3D`` on the instance(s). (even if the Viewer preview
+    ignore it, in render, the instance are properly transformed.)
+
+
+Modifying point-clouds | Culling
+________________________________
+
+Another need would be to prune points so no instance is produce at this
+location. Even if instancing improve performances compared to no instancing,
+more instances still costs at render-time so you wanna make sure you are not
+rendering non-contributing instances.
+
+.. TODO finish by including a culling script.
+
 
 Katana Uber Instancing
 ----------------------
 
 As we just saw, instancing can require in some cases quite some work before
 having a result. That's why I tried to produce a solution that would be very
-flexible with a vrey straightforward setup.
+flexible with a very straightforward setup.
 
 The goal here will be to create an 'uber' instancing node (just a group node
 actually) where, using the same parameters, you could conveniently switch
