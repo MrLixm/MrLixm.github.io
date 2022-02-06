@@ -148,7 +148,7 @@ pre, code {
   font-family: var(--code-font), monospace, monospace; /* https://en.wikipedia.org/wiki/User:Davidgothberg/Test59 */
   font-size: var(--code-font-size);
   color: var(--code-color);
-  background-color: var(--code-background-color);
+  background-color: #242931;
   border-radius:0.2rem
 }
 pre.m-console, code.m-console {
@@ -160,6 +160,7 @@ pre {
   border-radius: var(--border-radius);
   overflow-x: auto;
   margin-top: 0; /* stupid defaults */
+  background-color: var(--code-background-color);
 }
 pre.m-console-wrap {
   white-space: pre-wrap;
