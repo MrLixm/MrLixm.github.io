@@ -106,31 +106,36 @@ agripetas ortum.
 
     cur itineris tramitem ire? neuter, teres finiss grauiter amor de magnum,
     primus nomen.
-    audax, altus nomens tandem reperire de varius, primus caesium.
+
+    - audax, altus nomens tandem reperire de varius, primus caesium.
 
 .. note-info::
 
     cur itineris tramitem ire? neuter, teres finiss grauiter amor de magnum,
     primus nomen.
-    audax, altus nomens tandem reperire de varius, primus caesium.
+
+    - audax, altus nomens tandem reperire de varius, primus caesium.
 
 .. note-warning::
 
     cur itineris tramitem ire? neuter, teres finiss grauiter amor de magnum,
     primus nomen.
-    audax, altus nomens tandem reperire de varius, primus caesium.
+
+    - audax, altus nomens tandem reperire de varius, primus caesium.
 
 .. note-danger::
 
     cur itineris tramitem ire? neuter, teres finiss grauiter amor de magnum,
     primus nomen.
-    audax, altus nomens tandem reperire de varius, primus caesium.
+
+    - audax, altus nomens tandem reperire de varius, primus caesium.
 
 .. note-success::
 
     cur itineris tramitem ire? neuter, teres finiss grauiter amor de magnum,
     primus nomen.
-    audax, altus nomens tandem reperire de varius, primus caesium.
+
+    - audax, altus nomens tandem reperire de varius, primus caesium.
 
 Blocks
 ======
