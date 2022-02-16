@@ -234,17 +234,10 @@ footer .l-line-xs {
     l-box-discord
 */
 .l-box-discord {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: center;
-    align-items: center;
+    border-color: rgba(88,101,242,0.5);
     background-color: rgba(88,101,242,0.5);
-    border-radius: 1rem;
-    padding: 1rem;
-    margin: 1rem;
 }
-.l-box-discord p {
-    margin: 0 0 0.2rem;
+.l-box-kofi {
+    border-color: rgba(41, 171, 224, 0.2);
+    background-color: rgba(41, 171, 224, 0.2);
 }
-
