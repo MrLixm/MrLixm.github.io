@@ -1,17 +1,34 @@
 --[[
-  OpScript for Foundry's Katana software
+OpScript for Foundry's Katana software
 
-  Author: Mixed sources
-  Modified by: Liam Collod
-  Last Modified: 11/06/2021 (added proxy)
+Author: Mixed sources
+Modified by: Liam Collod
+Last Modified: 11/06/2021 (added proxy)
 
-  [OpScript setup]
-    user variables:
-      "user.instanceSourceLocations" string array (Scene graph locations)
-      "user.pointCloudLocation" string, scene graph location to the pointcloud
-    parameters:
-      applyWhere: at specific location
-      location: desired output locations for the instances created
+[OpScript setup]
+  user variables:
+    "user.instanceSourceLocations" string array (Scene graph locations)
+    "user.pointCloudLocation" string, scene graph location to the pointcloud
+  parameters:
+    applyWhere: at specific location
+    location: desired output locations for the instances created
+
+[License]:
+Hierarchical Instancing Opscript for Katana
+Copyright (C) 2022  Liam Collod
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ]]
 
 -- version = "0.3.6"

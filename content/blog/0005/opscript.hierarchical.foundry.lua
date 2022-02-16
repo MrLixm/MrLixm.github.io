@@ -24,7 +24,8 @@ if Interface.AtRoot() then
       gb:set("childAttrs", Interface.GetAttr("", instanceSourceLocation))
       gb:set("childAttrs.type", StringAttribute("instance"))
       gb:set("childAttrs.geometry.instanceSource", StringAttribute(instanceSourceLocation))
-      gb:set("childAttrs.xform.interactive.translate", DoubleAttribute({x, y, z}))
+      -- note: we shouldn't use `xform.interactive` as originaly specified.
+      gb:set("childAttrs.xform.group0.translate", DoubleAttribute({x, y, z}))
 
       -- Create the child
       Interface.CreateChild(

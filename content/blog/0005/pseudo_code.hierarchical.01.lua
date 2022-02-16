@@ -27,11 +27,11 @@ for i=0, #points/3 -1 do
   --[...]
 
   --[...]
-  instance:set("childAttrs.xform.interactive.translate", out_translate)
-  instance:set("childAttrs.xform.interactive.rotateZ", out_rotateX)
-  instance:set("childAttrs.xform.interactive.rotateY", out_rotateY)
-  instance:set("childAttrs.xform.interactive.rotateX", out_rotateZ)
-  instance:set("childAttrs.xform.interactive.scale", out_scale)
+  instance:set("childAttrs.xform.group0.translate", out_translate)
+  instance:set("childAttrs.xform.group0.rotateZ", out_rotateX)
+  instance:set("childAttrs.xform.group0.rotateY", out_rotateY)
+  instance:set("childAttrs.xform.group0.rotateX", out_rotateZ)
+  instance:set("childAttrs.xform.group0.scale", out_scale)
 
   Interface.CreateChild(
     instance_name,
