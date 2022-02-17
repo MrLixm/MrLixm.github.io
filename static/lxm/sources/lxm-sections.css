@@ -108,6 +108,12 @@ main article p {
     font-size: var(--font-article-size);
     letter-spacing: -0.4px;
 }
+main article aside p {
+    color: inherit;
+    font-size: 1rem;
+    letter-spacing: -0.3px;
+}
+
 main article h1,
 main article h2,
 main article h3,
@@ -262,6 +268,14 @@ article .l-article-header h1 {
 .m-block p {
     text-align: left;
 }
+/*inline crumbed list*/
+article section dd {
+    margin-inline-start: 0;
+    margin-top: 0.5rem;
+}
+article section dt {
+    margin-top: 0.5rem;
+}
 /*
 
     url-preview directive
@@ -306,7 +320,6 @@ article .l-article-header h1 {
         max-width: 90px;
     }
 }
-
 .l-url-box-image img{
     border-radius: 0.5rem;
     object-fit: cover;
@@ -328,12 +341,48 @@ article .l-article-header h1 {
 .l-url-subtitle a::before {
     all: initial;
 }
-
 .l-url-description {
     margin: 0;
     font-size: 0.9rem;
     color: var(--color-article-darker);
 }
+/*
+l-box-post-connections
+in blog-post footers
+*/
+.l-box-post-connections {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0 2rem;
+}
+@media screen and (max-width: 500px) {
+    .l-box-post-connections {
+        flex-direction: column;
+    }
+    .l-box-post-connections > * {
+        width: 100%;
+    }
+}
+.l-box-post-connections p {
+    font-size: 1rem;
+    margin: 0 0 0.4rem;
+    text-align: center;
+}
+.l-box-post-connections > * {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    border-width: 1px;
+    border-style: solid;
+    padding: 0.7rem 2rem 0.7rem;
+    border-radius: 0.5rem;
+}
+
 /*------------END article----------------------------------------------------*/
 /*-----------------------------------------------------------------------------
 

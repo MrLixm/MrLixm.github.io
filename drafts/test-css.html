@@ -192,25 +192,40 @@ THis is still the second line.<br />
 <p>cum humani generis cadunt, omnes brabeutaes carpseris camerarius, salvus mortemes.
 agripetas ortum.</p>
 <aside class="m-note m-default">
-cur itineris tramitem ire? neuter, teres finiss grauiter amor de magnum,
-primus nomen.
-audax, altus nomens tandem reperire de varius, primus caesium.</aside>
+<p>cur itineris tramitem ire? neuter, teres finiss grauiter amor de magnum,
+primus nomen.</p>
+<ul>
+<li>audax, altus nomens tandem reperire de varius, primus caesium.</li>
+</ul>
+</aside>
 <aside class="m-note m-info">
-cur itineris tramitem ire? neuter, teres finiss grauiter amor de magnum,
-primus nomen.
-audax, altus nomens tandem reperire de varius, primus caesium.</aside>
+<p>cur itineris tramitem ire? neuter, teres finiss grauiter amor de magnum,
+primus nomen.</p>
+<ul>
+<li>audax, altus nomens tandem reperire de varius, primus caesium.</li>
+</ul>
+</aside>
 <aside class="m-note m-warning">
-cur itineris tramitem ire? neuter, teres finiss grauiter amor de magnum,
-primus nomen.
-audax, altus nomens tandem reperire de varius, primus caesium.</aside>
+<p>cur itineris tramitem ire? neuter, teres finiss grauiter amor de magnum,
+primus nomen.</p>
+<ul>
+<li>audax, altus nomens tandem reperire de varius, primus caesium.</li>
+</ul>
+</aside>
 <aside class="m-note m-danger">
-cur itineris tramitem ire? neuter, teres finiss grauiter amor de magnum,
-primus nomen.
-audax, altus nomens tandem reperire de varius, primus caesium.</aside>
+<p>cur itineris tramitem ire? neuter, teres finiss grauiter amor de magnum,
+primus nomen.</p>
+<ul>
+<li>audax, altus nomens tandem reperire de varius, primus caesium.</li>
+</ul>
+</aside>
 <aside class="m-note m-success">
-cur itineris tramitem ire? neuter, teres finiss grauiter amor de magnum,
-primus nomen.
-audax, altus nomens tandem reperire de varius, primus caesium.</aside>
+<p>cur itineris tramitem ire? neuter, teres finiss grauiter amor de magnum,
+primus nomen.</p>
+<ul>
+<li>audax, altus nomens tandem reperire de varius, primus caesium.</li>
+</ul>
+</aside>
 </section>
 <section id="blocks">
 <h3><a href="#id8">Blocks</a></h3>
@@ -310,6 +325,37 @@ start <span class="s2">&quot;&quot;</span> <span class="s2">&quot;C:\Program Fil
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">run</span><span class="p">()</span></pre>
+<p>Produced wih the include directive</p>
+<pre class="m-code"><span class="cm">--[[</span>
+<span class="cm">source: https://support.foundry.com/hc/en-us/articles/360006999279</span>
+<span class="cm">]]</span>
+
+<span class="c1">-- Read op arguments</span>
+<span class="kd">local</span> <span class="n">instanceSourceLocation</span> <span class="o">=</span> <span class="n">Interface</span><span class="p">.</span><span class="n">GetOpArg</span><span class="p">(</span><span class="s2">&quot;user.instanceSourceLocation&quot;</span><span class="p">):</span><span class="n">getValue</span><span class="p">()</span>
+<span class="kd">local</span> <span class="n">pointCloudLocation</span> <span class="o">=</span> <span class="n">Interface</span><span class="p">.</span><span class="n">GetOpArg</span><span class="p">(</span><span class="s2">&quot;user.pointCloudLocation&quot;</span><span class="p">):</span><span class="n">getValue</span><span class="p">()</span>
+
+<span class="kr">if</span> <span class="n">Interface</span><span class="p">.</span><span class="n">AtRoot</span><span class="p">()</span> <span class="kr">then</span>
+  <span class="c1">-- Read the point cloud</span>
+  <span class="kd">local</span> <span class="n">points</span> <span class="o">=</span> <span class="n">Interface</span><span class="p">.</span><span class="n">GetAttr</span><span class="p">(</span><span class="s2">&quot;geometry.point.P&quot;</span><span class="p">,</span> <span class="n">pointCloudLocation</span><span class="p">)</span>
+  <span class="n">points</span> <span class="o">=</span> <span class="n">points</span><span class="p">:</span><span class="n">getNearestSample</span><span class="p">(</span><span class="n">Interface</span><span class="p">.</span><span class="n">GetCurrentTime</span><span class="p">())</span>
+
+  <span class="c1">-- Loop over points</span>
+  <span class="kd">local</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span>
+  <span class="kd">local</span> <span class="n">gb</span> <span class="o">=</span> <span class="n">GroupBuilder</span><span class="p">()</span>
+  <span class="kr">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">#</span><span class="n">points</span><span class="o">/</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">1</span> <span class="kr">do</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">points</span><span class="p">[</span><span class="mi">3</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">points</span><span class="p">[</span><span class="mi">3</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">points</span><span class="p">[</span><span class="mi">3</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="c1">-- Build op arguments for the child location</span>
+    <span class="n">gb</span><span class="p">:</span><span class="n">update</span><span class="p">(</span><span class="n">Interface</span><span class="p">.</span><span class="n">GetOpArg</span><span class="p">())</span>
+    <span class="n">gb</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;childAttrs&quot;</span><span class="p">,</span> <span class="n">Interface</span><span class="p">.</span><span class="n">GetAttr</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">instanceSourceLocation</span><span class="p">))</span>
+    <span class="n">gb</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;childAttrs.type&quot;</span><span class="p">,</span> <span class="n">StringAttribute</span><span class="p">(</span><span class="s2">&quot;instance&quot;</span><span class="p">))</span>
+    <span class="n">gb</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;childAttrs.geometry.instanceSource&quot;</span><span class="p">,</span> <span class="n">StringAttribute</span><span class="p">(</span><span class="n">instanceSourceLocation</span><span class="p">))</span>
+    <span class="n">gb</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;childAttrs.xform.interactive.translate&quot;</span><span class="p">,</span> <span class="n">DoubleAttribute</span><span class="p">({</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">}))</span>
+  <span class="kr">end</span>
+<span class="kr">end</span>
+  <span class="c1">-- missing code !!! Only for test purposes !!!</span></pre>
 </section>
 </section>
 <section id="fake-test-section">
@@ -515,13 +561,23 @@ Cum exsul favere, omnes aususes convertam grandis, albus fortises.</p>
             </span>
           </span>
         </footer>
-        <div class="l-box-discord">
-          <p>No comment system yet so instead :</p>
-          <div class="l-btn-discord  l-flex-r l-flex-center">
-            <a  class="l-btn-discord-img" href="https://discord.gg/47ySGqMEAj">
-              <img src="/static/images/global/social/discord.svg" alt="Discord Icon">
-            </a>
-            <a href="https://discord.gg/47ySGqMEAj">Join the Discord to discuss</a>
+        <div class="l-box-post-connections">
+          <div class="l-box-kofi">
+            <p>If this was of any help you can:</p>
+            <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'>
+            </script>
+            <script type='text/javascript'>
+              kofiwidget2.init('Support Me on Ko-fi !', '#29abe0', 'E1E3ALNSG');kofiwidget2.draw();
+            </script>
+          </div>
+          <div class="l-box-discord">
+            <p>No comment system yet so instead:</p>
+            <div class="l-btn-discord  l-flex-r l-flex-center">
+              <a  class="l-btn-discord-img" href="https://discord.gg/47ySGqMEAj">
+                <img src="/static/images/global/social/discord.svg" alt="Discord Icon">
+              </a>
+              <a href="https://discord.gg/47ySGqMEAj">Join the Discord to discuss</a>
+            </div>
           </div>
         </div>
         </footer>
@@ -533,7 +589,7 @@ Cum exsul favere, omnes aususes convertam grandis, albus fortises.</p>
     <div class="m-container">
       <div class="m-row">
         <div class="m-col-l-10 m-push-l-1">
-          <p>Copyright © <a href="mailto:lcollod&#64;gmail.com">Liam Collod</a> - 2021. All rights
+          <p>Copyright © <a href="mailto:lcollod&#64;gmail.com">Liam Collod</a> - 2022. All rights
         reserved. Made with <a href="https://blog.getpelican.com/">Pelican</a> and
         <a href="https://mcss.mosra.cz/">m.css</a> .</p>
         </div>
