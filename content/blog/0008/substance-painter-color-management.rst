@@ -38,7 +38,7 @@ skip straight to the `Substance Setup & Workflow`_ section if desired.
 
     This is the version used through this article and some features might
     changed at the time you are reading this. I will try to keep the article
-    updated thought.
+    updated though.
 
 .. url-preview:: https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html
     :title: Official Documentation
