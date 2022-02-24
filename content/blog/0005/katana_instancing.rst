@@ -578,6 +578,29 @@ To add rotations, you will need to split the incoming point-cloud attribute
 into X,Y and Z and add the axis direction. Works the same as for hierarchical.
 And imagine you are using a matrix instead. Even less code to write.
 
+
+.. note-warning::
+
+    All attributes are very sensitive to the way they are build:
+
+    - You have to make sure the order is respected as followed :
+
+    ::
+
+        matrix
+        translation
+        rotationZ
+        rotationY
+        rotationX
+        scale
+
+    -
+        You have to make sure all the above attributes are ``DoubleAttributes``
+        (and other attributes like ``instanceIndex`` also have the correct type
+        specified in the documentation).
+        Else you might have surprises at render-time.
+
+
 Anyway here was the solution I used in prod, same blah blah as for
 hierarchical...
 
@@ -591,6 +614,50 @@ hierarchical...
 
 Advanced workflows
 ==================
+
+
+Instances preview in the Viewer
+_______________________________
+
+Since **Katana 4.5**, it is now possible to view **instance array** in the
+Viewer :
+
+-
+    You need to set instance-source location ``type`` to ``instance source``.
+
+-
+    Make sure the instance-sources and the instance are set to be viewed in
+    the Viewer (location expanded or "eye" checked for all the instance source
+    hierarchy).
+
+⚠ Be careful though, as if your instance-sources are heavy meshes, you
+might end up with an un-responsive Viewer.
+
+More details `in this video <https://youtu.be/VYRjWw6biEQ>`_. Or in the
+`Katana 4.5 patch-note <https://learn.foundry
+.com/katana/Content/release_notes/whats_new_4.5
+.html#PreviewInstancesandRendersintheHydraViewer>`_.
+
+The above also apply to *hierarchical* even if not specified in the notes.
+For Katana < 4.5, there is no real solution for *arrays*, but there is one for
+*hierarchical* that make use of the ``proxies.viewer`` attribute :
+
+.. url-preview:: https://learn.foundry.com/katana/4.0/Content/ug/scene_data/proxies_good_data.html
+    :title: Proxies and Good Data for Users
+    :svg: {static}/images/global/icons/katana.svg
+    :svg-size: 60
+
+    This solution require to have a pre-generated proxy alembic for your
+    instance-source.
+
+The attributes have to be set on the instances itself.
+But it would be less work to set these attributes on the instance-source and
+then make sure your OpScript copies the local attributes from the
+instance-source to the instance
+( with ``Interface.GetAttr("", instanceSourceLocation)``).
+
+Nothing prevent you to also set it on an *array instance*, but this requires
+to have already pre-generated an exactly similar-looking alembic.
 
 Modifying point-clouds | Transforms
 ___________________________________
@@ -628,6 +695,19 @@ improve performances compared to when not used,
 more instances still costs at render-time so you wanna make sure you are not
 rendering non-contributing instances.
 
+For this you could try to see Efthymis's OpScript :
+
+.. url-preview:: https://efthymisb.gumroad.com/l/tsrvn
+    :title: Frustum Culling OpScript for Katana
+    :image: https://cdn.discordapp.com/attachments/752132517405917204/937006446695038986/frustumCulling_thumbnail.gif
+
+    This OpScript creates Attributes based on if the geometry/point is inside the Camera's Frustum Culling.
+
+    - Hide geometry that is outside of the Frustum (from the viewport)
+    - Set Visibility Attribute (for render)
+    - Create Attributes based on distance from the camera.
+    - Create instanceSkipIndex attribute for PointClouds.
+
 .. TODO finish by including a culling script.
 
 
@@ -652,44 +732,6 @@ The project is available on GitHub here :
 I let you check the README.md that should provide all the instructions
 necessary to use this tool.
 
-Else I'll be now detailing a bit the workflow used to achieve this tool.
-
-
-R&D
-===
-
-Let's first think of what could be the ``source`` of the instances data. A most
-common case would be to use a point-cloud. We could also see an even more
-flexible solution by allowing to use any location, like a locator.
-
-The next step will be to extract the ``source`` attributes and convert them to
-individual instances attributes. That's where we will meet a new issue :
-
-| We know the destination of these attributes : scale, rotation, index, color,
- ..., we know that at least one of them will be present.
- But what is very variable is how they are named, what are the ones that we
- actually need, etc. The first way to fix this issue is to define pipeline
- conventions, where X type of attribute should have X name, and so the X name
- is hardcoded into your script. But production needs change often, and we can
- agree that having a script with as minimal hardcoded conventions as possible
- is better.
-| The second solution is to have a way to specify to the script the name of
- the attributes present on the ``source`` and how to behave with them.
- We could do this using user argument on the OpScript but I feel we can
- have an even more logicial solution that would be to have these infos on the
- ``source`` itself.
-
-So the ``source`` would have a bunch of attributes that have a fixed naming
-convention (we can't escape it) that will give the script the info required
-to process the ``source``. It will be more clear when applied to the script.
-
-
-
-OpScript-Getting What We Need
-=============================
-
-
-
 
 Redshift
 --------
@@ -697,7 +739,42 @@ Redshift
 The production where I had to look for instancing was using Redshift,
 and unfortunately, it seems that, at that time, the instancing features where
 "minimally" implemented and some stuff was missing/broken.
-Fortunately, Redshift developer's Juanjo was very responsive and very quickly, fixed
-all the issues I found. Discussion can be found `in this thread
-<https://redshift.maxon.net/topic/33461/more-documentation-for-instancing-in-katana?_=1634997159560>`_.
+Fortunately, Redshift developer's Juanjo was very responsive and very quickly,
+fixed all the issues I found. Discussion can be found `in this thread
+<https://redshift.maxon.net/topic/33461/more-documentation-for-instancing-in-katana?_=1634997159560>`_
+(maxon account required).
 
+Didn't tested the latest version but I think you should now get the same
+features other render-engine have. I'm just not sure if arbitrary attributes
+still need to be in ``instance.arbitrary`` or is the commonly used
+``geometry.arbitrary`` is supported ?
+
+
+Outro
+-----
+
+And that's a wrap. I really hope this was useful for you because this was
+the kind of informations I wish I had when starting looking for
+instancing !
+As always feedback is welcome. If you notice anything let me know
+on the PYCO discord (link in the footer) or e-mail me.
+
+.. url-preview:: https://github.com/MrLixm/Foundry_Katana
+    :title: GitHub - MrLixm/Foundry_Katana
+    :image: https://github.com/MrLixm/Foundry_Katana/blob/main/img/thumbnail.jpg?raw=true
+
+    Collection of resources for Foundry's Katana software.
+
+.. url-preview:: https://discord.gg/Rgn9ucN
+    :title: Discord - Foundry Katana (Community)
+    :svg: {static}/images/global/icons/discord.svg
+    :svg-size: 100
+    :color: #D9D9D9
+
+    A community Discord server for Katana with official Foundry staffs.
+
+.. url-preview:: https://discord.gg/KepWvn8
+    :title: Discord - Coding for CGI & VFX
+    :image: https://cdn.discordapp.com/icons/718106101773500527/60b10f494eb6b9387462445f0eef58c6.webp
+
+    You can find resources related to scripting in Katana on this server.
