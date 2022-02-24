@@ -108,34 +108,32 @@ troubles guessing what it needed to work.</p>
 <aside class="contents" id="contents">
 <h3>Contents</h3>
 <ul>
-<li><a href="#intro" id="id1">Intro</a></li>
-<li><a href="#instancing-methods" id="id2">Instancing Methods</a><ul>
-<li><a href="#leaf-level" id="id3">Leaf-level</a></li>
-<li><a href="#hierarchical" id="id4">Hierarchical</a></li>
-<li><a href="#array" id="id5">Array</a></li>
+<li><a href="#intro" id="id2">Intro</a></li>
+<li><a href="#instancing-methods" id="id3">Instancing Methods</a><ul>
+<li><a href="#leaf-level" id="id4">Leaf-level</a></li>
+<li><a href="#hierarchical" id="id5">Hierarchical</a></li>
+<li><a href="#array" id="id6">Array</a></li>
 </ul>
 </li>
-<li><a href="#instancing-in-practice" id="id6">Instancing in Practice</a><ul>
-<li><a href="#scene-preparation" id="id7">Scene-Preparation</a></li>
-<li><a href="#opscript-preparation" id="id8">OpScript-Preparation</a></li>
-<li><a href="#basic-instancing-hierarchical" id="id9">Basic Instancing : Hierarchical</a></li>
-<li><a href="#basic-instancing-array" id="id10">Basic Instancing : Array</a></li>
-<li><a href="#full-instancing" id="id11">Full Instancing</a></li>
-<li><a href="#full-instancing-hierarchical" id="id12">Full Instancing : Hierarchical</a></li>
-<li><a href="#full-instancing-array" id="id13">Full Instancing : Array</a></li>
-<li><a href="#advanced-workflows" id="id14">Advanced workflows</a><ul>
-<li><a href="#modifying-point-clouds-transforms" id="id15">Modifying point-clouds | Transforms</a></li>
-<li><a href="#modifying-point-clouds-culling" id="id16">Modifying point-clouds | Culling</a></li>
+<li><a href="#instancing-in-practice" id="id7">Instancing in Practice</a><ul>
+<li><a href="#scene-preparation" id="id8">Scene-Preparation</a></li>
+<li><a href="#opscript-preparation" id="id9">OpScript-Preparation</a></li>
+<li><a href="#basic-instancing-hierarchical" id="id10">Basic Instancing : Hierarchical</a></li>
+<li><a href="#basic-instancing-array" id="id11">Basic Instancing : Array</a></li>
+<li><a href="#full-instancing" id="id12">Full Instancing</a></li>
+<li><a href="#full-instancing-hierarchical" id="id13">Full Instancing : Hierarchical</a></li>
+<li><a href="#full-instancing-array" id="id14">Full Instancing : Array</a></li>
+<li><a href="#advanced-workflows" id="id15">Advanced workflows</a><ul>
+<li><a href="#instances-preview-in-the-viewer" id="id16">Instances preview in the Viewer</a></li>
+<li><a href="#modifying-point-clouds-transforms" id="id17">Modifying point-clouds | Transforms</a></li>
+<li><a href="#modifying-point-clouds-culling" id="id18">Modifying point-clouds | Culling</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#katana-uber-instancing" id="id17">Katana Uber Instancing</a><ul>
-<li><a href="#r-d" id="id18">R&amp;D</a></li>
-<li><a href="#opscript-getting-what-we-need" id="id19">OpScript-Getting What We Need</a></li>
-</ul>
-</li>
+<li><a href="#katana-uber-instancing" id="id19">Katana Uber Instancing</a></li>
 <li><a href="#redshift" id="id20">Redshift</a></li>
+<li><a href="#outro" id="id21">Outro</a></li>
 </ul>
 </aside>
 <aside class="m-block m-warning">
@@ -152,7 +150,7 @@ If you are a more advanced user you can check <a href="#katana-uber-instancing">
 </p>
 </aside>
 <section id="intro">
-<h2><a href="#id1">Intro</a></h2>
+<h2><a href="#id2">Intro</a></h2>
 <p>As Katana’s motto states : <em>It’s all just a bunch of Attributes.</em> And it
 applies to instances too. They are just a bunch of locations with a defined
 list of attributes understood by your render-engine.
@@ -170,7 +168,7 @@ Additional attributes can also be set and used for shading to make the
 instance even more different than the source.</p>
 </section>
 <section id="instancing-methods">
-<h2><a href="#id2">Instancing Methods</a></h2>
+<h2><a href="#id3">Instancing Methods</a></h2>
 <p>Instancing comes in different flavors, that, similarly to all things, have
 specific ups and downs. Your render-engine may also supply alternative ways to
 produce instances so be sure to check its documentation on the topic.</p>
@@ -189,7 +187,7 @@ produce instances so be sure to check its documentation on the topic.</p>
 </div>
 </div>
 <section id="leaf-level">
-<h3><a href="#id3">Leaf-level</a></h3>
+<h3><a href="#id4">Leaf-level</a></h3>
 <p><em>(Never used this one)</em></p>
 <p><a href="https://support.foundry.com/hc/en-us/articles/360006999259">The Katana documentation</a> is pretty explicit.</p>
 <div class="m-row">
@@ -214,7 +212,7 @@ location is the first one to instance 🙂.</p>
 <p><em>Would love to know in what case this one can be more pertinent than the other methods.</em></p>
 </section>
 <section id="hierarchical">
-<h3><a href="#id4">Hierarchical</a></h3>
+<h3><a href="#id5">Hierarchical</a></h3>
 <p>Each instance = one scene-graph location.</p>
 <div class="m-row">
 <div class="m-col-s-6">
@@ -234,7 +232,7 @@ issues. (pre-render)</p>
 </div>
 </section>
 <section id="array">
-<h3><a href="#id5">Array</a></h3>
+<h3><a href="#id6">Array</a></h3>
 <p>One single scene-graph location where each instance correspond to an index
 on each attribute.</p>
 <div class="m-row">
@@ -259,7 +257,7 @@ locations with children when using the <code>array</code> method.)</p>
 </section>
 </section>
 <section id="instancing-in-practice">
-<h2><a href="#id6">Instancing in Practice</a></h2>
+<h2><a href="#id7">Instancing in Practice</a></h2>
 <p>To start, there is a nice small example on the <a href="https://learn.foundry.com/katana/Content/ug/instancing/rendering_instances.html">official Katana documentation</a>
 . It explains how to create instances using mostly Katana nodes and one small
 OpScript to avoid stacking numerous <code>AttributeSet</code> nodes.
@@ -285,7 +283,7 @@ For this what’s better than having a look at the documentation :
 find the 3 instancing methods described again.</p>
 <p>Let’s now start building the scene.</p>
 <section id="scene-preparation">
-<h3><a href="#id7">Scene-Preparation</a></h3>
+<h3><a href="#id8">Scene-Preparation</a></h3>
 <p>For you to follow the tutorial, I will be providing you a few assets. Actually
 only a point-cloud, as to keep it simple, instances sources will be
 primitives.</p>
@@ -373,7 +371,7 @@ nodegraph is looking like this :</p>
 <p>Now it’s time to have a look at OpScripting.</p>
 </section>
 <section id="opscript-preparation">
-<h3><a href="#id8">OpScript-Preparation</a></h3>
+<h3><a href="#id9">OpScript-Preparation</a></h3>
 <p>We are going to manipulate a lot of inputs and data and at some point, we
 will need to see what X variable is equal to, what is the result of X
 operation, etc
@@ -434,7 +432,7 @@ CookInterface :</p>
 </div>
 </section>
 <section id="basic-instancing-hierarchical">
-<h3><a href="#id9">Basic Instancing : Hierarchical</a></h3>
+<h3><a href="#id10">Basic Instancing : Hierarchical</a></h3>
 <p>For a first try, we will be using the OpScript provided on the Foundry’s
 documentation. It’s the most basic you can do which will be perfect for an
 introduction. It’s the one for the hierarchical method.</p>
@@ -576,7 +574,7 @@ the result with a “heavy” asset :</p>
 </div>
 </section>
 <section id="basic-instancing-array">
-<h3><a href="#id10">Basic Instancing : Array</a></h3>
+<h3><a href="#id11">Basic Instancing : Array</a></h3>
 <p>Before trying to go further with hierarchical we are going to have a look at
 the <code>array</code> method. Keep the same scene, we will only need to change the
 OpScript.</p>
@@ -720,7 +718,7 @@ instancing method, we can have a look at the documentation:</p>
 represented by one scene-graph location.</p>
 </section>
 <section id="full-instancing">
-<h3><a href="#id11">Full Instancing</a></h3>
+<h3><a href="#id12">Full Instancing</a></h3>
 <p>Aight’ that was a quick first look at instancing, but as mentioned, we were
 not using all the exported attributes on our point-cloud. Supporting them
 requires extending the basics OpScripts we used but this will be too long
@@ -729,7 +727,7 @@ be using if you want to go down that road. Else you will find a fully working
 solution in the <a href="#katana-uber-instancing">Katana Uber Instancing</a> section.</p>
 </section>
 <section id="full-instancing-hierarchical">
-<h3><a href="#id12">Full Instancing : Hierarchical</a></h3>
+<h3><a href="#id13">Full Instancing : Hierarchical</a></h3>
 <p>Hierarchical is using single location per-instance, they can use the commonly
 used attributes for locations like <code>xform</code>. This transformation attributes
 are described in the docs : <a href="https://learn.foundry.com/katana/4.5/dev-guide/AttributeConventions/Transformations.html">dev-guide/AttributeConventions/Transformations</a>. So pretty easy to implement, in pseudo-code :</p>
@@ -900,7 +898,7 @@ so use it at your own risk. Again I recommend instead having a look at
 </div>
 </section>
 <section id="full-instancing-array">
-<h3><a href="#id13">Full Instancing : Array</a></h3>
+<h3><a href="#id14">Full Instancing : Array</a></h3>
 <p>Array is in a way more simple, you can just brainless copy the attributes
 from the point-cloud to the instance (if they are properly formatted).
 Make sure to <a href="https://learn.foundry.com/katana/4.5/dev-guide/AttributeConventions/Instancing.html">check the documentation</a> about what kind of
@@ -923,6 +921,24 @@ Pseudo code is looking like this :</p>
 <p>To add rotations, you will need to split the incoming point-cloud attribute
 into X,Y and Z and add the axis direction. Works the same as for hierarchical.
 And imagine you are using a matrix instead. Even less code to write.</p>
+<aside class="m-note m-warning">
+<p>All attributes are very sensitive to the way they are build:</p>
+<ul>
+<li>You have to make sure the order is respected as followed :</li>
+</ul>
+<pre>matrix
+translation
+rotationZ
+rotationY
+rotationX
+scale</pre>
+<ul>
+<li>You have to make sure all the above attributes are <code>DoubleAttributes</code>
+(and other attributes like <code>instanceIndex</code> also have the correct type
+specified in the documentation).
+Else you might have surprises at render-time.</li>
+</ul>
+</aside>
 <p>Anyway here was the solution I used in prod, same blah blah as for
 hierarchical…</p>
 <div class="l-url-box">
@@ -942,9 +958,53 @@ hierarchical…</p>
 </div>
 </section>
 <section id="advanced-workflows">
-<h3><a href="#id14">Advanced workflows</a></h3>
+<h3><a href="#id15">Advanced workflows</a></h3>
+<section id="instances-preview-in-the-viewer">
+<h4><a href="#id16">Instances preview in the Viewer</a></h4>
+<p>Since <strong>Katana 4.5</strong>, it is now possible to view <strong>instance array</strong> in the
+Viewer :</p>
+<ul>
+<li>You need to set instance-source location <code>type</code> to <code>instance source</code>.</li>
+<li>Make sure the instance-sources and the instance are set to be viewed in
+the Viewer (location expanded or “eye” checked for all the instance source
+hierarchy).</li>
+</ul>
+<p>⚠ Be careful though, as if your instance-sources are heavy meshes, you
+might end up with an un-responsive Viewer.</p>
+<p>More details <a href="https://youtu.be/VYRjWw6biEQ">in this video</a>. Or in the
+<a href="https://learn.foundry.com/katana/Content/release_notes/whats_new_4.5.html#PreviewInstancesandRendersintheHydraViewer">Katana 4.5 patch-note</a>.</p>
+<p>The above also apply to <em>hierarchical</em> even if not specified in the notes.
+For Katana &lt; 4.5, there is no real solution for <em>arrays</em>, but there is one for
+<em>hierarchical</em> that make use of the <code>proxies.viewer</code> attribute :</p>
+<div class="l-url-box">
+<a class="l-url-a" href="https://learn.foundry.com/katana/4.0/Content/ug/scene_data/proxies_good_data.html"></a>
+<div class="l-url-box-image">
+<svg width="60" height="60" viewBox="0 0 490 490" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M245 490C380.31 490 490 380.31 490 245C490 109.69 380.31 0 245 0C109.69 0 0 109.69 0 245C0 380.31 109.69 490 245 490ZM245 466C367.055 466 466 367.055 466 245C466 122.945 367.055 24 245 24C122.945 24 24 122.945 24 245C24 367.055 122.945 466 245 466Z" fill="currentColor"/>
+<path d="M335.174 313.737C335.72 308.9 336 303.983 336 299C336 227.203 277.797 169 206 169C134.203 169 76 227.203 76 299C76 352.522 108.344 398.49 154.553 418.423C126.898 397.723 109 364.702 109 327.5C109 264.816 159.816 214 222.5 214C280.526 214 328.381 257.543 335.174 313.737Z" fill="currentColor"/>
+<path d="M141.339 288.419C145.255 291.31 149.373 294.011 153.688 296.502C215.866 332.401 295.373 311.097 331.271 248.919C367.17 186.741 345.866 107.234 283.688 71.3359C237.337 44.5749 181.356 49.602 140.989 79.6531C172.743 66.0533 210.289 67.0639 242.506 85.6647C296.793 117.007 315.392 186.422 284.05 240.709C255.037 290.96 193.4 310.633 141.339 288.419Z" fill="currentColor"/>
+<path d="M258.759 133.059C254.297 135.004 249.898 137.22 245.583 139.712C183.405 175.61 162.102 255.117 198 317.295C233.899 379.473 313.405 400.777 375.583 364.878C421.935 338.117 445.572 287.122 439.73 237.138C435.631 271.438 415.983 303.448 383.765 322.049C329.479 353.391 260.063 334.792 228.721 280.505C199.708 230.254 213.49 167.038 258.759 133.059Z" fill="currentColor"/>
+</svg>
+</div>
+<div class="l-url-box-details">
+<p class="l-url-title">Proxies and Good Data for Users</p>
+<div class="l-url-subtitle">
+<a class="m-link-wrap" href="https://learn.foundry.com/katana/4.0/Content/ug/scene_data/proxies_good_data.html">https://learn.foundry.com/katana/4.0/Content/ug/scene_data/proxies_good_data.html</a>
+</div>
+<p class="l-url-description">This solution require to have a pre-generated proxy alembic for your
+instance-source.</p>
+</div>
+</div>
+<p>The attributes have to be set on the instances itself.
+But it would be less work to set these attributes on the instance-source and
+then make sure your OpScript copies the local attributes from the
+instance-source to the instance
+( with <code>Interface.GetAttr(&quot;&quot;, instanceSourceLocation)</code>).</p>
+<p>Nothing prevent you to also set it on an <em>array instance</em>, but this requires
+to have already pre-generated an exactly similar-looking alembic.</p>
+</section>
 <section id="modifying-point-clouds-transforms">
-<h4><a href="#id15">Modifying point-clouds | Transforms</a></h4>
+<h4><a href="#id17">Modifying point-clouds | Transforms</a></h4>
 <p>You might stumble upon the case where you can’t re-generate the point-cloud and
 you have to move it in Katana. But we can’t use our good old <code>Transform3D</code>
 friend here because, well, the transformations data is stored in geometry
@@ -972,16 +1032,37 @@ use of <code>Transform3D</code> on the instance(s). (even if the Viewer preview
 ignores it, in render, the instances are properly transformed.)</aside>
 </section>
 <section id="modifying-point-clouds-culling">
-<h4><a href="#id16">Modifying point-clouds | Culling</a></h4>
+<h4><a href="#id18">Modifying point-clouds | Culling</a></h4>
 <p>Another need would be to prune points to reduce instances. Even if instancing
 improve performances compared to when not used,
 more instances still costs at render-time so you wanna make sure you are not
 rendering non-contributing instances.</p>
+<p>For this you could try to see Efthymis’s OpScript :</p>
+<div class="l-url-box">
+<a class="l-url-a" href="https://efthymisb.gumroad.com/l/tsrvn"></a>
+<div class="l-url-box-image">
+<img src="https://cdn.discordapp.com/attachments/752132517405917204/937006446695038986/frustumCulling_thumbnail.gif" />
+</div>
+<div class="l-url-box-details">
+<p class="l-url-title">Frustum Culling OpScript for Katana</p>
+<div class="l-url-subtitle">
+<a class="m-link-wrap" href="https://efthymisb.gumroad.com/l/tsrvn">https://efthymisb.gumroad.com/l/tsrvn</a>
+</div>
+<p class="l-url-description"><p>This OpScript creates Attributes based on if the geometry/point is inside the Camera’s Frustum Culling.</p>
+<ul>
+<li>Hide geometry that is outside of the Frustum (from the viewport)</li>
+<li>Set Visibility Attribute (for render)</li>
+<li>Create Attributes based on distance from the camera.</li>
+<li>Create instanceSkipIndex attribute for PointClouds.</li>
+</ul>
+</p>
+</div>
+</div>
 </section>
 </section>
 </section>
 <section id="katana-uber-instancing">
-<h2><a href="#id17">Katana Uber Instancing</a></h2>
+<h2><a href="#id19">Katana Uber Instancing</a></h2>
 <p>As we just saw, instancing can require in some cases quite some work before
 having a result. That’s why I tried to produce a solution that would be very
 flexible with a very straightforward setup.</p>
@@ -1008,44 +1089,68 @@ between different instancing methods and have a lot of flexibility on inputs.
 </div>
 <p>I let you check the README.md that should provide all the instructions
 necessary to use this tool.</p>
-<p>Else I’ll be now detailing a bit the workflow used to achieve this tool.</p>
-<section id="r-d">
-<h3><a href="#id18">R&amp;D</a></h3>
-<p>Let’s first think of what could be the <code>source</code> of the instances data. A most
-common case would be to use a point-cloud. We could also see an even more
-flexible solution by allowing to use any location, like a locator.</p>
-<p>The next step will be to extract the <code>source</code> attributes and convert them to
-individual instances attributes. That’s where we will meet a new issue :</p>
-<p>
-We know the destination of these attributes : scale, rotation, index, color,
-…, we know that at least one of them will be present.
-But what is very variable is how they are named, what are the ones that we
-actually need, etc. The first way to fix this issue is to define pipeline
-conventions, where X type of attribute should have X name, and so the X name
-is hardcoded into your script. But production needs change often, and we can
-agree that having a script with as minimal hardcoded conventions as possible
-is better.<br />
-The second solution is to have a way to specify to the script the name of
-the attributes present on the <code>source</code> and how to behave with them.
-We could do this using user argument on the OpScript but I feel we can
-have an even more logicial solution that would be to have these infos on the
-<code>source</code> itself.<br />
-</p>
-<p>So the <code>source</code> would have a bunch of attributes that have a fixed naming
-convention (we can’t escape it) that will give the script the info required
-to process the <code>source</code>. It will be more clear when applied to the script.</p>
-</section>
-<section id="opscript-getting-what-we-need">
-<h3><a href="#id19">OpScript-Getting What We Need</a></h3>
-</section>
 </section>
 <section id="redshift">
 <h2><a href="#id20">Redshift</a></h2>
 <p>The production where I had to look for instancing was using Redshift,
 and unfortunately, it seems that, at that time, the instancing features where
 “minimally” implemented and some stuff was missing/broken.
-Fortunately, Redshift developer’s Juanjo was very responsive and very quickly, fixed
-all the issues I found. Discussion can be found <a href="https://redshift.maxon.net/topic/33461/more-documentation-for-instancing-in-katana?_=1634997159560">in this thread</a>.</p>
+Fortunately, Redshift developer’s Juanjo was very responsive and very quickly,
+fixed all the issues I found. Discussion can be found <a href="https://redshift.maxon.net/topic/33461/more-documentation-for-instancing-in-katana?_=1634997159560">in this thread</a>
+(maxon account required).</p>
+<p>Didn’t tested the latest version but I think you should now get the same
+features other render-engine have. I’m just not sure if arbitrary attributes
+still need to be in <code>instance.arbitrary</code> or is the commonly used
+<code>geometry.arbitrary</code> is supported ?</p>
+</section>
+<section id="outro">
+<h2><a href="#id21">Outro</a></h2>
+<p>And that’s a wrap. I really hope this was useful for you because this was
+the kind of informations I wish I had when starting looking for
+instancing !
+As always feedback is welcome. If you notice anything let me know
+on the PYCO discord (link in the footer) or e-mail me.</p>
+<div class="l-url-box">
+<a class="l-url-a" href="https://github.com/MrLixm/Foundry_Katana"></a>
+<div class="l-url-box-image">
+<img src="https://github.com/MrLixm/Foundry_Katana/blob/main/img/thumbnail.jpg?raw=true" />
+</div>
+<div class="l-url-box-details">
+<p class="l-url-title">GitHub - MrLixm/Foundry_Katana</p>
+<div class="l-url-subtitle">
+<a class="m-link-wrap" href="https://github.com/MrLixm/Foundry_Katana">https://github.com/MrLixm/Foundry_Katana</a>
+</div>
+<p class="l-url-description">Collection of resources for Foundry’s Katana software.</p>
+</div>
+</div>
+<div class="l-url-box">
+<a class="l-url-a" href="https://discord.gg/Rgn9ucN"></a>
+<div class="l-url-box-image" style="color: #D9D9D9;">
+<svg width="100" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <title>Discord</title>
+    <path fill="currentColor" d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
+</svg></div>
+<div class="l-url-box-details">
+<p class="l-url-title">Discord - Foundry Katana (Community)</p>
+<div class="l-url-subtitle">
+<a class="m-link-wrap" href="https://discord.gg/Rgn9ucN">https://discord.gg/Rgn9ucN</a>
+</div>
+<p class="l-url-description">A community Discord server for Katana with official Foundry staffs.</p>
+</div>
+</div>
+<div class="l-url-box">
+<a class="l-url-a" href="https://discord.gg/KepWvn8"></a>
+<div class="l-url-box-image">
+<img src="https://cdn.discordapp.com/icons/718106101773500527/60b10f494eb6b9387462445f0eef58c6.webp" />
+</div>
+<div class="l-url-box-details">
+<p class="l-url-title">Discord - Coding for CGI &amp; VFX</p>
+<div class="l-url-subtitle">
+<a class="m-link-wrap" href="https://discord.gg/KepWvn8">https://discord.gg/KepWvn8</a>
+</div>
+<p class="l-url-description">You can find resources related to scripting in Katana on this server.</p>
+</div>
+</div>
 </section>
           <!-- /content -->
         <footer>

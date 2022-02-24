@@ -42,6 +42,9 @@ Used to configure a flexbox container
 .l-flex-baseline {
     align-items: baseline;
 }
+.l-flex-justify-center {
+   justify-content: center;
+}
 /*
 l-gap
 gap between flexbox items
