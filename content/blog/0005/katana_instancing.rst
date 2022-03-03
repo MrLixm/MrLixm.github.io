@@ -12,6 +12,15 @@ Instancing in Katana
 :tags: katana, instancing, lua, software
 :author: Liam Collod
 
+.. role:: txt-dl
+    :class: code l-bgc-dl-o
+
+.. role:: txt-ai
+    :class: code l-bgc-ai-o
+
+.. role:: txt-prman
+    :class: code l-bgc-prman-o
+
 
 Katana, as usual, doesn't offer a "ready to go" solution for instancing.
 This initial complexity can be overcome by the fact that we can create an
@@ -282,14 +291,17 @@ logging module in lua. Kind of similar to what Python logging module does.
 It adds a bunch of line to your script but will allow more flexibility in the
 way data will be displayed to you.
 
-On top of a freshly created ``.lua`` file paste the content of this file :
+Have a look at this repository to install the llloger module :
 
-.. url-preview:: https://raw.githubusercontent.com/MrLixm/Foundry_Katana/main/src/utility/lua_logger/lllogger.lua
+.. url-preview:: https://github.com/MrLixm/llloger
     :title: llloger.lua
-    :image: https://github.com/MrLixm/Foundry_Katana/raw/main/src/utility/lua_logger/cover.png
+    :image: https://raw.githubusercontent.com/MrLixm/llloger/main/doc/img/thumbnail.jpg
 
     A simple lua logging module based on Python one.
 
+All instructions are specified in the `documentation <https://github
+.com/MrLixm/llloger/blob/main/doc/INDEX.md>`_ so I have not much to explain
+here.
 
 We will then be able to use the logger methods to output messages to the
 console. *(This just wrap the ``print()`` function which in Katana, output the
@@ -302,14 +314,12 @@ result in the console that should be opened alongside your Katana)*
     logger:warning("any object")
     logger:error("any object")
 
-.. note-info::
+All these steps **are not mandatory** for this tutorial. They just help for
+faster debugging. *(And pertinent if you want to write lua code by yourself.)*
+Though, the ``llloger`` module is required for ``KUI`` to work, so if you plan
+to use it, you will need to install it anyways.
 
-    Alternatively, to avoid having to paste so much code you can use it as a
-    lua module. See the `README.md <https://github.com/MrLixm/Foundry_Katana
-    /tree/main/src/utility/lua_logger>`_ for instructions.
-
-All these steps **are not mandatory**. They just help for faster debugging.
-*(And pertinent if you want to write lua code by yourself.)*
+.. transition:: ~
 
 And by the way, if this is your first time with OpScript, the documentation
 can be a bit confusing at first. It is split into multiple "modules" with
@@ -363,14 +373,7 @@ SceneGraph to see our instances.
 .. block-info:: Instances preview in the Viewer
 
     Since **Katana 4.5**, it is now possible to view instances in the Viewer.
-    You need to set instance-source location ``type`` to ``instance source``
-    *(more on that below)* and make sure the instance-sources and the
-    instances are set to be viewed in the Viewer.
-
-    Be careful though, as if your instance-sources are heavy meshes, you
-    might end up with an unresponsive Viewer.
-
-    More details `in this video <https://youtu.be/VYRjWw6biEQ>`_.
+    Have a look at the `Instances preview in the Viewer`_ section.
 
 Yay, that was quick to have something working. But check the Attributes on one
 of the instance.
@@ -548,6 +551,7 @@ must check your render-engine documentation for that, but usually, it's :
 .. include:: pseudo_code.hierarchical.03.lua
     :code: lua
 
+
 And finally just for ""educational"" purposes, here is the code I used on
 a Redshift production. It's not that documented and is probably not very clean
 so use it at your own risk. Again I recommend instead having a look at
@@ -708,8 +712,18 @@ For this you could try to see Efthymis's OpScript :
     - Create Attributes based on distance from the camera.
     - Create instanceSkipIndex attribute for PointClouds.
 
-.. TODO finish by including a culling script.
+The concept is to use the ``instanceSkipIndex`` attribute, at least for
+the ``array`` method, to specify point index that must not be rendered.
 
+For ``hierarchical`` you would need to read this attribute and whenever the
+current point index you are visiting is in ``instanceSkipIndex`` you just
+don't build the instance and skip to the next point.
+
+I'm planning to ship a solution with KUI to easily cull points using boxes,
+but if you are reading this means the feature has not been implemented yet.
+So make sure to follow the `issue on the github repo
+<https://github.com/MrLixm/KUI/issues/1>`_ to get notified when this is
+implemented.
 
 Katana Uber Instancing
 ----------------------
@@ -723,18 +737,78 @@ actually) where, using the same parameters, you could conveniently switch
 between different instancing methods and have a lot of flexibility on inputs.
 (Leaf-level has been excluded as I'm not familiar with it.)
 
+Lot of work has been put into this project, learned a lot about lua and i'm
+really happy to share it to you. (Furthermore open-sourced)
+
 The project is available on GitHub here :
 
-.. TODO edit the link when published
-.. url-preview:: https://github.com/MrLixm/Foundry_Katana/tree/kui/src/instancing/kui
+.. url-preview:: https://github.com/MrLixm/KUI
     :title: KUI - Github Repository
+    :image: https://raw.githubusercontent.com/MrLixm/KUI/dev/doc/img/thumbnail.jpg
 
-I let you check the README.md that should provide all the instructions
-necessary to use this tool.
+    Katana OpScripts for flexible instancing setup.
+
+**I let you check the README.md** that is listing all the instructions
+necessary to use this tool. There is a pretty extensive documentation that
+should cover everything you need to know.
+
+
+Render-Engines
+--------------
+
+Even if you are sure your instancing setup is correct, it might actually not
+be what you render-engine expect it to be. So golden-rule, read your
+rendered documentation carefully first to see what is required, then if it's
+still not work, you will have to test stuff until it work 😬.
+
+For Redshift, check the section right under, for other renderer, here is
+what I have :
+
+-
+    :txt-dl:`3Delight` : arbitrary attribute need to be ``Float`` and not
+    ``Double``.
+
+-
+    :txt-dl:`3Delight` AND :txt-prman:`Renderman` : instance array seems to
+    only support instance matrix attribute and not the other TRS attributes.
+
+-
+    :txt-ai:`Arnold` : Using the TRS instances attributes with ``array``
+    method led to visually incorrect rotations. You have to use an
+    ``instanceMatrix`` attribute to see the correct result.
+
+-
+    :txt-ai:`Arnold` : for ``array`` instancing, arbitrary attributes need to
+    have the scope set to ``point`` to work.
+
+-
+    :txt-prman:`Renderman` : arbitrary attribute need to be ``Float`` and not
+    ``Double``.
+
+-
+    :txt-prman:`Renderman` : arbitrary attribute for ``hierarchical`` need to
+    be located at ``prmanStatements.attributes.user.<myAttr>.value``.
+    See `Renderman doc <https://rmanwiki.pixar.com/display/RFK24/User+Attributes>`_.
+
+-
+    :txt-prman:`Renderman` :  arbitrary attribute for ``array`` are at the usual
+    ``geometry.arbitrary`` path but scope need to be ``primitive``. This mean
+    the attribute can be used as a ``primvar`` in shading.
+
+-
+    :txt-prman:`Renderman` :  for ``array`` instancing, the material must be
+    assigned on the ``instance array`` location and not on the *instances
+    sources*.
+
+
+You can check the test scene I used for KUI that should have a working setup
+for Arnold, 3Delight and Renderman.
+
+    https://github.com/MrLixm/KUI/blob/dev/dev/scenes/kui.demo.katana
 
 
 Redshift
---------
+========
 
 The production where I had to look for instancing was using Redshift,
 and unfortunately, it seems that, at that time, the instancing features where
@@ -753,11 +827,14 @@ still need to be in ``instance.arbitrary`` or is the commonly used
 Outro
 -----
 
-And that's a wrap. I really hope this was useful for you because this was
+And that's a wrap. Very happy to have finally published this tutorial that was
+hanging around for 4 month already haha.
+
+I really hope this was useful for you because this was
 the kind of informations I wish I had when starting looking for
 instancing !
 As always feedback is welcome. If you notice anything let me know
-on the PYCO discord (link in the footer) or e-mail me.
+on the PYCO discord (link in the page's footer) or e-mail me.
 
 .. url-preview:: https://github.com/MrLixm/Foundry_Katana
     :title: GitHub - MrLixm/Foundry_Katana

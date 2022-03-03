@@ -149,6 +149,14 @@ main article aside h3 {
     font-weight: 600;
 }
 /*
+    Other common class
+*/
+main article li {
+    margin: 0.6rem 0 0.6rem;
+}
+
+
+/*
     l-article-header
     post context + h1 + summary
  */
