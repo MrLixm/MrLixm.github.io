@@ -393,7 +393,7 @@ Cum exsul favere, omnes aususes convertam grandis, albus fortises.
 
 .. url-preview:: https://discord.gg/jk6u3eB
     :title: Digital Imaging | Discord Server
-    :svg: {static}/images/global/social/discord.svg
+    :svg: {static}/images/global/icons/discord.svg
     :svg-size: 60
 
     A Discord server centered around digital imaging - from CGI to digital

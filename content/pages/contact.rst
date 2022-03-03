@@ -11,21 +11,21 @@ Contact
 
     .. container:: m-col-t-12 m-col-s-4 l-img-btn-a
 
-        .. image:: {static}/images/global/social/linkedin.svg
+        .. image:: {static}/images/global/static/linkedin.svg
             :alt: linkedin
             :width: 200px
             :target: https://www.linkedin.com/in/liam-collod/
 
     .. container:: m-col-t-12 m-col-s-4 l-img-btn-a
 
-        .. image:: {static}/images/global/social/twitter.svg
+        .. image:: {static}/images/global/static/twitter.svg
             :alt: twitter
             :width: 200px
             :target: https://twitter.com/MrLixm
 
     .. container:: m-col-t-12 m-col-s-4 l-img-btn-a
 
-        .. image:: {static}/images/global/social/email.svg
+        .. image:: {static}/images/global/static/email.svg
             :alt: email
             :width: 200px
             :target: mailto:lcollod@gmail.com

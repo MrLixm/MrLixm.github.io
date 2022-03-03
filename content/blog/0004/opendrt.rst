@@ -60,7 +60,7 @@ personal projects that would like a quick solution for proper SDR-HDR export.**
 
 .. url-preview:: https://github.com/jedypod/open-display-transform
     :title: OpenDRT repository.
-    :svg: {static}/images/global/social/github.svg
+    :svg: {static}/images/global/icons/github.svg
     :svg-size: 64
 
     Download on github.

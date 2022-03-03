@@ -834,7 +834,7 @@ I really hope this was useful for you because this was
 the kind of informations I wish I had when starting looking for
 instancing !
 As always feedback is welcome. If you notice anything let me know
-on the PYCO discord (link in the page's footer) or e-mail me.
+on the PYCO discord (link in the page's footer) or just e-mail me.
 
 .. url-preview:: https://github.com/MrLixm/Foundry_Katana
     :title: GitHub - MrLixm/Foundry_Katana
@@ -846,7 +846,6 @@ on the PYCO discord (link in the page's footer) or e-mail me.
     :title: Discord - Foundry Katana (Community)
     :svg: {static}/images/global/icons/discord.svg
     :svg-size: 100
-    :color: #D9D9D9
 
     A community Discord server for Katana with official Foundry staffs.
 
