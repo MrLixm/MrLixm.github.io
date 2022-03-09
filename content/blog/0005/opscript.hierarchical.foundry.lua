@@ -9,7 +9,8 @@ local pointCloudLocation = Interface.GetOpArg("user.pointCloudLocation"):getValu
 if Interface.AtRoot() then
   -- Read the point cloud
   local points = Interface.GetAttr("geometry.point.P", pointCloudLocation)
-  points = points:getNearestSample(Interface.GetCurrentTime())
+  -- ignore the other samples so no motion blur !
+  points = points:getNearestSample(0.0)
 
   -- Loop over points
   local x, y, z

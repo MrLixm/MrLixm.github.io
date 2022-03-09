@@ -5,8 +5,8 @@ Instancing in Katana
     instancing.
 :thumbnail: {static}/images/blog/0005/cover.jpg
 
-:status: draft
-:date: 2021-10-23 14:58
+:status: hidden
+:date: 2022-03-09 12:24
 :date-created: 2021-10-23 14:58
 
 :category: tutorial
@@ -29,8 +29,6 @@ instancing solution that exactly suits our needs. And that is what we
 are going to address in this post.
 Additionally, I will explain how I tried to create a flexible solution for
 instancing called ``kui``.
-And lastly, you will find a paragraph specific to `Redshift`_ where I had some
-troubles guessing what it needed to work.
 
 .. contents::
 
@@ -163,7 +161,8 @@ on each attribute.
 And there is probably some additional pro/cons inherent to your render-engine
 so again, check the documentation, and test stuff.
 (For example, when I started to explore instancing, Redshift was not supporting
-locations with children when using the ``array`` method.)
+locations with children when using the ``array`` method (not the case
+anymore).)
 
 Instancing in Practice
 ----------------------
@@ -394,7 +393,7 @@ correspond to the instance translations.
 
 .. code:: lua
 
-    24  gb:set("childAttrs", Interface.GetAttr("", instanceSourceLocation))
+    25  gb:set("childAttrs", Interface.GetAttr("", instanceSourceLocation))
 
 This would allow having the bounds attribute on the instance, so we have at
 least some primitive representation in the viewer. But the ``geometry``
@@ -473,12 +472,11 @@ Make sure the OpScript is running and then check the attribute on the
 .. image:: {static}/images/blog/0005/demo-katana-09.png
     :alt: Katana Interface screenshot: Instance Array Attributes.
 
-This time we can use our different instance-sources and not only one
-and we have an ``InstanceIndex`` attribute that specify which
-instance-source to use per point. But if we look more closely at the
-OpScript lua script, we notice the index are generated mathematically
-instead of using our point-cloud's ``objectIndex`` attribute. This will need
-to be addressed later of course.
+This time we can use our different instance-sources thanks to the
+``InstanceIndex`` attribute that specify which instance-source to use per
+point. But if we look more closely at the OpScript lua script, we notice the
+index are generated mathematically instead of using our point-cloud's
+``objectIndex`` attribute. This will need to be addressed later of course.
 
 We can also notice that we are not using the traditional "translate" attribute,
 but a matrix one. Matrices have the advantages of replacing 4 attributes
@@ -554,9 +552,9 @@ must check your render-engine documentation for that, but usually, it's :
 
 
 And finally just for ""educational"" purposes, here is the code I used on
-a Redshift production. It's not that documented and is probably not very clean
-so use it at your own risk. Again I recommend instead having a look at
-``kui``.
+a Redshift production. It's not that documented and code have a lot of
+mistakes so use it at your own risk. Again I recommend instead having a look at
+``KUI``.
 
 .. url-preview:: {static}/blog/0005/opscript.hierarchical.liam.lua
     :title: OpScript | Hierarchical | Redshift
@@ -618,11 +616,64 @@ hierarchical...
 
 
 Advanced workflows
-==================
+------------------
+
+
+Time samples and Motion-blur
+============================
+
+An important topic that I actually only manage to understand very few time
+before publishing this article . To have motion-blur working on your instances
+(if there is movement), they need to store multiples samples on attributes that
+correspond to the ``shutterOpen/Close`` values specified in the RenderSettings.
+A samples could be considered as a "sub-frame", so with ``shutterOpen=-0.25,
+shutterClose=0.25`` and the ``maxTimeSamples`` set to 3 you would find 3
+time samples at -0.25, 0.0, 0.25 per attribute.
+
+Example with an xform matrix attribute :
+
+.. code:: lua
+
+    <DoubleAttribute: values=16, samples=3, tupleSize=4> {
+      [-0.25] = {{1.0, 0.0, 0.0, 0.0}, {0.0, 1.0, 0.0, 0.0}, {0.0, 0.0,  ... }},
+      [0.0] = {{1.0, 0.0, 0.0, 0.0}, {0.0, 1.0, 0.0, 0.0}, {0.0, 0.0,  ... }},
+      [0.25] = {{1.0, 0.0, 0.0, 0.0}, {0.0, 1.0, 0.0, 0.0}, {0.0, 0.0,  ... }},
+    }
+
+All the code you saw in the `Instancing In Practice`_ section (except the
+Basic Array one) doesn't take account for multiple time samples and just get
+the nearest sample at 0.0. And you better know if you need to support
+motion-blur before writing anything (I have to rewrite a good chunk of KUI
+because of not knowing about it).
+
+The `Katana Attributes documentation <https://learn.foundry.com/katana/5
+.0/dev-guide/OpsAndOpScript/Attributes/OpScript.html#DataAttribute.getNearestSample>`_
+define all the methods you can use to manipulate time samples but I found it
+confusing with not a lot of examples to show how the overall picture is
+working. So here is a code snippet showcasing the 2 different options to
+manipulate values per time-sample :
+
+.. include:: pseudo_code.time_samples.lua
+    :code: lua
+
+.. note-info::
+
+    If you try to print the samples, you have to look at the result in the
+    RenderLog **(so start a render)**. The nodegraph doesn't evaluate
+    motion-blur in live and the result in the console will only be for time
+    sample 0.0.
+
+Of course this add an additional small loop to process values which increase
+code complexity and could also damage performances if not optimized code is
+being used.
+
+You can have a look at the lua files in My ``Foundry_Katana`` GitHub repository
+like `attrTypeSwap.lua <https://github.com/MrLixm/Foundry_Katana/blob/main/src/attributes/attrTypeSwap/attrTypeSwap.lua>`_
+to see more context use of time-samples.
 
 
 Instances preview in the Viewer
-_______________________________
+===============================
 
 Since **Katana 4.5**, it is now possible to view **instance array** in the
 Viewer :
@@ -665,7 +716,7 @@ Nothing prevent you to also set it on an *array instance*, but this requires
 to have already pre-generated an exactly similar-looking alembic.
 
 Modifying point-clouds | Transforms
-___________________________________
+===================================
 
 You might stumble upon the case where you can't re-generate the point-cloud and
 you have to move it in Katana. But we can't use our good old ``Transform3D``
@@ -693,7 +744,7 @@ the ``translation`` and ``rotation`` from the ``Transform3D`` are applied.
 
 
 Modifying point-clouds | Culling
-________________________________
+================================
 
 Another need would be to prune points to reduce instances. Even if instancing
 improve performances compared to when not used,
@@ -728,6 +779,12 @@ implemented.
 
 Katana Uber Instancing
 ----------------------
+
+
+.. block-warning:: ⚠ IN DEVELOPMENT
+
+    ! if you read this means KUI is still in development. Do not
+    use for now !
 
 As we just saw, instancing can require in some cases quite some work before
 having a result. That's why I tried to produce a solution that would be very
@@ -766,8 +823,8 @@ For Redshift, check the section right under, for other renderer, here is
 what I have :
 
 -
-    :txt-dl:`3Delight` : arbitrary attribute need to be ``Float`` and not
-    ``Double``.
+    :txt-dl:`3Delight` AND :txt-prman:`Renderman` : arbitrary attribute need
+    to be ``Float`` and not ``Double``.
 
 -
     :txt-dl:`3Delight` AND :txt-prman:`Renderman` : instance array seems to
@@ -781,10 +838,6 @@ what I have :
 -
     :txt-ai:`Arnold` : for ``array`` instancing, arbitrary attributes need to
     have the scope set to ``point`` to work.
-
--
-    :txt-prman:`Renderman` : arbitrary attribute need to be ``Float`` and not
-    ``Double``.
 
 -
     :txt-prman:`Renderman` : arbitrary attribute for ``hierarchical`` need to
@@ -807,6 +860,7 @@ for Arnold, 3Delight and Renderman.
 
     https://github.com/MrLixm/KUI/blob/dev/dev/scenes/kui.demo.katana
 
+.. TODO replace the above link wken KUI published
 
 Redshift
 ========
