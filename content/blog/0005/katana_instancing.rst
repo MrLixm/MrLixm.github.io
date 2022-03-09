@@ -28,7 +28,7 @@ This initial complexity can be overcome by the fact that we can create an
 instancing solution that exactly suits our needs. And that is what we
 are going to address in this post.
 Additionally, I will explain how I tried to create a flexible solution for
-instancing called ``kui``.
+instancing called ``KUI`` so you don't have to !
 
 .. contents::
 
@@ -479,8 +479,8 @@ index are generated mathematically instead of using our point-cloud's
 ``objectIndex`` attribute. This will need to be addressed later of course.
 
 We can also notice that we are not using the traditional "translate" attribute,
-but a matrix one. Matrices have the advantages of replacing 4 attributes
-with 1 (translations, rotations(X, Y, Z)) but are harder to modify
+but a matrix one. Matrices have the advantages of replacing 5 attributes
+with 1 (translations, rotations(X, Y, Z), scale) but are harder to modify
 "on-the-fly". In the end choose what suits you best for your workflow.
 
 To know what kind of attributes are supposed to be supported by each
@@ -623,8 +623,8 @@ Time samples and Motion-blur
 ============================
 
 An important topic that I actually only manage to understand very few time
-before publishing this article . To have motion-blur working on your instances
-(if there is movement), they need to store multiples samples on attributes that
+before publishing this article. To have motion-blur working on your instances
+(if there is movement), they need to store on attributes multiples samples that
 correspond to the ``shutterOpen/Close`` values specified in the RenderSettings.
 A samples could be considered as a "sub-frame", so with ``shutterOpen=-0.25,
 shutterClose=0.25`` and the ``maxTimeSamples`` set to 3 you would find 3
@@ -747,9 +747,8 @@ Modifying point-clouds | Culling
 ================================
 
 Another need would be to prune points to reduce instances. Even if instancing
-improve performances compared to when not used,
-more instances still costs at render-time so you wanna make sure you are not
-rendering non-contributing instances.
+improve performances , more instances still costs at render-time so you
+wanna make sure you are not rendering non-contributing instances.
 
 For this you could try to see Efthymis's OpScript :
 
@@ -779,7 +778,6 @@ implemented.
 
 Katana Uber Instancing
 ----------------------
-
 
 .. block-warning:: ⚠ IN DEVELOPMENT
 
@@ -815,12 +813,12 @@ Render-Engines
 --------------
 
 Even if you are sure your instancing setup is correct, it might actually not
-be what you render-engine expect it to be. So golden-rule, read your
-rendered documentation carefully first to see what is required, then if it's
-still not work, you will have to test stuff until it work 😬.
+be what you render-engine expect it to be. So golden-rule, first read your
+renderer documentation carefully to see what is required, then if it's
+still not working, you will have to test stuff until it work 😬.
 
 For Redshift, check the section right under, for other renderer, here is
-what I have :
+what I found :
 
 -
     :txt-dl:`3Delight` AND :txt-prman:`Renderman` : arbitrary attribute need
@@ -883,7 +881,9 @@ Outro
 -----
 
 And that's a wrap. Very happy to have finally published this tutorial that was
-hanging around for 4 month already haha.
+hanging around for 4 month already haha. A topic that I could have explored in
+this post is USD, which is an additional solution for instancing. But
+having no experience at all with the format I will let you do the research.
 
 I really hope this was useful for you because this was
 the kind of informations I wish I had when starting looking for
