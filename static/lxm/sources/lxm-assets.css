@@ -19,6 +19,16 @@ s&r variables :
 .l-bgc-red-l {
     background-color: var(--danger-filled-color);
 }
+.l-bgc-dl-o {
+    background-color: rgba(206, 27, 27, 0.5)
+}
+.l-bgc-ai-o {
+    background-color: rgba(22, 127, 130, 0.8)
+}
+.l-bgc-prman-o {
+    background-color: rgba(1, 153, 254, 0.5)
+}
+
 .l-c-ldark {
     color: rgb(16,16,16);
 }

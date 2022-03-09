@@ -14,6 +14,7 @@ skip straight to the &lt;a href="#substance-setup-workflow"&gt;Substance Setup &
 changed at the time you are reading this. I will try to keep the article
 updated though.&lt;/p&gt;
 &lt;/aside&gt;
+&lt;/aside&gt;
 &lt;div class="l-url-box"&gt;
 &lt;a class="l-url-a" href="https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html"&gt;&lt;/a&gt;
 &lt;div class="l-url-box-image"&gt;
@@ -27,7 +28,7 @@ updated though.&lt;/p&gt;
 &lt;p class="l-url-description"&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;aside class="contents" id="contents"&gt;
+&lt;nav id="contents"&gt;
 &lt;h3&gt;Contents&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="#color-managed-workflow" id="id2"&gt;Color-managed Workflow&lt;/a&gt;&lt;ul&gt;
@@ -103,6 +104,7 @@ updated though.&lt;/p&gt;
 &lt;li&gt;&lt;a href="#resources" id="id46"&gt;Resources&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#changelog" id="id47"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;/nav&gt;
 &lt;/aside&gt;
 &lt;section id="color-managed-workflow"&gt;
 &lt;h2&gt;&lt;a href="#id2"&gt;Color-managed Workflow&lt;/a&gt;&lt;/h2&gt;
@@ -111,6 +113,7 @@ This part is aimed at beginners, but introduce a too vast topic for this
 article. I recommend reading
 &lt;a href="https://chrisbrejon.com/cg-cinematography/chapter-1-color-management#rgb-colorspace-and-its-components"&gt;Chris Brejon article’s section about colorspaces&lt;/a&gt; first, to be sure you understand
 some of the technical vocabularies employed.&lt;/aside&gt;
+&lt;/aside&gt;
 &lt;p&gt;We can break the workflow into 4 sections : &lt;code&gt;Input&lt;/code&gt;, &lt;code&gt;Workspace&lt;/code&gt;,
 &lt;code&gt;Display&lt;/code&gt; and &lt;code&gt;Output&lt;/code&gt;&lt;/p&gt;
 &lt;div class="l-c-color l-mrg-l l-flex-c l-flex-center"&gt;
@@ -174,6 +177,7 @@ roughness, normals, masks, displacement, vectors, …&lt;/p&gt;
 &lt;aside class="m-note m-warning"&gt;
 This is not because the data, when displayed, is not grayscale, that it
 is color data. For example normal maps, even if colored, ARE scalar data.&lt;/aside&gt;
+&lt;/aside&gt;
 &lt;/section&gt;
 &lt;section id="color"&gt;
 &lt;h4&gt;&lt;a href="#id5"&gt;Color&lt;/a&gt;&lt;/h4&gt;
@@ -331,6 +335,7 @@ modifying the view-transform colorspace.&lt;/div&gt;
 &lt;/div&gt;
 &lt;p&gt;We finally export the textures in the same Workspace colorspace.&lt;/p&gt;
 &lt;/aside&gt;
+&lt;/aside&gt;
 &lt;aside class="m-block m-primary"&gt;
 &lt;h3&gt;Maya&lt;/h3&gt;
 &lt;p&gt;
@@ -343,6 +348,7 @@ change, which is now ACEScg.&lt;br /&gt;
 Let’s skip quickly to the last department.&lt;br /&gt;
 &lt;/p&gt;
 &lt;/aside&gt;
+&lt;/aside&gt;
 &lt;aside class="m-block m-warning"&gt;
 &lt;h3&gt;Nuke&lt;/h3&gt;
 &lt;p&gt;Nuke keep the same Workspace as Maya, as our Input render is already in ACEScg
@@ -351,6 +357,7 @@ more possibilities here for the Output. Here we want to also be able to
 see the composited render on an sRGB Display. As such this mean the
 Output needs to be encoded for an sRGB Display, we cannot use the Output
 encoded for a DCI-P3 Display.&lt;/p&gt;
+&lt;/aside&gt;
 &lt;/aside&gt;
 &lt;hr /&gt;
 &lt;p&gt;You made it yay ! Color-science is a complex topic, so don’t worry if you
@@ -379,6 +386,7 @@ window. You will find a &lt;code&gt;Color Management&lt;/code&gt; sub-menu at th
 You can change all the color-management settings at any moment in
 the project settings. Keep in mind that big changes could break your
 project though.&lt;/aside&gt;
+&lt;/aside&gt;
 &lt;p&gt;You will be offered between two modes &lt;code&gt;Legacy&lt;/code&gt; and &lt;code&gt;OpenColorIO&lt;/code&gt;.
 &lt;code&gt;Legacy&lt;/code&gt; corresponds to the pre-release way sp was working with. We will
 skip this mode as it is not useful anymore.&lt;/p&gt;
@@ -386,6 +394,7 @@ skip this mode as it is not useful anymore.&lt;/p&gt;
 Even if you don’t need to use any specific OCIO config, substance offer a
 default one for the sRGB workflow which made &lt;strong&gt;the OCIO mode recommended
 to use.&lt;/strong&gt;&lt;/aside&gt;
+&lt;/aside&gt;
 &lt;/section&gt;
 &lt;section id="ocio-config"&gt;
 &lt;h3&gt;&lt;a href="#id15"&gt;OCIO config&lt;/a&gt;&lt;/h3&gt;
@@ -446,6 +455,7 @@ see this message pop up :&lt;/p&gt;
 &lt;a href="https://mrlixm.github.io/static/images/blog/0008/sp-project-ocio-custom-error.png"&gt;&lt;img alt="Error window when the custom config can't be found." src="https://mrlixm.github.io/static/images/blog/0008/sp-project-ocio-custom-error.png" /&gt;&lt;/a&gt;
 &lt;/div&gt;
 &lt;/aside&gt;
+&lt;/aside&gt;
 &lt;p&gt;See the bottom section &lt;a href="#substance-parameters-for-ocio-configs"&gt;Substance parameters for OCIO configs&lt;/a&gt; to continue
 the setup.&lt;/p&gt;
 &lt;/section&gt;
@@ -456,6 +466,7 @@ environment requires other ways to set OCIO automatically.&lt;/p&gt;
 &lt;aside class="m-note m-info"&gt;
 If the OCIO environment variable is present and has a valid configuration
 file it will take over to override and disable the UI settings.&lt;/aside&gt;
+&lt;/aside&gt;
 &lt;p&gt;On Windows you have 2 ways to set environment variables :&lt;/p&gt;
 &lt;section id="global-settings"&gt;
 &lt;h5&gt;&lt;a href="#id18"&gt;Global Settings&lt;/a&gt;&lt;/h5&gt;
@@ -484,6 +495,7 @@ start &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt; &lt;span class="s
 To create a &lt;code&gt;.bat&lt;/code&gt; just create a new &lt;code&gt;.txt&lt;/code&gt; file, paste the above code,
 modify it with the path to your config, save it, and then just replace
 the &lt;code&gt;.txt&lt;/code&gt; with &lt;code&gt;.bat&lt;/code&gt; in the file’s name.&lt;/aside&gt;
+&lt;/aside&gt;
 &lt;p&gt;
 This means that to launch Substance you will have to always use this .bat.
 No “double-clicking” on file to open them either.&lt;br /&gt;
@@ -537,6 +549,7 @@ transformation. It is defined in the OCIO config and cannot be changed outside
 of it.&lt;/p&gt;
 &lt;aside class="m-note m-info"&gt;
 In the OCIO config it corresponds to the &lt;code&gt;scene_linear&lt;/code&gt; role.&lt;/aside&gt;
+&lt;/aside&gt;
 &lt;figure class="m-figure"&gt;
 &lt;a href="https://mrlixm.github.io/static/images/blog/0008/sp-project-ocio-workspace.png"&gt;&lt;img alt="The Working Colorspace displayed in the Color-management tab." src="https://mrlixm.github.io/static/images/blog/0008/sp-project-ocio-workspace.png" /&gt;&lt;/a&gt;
 &lt;figcaption&gt;Visible in the Project’s Color-management section (Using the ACES 1.2 OCIO
@@ -665,6 +678,7 @@ interface.&lt;/strong&gt; (you can see this displayed value under the &lt;code&g
 &lt;aside class="m-note m-info"&gt;
 As such it is recommended to set the &lt;code&gt;tcd&lt;/code&gt; to the same colorspace
 being used in the view-transform.&lt;/aside&gt;
+&lt;/aside&gt;
 &lt;p id="picker"&gt;What about the actual picker ?&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;
@@ -706,6 +720,7 @@ You need to also take into consideration the color-picker precision issues.
 Applying an invert color-transformations can lead in some cases to
 imprecisions + the picking operation has precisions
 issues by itself&lt;/aside&gt;
+&lt;/aside&gt;
 &lt;p&gt;This means the colorpicker is unfortunately again, broken. But
 with the above in mind, it is still possible to get back the correct values.&lt;/p&gt;
 &lt;aside class="m-block m-primary"&gt;
@@ -713,6 +728,7 @@ with the above in mind, it is still possible to get back the correct values.&lt;
 &lt;ul&gt;
 &lt;li&gt;Disable the view-transform whenever you want to pick a value.&lt;/li&gt;
 &lt;/ul&gt;
+&lt;/aside&gt;
 &lt;/aside&gt;
 &lt;aside class="m-block m-primary"&gt;
 &lt;h3&gt;For &lt;code&gt;Case 2&lt;/code&gt; :&lt;/h3&gt;
@@ -722,6 +738,7 @@ with the above in mind, it is still possible to get back the correct values.&lt;
 &lt;li&gt;Look at the values in the &lt;code&gt;Display colorspace&lt;/code&gt; widget, and copy
 them in the &lt;code&gt;eds&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
+&lt;/aside&gt;
 &lt;/aside&gt;
 &lt;p&gt;If you are curious I made a bug report on the forum here :
 &lt;a class="m-link-wrap" href="https://community.adobe.com/t5/substance-3d-painter-discussions/color-picker-doesn-t-behave-consistent-across-ocio-configs/td-p/12603389"&gt;https://community.adobe.com/t5/substance-3d-painter-discussions/color-picker-doesn-t-behave-consistent-across-ocio-configs/td-p/12603389&lt;/a&gt;&lt;/p&gt;
@@ -867,6 +884,7 @@ and no object except laser are that saturated.&lt;/p&gt;
 This mean you have to be careful
 when picking values, and always keep a look at the scene-refered ACEScg
 values.&lt;/aside&gt;
+&lt;/aside&gt;
 &lt;p&gt;What if I want to apply a color we gave me as hexadecimal ?&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Consider my brand’s green picked from &lt;a class="m-link-wrap" href="https://coolors.co"&gt;https://coolors.co&lt;/a&gt; .&lt;/p&gt;
@@ -911,6 +929,7 @@ name. (and instead export the textures in a folder named ACEScg)&lt;/p&gt;
 &lt;aside class="m-note m-default"&gt;
 The goal here is not to denigrate the dev team’s works but rather to offer
 explanations and solutions for improving the software.&lt;/aside&gt;
+&lt;/aside&gt;
 &lt;section id="display-issues"&gt;
 &lt;h3&gt;&lt;a href="#id40"&gt;Display Issues&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;These explanations were made possible thanks to the Chris Brejon’s article
@@ -1192,7 +1211,7 @@ behind modern feature-film visual-effects and animation.&lt;/p&gt;
 &lt;div class="l-url-box-image"&gt;
 &lt;svg width="60" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"&gt;
     &lt;title&gt;Discord&lt;/title&gt;
-    &lt;path fill="#fefefe" d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/&gt;
+    &lt;path fill="currentColor" d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/&gt;
 &lt;/svg&gt;&lt;/div&gt;
 &lt;div class="l-url-box-details"&gt;
 &lt;p class="l-url-title"&gt;Digital Imaging | Discord Server&lt;/p&gt;
@@ -1223,7 +1242,7 @@ And that is understandable, as individual artists, you most of the time, only
 care about having the prettiest image possible at the end.&lt;/p&gt;
 &lt;p&gt;So what if you got a well-formed and pleasing image at the end without having
 to go through the complexity of ACES ?&lt;/p&gt;
-&lt;aside class="contents" id="contents"&gt;
+&lt;nav id="contents"&gt;
 &lt;h3&gt;Contents&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="#who-s-this-for" id="id1"&gt;Who’s this for ?&lt;/a&gt;&lt;/li&gt;
@@ -1240,6 +1259,7 @@ to go through the complexity of ACES ?&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;a href="#conclusion" id="id9"&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;/nav&gt;
 &lt;/aside&gt;
 &lt;section id="who-s-this-for"&gt;
 &lt;h2&gt;&lt;a href="#id1"&gt;Who’s this for ?&lt;/a&gt;&lt;/h2&gt;
@@ -1263,14 +1283,9 @@ personal projects that would like a quick solution for proper SDR-HDR export.&lt
 &lt;div class="l-url-box"&gt;
 &lt;a class="l-url-a" href="https://github.com/jedypod/open-display-transform"&gt;&lt;/a&gt;
 &lt;div class="l-url-box-image"&gt;
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!DOCTYPE svg PUBLIC
-        "-//W3C//DTD SVG 1.1//EN"
-        "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
-&lt;svg xmlns="http://www.w3.org/2000/svg"
-     xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="64"
-     height="64" viewBox="0 0 24 24"&gt;
-    &lt;path fill="#fafafa"
-          d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"/&gt;
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
+&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="64" height="64" viewBox="0 0 24 24"&gt;
+    &lt;path fill="currentColor" d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"/&gt;
 &lt;/svg&gt;&lt;/div&gt;
 &lt;div class="l-url-box-details"&gt;
 &lt;p class="l-url-title"&gt;OpenDRT repository.&lt;/p&gt;
@@ -1296,6 +1311,7 @@ can look very neutral and should be graded.&lt;/blockquote&gt;
 and thus this post will also probably be.&lt;/p&gt;
 &lt;aside class="m-note m-default"&gt;
 All the examples are using Opendrt version &lt;code&gt;0.0.90b2&lt;/code&gt;&lt;/aside&gt;
+&lt;/aside&gt;
 &lt;div class="m-row"&gt;
 &lt;div class="m-container-inflate m-col-l-5 m-left-l"&gt;
 &lt;div class="m-image"&gt;
@@ -1402,9 +1418,11 @@ understand how everything works.&lt;/p&gt;
 &lt;aside class="m-note m-warning"&gt;
 I didn’t test any of these solutions with HDR display-encoding so
 further investigation needs to be done.&lt;/aside&gt;
+&lt;/aside&gt;
 &lt;aside class="m-note m-info"&gt;
 I will keep the defaut &lt;code&gt;BT.1886&lt;/code&gt; value for the eotf, but to match the
 nuke’s default config I should have use &lt;code&gt;sRGB Display&lt;/code&gt;.&lt;/aside&gt;
+&lt;/aside&gt;
 &lt;section id="revert-display"&gt;
 &lt;h4&gt;&lt;a href="#id5"&gt;Revert Display&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;We let the DRT handle everything (with display-encoding), then we apply the

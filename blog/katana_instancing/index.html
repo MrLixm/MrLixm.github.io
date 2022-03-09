@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;700;900" />
   <link rel="stylesheet" href="https://mrlixm.github.io/static/m-dark.css" />
   <link rel="icon" href="https://mrlixm.github.io/static/images/global/icons/lixm.svg" type="image/x-ico" />
-  <link rel="canonical" href="https://mrlixm.github.io/drafts/katana_instancing.html" />
+  <link rel="canonical" href="https://mrlixm.github.io/blog/katana_instancing/" />
   <link href="https://mrlixm.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Liam Collod Website" />
   <link href="https://mrlixm.github.io/feeds/tutorial.atom.xml" type="application/atom+xml" rel="alternate" title="Liam Collod Website | tutorial" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,12 +18,12 @@
   <meta property="og:site_name" content="Liam Collod&#39;s Blog" />
   <meta property="og:title" content="Instancing in Katana" />
   <meta name="twitter:title" content="Instancing in Katana" />
-  <meta property="og:url" content="https://mrlixm.github.io/drafts/katana_instancing.html" />
+  <meta property="og:url" content="https://mrlixm.github.io/blog/katana_instancing/" />
   <meta property="og:description" content="How OpScript can be used to create a flexible solution for instancing." />
   <meta name="twitter:description" content="How OpScript can be used to create a flexible solution for instancing." />
-  <meta property="og:image" content="https://mrlixm.github.io/static/images/global/cover_social.jpg" />
-  <meta name="twitter:image" content="https://mrlixm.github.io/static/images/global/cover_social.jpg" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://mrlixm.github.io/static/images/blog/0005/cover.jpg" />
+  <meta name="twitter:image" content="https://mrlixm.github.io/static/images/blog/0005/cover.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta property="og:type" content="article" />
 </head>
 <body>
@@ -48,9 +48,6 @@
       <div class="m-container m-container-inflatable">
         <header class="l-article-header" id="article-header">
         <header class="l-post-context l-mrg-s" title="Post Context" id="post-context-header">
-            <span class="l-status l-bgc-yellow-l l-c-ldark l-flex-item" id="s-draft" title="Post status">
-              draft
-            </span>
           <span class="l-category">
             <a href="https://mrlixm.github.io/category/tutorial.html">tutorial</a>
           </span>
@@ -76,7 +73,7 @@
               </span>
         </header>
         <h1 title="Article title">
-          <a href="https://mrlixm.github.io/drafts/katana_instancing.html" rel="bookmark" title="Permalink to Instancing in Katana">
+          <a href="https://mrlixm.github.io/blog/katana_instancing/" rel="bookmark" title="Permalink to Instancing in Katana">
             Instancing in Katana
           </a>
         </h1>
@@ -85,7 +82,7 @@
         <footer class="l-post-context" id="post-context-footer">
           <span class="l-time l-flex-item" title="Date Created">
             <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-            <time datetime="2021-10-23T14:58:00+02:00">23 October 2021</time>
+            <time datetime="2022-03-09T12:24:00+01:00">09 March 2022</time>
           </span>
           <span class="l-box-author l-flex-item" title="List of Authors">
             <img src="/static/images/global/icons/account.svg" alt="Author icon" >
@@ -102,45 +99,49 @@ This initial complexity can be overcome by the fact that we can create an
 instancing solution that exactly suits our needs. And that is what we
 are going to address in this post.
 Additionally, I will explain how I tried to create a flexible solution for
-instancing called <code>kui</code>.
-And lastly, you will find a paragraph specific to <a href="#redshift">Redshift</a> where I had some
-troubles guessing what it needed to work.</p>
-<aside class="contents" id="contents">
+instancing called <code>KUI</code> so you don’t have to !</p>
+<nav id="contents">
 <h3>Contents</h3>
 <ul>
-<li><a href="#intro" id="id2">Intro</a></li>
-<li><a href="#instancing-methods" id="id3">Instancing Methods</a><ul>
-<li><a href="#leaf-level" id="id4">Leaf-level</a></li>
-<li><a href="#hierarchical" id="id5">Hierarchical</a></li>
-<li><a href="#array" id="id6">Array</a></li>
+<li><a href="#intro" id="id1">Intro</a></li>
+<li><a href="#instancing-methods" id="id2">Instancing Methods</a><ul>
+<li><a href="#leaf-level" id="id3">Leaf-level</a></li>
+<li><a href="#hierarchical" id="id4">Hierarchical</a></li>
+<li><a href="#array" id="id5">Array</a></li>
 </ul>
 </li>
-<li><a href="#instancing-in-practice" id="id7">Instancing in Practice</a><ul>
-<li><a href="#scene-preparation" id="id8">Scene-Preparation</a></li>
-<li><a href="#opscript-preparation" id="id9">OpScript-Preparation</a></li>
-<li><a href="#basic-instancing-hierarchical" id="id10">Basic Instancing : Hierarchical</a></li>
-<li><a href="#basic-instancing-array" id="id11">Basic Instancing : Array</a></li>
-<li><a href="#full-instancing" id="id12">Full Instancing</a></li>
-<li><a href="#full-instancing-hierarchical" id="id13">Full Instancing : Hierarchical</a></li>
-<li><a href="#full-instancing-array" id="id14">Full Instancing : Array</a></li>
-<li><a href="#advanced-workflows" id="id15">Advanced workflows</a><ul>
+<li><a href="#instancing-in-practice" id="id6">Instancing in Practice</a><ul>
+<li><a href="#scene-preparation" id="id7">Scene-Preparation</a></li>
+<li><a href="#opscript-preparation" id="id8">OpScript-Preparation</a></li>
+<li><a href="#basic-instancing-hierarchical" id="id9">Basic Instancing : Hierarchical</a></li>
+<li><a href="#basic-instancing-array" id="id10">Basic Instancing : Array</a></li>
+<li><a href="#full-instancing" id="id11">Full Instancing</a></li>
+<li><a href="#full-instancing-hierarchical" id="id12">Full Instancing : Hierarchical</a></li>
+<li><a href="#full-instancing-array" id="id13">Full Instancing : Array</a></li>
+</ul>
+</li>
+<li><a href="#advanced-workflows" id="id14">Advanced workflows</a><ul>
+<li><a href="#time-samples-and-motion-blur" id="id15">Time samples and Motion-blur</a></li>
 <li><a href="#instances-preview-in-the-viewer" id="id16">Instances preview in the Viewer</a></li>
 <li><a href="#modifying-point-clouds-transforms" id="id17">Modifying point-clouds | Transforms</a></li>
 <li><a href="#modifying-point-clouds-culling" id="id18">Modifying point-clouds | Culling</a></li>
 </ul>
 </li>
+<li><a href="#katana-uber-instancing" id="id19">Katana Uber Instancing</a></li>
+<li><a href="#render-engines" id="id20">Render-Engines</a><ul>
+<li><a href="#redshift" id="id21">Redshift</a></li>
 </ul>
 </li>
-<li><a href="#katana-uber-instancing" id="id19">Katana Uber Instancing</a></li>
-<li><a href="#redshift" id="id20">Redshift</a></li>
-<li><a href="#outro" id="id21">Outro</a></li>
+<li><a href="#outro" id="id22">Outro</a></li>
 </ul>
+</nav>
 </aside>
 <aside class="m-block m-warning">
 <h3>Disclaimer</h3>
 <p>My explanations reflect the experience I had with this subject and may
 not be accurate in other production contexts. Be sure to contact me
 if you spot big mistakes /  things to improve.</p>
+</aside>
 </aside>
 <aside class="m-block m-info">
 <h3>Target-Audience</h3>
@@ -149,8 +150,9 @@ This post is targeted towards beginners with Kanata itself.<br />
 If you are a more advanced user you can check <a href="#katana-uber-instancing">Katana Uber Instancing</a>.<br />
 </p>
 </aside>
+</aside>
 <section id="intro">
-<h2><a href="#id2">Intro</a></h2>
+<h2><a href="#id1">Intro</a></h2>
 <p>As Katana’s motto states : <em>It’s all just a bunch of Attributes.</em> And it
 applies to instances too. They are just a bunch of locations with a defined
 list of attributes understood by your render-engine.
@@ -168,7 +170,7 @@ Additional attributes can also be set and used for shading to make the
 instance even more different than the source.</p>
 </section>
 <section id="instancing-methods">
-<h2><a href="#id3">Instancing Methods</a></h2>
+<h2><a href="#id2">Instancing Methods</a></h2>
 <p>Instancing comes in different flavors, that, similarly to all things, have
 specific ups and downs. Your render-engine may also supply alternative ways to
 produce instances so be sure to check its documentation on the topic.</p>
@@ -187,7 +189,7 @@ produce instances so be sure to check its documentation on the topic.</p>
 </div>
 </div>
 <section id="leaf-level">
-<h3><a href="#id4">Leaf-level</a></h3>
+<h3><a href="#id3">Leaf-level</a></h3>
 <p><em>(Never used this one)</em></p>
 <p><a href="https://support.foundry.com/hc/en-us/articles/360006999259">The Katana documentation</a> is pretty explicit.</p>
 <div class="m-row">
@@ -199,6 +201,7 @@ locations (to verify),
 and well it seems every render-engine has a way to decide which
 location is the first one to instance 🙂.</p>
 </aside>
+</aside>
 </div>
 <div class="m-col-s-6">
 <aside class="m-block m-success">
@@ -207,12 +210,13 @@ location is the first one to instance 🙂.</p>
 <p>You can easily apply modification on a single instance.
 <em>(ex: a Transform3D)</em></p>
 </aside>
+</aside>
 </div>
 </div>
 <p><em>Would love to know in what case this one can be more pertinent than the other methods.</em></p>
 </section>
 <section id="hierarchical">
-<h3><a href="#id5">Hierarchical</a></h3>
+<h3><a href="#id4">Hierarchical</a></h3>
 <p>Each instance = one scene-graph location.</p>
 <div class="m-row">
 <div class="m-col-s-6">
@@ -221,6 +225,7 @@ location is the first one to instance 🙂.</p>
 <p>Too many instances (&gt;~250 000) will lead you to performances
 issues. (pre-render)</p>
 </aside>
+</aside>
 </div>
 <div class="m-col-s-6">
 <aside class="m-block m-success">
@@ -228,11 +233,12 @@ issues. (pre-render)</p>
 <p>You can easily apply modification on a single instance.
 <em>(ex: a Transform3D)</em></p>
 </aside>
+</aside>
 </div>
 </div>
 </section>
 <section id="array">
-<h3><a href="#id6">Array</a></h3>
+<h3><a href="#id5">Array</a></h3>
 <p>One single scene-graph location where each instance correspond to an index
 on each attribute.</p>
 <div class="m-row">
@@ -241,11 +247,13 @@ on each attribute.</p>
 <h3>cons</h3>
 <p>Complicated to get per-instance override.</p>
 </aside>
+</aside>
 </div>
 <div class="m-col-s-6">
 <aside class="m-block m-success">
 <h3>pros</h3>
 <p>Better performances.</p>
+</aside>
 </aside>
 </div>
 </div>
@@ -253,11 +261,12 @@ on each attribute.</p>
 <p>And there is probably some additional pro/cons inherent to your render-engine
 so again, check the documentation, and test stuff.
 (For example, when I started to explore instancing, Redshift was not supporting
-locations with children when using the <code>array</code> method.)</p>
+locations with children when using the <code>array</code> method (not the case
+anymore).)</p>
 </section>
 </section>
 <section id="instancing-in-practice">
-<h2><a href="#id7">Instancing in Practice</a></h2>
+<h2><a href="#id6">Instancing in Practice</a></h2>
 <p>To start, there is a nice small example on the <a href="https://learn.foundry.com/katana/Content/ug/instancing/rendering_instances.html">official Katana documentation</a>
 . It explains how to create instances using mostly Katana nodes and one small
 OpScript to avoid stacking numerous <code>AttributeSet</code> nodes.
@@ -283,7 +292,7 @@ For this what’s better than having a look at the documentation :
 find the 3 instancing methods described again.</p>
 <p>Let’s now start building the scene.</p>
 <section id="scene-preparation">
-<h3><a href="#id8">Scene-Preparation</a></h3>
+<h3><a href="#id7">Scene-Preparation</a></h3>
 <p>For you to follow the tutorial, I will be providing you a few assets. Actually
 only a point-cloud, as to keep it simple, instances sources will be
 primitives.</p>
@@ -364,6 +373,7 @@ rendering the point-cloud and generating the instances on the fly !
 Like Arnold does <a href="https://docs.arnoldrenderer.com/display/A5KTN/pointcloud+and+instance+array">as explained here</a>. But it excepts
 specific attributes in the <code>point</code> group.</p>
 </aside>
+</aside>
 <p>For the instance-sources we will be using simple primitives as detailed above.
 You can use <code>PrimitiveCreate</code> node to create them. My final “initial”
 nodegraph is looking like this :</p>
@@ -371,7 +381,7 @@ nodegraph is looking like this :</p>
 <p>Now it’s time to have a look at OpScripting.</p>
 </section>
 <section id="opscript-preparation">
-<h3><a href="#id9">OpScript-Preparation</a></h3>
+<h3><a href="#id8">OpScript-Preparation</a></h3>
 <p>We are going to manipulate a lot of inputs and data and at some point, we
 will need to see what X variable is equal to, what is the result of X
 operation, etc
@@ -382,20 +392,22 @@ various limitations.</p>
 logging module in lua. Kind of similar to what Python logging module does.
 It adds a bunch of line to your script but will allow more flexibility in the
 way data will be displayed to you.</p>
-<p>On top of a freshly created <code>.lua</code> file paste the content of this file :</p>
+<p>Have a look at this repository to install the llloger module :</p>
 <div class="l-url-box">
-<a class="l-url-a" href="https://raw.githubusercontent.com/MrLixm/Foundry_Katana/main/src/utility/lua_logger/lllogger.lua"></a>
+<a class="l-url-a" href="https://github.com/MrLixm/llloger"></a>
 <div class="l-url-box-image">
-<img src="https://github.com/MrLixm/Foundry_Katana/raw/main/src/utility/lua_logger/cover.png" />
+<img src="https://raw.githubusercontent.com/MrLixm/llloger/main/doc/img/thumbnail.jpg" />
 </div>
 <div class="l-url-box-details">
 <p class="l-url-title">llloger.lua</p>
 <div class="l-url-subtitle">
-<a class="m-link-wrap" href="https://raw.githubusercontent.com/MrLixm/Foundry_Katana/main/src/utility/lua_logger/lllogger.lua">https://raw.githubusercontent.com/MrLixm/Foundry_Katana/main/src/utility/lua_logger/lllogger.lua</a>
+<a class="m-link-wrap" href="https://github.com/MrLixm/llloger">https://github.com/MrLixm/llloger</a>
 </div>
 <p class="l-url-description">A simple lua logging module based on Python one.</p>
 </div>
 </div>
+<p>All instructions are specified in the <a href="https://github.com/MrLixm/llloger/blob/main/doc/INDEX.md">documentation</a> so I have not much to explain
+here.</p>
 <p>We will then be able to use the logger methods to output messages to the
 console. <em>(This just wrap the “print()“ function which in Katana, output the
 result in the console that should be opened alongside your Katana)</em></p>
@@ -403,11 +415,11 @@ result in the console that should be opened alongside your Katana)</em></p>
 <span class="n">logger</span><span class="p">:</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;any object&quot;</span><span class="p">)</span>
 <span class="n">logger</span><span class="p">:</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;any object&quot;</span><span class="p">)</span>
 <span class="n">logger</span><span class="p">:</span><span class="nb">error</span><span class="p">(</span><span class="s2">&quot;any object&quot;</span><span class="p">)</span></pre>
-<aside class="m-note m-info">
-Alternatively, to avoid having to paste so much code you can use it as a
-lua module. See the <a href="https://github.com/MrLixm/Foundry_Katana/tree/main/src/utility/lua_logger">README.md</a> for instructions.</aside>
-<p>All these steps <strong>are not mandatory</strong>. They just help for faster debugging.
-<em>(And pertinent if you want to write lua code by yourself.)</em></p>
+<p>All these steps <strong>are not mandatory</strong> for this tutorial. They just help for
+faster debugging. <em>(And pertinent if you want to write lua code by yourself.)</em>
+Though, the <code>llloger</code> module is required for <code>KUI</code> to work, so if you plan
+to use it, you will need to install it anyways.</p>
+<p class="m-transition">~</p>
 <p>And by the way, if this is your first time with OpScript, the documentation
 can be a bit confusing at first. It is split into multiple “modules” with
 different language bindings. The one we use the most often is the
@@ -432,7 +444,7 @@ CookInterface :</p>
 </div>
 </section>
 <section id="basic-instancing-hierarchical">
-<h3><a href="#id10">Basic Instancing : Hierarchical</a></h3>
+<h3><a href="#id9">Basic Instancing : Hierarchical</a></h3>
 <p>For a first try, we will be using the OpScript provided on the Foundry’s
 documentation. It’s the most basic you can do which will be perfect for an
 introduction. It’s the one for the hierarchical method.</p>
@@ -449,7 +461,8 @@ parameter</p>
 <span class="kr">if</span> <span class="n">Interface</span><span class="p">.</span><span class="n">AtRoot</span><span class="p">()</span> <span class="kr">then</span>
   <span class="c1">-- Read the point cloud</span>
   <span class="kd">local</span> <span class="n">points</span> <span class="o">=</span> <span class="n">Interface</span><span class="p">.</span><span class="n">GetAttr</span><span class="p">(</span><span class="s2">&quot;geometry.point.P&quot;</span><span class="p">,</span> <span class="n">pointCloudLocation</span><span class="p">)</span>
-  <span class="n">points</span> <span class="o">=</span> <span class="n">points</span><span class="p">:</span><span class="n">getNearestSample</span><span class="p">(</span><span class="n">Interface</span><span class="p">.</span><span class="n">GetCurrentTime</span><span class="p">())</span>
+  <span class="c1">-- ignore the other samples so no motion blur !</span>
+  <span class="n">points</span> <span class="o">=</span> <span class="n">points</span><span class="p">:</span><span class="n">getNearestSample</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
 
   <span class="c1">-- Loop over points</span>
   <span class="kd">local</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span>
@@ -505,12 +518,8 @@ SceneGraph to see our instances.</p>
 <aside class="m-block m-info">
 <h3>Instances preview in the Viewer</h3>
 <p>Since <strong>Katana 4.5</strong>, it is now possible to view instances in the Viewer.
-You need to set instance-source location <code>type</code> to <code>instance source</code>
-<em>(more on that below)</em> and make sure the instance-sources and the
-instances are set to be viewed in the Viewer.</p>
-<p>Be careful though, as if your instance-sources are heavy meshes, you
-might end up with an unresponsive Viewer.</p>
-<p>More details <a href="https://youtu.be/VYRjWw6biEQ">in this video</a>.</p>
+Have a look at the <a href="#instances-preview-in-the-viewer">Instances preview in the Viewer</a> section.</p>
+</aside>
 </aside>
 <p>Yay, that was quick to have something working. But check the Attributes on one
 of the instance.</p>
@@ -524,7 +533,7 @@ You can notice that all the <code>geometry</code> attributes from the instance-s
 have also been copied. This is because the script copies all the root
 attributes of the instance-source :<br />
 </p>
-<pre class="m-code"><span class="mi">24</span>  <span class="n">gb</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;childAttrs&quot;</span><span class="p">,</span> <span class="n">Interface</span><span class="p">.</span><span class="n">GetAttr</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">instanceSourceLocation</span><span class="p">))</span></pre>
+<pre class="m-code"><span class="mi">25</span>  <span class="n">gb</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;childAttrs&quot;</span><span class="p">,</span> <span class="n">Interface</span><span class="p">.</span><span class="n">GetAttr</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">instanceSourceLocation</span><span class="p">))</span></pre>
 <p>This would allow having the bounds attribute on the instance, so we have at
 least some primitive representation in the viewer. But the <code>geometry</code>
 attributes are not needed because they are copied from the instance-source
@@ -547,6 +556,7 @@ You can use an <code>AttributeSet</code> node for this.<br />
 Setting a location type to <code>instance source</code> will make it invisible in
 the viewer, in the render and allow to preview the instances in the viewer
 (with Katana &gt;= 4.5).</aside>
+</aside>
 <img alt="Katana Interface screenshot: AttributeSet node." class="m-image" src="https://mrlixm.github.io/static/images/blog/0005/demo-katana-06.png" />
 <p>Annnnd, we can try to fire up a render to see our instancing result.
 Nothing very exciting, using primitives doesn’t look very impressive. You
@@ -574,7 +584,7 @@ the result with a “heavy” asset :</p>
 </div>
 </section>
 <section id="basic-instancing-array">
-<h3><a href="#id11">Basic Instancing : Array</a></h3>
+<h3><a href="#id10">Basic Instancing : Array</a></h3>
 <p>Before trying to go further with hierarchical we are going to have a look at
 the <code>array</code> method. Keep the same scene, we will only need to change the
 OpScript.</p>
@@ -684,15 +694,14 @@ the group holding the instances, but directly the full location of the instance
 <p>Make sure the OpScript is running and then check the attribute on the
 <code>instance array</code> location created.</p>
 <img alt="Katana Interface screenshot: Instance Array Attributes." class="m-image" src="https://mrlixm.github.io/static/images/blog/0005/demo-katana-09.png" />
-<p>This time we can use our different instance-sources and not only one
-and we have an <code>InstanceIndex</code> attribute that specify which
-instance-source to use per point. But if we look more closely at the
-OpScript lua script, we notice the index are generated mathematically
-instead of using our point-cloud’s <code>objectIndex</code> attribute. This will need
-to be addressed later of course.</p>
+<p>This time we can use our different instance-sources thanks to the
+<code>InstanceIndex</code> attribute that specify which instance-source to use per
+point. But if we look more closely at the OpScript lua script, we notice the
+index are generated mathematically instead of using our point-cloud’s
+<code>objectIndex</code> attribute. This will need to be addressed later of course.</p>
 <p>We can also notice that we are not using the traditional “translate” attribute,
-but a matrix one. Matrices have the advantages of replacing 4 attributes
-with 1 (translations, rotations(X, Y, Z)) but are harder to modify
+but a matrix one. Matrices have the advantages of replacing 5 attributes
+with 1 (translations, rotations(X, Y, Z), scale) but are harder to modify
 “on-the-fly”. In the end choose what suits you best for your workflow.</p>
 <p>To know what kind of attributes are supposed to be supported by each
 instancing method, we can have a look at the documentation:</p>
@@ -718,7 +727,7 @@ instancing method, we can have a look at the documentation:</p>
 represented by one scene-graph location.</p>
 </section>
 <section id="full-instancing">
-<h3><a href="#id12">Full Instancing</a></h3>
+<h3><a href="#id11">Full Instancing</a></h3>
 <p>Aight’ that was a quick first look at instancing, but as mentioned, we were
 not using all the exported attributes on our point-cloud. Supporting them
 requires extending the basics OpScripts we used but this will be too long
@@ -727,7 +736,7 @@ be using if you want to go down that road. Else you will find a fully working
 solution in the <a href="#katana-uber-instancing">Katana Uber Instancing</a> section.</p>
 </section>
 <section id="full-instancing-hierarchical">
-<h3><a href="#id13">Full Instancing : Hierarchical</a></h3>
+<h3><a href="#id12">Full Instancing : Hierarchical</a></h3>
 <p>Hierarchical is using single location per-instance, they can use the commonly
 used attributes for locations like <code>xform</code>. This transformation attributes
 are described in the docs : <a href="https://learn.foundry.com/katana/4.5/dev-guide/AttributeConventions/Transformations.html">dev-guide/AttributeConventions/Transformations</a>. So pretty easy to implement, in pseudo-code :</p>
@@ -791,6 +800,7 @@ matrix</pre>
 <ul>
 <li>You have to make sure all the above attributes are <code>DoubleAttributes</code>. Else you might have surprises at render-time.</li>
 </ul>
+</aside>
 </aside>
 <p>If you are now wondering who to determine which instanceSource to use, the
 logic is pretty simple :</p>
@@ -878,9 +888,9 @@ must check your render-engine documentation for that, but usually, it’s :</p>
 <span class="kr">end</span>
 <span class="c1">--[...]</span></pre>
 <p>And finally just for “”educational”” purposes, here is the code I used on
-a Redshift production. It’s not that documented and is probably not very clean
-so use it at your own risk. Again I recommend instead having a look at
-<code>kui</code>.</p>
+a Redshift production. It’s not that documented and code have a lot of
+mistakes so use it at your own risk. Again I recommend instead having a look at
+<code>KUI</code>.</p>
 <div class="l-url-box">
 <a class="l-url-a" href="https://mrlixm.github.io/static/blog/0005/opscript.hierarchical.liam.lua"></a>
 <div class="l-url-box-image">
@@ -898,7 +908,7 @@ so use it at your own risk. Again I recommend instead having a look at
 </div>
 </section>
 <section id="full-instancing-array">
-<h3><a href="#id14">Full Instancing : Array</a></h3>
+<h3><a href="#id13">Full Instancing : Array</a></h3>
 <p>Array is in a way more simple, you can just brainless copy the attributes
 from the point-cloud to the instance (if they are properly formatted).
 Make sure to <a href="https://learn.foundry.com/katana/4.5/dev-guide/AttributeConventions/Instancing.html">check the documentation</a> about what kind of
@@ -939,6 +949,7 @@ specified in the documentation).
 Else you might have surprises at render-time.</li>
 </ul>
 </aside>
+</aside>
 <p>Anyway here was the solution I used in prod, same blah blah as for
 hierarchical…</p>
 <div class="l-url-box">
@@ -957,10 +968,94 @@ hierarchical…</p>
 </div>
 </div>
 </section>
+</section>
 <section id="advanced-workflows">
-<h3><a href="#id15">Advanced workflows</a></h3>
+<h2><a href="#id14">Advanced workflows</a></h2>
+<section id="time-samples-and-motion-blur">
+<h3><a href="#id15">Time samples and Motion-blur</a></h3>
+<p>An important topic that I actually only manage to understand very few time
+before publishing this article. To have motion-blur working on your instances
+(if there is movement), they need to store on attributes multiples samples that
+correspond to the <code>shutterOpen/Close</code> values specified in the RenderSettings.
+A samples could be considered as a “sub-frame”, so with <code>shutterOpen=-0.25,
+shutterClose=0.25</code> and the <code>maxTimeSamples</code> set to 3 you would find 3
+time samples at -0.25, 0.0, 0.25 per attribute.</p>
+<p>Example with an xform matrix attribute :</p>
+<pre class="m-code"><span class="o">&lt;</span><span class="n">DoubleAttribute</span><span class="p">:</span> <span class="n">values</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">tupleSize</span><span class="o">=</span><span class="mi">4</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="p">[</span><span class="o">-</span><span class="mf">0.25</span><span class="p">]</span> <span class="o">=</span> <span class="p">{{</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">},</span> <span class="p">{</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">},</span> <span class="p">{</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>  <span class="p">...</span> <span class="p">}},</span>
+  <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">=</span> <span class="p">{{</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">},</span> <span class="p">{</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">},</span> <span class="p">{</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>  <span class="p">...</span> <span class="p">}},</span>
+  <span class="p">[</span><span class="mf">0.25</span><span class="p">]</span> <span class="o">=</span> <span class="p">{{</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">},</span> <span class="p">{</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">},</span> <span class="p">{</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>  <span class="p">...</span> <span class="p">}},</span>
+<span class="p">}</span></pre>
+<p>All the code you saw in the <a href="#instancing-in-practice">Instancing In Practice</a> section (except the
+Basic Array one) doesn’t take account for multiple time samples and just get
+the nearest sample at 0.0. And you better know if you need to support
+motion-blur before writing anything (I have to rewrite a good chunk of KUI
+because of not knowing about it).</p>
+<p>The <a href="https://learn.foundry.com/katana/5.0/dev-guide/OpsAndOpScript/Attributes/OpScript.html#DataAttribute.getNearestSample">Katana Attributes documentation</a>
+define all the methods you can use to manipulate time samples but I found it
+confusing with not a lot of examples to show how the overall picture is
+working. So here is a code snippet showcasing the 2 different options to
+manipulate values per time-sample :</p>
+<pre class="m-code"><span class="c1">-- pseudo code to showcase code logic, not usable as it is</span>
+
+<span class="kd">local</span> <span class="n">data</span> <span class="o">=</span> <span class="n">Interface</span><span class="p">.</span><span class="n">GetAttr</span><span class="p">(</span><span class="s2">&quot;geometry.point.P&quot;</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">samples</span> <span class="kd">local</span> <span class="n">sample</span>
+<span class="kd">local</span> <span class="n">values</span>
+<span class="kd">local</span> <span class="n">new_value</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="cm">--[[ --------------------------------------------------------------------------</span>
+<span class="cm">  USING TABLES</span>
+
+<span class="cm">  table are a bit faster but can only go up to 2^27 (134 million) values per attribute</span>
+
+<span class="cm">]]</span>
+
+<span class="n">samples</span> <span class="o">=</span> <span class="n">data</span><span class="p">:</span><span class="n">getNumberOfTimeSamples</span><span class="p">()</span>
+
+<span class="kr">for</span> <span class="n">smplindex</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">samples</span> <span class="o">-</span> <span class="mi">1</span> <span class="kr">do</span>
+  <span class="c1">-- convert the smplindex to sampletime (shutterOpen/Close values)</span>
+  <span class="n">sample</span> <span class="o">=</span> <span class="n">data</span><span class="p">:</span><span class="n">getSampleTime</span><span class="p">(</span><span class="n">smplindex</span><span class="p">)</span>
+  <span class="n">values</span> <span class="o">=</span> <span class="n">data</span><span class="p">:</span><span class="n">getNearestSample</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span> <span class="c1">-- table</span>
+  <span class="c1">-- // do something with the values table</span>
+  <span class="n">new_value</span><span class="p">[</span><span class="n">sample</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span>
+<span class="kr">end</span>
+
+<span class="cm">--[[ --------------------------------------------------------------------------</span>
+<span class="cm">  USING ARRAYS</span>
+
+<span class="cm">  arrays are a bit slower but have no limit,</span>
+<span class="cm">  array manipulation is less convenient than tables.</span>
+
+<span class="cm">]]</span>
+
+<span class="n">samples</span> <span class="o">=</span> <span class="n">data</span><span class="p">:</span><span class="n">getSamples</span><span class="p">()</span>
+
+<span class="kr">for</span> <span class="n">smplindex</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">#</span><span class="n">samples</span> <span class="o">-</span> <span class="mi">1</span> <span class="kr">do</span>
+  <span class="n">sample</span> <span class="o">=</span> <span class="n">samples</span><span class="p">:</span><span class="n">get</span><span class="p">(</span><span class="n">smplindex</span><span class="p">)</span> <span class="c1">-- get() starts at 0</span>
+  <span class="n">values</span> <span class="o">=</span> <span class="n">sample</span><span class="p">:</span><span class="n">toArray</span><span class="p">()</span> <span class="c1">-- Array</span>
+  <span class="c1">-- // do something with the values Array</span>
+  <span class="n">new_value</span><span class="p">[</span><span class="n">sample</span><span class="p">:</span><span class="n">getSampleTime</span><span class="p">()]</span> <span class="o">=</span> <span class="n">values</span>
+<span class="kr">end</span>
+
+<span class="c1">-- new value is a table of time samples. Exemple :</span>
+<span class="c1">-- new_value {-0.25={...}, 0.0={...}, 0.25={...}}</span>
+<span class="c1">-- new_value {-0.25=Array, 0.0=Array, 0.25=Array}</span></pre>
+<aside class="m-note m-info">
+If you try to print the samples, you have to look at the result in the
+RenderLog <strong>(so start a render)</strong>. The nodegraph doesn’t evaluate
+motion-blur in live and the result in the console will only be for time
+sample 0.0.</aside>
+</aside>
+<p>Of course this add an additional small loop to process values which increase
+code complexity and could also damage performances if not optimized code is
+being used.</p>
+<p>You can have a look at the lua files in My <code>Foundry_Katana</code> GitHub repository
+like <a href="https://github.com/MrLixm/Foundry_Katana/blob/main/src/attributes/attrTypeSwap/attrTypeSwap.lua">attrTypeSwap.lua</a>
+to see more context use of time-samples.</p>
+</section>
 <section id="instances-preview-in-the-viewer">
-<h4><a href="#id16">Instances preview in the Viewer</a></h4>
+<h3><a href="#id16">Instances preview in the Viewer</a></h3>
 <p>Since <strong>Katana 4.5</strong>, it is now possible to view <strong>instance array</strong> in the
 Viewer :</p>
 <ul>
@@ -1004,7 +1099,7 @@ instance-source to the instance
 to have already pre-generated an exactly similar-looking alembic.</p>
 </section>
 <section id="modifying-point-clouds-transforms">
-<h4><a href="#id17">Modifying point-clouds | Transforms</a></h4>
+<h3><a href="#id17">Modifying point-clouds | Transforms</a></h3>
 <p>You might stumble upon the case where you can’t re-generate the point-cloud and
 you have to move it in Katana. But we can’t use our good old <code>Transform3D</code>
 friend here because, well, the transformations data is stored in geometry
@@ -1030,13 +1125,13 @@ the <code>translation</code> and <code>rotation</code> from the <code>Transform3
 But you might not need this as your render-engine probably supports the
 use of <code>Transform3D</code> on the instance(s). (even if the Viewer preview
 ignores it, in render, the instances are properly transformed.)</aside>
+</aside>
 </section>
 <section id="modifying-point-clouds-culling">
-<h4><a href="#id18">Modifying point-clouds | Culling</a></h4>
+<h3><a href="#id18">Modifying point-clouds | Culling</a></h3>
 <p>Another need would be to prune points to reduce instances. Even if instancing
-improve performances compared to when not used,
-more instances still costs at render-time so you wanna make sure you are not
-rendering non-contributing instances.</p>
+improve performances , more instances still costs at render-time so you
+wanna make sure you are not rendering non-contributing instances.</p>
 <p>For this you could try to see Efthymis’s OpScript :</p>
 <div class="l-url-box">
 <a class="l-url-a" href="https://efthymisb.gumroad.com/l/tsrvn"></a>
@@ -1058,11 +1153,25 @@ rendering non-contributing instances.</p>
 </p>
 </div>
 </div>
-</section>
+<p>The concept is to use the <code>instanceSkipIndex</code> attribute, at least for
+the <code>array</code> method, to specify point index that must not be rendered.</p>
+<p>For <code>hierarchical</code> you would need to read this attribute and whenever the
+current point index you are visiting is in <code>instanceSkipIndex</code> you just
+don’t build the instance and skip to the next point.</p>
+<p>I’m planning to ship a solution with KUI to easily cull points using boxes,
+but if you are reading this means the feature has not been implemented yet.
+So make sure to follow the <a href="https://github.com/MrLixm/KUI/issues/1">issue on the github repo</a> to get notified when this is
+implemented.</p>
 </section>
 </section>
 <section id="katana-uber-instancing">
 <h2><a href="#id19">Katana Uber Instancing</a></h2>
+<aside class="m-block m-warning">
+<h3>⚠ IN DEVELOPMENT</h3>
+<p>! if you read this means KUI is still in development. Do not
+use for now !</p>
+</aside>
+</aside>
 <p>As we just saw, instancing can require in some cases quite some work before
 having a result. That’s why I tried to produce a solution that would be very
 flexible with a very straightforward setup.</p>
@@ -1070,28 +1179,60 @@ flexible with a very straightforward setup.</p>
 actually) where, using the same parameters, you could conveniently switch
 between different instancing methods and have a lot of flexibility on inputs.
 (Leaf-level has been excluded as I’m not familiar with it.)</p>
+<p>Lot of work has been put into this project, learned a lot about lua and i’m
+really happy to share it to you. (Furthermore open-sourced)</p>
 <p>The project is available on GitHub here :</p>
 <div class="l-url-box">
-<a class="l-url-a" href="https://github.com/MrLixm/Foundry_Katana/tree/kui/src/instancing/kui"></a>
+<a class="l-url-a" href="https://github.com/MrLixm/KUI"></a>
 <div class="l-url-box-image">
-
-<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M32 64C49.6731 64 64 49.6731 64 32C64 14.3269 49.6731 0 32 0C14.3269 0 0 14.3269 0 32C0 49.6731 14.3269 64 32 64ZM25.8761 22.825C21.6565 27.0446 21.6565 33.9042 25.8761 38.1239C26.72 38.9678 28.1049 38.9678 28.9489 38.1239C29.8361 37.28 29.8361 35.8951 28.9489 35.0511C26.3955 32.5193 26.3955 28.4079 28.9489 25.8761L36.5875 18.2375C39.1193 15.6841 43.2307 15.6841 45.7625 18.2375C48.3159 20.7693 48.3159 24.8807 45.7625 27.4125L44.7455 28.4512C45.3514 30.139 45.6327 31.9134 45.611 33.6879L48.8353 30.4636C53.0549 26.244 53.0549 19.3844 48.8353 15.1647C44.6156 10.9451 37.756 10.9451 33.5364 15.1647L25.8761 22.825ZM38.1239 25.8761C37.28 25.0322 35.8951 25.0322 35.0511 25.8761C34.1639 26.72 34.1639 28.1049 35.0511 28.9489C37.6045 31.4807 37.6045 35.5921 35.0511 38.1239L27.4125 45.7625C24.8807 48.3159 20.7693 48.3159 18.2375 45.7625C15.6841 43.2307 15.6841 39.1193 18.2375 36.5875L19.2545 35.5705C18.6486 33.861 18.3673 32.0866 18.389 30.3121L15.1647 33.5364C10.9451 37.756 10.9451 44.6156 15.1647 48.8353C19.3844 53.0549 26.244 53.0549 30.4636 48.8353L38.1239 41.175C42.3435 36.9554 42.3435 30.0958 38.1239 25.8761Z" fill="currentColor"/>
-</svg>
-    </div>
+<img src="https://raw.githubusercontent.com/MrLixm/KUI/dev/doc/img/thumbnail.jpg" />
+</div>
 <div class="l-url-box-details">
 <p class="l-url-title">KUI - Github Repository</p>
 <div class="l-url-subtitle">
-<a class="m-link-wrap" href="https://github.com/MrLixm/Foundry_Katana/tree/kui/src/instancing/kui">https://github.com/MrLixm/Foundry_Katana/tree/kui/src/instancing/kui</a>
+<a class="m-link-wrap" href="https://github.com/MrLixm/KUI">https://github.com/MrLixm/KUI</a>
 </div>
-<p class="l-url-description"></p>
+<p class="l-url-description">Katana OpScripts for flexible instancing setup.</p>
 </div>
 </div>
-<p>I let you check the README.md that should provide all the instructions
-necessary to use this tool.</p>
+<p><strong>I let you check the README.md</strong> that is listing all the instructions
+necessary to use this tool. There is a pretty extensive documentation that
+should cover everything you need to know.</p>
 </section>
+<section id="render-engines">
+<h2><a href="#id20">Render-Engines</a></h2>
+<p>Even if you are sure your instancing setup is correct, it might actually not
+be what you render-engine expect it to be. So golden-rule, first read your
+renderer documentation carefully to see what is required, then if it’s
+still not working, you will have to test stuff until it work 😬.</p>
+<p>For Redshift, check the section right under, for other renderer, here is
+what I found :</p>
+<ul>
+<li><code class="l-bgc-dl-o">3Delight</code> AND <code class="l-bgc-prman-o">Renderman</code> : arbitrary attribute need
+to be <code>Float</code> and not <code>Double</code>.</li>
+<li><code class="l-bgc-dl-o">3Delight</code> AND <code class="l-bgc-prman-o">Renderman</code> : instance array seems to
+only support instance matrix attribute and not the other TRS attributes.</li>
+<li><code class="l-bgc-ai-o">Arnold</code> : Using the TRS instances attributes with <code>array</code>
+method led to visually incorrect rotations. You have to use an
+<code>instanceMatrix</code> attribute to see the correct result.</li>
+<li><code class="l-bgc-ai-o">Arnold</code> : for <code>array</code> instancing, arbitrary attributes need to
+have the scope set to <code>point</code> to work.</li>
+<li><code class="l-bgc-prman-o">Renderman</code> : arbitrary attribute for <code>hierarchical</code> need to
+be located at <code>prmanStatements.attributes.user.&lt;myAttr&gt;.value</code>.
+See <a href="https://rmanwiki.pixar.com/display/RFK24/User+Attributes">Renderman doc</a>.</li>
+<li><code class="l-bgc-prman-o">Renderman</code> :  arbitrary attribute for <code>array</code> are at the usual
+<code>geometry.arbitrary</code> path but scope need to be <code>primitive</code>. This mean
+the attribute can be used as a <code>primvar</code> in shading.</li>
+<li><code class="l-bgc-prman-o">Renderman</code> :  for <code>array</code> instancing, the material must be
+assigned on the <code>instance array</code> location and not on the <em>instances
+sources</em>.</li>
+</ul>
+<p>You can check the test scene I used for KUI that should have a working setup
+for Arnold, 3Delight and Renderman.</p>
+<blockquote>
+<a class="m-link-wrap" href="https://github.com/MrLixm/KUI/blob/dev/dev/scenes/kui.demo.katana">https://github.com/MrLixm/KUI/blob/dev/dev/scenes/kui.demo.katana</a></blockquote>
 <section id="redshift">
-<h2><a href="#id20">Redshift</a></h2>
+<h3><a href="#id21">Redshift</a></h3>
 <p>The production where I had to look for instancing was using Redshift,
 and unfortunately, it seems that, at that time, the instancing features where
 “minimally” implemented and some stuff was missing/broken.
@@ -1103,13 +1244,18 @@ features other render-engine have. I’m just not sure if arbitrary attributes
 still need to be in <code>instance.arbitrary</code> or is the commonly used
 <code>geometry.arbitrary</code> is supported ?</p>
 </section>
+</section>
 <section id="outro">
-<h2><a href="#id21">Outro</a></h2>
-<p>And that’s a wrap. I really hope this was useful for you because this was
+<h2><a href="#id22">Outro</a></h2>
+<p>And that’s a wrap. Very happy to have finally published this tutorial that was
+hanging around for 4 month already haha. A topic that I could have explored in
+this post is USD, which is an additional solution for instancing. But
+having no experience at all with the format I will let you do the research.</p>
+<p>I really hope this was useful for you because this was
 the kind of informations I wish I had when starting looking for
 instancing !
 As always feedback is welcome. If you notice anything let me know
-on the PYCO discord (link in the footer) or e-mail me.</p>
+on the PYCO discord (link in the page’s footer) or just e-mail me.</p>
 <div class="l-url-box">
 <a class="l-url-a" href="https://github.com/MrLixm/Foundry_Katana"></a>
 <div class="l-url-box-image">
@@ -1125,7 +1271,7 @@ on the PYCO discord (link in the footer) or e-mail me.</p>
 </div>
 <div class="l-url-box">
 <a class="l-url-a" href="https://discord.gg/Rgn9ucN"></a>
-<div class="l-url-box-image" style="color: #D9D9D9;">
+<div class="l-url-box-image">
 <svg width="100" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <title>Discord</title>
     <path fill="currentColor" d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
@@ -1156,9 +1302,6 @@ on the PYCO discord (link in the footer) or e-mail me.</p>
         <footer>
           <div class="l-line-xs" title="Footer Separator"></div>
         <header class="l-post-context l-mrg-xs" title="Post Context" id="post-context-header">
-            <span class="l-status l-bgc-yellow-l l-c-ldark l-flex-item" id="s-draft" title="Post status">
-              draft
-            </span>
           <span class="l-category">
             <a href="https://mrlixm.github.io/category/tutorial.html">tutorial</a>
           </span>
@@ -1186,7 +1329,7 @@ on the PYCO discord (link in the footer) or e-mail me.</p>
         <footer class="l-post-context" id="post-context-footer">
           <span class="l-time l-flex-item" title="Date Created">
             <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-            <time datetime="2021-10-23T14:58:00+02:00">23 October 2021</time>
+            <time datetime="2022-03-09T12:24:00+01:00">09 March 2022</time>
           </span>
           <span class="l-box-author l-flex-item" title="List of Authors">
             <img src="/static/images/global/icons/account.svg" alt="Author icon" >
@@ -1208,7 +1351,7 @@ on the PYCO discord (link in the footer) or e-mail me.</p>
             <p>No comment system yet so instead:</p>
             <div class="l-btn-discord  l-flex-r l-flex-center">
               <a  class="l-btn-discord-img" href="https://discord.gg/47ySGqMEAj">
-                <img src="/static/images/global/social/discord.svg" alt="Discord Icon">
+                <img src="/static/images/global/static/discord.svg" alt="Discord Icon">
               </a>
               <a href="https://discord.gg/47ySGqMEAj">Join the Discord to discuss</a>
             </div>
