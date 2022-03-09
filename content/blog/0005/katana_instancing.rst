@@ -3,6 +3,7 @@ Instancing in Katana
 
 :summary: How OpScript can be used to create a flexible solution for
     instancing.
+:thumbnail: {static}/images/blog/0005/cover.jpg
 
 :status: draft
 :date: 2021-10-23 14:58
