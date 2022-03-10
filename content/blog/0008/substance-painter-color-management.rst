@@ -20,7 +20,7 @@ Color-management in Substance Painter with OCIO
     :class: m-text m-primary
 
 .. role:: strike
-    :class: m-text m-s
+    :class: m-text m-s l-c-color-6
 
 It's there ! After so much time, Substance-Painter finally saw itself getting
 a shiny new color-management system with OCIO support. We're going to dive
@@ -39,6 +39,8 @@ skip straight to the `Substance Setup & Workflow`_ section if desired.
     This is the version used through this article and some features might
     changed at the time you are reading this. I will try to keep the article
     updated though.
+
+    This article has been updated following the 7.4.2 update from 08/03/22.
 
 .. url-preview:: https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html
     :title: Official Documentation
@@ -292,7 +294,7 @@ already is.
     Output needs to be encoded for an sRGB Display, we cannot use the Output
     encoded for a DCI-P3 Display.
 
-----
+.. transition:: ~
 
 You made it yay ! Color-science is a complex topic, so don't worry if you
 don't get everything the first time. You will find additional resources to
@@ -373,7 +375,7 @@ For our convenience sp already ships with 3 OCIO configs :
 
 You can find them in the sp installation folder like this one :
 
-::
+.. code:: text
 
     C:\Program Files\Allegorithmic\Adobe Substance 3D Painter\resources\ocio
 
@@ -486,7 +488,7 @@ _____________________________________
     :target: {static}/images/blog/0008/sp-project-ocio-options.png
     :alt: Options for OCIO mode in sp..
 
-    OCIO with Substance config properly configured.
+    OCIO with Substance config default settings.
 
 
 It corresponds to all the sections below the color-management mode. It allows
@@ -496,21 +498,51 @@ being assigned by default.
 Usually, in other software, this section is configured using the `OCIO roles
 <https://opencolorio.readthedocs.io/en/latest/guides/authoring/overview
 .html#roles>`_ defined in the OCIO configuration.
-:text-danger:`But currently sp doesn't support OCIO roles.` Instead, it is
-using the ``working colorspace`` as a default colorspace everywhere, which mean
-:text-danger:`you have to manually setup this section` to get a correct result
-with the auto settings.
+:text-danger:`But currently sp support only its own OCIO roles.` Which mean
+:text-danger:`you might have to manually setup this section` to get a correct
+result with the auto settings OR make sure the OCIO config you are using
+have the OCIO roles supported by Sp.
 
 If you look at the above image, this is how it is supposed to look when picking
-the Substance config. By default 8 and 16 bit images are supposed to be
-considered as ``sRGB``, **same goes for substance materials**.
+the Substance config. As the Substance config have the supported OCIO roles
+defined, the parameters are properly configured.
 
-Make sure these options are properly configured with the intended colorspaces
-for each format if you want all the ``auto`` options to work properly. Most of 
-them (except Export ones) can be changed in context.
+But if you are loading a custom config, make sure these options are properly
+configured with the intended colorspaces for each format if you want all the
+``auto`` options to work properly. Most of them (except Export ones) can be
+changed in context in last resort.
 
 Visit the `ACES Workflow`_ section to find how this should be considered if you
 are using the ACES config.
+
+.. transition:: ~
+
+Since 7.4.2 you can also find a new ``Standard sRGB color space`` parameter
+which is a very nice add for having UI elements properly managed. If the name
+doesn't looks clear, it correspond to the ``sRGB - Display encoded``
+colorspace. From the documentation, it is used :
+
+- To convert color set in the hexadecimal field of the color picker.
+- To save and load color swatches within the color picker.
+- To be listed as a Display in the color picker list.
+
+This update also adds support for specific OCIO role which are the following :
+
+.. code:: text
+
+  substance_3d_painter_bitmap_import_8bit
+  substance_3d_painter_bitmap_import_16bit
+  substance_3d_painter_bitmap_import_floating
+  substance_3d_painter_bitmap_export_8bit
+  substance_3d_painter_bitmap_export_16bit
+  substance_3d_painter_bitmap_export_floating
+  substance_3d_painter_substance_material
+
+Check `the Substance's OCIO documentation <https://substance3d.adobe
+.com/documentation/spdoc/color-management-with-opencolorio-225969419
+.html#section3>`_ for more details but make sure your OCIO config have these
+fellas set with the corresponding colorspace if you want it to be properly
+read in Sp.
 
 New Project : Conclusion
 ========================
@@ -519,7 +551,7 @@ Alright, to recap' everything for a new project you need :
 
 1. Change the color-management mode to OCIO
 2. Choose the OCIO config (already chosen if env variable set)
-3. Edit the OCIO options to have the correct default colorspaces working.
+3. Check the OCIO options to have the correct default colorspaces working.
 
 And of course, setting the other parameters related to your texturing.
 
@@ -647,6 +679,14 @@ layer. You will not find any option to specify the colorspace in the shelf.
 .. image:: {static}/images/blog/0008/sp-in-bobross.png
     :target: {static}/images/blog/0008/sp-in-bobross.png
     :alt: Screenshots of the Input colorspace option for layers.
+    :scale: 50%
+
+.. figure:: {static}/images/blog/0008/sp-in-bobross-7.4.2.png
+    :target: {static}/images/blog/0008/sp-in-bobross-7.4.2.png
+    :alt: Screenshots of the Input colorspace option for layers.
+
+    Updated menu design on versions 7.4.2 +
+
 
 By default, it is set to ``auto``, which will use the settings specified in the
 project color-management settings explained above.
@@ -664,11 +704,33 @@ config this could give: ``bricks_wall_albedo_Utility - Linear - sRGB.exr``.
 The color-picker
 ________________
 
+.. note-info::
+
+    7.4.2 update changed the behavior of the color-picker with huge
+    improvements :
+
+    -
+        Swapped working and display space for the widgets, the ``eds`` is now
+        expressed in the display space specified by the ``tcd`` and you can
+        have a look at the working colorspace value just under.
+
+    -
+        Color-picker behavior is more consistent overall .
+
+    -
+        You will also notice that the ``tcd`` disapear when picking color in a
+        scalar channel/role (which is logic).
+
+
+    The following section has been updated to reflect the change and **will
+    not be valid for version under 7.4.2**
+
+
 .. container:: l-flex-r l-flex-start l-gap-1
 
     .. image:: {static}/images/blog/0008/sp-colorpicker.png
         :target: {static}/images/blog/0008/sp-colorpicker.png
-        :alt: Screenshots of the color picker.
+        :alt: Screenshot of the color picker.
 
     .. container:: l-flex-shrink-2
 
@@ -684,104 +746,127 @@ ________________
             ``eds`` : editable sliders, where you can manually enter your color
             components.
 
-        First really good feature is the little info icon, giving explicit
-        info on how the widget works. But the given info brings some bad
-        news; if we have a look at the info message next to the ``tcd`` :
+        A good feature is the little info icon, giving explicit
+        info on how the widget works. If we have a look at the info message
+        next to the ``tcd`` we can read :
 
-            This is the display color space used for displaying the on-screen
-            image. The editable color values are specified within the project's
-            working color space.
+            Color mixing space, this is the space in which a color is edited
+            before being converted into the working color space. It usually
+            matches the monitor to be easily viewed.
 
-        What this means is that in the values sliders under, the value entered
-        are always in the colorspace defined by the project's working
-        color space. So you could change the ``tcd`` but
-        this won't modify the value entered.
+        Which means the values in the ``eds`` are in the colorspace
+        specified by the ``tcd``, then they are converted to the working
+        colorspace. (you can check the result of this conversion just under.)
 
-**The ``tcd`` only modify how the color is displayed in the
-interface.** (you can see this displayed value under the ``eds``)
+        This is a valid workflow, which allow you to get the same color seen
+        in the UI on the final textures.
+
+But keep in mind that you have to be careful on the color
+you are chosing, the fact that it looks as you want (perceptual)
+doesn't mean the scene-refered values (working colorspace) have a
+physically plausible value. For exemple, in an ACES workflow you might want
+to make sure that no channel's value goes up to 1.0, which mean you are
+reaching the boundary of the ACEScg gamut which is comparable to a laser's
+color.
+
 
 .. note-info::
 
-    As such it is recommended to set the ``tcd`` to the same colorspace
-    being used in the view-transform.
+    Ideally the ``tcd`` and the view-transform should use the same
+    colorspace. This is especially true if you are using the actual picker.
+    Unless you need to enter specific value you already know
+    which colorspae they are encoded in.
+
+    Luckily, this is already done automatically. Change the
+    view-transform and you will see the ``tcd`` update to reflect the change !
 
 .. _picker:
 
 What about the actual picker ?
 
-    | Same thing, the value that is being picked is expressed in the working
-     colorspace. It is not affected by the ``tcd``.
-    | But there is a :strike:`little` huge twist !
+    The picker will pick the value at display, so with the view-transform
+    applied (if not disabled). Consider this as the input, and will convert
+    from the ``tcd`` colorspace to the working colorspace. You then get
+    back "nearly" the same value (with some math precisions issue ).
 
-After `some extensive testing <https://liamcollod.notion
-.site/Substance-Painter-Color-Picker-Issue-1d1cdeeb0e2846ba977ebc453e5ae56b>`_,
-I can unfortunately say that the picker is not
-consistent depending of the OCIO config you are using. It works in some
-cases and it is broken in others. I'm still not sure about what the issue
-actually is but here is what I have :
+    What I recommend though, is to change the view-transform to a
+    "no-operation" colorspace (usually called ``raw``), pick the color, and
+    re-apply the previous view-transform. This will avoid the
+    potential colorspace invertibility and imprecisions issues.
 
--
-    ``Case 1`` : You are using an OCIO v2 config that **uses Display
-    colorspaces and Shared Views** (OCIO v2 new features) :
+    .. figure:: {static}/images/blog/0008/sp-colorpicker-picker.gif
+        :target: {static}/images/blog/0008/sp-colorpicker-picker.gif
+        :alt: GIF showing the trick explained above.
 
-        The picker take the value at the display (after the
-        view-transform is applied) and return it.
-
-        This only work when there is, well ..., no view-transform, i.e. is
-        it is disabled or use a display with a "passtrough/raw" encoding. If
-        you are viewing color data with the proper view-transform, the
-        picked value will not correspond to the original value you used.
-
--
-    ``Case 2`` : You are using an OCIO v1 config or v2 without the new
-    features :
-
-        The picker take the value at display (with the view-transform), then
-        apply an inverse display transform. It pick the default one, i.e. the
-        first defined in the config or in the ``active_displays`` key.
-        And as the sliders don't go above 1, the result is clamped between the
-        0-1 range 🙂
+        Using Filmic config, original value is RGB(1,0.5,0).
 
 
-.. note-warning::
+.. note-info::
 
-    You need to also take into consideration the color-picker precision issues.
-    Applying an invert color-transformations can lead in some cases to
-    imprecisions + the picking operation has precisions
-    issues by itself
+    The color-picker is unfortunately clamped between the 0-1 range, which is
+    at the same time ok because for texturing you usually want to avoid
+    values to goes outside this range, but also means color-picking operation
+    are clamped which create inconsistency for some of them yielding result
+    above 1.
 
-This means the colorpicker is unfortunately again, broken. But
-with the above in mind, it is still possible to get back the correct values.
+.. block-info:: Hexadecimal
 
-.. block-primary:: For ``Case 1`` :
+    If you need to enter hexadecimal values, the field will assume they are ``
+    sRGB-Display`` encoded and use the ``Standard sRGB color space`` defined
+    in the config to convert it to the working color-space.
+    (Field that seems to be bugged, I can't edit edit it, only copy/paste
+    value inside).
 
-    -
-        Disable the view-transform whenever you want to pick a value.
+.. block-warning:: OCIO v2 issue
 
+    Seems the OCIO v2 feature called "shared views" is not supported properly
+    by the color-picker. If you use a "colorspace" (actually a ``display
+    view``) which make use of a shared view (using ``<Views>``), the widget
+    displaying the working colorspace values will disapear.
 
-.. block-primary:: For ``Case 2`` :
+.. block-info:: Swatches
+
+    You can save colors as swatches for easier re-use. Quoting from the
+    `swatches documentation <https://substance3d.adobe
+    .com/documentation/spdoc/color-picker-220857079.html#section7>`_ :
+    ``Swatch color are managed and saved as sRGB colors, whatever the current
+    color management configuration is set to``. The steps are as follow :
 
     -
-        Set the ``tcd`` to the default view-transform colorspace.
+        ``saving`` : ``working colorspace`` converted to ``sRGB standard
+        colorspace`` then converted to hexadecimal.
 
-    -
-        Pick your value.
+    - ``importing`` : ``sRGB standard colorspace`` converted to ``working colorspace``
 
-    -
-        Look at the values in the ``Display colorspace`` widget, and copy
-        them in the ``eds``.
-
-If you are curious I made a bug report on the forum here :
-https://community.adobe.com/t5/substance-3d-painter-discussions/color-picker-doesn-t-behave-consistent-across-ocio-configs/td-p/12603389
+    No matter how the ``tcd`` is set this is how it works EXCEPT if the ``tcd``
+    is set to a scalar colorspace (``isdata=true`` in the config). In that case
+    and as expected the swatch is imported without conversion so straight
+    hexadecimal to RGB values (which doesn't looks like the original color of
+    course.)
 
 
+.. figure:: {static}/images/blog/0008/sp-colorpicker-infograph.jpg
+    :target: {static}/images/blog/0008/sp-colorpicker-infograph.jpg
+    :alt: Color-picker infographic.
+
+    Small infographic to resume colorspace transformations.
+
+
+
+So I must say that the latest update have greatly improved the color-picking
+experience which behave a bit more as you would except. Cool stuff !
+Looking forward to next updates to reach the perfect color-picking
+experience haha.
 
 Environment
 ___________
 
-There is no direct option to modify the environment image colorspace.
+:strike:`There is no direct option to modify the environment image colorspace.`
 
-Your options are :
+From 7.4.2 + you can find an option in the ``Display Settings`` Menu, to change
+the environment colorspace being used.
+
+For the other versions you still have the following options:
 
 -
     Modify the default ``Linear`` colorspace in the project settings. The
@@ -793,7 +878,9 @@ Your options are :
     ``myhdri_ACES - ACEScg.exr``. (you can find an example in `ACES -
     Environment`_)
 
-The pre-integrated HDRIs are encoded with a ``linear - sRGB`` colorspace.
+.. note-info::
+
+    The pre-integrated HDRIs are encoded with a ``linear - sRGB``-like colorspace.
 
 
 Masks
@@ -916,12 +1003,21 @@ for the ACES workflow apply.
 ACES - Environment
 """"""""""""""""""
 
-There is unfortunately no direct options to change environment's colorspace.
-But they follow default colorspace rules. And as they are floating point image
-they use the pre-defined ``Utility - Linear - sRGB`` colorspace. As such, as
-long as they are sRGB - linear encoded, they will be properly displayed.
+:strike:`There is unfortunately no direct options to change environment's
+colorspace.`
 
-But what if I want to import an already converted ACEScg HDRI ?
+From 7.4.2+ you can find an option in the ``Display Settings`` Menu, to change
+the environment colorspace being used.
+
+Environment follow default colorspace rules. Being floating point image
+, they will use the pre-defined ``Utility - Linear - sRGB`` colorspace.
+So as long as they are ``sRGB - linear``-like encoded, they will be properly
+displayed.
+
+If that not the case you can use the mentioned override option, but
+in the case you are using an older version here is my previous solution :
+
+    But what if I want to import an already converted ACEScg HDRI ?
 
     There is a way to have it working. You can specify the colorspace in the
     file name. The colorspace has to be **the exact same name** as the one
@@ -940,12 +1036,20 @@ But what if I want to import an already converted ACEScg HDRI ?
 ACES - Colorpicker
 __________________
 
-The colorpicker by default and in my case use the same colorspace as the
-first view_transform. This means the color I see in the picker is the same in
-the viewport. As mentioned in `The color-picker`_ section the sliders values
-are expressed in the working-colorspace, in our case ACEScg.
+.. note-info::
 
-Consider the following example :
+    The screenshots in this section have not been updated to reflect change
+    in the 7.4.2 update. Explanations still apply.
+
+Everything in `The color-picker`_ section applies here. You can just except
+more odd behavior as a wider-gamut and more complex view-transform will not
+play well with it. The first potential issue that came to my mind is the
+combinaison of 0-1 clamping + ACES ODT : If you are picking a pure value of
+RGB(1,1,1) considered encoded as ``Output - sRGB``, you would usually get back
+a scene-referred value of RGB(16.2,16.2,16.2). But the color-picker is
+clamped between the 0-1 range so you will end up with just RGB(1,1,1).
+
+Then consider the following example :
 
 .. figure:: {static}/images/blog/0008/sp-aces-colorpicker.png
     :target: {static}/images/blog/0008/sp-aces-colorpicker.png
@@ -966,33 +1070,30 @@ What if I want to apply a color we gave me as hexadecimal ?
 
     Consider my brand's green picked from https://coolors.co .
 
-    .. figure:: {static}/images/blog/0008/sp-aces-colorpicker-hex.png
+    .. image:: {static}/images/blog/0008/sp-aces-colorpicker-hex.png
         :target: {static}/images/blog/0008/sp-aces-colorpicker-hex.png
         :alt: Substance colorpicker with ACES workflow.
 
-        Model by `Emmanuel-Xuân Dubois`_
 
     Well ... the less brain-damaging solution would be to just eyeball the
     color.
 
-    The first issue here is that the color is probably sRGB display
-    encoded and need to first be linearized, then converted to ACEScg.
+    Luckily, the 7.4.2 update made thing easier for us. The hexadecimal color
+    will assume to be encoded in the ``sRGB standard colorspace`` and converted
+    to the working colorspace. So just copy/paste your color in the hexadecimal
+    field and you should have your color converted.
 
-    .. image:: {static}/images/blog/0008/sp-aces-colorpicker-conversion.png
-        :target: {static}/images/blog/0008/sp-aces-colorpicker-conversion.png
-        :alt: Nuke screenshot to convert sRGB hex value to ACEScg
+    Even with this, you might notice that the color is still not similar to
+    the sRGB one. This is normal and inherent to the ACES ODT which apply a
+    "creative" and "technical" transformation on display.
 
-    The above should give you an idea of how to achieve this with Nuke.
-    The ACEScg values can be found at the bottom right of the image.
-    But as you can see the viewer color (with the ACES ODT applied) is still
-    different from the preview on coolors website !
-
-    Keep this in mind: :text-green:`you will never be able to match the look
+    So keep this in mind: :text-green:`you will never be able to match the look
     of the sRGB workflow with the ACES workflow.` (unless cheating).
 
-    I'm not going to dive into further explanations as there is `enough threads
-    on this subject <https://community.acescentral.com/t/preserving-logos-and-graphics-in-aces/2861>`_
-    on ACES central and Chris `is already explaining it here
+    I'm not going to dive into further explanations as there is `enough
+    ACES central threads <https://community.acescentral
+    .com/t/preserving-logos-and-graphics-in-aces/2861>`_  on this subject
+    and Chris `is also explaining it here
     <https://chrisbrejon.com/cg-cinematography/chapter-1-5-academy-color
     -encoding-system-aces/#inverted-odt-workflow>`_.
 
@@ -1026,6 +1127,11 @@ OCIO Implementation Issues
 
     The goal here is not to denigrate the dev team's works but rather to offer
     explanations and solutions for improving the software.
+
+.. note-info::
+
+    The team did a fantastic job in the latest updates by adressing some of
+    the issues I mentionned !
 
 Display Issues
 ==============
@@ -1223,9 +1329,9 @@ Issues Recap
     The Substance config could overall, benefits from using OCIO v2 features.
 
 -
-    | OCIO roles are not supported, as such default configuration for
-     projects is wrong and can confuse artists.
-    | (see `Substance parameters for OCIO configs`_)
+    | :strike:`OCIO roles are not supported, as such default configuration for
+     projects is wrong and can confuse artists.`
+    | (implemented on 7.4.2 !)(see `Substance parameters for OCIO configs`_)
 
 -
     | The view-transform dropdown is too small in width. When selecting long
@@ -1243,23 +1349,27 @@ Issues Recap
     colorspace changing depending on where it's used !
 
 -
-    | There is no direct option to change the environment image colorspace.
-     Having the above suggestion implemented would solve this one too.
-    | (see `Environment`_ )
+    | :strike:`There is no direct option to change the environment image colorspace.
+     Having the above suggestion implemented would solve this one too.`
+    | (implemented on 7.4.2 !)(see `Environment`_ )
 
 -
-    Color-picker : modifying the top colorspace should affect the editable
-    values. Where the top colorspace represents the colorspace used to enter
-    values so they can be converted to the working colorspace behind the scene.
+    | :strike:`Color-picker : modifying the top colorspace should affect the
+     editable values. Where the top colorspace represents the colorspace used
+     to enter values so they can be converted to the working colorspace
+     behind the scene.`
+    | (implemented on 7.4.2 !)
 
 -
-    With the above, add a way to see what values are being used in the
-    workspace.
+    | :strike:`With the above, add a way to see what values are being used in
+     the workspace.`
+    | (implemented on 7.4.2 !)
 
 -
     | Color-picker is broken. It react differently depending of the OCIO
-        config version use.
-    | (see `picker`_ section for details)
+     config version use.
+    | (see `picker`_ section for details).
+    | Update: it is less broken in 7.4.2 but there is still no some issues.
 
 -
     No options to set a specific colorspace for textures at export time.
@@ -1273,6 +1383,15 @@ Issues Recap
 
     But displays still manage to work without issues.
 
+    EDIT: This actually affect the color-picker who doesn't seems to supports
+    shared-views.
+
+-
+    2 colorspace in the OCIO config with a different ``isdata`` tag will not
+    produce the same result even if it's the only difference between them. (
+    This one might be an expected behavior though, not sure).
+
+
 Conclusion
 ----------
 
@@ -1283,7 +1402,8 @@ article could be improved. (you can also join the discord, click on the purple
 button at the bottom of this page)
 
 If you like this post and wish to support me you could buy some of my
-scripts on `my Gumroad <https://app.gumroad.com/pyco>`_.
+scripts on `my Gumroad <https://app.gumroad.com/pyco>`_ or check my ko-fi at
+the bottom of this page.
 
 I see you in the next one that would probably be on the same topic but on
 Mari. 👋
@@ -1335,3 +1455,12 @@ Changelog
 -
     ``17-12-2021``: fixed `The color-picker`_ section. `Discussion available here
     <https://community.acescentral.com/t/aces-and-substance-painter/2299/42>`_
+
+-
+    ``09-03-2022``: Updated article following 7.4.2 update.
+
+    - `Substance parameters for OCIO configs`_ : added precisions
+    - `The color-picker`_ : whole section re-wrote
+    - `Environment`_ : added precision
+    - `ACES - Colorpicker`_ : updated
+    - `Issues Recap`_ : updated
