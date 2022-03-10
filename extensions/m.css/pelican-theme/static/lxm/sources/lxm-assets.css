@@ -35,6 +35,11 @@ s&r variables :
 .l-c-color {
     color: var(--color);
 }
+.l-c-color-6 {
+    color: var(--color);
+    opacity: 60%;
+}
+
 /* ----------------------------------------------------------------------------
 
     TEXT STYLING
