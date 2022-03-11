@@ -6,7 +6,7 @@ Color-management in Substance Painter with OCIO
 :status: published
 :date-created: 2021-11-24 23:33
 :date: 2021-12-08 19:03
-:modified: 2021-11-03 11:53
+:modified: 2022-03-11 11:53
 :cover: {static}/images/blog/0008/cover.jpg
 
 :category: tutorial
