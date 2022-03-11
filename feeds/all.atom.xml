@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Liam Collod Website</title><link href="https://mrlixm.github.io/" rel="alternate"></link><link href="https://mrlixm.github.io/feeds/all.atom.xml" rel="self"></link><id>https://mrlixm.github.io/</id><updated>2021-12-17T23:46:00+01:00</updated><entry><title>Color-management in Substance Painter with OCIO</title><link href="https://mrlixm.github.io/blog/substance-painter-color-management/" rel="alternate"></link><published>2021-12-08T19:03:00+01:00</published><updated>2021-12-17T23:46:00+01:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-12-08:/blog/substance-painter-color-management/</id><summary type="html">&lt;p&gt;The long-awaited OCIO feature is here, now we gotta find how it works.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Liam Collod Website</title><link href="https://mrlixm.github.io/" rel="alternate"></link><link href="https://mrlixm.github.io/feeds/all.atom.xml" rel="self"></link><id>https://mrlixm.github.io/</id><updated>2021-12-08T19:03:00+01:00</updated><entry><title>Color-management in Substance Painter with OCIO</title><link href="https://mrlixm.github.io/blog/substance-painter-color-management/" rel="alternate"></link><published>2021-12-08T19:03:00+01:00</published><updated>2021-11-03T11:53:00+01:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-12-08:/blog/substance-painter-color-management/</id><summary type="html">&lt;p&gt;The long-awaited OCIO feature is here, now we gotta find how it works.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;It’s there ! After so much time, Substance-Painter finally saw itself getting
 a shiny new color-management system with OCIO support. We’re going to dive
 deeper inside and see how it works.&lt;/p&gt;
@@ -13,6 +13,7 @@ skip straight to the &lt;a href="#substance-setup-workflow"&gt;Substance Setup &
 &lt;p&gt;This is the version used through this article and some features might
 changed at the time you are reading this. I will try to keep the article
 updated though.&lt;/p&gt;
+&lt;p&gt;This article has been updated following the 7.4.2 update from 08/03/22.&lt;/p&gt;
 &lt;/aside&gt;
 &lt;/aside&gt;
 &lt;div class="l-url-box"&gt;
@@ -359,7 +360,7 @@ Output needs to be encoded for an sRGB Display, we cannot use the Output
 encoded for a DCI-P3 Display.&lt;/p&gt;
 &lt;/aside&gt;
 &lt;/aside&gt;
-&lt;hr /&gt;
+&lt;p class="m-transition"&gt;~&lt;/p&gt;
 &lt;p&gt;You made it yay ! Color-science is a complex topic, so don’t worry if you
 don’t get everything the first time. You will find additional resources to
 continue your exploration at the end of this article.&lt;/p&gt;
@@ -422,7 +423,7 @@ through all of your DCCs (in theory).&lt;/p&gt;
 &lt;li&gt;ACES 1.2&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;You can find them in the sp installation folder like this one :&lt;/p&gt;
-&lt;pre&gt;C:\Program Files\Allegorithmic\Adobe Substance 3D Painter\resources\ocio&lt;/pre&gt;
+&lt;pre class="m-code"&gt;C:\Program Files\Allegorithmic\Adobe Substance 3D Painter\resources\ocio&lt;/pre&gt;
 &lt;p&gt;Honestly, I don’t know why did they include two ACES versions, only the last
 one was needed, but it is awesome to have a default “Substance” config.&lt;/p&gt;
 &lt;p&gt;
@@ -508,24 +509,46 @@ You can have a look on internet at &lt;a href="https://superuser.com/questions/6
 &lt;h4&gt;&lt;a href="#id20"&gt;Substance parameters for OCIO configs&lt;/a&gt;&lt;/h4&gt;
 &lt;figure class="m-figure"&gt;
 &lt;a href="https://mrlixm.github.io/static/images/blog/0008/sp-project-ocio-options.png"&gt;&lt;img alt="Options for OCIO mode in sp.." src="https://mrlixm.github.io/static/images/blog/0008/sp-project-ocio-options.png" /&gt;&lt;/a&gt;
-&lt;figcaption&gt;OCIO with Substance config properly configured.&lt;/figcaption&gt;
+&lt;figcaption&gt;OCIO with Substance config default settings.&lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;p&gt;It corresponds to all the sections below the color-management mode. It allows
 to configure how inputs react with the OCIO config, i.e which colorspace is
 being assigned by default.&lt;/p&gt;
 &lt;p&gt;Usually, in other software, this section is configured using the &lt;a href="https://opencolorio.readthedocs.io/en/latest/guides/authoring/overview.html#roles"&gt;OCIO roles&lt;/a&gt; defined in the OCIO configuration.
-&lt;span class="m-text m-danger"&gt;But currently sp doesn’t support OCIO roles.&lt;/span&gt; Instead, it is
-using the &lt;code&gt;working colorspace&lt;/code&gt; as a default colorspace everywhere, which mean
-&lt;span class="m-text m-danger"&gt;you have to manually setup this section&lt;/span&gt; to get a correct result
-with the auto settings.&lt;/p&gt;
+&lt;span class="m-text m-danger"&gt;But currently sp support only its own OCIO roles.&lt;/span&gt; Which mean
+&lt;span class="m-text m-danger"&gt;you might have to manually setup this section&lt;/span&gt; to get a correct
+result with the auto settings OR make sure the OCIO config you are using
+have the OCIO roles supported by Sp.&lt;/p&gt;
 &lt;p&gt;If you look at the above image, this is how it is supposed to look when picking
-the Substance config. By default 8 and 16 bit images are supposed to be
-considered as &lt;code&gt;sRGB&lt;/code&gt;, &lt;strong&gt;same goes for substance materials&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;Make sure these options are properly configured with the intended colorspaces
-for each format if you want all the &lt;code&gt;auto&lt;/code&gt; options to work properly. Most of
-them (except Export ones) can be changed in context.&lt;/p&gt;
+the Substance config. As the Substance config have the supported OCIO roles
+defined, the parameters are properly configured.&lt;/p&gt;
+&lt;p&gt;But if you are loading a custom config, make sure these options are properly
+configured with the intended colorspaces for each format if you want all the
+&lt;code&gt;auto&lt;/code&gt; options to work properly. Most of them (except Export ones) can be
+changed in context in last resort.&lt;/p&gt;
 &lt;p&gt;Visit the &lt;a href="#aces-workflow"&gt;ACES Workflow&lt;/a&gt; section to find how this should be considered if you
 are using the ACES config.&lt;/p&gt;
+&lt;p class="m-transition"&gt;~&lt;/p&gt;
+&lt;p&gt;Since 7.4.2 you can also find a new &lt;code&gt;Standard sRGB color space&lt;/code&gt; parameter
+which is a very nice add for having UI elements properly managed. If the name
+doesn’t looks clear, it correspond to the &lt;code&gt;sRGB - Display encoded&lt;/code&gt;
+colorspace. From the documentation, it is used :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;To convert color set in the hexadecimal field of the color picker.&lt;/li&gt;
+&lt;li&gt;To save and load color swatches within the color picker.&lt;/li&gt;
+&lt;li&gt;To be listed as a Display in the color picker list.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This update also adds support for specific OCIO role which are the following :&lt;/p&gt;
+&lt;pre class="m-code"&gt;substance_3d_painter_bitmap_import_8bit
+substance_3d_painter_bitmap_import_16bit
+substance_3d_painter_bitmap_import_floating
+substance_3d_painter_bitmap_export_8bit
+substance_3d_painter_bitmap_export_16bit
+substance_3d_painter_bitmap_export_floating
+substance_3d_painter_substance_material&lt;/pre&gt;
+&lt;p&gt;Check &lt;a href="https://substance3d.adobe.com/documentation/spdoc/color-management-with-opencolorio-225969419.html#section3"&gt;the Substance’s OCIO documentation&lt;/a&gt; for more details but make sure your OCIO config have these
+fellas set with the corresponding colorspace if you want it to be properly
+read in Sp.&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="new-project-conclusion"&gt;
@@ -534,7 +557,7 @@ are using the ACES config.&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Change the color-management mode to OCIO&lt;/li&gt;
 &lt;li&gt;Choose the OCIO config (already chosen if env variable set)&lt;/li&gt;
-&lt;li&gt;Edit the OCIO options to have the correct default colorspaces working.&lt;/li&gt;
+&lt;li&gt;Check the OCIO options to have the correct default colorspaces working.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;And of course, setting the other parameters related to your texturing.&lt;/p&gt;
 &lt;p&gt;Now you are good to start the texturing workflow. The workflow will be
@@ -630,12 +653,21 @@ processor can know if it needs conversion to the Workspace colorspace.&lt;/p&gt;
 &lt;h4&gt;&lt;a href="#id26"&gt;Shelf Resources&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;In Sp this manipulation takes place, weirdly, on the images slots of each
 layer. You will not find any option to specify the colorspace in the shelf.&lt;/p&gt;
-&lt;div class="m-image"&gt;
-&lt;a href="https://mrlixm.github.io/static/images/blog/0008/sp-in-bobross.png"&gt;&lt;img alt="Screenshots of the Input colorspace option for layers." src="https://mrlixm.github.io/static/images/blog/0008/sp-in-bobross.png" /&gt;&lt;/a&gt;
+&lt;div class="l-flex-r l-flex-start l-gap-1"&gt;
+&lt;figure class="m-figure"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0008/sp-in-bobross-7.4.2.png"&gt;&lt;img alt="Screenshots of the Input colorspace option for layers." src="https://mrlixm.github.io/static/images/blog/0008/sp-in-bobross-7.4.2.png" /&gt;&lt;/a&gt;
+&lt;figcaption&gt;Updated menu design on versions 7.4.2 +&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;figure class="m-figure"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0008/sp-in-menudisplay.png"&gt;&lt;img alt="Screenshots of the Input colorspace option for layers." src="https://mrlixm.github.io/static/images/blog/0008/sp-in-menudisplay.png" /&gt;&lt;/a&gt;
+&lt;figcaption&gt;If the menu is not visible, you can toggle it just above.&lt;/figcaption&gt;
+&lt;/figure&gt;
 &lt;/div&gt;
-&lt;p&gt;By default, it is set to &lt;code&gt;auto&lt;/code&gt;, which will use the settings specified in the
-project color-management settings explained above.
-(&lt;a href="#substance-parameters-for-ocio-configs"&gt;Substance parameters for OCIO configs&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;
+By default, it is set to &lt;code&gt;auto&lt;/code&gt;, which will use the settings specified in
+the project color-management menu explained above.&lt;br /&gt;
+(&lt;a href="#substance-parameters-for-ocio-configs"&gt;Substance parameters for OCIO configs&lt;/a&gt;).&lt;br /&gt;
+&lt;/p&gt;
 &lt;p&gt;I recommend always modifying this option to the proper colorspace to be sure
 the resource is properly color-managed.&lt;/p&gt;
 &lt;p&gt;Another option is to have the source colorspace specified in the file name.
@@ -646,9 +678,24 @@ config this could give: &lt;code&gt;bricks_wall_albedo_Utility - Linear - sRGB.e
 &lt;/section&gt;
 &lt;section id="the-color-picker"&gt;
 &lt;h4&gt;&lt;a href="#id27"&gt;The color-picker&lt;/a&gt;&lt;/h4&gt;
+&lt;aside class="m-note m-info"&gt;
+&lt;p&gt;7.4.2 update changed the behavior of the color-picker with huge
+improvements :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Swapped working and display space for the widgets, the &lt;code&gt;eds&lt;/code&gt; is now
+expressed in the display space specified by the &lt;code&gt;tcd&lt;/code&gt; and you can
+have a look at the working colorspace value just under.&lt;/li&gt;
+&lt;li&gt;Color-picker behavior is more consistent overall .&lt;/li&gt;
+&lt;li&gt;You will also notice that the &lt;code&gt;tcd&lt;/code&gt; disapear when picking color in a
+scalar channel/role (which is logic).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The following section has been updated to reflect the change and &lt;strong&gt;will
+not be valid for version under 7.4.2&lt;/strong&gt;&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
 &lt;div class="l-flex-r l-flex-start l-gap-1"&gt;
 &lt;div class="m-image"&gt;
-&lt;a href="https://mrlixm.github.io/static/images/blog/0008/sp-colorpicker.png"&gt;&lt;img alt="Screenshots of the color picker." src="https://mrlixm.github.io/static/images/blog/0008/sp-colorpicker.png" /&gt;&lt;/a&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0008/sp-colorpicker.png"&gt;&lt;img alt="Screenshot of the color picker." src="https://mrlixm.github.io/static/images/blog/0008/sp-colorpicker.png" /&gt;&lt;/a&gt;
 &lt;/div&gt;
 &lt;div class="l-flex-shrink-2"&gt;
 &lt;p&gt;As used as feared by artists. It never react how the artist wants
@@ -660,93 +707,113 @@ Did the sp implementation bring any good news ? Let’s see.&lt;/p&gt;
 &lt;li&gt;&lt;code&gt;eds&lt;/code&gt; : editable sliders, where you can manually enter your color
 components.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;First really good feature is the little info icon, giving explicit
-info on how the widget works. But the given info brings some bad
-news; if we have a look at the info message next to the &lt;code&gt;tcd&lt;/code&gt; :&lt;/p&gt;
+&lt;p&gt;A good feature is the little info icon, giving explicit
+info on how the widget works. If we have a look at the info message
+next to the &lt;code&gt;tcd&lt;/code&gt; we can read :&lt;/p&gt;
 &lt;blockquote&gt;
-This is the display color space used for displaying the on-screen
-image. The editable color values are specified within the project’s
-working color space.&lt;/blockquote&gt;
-&lt;p&gt;What this means is that in the values sliders under, the value entered
-are always in the colorspace defined by the project’s working
-color space. So you could change the &lt;code&gt;tcd&lt;/code&gt; but
-this won’t modify the value entered.&lt;/p&gt;
+Color mixing space, this is the space in which a color is edited
+before being converted into the working color space. It usually
+matches the monitor to be easily viewed.&lt;/blockquote&gt;
+&lt;p&gt;Which means the values in the &lt;code&gt;eds&lt;/code&gt; are in the colorspace
+specified by the &lt;code&gt;tcd&lt;/code&gt;, then they are converted to the working
+colorspace. (you can check the result of this conversion just under.)&lt;/p&gt;
+&lt;p&gt;This is a valid workflow, which allow you to get the same color seen
+in the UI on the final textures.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;The “tcd“ only modify how the color is displayed in the
-interface.&lt;/strong&gt; (you can see this displayed value under the &lt;code&gt;eds&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;But keep in mind that you have to be careful on the color
+you are chosing, the fact that it looks as you want (perceptual)
+doesn’t mean the scene-refered values (working colorspace) have a
+physically plausible value. For exemple, in an ACES workflow you might want
+to make sure that no channel’s value goes up to 1.0, which mean you are
+reaching the boundary of the ACEScg gamut which is comparable to a laser’s
+color.&lt;/p&gt;
 &lt;aside class="m-note m-info"&gt;
-As such it is recommended to set the &lt;code&gt;tcd&lt;/code&gt; to the same colorspace
-being used in the view-transform.&lt;/aside&gt;
+&lt;p&gt;Ideally the &lt;code&gt;tcd&lt;/code&gt; and the view-transform should use the same
+colorspace. This is especially true if you are using the actual picker.
+Unless you need to enter specific value you already know
+which colorspae they are encoded in.&lt;/p&gt;
+&lt;p&gt;Luckily, this is already done automatically. Change the
+view-transform and you will see the &lt;code&gt;tcd&lt;/code&gt; update to reflect the change !&lt;/p&gt;
+&lt;/aside&gt;
 &lt;/aside&gt;
 &lt;p id="picker"&gt;What about the actual picker ?&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;
-Same thing, the value that is being picked is expressed in the working
-colorspace. It is not affected by the &lt;code&gt;tcd&lt;/code&gt;.&lt;br /&gt;
-But there is a &lt;span class="m-text m-s"&gt;little&lt;/span&gt; huge twist !&lt;br /&gt;
-&lt;/p&gt;
+&lt;p&gt;The picker will pick the value at display, so with the view-transform
+applied (if not disabled). Consider this as the input, and will convert
+from the &lt;code&gt;tcd&lt;/code&gt; colorspace to the working colorspace. You then get
+back “nearly” the same value (with some math precisions issue ).&lt;/p&gt;
+&lt;p&gt;What I recommend though, is to change the view-transform to a
+“no-operation” colorspace (usually called &lt;code&gt;raw&lt;/code&gt;), pick the color, and
+re-apply the previous view-transform. This will avoid the
+potential colorspace invertibility and imprecisions issues.&lt;/p&gt;
+&lt;figure class="m-figure"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0008/sp-colorpicker-picker.gif"&gt;&lt;img alt="GIF showing the trick explained above." src="https://mrlixm.github.io/static/images/blog/0008/sp-colorpicker-picker.gif" /&gt;&lt;/a&gt;
+&lt;figcaption&gt;Using Filmic config, original value is RGB(1,0.5,0).&lt;/figcaption&gt;
+&lt;/figure&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;After &lt;a href="https://liamcollod.notion.site/Substance-Painter-Color-Picker-Issue-1d1cdeeb0e2846ba977ebc453e5ae56b"&gt;some extensive testing&lt;/a&gt;,
-I can unfortunately say that the picker is not
-consistent depending of the OCIO config you are using. It works in some
-cases and it is broken in others. I’m still not sure about what the issue
-actually is but here is what I have :&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;Case 1&lt;/code&gt; : You are using an OCIO v2 config that &lt;strong&gt;uses Display
-colorspaces and Shared Views&lt;/strong&gt; (OCIO v2 new features) :&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;The picker take the value at the display (after the
-view-transform is applied) and return it.&lt;/p&gt;
-&lt;p&gt;This only work when there is, well …, no view-transform, i.e. is
-it is disabled or use a display with a “passtrough/raw” encoding. If
-you are viewing color data with the proper view-transform, the
-picked value will not correspond to the original value you used.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;Case 2&lt;/code&gt; : You are using an OCIO v1 config or v2 without the new
-features :&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;The picker take the value at display (with the view-transform), then
-apply an inverse display transform. It pick the default one, i.e. the
-first defined in the config or in the &lt;code&gt;active_displays&lt;/code&gt; key.
-And as the sliders don’t go above 1, the result is clamped between the
-0-1 range 🙂&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
+&lt;aside class="m-note m-info"&gt;
+The color-picker is unfortunately clamped between the 0-1 range, which is
+at the same time ok because for texturing you usually want to avoid
+values to goes outside this range, but also means color-picking operation
+are clamped which create inconsistency for some of them yielding result
+above 1.&lt;/aside&gt;
+&lt;/aside&gt;
 &lt;aside class="m-note m-warning"&gt;
-You need to also take into consideration the color-picker precision issues.
-Applying an invert color-transformations can lead in some cases to
-imprecisions + the picking operation has precisions
-issues by itself&lt;/aside&gt;
+Sometimes, when switching colorspaces in the &lt;code&gt;tcd&lt;/code&gt;, some UI elements
+like the  &lt;code&gt;eds&lt;/code&gt; will not update and you might have to move the sliders
+slightly to force an update.&lt;/aside&gt;
 &lt;/aside&gt;
-&lt;p&gt;This means the colorpicker is unfortunately again, broken. But
-with the above in mind, it is still possible to get back the correct values.&lt;/p&gt;
-&lt;aside class="m-block m-primary"&gt;
-&lt;h3&gt;For &lt;code&gt;Case 1&lt;/code&gt; :&lt;/h3&gt;
+&lt;aside class="m-block m-info"&gt;
+&lt;h3&gt;Hexadecimal&lt;/h3&gt;
+&lt;p&gt;If you need to enter hexadecimal values, the field will assume they are “
+sRGB-Display“ encoded and use the &lt;code&gt;Standard sRGB color space&lt;/code&gt; defined
+in the config to convert it to the working color-space.
+(Field that seems to be bugged, I can’t edit edit it, only copy/paste
+value inside).&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;aside class="m-block m-warning"&gt;
+&lt;h3&gt;OCIO v2 issue&lt;/h3&gt;
+&lt;p&gt;Seems the OCIO v2 feature called “shared views” is not supported properly
+by the color-picker. If you use a “colorspace” (actually a &lt;code&gt;display
+view&lt;/code&gt;) which make use of a shared view (using &lt;code&gt;&amp;lt;Views&amp;gt;&lt;/code&gt;), the widget
+displaying the working colorspace values will disapear.&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;aside class="m-block m-info"&gt;
+&lt;h3&gt;Swatches&lt;/h3&gt;
+&lt;p&gt;You can save colors as swatches for easier re-use. Quoting from the
+&lt;a href="https://substance3d.adobe.com/documentation/spdoc/color-picker-220857079.html#section7"&gt;swatches documentation&lt;/a&gt; :
+&lt;code&gt;Swatch color are managed and saved as sRGB colors, whatever the current
+color management configuration is set to&lt;/code&gt;. The steps are as follow :&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Disable the view-transform whenever you want to pick a value.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;saving&lt;/code&gt; : &lt;code&gt;working colorspace&lt;/code&gt; converted to &lt;code&gt;sRGB standard
+colorspace&lt;/code&gt; then converted to hexadecimal.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;importing&lt;/code&gt; : &lt;code&gt;sRGB standard colorspace&lt;/code&gt; converted to &lt;code&gt;working colorspace&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;No matter how the &lt;code&gt;tcd&lt;/code&gt; is set this is how it works EXCEPT if the &lt;code&gt;tcd&lt;/code&gt;
+is set to a scalar colorspace (&lt;code&gt;isdata=true&lt;/code&gt; in the config). In that case
+and as expected the swatch is imported without conversion so straight
+hexadecimal to RGB values (which doesn’t looks like the original color of
+course.)&lt;/p&gt;
 &lt;/aside&gt;
 &lt;/aside&gt;
-&lt;aside class="m-block m-primary"&gt;
-&lt;h3&gt;For &lt;code&gt;Case 2&lt;/code&gt; :&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Set the &lt;code&gt;tcd&lt;/code&gt; to the default view-transform colorspace.&lt;/li&gt;
-&lt;li&gt;Pick your value.&lt;/li&gt;
-&lt;li&gt;Look at the values in the &lt;code&gt;Display colorspace&lt;/code&gt; widget, and copy
-them in the &lt;code&gt;eds&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/aside&gt;
-&lt;/aside&gt;
-&lt;p&gt;If you are curious I made a bug report on the forum here :
-&lt;a class="m-link-wrap" href="https://community.adobe.com/t5/substance-3d-painter-discussions/color-picker-doesn-t-behave-consistent-across-ocio-configs/td-p/12603389"&gt;https://community.adobe.com/t5/substance-3d-painter-discussions/color-picker-doesn-t-behave-consistent-across-ocio-configs/td-p/12603389&lt;/a&gt;&lt;/p&gt;
+&lt;figure class="m-figure"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0008/sp-colorpicker-infograph.jpg"&gt;&lt;img alt="Color-picker infographic." src="https://mrlixm.github.io/static/images/blog/0008/sp-colorpicker-infograph.jpg" /&gt;&lt;/a&gt;
+&lt;figcaption&gt;Small infographic to resume colorspace transformations.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;So I must say that the latest update have greatly improved the color-picking
+experience which behave a bit more as you would except. Cool stuff !
+Looking forward to next updates to reach the perfect color-picking
+experience haha.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="environment"&gt;
 &lt;h4&gt;&lt;a href="#id28"&gt;Environment&lt;/a&gt;&lt;/h4&gt;
-&lt;p&gt;There is no direct option to modify the environment image colorspace.&lt;/p&gt;
-&lt;p&gt;Your options are :&lt;/p&gt;
+&lt;p&gt;&lt;span class="m-text m-s l-c-color-6"&gt;There is no direct option to modify the environment image colorspace.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;From 7.4.2 + you can find an option in the &lt;code&gt;Display Settings&lt;/code&gt; Menu, to change
+the environment colorspace being used.&lt;/p&gt;
+&lt;p&gt;For the other versions you still have the following options:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Modify the default &lt;code&gt;Linear&lt;/code&gt; colorspace in the project settings. The
 environments maps will use it.&lt;/li&gt;
@@ -755,7 +822,9 @@ environments maps will use it.&lt;/li&gt;
 &lt;code&gt;myhdri_ACES - ACEScg.exr&lt;/code&gt;. (you can find an example in &lt;a href="#aces-environment"&gt;ACES -
 Environment&lt;/a&gt;)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;The pre-integrated HDRIs are encoded with a &lt;code&gt;linear - sRGB&lt;/code&gt; colorspace.&lt;/p&gt;
+&lt;aside class="m-note m-info"&gt;
+The pre-integrated HDRIs are encoded with a &lt;code&gt;linear - sRGB&lt;/code&gt;-like colorspace.&lt;/aside&gt;
+&lt;/aside&gt;
 &lt;/section&gt;
 &lt;section id="masks"&gt;
 &lt;h4&gt;&lt;a href="#id29"&gt;Masks&lt;/a&gt;&lt;/h4&gt;
@@ -849,12 +918,18 @@ for the ACES workflow apply.&lt;/p&gt;
 &lt;/div&gt;
 &lt;section id="aces-environment"&gt;
 &lt;h5&gt;&lt;a href="#id36"&gt;ACES - Environment&lt;/a&gt;&lt;/h5&gt;
-&lt;p&gt;There is unfortunately no direct options to change environment’s colorspace.
-But they follow default colorspace rules. And as they are floating point image
-they use the pre-defined &lt;code&gt;Utility - Linear - sRGB&lt;/code&gt; colorspace. As such, as
-long as they are sRGB - linear encoded, they will be properly displayed.&lt;/p&gt;
-&lt;p&gt;But what if I want to import an already converted ACEScg HDRI ?&lt;/p&gt;
+&lt;p&gt;&lt;span class="m-text m-s l-c-color-6"&gt;There is unfortunately no direct options to change environment’s
+colorspace.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;From 7.4.2+ you can find an option in the &lt;code&gt;Display Settings&lt;/code&gt; Menu, to change
+the environment colorspace being used.&lt;/p&gt;
+&lt;p&gt;Environment follow default colorspace rules. Being floating point image
+, they will use the pre-defined &lt;code&gt;Utility - Linear - sRGB&lt;/code&gt; colorspace.
+So as long as they are &lt;code&gt;sRGB - linear&lt;/code&gt;-like encoded, they will be properly
+displayed.&lt;/p&gt;
+&lt;p&gt;If that not the case you can use the mentioned override option, but
+in the case you are using an older version here is my previous solution :&lt;/p&gt;
 &lt;blockquote&gt;
+&lt;p&gt;But what if I want to import an already converted ACEScg HDRI ?&lt;/p&gt;
 &lt;p&gt;There is a way to have it working. You can specify the colorspace in the
 file name. The colorspace has to be &lt;strong&gt;the exact same name&lt;/strong&gt; as the one
 defined in the config. An example would be: &lt;code&gt;myhdri_ACES - ACEScg.exr&lt;/code&gt;.&lt;/p&gt;
@@ -869,11 +944,18 @@ doesn’t get properly converted and looks shifted.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="aces-colorpicker"&gt;
 &lt;h4&gt;&lt;a href="#id37"&gt;ACES - Colorpicker&lt;/a&gt;&lt;/h4&gt;
-&lt;p&gt;The colorpicker by default and in my case use the same colorspace as the
-first view_transform. This means the color I see in the picker is the same in
-the viewport. As mentioned in &lt;a href="#the-color-picker"&gt;The color-picker&lt;/a&gt; section the sliders values
-are expressed in the working-colorspace, in our case ACEScg.&lt;/p&gt;
-&lt;p&gt;Consider the following example :&lt;/p&gt;
+&lt;aside class="m-note m-info"&gt;
+The screenshots in this section have not been updated to reflect change
+in the 7.4.2 update. Explanations still apply.&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;p&gt;Everything in &lt;a href="#the-color-picker"&gt;The color-picker&lt;/a&gt; section applies here. You can just except
+more odd behavior as a wider-gamut and more complex view-transform will not
+play well with it. The first potential issue that came to my mind is the
+combinaison of 0-1 clamping + ACES ODT : If you are picking a pure value of
+RGB(1,1,1) considered encoded as &lt;code&gt;Output - sRGB&lt;/code&gt;, you would usually get back
+a scene-referred value of RGB(16.2,16.2,16.2). But the color-picker is
+clamped between the 0-1 range so you will end up with just RGB(1,1,1).&lt;/p&gt;
+&lt;p&gt;Then consider the following example :&lt;/p&gt;
 &lt;figure class="m-figure"&gt;
 &lt;a href="https://mrlixm.github.io/static/images/blog/0008/sp-aces-colorpicker.png"&gt;&lt;img alt="Substance colorpicker with ACES workflow." src="https://mrlixm.github.io/static/images/blog/0008/sp-aces-colorpicker.png" /&gt;&lt;/a&gt;
 &lt;figcaption&gt;Model by &lt;a href="https://www.artstation.com/ashimara"&gt;Emmanuel-Xuân Dubois&lt;/a&gt;&lt;/figcaption&gt;
@@ -888,26 +970,23 @@ values.&lt;/aside&gt;
 &lt;p&gt;What if I want to apply a color we gave me as hexadecimal ?&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Consider my brand’s green picked from &lt;a class="m-link-wrap" href="https://coolors.co"&gt;https://coolors.co&lt;/a&gt; .&lt;/p&gt;
-&lt;figure class="m-figure"&gt;
+&lt;div class="m-image"&gt;
 &lt;a href="https://mrlixm.github.io/static/images/blog/0008/sp-aces-colorpicker-hex.png"&gt;&lt;img alt="Substance colorpicker with ACES workflow." src="https://mrlixm.github.io/static/images/blog/0008/sp-aces-colorpicker-hex.png" /&gt;&lt;/a&gt;
-&lt;figcaption&gt;Model by &lt;a href="https://www.artstation.com/ashimara"&gt;Emmanuel-Xuân Dubois&lt;/a&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
+&lt;/div&gt;
 &lt;p&gt;Well … the less brain-damaging solution would be to just eyeball the
 color.&lt;/p&gt;
-&lt;p&gt;The first issue here is that the color is probably sRGB display
-encoded and need to first be linearized, then converted to ACEScg.&lt;/p&gt;
-&lt;div class="m-image"&gt;
-&lt;a href="https://mrlixm.github.io/static/images/blog/0008/sp-aces-colorpicker-conversion.png"&gt;&lt;img alt="Nuke screenshot to convert sRGB hex value to ACEScg" src="https://mrlixm.github.io/static/images/blog/0008/sp-aces-colorpicker-conversion.png" /&gt;&lt;/a&gt;
-&lt;/div&gt;
-&lt;p&gt;The above should give you an idea of how to achieve this with Nuke.
-The ACEScg values can be found at the bottom right of the image.
-But as you can see the viewer color (with the ACES ODT applied) is still
-different from the preview on coolors website !&lt;/p&gt;
-&lt;p&gt;Keep this in mind: &lt;span class="m-text m-primary"&gt;you will never be able to match the look
+&lt;p&gt;Luckily, the 7.4.2 update made thing easier for us. The hexadecimal color
+will assume to be encoded in the &lt;code&gt;sRGB standard colorspace&lt;/code&gt; and converted
+to the working colorspace. So just copy/paste your color in the hexadecimal
+field and you should have your color converted.&lt;/p&gt;
+&lt;p&gt;Even with this, you might notice that the color is still not similar to
+the sRGB one. This is normal and inherent to the ACES ODT which apply a
+“creative” and “technical” transformation on display.&lt;/p&gt;
+&lt;p&gt;So keep this in mind: &lt;span class="m-text m-primary"&gt;you will never be able to match the look
 of the sRGB workflow with the ACES workflow.&lt;/span&gt; (unless cheating).&lt;/p&gt;
-&lt;p&gt;I’m not going to dive into further explanations as there is &lt;a href="https://community.acescentral.com/t/preserving-logos-and-graphics-in-aces/2861"&gt;enough threads
-on this subject&lt;/a&gt;
-on ACES central and Chris &lt;a href="https://chrisbrejon.com/cg-cinematography/chapter-1-5-academy-color-encoding-system-aces/#inverted-odt-workflow"&gt;is already explaining it here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I’m not going to dive into further explanations as there is &lt;a href="https://community.acescentral.com/t/preserving-logos-and-graphics-in-aces/2861"&gt;enough
+ACES central threads&lt;/a&gt;  on this subject
+and Chris &lt;a href="https://chrisbrejon.com/cg-cinematography/chapter-1-5-academy-color-encoding-system-aces/#inverted-odt-workflow"&gt;is also explaining it here&lt;/a&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;/section&gt;
 &lt;section id="aces-output"&gt;
@@ -929,6 +1008,10 @@ name. (and instead export the textures in a folder named ACEScg)&lt;/p&gt;
 &lt;aside class="m-note m-default"&gt;
 The goal here is not to denigrate the dev team’s works but rather to offer
 explanations and solutions for improving the software.&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;aside class="m-note m-info"&gt;
+The team did a fantastic job in the latest updates by adressing some of
+the issues I mentionned !&lt;/aside&gt;
 &lt;/aside&gt;
 &lt;section id="display-issues"&gt;
 &lt;h3&gt;&lt;a href="#id40"&gt;Display Issues&lt;/a&gt;&lt;/h3&gt;
@@ -1088,9 +1171,9 @@ Substance config &lt;code&gt;displays&lt;/code&gt; key is not properly built.&lt
 &lt;li&gt;&lt;p&gt;The Substance config could overall, benefits from using OCIO v2 features.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;
-OCIO roles are not supported, as such default configuration for
-projects is wrong and can confuse artists.&lt;br /&gt;
-(see &lt;a href="#substance-parameters-for-ocio-configs"&gt;Substance parameters for OCIO configs&lt;/a&gt;)&lt;br /&gt;
+&lt;span class="m-text m-s l-c-color-6"&gt;OCIO roles are not supported, as such default configuration for
+projects is wrong and can confuse artists.&lt;/span&gt;&lt;br /&gt;
+(implemented on 7.4.2 !)(see &lt;a href="#substance-parameters-for-ocio-configs"&gt;Substance parameters for OCIO configs&lt;/a&gt;)&lt;br /&gt;
 &lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;
@@ -1110,22 +1193,30 @@ and not from a layer’s slot. A resource doesn’t have its original
 colorspace changing depending on where it’s used !&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;
-There is no direct option to change the environment image colorspace.
-Having the above suggestion implemented would solve this one too.&lt;br /&gt;
-(see &lt;a href="#environment"&gt;Environment&lt;/a&gt; )&lt;br /&gt;
+&lt;span class="m-text m-s l-c-color-6"&gt;There is no direct option to change the environment image colorspace.
+Having the above suggestion implemented would solve this one too.&lt;/span&gt;&lt;br /&gt;
+(implemented on 7.4.2 !)(see &lt;a href="#environment"&gt;Environment&lt;/a&gt; )&lt;br /&gt;
 &lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Color-picker : modifying the top colorspace should affect the editable
-values. Where the top colorspace represents the colorspace used to enter
-values so they can be converted to the working colorspace behind the scene.&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;
+&lt;span class="m-text m-s l-c-color-6"&gt;Color-picker : modifying the top colorspace should affect the
+editable values. Where the top colorspace represents the colorspace used
+to enter values so they can be converted to the working colorspace
+behind the scene.&lt;/span&gt;&lt;br /&gt;
+(implemented on 7.4.2 !)&lt;br /&gt;
+&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;With the above, add a way to see what values are being used in the
-workspace.&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;
+&lt;span class="m-text m-s l-c-color-6"&gt;With the above, add a way to see what values are being used in
+the workspace.&lt;/span&gt;&lt;br /&gt;
+(implemented on 7.4.2 !)&lt;br /&gt;
+&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;
 Color-picker is broken. It react differently depending of the OCIO
 config version use.&lt;br /&gt;
-(see &lt;a href="#picker"&gt;picker&lt;/a&gt; section for details)&lt;br /&gt;
+(see &lt;a href="#picker"&gt;picker&lt;/a&gt; section for details).&lt;br /&gt;
+Update: it is less broken in 7.4.2 but there is still no some issues.&lt;br /&gt;
 &lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;No options to set a specific colorspace for textures at export time.&lt;/p&gt;
@@ -1133,6 +1224,8 @@ config version use.&lt;br /&gt;
 &lt;li&gt;&lt;p&gt;When use the following OCIO v2 colorspace name token, an error is logged:&lt;/p&gt;
 &lt;pre class="m-code"&gt;[ColorManagement] Error while creating OpenColorIO colorspace transform: Color space &amp;#39;&amp;lt;USE_DISPLAY_NAME&amp;gt;&amp;#39; could not be found&lt;/pre&gt;
 &lt;p&gt;But displays still manage to work without issues.&lt;/p&gt;
+&lt;p&gt;EDIT: This actually affect the color-picker who doesn’t seems to supports
+shared-views.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/section&gt;
@@ -1145,7 +1238,8 @@ don’t hesitate to &lt;a href="/pages/contact"&gt;contact&lt;/a&gt; me to sugge
 article could be improved. (you can also join the discord, click on the purple
 button at the bottom of this page)&lt;/p&gt;
 &lt;p&gt;If you like this post and wish to support me you could buy some of my
-scripts on &lt;a href="https://app.gumroad.com/pyco"&gt;my Gumroad&lt;/a&gt;.&lt;/p&gt;
+scripts on &lt;a href="https://app.gumroad.com/pyco"&gt;my Gumroad&lt;/a&gt; or check my ko-fi at
+the bottom of this page.&lt;/p&gt;
 &lt;p&gt;I see you in the next one that would probably be on the same topic but on
 Mari. 👋&lt;/p&gt;
 &lt;/section&gt;
@@ -1227,6 +1321,14 @@ cinematography and photography and more.&lt;/p&gt;
 &lt;h2&gt;&lt;a href="#id47"&gt;Changelog&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;17-12-2021&lt;/code&gt;: fixed &lt;a href="#the-color-picker"&gt;The color-picker&lt;/a&gt; section. &lt;a href="https://community.acescentral.com/t/aces-and-substance-painter/2299/42"&gt;Discussion available here&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;09-03-2022&lt;/code&gt;: Updated article following 7.4.2 update.&lt;ul&gt;
+&lt;li&gt;&lt;a href="#substance-parameters-for-ocio-configs"&gt;Substance parameters for OCIO configs&lt;/a&gt; : updated&lt;/li&gt;
+&lt;li&gt;&lt;a href="#the-color-picker"&gt;The color-picker&lt;/a&gt; : whole section re-wrote&lt;/li&gt;
+&lt;li&gt;&lt;a href="#environment"&gt;Environment&lt;/a&gt; : updated&lt;/li&gt;
+&lt;li&gt;&lt;a href="#aces-colorpicker"&gt;ACES - Colorpicker&lt;/a&gt; : updated&lt;/li&gt;
+&lt;li&gt;&lt;a href="#issues-recap"&gt;Issues Recap&lt;/a&gt; : updated&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/section&gt;
 </content><category term="tutorial"></category><category term="substance-painter"></category><category term="color-science"></category><category term="OCIO"></category><category term="ACES"></category></entry><entry><title>OpenDRT : a nice (experimental) alternative to ACES</title><link href="https://mrlixm.github.io/blog/opendrt/" rel="alternate"></link><published>2021-11-24T19:02:00+01:00</published><updated>2021-11-24T19:02:00+01:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-11-24:/blog/opendrt/</id><summary type="html">&lt;p&gt;An open-source alternative to convert scene-linear data to SDR or

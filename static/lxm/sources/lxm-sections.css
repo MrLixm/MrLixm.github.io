@@ -113,6 +113,13 @@ main article aside p {
     font-size: 1rem;
     letter-spacing: -0.3px;
 }
+main article ul {
+    color: var(--color-article-main);
+}
+main article ol {
+    color: var(--color-article-main);
+}
+
 
 main article h1,
 main article h2,
