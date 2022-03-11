@@ -6,7 +6,7 @@ Color-management in Substance Painter with OCIO
 :status: published
 :date-created: 2021-11-24 23:33
 :date: 2021-12-08 19:03
-:modified: 2021-12-17 23:46
+:modified: 2021-11-03 11:53
 :cover: {static}/images/blog/0008/cover.jpg
 
 :category: tutorial
@@ -676,21 +676,23 @@ _______________
 In Sp this manipulation takes place, weirdly, on the images slots of each
 layer. You will not find any option to specify the colorspace in the shelf.
 
-.. image:: {static}/images/blog/0008/sp-in-bobross.png
-    :target: {static}/images/blog/0008/sp-in-bobross.png
-    :alt: Screenshots of the Input colorspace option for layers.
-    :scale: 50%
+.. container:: l-flex-r l-flex-start l-gap-1
 
-.. figure:: {static}/images/blog/0008/sp-in-bobross-7.4.2.png
-    :target: {static}/images/blog/0008/sp-in-bobross-7.4.2.png
-    :alt: Screenshots of the Input colorspace option for layers.
+    .. figure:: {static}/images/blog/0008/sp-in-bobross-7.4.2.png
+        :target: {static}/images/blog/0008/sp-in-bobross-7.4.2.png
+        :alt: Screenshots of the Input colorspace option for layers.
 
-    Updated menu design on versions 7.4.2 +
+        Updated menu design on versions 7.4.2 +
 
+    .. figure:: {static}/images/blog/0008/sp-in-menudisplay.png
+        :target: {static}/images/blog/0008/sp-in-menudisplay.png
+        :alt: Screenshots of the Input colorspace option for layers.
 
-By default, it is set to ``auto``, which will use the settings specified in the
-project color-management settings explained above.
-(`Substance parameters for OCIO configs`_).
+        If the menu is not visible, you can toggle it just above.
+
+| By default, it is set to ``auto``, which will use the settings specified in
+ the project color-management menu explained above.
+| (`Substance parameters for OCIO configs`_).
 
 I recommend always modifying this option to the proper colorspace to be sure
 the resource is properly color-managed.
@@ -808,6 +810,12 @@ What about the actual picker ?
     values to goes outside this range, but also means color-picking operation
     are clamped which create inconsistency for some of them yielding result
     above 1.
+
+.. note-warning::
+
+    Sometimes, when switching colorspaces in the ``tcd``, some UI elements
+    like the  ``eds`` will not update and you might have to move the sliders
+    slightly to force an update.
 
 .. block-info:: Hexadecimal
 
@@ -1386,11 +1394,6 @@ Issues Recap
     EDIT: This actually affect the color-picker who doesn't seems to supports
     shared-views.
 
--
-    2 colorspace in the OCIO config with a different ``isdata`` tag will not
-    produce the same result even if it's the only difference between them. (
-    This one might be an expected behavior though, not sure).
-
 
 Conclusion
 ----------
@@ -1459,8 +1462,8 @@ Changelog
 -
     ``09-03-2022``: Updated article following 7.4.2 update.
 
-    - `Substance parameters for OCIO configs`_ : added precisions
+    - `Substance parameters for OCIO configs`_ : updated
     - `The color-picker`_ : whole section re-wrote
-    - `Environment`_ : added precision
+    - `Environment`_ : updated
     - `ACES - Colorpicker`_ : updated
     - `Issues Recap`_ : updated
