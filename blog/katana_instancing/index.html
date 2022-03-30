@@ -82,7 +82,7 @@
         <footer class="l-post-context" id="post-context-footer">
           <span class="l-time l-flex-item" title="Date Created">
             <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-            <time datetime="2022-03-09T12:24:00+01:00">09 March 2022</time>
+            <time datetime="2022-03-30T20:58:00+02:00">30 March 2022</time>
           </span>
           <span class="l-box-author l-flex-item" title="List of Authors">
             <img src="/static/images/global/icons/account.svg" alt="Author icon" >
@@ -313,6 +313,7 @@ primitives.</p>
 <p class="l-url-description">15KB folder on mega.nz</p>
 </div>
 </div>
+<p>You can also download the <a href="https://github.com/MrLixm/KUI/tree/main/dev/data/alembics">pointcloud used in KUI</a> for testing.</p>
 <p>This point-cloud has been generated from Mash (see <a href="https://github.com/MrLixm/Autodesk_Maya/tree/main/src/mash2pointcloud">mash2pointcloud</a>)
 and contains the most commonly used attributes.</p>
 <p>Here is what it looked like in Maya :</p>
@@ -331,7 +332,7 @@ and contains the most commonly used attributes.</p>
 </div>
 </div>
 <p>And here is the instances-sources mapping list :</p>
-<pre>0: cube
+<pre class="m-code">0: cube
 1: cone
 2: sphere</pre>
 <p>Here it is imported in Katana :</p>
@@ -733,7 +734,7 @@ not using all the exported attributes on our point-cloud. Supporting them
 requires extending the basics OpScripts we used but this will be too long
 for this blog-post. Instead, I’m just going to give the code logic you could
 be using if you want to go down that road. Else you will find a fully working
-solution in the <a href="#katana-uber-instancing">Katana Uber Instancing</a> section.</p>
+solution in the <a href="#katana-uber-instancing">Katana Uber Instancing</a> section 😉.</p>
 </section>
 <section id="full-instancing-hierarchical">
 <h3><a href="#id12">Full Instancing : Hierarchical</a></h3>
@@ -912,7 +913,7 @@ mistakes so use it at your own risk. Again I recommend instead having a look at
 <p>Array is in a way more simple, you can just brainless copy the attributes
 from the point-cloud to the instance (if they are properly formatted).
 Make sure to <a href="https://learn.foundry.com/katana/4.5/dev-guide/AttributeConventions/Instancing.html">check the documentation</a> about what kind of
-attribute is excepted.
+attribute is expected.
 Pseudo code is looking like this :</p>
 <pre class="m-code"><span class="c1">-- this is &quot;pseudo-code&quot;, not usable as it is (actually for this one it is).</span>
 
@@ -927,7 +928,7 @@ Pseudo code is looking like this :</p>
 
 <span class="n">Interface</span><span class="p">.</span><span class="n">SetAttr</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="n">StringAttribute</span><span class="p">(</span><span class="s1">&#39;instance array&#39;</span><span class="p">))</span>
 <span class="n">Interface</span><span class="p">.</span><span class="n">SetAttr</span><span class="p">(</span><span class="s1">&#39;geometry.instanceTranslate&#39;</span><span class="p">,</span> <span class="n">p_attr</span><span class="p">)</span></pre>
-<p>Yup, that is that easy if you only need translations.</p>
+<p>Yup, it is that easy if you only need translations.</p>
 <p>To add rotations, you will need to split the incoming point-cloud attribute
 into X,Y and Z and add the axis direction. Works the same as for hierarchical.
 And imagine you are using a matrix instead. Even less code to write.</p>
@@ -977,7 +978,7 @@ hierarchical…</p>
 before publishing this article. To have motion-blur working on your instances
 (if there is movement), they need to store on attributes multiples samples that
 correspond to the <code>shutterOpen/Close</code> values specified in the RenderSettings.
-A samples could be considered as a “sub-frame”, so with <code>shutterOpen=-0.25,
+A sample could be considered as a “sub-frame”, so with <code>shutterOpen=-0.25,
 shutterClose=0.25</code> and the <code>maxTimeSamples</code> set to 3 you would find 3
 time samples at -0.25, 0.0, 0.25 per attribute.</p>
 <p>Example with an xform matrix attribute :</p>
@@ -987,7 +988,7 @@ time samples at -0.25, 0.0, 0.25 per attribute.</p>
   <span class="p">[</span><span class="mf">0.25</span><span class="p">]</span> <span class="o">=</span> <span class="p">{{</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">},</span> <span class="p">{</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">},</span> <span class="p">{</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>  <span class="p">...</span> <span class="p">}},</span>
 <span class="p">}</span></pre>
 <p>All the code you saw in the <a href="#instancing-in-practice">Instancing In Practice</a> section (except the
-Basic Array one) doesn’t take account for multiple time samples and just get
+Basic Array one) doesn’t take account of multiple time samples and just gets
 the nearest sample at 0.0. And you better know if you need to support
 motion-blur before writing anything (I have to rewrite a good chunk of KUI
 because of not knowing about it).</p>
@@ -1047,7 +1048,7 @@ RenderLog <strong>(so start a render)</strong>. The nodegraph doesn’t evaluate
 motion-blur in live and the result in the console will only be for time
 sample 0.0.</aside>
 </aside>
-<p>Of course this add an additional small loop to process values which increase
+<p>Of course, this adds an additional small loop to process values which increase
 code complexity and could also damage performances if not optimized code is
 being used.</p>
 <p>You can have a look at the lua files in My <code>Foundry_Katana</code> GitHub repository
@@ -1166,12 +1167,6 @@ implemented.</p>
 </section>
 <section id="katana-uber-instancing">
 <h2><a href="#id19">Katana Uber Instancing</a></h2>
-<aside class="m-block m-warning">
-<h3>⚠ IN DEVELOPMENT</h3>
-<p>! if you read this means KUI is still in development. Do not
-use for now !</p>
-</aside>
-</aside>
 <p>As we just saw, instancing can require in some cases quite some work before
 having a result. That’s why I tried to produce a solution that would be very
 flexible with a very straightforward setup.</p>
@@ -1179,8 +1174,8 @@ flexible with a very straightforward setup.</p>
 actually) where, using the same parameters, you could conveniently switch
 between different instancing methods and have a lot of flexibility on inputs.
 (Leaf-level has been excluded as I’m not familiar with it.)</p>
-<p>Lot of work has been put into this project, learned a lot about lua and i’m
-really happy to share it to you. (Furthermore open-sourced)</p>
+<p>A lot of work has been put into this project, learned a lot about lua and I’m
+really happy to share it with you. (Furthermore open-sourced)</p>
 <p>The project is available on GitHub here :</p>
 <div class="l-url-box">
 <a class="l-url-a" href="https://github.com/MrLixm/KUI"></a>
@@ -1196,16 +1191,16 @@ really happy to share it to you. (Furthermore open-sourced)</p>
 </div>
 </div>
 <p><strong>I let you check the README.md</strong> that is listing all the instructions
-necessary to use this tool. There is a pretty extensive documentation that
+necessary to use this tool. There is pretty extensive documentation that
 should cover everything you need to know.</p>
 </section>
 <section id="render-engines">
 <h2><a href="#id20">Render-Engines</a></h2>
 <p>Even if you are sure your instancing setup is correct, it might actually not
-be what you render-engine expect it to be. So golden-rule, first read your
+be what your render-engine expect it to be. So golden rule, first read your
 renderer documentation carefully to see what is required, then if it’s
-still not working, you will have to test stuff until it work 😬.</p>
-<p>For Redshift, check the section right under, for other renderer, here is
+still not working, you will have to test stuff until it works 😬.</p>
+<p>For Redshift, check the section right under, for other renderers, here is
 what I found :</p>
 <ul>
 <li><code class="l-bgc-dl-o">3Delight</code> AND <code class="l-bgc-prman-o">Renderman</code> : arbitrary attribute need
@@ -1230,29 +1225,29 @@ sources</em>.</li>
 <p>You can check the test scene I used for KUI that should have a working setup
 for Arnold, 3Delight and Renderman.</p>
 <blockquote>
-<a class="m-link-wrap" href="https://github.com/MrLixm/KUI/blob/dev/dev/scenes/kui.demo.katana">https://github.com/MrLixm/KUI/blob/dev/dev/scenes/kui.demo.katana</a></blockquote>
+<a class="m-link-wrap" href="https://github.com/MrLixm/KUI/blob/master/dev/scenes/kui.tests.katana">https://github.com/MrLixm/KUI/blob/master/dev/scenes/kui.tests.katana</a></blockquote>
 <section id="redshift">
 <h3><a href="#id21">Redshift</a></h3>
 <p>The production where I had to look for instancing was using Redshift,
 and unfortunately, it seems that, at that time, the instancing features where
 “minimally” implemented and some stuff was missing/broken.
-Fortunately, Redshift developer’s Juanjo was very responsive and very quickly,
+Fortunately, Redshift developer Juanjo was very responsive and very quickly,
 fixed all the issues I found. Discussion can be found <a href="https://redshift.maxon.net/topic/33461/more-documentation-for-instancing-in-katana?_=1634997159560">in this thread</a>
 (maxon account required).</p>
 <p>Didn’t tested the latest version but I think you should now get the same
 features other render-engine have. I’m just not sure if arbitrary attributes
 still need to be in <code>instance.arbitrary</code> or is the commonly used
-<code>geometry.arbitrary</code> is supported ?</p>
+<code>geometry.arbitrary</code> supported ?</p>
 </section>
 </section>
 <section id="outro">
 <h2><a href="#id22">Outro</a></h2>
 <p>And that’s a wrap. Very happy to have finally published this tutorial that was
-hanging around for 4 month already haha. A topic that I could have explored in
+hanging around for 4 months already haha. A topic that I could have explored in
 this post is USD, which is an additional solution for instancing. But
 having no experience at all with the format I will let you do the research.</p>
 <p>I really hope this was useful for you because this was
-the kind of informations I wish I had when starting looking for
+the kind of information I wish I had when starting looking for
 instancing !
 As always feedback is welcome. If you notice anything let me know
 on the PYCO discord (link in the page’s footer) or just e-mail me.</p>
@@ -1329,7 +1324,7 @@ on the PYCO discord (link in the page’s footer) or just e-mail me.</p>
         <footer class="l-post-context" id="post-context-footer">
           <span class="l-time l-flex-item" title="Date Created">
             <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-            <time datetime="2022-03-09T12:24:00+01:00">09 March 2022</time>
+            <time datetime="2022-03-30T20:58:00+02:00">30 March 2022</time>
           </span>
           <span class="l-box-author l-flex-item" title="List of Authors">
             <img src="/static/images/global/icons/account.svg" alt="Author icon" >

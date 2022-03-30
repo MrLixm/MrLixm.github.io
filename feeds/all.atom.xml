@@ -1,5 +1,1206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Liam Collod Website</title><link href="https://mrlixm.github.io/" rel="alternate"></link><link href="https://mrlixm.github.io/feeds/all.atom.xml" rel="self"></link><id>https://mrlixm.github.io/</id><updated>2022-03-11T11:53:00+01:00</updated><entry><title>Color-management in Substance Painter with OCIO</title><link href="https://mrlixm.github.io/blog/substance-painter-color-management/" rel="alternate"></link><published>2021-12-08T19:03:00+01:00</published><updated>2022-03-11T11:53:00+01:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-12-08:/blog/substance-painter-color-management/</id><summary type="html">&lt;p&gt;The long-awaited OCIO feature is here, now we gotta find how it works.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Liam Collod Website</title><link href="https://mrlixm.github.io/" rel="alternate"></link><link href="https://mrlixm.github.io/feeds/all.atom.xml" rel="self"></link><id>https://mrlixm.github.io/</id><updated>2022-03-30T20:58:00+02:00</updated><entry><title>Instancing in Katana</title><link href="https://mrlixm.github.io/blog/katana_instancing/" rel="alternate"></link><published>2022-03-30T20:58:00+02:00</published><updated>2022-03-30T20:58:00+02:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2022-03-30:/blog/katana_instancing/</id><summary type="html">&lt;p&gt;How OpScript can be used to create a flexible solution for
+instancing.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Katana, as usual, doesn’t offer a “ready to go” solution for instancing.
+This initial complexity can be overcome by the fact that we can create an
+instancing solution that exactly suits our needs. And that is what we
+are going to address in this post.
+Additionally, I will explain how I tried to create a flexible solution for
+instancing called &lt;code&gt;KUI&lt;/code&gt; so you don’t have to !&lt;/p&gt;
+&lt;nav id="contents"&gt;
+&lt;h3&gt;Contents&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="#intro" id="id1"&gt;Intro&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#instancing-methods" id="id2"&gt;Instancing Methods&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#leaf-level" id="id3"&gt;Leaf-level&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#hierarchical" id="id4"&gt;Hierarchical&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#array" id="id5"&gt;Array&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#instancing-in-practice" id="id6"&gt;Instancing in Practice&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#scene-preparation" id="id7"&gt;Scene-Preparation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#opscript-preparation" id="id8"&gt;OpScript-Preparation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#basic-instancing-hierarchical" id="id9"&gt;Basic Instancing : Hierarchical&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#basic-instancing-array" id="id10"&gt;Basic Instancing : Array&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#full-instancing" id="id11"&gt;Full Instancing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#full-instancing-hierarchical" id="id12"&gt;Full Instancing : Hierarchical&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#full-instancing-array" id="id13"&gt;Full Instancing : Array&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#advanced-workflows" id="id14"&gt;Advanced workflows&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#time-samples-and-motion-blur" id="id15"&gt;Time samples and Motion-blur&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#instances-preview-in-the-viewer" id="id16"&gt;Instances preview in the Viewer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#modifying-point-clouds-transforms" id="id17"&gt;Modifying point-clouds | Transforms&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#modifying-point-clouds-culling" id="id18"&gt;Modifying point-clouds | Culling&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#katana-uber-instancing" id="id19"&gt;Katana Uber Instancing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#render-engines" id="id20"&gt;Render-Engines&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#redshift" id="id21"&gt;Redshift&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#outro" id="id22"&gt;Outro&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/nav&gt;
+&lt;/aside&gt;
+&lt;aside class="m-block m-warning"&gt;
+&lt;h3&gt;Disclaimer&lt;/h3&gt;
+&lt;p&gt;My explanations reflect the experience I had with this subject and may
+not be accurate in other production contexts. Be sure to contact me
+if you spot big mistakes /  things to improve.&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;aside class="m-block m-info"&gt;
+&lt;h3&gt;Target-Audience&lt;/h3&gt;
+&lt;p&gt;
+This post is targeted towards beginners with Kanata itself.&lt;br /&gt;
+If you are a more advanced user you can check &lt;a href="#katana-uber-instancing"&gt;Katana Uber Instancing&lt;/a&gt;.&lt;br /&gt;
+&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;section id="intro"&gt;
+&lt;h2&gt;&lt;a href="#id1"&gt;Intro&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;As Katana’s motto states : &lt;em&gt;It’s all just a bunch of Attributes.&lt;/em&gt; And it
+applies to instances too. They are just a bunch of locations with a defined
+list of attributes understood by your render-engine.
+You can as such create an instance with a simple
+&lt;code&gt;LocationCreate + AttributeSet&lt;/code&gt; setup &lt;em&gt;(if you have time to lose)&lt;/em&gt;. But we
+will be using OpScripts to do so.&lt;/p&gt;
+&lt;p&gt;Here is a quick diagram that could resume how an instance is built :&lt;/p&gt;
+&lt;img alt="instancing principle" class="m-image" src="https://mrlixm.github.io/static/images/blog/0005/intro.png" /&gt;
+&lt;p&gt;The basic principle is that an &lt;code&gt;instance&lt;/code&gt; links at least to one
+&lt;code&gt;instance source&lt;/code&gt; (a scene-graph location).
+The instance will create a “copy” of this instance source. You can then set
+transformations override that will allow the instance to have a different
+position, rotation, etc, than the source.
+Additional attributes can also be set and used for shading to make the
+instance even more different than the source.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="instancing-methods"&gt;
+&lt;h2&gt;&lt;a href="#id2"&gt;Instancing Methods&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Instancing comes in different flavors, that, similarly to all things, have
+specific ups and downs. Your render-engine may also supply alternative ways to
+produce instances so be sure to check its documentation on the topic.&lt;/p&gt;
+&lt;p&gt;Here is what the Katana documentation say about this:&lt;/p&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://support.foundry.com/hc/en-us/articles/360006999219"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;img src="https://www.foundry.com/sites/default/files/2021-12/Katana%205.0%20Webpage%20Header%20-%201920x500.jpg" /&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;Q100518: Instancing Overview&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://support.foundry.com/hc/en-us/articles/360006999219"&gt;https://support.foundry.com/hc/en-us/articles/360006999219&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;section id="leaf-level"&gt;
+&lt;h3&gt;&lt;a href="#id3"&gt;Leaf-level&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;(Never used this one)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://support.foundry.com/hc/en-us/articles/360006999259"&gt;The Katana documentation&lt;/a&gt; is pretty explicit.&lt;/p&gt;
+&lt;div class="m-row"&gt;
+&lt;div class="m-col-s-6"&gt;
+&lt;aside class="m-block m-danger"&gt;
+&lt;h3&gt;cons&lt;/h3&gt;
+&lt;p&gt;Major drawback is that you can’t have a location with children
+locations (to verify),
+and well it seems every render-engine has a way to decide which
+location is the first one to instance 🙂.&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;/div&gt;
+&lt;div class="m-col-s-6"&gt;
+&lt;aside class="m-block m-success"&gt;
+&lt;h3&gt;pros&lt;/h3&gt;
+&lt;p&gt;You just have to set a single attribute.&lt;/p&gt;
+&lt;p&gt;You can easily apply modification on a single instance.
+&lt;em&gt;(ex: a Transform3D)&lt;/em&gt;&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;Would love to know in what case this one can be more pertinent than the other methods.&lt;/em&gt;&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="hierarchical"&gt;
+&lt;h3&gt;&lt;a href="#id4"&gt;Hierarchical&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Each instance = one scene-graph location.&lt;/p&gt;
+&lt;div class="m-row"&gt;
+&lt;div class="m-col-s-6"&gt;
+&lt;aside class="m-block m-danger"&gt;
+&lt;h3&gt;cons&lt;/h3&gt;
+&lt;p&gt;Too many instances (&amp;gt;~250 000) will lead you to performances
+issues. (pre-render)&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;/div&gt;
+&lt;div class="m-col-s-6"&gt;
+&lt;aside class="m-block m-success"&gt;
+&lt;h3&gt;pros&lt;/h3&gt;
+&lt;p&gt;You can easily apply modification on a single instance.
+&lt;em&gt;(ex: a Transform3D)&lt;/em&gt;&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+&lt;section id="array"&gt;
+&lt;h3&gt;&lt;a href="#id5"&gt;Array&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;One single scene-graph location where each instance correspond to an index
+on each attribute.&lt;/p&gt;
+&lt;div class="m-row"&gt;
+&lt;div class="m-col-s-6"&gt;
+&lt;aside class="m-block m-danger"&gt;
+&lt;h3&gt;cons&lt;/h3&gt;
+&lt;p&gt;Complicated to get per-instance override.&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;/div&gt;
+&lt;div class="m-col-s-6"&gt;
+&lt;aside class="m-block m-success"&gt;
+&lt;h3&gt;pros&lt;/h3&gt;
+&lt;p&gt;Better performances.&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p class="m-transition"&gt;~&lt;/p&gt;
+&lt;p&gt;And there is probably some additional pro/cons inherent to your render-engine
+so again, check the documentation, and test stuff.
+(For example, when I started to explore instancing, Redshift was not supporting
+locations with children when using the &lt;code&gt;array&lt;/code&gt; method (not the case
+anymore).)&lt;/p&gt;
+&lt;/section&gt;
+&lt;/section&gt;
+&lt;section id="instancing-in-practice"&gt;
+&lt;h2&gt;&lt;a href="#id6"&gt;Instancing in Practice&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;To start, there is a nice small example on the &lt;a href="https://learn.foundry.com/katana/Content/ug/instancing/rendering_instances.html"&gt;official Katana documentation&lt;/a&gt;
+. It explains how to create instances using mostly Katana nodes and one small
+OpScript to avoid stacking numerous &lt;code&gt;AttributeSet&lt;/code&gt; nodes.
+This approach is pretty basic: we manually set how many instances we want to
+create and we need to manually move them. The setup also
+takes time to build and is not very scalable.&lt;/p&gt;
+&lt;p&gt;A more widely used solution depends on &lt;code&gt;point-clouds&lt;/code&gt;: a type of location
+composed of visual abstract “points” in the 3d space that can hold an
+arbitrary number of attributes based on the point index.&lt;/p&gt;
+&lt;p&gt;You use each individual point’s attribute to create an instance. For example,
+each point can specify what kind of instance source it is representing, …
+Furthermore, its “abstract” aspect makes it very convenient for transferring
+data between DCCs.&lt;/p&gt;
+&lt;p&gt;A convenient way to create scene graph locations based on a source object like
+a point-cloud, is to use the &lt;a href="https://learn.foundry.com/katana/Content/ug/working_with_attributes/opscript_nodes.html"&gt;OpScript&lt;/a&gt; feature. It is an entry door to use scripting while
+staying in the Katana nodegraph system. Usage of OpScript require to learn
+the &lt;a href="https://en.wikipedia.org/wiki/Lua_(programming_language)"&gt;lua language&lt;/a&gt;
+. But don’t worry, if you don’t want to get your hands dirty you will be able
+to use a premade script/node shared in the &lt;a href="#katana-uber-instancing"&gt;Katana Uber Instancing&lt;/a&gt; section.&lt;/p&gt;
+&lt;p&gt;To create scene graph locations we need to know how they must be structured.
+For this what’s better than having a look at the documentation :
+&lt;a href="https://learn.foundry.com/katana/4.5/dev-guide/AttributeConventions/Instancing.html"&gt;AttributesConventions/Instancing&lt;/a&gt;. You notice that we
+find the 3 instancing methods described again.&lt;/p&gt;
+&lt;p&gt;Let’s now start building the scene.&lt;/p&gt;
+&lt;section id="scene-preparation"&gt;
+&lt;h3&gt;&lt;a href="#id7"&gt;Scene-Preparation&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;For you to follow the tutorial, I will be providing you a few assets. Actually
+only a point-cloud, as to keep it simple, instances sources will be
+primitives.&lt;/p&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://mega.nz/folder/uooQzJJR#5aguo_c3gLXPrkEnN62ZBg"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;svg role="img" width="64" height="64" viewBox="0 0 24 24"
+     xmlns="http://www.w3.org/2000/svg"&gt;
+    &lt;title&gt;MEGA&lt;/title&gt;
+    &lt;path fill="currentColor"
+          d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm6.23 16.244a.371.371 0 0 1-.373.372H16.29a.371.371 0 0 1-.372-.372v-4.828c0-.04-.046-.06-.08-.033l-3.32 3.32a.742.742 0 0 1-1.043 0l-3.32-3.32c-.027-.027-.08-.007-.08.033v4.828a.371.371 0 0 1-.372.372H6.136a.371.371 0 0 1-.372-.372V7.757c0-.206.166-.372.372-.372h1.076a.75.75 0 0 1 .525.22l4.13 4.13a.18.18 0 0 0 .26 0l4.13-4.13c.14-.14.325-.22.525-.22h1.075c.206 0 .372.166.372.372z"/&gt;
+&lt;/svg&gt;&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;Sources Files Download&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://mega.nz/folder/uooQzJJR#5aguo_c3gLXPrkEnN62ZBg"&gt;https://mega.nz/folder/uooQzJJR#5aguo_c3gLXPrkEnN62ZBg&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;15KB folder on mega.nz&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;You can also download the &lt;a href="https://github.com/MrLixm/KUI/tree/main/dev/data/alembics"&gt;pointcloud used in KUI&lt;/a&gt; for testing.&lt;/p&gt;
+&lt;p&gt;This point-cloud has been generated from Mash (see &lt;a href="https://github.com/MrLixm/Autodesk_Maya/tree/main/src/mash2pointcloud"&gt;mash2pointcloud&lt;/a&gt;)
+and contains the most commonly used attributes.&lt;/p&gt;
+&lt;p&gt;Here is what it looked like in Maya :&lt;/p&gt;
+&lt;div class="m-imagegrid m-container-inflate"&gt;
+&lt;div&gt;
+&lt;figure style="width: 38.560%"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0005/demo-maya-01.png"&gt;&lt;img src="https://mrlixm.github.io/static/images/blog/0005/demo-maya-01.png" /&gt;&lt;div&gt;
+&lt;/div&gt;
+&lt;/a&gt;
+&lt;/figure&gt;
+&lt;figure style="width: 61.440%"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0005/demo-maya-02.png"&gt;&lt;img src="https://mrlixm.github.io/static/images/blog/0005/demo-maya-02.png" /&gt;&lt;div&gt;
+&lt;/div&gt;
+&lt;/a&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;And here is the instances-sources mapping list :&lt;/p&gt;
+&lt;pre class="m-code"&gt;0: cube
+1: cone
+2: sphere&lt;/pre&gt;
+&lt;p&gt;Here it is imported in Katana :&lt;/p&gt;
+&lt;img alt="Katana Interface screenshot." class="m-image" src="https://mrlixm.github.io/static/images/blog/0005/demo-katana-01.png" /&gt;
+&lt;p&gt;I also used a small OpScript that allow me to set the viewer size of the
+points. You can &lt;a href="https://github.com/MrLixm/Foundry_Katana/tree/main/src/viewer/PointcloudWidth"&gt;grab the OpScript here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In the &lt;code&gt;Attributes&lt;/code&gt; tab we can see what are the attributes stored on the
+point-cloud. This one has :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;dl&gt;
+&lt;dt&gt;&lt;code&gt;arbitrary&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;scale&lt;/code&gt; : XYZ per-point scale attribute.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;rotation&lt;/code&gt;: XYZ per-point rotation attribute&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;objectIndex&lt;/code&gt;: per-point index to use for instance-source&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;colorRandom&lt;/code&gt;: per-point random color&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;dl&gt;
+&lt;dt&gt;&lt;code&gt;point&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;P&lt;/code&gt; : XYZ per-point transform&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;v&lt;/code&gt; : per-point velocity&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;width&lt;/code&gt; : added via the OpScript for viewer size.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All the attributes in the &lt;code&gt;arbitrary&lt;/code&gt; section don’t have a naming
+convention. You must know which name corresponds to which type of data for when
+you are creating the OpScript that produce the instances.&lt;/p&gt;
+&lt;aside class="m-block m-info"&gt;
+&lt;h3&gt;PointCloud Instancing without OpScript&lt;/h3&gt;
+&lt;p&gt;Depending on your render-engine , it might actually support directly
+rendering the point-cloud and generating the instances on the fly !
+Like Arnold does &lt;a href="https://docs.arnoldrenderer.com/display/A5KTN/pointcloud+and+instance+array"&gt;as explained here&lt;/a&gt;. But it excepts
+specific attributes in the &lt;code&gt;point&lt;/code&gt; group.&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;p&gt;For the instance-sources we will be using simple primitives as detailed above.
+You can use &lt;code&gt;PrimitiveCreate&lt;/code&gt; node to create them. My final “initial”
+nodegraph is looking like this :&lt;/p&gt;
+&lt;img alt="Katana Interface screenshot." class="m-image" src="https://mrlixm.github.io/static/images/blog/0005/demo-katana-02.png" /&gt;
+&lt;p&gt;Now it’s time to have a look at OpScripting.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="opscript-preparation"&gt;
+&lt;h3&gt;&lt;a href="#id8"&gt;OpScript-Preparation&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;We are going to manipulate a lot of inputs and data and at some point, we
+will need to see what X variable is equal to, what is the result of X
+operation, etc
+to just be able to know where we need to go scripting-wise. Usually, this is
+done by using the &lt;code&gt;print()&lt;/code&gt; function. But this is very basic and can lead to
+various limitations.&lt;/p&gt;
+&lt;p&gt;To have a more robust way of debugging OpScripts I made myself a small
+logging module in lua. Kind of similar to what Python logging module does.
+It adds a bunch of line to your script but will allow more flexibility in the
+way data will be displayed to you.&lt;/p&gt;
+&lt;p&gt;Have a look at this repository to install the llloger module :&lt;/p&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://github.com/MrLixm/llloger"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;img src="https://raw.githubusercontent.com/MrLixm/llloger/main/doc/img/thumbnail.jpg" /&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;llloger.lua&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://github.com/MrLixm/llloger"&gt;https://github.com/MrLixm/llloger&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;A simple lua logging module based on Python one.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;All instructions are specified in the &lt;a href="https://github.com/MrLixm/llloger/blob/main/doc/INDEX.md"&gt;documentation&lt;/a&gt; so I have not much to explain
+here.&lt;/p&gt;
+&lt;p&gt;We will then be able to use the logger methods to output messages to the
+console. &lt;em&gt;(This just wrap the “print()“ function which in Katana, output the
+result in the console that should be opened alongside your Katana)&lt;/em&gt;&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="n"&gt;logger&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;debug&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;any object&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;logger&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;any object&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;logger&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;warning&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;any object&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;logger&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;any object&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;All these steps &lt;strong&gt;are not mandatory&lt;/strong&gt; for this tutorial. They just help for
+faster debugging. &lt;em&gt;(And pertinent if you want to write lua code by yourself.)&lt;/em&gt;
+Though, the &lt;code&gt;llloger&lt;/code&gt; module is required for &lt;code&gt;KUI&lt;/code&gt; to work, so if you plan
+to use it, you will need to install it anyways.&lt;/p&gt;
+&lt;p class="m-transition"&gt;~&lt;/p&gt;
+&lt;p&gt;And by the way, if this is your first time with OpScript, the documentation
+can be a bit confusing at first. It is split into multiple “modules” with
+different language bindings. The one we use the most often is the
+CookInterface :&lt;/p&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://learn.foundry.com/katana/4.5/dev-guide/OpsAndOpScript/CookInterface/OpScript.html"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;svg width="60" height="60" viewBox="0 0 490 490" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;
+&lt;path fill-rule="evenodd" clip-rule="evenodd" d="M245 490C380.31 490 490 380.31 490 245C490 109.69 380.31 0 245 0C109.69 0 0 109.69 0 245C0 380.31 109.69 490 245 490ZM245 466C367.055 466 466 367.055 466 245C466 122.945 367.055 24 245 24C122.945 24 24 122.945 24 245C24 367.055 122.945 466 245 466Z" fill="currentColor"/&gt;
+&lt;path d="M335.174 313.737C335.72 308.9 336 303.983 336 299C336 227.203 277.797 169 206 169C134.203 169 76 227.203 76 299C76 352.522 108.344 398.49 154.553 418.423C126.898 397.723 109 364.702 109 327.5C109 264.816 159.816 214 222.5 214C280.526 214 328.381 257.543 335.174 313.737Z" fill="currentColor"/&gt;
+&lt;path d="M141.339 288.419C145.255 291.31 149.373 294.011 153.688 296.502C215.866 332.401 295.373 311.097 331.271 248.919C367.17 186.741 345.866 107.234 283.688 71.3359C237.337 44.5749 181.356 49.602 140.989 79.6531C172.743 66.0533 210.289 67.0639 242.506 85.6647C296.793 117.007 315.392 186.422 284.05 240.709C255.037 290.96 193.4 310.633 141.339 288.419Z" fill="currentColor"/&gt;
+&lt;path d="M258.759 133.059C254.297 135.004 249.898 137.22 245.583 139.712C183.405 175.61 162.102 255.117 198 317.295C233.899 379.473 313.405 400.777 375.583 364.878C421.935 338.117 445.572 287.122 439.73 237.138C435.631 271.438 415.983 303.448 383.765 322.049C329.479 353.391 260.063 334.792 228.721 280.505C199.708 230.254 213.49 167.038 258.759 133.059Z" fill="currentColor"/&gt;
+&lt;/svg&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;Cook Interface (OpScript).&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://learn.foundry.com/katana/4.5/dev-guide/OpsAndOpScript/CookInterface/OpScript.html"&gt;https://learn.foundry.com/katana/4.5/dev-guide/OpsAndOpScript/CookInterface/OpScript.html&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+&lt;section id="basic-instancing-hierarchical"&gt;
+&lt;h3&gt;&lt;a href="#id9"&gt;Basic Instancing : Hierarchical&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;For a first try, we will be using the OpScript provided on the Foundry’s
+documentation. It’s the most basic you can do which will be perfect for an
+introduction. It’s the one for the hierarchical method.&lt;/p&gt;
+&lt;p&gt;Create an OpScript node and paste the bottom script inside the &lt;code&gt;script.lua&lt;/code&gt;
+parameter&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="cm"&gt;--[[&lt;/span&gt;
+&lt;span class="cm"&gt;source: https://support.foundry.com/hc/en-us/articles/360006999279&lt;/span&gt;
+&lt;span class="cm"&gt;]]&lt;/span&gt;
+
+&lt;span class="c1"&gt;-- Read op arguments&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;instanceSourceLocation&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetOpArg&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;user.instanceSourceLocation&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;&lt;span class="n"&gt;getValue&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;pointCloudLocation&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetOpArg&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;user.pointCloudLocation&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;&lt;span class="n"&gt;getValue&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="kr"&gt;if&lt;/span&gt; &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;AtRoot&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="kr"&gt;then&lt;/span&gt;
+  &lt;span class="c1"&gt;-- Read the point cloud&lt;/span&gt;
+  &lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;points&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetAttr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;geometry.point.P&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;pointCloudLocation&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="c1"&gt;-- ignore the other samples so no motion blur !&lt;/span&gt;
+  &lt;span class="n"&gt;points&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;points&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;getNearestSample&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="c1"&gt;-- Loop over points&lt;/span&gt;
+  &lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;z&lt;/span&gt;
+  &lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;gb&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;GroupBuilder&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+  &lt;span class="kr"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="n"&gt;points&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+      &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;points&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+      &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;points&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+      &lt;span class="n"&gt;z&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;points&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+      &lt;span class="c1"&gt;-- Build op arguments for the child location&lt;/span&gt;
+      &lt;span class="n"&gt;gb&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetOpArg&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+      &lt;span class="n"&gt;gb&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;childAttrs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetAttr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;instanceSourceLocation&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+      &lt;span class="n"&gt;gb&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;childAttrs.type&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;StringAttribute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;instance&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+      &lt;span class="n"&gt;gb&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;childAttrs.geometry.instanceSource&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;StringAttribute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;instanceSourceLocation&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+      &lt;span class="c1"&gt;-- note: we shouldn&amp;#39;t use `xform.interactive` as originaly specified.&lt;/span&gt;
+      &lt;span class="n"&gt;gb&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;childAttrs.xform.group0.translate&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;DoubleAttribute&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;z&lt;/span&gt;&lt;span class="p"&gt;}))&lt;/span&gt;
+
+      &lt;span class="c1"&gt;-- Create the child&lt;/span&gt;
+      &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CreateChild&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+          &lt;span class="nb"&gt;string.format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;child%04d&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+          &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetOpType&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+          &lt;span class="n"&gt;gb&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;build&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+      &lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="kr"&gt;end&lt;/span&gt;
+
+&lt;span class="kr"&gt;else&lt;/span&gt;
+
+  &lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;childAttrs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetOpArg&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;childAttrs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="kr"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;childAttrs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;getNumberOfChildren&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+      &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SetAttr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;childAttrs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;getChildName&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;childAttrs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;getChildByIndex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+  &lt;span class="kr"&gt;end&lt;/span&gt;
+
+&lt;span class="kr"&gt;end&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;If you look at the first lines you can see that we are getting some
+&lt;code&gt;OpArg&lt;/code&gt; values. On OpScript nodes this corresponds to &lt;code&gt;user&lt;/code&gt; parameters.
+This means we will need to create two of them.&lt;/p&gt;
+&lt;img alt="Katana Interface screenshot: OpScript parameters." class="m-image" src="https://mrlixm.github.io/static/images/blog/0005/demo-katana-03.png" /&gt;
+&lt;p&gt;You should have noticed the first script’s limitation, we can only give one
+instance-source for now. But let’s keep that for later. Set the 2 created user
+parameters values with their corresponding locations. &lt;em&gt;(! the pointcloud is the
+location of type&lt;/em&gt; &lt;code&gt;pointcloud&lt;/code&gt; &lt;em&gt;, not its parent “group”.)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;
+We need to provide one
+last input, the target destination for our instances. For this, change the
+&lt;code&gt;applyWhere&lt;/code&gt; parameter to &lt;code&gt;atSpecificLocation&lt;/code&gt; and then in the
+&lt;code&gt;location&lt;/code&gt; param at the top,
+submit the desired target location for your instances.&lt;br /&gt;
+I will be using &lt;code&gt;/root/world/geo/instancing/demo&lt;/code&gt;.&lt;br /&gt;
+&lt;/p&gt;
+&lt;p&gt;Now let’s view the OpScript node, and expand the target location in the
+SceneGraph to see our instances.&lt;/p&gt;
+&lt;img alt="Katana Interface screenshot:SceneGraph instances." class="m-image" src="https://mrlixm.github.io/static/images/blog/0005/demo-katana-04.png" /&gt;
+&lt;aside class="m-block m-info"&gt;
+&lt;h3&gt;Instances preview in the Viewer&lt;/h3&gt;
+&lt;p&gt;Since &lt;strong&gt;Katana 4.5&lt;/strong&gt;, it is now possible to view instances in the Viewer.
+Have a look at the &lt;a href="#instances-preview-in-the-viewer"&gt;Instances preview in the Viewer&lt;/a&gt; section.&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;p&gt;Yay, that was quick to have something working. But check the Attributes on one
+of the instance.&lt;/p&gt;
+&lt;img alt="Katana Interface screenshot: Instance Attributes." class="m-image" src="https://mrlixm.github.io/static/images/blog/0005/demo-katana-05.png" style="width: 480px" /&gt;
+&lt;p&gt;If you have a look at the &lt;code&gt;xform.interactive&lt;/code&gt; attributes, we can see that
+only the &lt;code&gt;translate&lt;/code&gt; attribute has non-default values. This is because our
+current OpScript only read the &lt;code&gt;P&lt;/code&gt; attribute on the point-cloud which
+correspond to the instance translations.&lt;/p&gt;
+&lt;p&gt;
+You can notice that all the &lt;code&gt;geometry&lt;/code&gt; attributes from the instance-source
+have also been copied. This is because the script copies all the root
+attributes of the instance-source :&lt;br /&gt;
+&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="mi"&gt;25&lt;/span&gt;  &lt;span class="n"&gt;gb&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;childAttrs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetAttr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;instanceSourceLocation&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;This would allow having the bounds attribute on the instance, so we have at
+least some primitive representation in the viewer. But the &lt;code&gt;geometry&lt;/code&gt;
+attributes are not needed because they are copied from the instance-source
+at render-time. To fix this, the instance-source location would need to be a
+group with the mesh inside.&lt;/p&gt;
+&lt;p&gt;Now, what we should not forget, is cleaning the scene for rendering. This
+means :&lt;/p&gt;
+&lt;p&gt;
+1. Hide the pointcloud (cause you render-engine will probably render the
+points as spheres).&lt;br /&gt;
+You can use a &lt;code&gt;VisibilityAssign&lt;/code&gt; node for this.&lt;br /&gt;
+&lt;/p&gt;
+&lt;p&gt;
+2. Hide the instances-sources.&lt;br /&gt;
+This can be graciously done by setting the type of the instance-source
+location to &lt;code&gt;instance source&lt;/code&gt;.&lt;br /&gt;
+You can use an &lt;code&gt;AttributeSet&lt;/code&gt; node for this.&lt;br /&gt;
+&lt;/p&gt;
+&lt;aside class="m-note m-info"&gt;
+Setting a location type to &lt;code&gt;instance source&lt;/code&gt; will make it invisible in
+the viewer, in the render and allow to preview the instances in the viewer
+(with Katana &amp;gt;= 4.5).&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;img alt="Katana Interface screenshot: AttributeSet node." class="m-image" src="https://mrlixm.github.io/static/images/blog/0005/demo-katana-06.png" /&gt;
+&lt;p&gt;Annnnd, we can try to fire up a render to see our instancing result.
+Nothing very exciting, using primitives doesn’t look very impressive. You
+can have a try with any asset, just instance it’s top-most location. Here is
+the result with a “heavy” asset :&lt;/p&gt;
+&lt;figure class="m-figure"&gt;
+&lt;img alt="Katana Viewer GIF: rendering house instances." src="https://mrlixm.github.io/static/images/blog/0005/demo-katana-07.gif" /&gt;
+&lt;figcaption&gt;100 x 3.2 mi vertices house asset, 1920x1080, 3Delight&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;And if you need it, here is the Katana file :&lt;/p&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://mrlixm.github.io/static/blog/0005/demo.hierarchical.basic.katana"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;svg width="60" height="60" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;
+&lt;path fill-rule="evenodd" clip-rule="evenodd" d="M52.5832 22.5H35.1665V5.08334L52.5832 22.5ZM38.3332 0.333336H12.9998C9.48484 0.333336 6.6665 3.15167 6.6665 6.66667V57.3333C6.6665 60.8167 9.48484 63.6667 12.9998 63.6667H50.9998C52.6795 63.6667 54.2904 62.9994 55.4782 61.8117C56.6659 60.624 57.3332 59.013 57.3332 57.3333V19.3333L38.3332 0.333336ZM48 44C48 52.8366 40.8366 60 32 60C23.1634 60 16 52.8366 16 44C16 35.1634 23.1634 28 32 28C40.8366 28 48 35.1634 48 44ZM46.4327 44C46.4327 51.9709 39.9709 58.4327 32 58.4327C24.0291 58.4327 17.5673 51.9709 17.5673 44C17.5673 36.0291 24.0291 29.5673 32 29.5673C39.9709 29.5673 46.4327 36.0291 46.4327 44ZM26.0368 47.3634C25.755 47.2007 25.4861 47.0243 25.2304 46.8355C26.2296 47.2619 27.2829 47.452 28.3203 47.4245C27.7094 45.7806 27.6402 44.0292 28.0511 42.4004C25.1769 43.4205 23.1185 46.1637 23.1185 49.3878C23.1185 51.8173 24.2873 53.9737 26.0934 55.3256C23.0756 54.0238 20.9634 51.0218 20.9634 47.5265C20.9634 42.8377 24.7644 39.0367 29.4532 39.0367C29.5551 39.0367 29.6565 39.0385 29.7575 39.0421C30.3811 38.2932 31.1451 37.6397 32.0383 37.1241C32.3201 36.9613 32.6074 36.8166 32.8987 36.6896C32.0068 37.3591 31.3021 38.2023 30.8047 39.1437C32.5811 39.4279 34.1736 40.2632 35.4012 41.4686C36.0082 38.4372 34.6631 35.2259 31.8372 33.5944C29.7332 32.3797 27.2812 32.3137 25.2075 33.2018C27.8437 31.2393 31.4996 30.911 34.5266 32.6587C38.5872 35.003 39.9785 40.1953 37.6341 44.2559C37.5667 44.3727 37.4969 44.4872 37.4249 44.5995C37.76 45.512 37.943 46.4979 37.943 47.5265C37.943 47.852 37.9247 48.1731 37.889 48.4889C37.7549 47.3798 37.3759 46.3461 36.8076 45.4436C35.6655 46.8189 34.1457 47.7622 32.4919 48.2081C34.8134 50.2265 38.249 50.6561 41.0624 49.0318C43.1664 47.817 44.4496 45.7266 44.7173 43.4866C45.0988 46.7508 43.5551 50.0811 40.5281 51.8288C36.4675 54.1732 31.2752 52.7819 28.9308 48.7213C28.862 48.6021 28.7964 48.4819 28.734 48.3609C27.8094 48.1895 26.8977 47.8604 26.0368 47.3634ZM34.5503 43.7198C33.7487 45.1081 32.5658 46.139 31.2103 46.7566C31.115 46.6149 31.0238 46.4689 30.9371 46.3187C30.1515 44.958 29.8463 43.4518 29.969 41.9965C30.1544 41.9826 30.3418 41.9755 30.5307 41.9755C32.1078 41.9755 33.5699 42.468 34.7714 43.3077C34.7025 43.4464 34.6288 43.5838 34.5503 43.7198Z" fill="currentColor"/&gt;
+&lt;/svg&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;Download sources files.&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://mrlixm.github.io/static/blog/0005/demo.hierarchical.basic.katana"&gt;{static}/blog/0005/demo.hierarchical.basic.katana&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+&lt;section id="basic-instancing-array"&gt;
+&lt;h3&gt;&lt;a href="#id10"&gt;Basic Instancing : Array&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Before trying to go further with hierarchical we are going to have a look at
+the &lt;code&gt;array&lt;/code&gt; method. Keep the same scene, we will only need to change the
+OpScript.&lt;/p&gt;
+&lt;p&gt;And here it is. It’s a slightly modified version from the one on
+Foundry’s website. (better readability + bugs fixed)&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="cm"&gt;--[[&lt;/span&gt;
+&lt;span class="cm"&gt;source: https://support.foundry.com/hc/en-us/articles/360006999239&lt;/span&gt;
+&lt;span class="cm"&gt;]]&lt;/span&gt;
+
+&lt;span class="c1"&gt;-- Read the op arguments&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;instanceSourceLocations&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetOpArg&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;user.instanceSourceLocations&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;pointCloudLocation&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetOpArg&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;user.pointCloudLocation&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;&lt;span class="n"&gt;getValue&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="c1"&gt;-- Read the point cloud&amp;#39;s points&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;pointAttr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetAttr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;geometry.point.P&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;pointCloudLocation&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;points&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pointAttr&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;getNearestSample&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetCurrentTime&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+
+
+&lt;span class="c1"&gt;-- declare variable used to build the final instance&lt;/span&gt;
+&lt;span class="c1"&gt;-- The indexArray attribute determines which instance source each instance location represents&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;indexArray&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;matrixArrayMap&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+
+&lt;span class="cm"&gt;--[[---------------------------------------------------------------------------&lt;/span&gt;
+
+&lt;span class="cm"&gt;  PROCESS instance source attribute&lt;/span&gt;
+
+&lt;span class="cm"&gt;]]&lt;/span&gt;
+
+
+&lt;span class="c1"&gt;-- for each instance create an instance index&lt;/span&gt;
+&lt;span class="kr"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="n"&gt;points&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+  &lt;span class="c1"&gt;-- For this example, the instances are arbitrarily assigned to an&lt;/span&gt;
+  &lt;span class="c1"&gt;-- instance source&lt;/span&gt;
+  &lt;span class="c1"&gt;-- a more stable apporach would be to use an arbitrary attribute&lt;/span&gt;
+  &lt;span class="c1"&gt;-- on the point cloud to assign an instance source&lt;/span&gt;
+  &lt;span class="n"&gt;indexArray&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="n"&gt;indexArray&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;instanceSourceLocations&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;getNumberOfTuples&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="kr"&gt;end&lt;/span&gt;
+
+
+&lt;span class="cm"&gt;--[[---------------------------------------------------------------------------&lt;/span&gt;
+
+&lt;span class="cm"&gt;  PROCESS MATRIX ATTRIBUTE&lt;/span&gt;
+
+&lt;span class="cm"&gt;]]&lt;/span&gt;
+&lt;span class="c1"&gt;-- Get the transforms from the points&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;numTimeSamples&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pointAttr&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;getNumberOfTimeSamples&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;matrixArray&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;workMatrix&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;sampleTime&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;pointSample&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;z&lt;/span&gt;
+&lt;span class="c1"&gt;-- to get motion blur on the instances, create an instanceMatrix at each&lt;/span&gt;
+&lt;span class="c1"&gt;-- time sample available from the point cloud points attribute&lt;/span&gt;
+&lt;span class="kr"&gt;for&lt;/span&gt; &lt;span class="n"&gt;idx&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;numTimeSamples&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+  &lt;span class="n"&gt;sampleTime&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pointAttr&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;getSampleTime&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;idx&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;pointSample&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pointAttr&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;getNearestSample&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sampleTime&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="c1"&gt;-- each instance in array has its own matrix&lt;/span&gt;
+  &lt;span class="n"&gt;matrixArray&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+  &lt;span class="n"&gt;workMatrix&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Imath&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;M44d&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;&lt;span class="n"&gt;toTable&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+  &lt;span class="c1"&gt;-- for each instance build a matrix with a mocked up transformation&lt;/span&gt;
+  &lt;span class="kr"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="n"&gt;pointSample&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+    &lt;span class="c1"&gt;-- grab the points that represent this instance&lt;/span&gt;
+    &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pointSample&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pointSample&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;z&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pointSample&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+    &lt;span class="c1"&gt;-- set the translate of the matrix to the points in the point cloud&lt;/span&gt;
+    &lt;span class="n"&gt;workMatrix&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;
+    &lt;span class="n"&gt;workMatrix&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;14&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;
+    &lt;span class="n"&gt;workMatrix&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;z&lt;/span&gt;
+
+    &lt;span class="kr"&gt;for&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+      &lt;span class="n"&gt;matrixArray&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="n"&gt;matrixArray&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;workMatrix&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="kr"&gt;end&lt;/span&gt;
+
+  &lt;span class="kr"&gt;end&lt;/span&gt;
+  &lt;span class="n"&gt;matrixArrayMap&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;sampleTime&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;matrixArray&lt;/span&gt;
+
+&lt;span class="kr"&gt;end&lt;/span&gt;
+
+
+&lt;span class="cm"&gt;--[[---------------------------------------------------------------------------&lt;/span&gt;
+
+&lt;span class="cm"&gt; Build the array instance&lt;/span&gt;
+
+&lt;span class="cm"&gt;]]&lt;/span&gt;
+&lt;span class="c1"&gt;-- Create a single location which will generate an array of instances&lt;/span&gt;
+&lt;span class="c1"&gt;-- Set type for this location to &amp;#39;instance array&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SetAttr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;type&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;StringAttribute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;instance array&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="c1"&gt;-- This instance array location must point to the instance source locations&lt;/span&gt;
+&lt;span class="c1"&gt;-- through the attribute &amp;#39;geometry.instanceSource&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SetAttr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;geometry.instanceSource&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;instanceSourceLocations&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;-- Set index for instance array element&lt;/span&gt;
+&lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SetAttr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;geometry.instanceIndex&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;IntAttribute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;indexArray&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SetAttr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;geometry.instanceMatrix&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;DoubleAttribute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;matrixArrayMap&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;You still need to create 2 &lt;code&gt;user&lt;/code&gt; parameters on the OpScript node, but
+this time &lt;code&gt;user.instancesSourceLocations&lt;/code&gt; must be a string array of scene
+graph-locations.&lt;/p&gt;
+&lt;img alt="Katana Interface screenshot: OpScript user paramaters." class="m-image" src="https://mrlixm.github.io/static/images/blog/0005/demo-katana-08.gif" /&gt;
+&lt;p&gt;And of course the same &lt;code&gt;user.pointCloudLocation&lt;/code&gt; one. The &lt;code&gt;location&lt;/code&gt;
+parameter still define where the instance is created but this time it’s not
+the group holding the instances, but directly the full location of the instance
+(array instance is only one scene-graph location).&lt;/p&gt;
+&lt;p&gt;Make sure the OpScript is running and then check the attribute on the
+&lt;code&gt;instance array&lt;/code&gt; location created.&lt;/p&gt;
+&lt;img alt="Katana Interface screenshot: Instance Array Attributes." class="m-image" src="https://mrlixm.github.io/static/images/blog/0005/demo-katana-09.png" /&gt;
+&lt;p&gt;This time we can use our different instance-sources thanks to the
+&lt;code&gt;InstanceIndex&lt;/code&gt; attribute that specify which instance-source to use per
+point. But if we look more closely at the OpScript lua script, we notice the
+index are generated mathematically instead of using our point-cloud’s
+&lt;code&gt;objectIndex&lt;/code&gt; attribute. This will need to be addressed later of course.&lt;/p&gt;
+&lt;p&gt;We can also notice that we are not using the traditional “translate” attribute,
+but a matrix one. Matrices have the advantages of replacing 5 attributes
+with 1 (translations, rotations(X, Y, Z), scale) but are harder to modify
+“on-the-fly”. In the end choose what suits you best for your workflow.&lt;/p&gt;
+&lt;p&gt;To know what kind of attributes are supposed to be supported by each
+instancing method, we can have a look at the documentation:&lt;/p&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://learn.foundry.com/katana/4.5/dev-guide/AttributeConventions/Instancing.html"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;svg width="60" height="60" viewBox="0 0 490 490" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;
+&lt;path fill-rule="evenodd" clip-rule="evenodd" d="M245 490C380.31 490 490 380.31 490 245C490 109.69 380.31 0 245 0C109.69 0 0 109.69 0 245C0 380.31 109.69 490 245 490ZM245 466C367.055 466 466 367.055 466 245C466 122.945 367.055 24 245 24C122.945 24 24 122.945 24 245C24 367.055 122.945 466 245 466Z" fill="currentColor"/&gt;
+&lt;path d="M335.174 313.737C335.72 308.9 336 303.983 336 299C336 227.203 277.797 169 206 169C134.203 169 76 227.203 76 299C76 352.522 108.344 398.49 154.553 418.423C126.898 397.723 109 364.702 109 327.5C109 264.816 159.816 214 222.5 214C280.526 214 328.381 257.543 335.174 313.737Z" fill="currentColor"/&gt;
+&lt;path d="M141.339 288.419C145.255 291.31 149.373 294.011 153.688 296.502C215.866 332.401 295.373 311.097 331.271 248.919C367.17 186.741 345.866 107.234 283.688 71.3359C237.337 44.5749 181.356 49.602 140.989 79.6531C172.743 66.0533 210.289 67.0639 242.506 85.6647C296.793 117.007 315.392 186.422 284.05 240.709C255.037 290.96 193.4 310.633 141.339 288.419Z" fill="currentColor"/&gt;
+&lt;path d="M258.759 133.059C254.297 135.004 249.898 137.22 245.583 139.712C183.405 175.61 162.102 255.117 198 317.295C233.899 379.473 313.405 400.777 375.583 364.878C421.935 338.117 445.572 287.122 439.73 237.138C435.631 271.438 415.983 303.448 383.765 322.049C329.479 353.391 260.063 334.792 228.721 280.505C199.708 230.254 213.49 167.038 258.759 133.059Z" fill="currentColor"/&gt;
+&lt;/svg&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;Instancing – Katana Developer Guide&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://learn.foundry.com/katana/4.5/dev-guide/AttributeConventions/Instancing.html"&gt;https://learn.foundry.com/katana/4.5/dev-guide/AttributeConventions/Instancing.html&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Only the Array method require specific attributes as all instances are
+represented by one scene-graph location.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="full-instancing"&gt;
+&lt;h3&gt;&lt;a href="#id11"&gt;Full Instancing&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Aight’ that was a quick first look at instancing, but as mentioned, we were
+not using all the exported attributes on our point-cloud. Supporting them
+requires extending the basics OpScripts we used but this will be too long
+for this blog-post. Instead, I’m just going to give the code logic you could
+be using if you want to go down that road. Else you will find a fully working
+solution in the &lt;a href="#katana-uber-instancing"&gt;Katana Uber Instancing&lt;/a&gt; section 😉.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="full-instancing-hierarchical"&gt;
+&lt;h3&gt;&lt;a href="#id12"&gt;Full Instancing : Hierarchical&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Hierarchical is using single location per-instance, they can use the commonly
+used attributes for locations like &lt;code&gt;xform&lt;/code&gt;. This transformation attributes
+are described in the docs : &lt;a href="https://learn.foundry.com/katana/4.5/dev-guide/AttributeConventions/Transformations.html"&gt;dev-guide/AttributeConventions/Transformations&lt;/a&gt;. So pretty easy to implement, in pseudo-code :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="c1"&gt;-- this is &amp;quot;pseudo-code&amp;quot;, not usable as it is.&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;points&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;...&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;translate_attr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;...&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;rotate_attr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;...&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;scale_attr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;...&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;out_translate&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;out_rotateX&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;out_rotateY&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;out_rotateZ&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;out_scale&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;instance&lt;/span&gt;
+
+&lt;span class="c1"&gt;-- points is divided by 3 cause it has `num point * XYZ`&lt;/span&gt;
+&lt;span class="c1"&gt;-- in lua we start counting at 1 but we need the `i` to start at 0 to correctly&lt;/span&gt;
+&lt;span class="c1"&gt;-- gather each point index. As we start at 0 we remove 1 to compensate.&lt;/span&gt;
+&lt;span class="kr"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="n"&gt;points&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+
+  &lt;span class="n"&gt;instance&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;GroupBuilder&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+  &lt;span class="n"&gt;out_translate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;points&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;points&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;points&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]}&lt;/span&gt;
+  &lt;span class="c1"&gt;-- as stated in the doc, rotations need to define axis orientation.&lt;/span&gt;
+  &lt;span class="n"&gt;out_rotateX&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;rotate_attr&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="n"&gt;out_rotateY&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;rotate_attr&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="c1"&gt;--[...]&lt;/span&gt;
+
+  &lt;span class="c1"&gt;--[...]&lt;/span&gt;
+  &lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;childAttrs.xform.group0.translate&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;out_translate&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;childAttrs.xform.group0.rotateZ&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;out_rotateX&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;childAttrs.xform.group0.rotateY&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;out_rotateY&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;childAttrs.xform.group0.rotateX&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;out_rotateZ&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;childAttrs.xform.group0.scale&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;out_scale&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CreateChild&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;instance_name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetOpType&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;build&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+  &lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="kr"&gt;end&lt;/span&gt;
+&lt;span class="c1"&gt;--[...]&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;In the code I wrote in the past, my target was &lt;code&gt;xform.interactive&lt;/code&gt; but
+this is wrong as the xform is not interactive like with a Transform3D ! You
+should use &lt;code&gt;xform.groupN&lt;/code&gt; convention instead.&lt;/p&gt;
+&lt;aside class="m-note m-warning"&gt;
+&lt;p&gt;&lt;code&gt;Xform&lt;/code&gt; attributes are very sensitive :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You have to make sure the order is respected as followed :&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;translation
+rotationZ
+rotationY
+rotationX
+scale
+matrix&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;You have to make sure all the above attributes are &lt;code&gt;DoubleAttributes&lt;/code&gt;. Else you might have surprises at render-time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;p&gt;If you are now wondering who to determine which instanceSource to use, the
+logic is pretty simple :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="c1"&gt;-- this is &amp;quot;pseudo-code&amp;quot;, not usable as it is.&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;user_instance_sources&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;...&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;points&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;...&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;instance_index_attr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;...&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;instance&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;out_instance_source&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;current_instance_index&lt;/span&gt;
+
+&lt;span class="kr"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="n"&gt;points&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+
+  &lt;span class="n"&gt;instance&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;GroupBuilder&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+  &lt;span class="c1"&gt;-- find which index the currently visited point corresponds to&lt;/span&gt;
+  &lt;span class="n"&gt;current_instance_index&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;  &lt;span class="n"&gt;instance_index_attr&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="c1"&gt;-- The user_instance_sources had of course to be submitted in the proper&lt;/span&gt;
+  &lt;span class="c1"&gt;-- order to work.&lt;/span&gt;
+  &lt;span class="c1"&gt;-- (in lua, we start counting from 1, so if the above index returned start&lt;/span&gt;
+  &lt;span class="c1"&gt;-- at 0, we need to add 1.)&lt;/span&gt;
+  &lt;span class="n"&gt;out_instance_source&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;user_instance_sources&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;current_instance_index&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+  &lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+      &lt;span class="s2"&gt;&amp;quot;childAttrs.geometry.instanceSource&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="n"&gt;StringAttribute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;out_instance_source&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="c1"&gt;--[...]&lt;/span&gt;
+
+  &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CreateChild&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;instance_name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetOpType&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;build&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+  &lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="kr"&gt;end&lt;/span&gt;
+&lt;span class="c1"&gt;--[...]&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;And you could then do the same for arbitrary attributes like &lt;code&gt;colorRandom&lt;/code&gt;.
+The only difference could be the target destination on the instance. You
+must check your render-engine documentation for that, but usually, it’s :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="c1"&gt;-- this is &amp;quot;pseudo-code&amp;quot;, not usable as it is.&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;random_color_attr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;...&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;points&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;...&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;instance&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;cr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cg&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cb&lt;/span&gt;
+
+&lt;span class="kr"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="n"&gt;points&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+
+  &lt;span class="n"&gt;instance&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;GroupBuilder&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+  &lt;span class="c1"&gt;--[...]&lt;/span&gt;
+
+  &lt;span class="n"&gt;cr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;random_color_attr&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="n"&gt;cg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;random_color_attr&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="n"&gt;cb&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;random_color_attr&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+  &lt;span class="c1"&gt;-- not gonna lie I don&amp;#39;t really know what the scope does&lt;/span&gt;
+  &lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+      &lt;span class="s2"&gt;&amp;quot;childAttrs.geometry.arbitrary.randomColor.scope&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="n"&gt;StringAttribute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;primitive&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="c1"&gt;-- inputType is important ! Depends on what node you use in the shading&lt;/span&gt;
+  &lt;span class="c1"&gt;-- network to get back the data. In Arnold this would be an `user_data_rgb`&lt;/span&gt;
+  &lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+      &lt;span class="s2"&gt;&amp;quot;childAttrs.geometry.arbitrary.randomColor.inputType&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="n"&gt;StringAttribute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;color3&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+      &lt;span class="s2"&gt;&amp;quot;childAttrs.geometry.arbitrary.randomColor.value&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+       &lt;span class="n"&gt;FloatAttribute&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="n"&gt;cr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cg&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cb&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CreateChild&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;instance_name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetOpType&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;build&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+  &lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="kr"&gt;end&lt;/span&gt;
+&lt;span class="c1"&gt;--[...]&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;And finally just for “”educational”” purposes, here is the code I used on
+a Redshift production. It’s not that documented and code have a lot of
+mistakes so use it at your own risk. Again I recommend instead having a look at
+&lt;code&gt;KUI&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://mrlixm.github.io/static/blog/0005/opscript.hierarchical.liam.lua"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;svg width="60" height="60" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;
+&lt;path d="M35.1665 22.5H52.5832L35.1665 5.08334V22.5ZM12.9998 0.333336H38.3332L57.3332 19.3333V57.3333C57.3332 59.013 56.6659 60.624 55.4782 61.8117C54.2904 62.9994 52.6795 63.6667 50.9998 63.6667H12.9998C9.48484 63.6667 6.6665 60.8167 6.6665 57.3333V6.66667C6.6665 3.15167 9.48484 0.333336 12.9998 0.333336ZM13.3798 43.0833L25.2232 54.9267L29.7198 50.4617L22.3415 43.0833L29.7198 35.705L25.2232 31.24L13.3798 43.0833ZM48.7198 43.0833L36.8765 31.24L32.3798 35.705L39.7582 43.0833L32.3798 50.4617L36.8765 54.9267L48.7198 43.0833Z" fill="currentColor"/&gt;
+&lt;/svg&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;OpScript | Hierarchical | Redshift&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://mrlixm.github.io/static/blog/0005/opscript.hierarchical.liam.lua"&gt;{static}/blog/0005/opscript.hierarchical.liam.lua&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+&lt;section id="full-instancing-array"&gt;
+&lt;h3&gt;&lt;a href="#id13"&gt;Full Instancing : Array&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Array is in a way more simple, you can just brainless copy the attributes
+from the point-cloud to the instance (if they are properly formatted).
+Make sure to &lt;a href="https://learn.foundry.com/katana/4.5/dev-guide/AttributeConventions/Instancing.html"&gt;check the documentation&lt;/a&gt; about what kind of
+attribute is expected.
+Pseudo code is looking like this :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="c1"&gt;-- this is &amp;quot;pseudo-code&amp;quot;, not usable as it is (actually for this one it is).&lt;/span&gt;
+
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;pointCloudLocation&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetOpArg&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;user.pointCloudLocation&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;&lt;span class="n"&gt;getValue&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;p_attr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetAttr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;geometry.point.P&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;pointCloudLocation&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;-- this already return a FloatAttribute instance.&lt;/span&gt;
+
+
+&lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SetAttr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;type&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;StringAttribute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;instance array&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SetAttr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;geometry.instanceTranslate&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;p_attr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;Yup, it is that easy if you only need translations.&lt;/p&gt;
+&lt;p&gt;To add rotations, you will need to split the incoming point-cloud attribute
+into X,Y and Z and add the axis direction. Works the same as for hierarchical.
+And imagine you are using a matrix instead. Even less code to write.&lt;/p&gt;
+&lt;aside class="m-note m-warning"&gt;
+&lt;p&gt;All attributes are very sensitive to the way they are build:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You have to make sure the order is respected as followed :&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;matrix
+translation
+rotationZ
+rotationY
+rotationX
+scale&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;You have to make sure all the above attributes are &lt;code&gt;DoubleAttributes&lt;/code&gt;
+(and other attributes like &lt;code&gt;instanceIndex&lt;/code&gt; also have the correct type
+specified in the documentation).
+Else you might have surprises at render-time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;p&gt;Anyway here was the solution I used in prod, same blah blah as for
+hierarchical…&lt;/p&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://mrlixm.github.io/static/blog/0005/opscript.array.liam.lua"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;svg width="60" height="60" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;
+&lt;path d="M35.1665 22.5H52.5832L35.1665 5.08334V22.5ZM12.9998 0.333336H38.3332L57.3332 19.3333V57.3333C57.3332 59.013 56.6659 60.624 55.4782 61.8117C54.2904 62.9994 52.6795 63.6667 50.9998 63.6667H12.9998C9.48484 63.6667 6.6665 60.8167 6.6665 57.3333V6.66667C6.6665 3.15167 9.48484 0.333336 12.9998 0.333336ZM13.3798 43.0833L25.2232 54.9267L29.7198 50.4617L22.3415 43.0833L29.7198 35.705L25.2232 31.24L13.3798 43.0833ZM48.7198 43.0833L36.8765 31.24L32.3798 35.705L39.7582 43.0833L32.3798 50.4617L36.8765 54.9267L48.7198 43.0833Z" fill="currentColor"/&gt;
+&lt;/svg&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;OpScript | Hierarchical | Redshift&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://mrlixm.github.io/static/blog/0005/opscript.array.liam.lua"&gt;{static}/blog/0005/opscript.array.liam.lua&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+&lt;/section&gt;
+&lt;section id="advanced-workflows"&gt;
+&lt;h2&gt;&lt;a href="#id14"&gt;Advanced workflows&lt;/a&gt;&lt;/h2&gt;
+&lt;section id="time-samples-and-motion-blur"&gt;
+&lt;h3&gt;&lt;a href="#id15"&gt;Time samples and Motion-blur&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;An important topic that I actually only manage to understand very few time
+before publishing this article. To have motion-blur working on your instances
+(if there is movement), they need to store on attributes multiples samples that
+correspond to the &lt;code&gt;shutterOpen/Close&lt;/code&gt; values specified in the RenderSettings.
+A sample could be considered as a “sub-frame”, so with &lt;code&gt;shutterOpen=-0.25,
+shutterClose=0.25&lt;/code&gt; and the &lt;code&gt;maxTimeSamples&lt;/code&gt; set to 3 you would find 3
+time samples at -0.25, 0.0, 0.25 per attribute.&lt;/p&gt;
+&lt;p&gt;Example with an xform matrix attribute :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;DoubleAttribute&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;values&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;samples&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tupleSize&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;0.25&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{{&lt;/span&gt;&lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="p"&gt;...&lt;/span&gt; &lt;span class="p"&gt;}},&lt;/span&gt;
+  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{{&lt;/span&gt;&lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="p"&gt;...&lt;/span&gt; &lt;span class="p"&gt;}},&lt;/span&gt;
+  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;0.25&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{{&lt;/span&gt;&lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="p"&gt;...&lt;/span&gt; &lt;span class="p"&gt;}},&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;All the code you saw in the &lt;a href="#instancing-in-practice"&gt;Instancing In Practice&lt;/a&gt; section (except the
+Basic Array one) doesn’t take account of multiple time samples and just gets
+the nearest sample at 0.0. And you better know if you need to support
+motion-blur before writing anything (I have to rewrite a good chunk of KUI
+because of not knowing about it).&lt;/p&gt;
+&lt;p&gt;The &lt;a href="https://learn.foundry.com/katana/5.0/dev-guide/OpsAndOpScript/Attributes/OpScript.html#DataAttribute.getNearestSample"&gt;Katana Attributes documentation&lt;/a&gt;
+define all the methods you can use to manipulate time samples but I found it
+confusing with not a lot of examples to show how the overall picture is
+working. So here is a code snippet showcasing the 2 different options to
+manipulate values per time-sample :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="c1"&gt;-- pseudo code to showcase code logic, not usable as it is&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Interface&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetAttr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;geometry.point.P&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;samples&lt;/span&gt; &lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;sample&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;values&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;new_value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+
+&lt;span class="cm"&gt;--[[ --------------------------------------------------------------------------&lt;/span&gt;
+&lt;span class="cm"&gt;  USING TABLES&lt;/span&gt;
+
+&lt;span class="cm"&gt;  table are a bit faster but can only go up to 2^27 (134 million) values per attribute&lt;/span&gt;
+
+&lt;span class="cm"&gt;]]&lt;/span&gt;
+
+&lt;span class="n"&gt;samples&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;getNumberOfTimeSamples&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="kr"&gt;for&lt;/span&gt; &lt;span class="n"&gt;smplindex&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;samples&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+  &lt;span class="c1"&gt;-- convert the smplindex to sampletime (shutterOpen/Close values)&lt;/span&gt;
+  &lt;span class="n"&gt;sample&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;getSampleTime&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;smplindex&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;values&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;getNearestSample&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sample&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;-- table&lt;/span&gt;
+  &lt;span class="c1"&gt;-- // do something with the values table&lt;/span&gt;
+  &lt;span class="n"&gt;new_value&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;sample&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;values&lt;/span&gt;
+&lt;span class="kr"&gt;end&lt;/span&gt;
+
+&lt;span class="cm"&gt;--[[ --------------------------------------------------------------------------&lt;/span&gt;
+&lt;span class="cm"&gt;  USING ARRAYS&lt;/span&gt;
+
+&lt;span class="cm"&gt;  arrays are a bit slower but have no limit,&lt;/span&gt;
+&lt;span class="cm"&gt;  array manipulation is less convenient than tables.&lt;/span&gt;
+
+&lt;span class="cm"&gt;]]&lt;/span&gt;
+
+&lt;span class="n"&gt;samples&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;getSamples&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="kr"&gt;for&lt;/span&gt; &lt;span class="n"&gt;smplindex&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="n"&gt;samples&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+  &lt;span class="n"&gt;sample&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;samples&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;smplindex&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;-- get() starts at 0&lt;/span&gt;
+  &lt;span class="n"&gt;values&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sample&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;toArray&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="c1"&gt;-- Array&lt;/span&gt;
+  &lt;span class="c1"&gt;-- // do something with the values Array&lt;/span&gt;
+  &lt;span class="n"&gt;new_value&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;sample&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;getSampleTime&lt;/span&gt;&lt;span class="p"&gt;()]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;values&lt;/span&gt;
+&lt;span class="kr"&gt;end&lt;/span&gt;
+
+&lt;span class="c1"&gt;-- new value is a table of time samples. Exemple :&lt;/span&gt;
+&lt;span class="c1"&gt;-- new_value {-0.25={...}, 0.0={...}, 0.25={...}}&lt;/span&gt;
+&lt;span class="c1"&gt;-- new_value {-0.25=Array, 0.0=Array, 0.25=Array}&lt;/span&gt;&lt;/pre&gt;
+&lt;aside class="m-note m-info"&gt;
+If you try to print the samples, you have to look at the result in the
+RenderLog &lt;strong&gt;(so start a render)&lt;/strong&gt;. The nodegraph doesn’t evaluate
+motion-blur in live and the result in the console will only be for time
+sample 0.0.&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;p&gt;Of course, this adds an additional small loop to process values which increase
+code complexity and could also damage performances if not optimized code is
+being used.&lt;/p&gt;
+&lt;p&gt;You can have a look at the lua files in My &lt;code&gt;Foundry_Katana&lt;/code&gt; GitHub repository
+like &lt;a href="https://github.com/MrLixm/Foundry_Katana/blob/main/src/attributes/attrTypeSwap/attrTypeSwap.lua"&gt;attrTypeSwap.lua&lt;/a&gt;
+to see more context use of time-samples.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="instances-preview-in-the-viewer"&gt;
+&lt;h3&gt;&lt;a href="#id16"&gt;Instances preview in the Viewer&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Since &lt;strong&gt;Katana 4.5&lt;/strong&gt;, it is now possible to view &lt;strong&gt;instance array&lt;/strong&gt; in the
+Viewer :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You need to set instance-source location &lt;code&gt;type&lt;/code&gt; to &lt;code&gt;instance source&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Make sure the instance-sources and the instance are set to be viewed in
+the Viewer (location expanded or “eye” checked for all the instance source
+hierarchy).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;⚠ Be careful though, as if your instance-sources are heavy meshes, you
+might end up with an un-responsive Viewer.&lt;/p&gt;
+&lt;p&gt;More details &lt;a href="https://youtu.be/VYRjWw6biEQ"&gt;in this video&lt;/a&gt;. Or in the
+&lt;a href="https://learn.foundry.com/katana/Content/release_notes/whats_new_4.5.html#PreviewInstancesandRendersintheHydraViewer"&gt;Katana 4.5 patch-note&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The above also apply to &lt;em&gt;hierarchical&lt;/em&gt; even if not specified in the notes.
+For Katana &amp;lt; 4.5, there is no real solution for &lt;em&gt;arrays&lt;/em&gt;, but there is one for
+&lt;em&gt;hierarchical&lt;/em&gt; that make use of the &lt;code&gt;proxies.viewer&lt;/code&gt; attribute :&lt;/p&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://learn.foundry.com/katana/4.0/Content/ug/scene_data/proxies_good_data.html"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;svg width="60" height="60" viewBox="0 0 490 490" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;
+&lt;path fill-rule="evenodd" clip-rule="evenodd" d="M245 490C380.31 490 490 380.31 490 245C490 109.69 380.31 0 245 0C109.69 0 0 109.69 0 245C0 380.31 109.69 490 245 490ZM245 466C367.055 466 466 367.055 466 245C466 122.945 367.055 24 245 24C122.945 24 24 122.945 24 245C24 367.055 122.945 466 245 466Z" fill="currentColor"/&gt;
+&lt;path d="M335.174 313.737C335.72 308.9 336 303.983 336 299C336 227.203 277.797 169 206 169C134.203 169 76 227.203 76 299C76 352.522 108.344 398.49 154.553 418.423C126.898 397.723 109 364.702 109 327.5C109 264.816 159.816 214 222.5 214C280.526 214 328.381 257.543 335.174 313.737Z" fill="currentColor"/&gt;
+&lt;path d="M141.339 288.419C145.255 291.31 149.373 294.011 153.688 296.502C215.866 332.401 295.373 311.097 331.271 248.919C367.17 186.741 345.866 107.234 283.688 71.3359C237.337 44.5749 181.356 49.602 140.989 79.6531C172.743 66.0533 210.289 67.0639 242.506 85.6647C296.793 117.007 315.392 186.422 284.05 240.709C255.037 290.96 193.4 310.633 141.339 288.419Z" fill="currentColor"/&gt;
+&lt;path d="M258.759 133.059C254.297 135.004 249.898 137.22 245.583 139.712C183.405 175.61 162.102 255.117 198 317.295C233.899 379.473 313.405 400.777 375.583 364.878C421.935 338.117 445.572 287.122 439.73 237.138C435.631 271.438 415.983 303.448 383.765 322.049C329.479 353.391 260.063 334.792 228.721 280.505C199.708 230.254 213.49 167.038 258.759 133.059Z" fill="currentColor"/&gt;
+&lt;/svg&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;Proxies and Good Data for Users&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://learn.foundry.com/katana/4.0/Content/ug/scene_data/proxies_good_data.html"&gt;https://learn.foundry.com/katana/4.0/Content/ug/scene_data/proxies_good_data.html&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;This solution require to have a pre-generated proxy alembic for your
+instance-source.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The attributes have to be set on the instances itself.
+But it would be less work to set these attributes on the instance-source and
+then make sure your OpScript copies the local attributes from the
+instance-source to the instance
+( with &lt;code&gt;Interface.GetAttr(&amp;quot;&amp;quot;, instanceSourceLocation)&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Nothing prevent you to also set it on an &lt;em&gt;array instance&lt;/em&gt;, but this requires
+to have already pre-generated an exactly similar-looking alembic.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="modifying-point-clouds-transforms"&gt;
+&lt;h3&gt;&lt;a href="#id17"&gt;Modifying point-clouds | Transforms&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;You might stumble upon the case where you can’t re-generate the point-cloud and
+you have to move it in Katana. But we can’t use our good old &lt;code&gt;Transform3D&lt;/code&gt;
+friend here because, well, the transformations data is stored in geometry
+attributes, and the &lt;code&gt;Transform3D&lt;/code&gt; only modify the &lt;code&gt;xform&lt;/code&gt; attribute !&lt;/p&gt;
+&lt;p&gt;But no need to worry I got u a solution on my GitHub :&lt;/p&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://github.com/MrLixm/Foundry_Katana/tree/main/src/viewer/PointcloudXform2P"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;img src="https://github.com/MrLixm/Foundry_Katana/raw/main/src/viewer/PointcloudXform2P/demo.gif" /&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;PointcloudXform2P&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://github.com/MrLixm/Foundry_Katana/tree/main/src/viewer/PointcloudXform2P"&gt;https://github.com/MrLixm/Foundry_Katana/tree/main/src/viewer/PointcloudXform2P&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;Allow merging xform transformations on a pointcloud location to
+the geometry.point.P attribute.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;As mentioned, the OpScript only modify the &lt;code&gt;P&lt;/code&gt; attribute, meaning only
+the &lt;code&gt;translation&lt;/code&gt; and &lt;code&gt;rotation&lt;/code&gt; from the &lt;code&gt;Transform3D&lt;/code&gt; are applied.&lt;/p&gt;
+&lt;aside class="m-note m-info"&gt;
+But you might not need this as your render-engine probably supports the
+use of &lt;code&gt;Transform3D&lt;/code&gt; on the instance(s). (even if the Viewer preview
+ignores it, in render, the instances are properly transformed.)&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;/section&gt;
+&lt;section id="modifying-point-clouds-culling"&gt;
+&lt;h3&gt;&lt;a href="#id18"&gt;Modifying point-clouds | Culling&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Another need would be to prune points to reduce instances. Even if instancing
+improve performances , more instances still costs at render-time so you
+wanna make sure you are not rendering non-contributing instances.&lt;/p&gt;
+&lt;p&gt;For this you could try to see Efthymis’s OpScript :&lt;/p&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://efthymisb.gumroad.com/l/tsrvn"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;img src="https://cdn.discordapp.com/attachments/752132517405917204/937006446695038986/frustumCulling_thumbnail.gif" /&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;Frustum Culling OpScript for Katana&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://efthymisb.gumroad.com/l/tsrvn"&gt;https://efthymisb.gumroad.com/l/tsrvn&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;&lt;p&gt;This OpScript creates Attributes based on if the geometry/point is inside the Camera’s Frustum Culling.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Hide geometry that is outside of the Frustum (from the viewport)&lt;/li&gt;
+&lt;li&gt;Set Visibility Attribute (for render)&lt;/li&gt;
+&lt;li&gt;Create Attributes based on distance from the camera.&lt;/li&gt;
+&lt;li&gt;Create instanceSkipIndex attribute for PointClouds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The concept is to use the &lt;code&gt;instanceSkipIndex&lt;/code&gt; attribute, at least for
+the &lt;code&gt;array&lt;/code&gt; method, to specify point index that must not be rendered.&lt;/p&gt;
+&lt;p&gt;For &lt;code&gt;hierarchical&lt;/code&gt; you would need to read this attribute and whenever the
+current point index you are visiting is in &lt;code&gt;instanceSkipIndex&lt;/code&gt; you just
+don’t build the instance and skip to the next point.&lt;/p&gt;
+&lt;p&gt;I’m planning to ship a solution with KUI to easily cull points using boxes,
+but if you are reading this means the feature has not been implemented yet.
+So make sure to follow the &lt;a href="https://github.com/MrLixm/KUI/issues/1"&gt;issue on the github repo&lt;/a&gt; to get notified when this is
+implemented.&lt;/p&gt;
+&lt;/section&gt;
+&lt;/section&gt;
+&lt;section id="katana-uber-instancing"&gt;
+&lt;h2&gt;&lt;a href="#id19"&gt;Katana Uber Instancing&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;As we just saw, instancing can require in some cases quite some work before
+having a result. That’s why I tried to produce a solution that would be very
+flexible with a very straightforward setup.&lt;/p&gt;
+&lt;p&gt;The goal here was to create an ‘uber’ instancing node (just a group node
+actually) where, using the same parameters, you could conveniently switch
+between different instancing methods and have a lot of flexibility on inputs.
+(Leaf-level has been excluded as I’m not familiar with it.)&lt;/p&gt;
+&lt;p&gt;A lot of work has been put into this project, learned a lot about lua and I’m
+really happy to share it with you. (Furthermore open-sourced)&lt;/p&gt;
+&lt;p&gt;The project is available on GitHub here :&lt;/p&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://github.com/MrLixm/KUI"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;img src="https://raw.githubusercontent.com/MrLixm/KUI/dev/doc/img/thumbnail.jpg" /&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;KUI - Github Repository&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://github.com/MrLixm/KUI"&gt;https://github.com/MrLixm/KUI&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;Katana OpScripts for flexible instancing setup.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;I let you check the README.md&lt;/strong&gt; that is listing all the instructions
+necessary to use this tool. There is pretty extensive documentation that
+should cover everything you need to know.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="render-engines"&gt;
+&lt;h2&gt;&lt;a href="#id20"&gt;Render-Engines&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Even if you are sure your instancing setup is correct, it might actually not
+be what your render-engine expect it to be. So golden rule, first read your
+renderer documentation carefully to see what is required, then if it’s
+still not working, you will have to test stuff until it works 😬.&lt;/p&gt;
+&lt;p&gt;For Redshift, check the section right under, for other renderers, here is
+what I found :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code class="l-bgc-dl-o"&gt;3Delight&lt;/code&gt; AND &lt;code class="l-bgc-prman-o"&gt;Renderman&lt;/code&gt; : arbitrary attribute need
+to be &lt;code&gt;Float&lt;/code&gt; and not &lt;code&gt;Double&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code class="l-bgc-dl-o"&gt;3Delight&lt;/code&gt; AND &lt;code class="l-bgc-prman-o"&gt;Renderman&lt;/code&gt; : instance array seems to
+only support instance matrix attribute and not the other TRS attributes.&lt;/li&gt;
+&lt;li&gt;&lt;code class="l-bgc-ai-o"&gt;Arnold&lt;/code&gt; : Using the TRS instances attributes with &lt;code&gt;array&lt;/code&gt;
+method led to visually incorrect rotations. You have to use an
+&lt;code&gt;instanceMatrix&lt;/code&gt; attribute to see the correct result.&lt;/li&gt;
+&lt;li&gt;&lt;code class="l-bgc-ai-o"&gt;Arnold&lt;/code&gt; : for &lt;code&gt;array&lt;/code&gt; instancing, arbitrary attributes need to
+have the scope set to &lt;code&gt;point&lt;/code&gt; to work.&lt;/li&gt;
+&lt;li&gt;&lt;code class="l-bgc-prman-o"&gt;Renderman&lt;/code&gt; : arbitrary attribute for &lt;code&gt;hierarchical&lt;/code&gt; need to
+be located at &lt;code&gt;prmanStatements.attributes.user.&amp;lt;myAttr&amp;gt;.value&lt;/code&gt;.
+See &lt;a href="https://rmanwiki.pixar.com/display/RFK24/User+Attributes"&gt;Renderman doc&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code class="l-bgc-prman-o"&gt;Renderman&lt;/code&gt; :  arbitrary attribute for &lt;code&gt;array&lt;/code&gt; are at the usual
+&lt;code&gt;geometry.arbitrary&lt;/code&gt; path but scope need to be &lt;code&gt;primitive&lt;/code&gt;. This mean
+the attribute can be used as a &lt;code&gt;primvar&lt;/code&gt; in shading.&lt;/li&gt;
+&lt;li&gt;&lt;code class="l-bgc-prman-o"&gt;Renderman&lt;/code&gt; :  for &lt;code&gt;array&lt;/code&gt; instancing, the material must be
+assigned on the &lt;code&gt;instance array&lt;/code&gt; location and not on the &lt;em&gt;instances
+sources&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You can check the test scene I used for KUI that should have a working setup
+for Arnold, 3Delight and Renderman.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;a class="m-link-wrap" href="https://github.com/MrLixm/KUI/blob/master/dev/scenes/kui.tests.katana"&gt;https://github.com/MrLixm/KUI/blob/master/dev/scenes/kui.tests.katana&lt;/a&gt;&lt;/blockquote&gt;
+&lt;section id="redshift"&gt;
+&lt;h3&gt;&lt;a href="#id21"&gt;Redshift&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The production where I had to look for instancing was using Redshift,
+and unfortunately, it seems that, at that time, the instancing features where
+“minimally” implemented and some stuff was missing/broken.
+Fortunately, Redshift developer Juanjo was very responsive and very quickly,
+fixed all the issues I found. Discussion can be found &lt;a href="https://redshift.maxon.net/topic/33461/more-documentation-for-instancing-in-katana?_=1634997159560"&gt;in this thread&lt;/a&gt;
+(maxon account required).&lt;/p&gt;
+&lt;p&gt;Didn’t tested the latest version but I think you should now get the same
+features other render-engine have. I’m just not sure if arbitrary attributes
+still need to be in &lt;code&gt;instance.arbitrary&lt;/code&gt; or is the commonly used
+&lt;code&gt;geometry.arbitrary&lt;/code&gt; supported ?&lt;/p&gt;
+&lt;/section&gt;
+&lt;/section&gt;
+&lt;section id="outro"&gt;
+&lt;h2&gt;&lt;a href="#id22"&gt;Outro&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;And that’s a wrap. Very happy to have finally published this tutorial that was
+hanging around for 4 months already haha. A topic that I could have explored in
+this post is USD, which is an additional solution for instancing. But
+having no experience at all with the format I will let you do the research.&lt;/p&gt;
+&lt;p&gt;I really hope this was useful for you because this was
+the kind of information I wish I had when starting looking for
+instancing !
+As always feedback is welcome. If you notice anything let me know
+on the PYCO discord (link in the page’s footer) or just e-mail me.&lt;/p&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://github.com/MrLixm/Foundry_Katana"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;img src="https://github.com/MrLixm/Foundry_Katana/blob/main/img/thumbnail.jpg?raw=true" /&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;GitHub - MrLixm/Foundry_Katana&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://github.com/MrLixm/Foundry_Katana"&gt;https://github.com/MrLixm/Foundry_Katana&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;Collection of resources for Foundry’s Katana software.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://discord.gg/Rgn9ucN"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;svg width="100" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"&gt;
+    &lt;title&gt;Discord&lt;/title&gt;
+    &lt;path fill="currentColor" d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/&gt;
+&lt;/svg&gt;&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;Discord - Foundry Katana (Community)&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://discord.gg/Rgn9ucN"&gt;https://discord.gg/Rgn9ucN&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;A community Discord server for Katana with official Foundry staffs.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://discord.gg/KepWvn8"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;img src="https://cdn.discordapp.com/icons/718106101773500527/60b10f494eb6b9387462445f0eef58c6.webp" /&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;Discord - Coding for CGI &amp;amp; VFX&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://discord.gg/KepWvn8"&gt;https://discord.gg/KepWvn8&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;You can find resources related to scripting in Katana on this server.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+</content><category term="tutorial"></category><category term="katana"></category><category term="instancing"></category><category term="lua"></category><category term="software"></category></entry><entry><title>Color-management in Substance Painter with OCIO</title><link href="https://mrlixm.github.io/blog/substance-painter-color-management/" rel="alternate"></link><published>2021-12-08T19:03:00+01:00</published><updated>2022-03-11T11:53:00+01:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-12-08:/blog/substance-painter-color-management/</id><summary type="html">&lt;p&gt;The long-awaited OCIO feature is here, now we gotta find how it works.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;It’s there ! After so much time, Substance-Painter finally saw itself getting
 a shiny new color-management system with OCIO support. We’re going to dive
 deeper inside and see how it works.&lt;/p&gt;
