@@ -5,8 +5,8 @@ Instancing in Katana
     instancing.
 :thumbnail: {static}/images/blog/0005/cover.jpg
 
-:status: hidden
-:date: 2022-03-09 12:24
+:status: published
+:date: 2022-03-30 20:58
 :date-created: 2021-10-23 14:58
 
 :category: tutorial
@@ -214,6 +214,9 @@ primitives.
 
     15KB folder on mega.nz
 
+You can also download the `pointcloud used in KUI <https://github
+.com/MrLixm/KUI/tree/main/dev/data/alembics>`_ for testing.
+
 This point-cloud has been generated from Mash (see `mash2pointcloud
 <https://github.com/MrLixm/Autodesk_Maya/tree/main/src/mash2pointcloud>`_)
 and contains the most commonly used attributes.
@@ -226,7 +229,8 @@ Here is what it looked like in Maya :
     {static}/images/blog/0005/demo-maya-02.png
 
 And here is the instances-sources mapping list :
-::
+
+.. code:: text
 
     0: cube
     1: cone
@@ -502,7 +506,7 @@ not using all the exported attributes on our point-cloud. Supporting them
 requires extending the basics OpScripts we used but this will be too long
 for this blog-post. Instead, I'm just going to give the code logic you could
 be using if you want to go down that road. Else you will find a fully working
-solution in the `Katana Uber Instancing`_ section.
+solution in the `Katana Uber Instancing`_ section 😉.
 
 Full Instancing : Hierarchical
 ==============================
@@ -569,13 +573,13 @@ Array is in a way more simple, you can just brainless copy the attributes
 from the point-cloud to the instance (if they are properly formatted).
 Make sure to `check the documentation <https://learn.foundry.com/katana/4
 .5/dev-guide/AttributeConventions/Instancing.html>`_ about what kind of
-attribute is excepted.
+attribute is expected.
 Pseudo code is looking like this :
 
 .. include:: pseudo_code.array.01.lua
     :code: lua
 
-Yup, that is that easy if you only need translations.
+Yup, it is that easy if you only need translations.
 
 To add rotations, you will need to split the incoming point-cloud attribute
 into X,Y and Z and add the axis direction. Works the same as for hierarchical.
@@ -626,7 +630,7 @@ An important topic that I actually only manage to understand very few time
 before publishing this article. To have motion-blur working on your instances
 (if there is movement), they need to store on attributes multiples samples that
 correspond to the ``shutterOpen/Close`` values specified in the RenderSettings.
-A samples could be considered as a "sub-frame", so with ``shutterOpen=-0.25,
+A sample could be considered as a "sub-frame", so with ``shutterOpen=-0.25,
 shutterClose=0.25`` and the ``maxTimeSamples`` set to 3 you would find 3
 time samples at -0.25, 0.0, 0.25 per attribute.
 
@@ -641,7 +645,7 @@ Example with an xform matrix attribute :
     }
 
 All the code you saw in the `Instancing In Practice`_ section (except the
-Basic Array one) doesn't take account for multiple time samples and just get
+Basic Array one) doesn't take account of multiple time samples and just gets
 the nearest sample at 0.0. And you better know if you need to support
 motion-blur before writing anything (I have to rewrite a good chunk of KUI
 because of not knowing about it).
@@ -663,7 +667,7 @@ manipulate values per time-sample :
     motion-blur in live and the result in the console will only be for time
     sample 0.0.
 
-Of course this add an additional small loop to process values which increase
+Of course, this adds an additional small loop to process values which increase
 code complexity and could also damage performances if not optimized code is
 being used.
 
@@ -779,11 +783,6 @@ implemented.
 Katana Uber Instancing
 ----------------------
 
-.. block-warning:: ⚠ IN DEVELOPMENT
-
-    ! if you read this means KUI is still in development. Do not
-    use for now !
-
 As we just saw, instancing can require in some cases quite some work before
 having a result. That's why I tried to produce a solution that would be very
 flexible with a very straightforward setup.
@@ -793,8 +792,8 @@ actually) where, using the same parameters, you could conveniently switch
 between different instancing methods and have a lot of flexibility on inputs.
 (Leaf-level has been excluded as I'm not familiar with it.)
 
-Lot of work has been put into this project, learned a lot about lua and i'm
-really happy to share it to you. (Furthermore open-sourced)
+A lot of work has been put into this project, learned a lot about lua and I'm
+really happy to share it with you. (Furthermore open-sourced)
 
 The project is available on GitHub here :
 
@@ -805,7 +804,7 @@ The project is available on GitHub here :
     Katana OpScripts for flexible instancing setup.
 
 **I let you check the README.md** that is listing all the instructions
-necessary to use this tool. There is a pretty extensive documentation that
+necessary to use this tool. There is pretty extensive documentation that
 should cover everything you need to know.
 
 
@@ -813,11 +812,11 @@ Render-Engines
 --------------
 
 Even if you are sure your instancing setup is correct, it might actually not
-be what you render-engine expect it to be. So golden-rule, first read your
+be what your render-engine expect it to be. So golden rule, first read your
 renderer documentation carefully to see what is required, then if it's
-still not working, you will have to test stuff until it work 😬.
+still not working, you will have to test stuff until it works 😬.
 
-For Redshift, check the section right under, for other renderer, here is
+For Redshift, check the section right under, for other renderers, here is
 what I found :
 
 -
@@ -856,9 +855,8 @@ what I found :
 You can check the test scene I used for KUI that should have a working setup
 for Arnold, 3Delight and Renderman.
 
-    https://github.com/MrLixm/KUI/blob/dev/dev/scenes/kui.demo.katana
+    https://github.com/MrLixm/KUI/blob/master/dev/scenes/kui.tests.katana
 
-.. TODO replace the above link wken KUI published
 
 Redshift
 ========
@@ -866,7 +864,7 @@ Redshift
 The production where I had to look for instancing was using Redshift,
 and unfortunately, it seems that, at that time, the instancing features where
 "minimally" implemented and some stuff was missing/broken.
-Fortunately, Redshift developer's Juanjo was very responsive and very quickly,
+Fortunately, Redshift developer Juanjo was very responsive and very quickly,
 fixed all the issues I found. Discussion can be found `in this thread
 <https://redshift.maxon.net/topic/33461/more-documentation-for-instancing-in-katana?_=1634997159560>`_
 (maxon account required).
@@ -874,19 +872,19 @@ fixed all the issues I found. Discussion can be found `in this thread
 Didn't tested the latest version but I think you should now get the same
 features other render-engine have. I'm just not sure if arbitrary attributes
 still need to be in ``instance.arbitrary`` or is the commonly used
-``geometry.arbitrary`` is supported ?
+``geometry.arbitrary`` supported ?
 
 
 Outro
 -----
 
 And that's a wrap. Very happy to have finally published this tutorial that was
-hanging around for 4 month already haha. A topic that I could have explored in
+hanging around for 4 months already haha. A topic that I could have explored in
 this post is USD, which is an additional solution for instancing. But
 having no experience at all with the format I will let you do the research.
 
 I really hope this was useful for you because this was
-the kind of informations I wish I had when starting looking for
+the kind of information I wish I had when starting looking for
 instancing !
 As always feedback is welcome. If you notice anything let me know
 on the PYCO discord (link in the page's footer) or just e-mail me.
