@@ -8,7 +8,7 @@ pelican configuration file
 ## Prefixes
 
 none: no prefix means pelican native content
-_ : only used to build an other object, not directly
+_ : only used to build another object, not directly
 M_ : m.css content
 L_ : liam customized content, added myself to extend m.css
 
@@ -47,7 +47,7 @@ IGNORE_FILES = [
 PAGE_PATHS = ['pages']
 PAGE_URL = '{proot}/{slug}'  # proot is only defined in EXTRA_PATH_METADATA
 PAGE_SAVE_AS = '{proot}/{slug}/index.html'
-# this fucker doesn't work ???, instead i'm using IGNORE_FILES
+# this fucker doesn't work ???, instead I'm using IGNORE_FILES
 PAGE_EXCLUDES = ["pages/work/projects/_template"]
 # -- Archives (blog post listing)
 ARCHIVES_URL = 'blog/'
@@ -56,7 +56,7 @@ ARCHIVES_SAVE_AS = 'blog/index.html'
 ARTICLE_PATHS = ['blog']
 ARTICLE_URL = 'blog/{slug}/'  # category/ is part of the slug
 ARTICLE_SAVE_AS = 'blog/{slug}/index.html'
-# this fucker doesn't work ???, instead i'm using IGNORE_FILES
+# this fucker doesn't work ???, instead I'm using IGNORE_FILES
 ARTICLE_EXCLUDES = ["blog/_template"]
 # -- STATIC
 STATIC_PATHS = ['images']

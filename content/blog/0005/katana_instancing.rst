@@ -40,7 +40,7 @@ instancing called ``KUI`` so you don't have to !
 
 .. block-info:: Target-Audience
 
-    | This post is targeted towards beginners with Kanata itself.
+    | This post is targeted towards beginners with Katana itself.
     | If you are a more advanced user you can check `Katana Uber Instancing`_.
 
 

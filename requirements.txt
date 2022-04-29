@@ -1,5 +1,0 @@
-ghp-import==2.0.2
-pelican==4.7.0
-Pygments==2.10.0
-Pillow==8.4.0
-docutils-stubs==0.0.22

@@ -1,3 +1,4 @@
+# MrLixm.github.io
 
 ![Last Published](https://img.shields.io/github/last-commit/MrLixm/MrLixm.github.io/master?label=Last%20Published)
 
@@ -11,19 +12,19 @@ A customized version of [m.css](https://mcss.mosra.cz/>) is used as theme.
 
 ## Git
 
-The branch `dev` should always be active. Commit and push on this branch whenever
-you have enough important changes.
+The branch `dev` **should always be active**. Commit and push on this branch
+whenever you have enough important changes.
 
 Once `dev` considered publish-ready you can push it to `master` using 
 [publish-online.py](./dev/publish-online.py).
 
-`gh-pages` is only used as an intermediate by the script. Nothing should
+`gh-pages` branch is only used as an intermediate by the script. Nothing should
 be manually commited to this branch.
 
 ## Dependencies
 
 Built using `Python==3.6.8`.
-See [requirements.txt](./requirements.txt) for packages required.
+See [pyproject.toml](pyproject.toml) for packages required.
 
 ## [dev/](./dev)
 
