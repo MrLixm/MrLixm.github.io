@@ -129,6 +129,7 @@ ij_markdown_min_lines_around_header = 1
 ij_markdown_min_lines_between_paragraphs = 1
 
 [{*.py,*.pyw}]
+max_line_length = 88
 ij_python_align_collections_and_comprehensions = true
 ij_python_align_multiline_imports = true
 ij_python_align_multiline_parameters = true

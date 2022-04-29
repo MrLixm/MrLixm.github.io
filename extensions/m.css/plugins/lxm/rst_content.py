@@ -33,28 +33,28 @@ def set_svg_size(svg, width, height=None):
     new_svg = re.sub(
         pattern="""width=["-'](\\d+)["-']""",
         repl=f"""width=\"{width}\"""",
-        string=svg
+        string=svg,
     )
     # the width attribute was not existing, add it.
     if new_svg == svg:
         new_svg = re.sub(
             pattern="""<svg""",
             repl=f"""<svg width=\"{width}\"""",
-            string=new_svg
+            string=new_svg,
         )
 
     # update the height attribute
     new_svg = re.sub(
         pattern="""height=["-'](\\d+)["-']""",
         repl=f"""height=\"{height}\"""",
-        string=new_svg
+        string=new_svg,
     )
     # the height attribute was not existing, add it.
     if new_svg == svg:
         new_svg = re.sub(
             pattern="""<svg""",
             repl=f"""<svg height=\"{height}\"""",
-            string=new_svg
+            string=new_svg,
         )
 
     return new_svg
@@ -143,13 +143,13 @@ class UrlPreview(rst.Directive):
 
         # Create nodes
         node_master = docutils.nodes.container()
-        node_master['classes'] += ['l-url-box']
+        node_master["classes"] += ["l-url-box"]
         node_url = docutils.nodes.reference(refuri=url_txt)
-        node_url['classes'] += ['l-url-a']
+        node_url["classes"] += ["l-url-a"]
         node_bdetail = docutils.nodes.container()
-        node_bdetail['classes'] += ['l-url-box-details']
+        node_bdetail["classes"] += ["l-url-box-details"]
         node_bimage = docutils.nodes.container()
-        node_bimage['classes'] += ['l-url-box-image']
+        node_bimage["classes"] += ["l-url-box-image"]
         # title is a regular paragraph styled differently
         node_title = docutils.nodes.paragraph("", "", *title_txt)
         node_title["classes"] += ["l-url-title"]
@@ -162,11 +162,7 @@ class UrlPreview(rst.Directive):
         node_content = docutils.nodes.paragraph()
         node_content["classes"] += ["l-url-description"]
         # content is RST formatting so parse it too.
-        self.state.nested_parse(
-            self.content,
-            self.content_offset,
-            node_content
-        )
+        self.state.nested_parse(self.content, self.content_offset, node_content)
 
         # we determine wht's going to be use in the image section
         # if path to image file is given
@@ -180,16 +176,14 @@ class UrlPreview(rst.Directive):
         elif "svg" in self.options and self.options.get("svg"):
             # build the path as it might use the {static} or {filename} token.
             svg_uri = directives.uri(self.options.get("svg"))
-            root = Path().cwd() / Path(self.pelican.settings['PATH'])
+            root = Path().cwd() / Path(self.pelican.settings["PATH"])
             svg_path = root / Path(svg_uri.format(filename=root, static=root))
             # read the svg file
             try:
                 svg_file = docutils.io.FileInput(source_path=str(svg_path))
                 svg_data = svg_file.read()
             except Exception as excp:
-                raise self.severe(
-                    f"[{self.name}] Can't read file <{svg_path}>: {excp}"
-                )
+                raise self.severe(f"[{self.name}] Can't read file <{svg_path}>: {excp}")
 
             # process options :
 
@@ -199,19 +193,15 @@ class UrlPreview(rst.Directive):
 
             # modify the width/height attribute of the svg if specified
             if "svg-size" in self.options and self.options.get("svg-size"):
-                size = self.options.get('svg-size')
+                size = self.options.get("svg-size")
                 # overwrite svg_data with the updated one
                 svg_data = set_svg_size(svg_data, width=size[0], height=size[1])
 
-            node_img = docutils.nodes.raw(
-                '', svg_data, format='html'
-            )
+            node_img = docutils.nodes.raw("", svg_data, format="html")
 
         # else use default icon wich is a svg representing a link in a circle.
         else:
-            node_img = docutils.nodes.raw(
-                '', self.__default_icon, format='html'
-            )
+            node_img = docutils.nodes.raw("", self.__default_icon, format="html")
 
         # build node tree
         node_master += node_url
@@ -231,7 +221,7 @@ def __register(pelican_object):
     Called by Pelican signal
     """
     UrlPreview.pelican = pelican_object
-    rst.directives.register_directive('url-preview', UrlPreview)
+    rst.directives.register_directive("url-preview", UrlPreview)
 
     return
 
