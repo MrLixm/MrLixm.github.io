@@ -7,8 +7,9 @@ import sys
 from . import c
 from . import cli
 
+ROOT_PACKAGE: str = c.__name__.split(".")[0]
 
-logger = logging.getLogger(f"{c.__name__}.__main__")
+logger = logging.getLogger(f"{ROOT_PACKAGE}.__main__")
 
 
 def _configureLogging():
@@ -32,7 +33,7 @@ def _configureLogging():
         "disable_existing_loggers": False,
         "formatters": {
             "fmt_standard": {
-                "format": "{levelname: <7} | {asctime} |[{name: >30}]{message}",
+                "format": "{levelname: <7} | {asctime} |[{name}]{message}",
                 "style": "{",
             }
         },
@@ -45,7 +46,7 @@ def _configureLogging():
             },
         },
         "loggers": {
-            f"{c.__name__}": {
+            f"{ROOT_PACKAGE}": {
                 "handlers": ["hl_console"],
                 "level": get_logs_level(),
                 "propagate": False,
