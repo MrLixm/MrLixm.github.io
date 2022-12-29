@@ -15,9 +15,15 @@ logger = logging.getLogger(__name__)
 
 TARGET_BRANCH_NAME = "master"
 
-INFO_FILE_PATH = Path(__file__) / "../info.json"
+SH_EXE = Path(r"C:\Program Files\Git\bin\sh.exe")
+assert SH_EXE.exists(), SH_EXE
+
+INFO_FILE_PATH = Path(__file__).parent / "../info.json"
 INFO_FILE_PATH = INFO_FILE_PATH.absolute().resolve()
-assert INFO_FILE_PATH.exists()
+assert INFO_FILE_PATH.exists(), INFO_FILE_PATH
+
+PUBLISH_SHELL_SCRIPT = Path(__file__).parent / "shell" / "build-n-publish.sh"
+assert PUBLISH_SHELL_SCRIPT.exists(), PUBLISH_SHELL_SCRIPT
 
 
 class InfoFile:
@@ -130,8 +136,8 @@ def publish(infofile: InfoFile, commit_name: str, dry_run: bool = False):
     """
 
     publish_command = [
-        r"C:\Program Files\Git\bin\sh.exe",
-        "_git-publish-noprompt.sh",
+        str(SH_EXE),
+        str(PUBLISH_SHELL_SCRIPT),
         f"{commit_name}",
         f"{infofile.version}",
     ]
