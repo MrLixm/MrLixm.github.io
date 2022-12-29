@@ -3,6 +3,7 @@ import logging
 
 import click
 from . import c
+from .publish import interactive_publish
 
 logger = logging.getLogger(__name__)
 
@@ -35,5 +36,4 @@ def publish(dry_run: bool):
     """
     Make the blog available online by building and pushing it to the remote.
     """
-    # TODO
-    pass
+    interactive_publish(dry_run=dry_run)
