@@ -243,8 +243,7 @@ Here it is imported in Katana :
     :alt: Katana Interface screenshot.
 
 I also used a small OpScript that allow me to set the viewer size of the
-points. You can `grab the OpScript here <https://github.com/MrLixm/
-Foundry_Katana/tree/main/src/viewer/PointcloudWidth>`_.
+points. You can `grab the OpScript here <https://github.com/MrLixm/opscripting/tree/main/opscriptlibrary/point_width>`_.
 
 In the ``Attributes`` tab we can see what are the attributes stored on the
 point-cloud. This one has :
@@ -672,7 +671,7 @@ code complexity and could also damage performances if not optimized code is
 being used.
 
 You can have a look at the lua files in My ``Foundry_Katana`` GitHub repository
-like `attrTypeSwap.lua <https://github.com/MrLixm/Foundry_Katana/blob/main/src/attributes/attrTypeSwap/attrTypeSwap.lua>`_
+like `attrTypeSwap.lua <https://github.com/MrLixm/opscripting/tree/main/opscriptlibrary/attr_type_swap>`_
 to see more context use of time-samples.
 
 
@@ -729,9 +728,9 @@ attributes, and the ``Transform3D`` only modify the ``xform`` attribute !
 
 But no need to worry I got u a solution on my GitHub :
 
-.. url-preview:: https://github.com/MrLixm/Foundry_Katana/tree/main/src/viewer/PointcloudXform2P
+.. url-preview:: https://github.com/MrLixm/opscripting/tree/main/opscriptlibrary/xform2P
     :title: PointcloudXform2P
-    :image: https://github.com/MrLixm/Foundry_Katana/raw/main/src/viewer/PointcloudXform2P/demo.gif
+    :image: https://raw.githubusercontent.com/MrLixm/opscripting/main/opscriptlibrary/xform2P/xform2P.gif
 
     Allow merging xform transformations on a pointcloud location to
     the geometry.point.P attribute.
@@ -799,7 +798,7 @@ The project is available on GitHub here :
 
 .. url-preview:: https://github.com/MrLixm/KUI
     :title: KUI - Github Repository
-    :image: https://raw.githubusercontent.com/MrLixm/KUI/dev/doc/img/thumbnail.jpg
+    :image: https://raw.githubusercontent.com/MrLixm/KUI/main/doc/img/thumbnail.jpg
 
     Katana OpScripts for flexible instancing setup.
 
@@ -855,7 +854,7 @@ what I found :
 You can check the test scene I used for KUI that should have a working setup
 for Arnold, 3Delight and Renderman.
 
-    https://github.com/MrLixm/KUI/blob/master/dev/scenes/kui.tests.katana
+    https://github.com/MrLixm/KUI/blob/master/main/scenes/kui.tests.katana
 
 
 Redshift
