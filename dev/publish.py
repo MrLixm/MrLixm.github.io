@@ -174,8 +174,10 @@ def interactive_publish(dry_run: bool = False):
     Start the publish process by prompting the user from the command line.
     """
 
-    if dry_run:
-        logger.info(f"[interactive_publish] Started with {dry_run=}")
+    logger.info(
+        f"[interactive_publish] Started with {dry_run=}. "
+        f"Target branch is <{TARGET_BRANCH_NAME}>"
+    )
 
     commit_name = get_commit_name()
     infofile = InfoFile(path=INFO_FILE_PATH)
@@ -190,7 +192,7 @@ if __name__ == "__main__":
 
     logging.basicConfig(
         level=logging.DEBUG,
-        format="{levelname: <7} | {asctime} [{name: >30}]{message}",
+        format="{levelname: <7} | {asctime} [{name}]{message}",
         style="{",
     )
 
