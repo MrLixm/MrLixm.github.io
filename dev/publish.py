@@ -6,6 +6,7 @@ __all__ = ("interactive_publish",)
 import json
 import logging
 import msvcrt
+import os
 import subprocess
 from datetime import datetime
 from pathlib import Path
@@ -98,13 +99,6 @@ def get_commit_name() -> str:
     Ask the user to give a name to the commit used for publishing.
     """
 
-    u_continue = input(
-        f'Website will be published and pushed to "{TARGET_BRANCH_NAME}" to make it '
-        "accessible online.\n Are you sure to continue ? ( y to continue)"
-    )  # type: str
-    if u_continue != "y":
-        raise InterruptedError("User doesn't want to continue.")
-
     commit_name = input("Give a name to this commit (summary of changes made):")
 
     # we ask if the commit name is ok, the user can retype it if not.
@@ -135,6 +129,11 @@ def publish(infofile: InfoFile, commit_name: str, dry_run: bool = False):
         dry_run: True to not write anything on disk.
     """
 
+    if not Path(".git").exists():
+        raise ValueError(
+            f"Current working directory is not the root of the Blog repo: {os.getcwd()}"
+        )
+
     publish_command = [
         str(SH_EXE),
         str(PUBLISH_SHELL_SCRIPT),
@@ -155,20 +154,16 @@ def publish(infofile: InfoFile, commit_name: str, dry_run: bool = False):
 
     infofile.write()
 
-    process = subprocess.run(
+    process = subprocess.Popen(
         publish_command,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
 
-    logger.info(
-        f"[publish][_git-publish-noprompt.sh] stdout:\n    {process.stdout.decode('utf-8')}"
-    )
-
-    if process.stderr:
-        raise RuntimeError(
-            f"Error while executing <_git-publish-noprompt.sh>:\n{process.stderr.decode('utf-8')}"
-        )
+    out, error = process.communicate()
+    logger.info(f"[publish][{SH_EXE.name}] result = {out.decode('utf-8')}")
+    if error:
+        raise RuntimeError(error.decode("utf-8"))
 
     return
 
