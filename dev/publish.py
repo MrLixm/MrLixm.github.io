@@ -1,11 +1,12 @@
 """
 
 """
+__all__ = ("interactive_publish",)
+
 import json
 import logging
 import msvcrt
 import subprocess
-import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
@@ -13,7 +14,10 @@ from typing import Optional
 logger = logging.getLogger(__name__)
 
 TARGET_BRANCH_NAME = "master"
-INFO_FILE_PATH = Path("../info.json").resolve()
+
+INFO_FILE_PATH = Path(__file__) / "../info.json"
+INFO_FILE_PATH = INFO_FILE_PATH.absolute().resolve()
+assert INFO_FILE_PATH.exists()
 
 
 class InfoFile:
@@ -163,18 +167,20 @@ def publish(infofile: InfoFile, commit_name: str, dry_run: bool = False):
     return
 
 
-def run():
+def interactive_publish(dry_run: bool = False):
+    """
+    Start the publish process by prompting the user from the command line.
+    """
 
-    dryrun = "--dryrun" in sys.argv[1:]
-    if dryrun:
-        logger.info(f"[run] Started with {dryrun=}")
+    if dry_run:
+        logger.info(f"[interactive_publish] Started with {dry_run=}")
 
     commit_name = get_commit_name()
     infofile = InfoFile(path=INFO_FILE_PATH)
 
-    publish(infofile=infofile, commit_name=commit_name, dry_run=dryrun)
+    publish(infofile=infofile, commit_name=commit_name, dry_run=dry_run)
 
-    logger.info("[run] Finished.")
+    logger.info("[interactive_publish] Finished.")
     return
 
 
@@ -186,4 +192,4 @@ if __name__ == "__main__":
         style="{",
     )
 
-    run()
+    interactive_publish()
