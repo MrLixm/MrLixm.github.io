@@ -139,6 +139,7 @@ def publish(infofile: InfoFile, commit_name: str, dry_run: bool = False):
         str(PUBLISH_SHELL_SCRIPT),
         f"{commit_name}",
         f"{infofile.version}",
+        TARGET_BRANCH_NAME,
     ]
 
     logger.info(f"[publish] {publish_command=}")
