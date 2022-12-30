@@ -10,36 +10,36 @@ instancing called &lt;code&gt;KUI&lt;/code&gt; so you don’t have to !&lt;/p&gt
 &lt;nav id="contents"&gt;
 &lt;h3&gt;Contents&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="#intro" id="id1"&gt;Intro&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#instancing-methods" id="id2"&gt;Instancing Methods&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#leaf-level" id="id3"&gt;Leaf-level&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#hierarchical" id="id4"&gt;Hierarchical&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#array" id="id5"&gt;Array&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#intro" id="toc-entry-1"&gt;Intro&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#instancing-methods" id="toc-entry-2"&gt;Instancing Methods&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#leaf-level" id="toc-entry-3"&gt;Leaf-level&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#hierarchical" id="toc-entry-4"&gt;Hierarchical&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#array" id="toc-entry-5"&gt;Array&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#instancing-in-practice" id="id6"&gt;Instancing in Practice&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#scene-preparation" id="id7"&gt;Scene-Preparation&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#opscript-preparation" id="id8"&gt;OpScript-Preparation&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#basic-instancing-hierarchical" id="id9"&gt;Basic Instancing : Hierarchical&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#basic-instancing-array" id="id10"&gt;Basic Instancing : Array&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#full-instancing" id="id11"&gt;Full Instancing&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#full-instancing-hierarchical" id="id12"&gt;Full Instancing : Hierarchical&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#full-instancing-array" id="id13"&gt;Full Instancing : Array&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#instancing-in-practice" id="toc-entry-6"&gt;Instancing in Practice&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#scene-preparation" id="toc-entry-7"&gt;Scene-Preparation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#opscript-preparation" id="toc-entry-8"&gt;OpScript-Preparation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#basic-instancing-hierarchical" id="toc-entry-9"&gt;Basic Instancing : Hierarchical&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#basic-instancing-array" id="toc-entry-10"&gt;Basic Instancing : Array&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#full-instancing" id="toc-entry-11"&gt;Full Instancing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#full-instancing-hierarchical" id="toc-entry-12"&gt;Full Instancing : Hierarchical&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#full-instancing-array" id="toc-entry-13"&gt;Full Instancing : Array&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#advanced-workflows" id="id14"&gt;Advanced workflows&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#time-samples-and-motion-blur" id="id15"&gt;Time samples and Motion-blur&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#instances-preview-in-the-viewer" id="id16"&gt;Instances preview in the Viewer&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#modifying-point-clouds-transforms" id="id17"&gt;Modifying point-clouds | Transforms&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#modifying-point-clouds-culling" id="id18"&gt;Modifying point-clouds | Culling&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#advanced-workflows" id="toc-entry-14"&gt;Advanced workflows&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#time-samples-and-motion-blur" id="toc-entry-15"&gt;Time samples and Motion-blur&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#instances-preview-in-the-viewer" id="toc-entry-16"&gt;Instances preview in the Viewer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#modifying-point-clouds-transforms" id="toc-entry-17"&gt;Modifying point-clouds | Transforms&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#modifying-point-clouds-culling" id="toc-entry-18"&gt;Modifying point-clouds | Culling&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#katana-uber-instancing" id="id19"&gt;Katana Uber Instancing&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#render-engines" id="id20"&gt;Render-Engines&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#redshift" id="id21"&gt;Redshift&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#katana-uber-instancing" id="toc-entry-19"&gt;Katana Uber Instancing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#render-engines" id="toc-entry-20"&gt;Render-Engines&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#redshift" id="toc-entry-21"&gt;Redshift&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#outro" id="id22"&gt;Outro&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#outro" id="toc-entry-22"&gt;Outro&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/nav&gt;
 &lt;/aside&gt;
@@ -53,13 +53,13 @@ if you spot big mistakes /  things to improve.&lt;/p&gt;
 &lt;aside class="m-block m-info"&gt;
 &lt;h3&gt;Target-Audience&lt;/h3&gt;
 &lt;p&gt;
-This post is targeted towards beginners with Kanata itself.&lt;br /&gt;
+This post is targeted towards beginners with Katana itself.&lt;br /&gt;
 If you are a more advanced user you can check &lt;a href="#katana-uber-instancing"&gt;Katana Uber Instancing&lt;/a&gt;.&lt;br /&gt;
 &lt;/p&gt;
 &lt;/aside&gt;
 &lt;/aside&gt;
 &lt;section id="intro"&gt;
-&lt;h2&gt;&lt;a href="#id1"&gt;Intro&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-1"&gt;Intro&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;As Katana’s motto states : &lt;em&gt;It’s all just a bunch of Attributes.&lt;/em&gt; And it
 applies to instances too. They are just a bunch of locations with a defined
 list of attributes understood by your render-engine.
@@ -77,7 +77,7 @@ Additional attributes can also be set and used for shading to make the
 instance even more different than the source.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="instancing-methods"&gt;
-&lt;h2&gt;&lt;a href="#id2"&gt;Instancing Methods&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-2"&gt;Instancing Methods&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Instancing comes in different flavors, that, similarly to all things, have
 specific ups and downs. Your render-engine may also supply alternative ways to
 produce instances so be sure to check its documentation on the topic.&lt;/p&gt;
@@ -96,7 +96,7 @@ produce instances so be sure to check its documentation on the topic.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;section id="leaf-level"&gt;
-&lt;h3&gt;&lt;a href="#id3"&gt;Leaf-level&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-3"&gt;Leaf-level&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;em&gt;(Never used this one)&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://support.foundry.com/hc/en-us/articles/360006999259"&gt;The Katana documentation&lt;/a&gt; is pretty explicit.&lt;/p&gt;
 &lt;div class="m-row"&gt;
@@ -123,7 +123,7 @@ location is the first one to instance 🙂.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Would love to know in what case this one can be more pertinent than the other methods.&lt;/em&gt;&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="hierarchical"&gt;
-&lt;h3&gt;&lt;a href="#id4"&gt;Hierarchical&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-4"&gt;Hierarchical&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Each instance = one scene-graph location.&lt;/p&gt;
 &lt;div class="m-row"&gt;
 &lt;div class="m-col-s-6"&gt;
@@ -145,7 +145,7 @@ issues. (pre-render)&lt;/p&gt;
 &lt;/div&gt;
 &lt;/section&gt;
 &lt;section id="array"&gt;
-&lt;h3&gt;&lt;a href="#id5"&gt;Array&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-5"&gt;Array&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;One single scene-graph location where each instance correspond to an index
 on each attribute.&lt;/p&gt;
 &lt;div class="m-row"&gt;
@@ -173,7 +173,7 @@ anymore).)&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="instancing-in-practice"&gt;
-&lt;h2&gt;&lt;a href="#id6"&gt;Instancing in Practice&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-6"&gt;Instancing in Practice&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;To start, there is a nice small example on the &lt;a href="https://learn.foundry.com/katana/Content/ug/instancing/rendering_instances.html"&gt;official Katana documentation&lt;/a&gt;
 . It explains how to create instances using mostly Katana nodes and one small
 OpScript to avoid stacking numerous &lt;code&gt;AttributeSet&lt;/code&gt; nodes.
@@ -199,7 +199,7 @@ For this what’s better than having a look at the documentation :
 find the 3 instancing methods described again.&lt;/p&gt;
 &lt;p&gt;Let’s now start building the scene.&lt;/p&gt;
 &lt;section id="scene-preparation"&gt;
-&lt;h3&gt;&lt;a href="#id7"&gt;Scene-Preparation&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-7"&gt;Scene-Preparation&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;For you to follow the tutorial, I will be providing you a few assets. Actually
 only a point-cloud, as to keep it simple, instances sources will be
 primitives.&lt;/p&gt;
@@ -211,7 +211,8 @@ primitives.&lt;/p&gt;
     &lt;title&gt;MEGA&lt;/title&gt;
     &lt;path fill="currentColor"
           d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm6.23 16.244a.371.371 0 0 1-.373.372H16.29a.371.371 0 0 1-.372-.372v-4.828c0-.04-.046-.06-.08-.033l-3.32 3.32a.742.742 0 0 1-1.043 0l-3.32-3.32c-.027-.027-.08-.007-.08.033v4.828a.371.371 0 0 1-.372.372H6.136a.371.371 0 0 1-.372-.372V7.757c0-.206.166-.372.372-.372h1.076a.75.75 0 0 1 .525.22l4.13 4.13a.18.18 0 0 0 .26 0l4.13-4.13c.14-.14.325-.22.525-.22h1.075c.206 0 .372.166.372.372z"/&gt;
-&lt;/svg&gt;&lt;/div&gt;
+&lt;/svg&gt;
+&lt;/div&gt;
 &lt;div class="l-url-box-details"&gt;
 &lt;p class="l-url-title"&gt;Sources Files Download&lt;/p&gt;
 &lt;div class="l-url-subtitle"&gt;
@@ -245,7 +246,7 @@ and contains the most commonly used attributes.&lt;/p&gt;
 &lt;p&gt;Here it is imported in Katana :&lt;/p&gt;
 &lt;img alt="Katana Interface screenshot." class="m-image" src="https://mrlixm.github.io/static/images/blog/0005/demo-katana-01.png" /&gt;
 &lt;p&gt;I also used a small OpScript that allow me to set the viewer size of the
-points. You can &lt;a href="https://github.com/MrLixm/Foundry_Katana/tree/main/src/viewer/PointcloudWidth"&gt;grab the OpScript here&lt;/a&gt;.&lt;/p&gt;
+points. You can &lt;a href="https://github.com/MrLixm/opscripting/tree/main/opscriptlibrary/point_width"&gt;grab the OpScript here&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;In the &lt;code&gt;Attributes&lt;/code&gt; tab we can see what are the attributes stored on the
 point-cloud. This one has :&lt;/p&gt;
 &lt;ul&gt;
@@ -289,7 +290,7 @@ nodegraph is looking like this :&lt;/p&gt;
 &lt;p&gt;Now it’s time to have a look at OpScripting.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="opscript-preparation"&gt;
-&lt;h3&gt;&lt;a href="#id8"&gt;OpScript-Preparation&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-8"&gt;OpScript-Preparation&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;We are going to manipulate a lot of inputs and data and at some point, we
 will need to see what X variable is equal to, what is the result of X
 operation, etc
@@ -352,7 +353,7 @@ CookInterface :&lt;/p&gt;
 &lt;/div&gt;
 &lt;/section&gt;
 &lt;section id="basic-instancing-hierarchical"&gt;
-&lt;h3&gt;&lt;a href="#id9"&gt;Basic Instancing : Hierarchical&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-9"&gt;Basic Instancing : Hierarchical&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;For a first try, we will be using the OpScript provided on the Foundry’s
 documentation. It’s the most basic you can do which will be perfect for an
 introduction. It’s the one for the hierarchical method.&lt;/p&gt;
@@ -492,7 +493,7 @@ the result with a “heavy” asset :&lt;/p&gt;
 &lt;/div&gt;
 &lt;/section&gt;
 &lt;section id="basic-instancing-array"&gt;
-&lt;h3&gt;&lt;a href="#id10"&gt;Basic Instancing : Array&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-10"&gt;Basic Instancing : Array&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Before trying to go further with hierarchical we are going to have a look at
 the &lt;code&gt;array&lt;/code&gt; method. Keep the same scene, we will only need to change the
 OpScript.&lt;/p&gt;
@@ -635,7 +636,7 @@ instancing method, we can have a look at the documentation:&lt;/p&gt;
 represented by one scene-graph location.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="full-instancing"&gt;
-&lt;h3&gt;&lt;a href="#id11"&gt;Full Instancing&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-11"&gt;Full Instancing&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Aight’ that was a quick first look at instancing, but as mentioned, we were
 not using all the exported attributes on our point-cloud. Supporting them
 requires extending the basics OpScripts we used but this will be too long
@@ -644,7 +645,7 @@ be using if you want to go down that road. Else you will find a fully working
 solution in the &lt;a href="#katana-uber-instancing"&gt;Katana Uber Instancing&lt;/a&gt; section 😉.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="full-instancing-hierarchical"&gt;
-&lt;h3&gt;&lt;a href="#id12"&gt;Full Instancing : Hierarchical&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-12"&gt;Full Instancing : Hierarchical&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Hierarchical is using single location per-instance, they can use the commonly
 used attributes for locations like &lt;code&gt;xform&lt;/code&gt;. This transformation attributes
 are described in the docs : &lt;a href="https://learn.foundry.com/katana/4.5/dev-guide/AttributeConventions/Transformations.html"&gt;dev-guide/AttributeConventions/Transformations&lt;/a&gt;. So pretty easy to implement, in pseudo-code :&lt;/p&gt;
@@ -816,7 +817,7 @@ mistakes so use it at your own risk. Again I recommend instead having a look at
 &lt;/div&gt;
 &lt;/section&gt;
 &lt;section id="full-instancing-array"&gt;
-&lt;h3&gt;&lt;a href="#id13"&gt;Full Instancing : Array&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-13"&gt;Full Instancing : Array&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Array is in a way more simple, you can just brainless copy the attributes
 from the point-cloud to the instance (if they are properly formatted).
 Make sure to &lt;a href="https://learn.foundry.com/katana/4.5/dev-guide/AttributeConventions/Instancing.html"&gt;check the documentation&lt;/a&gt; about what kind of
@@ -878,9 +879,9 @@ hierarchical…&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="advanced-workflows"&gt;
-&lt;h2&gt;&lt;a href="#id14"&gt;Advanced workflows&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-14"&gt;Advanced workflows&lt;/a&gt;&lt;/h2&gt;
 &lt;section id="time-samples-and-motion-blur"&gt;
-&lt;h3&gt;&lt;a href="#id15"&gt;Time samples and Motion-blur&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-15"&gt;Time samples and Motion-blur&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;An important topic that I actually only manage to understand very few time
 before publishing this article. To have motion-blur working on your instances
 (if there is movement), they need to store on attributes multiples samples that
@@ -959,11 +960,11 @@ sample 0.0.&lt;/aside&gt;
 code complexity and could also damage performances if not optimized code is
 being used.&lt;/p&gt;
 &lt;p&gt;You can have a look at the lua files in My &lt;code&gt;Foundry_Katana&lt;/code&gt; GitHub repository
-like &lt;a href="https://github.com/MrLixm/Foundry_Katana/blob/main/src/attributes/attrTypeSwap/attrTypeSwap.lua"&gt;attrTypeSwap.lua&lt;/a&gt;
+like &lt;a href="https://github.com/MrLixm/opscripting/tree/main/opscriptlibrary/attr_type_swap"&gt;attrTypeSwap.lua&lt;/a&gt;
 to see more context use of time-samples.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="instances-preview-in-the-viewer"&gt;
-&lt;h3&gt;&lt;a href="#id16"&gt;Instances preview in the Viewer&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-16"&gt;Instances preview in the Viewer&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Since &lt;strong&gt;Katana 4.5&lt;/strong&gt;, it is now possible to view &lt;strong&gt;instance array&lt;/strong&gt; in the
 Viewer :&lt;/p&gt;
 &lt;ul&gt;
@@ -1007,21 +1008,21 @@ instance-source to the instance
 to have already pre-generated an exactly similar-looking alembic.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="modifying-point-clouds-transforms"&gt;
-&lt;h3&gt;&lt;a href="#id17"&gt;Modifying point-clouds | Transforms&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-17"&gt;Modifying point-clouds | Transforms&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;You might stumble upon the case where you can’t re-generate the point-cloud and
 you have to move it in Katana. But we can’t use our good old &lt;code&gt;Transform3D&lt;/code&gt;
 friend here because, well, the transformations data is stored in geometry
 attributes, and the &lt;code&gt;Transform3D&lt;/code&gt; only modify the &lt;code&gt;xform&lt;/code&gt; attribute !&lt;/p&gt;
 &lt;p&gt;But no need to worry I got u a solution on my GitHub :&lt;/p&gt;
 &lt;div class="l-url-box"&gt;
-&lt;a class="l-url-a" href="https://github.com/MrLixm/Foundry_Katana/tree/main/src/viewer/PointcloudXform2P"&gt;&lt;/a&gt;
+&lt;a class="l-url-a" href="https://github.com/MrLixm/opscripting/tree/main/opscriptlibrary/xform2P"&gt;&lt;/a&gt;
 &lt;div class="l-url-box-image"&gt;
-&lt;img src="https://github.com/MrLixm/Foundry_Katana/raw/main/src/viewer/PointcloudXform2P/demo.gif" /&gt;
+&lt;img src="https://raw.githubusercontent.com/MrLixm/opscripting/main/opscriptlibrary/xform2P/xform2P.gif" /&gt;
 &lt;/div&gt;
 &lt;div class="l-url-box-details"&gt;
 &lt;p class="l-url-title"&gt;PointcloudXform2P&lt;/p&gt;
 &lt;div class="l-url-subtitle"&gt;
-&lt;a class="m-link-wrap" href="https://github.com/MrLixm/Foundry_Katana/tree/main/src/viewer/PointcloudXform2P"&gt;https://github.com/MrLixm/Foundry_Katana/tree/main/src/viewer/PointcloudXform2P&lt;/a&gt;
+&lt;a class="m-link-wrap" href="https://github.com/MrLixm/opscripting/tree/main/opscriptlibrary/xform2P"&gt;https://github.com/MrLixm/opscripting/tree/main/opscriptlibrary/xform2P&lt;/a&gt;
 &lt;/div&gt;
 &lt;p class="l-url-description"&gt;Allow merging xform transformations on a pointcloud location to
 the geometry.point.P attribute.&lt;/p&gt;
@@ -1036,7 +1037,7 @@ ignores it, in render, the instances are properly transformed.)&lt;/aside&gt;
 &lt;/aside&gt;
 &lt;/section&gt;
 &lt;section id="modifying-point-clouds-culling"&gt;
-&lt;h3&gt;&lt;a href="#id18"&gt;Modifying point-clouds | Culling&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-18"&gt;Modifying point-clouds | Culling&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Another need would be to prune points to reduce instances. Even if instancing
 improve performances , more instances still costs at render-time so you
 wanna make sure you are not rendering non-contributing instances.&lt;/p&gt;
@@ -1073,7 +1074,7 @@ implemented.&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="katana-uber-instancing"&gt;
-&lt;h2&gt;&lt;a href="#id19"&gt;Katana Uber Instancing&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-19"&gt;Katana Uber Instancing&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;As we just saw, instancing can require in some cases quite some work before
 having a result. That’s why I tried to produce a solution that would be very
 flexible with a very straightforward setup.&lt;/p&gt;
@@ -1087,7 +1088,7 @@ really happy to share it with you. (Furthermore open-sourced)&lt;/p&gt;
 &lt;div class="l-url-box"&gt;
 &lt;a class="l-url-a" href="https://github.com/MrLixm/KUI"&gt;&lt;/a&gt;
 &lt;div class="l-url-box-image"&gt;
-&lt;img src="https://raw.githubusercontent.com/MrLixm/KUI/dev/doc/img/thumbnail.jpg" /&gt;
+&lt;img src="https://raw.githubusercontent.com/MrLixm/KUI/main/doc/img/thumbnail.jpg" /&gt;
 &lt;/div&gt;
 &lt;div class="l-url-box-details"&gt;
 &lt;p class="l-url-title"&gt;KUI - Github Repository&lt;/p&gt;
@@ -1102,7 +1103,7 @@ necessary to use this tool. There is pretty extensive documentation that
 should cover everything you need to know.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="render-engines"&gt;
-&lt;h2&gt;&lt;a href="#id20"&gt;Render-Engines&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-20"&gt;Render-Engines&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Even if you are sure your instancing setup is correct, it might actually not
 be what your render-engine expect it to be. So golden rule, first read your
 renderer documentation carefully to see what is required, then if it’s
@@ -1132,9 +1133,9 @@ sources&lt;/em&gt;.&lt;/li&gt;
 &lt;p&gt;You can check the test scene I used for KUI that should have a working setup
 for Arnold, 3Delight and Renderman.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;a class="m-link-wrap" href="https://github.com/MrLixm/KUI/blob/master/dev/scenes/kui.tests.katana"&gt;https://github.com/MrLixm/KUI/blob/master/dev/scenes/kui.tests.katana&lt;/a&gt;&lt;/blockquote&gt;
+&lt;a class="m-link-wrap" href="https://github.com/MrLixm/KUI/blob/master/main/scenes/kui.tests.katana"&gt;https://github.com/MrLixm/KUI/blob/master/main/scenes/kui.tests.katana&lt;/a&gt;&lt;/blockquote&gt;
 &lt;section id="redshift"&gt;
-&lt;h3&gt;&lt;a href="#id21"&gt;Redshift&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-21"&gt;Redshift&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;The production where I had to look for instancing was using Redshift,
 and unfortunately, it seems that, at that time, the instancing features where
 “minimally” implemented and some stuff was missing/broken.
@@ -1148,7 +1149,7 @@ still need to be in &lt;code&gt;instance.arbitrary&lt;/code&gt; or is the common
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="outro"&gt;
-&lt;h2&gt;&lt;a href="#id22"&gt;Outro&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-22"&gt;Outro&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;And that’s a wrap. Very happy to have finally published this tutorial that was
 hanging around for 4 months already haha. A topic that I could have explored in
 this post is USD, which is an additional solution for instancing. But
@@ -1177,7 +1178,8 @@ on the PYCO discord (link in the page’s footer) or just e-mail me.&lt;/p&gt;
 &lt;svg width="100" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"&gt;
     &lt;title&gt;Discord&lt;/title&gt;
     &lt;path fill="currentColor" d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/&gt;
-&lt;/svg&gt;&lt;/div&gt;
+&lt;/svg&gt;
+&lt;/div&gt;
 &lt;div class="l-url-box-details"&gt;
 &lt;p class="l-url-title"&gt;Discord - Foundry Katana (Community)&lt;/p&gt;
 &lt;div class="l-url-subtitle"&gt;
@@ -1233,83 +1235,83 @@ updated though.&lt;/p&gt;
 &lt;nav id="contents"&gt;
 &lt;h3&gt;Contents&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="#color-managed-workflow" id="id2"&gt;Color-managed Workflow&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#data-types-color-and-scalar" id="id3"&gt;Data types: Color and Scalar&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#scalar" id="id4"&gt;Scalar&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#color" id="id5"&gt;Color&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#in-substance" id="id6"&gt;In Substance&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#color-managed-workflow" id="toc-entry-1"&gt;Color-managed Workflow&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#data-types-color-and-scalar" id="toc-entry-2"&gt;Data types: Color and Scalar&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#scalar" id="toc-entry-3"&gt;Scalar&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#color" id="toc-entry-4"&gt;Color&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#in-substance" id="toc-entry-5"&gt;In Substance&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#workflow-sections" id="id7"&gt;Workflow Sections&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#input" id="id8"&gt;Input&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#workspace" id="id9"&gt;Workspace&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#display" id="id10"&gt;Display&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#output" id="id11"&gt;Output&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#example" id="id12"&gt;Example&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href="#substance-setup-workflow" id="id13"&gt;Substance Setup &amp;amp; Workflow&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#new-project" id="id14"&gt;New Project&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#ocio-config" id="id15"&gt;OCIO config&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#custom-config" id="id16"&gt;Custom config&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#environment-variable" id="id17"&gt;Environment variable&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#global-settings" id="id18"&gt;Global Settings&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#set-locally-at-startup" id="id19"&gt;Set locally at startup&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href="#substance-parameters-for-ocio-configs" id="id20"&gt;Substance parameters for OCIO configs&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href="#new-project-conclusion" id="id21"&gt;New Project : Conclusion&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#workspace-setup-in-sp" id="id22"&gt;Workspace Setup in Sp&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#display-setup-in-sp" id="id23"&gt;Display Setup in Sp&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#displaying-color-and-scalar-data" id="id24"&gt;Displaying Color and Scalar data&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href="#input-setup-in-sp" id="id25"&gt;Input Setup in Sp&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#shelf-resources" id="id26"&gt;Shelf Resources&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#the-color-picker" id="id27"&gt;The color-picker&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#environment" id="id28"&gt;Environment&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#masks" id="id29"&gt;Masks&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href="#output-setup-in-sp" id="id30"&gt;Output Setup in Sp&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href="#aces-workflow" id="id31"&gt;ACES Workflow&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#aces-config-setup" id="id32"&gt;ACES - Config setup&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#aces-what-to-do-when-working" id="id33"&gt;ACES - What to do when working&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#aces-display" id="id34"&gt;ACES - Display&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#aces-inputs" id="id35"&gt;ACES - Inputs&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#aces-environment" id="id36"&gt;ACES - Environment&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href="#aces-colorpicker" id="id37"&gt;ACES - Colorpicker&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#aces-output" id="id38"&gt;ACES - Output&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#workflow-sections" id="toc-entry-6"&gt;Workflow Sections&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#input" id="toc-entry-7"&gt;Input&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#workspace" id="toc-entry-8"&gt;Workspace&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#display" id="toc-entry-9"&gt;Display&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#output" id="toc-entry-10"&gt;Output&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#example" id="toc-entry-11"&gt;Example&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#ocio-implementation-issues" id="id39"&gt;OCIO Implementation Issues&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#display-issues" id="id40"&gt;Display Issues&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#display-components-mismatch" id="id41"&gt;Display components mismatch&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#partial-look-support" id="id42"&gt;Partial Look support&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#substance-setup-workflow" id="toc-entry-12"&gt;Substance Setup &amp;amp; Workflow&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#new-project" id="toc-entry-13"&gt;New Project&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#ocio-config" id="toc-entry-14"&gt;OCIO config&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#custom-config" id="toc-entry-15"&gt;Custom config&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#environment-variable" id="toc-entry-16"&gt;Environment variable&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#global-settings" id="toc-entry-17"&gt;Global Settings&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#set-locally-at-startup" id="toc-entry-18"&gt;Set locally at startup&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#improving-the-substance-ocio-config" id="id43"&gt;Improving the Substance OCIO config&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#issues-recap" id="id44"&gt;Issues Recap&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#substance-parameters-for-ocio-configs" id="toc-entry-19"&gt;Substance parameters for OCIO configs&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#conclusion" id="id45"&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#resources" id="id46"&gt;Resources&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#changelog" id="id47"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#new-project-conclusion" id="toc-entry-20"&gt;New Project : Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#workspace-setup-in-sp" id="toc-entry-21"&gt;Workspace Setup in Sp&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#display-setup-in-sp" id="toc-entry-22"&gt;Display Setup in Sp&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#displaying-color-and-scalar-data" id="toc-entry-23"&gt;Displaying Color and Scalar data&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#input-setup-in-sp" id="toc-entry-24"&gt;Input Setup in Sp&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#shelf-resources" id="toc-entry-25"&gt;Shelf Resources&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#the-color-picker" id="toc-entry-26"&gt;The color-picker&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#environment" id="toc-entry-27"&gt;Environment&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#masks" id="toc-entry-28"&gt;Masks&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#output-setup-in-sp" id="toc-entry-29"&gt;Output Setup in Sp&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#aces-workflow" id="toc-entry-30"&gt;ACES Workflow&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#aces-config-setup" id="toc-entry-31"&gt;ACES - Config setup&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#aces-what-to-do-when-working" id="toc-entry-32"&gt;ACES - What to do when working&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#aces-display" id="toc-entry-33"&gt;ACES - Display&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#aces-inputs" id="toc-entry-34"&gt;ACES - Inputs&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#aces-environment" id="toc-entry-35"&gt;ACES - Environment&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#aces-colorpicker" id="toc-entry-36"&gt;ACES - Colorpicker&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#aces-output" id="toc-entry-37"&gt;ACES - Output&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#ocio-implementation-issues" id="toc-entry-38"&gt;OCIO Implementation Issues&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#display-issues" id="toc-entry-39"&gt;Display Issues&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#display-components-mismatch" id="toc-entry-40"&gt;Display components mismatch&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#partial-look-support" id="toc-entry-41"&gt;Partial Look support&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#improving-the-substance-ocio-config" id="toc-entry-42"&gt;Improving the Substance OCIO config&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#issues-recap" id="toc-entry-43"&gt;Issues Recap&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#conclusion" id="toc-entry-44"&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#resources" id="toc-entry-45"&gt;Resources&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#changelog" id="toc-entry-46"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/nav&gt;
 &lt;/aside&gt;
 &lt;section id="color-managed-workflow"&gt;
-&lt;h2&gt;&lt;a href="#id2"&gt;Color-managed Workflow&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-1"&gt;Color-managed Workflow&lt;/a&gt;&lt;/h2&gt;
 &lt;aside class="m-note m-info"&gt;
 This part is aimed at beginners, but introduce a too vast topic for this
 article. I recommend reading
@@ -1362,14 +1364,14 @@ As an example, in the above diagram, to convert the &lt;code&gt;Input&lt;/code&g
 &lt;code&gt;Workspace&lt;/code&gt; data, we need to know how the &lt;code&gt;Input&lt;/code&gt; data is encoded (in our
 case, which colorspace).&lt;/p&gt;
 &lt;section id="data-types-color-and-scalar"&gt;
-&lt;h3&gt;&lt;a href="#id3"&gt;Data types: Color and Scalar&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-2"&gt;Data types: Color and Scalar&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;“Where you start” means first, what type of data are you manipulating ?&lt;/p&gt;
 &lt;p&gt;There are only two types : &lt;code&gt;color&lt;/code&gt; and &lt;code&gt;scalar&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;It is important to know which one your data belongs to because the scalar
 one doesn’t require your data to be color-managed and as such skip a
 complex part.&lt;/p&gt;
 &lt;section id="scalar"&gt;
-&lt;h4&gt;&lt;a href="#id4"&gt;Scalar&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-3"&gt;Scalar&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;Scalar data has no means to be displayed directly, the data store numbers
 that can be used to drive other types of data. We are only interested in the
 original value of these numbers and as such this kind of data &lt;strong&gt;must never
@@ -1382,7 +1384,7 @@ is color data. For example normal maps, even if colored, ARE scalar data.&lt;/as
 &lt;/aside&gt;
 &lt;/section&gt;
 &lt;section id="color"&gt;
-&lt;h4&gt;&lt;a href="#id5"&gt;Color&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-4"&gt;Color&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;Everything that is not scalar. Values stored are intended to be displayed
 directly. These values are always encoded in some colorspace and require to be
 decoded properly.&lt;/p&gt;
@@ -1390,7 +1392,7 @@ decoded properly.&lt;/p&gt;
 color, specular color, refraction color, every image displayed on the web, …&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="in-substance"&gt;
-&lt;h4&gt;&lt;a href="#id6"&gt;In Substance&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-5"&gt;In Substance&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;In Substance you will find this separation depending on the channel you
 are working on. &lt;a href="https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html#section5"&gt;The full list of color-managed channels is available here.&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;As Substance is aware if the channel needs to be color-managed, some operations
@@ -1403,7 +1405,7 @@ specify the “colorspace” as “raw”, so no special decoding is applied.&lt
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="workflow-sections"&gt;
-&lt;h3&gt;&lt;a href="#id7"&gt;Workflow Sections&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-6"&gt;Workflow Sections&lt;/a&gt;&lt;/h3&gt;
 &lt;div class="l-c-color l-mrg-l l-flex-c l-flex-center"&gt;
 &lt;svg width="80%" height="80%" viewBox="0 0 630 153" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;"&gt;
     &lt;path d="M15,97L153,97C160.732,97 167,103.268 167,111L167,138C167,145.732 160.732,152 153,152L15,152C7.268,152 1,145.732 1,138L1,111C1,103.268 7.268,97 15,97ZM246,97L384,97C391.732,97 398,103.268 398,111L398,138C398,145.732 391.732,152 384,152L246,152C238.268,152 232,145.732 232,138L232,111C232,103.268 238.268,97 246,97ZM246,1L384,1C391.732,1 398,7.268 398,15L398,42C398,49.732 391.732,56 384,56L246,56C238.268,56 232,49.732 232,42L232,15C232,7.268 238.268,1 246,1ZM477,97L615,97C622.732,97 629,103.268 629,111L629,138C629,145.732 622.732,152 615,152L477,152C469.268,152 463,145.732 463,138L463,111C463,103.268 469.268,97 477,97Z" style="fill:none;fill-rule:nonzero;stroke:currentColor;stroke-width:2px;"/&gt;
@@ -1438,7 +1440,7 @@ specify the “colorspace” as “raw”, so no special decoding is applied.&lt
 &lt;/svg&gt;
 &lt;/div&gt;
 &lt;section id="input"&gt;
-&lt;h4&gt;&lt;a href="#id8"&gt;Input&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-7"&gt;Input&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;Data that need to be processed, can be anything but in our case it is
 pixel data, like an image texture, a brushstroke, a procedural noise, …&lt;/p&gt;
 &lt;p&gt;If it is scalar, we don’t need to decode it. We must specify that we don’t
@@ -1452,7 +1454,7 @@ a transfer-function depending on the file format used.&lt;/p&gt;
 See &lt;a href="#input-setup-in-sp"&gt;Input Setup in Sp&lt;/a&gt; ..&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="workspace"&gt;
-&lt;h4&gt;&lt;a href="#id9"&gt;Workspace&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-8"&gt;Workspace&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;Everything you create, modify go through it. We define how it is configured
 so we can always know “where to go” when transforming an Input.
 In sp this is the “Working color space”. In OCIO term it corresponds the
@@ -1461,7 +1463,7 @@ In sp this is the “Working color space”. In OCIO term it corresponds the
 &lt;code&gt;scene_linear&lt;/code&gt; one to use it as the Working Colorspace.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="display"&gt;
-&lt;h4&gt;&lt;a href="#id10"&gt;Display&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-9"&gt;Display&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;Once the data has been processed through the Workspace you might want to
 preview it. To do so, everybody will be using some kind of hardware display,
 usually a computer monitor. This might sound dumb but it is a critical step.
@@ -1488,7 +1490,7 @@ you can find at the top-right of your viewport.
 See &lt;a href="#display-setup-in-sp"&gt;Display Setup in Sp&lt;/a&gt; .&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="output"&gt;
-&lt;h4&gt;&lt;a href="#id11"&gt;Output&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-10"&gt;Output&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;But isn’t the Display the Output ? Yes, it can be, if you are at the end of the
 chain. But here in sp, the end of the chain is our exported texture files. The
 Display only allow us to have a preview of how they could look.&lt;/p&gt;
@@ -1499,7 +1501,7 @@ container (image format) you chose.&lt;/p&gt;
 See &lt;a href="#output-setup-in-sp"&gt;Output Setup in Sp&lt;/a&gt; .&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="example"&gt;
-&lt;h4&gt;&lt;a href="#id12"&gt;Example&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-11"&gt;Example&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;To illustrate the theory here is a diagram representing a section of a
 potential VFX-pipeline. I hope this will not confuse you more than this topic
 already is.&lt;/p&gt;
@@ -1570,7 +1572,7 @@ continue your exploration at the end of this article.&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="substance-setup-workflow"&gt;
-&lt;h2&gt;&lt;a href="#id13"&gt;Substance Setup &amp;amp; Workflow&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-12"&gt;Substance Setup &amp;amp; Workflow&lt;/a&gt;&lt;/h2&gt;
 &lt;div class="m-image"&gt;
 &lt;a href="https://mrlixm.github.io/static/images/blog/0008/sp-project-legacy.png"&gt;&lt;img alt="New project window with color-management tab" src="https://mrlixm.github.io/static/images/blog/0008/sp-project-legacy.png" /&gt;&lt;/a&gt;
 &lt;/div&gt;
@@ -1578,7 +1580,7 @@ continue your exploration at the end of this article.&lt;/p&gt;
 As such, you will not find any options in the applications settings but in
 project ones.&lt;/p&gt;
 &lt;section id="new-project"&gt;
-&lt;h3&gt;&lt;a href="#id14"&gt;New Project&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-13"&gt;New Project&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;The first occurrence of these new options can be found on the &lt;code&gt;New project&lt;/code&gt;
 window. You will find a &lt;code&gt;Color Management&lt;/code&gt; sub-menu at the bottom.&lt;/p&gt;
 &lt;div class="m-image"&gt;
@@ -1599,7 +1601,7 @@ to use.&lt;/strong&gt;&lt;/aside&gt;
 &lt;/aside&gt;
 &lt;/section&gt;
 &lt;section id="ocio-config"&gt;
-&lt;h3&gt;&lt;a href="#id15"&gt;OCIO config&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-14"&gt;OCIO config&lt;/a&gt;&lt;/h3&gt;
 &lt;div class="m-image"&gt;
 &lt;a href="https://mrlixm.github.io/static/images/blog/0008/sp-project-OCIO-01.png"&gt;&lt;img alt="New project window with OCIO options" src="https://mrlixm.github.io/static/images/blog/0008/sp-project-OCIO-01.png" /&gt;&lt;/a&gt;
 &lt;/div&gt;
@@ -1640,7 +1642,7 @@ sRGB linear workflow and do not wish to use an OCIO config in every DCC.
 You will still have enough control to have a proper color-managed workflow.&lt;/p&gt;
 &lt;p&gt;Let’s now see how you could load a custom OCIO config.&lt;/p&gt;
 &lt;section id="custom-config"&gt;
-&lt;h4&gt;&lt;a href="#id16"&gt;Custom config&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-15"&gt;Custom config&lt;/a&gt;&lt;/h4&gt;
 &lt;div class="m-image"&gt;
 &lt;a href="https://mrlixm.github.io/static/images/blog/0008/sp-project-ocio-custom.png"&gt;&lt;img alt="New project window with OCIO option set with a custom config." src="https://mrlixm.github.io/static/images/blog/0008/sp-project-ocio-custom.png" /&gt;&lt;/a&gt;
 &lt;/div&gt;
@@ -1662,7 +1664,7 @@ see this message pop up :&lt;/p&gt;
 the setup.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="environment-variable"&gt;
-&lt;h4&gt;&lt;a href="#id17"&gt;Environment variable&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-16"&gt;Environment variable&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;The above might be enough for individual artists but being in a pipeline
 environment requires other ways to set OCIO automatically.&lt;/p&gt;
 &lt;aside class="m-note m-info"&gt;
@@ -1671,7 +1673,7 @@ file it will take over to override and disable the UI settings.&lt;/aside&gt;
 &lt;/aside&gt;
 &lt;p&gt;On Windows you have 2 ways to set environment variables :&lt;/p&gt;
 &lt;section id="global-settings"&gt;
-&lt;h5&gt;&lt;a href="#id18"&gt;Global Settings&lt;/a&gt;&lt;/h5&gt;
+&lt;h5&gt;&lt;a href="#toc-entry-17"&gt;Global Settings&lt;/a&gt;&lt;/h5&gt;
 &lt;div class="m-image"&gt;
 &lt;a href="https://mrlixm.github.io/static/images/blog/0008/ocio-env-global.png"&gt;&lt;img alt="Windows creating the OCIO environment variable." src="https://mrlixm.github.io/static/images/blog/0008/ocio-env-global.png" /&gt;&lt;/a&gt;
 &lt;/div&gt;
@@ -1683,7 +1685,7 @@ overridden).&lt;/p&gt;
 will be broken.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="set-locally-at-startup"&gt;
-&lt;h5&gt;&lt;a href="#id19"&gt;Set locally at startup&lt;/a&gt;&lt;/h5&gt;
+&lt;h5&gt;&lt;a href="#toc-entry-18"&gt;Set locally at startup&lt;/a&gt;&lt;/h5&gt;
 &lt;p&gt;You defined the environment variable in a start-up script.
 This is the cleanest way to do it but means you can’t use the Windows shortcut
 to start your software :&lt;/p&gt;
@@ -1707,7 +1709,7 @@ You can have a look on internet at &lt;a href="https://superuser.com/questions/6
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="substance-parameters-for-ocio-configs"&gt;
-&lt;h4&gt;&lt;a href="#id20"&gt;Substance parameters for OCIO configs&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-19"&gt;Substance parameters for OCIO configs&lt;/a&gt;&lt;/h4&gt;
 &lt;figure class="m-figure"&gt;
 &lt;a href="https://mrlixm.github.io/static/images/blog/0008/sp-project-ocio-options.png"&gt;&lt;img alt="Options for OCIO mode in sp.." src="https://mrlixm.github.io/static/images/blog/0008/sp-project-ocio-options.png" /&gt;&lt;/a&gt;
 &lt;figcaption&gt;OCIO with Substance config default settings.&lt;/figcaption&gt;
@@ -1753,7 +1755,7 @@ read in Sp.&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="new-project-conclusion"&gt;
-&lt;h3&gt;&lt;a href="#id21"&gt;New Project : Conclusion&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-20"&gt;New Project : Conclusion&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Alright, to recap’ everything for a new project you need :&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Change the color-management mode to OCIO&lt;/li&gt;
@@ -1766,7 +1768,7 @@ divided into the same sections explained in the theoretical part of this
 article (see &lt;a href="#color-managed-workflow"&gt;Color-managed Workflow&lt;/a&gt;).&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="workspace-setup-in-sp"&gt;
-&lt;h3&gt;&lt;a href="#id22"&gt;Workspace Setup in Sp&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-21"&gt;Workspace Setup in Sp&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;The Workspace, in software is actually an “abstract” section. It just
 represents the colorspace used as a reference, target or source for every color
 transformation. It is defined in the OCIO config and cannot be changed outside
@@ -1782,7 +1784,7 @@ config here)&lt;/figcaption&gt;
 &lt;p&gt;It is just good to know what is the colorspace being used here.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="display-setup-in-sp"&gt;
-&lt;h3&gt;&lt;a href="#id23"&gt;Display Setup in Sp&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-22"&gt;Display Setup in Sp&lt;/a&gt;&lt;/h3&gt;
 &lt;div class="m-image"&gt;
 &lt;a href="https://mrlixm.github.io/static/images/blog/0008/sp-odt-default.png"&gt;&lt;img alt="View-transform screenshot." src="https://mrlixm.github.io/static/images/blog/0008/sp-odt-default.png" /&gt;&lt;/a&gt;
 &lt;/div&gt;
@@ -1830,7 +1832,7 @@ justify why using Rec709+BT.1886 instead of sRGB.&lt;/p&gt;
 wrote about this topic, I let you read this mind-blowing article from
 Chris Brejon &lt;a href="https://chrisbrejon.com/articles/ocio-display-transforms-and-misconceptions/"&gt;OCIO, Display Transforms and Misconceptions&lt;/a&gt;.&lt;/p&gt;
 &lt;section id="displaying-color-and-scalar-data"&gt;
-&lt;h4&gt;&lt;a href="#id24"&gt;Displaying Color and Scalar data&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-23"&gt;Displaying Color and Scalar data&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;Sp will handle it for you automatically, depending on the channel you
 are previewing.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html#section5"&gt;The full list of color-managed channels is available here.&lt;/a&gt;&lt;/p&gt;
@@ -1844,14 +1846,14 @@ specify if the channel is color-managed though. (By default they are not)&lt;/p&
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="input-setup-in-sp"&gt;
-&lt;h3&gt;&lt;a href="#id25"&gt;Input Setup in Sp&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-24"&gt;Input Setup in Sp&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Texturing is all about mixing already existing images, with some carefully
 crafted paint stroke, and funky procedural resources. All of these, if they
 are color-data, have been created and saved with a specific colorspace.
 We will need to know and then specify this colorspace to sp so the OCIO
 processor can know if it needs conversion to the Workspace colorspace.&lt;/p&gt;
 &lt;section id="shelf-resources"&gt;
-&lt;h4&gt;&lt;a href="#id26"&gt;Shelf Resources&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-25"&gt;Shelf Resources&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;In Sp this manipulation takes place, weirdly, on the images slots of each
 layer. You will not find any option to specify the colorspace in the shelf.&lt;/p&gt;
 &lt;div class="l-flex-r l-flex-start l-gap-1"&gt;
@@ -1878,7 +1880,7 @@ only work for one. If I take for example a colorspace name used in the ACES
 config this could give: &lt;code&gt;bricks_wall_albedo_Utility - Linear - sRGB.exr&lt;/code&gt;.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="the-color-picker"&gt;
-&lt;h4&gt;&lt;a href="#id27"&gt;The color-picker&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-26"&gt;The color-picker&lt;/a&gt;&lt;/h4&gt;
 &lt;aside class="m-note m-info"&gt;
 &lt;p&gt;7.4.2 update changed the behavior of the color-picker with huge
 improvements :&lt;/p&gt;
@@ -2010,7 +2012,7 @@ Looking forward to next updates to reach the perfect color-picking
 experience haha.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="environment"&gt;
-&lt;h4&gt;&lt;a href="#id28"&gt;Environment&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-27"&gt;Environment&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;&lt;span class="m-text m-s l-c-color-6"&gt;There is no direct option to modify the environment image colorspace.&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;From 7.4.2 + you can find an option in the &lt;code&gt;Display Settings&lt;/code&gt; Menu, to change
 the environment colorspace being used.&lt;/p&gt;
@@ -2028,14 +2030,14 @@ The pre-integrated HDRIs are encoded with a &lt;code&gt;linear - sRGB&lt;/code&g
 &lt;/aside&gt;
 &lt;/section&gt;
 &lt;section id="masks"&gt;
-&lt;h4&gt;&lt;a href="#id29"&gt;Masks&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-28"&gt;Masks&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;When you right-click on a mask you have the option to &lt;code&gt;Export mask as File&lt;/code&gt;.
 Don’t worry, mask seems to always be considered as scalar and exported
 without any treatment.&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="output-setup-in-sp"&gt;
-&lt;h3&gt;&lt;a href="#id30"&gt;Output Setup in Sp&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-29"&gt;Output Setup in Sp&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;The Export Textures window didn’t got much new. We doesn’t have any options
 to apply a color-transformation at export time in the Window. The only options
 are the one available into the project settings.&lt;/p&gt;
@@ -2061,11 +2063,11 @@ Interstingly, this colorspace &lt;code&gt;raw&lt;/code&gt; doesn’t get written
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="aces-workflow"&gt;
-&lt;h2&gt;&lt;a href="#id31"&gt;ACES Workflow&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-30"&gt;ACES Workflow&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;I’m not going to get into the what and the why, only the how. Let’s keep the
 rest for a next (potential) article ?&lt;/p&gt;
 &lt;section id="aces-config-setup"&gt;
-&lt;h3&gt;&lt;a href="#id32"&gt;ACES - Config setup&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-31"&gt;ACES - Config setup&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;You could use the one shipped with Substance but I wouldn’t recommend so.
 They are the ones with the hundred colorspaces that will just slow you down
 when you need to choose one.&lt;/p&gt;
@@ -2099,18 +2101,18 @@ are the only ones that can’t be modified per-case though; this is the only
 place you can change them.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="aces-what-to-do-when-working"&gt;
-&lt;h3&gt;&lt;a href="#id33"&gt;ACES - What to do when working&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-32"&gt;ACES - What to do when working&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;I’m only going to give detailed explanations when something is specific to
 ACES. Meanwhile the explanations given in &lt;a href="#substance-setup-workflow"&gt;Substance Setup &amp;amp; Workflow&lt;/a&gt; still
 apply so make sure you properly understood this section.&lt;/p&gt;
 &lt;section id="aces-display"&gt;
-&lt;h4&gt;&lt;a href="#id34"&gt;ACES - Display&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-33"&gt;ACES - Display&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;Not much new, use the view-transform that correspond to the display you are
 using. (In my case &lt;code&gt;ACES - sRGB&lt;/code&gt;, that behind the scene, uses &lt;code&gt;Output -
 sRGB&lt;/code&gt;)&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="aces-inputs"&gt;
-&lt;h4&gt;&lt;a href="#id35"&gt;ACES - Inputs&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-34"&gt;ACES - Inputs&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;For every external resource you import, you need to assign the correct
 input colorspace if the automatic one doesn’t correspond. The usual rules
 for the ACES workflow apply.&lt;/p&gt;
@@ -2118,7 +2120,7 @@ for the ACES workflow apply.&lt;/p&gt;
 &lt;a href="https://mrlixm.github.io/static/images/blog/0008/diagram-aces-idt.jpg"&gt;&lt;img alt="ACES IDT Cheatsheet." src="https://mrlixm.github.io/static/images/blog/0008/diagram-aces-idt.jpg" /&gt;&lt;/a&gt;
 &lt;/div&gt;
 &lt;section id="aces-environment"&gt;
-&lt;h5&gt;&lt;a href="#id36"&gt;ACES - Environment&lt;/a&gt;&lt;/h5&gt;
+&lt;h5&gt;&lt;a href="#toc-entry-35"&gt;ACES - Environment&lt;/a&gt;&lt;/h5&gt;
 &lt;p&gt;&lt;span class="m-text m-s l-c-color-6"&gt;There is unfortunately no direct options to change environment’s
 colorspace.&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;From 7.4.2+ you can find an option in the &lt;code&gt;Display Settings&lt;/code&gt; Menu, to change
@@ -2144,7 +2146,7 @@ doesn’t get properly converted and looks shifted.&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="aces-colorpicker"&gt;
-&lt;h4&gt;&lt;a href="#id37"&gt;ACES - Colorpicker&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-36"&gt;ACES - Colorpicker&lt;/a&gt;&lt;/h4&gt;
 &lt;aside class="m-note m-info"&gt;
 The screenshots in this section have not been updated to reflect change
 in the 7.4.2 update. Explanations still apply.&lt;/aside&gt;
@@ -2191,7 +2193,7 @@ and Chris &lt;a href="https://chrisbrejon.com/cg-cinematography/chapter-1-5-acad
 &lt;/blockquote&gt;
 &lt;/section&gt;
 &lt;section id="aces-output"&gt;
-&lt;h4&gt;&lt;a href="#id38"&gt;ACES - Output&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-37"&gt;ACES - Output&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;Do yourself a favour here and only care about EXR. &lt;a href="https://www.elsksa.me/scientia/cgi-offline-rendering/file-format-debunk"&gt;You don’t need anything
 else&lt;/a&gt; and this is the file format recommended by the Academy for ACES
 data encoding.&lt;/p&gt;
@@ -2205,7 +2207,7 @@ name. (and instead export the textures in a folder named ACEScg)&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="ocio-implementation-issues"&gt;
-&lt;h2&gt;&lt;a href="#id39"&gt;OCIO Implementation Issues&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-38"&gt;OCIO Implementation Issues&lt;/a&gt;&lt;/h2&gt;
 &lt;aside class="m-note m-default"&gt;
 The goal here is not to denigrate the dev team’s works but rather to offer
 explanations and solutions for improving the software.&lt;/aside&gt;
@@ -2215,11 +2217,11 @@ The team did a fantastic job in the latest updates by adressing some of
 the issues I mentionned !&lt;/aside&gt;
 &lt;/aside&gt;
 &lt;section id="display-issues"&gt;
-&lt;h3&gt;&lt;a href="#id40"&gt;Display Issues&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-39"&gt;Display Issues&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;These explanations were made possible thanks to the Chris Brejon’s article
 &lt;a href="https://chrisbrejon.com/articles/ocio-display-transforms-and-misconceptions/"&gt;OCIO, Display Transforms and Misconceptions&lt;/a&gt;.&lt;/p&gt;
 &lt;section id="display-components-mismatch"&gt;
-&lt;h4&gt;&lt;a href="#id41"&gt;Display components mismatch&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-40"&gt;Display components mismatch&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;OCIO divide the Display section into 3 components :&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;Display&lt;/code&gt; : the physical hardware you are using (monitor, TV, phone, …).&lt;/li&gt;
@@ -2273,7 +2275,7 @@ We should even get a third one for looks as we are going to see in the next
 section :&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="partial-look-support"&gt;
-&lt;h4&gt;&lt;a href="#id42"&gt;Partial Look support&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-41"&gt;Partial Look support&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;In above explanations where I mention OCIO Display is build with
 3 components, we now see that I didn’t mention the last one yet: Looks.&lt;/p&gt;
 &lt;p&gt;Looks is a color-tansformation performed in any colorspace aimed at
@@ -2320,7 +2322,7 @@ cropped name 😬 But at least it’s working.&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="improving-the-substance-ocio-config"&gt;
-&lt;h3&gt;&lt;a href="#id43"&gt;Improving the Substance OCIO config&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-42"&gt;Improving the Substance OCIO config&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;The Substance OCIO config is an OCIO v1 configuration. I don’t know
 what is the reason they decided to not use the v2 for their config because
 it could really helped having a cleaner and better config (even if the artist
@@ -2348,7 +2350,7 @@ Substance config. Have a look at the
 file to see the new features.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="issues-recap"&gt;
-&lt;h3&gt;&lt;a href="#id44"&gt;Issues Recap&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-43"&gt;Issues Recap&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;
 This list aim at helping the potential Substance dev team members reading
 this, addressing the issues.&lt;br /&gt;
@@ -2432,7 +2434,7 @@ shared-views.&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="conclusion"&gt;
-&lt;h2&gt;&lt;a href="#id45"&gt;Conclusion&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-44"&gt;Conclusion&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Damn that was a long one. Congrats if you stick to the end, I hope you
 now have an idea of how you could use OCIO in SubstancePainter. If not,
 don’t hesitate to &lt;a href="/pages/contact"&gt;contact&lt;/a&gt; me to suggest how this
@@ -2445,7 +2447,7 @@ the bottom of this page.&lt;/p&gt;
 Mari. 👋&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="resources"&gt;
-&lt;h2&gt;&lt;a href="#id46"&gt;Resources&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-45"&gt;Resources&lt;/a&gt;&lt;/h2&gt;
 &lt;div class="l-url-box"&gt;
 &lt;a class="l-url-a" href="https://hg2dc.com/"&gt;&lt;/a&gt;
 &lt;div class="l-url-box-image"&gt;
@@ -2507,7 +2509,8 @@ behind modern feature-film visual-effects and animation.&lt;/p&gt;
 &lt;svg width="60" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"&gt;
     &lt;title&gt;Discord&lt;/title&gt;
     &lt;path fill="currentColor" d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/&gt;
-&lt;/svg&gt;&lt;/div&gt;
+&lt;/svg&gt;
+&lt;/div&gt;
 &lt;div class="l-url-box-details"&gt;
 &lt;p class="l-url-title"&gt;Digital Imaging | Discord Server&lt;/p&gt;
 &lt;div class="l-url-subtitle"&gt;
@@ -2519,7 +2522,7 @@ cinematography and photography and more.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/section&gt;
 &lt;section id="changelog"&gt;
-&lt;h2&gt;&lt;a href="#id47"&gt;Changelog&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-46"&gt;Changelog&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;17-12-2021&lt;/code&gt;: fixed &lt;a href="#the-color-picker"&gt;The color-picker&lt;/a&gt; section. &lt;a href="https://community.acescentral.com/t/aces-and-substance-painter/2299/42"&gt;Discussion available here&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;09-03-2022&lt;/code&gt;: Updated article following 7.4.2 update.&lt;ul&gt;
@@ -2548,24 +2551,24 @@ to go through the complexity of ACES ?&lt;/p&gt;
 &lt;nav id="contents"&gt;
 &lt;h3&gt;Contents&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="#who-s-this-for" id="id1"&gt;Who’s this for ?&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#node-knobs" id="id2"&gt;Node knobs&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#nuke" id="id3"&gt;Nuke&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#node-setup" id="id4"&gt;Node Setup&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#revert-display" id="id5"&gt;Revert Display&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#nuke-display-encoding-disable" id="id6"&gt;Nuke Display-encoding disable&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#opendrt-no-display-encoding" id="id7"&gt;OpenDRT no Display-encoding&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#opendrt-with-viewer-input-process-recommended" id="id8"&gt;OpenDRT with Viewer Input Process (recommended)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#who-s-this-for" id="toc-entry-1"&gt;Who’s this for ?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#node-knobs" id="toc-entry-2"&gt;Node knobs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#nuke" id="toc-entry-3"&gt;Nuke&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#node-setup" id="toc-entry-4"&gt;Node Setup&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#revert-display" id="toc-entry-5"&gt;Revert Display&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#nuke-display-encoding-disable" id="toc-entry-6"&gt;Nuke Display-encoding disable&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#opendrt-no-display-encoding" id="toc-entry-7"&gt;OpenDRT no Display-encoding&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#opendrt-with-viewer-input-process-recommended" id="toc-entry-8"&gt;OpenDRT with Viewer Input Process (recommended)&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#conclusion" id="id9"&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#conclusion" id="toc-entry-9"&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/nav&gt;
 &lt;/aside&gt;
 &lt;section id="who-s-this-for"&gt;
-&lt;h2&gt;&lt;a href="#id1"&gt;Who’s this for ?&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-1"&gt;Who’s this for ?&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;My post mainly targets the VFX-CGI audience but OpenDRT work on any
 open-domain/scene-referred data, including photography and cinematography.
 (as long as the data is not in a closed-display-domain).&lt;/p&gt;
@@ -2589,7 +2592,8 @@ personal projects that would like a quick solution for proper SDR-HDR export.&lt
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
 &lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="64" height="64" viewBox="0 0 24 24"&gt;
     &lt;path fill="currentColor" d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"/&gt;
-&lt;/svg&gt;&lt;/div&gt;
+&lt;/svg&gt;
+&lt;/div&gt;
 &lt;div class="l-url-box-details"&gt;
 &lt;p class="l-url-title"&gt;OpenDRT repository.&lt;/p&gt;
 &lt;div class="l-url-subtitle"&gt;
@@ -2609,7 +2613,7 @@ scene-referred data to a closed-domain : the display. This mean
 can look very neutral and should be graded.&lt;/blockquote&gt;
 &lt;/section&gt;
 &lt;section id="node-knobs"&gt;
-&lt;h2&gt;&lt;a href="#id2"&gt;Node knobs&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-2"&gt;Node knobs&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;As the tool is constantly changing, Jed’s documentation is not up to date,
 and thus this post will also probably be.&lt;/p&gt;
 &lt;aside class="m-note m-default"&gt;
@@ -2695,7 +2699,7 @@ close this topic.&lt;br /&gt;
 &lt;p&gt;So for now, using the presets is, I think a good practice.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="nuke"&gt;
-&lt;h2&gt;&lt;a href="#id3"&gt;Nuke&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-3"&gt;Nuke&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;&lt;em&gt;(For now i’m only going to show how you can use it in Nuke as I don’t have
 a Resolve License)&lt;/em&gt;&lt;/p&gt;
 &lt;ol&gt;
@@ -2711,7 +2715,7 @@ file and copy all of his content &lt;code&gt;(ctrl+a, ctrl+c)&lt;/code&gt;&lt;/l
 &lt;/ol&gt;
 &lt;p&gt;Alright, you now have the OpenDRT node.&lt;/p&gt;
 &lt;section id="node-setup"&gt;
-&lt;h3&gt;&lt;a href="#id4"&gt;Node Setup&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-4"&gt;Node Setup&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Things will now get a bit complicated at first. The issue is that has the
 OpenDRT handle the scene -&amp;gt; display conversion, this will collide with Nuke
 that try to do the same in the view-transform.&lt;/p&gt;
@@ -2727,7 +2731,7 @@ I will keep the defaut &lt;code&gt;BT.1886&lt;/code&gt; value for the eotf, but 
 nuke’s default config I should have use &lt;code&gt;sRGB Display&lt;/code&gt;.&lt;/aside&gt;
 &lt;/aside&gt;
 &lt;section id="revert-display"&gt;
-&lt;h4&gt;&lt;a href="#id5"&gt;Revert Display&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-5"&gt;Revert Display&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;We let the DRT handle everything (with display-encoding), then we apply the
 invert transform that applied by Nuke:&lt;/p&gt;
 &lt;div class="m-image"&gt;
@@ -2737,7 +2741,7 @@ invert transform that applied by Nuke:&lt;/p&gt;
 node has the same &lt;code&gt;in&lt;/code&gt; parameters as the &lt;code&gt;colorspace&lt;/code&gt; one on the write node.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="nuke-display-encoding-disable"&gt;
-&lt;h4&gt;&lt;a href="#id6"&gt;Nuke Display-encoding disable&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-6"&gt;Nuke Display-encoding disable&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;We disable Nuke’s handling of the display-encoding. The DRT is the last step.&lt;/p&gt;
 &lt;div class="m-image"&gt;
 &lt;a href="https://mrlixm.github.io/static/images/blog/0004/nuke.nuke_no-de.png"&gt;&lt;img alt="Method with Nuke display-encoding disable" src="https://mrlixm.github.io/static/images/blog/0004/nuke.nuke_no-de.png" /&gt;&lt;/a&gt;
@@ -2746,7 +2750,7 @@ node has the same &lt;code&gt;in&lt;/code&gt; parameters as the &lt;code&gt;colo
 when you need to preview a node upstream.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="opendrt-no-display-encoding"&gt;
-&lt;h4&gt;&lt;a href="#id7"&gt;OpenDRT no Display-encoding&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-7"&gt;OpenDRT no Display-encoding&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;One good solution: the OpenDRT doesn’t handle the display
 encoding but output closed-domain data ready for the display.
 Nuke apply the display-encoding as usually, writing data is the regular
@@ -2758,7 +2762,7 @@ output. Write node colorspace need to be choosen with this is mind.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/section&gt;
 &lt;section id="opendrt-with-viewer-input-process-recommended"&gt;
-&lt;h4&gt;&lt;a href="#id8"&gt;OpenDRT with Viewer Input Process (recommended)&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-8"&gt;OpenDRT with Viewer Input Process (recommended)&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;This is probably the best solution :&lt;/p&gt;
 &lt;p&gt;
 OpenDRT handle everything, we disable Nuke view-transform but we will be
@@ -2779,7 +2783,7 @@ by checking &lt;code&gt;raw data&lt;/code&gt;.&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="conclusion"&gt;
-&lt;h2&gt;&lt;a href="#id9"&gt;Conclusion&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-9"&gt;Conclusion&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;If you tried to compare the result to an ACES processed image you would have
 probably notice that the image-formation produce much more “excepted” result,
 among others, in strong colored highlights, which make OpenDRT a solid
@@ -2793,7 +2797,7 @@ we can only hope he finds time to !).&lt;/p&gt;
 &lt;p&gt;Make sure to star &lt;a href="https://github.com/jedypod/open-display-transform"&gt;Jed’s repository&lt;/a&gt;
 on Github !&lt;/p&gt;
 &lt;/section&gt;
-</content><category term="tutorial"></category><category term="nuke"></category><category term="resolve"></category><category term="ACES"></category><category term="tonemapping"></category><category term="color-science"></category></entry><entry><title>CGI-related white-papers database</title><link href="https://mrlixm.github.io/blog/cgi_whitepaper_database/" rel="alternate"></link><published>2021-11-08T22:34:00+01:00</published><updated>2021-11-08T22:34:00+01:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-11-08:/blog/cgi_whitepaper_database/</id><summary type="html">&lt;p&gt;&lt;em&gt;” 70+ white-papers conveniently ordered for you “&lt;/em&gt;&lt;/p&gt;
+</content><category term="tutorial"></category><category term="nuke"></category><category term="resolve"></category><category term="ACES"></category><category term="tonemapping"></category><category term="color-science"></category></entry><entry><title>CGI-related white-papers database</title><link href="https://mrlixm.github.io/blog/cgi_whitepaper_database/" rel="alternate"></link><published>2021-11-08T22:34:00+01:00</published><updated>2021-11-08T22:34:00+01:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-11-08:/blog/cgi_whitepaper_database/</id><summary type="html">&lt;p&gt;&lt;em&gt;“ 70+ white-papers conveniently ordered for you “&lt;/em&gt;&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;As an artist, I found white-papers absolutely fascinating and so useful
 to understand how the software we are using are built.
 Even if platform like the &lt;a href="https://dl.acm.org"&gt;ACM digital library&lt;/a&gt; regroup
@@ -2823,7 +2827,7 @@ As I’m someone that definitively think core knowledge should be lock behind
 a paywall I would absolutely  not recommend to use &lt;a href="https://sci-hub.mksa.top/"&gt;Sci-hub&lt;/a&gt; to find a free illegal version of these paid papers. (here is
 the full url to be sure you doesn’t click on it &lt;a class="m-link-wrap" href="https://sci-hub.mksa.top/"&gt;https://sci-hub.mksa.top/&lt;/a&gt; ).&lt;br /&gt;
 &lt;/p&gt;
-</content><category term="resource"></category><category term="science"></category><category term="math"></category><category term="shading"></category><category term="lighting"></category><category term="rendering"></category></entry><entry><title>A Discord server for Coding in VFX/CGI</title><link href="https://mrlixm.github.io/blog/vfx_coding_discord/" rel="alternate"></link><published>2021-10-23T22:59:00+02:00</published><updated>2021-10-23T22:59:00+02:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-10-23:/blog/vfx_coding_discord/</id><summary type="html">&lt;p&gt;&lt;em&gt;” A bunch of resources you don’t want to miss “&lt;/em&gt;&lt;/p&gt;
+</content><category term="resource"></category><category term="science"></category><category term="math"></category><category term="shading"></category><category term="lighting"></category><category term="rendering"></category></entry><entry><title>A Discord server for Coding in VFX/CGI</title><link href="https://mrlixm.github.io/blog/vfx_coding_discord/" rel="alternate"></link><published>2021-10-23T22:59:00+02:00</published><updated>2021-10-23T22:59:00+02:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-10-23:/blog/vfx_coding_discord/</id><summary type="html">&lt;p&gt;&lt;em&gt;“ A bunch of resources you don’t want to miss “&lt;/em&gt;&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;
 Not much to explain,&lt;br /&gt;
 I’m managing this server where I post anything useful that I find,
