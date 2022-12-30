@@ -5,12 +5,13 @@ description = "Personal website and blog repository."
 authors = ["Liam Collod <lcollod@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = ">=3.6.2,<3.7.0"
+python = "^3.9"
 Pillow = "8.4.0"
 ghp-import = "2.0.2"
-pelican = "4.7.0"
+pelican = "4.7.2"
 Pygments = "2.10.0"
 docutils-stubs = "0.0.22"
+click = "8.1.*"
 
 [tool.poetry.dev-dependencies]
 black = "*"
