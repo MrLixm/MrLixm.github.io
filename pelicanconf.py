@@ -43,22 +43,25 @@ IGNORE_FILES = [
     "__*",  # ignore dir/files starting with __
 ]
 
-# -- PAGE
+# -- PAGE (relative to PATH)
 PAGE_PATHS = ["pages"]
 PAGE_URL = "{proot}/{slug}"  # proot is only defined in EXTRA_PATH_METADATA
 PAGE_SAVE_AS = "{proot}/{slug}/index.html"
 # this fucker doesn't work ???, instead I'm using IGNORE_FILES
 PAGE_EXCLUDES = ["pages/work/projects/_template"]
-# -- Archives (blog post listing)
+
+# -- Archives (blog post listing)(relative to PATH)
 ARCHIVES_URL = "blog/"
 ARCHIVES_SAVE_AS = "blog/index.html"
-# -- ARTICLE
+
+# -- ARTICLE (relative to PATH)
 ARTICLE_PATHS = ["blog"]
 ARTICLE_URL = "blog/{slug}/"  # category/ is part of the slug
 ARTICLE_SAVE_AS = "blog/{slug}/index.html"
 # this fucker doesn't work ???, instead I'm using IGNORE_FILES
 ARTICLE_EXCLUDES = ["blog/_template"]
-# -- STATIC
+
+# -- STATIC (relative to PATH)
 STATIC_PATHS = ["images"]
 STATIC_URL = "static/{path}"
 STATIC_SAVE_AS = "static/{path}"
@@ -83,10 +86,10 @@ DIRECT_TEMPLATES = [
 DEFAULT_PAGINATION = 10
 # if value set to None, use the above
 PAGINATED_TEMPLATES = {
-    'archives': None,
-    'tag': None,
-    'category': None,
-    'author': None,
+    "archives": None,
+    "tag": None,
+    "category": None,
+    "author": None,
 }
 
 
@@ -106,21 +109,14 @@ SLUGIFY_SOURCE = "basename"  # the {slug} is generated from the file name instea
 
 """
 
-_THEME_ROOT = "extensions/m.css"
-
-# m.css config
-THEME = f"{_THEME_ROOT}/pelican-theme"
+THEME = "theme"
 THEME_STATIC_DIR = "static"
+THEME_TEMPLATES_OVERRIDES = []
 
-# M_HTML_HEADER = ""
-M_LINKS_NAVBAR1 = [
-    ("Work", "work", "work", []),
-    ("Blog", "blog", "[blog]", []),
-    ("Contact", "pages/contact", "contact", []),
-]
+_EXTENSIONS = "extensions"
+_EXTENSION_MCSS = f"{_EXTENSIONS}/m.css"
 
-
-PLUGIN_PATHS.append(f"{_THEME_ROOT}/plugins")
+PLUGIN_PATHS.append(f"{_EXTENSION_MCSS}/plugins")
 PLUGINS.extend(
     [
         "m.abbr",
@@ -187,6 +183,13 @@ M_COLLAPSE_FIRST_ARTICLE = True
 M_HTMLSANITY_HYPHENATION = True
 M_HTMLSANITY_SMART_QUOTES = True
 M_HTMLSANITY_FORMATTED_FIELDS = ["thumbnail"]
+
+# M_HTML_HEADER = ""
+M_LINKS_NAVBAR1 = [
+    ("Work", "work", "work", []),
+    ("Blog", "blog", "[blog]", []),
+    ("Contact", "pages/contact", "contact", []),
+]
 
 # M_LINKS_FOOTER1 = [
 #     ('Contact', ''),
