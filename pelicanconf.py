@@ -198,7 +198,7 @@ M_LINKS_NAVBAR1 = [
 # ]
 
 M_FINE_PRINT = """
-Copyright © `Liam Collod <mailto:lcollod@gmail.com>`_ - 2022. All rights
+Copyright © `Liam Collod <mailto:lcollod@gmail.com>`_ 2021 - 2023. All rights
 reserved. Made with `Pelican <https://blog.getpelican.com/>`_ and
 `m.css <https://mcss.mosra.cz/>`_ .
 """
