@@ -7,24 +7,21 @@ import json
 import logging
 import msvcrt
 import os
-import subprocess
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
+
+import dev.shell
 
 logger = logging.getLogger(__name__)
 
 TARGET_BRANCH_NAME = "master"
 
-SH_EXE = Path(r"C:\Program Files\Git\bin\sh.exe")
-assert SH_EXE.exists(), SH_EXE
-
 INFO_FILE_PATH = Path(__file__).parent / "../info.json"
 INFO_FILE_PATH = INFO_FILE_PATH.absolute().resolve()
 assert INFO_FILE_PATH.exists(), INFO_FILE_PATH
 
-PUBLISH_SHELL_SCRIPT = Path(__file__).parent / "shell" / "build-n-publish.sh"
-assert PUBLISH_SHELL_SCRIPT.exists(), PUBLISH_SHELL_SCRIPT
+PUBLISH_SHELL_SCRIPT = dev.shell.get("build-n-publish.sh")
 
 
 class InfoFile:
@@ -134,15 +131,13 @@ def publish(infofile: InfoFile, commit_name: str, dry_run: bool = False):
             f"Current working directory is not the root of the Blog repo: {os.getcwd()}"
         )
 
-    publish_command = [
-        str(SH_EXE),
-        str(PUBLISH_SHELL_SCRIPT),
+    publish_args = [
         f"{commit_name}",
         f"{infofile.version}",
         TARGET_BRANCH_NAME,
     ]
 
-    logger.info(f"[publish] {publish_command=}")
+    logger.info(f"[publish] {publish_args=}")
     logger.info(f"[publish] {infofile=}")
 
     # update the info.json before any commits (not good if error happen)
@@ -157,23 +152,10 @@ def publish(infofile: InfoFile, commit_name: str, dry_run: bool = False):
 
     logger.info(f"[publish] calling {PUBLISH_SHELL_SCRIPT.name} ...")
 
-    process = subprocess.Popen(
-        publish_command,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-    )
-
-    out, error = process.communicate()
-    logger.info(
-        f"[publish][{PUBLISH_SHELL_SCRIPT.name}] result = {out.decode('utf-8')}"
-    )
-    if error:
-        logger.warning(error.decode("utf-8"))
-
-    if process.returncode != 0:
-        logger.error(
-            f"[publish][{PUBLISH_SHELL_SCRIPT.name}] RETURNED WITH NON ZERO STATUS {process.returncode}"
-        )
+    try:
+        dev.shell.execute(PUBLISH_SHELL_SCRIPT, *publish_args)
+    except RuntimeError as excp:
+        logger.error(f"[publish][{PUBLISH_SHELL_SCRIPT.name}] {excp}")
 
     return
 
