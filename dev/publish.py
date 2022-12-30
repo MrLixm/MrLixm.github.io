@@ -155,6 +155,8 @@ def publish(infofile: InfoFile, commit_name: str, dry_run: bool = False):
 
     infofile.write()
 
+    logger.info(f"[publish] calling {PUBLISH_SHELL_SCRIPT.name} ...")
+
     process = subprocess.Popen(
         publish_command,
         stdout=subprocess.PIPE,
@@ -162,9 +164,16 @@ def publish(infofile: InfoFile, commit_name: str, dry_run: bool = False):
     )
 
     out, error = process.communicate()
-    logger.info(f"[publish][{SH_EXE.name}] result = {out.decode('utf-8')}")
+    logger.info(
+        f"[publish][{PUBLISH_SHELL_SCRIPT.name}] result = {out.decode('utf-8')}"
+    )
     if error:
-        raise RuntimeError(error.decode("utf-8"))
+        logger.warning(error.decode("utf-8"))
+
+    if process.returncode != 0:
+        logger.error(
+            f"[publish][{PUBLISH_SHELL_SCRIPT.name}] RETURNED WITH NON ZERO STATUS {process.returncode}"
+        )
 
     return
 
