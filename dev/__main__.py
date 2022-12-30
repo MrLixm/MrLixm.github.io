@@ -4,10 +4,10 @@ import logging
 import logging.config
 import sys
 
-from . import c
-from . import cli
+import dev.c
+import dev.cli
 
-ROOT_PACKAGE: str = c.__name__.split(".")[0]
+ROOT_PACKAGE: str = dev.__name__
 
 logger = logging.getLogger(f"{ROOT_PACKAGE}.__main__")
 
@@ -22,7 +22,7 @@ def _configureLogging():
         if len(sys.argv) > 1 and sys.argv[1] == "--debug":
             return logging.DEBUG
 
-        env = c.Env.get(c.Env.logs_debug)
+        env = dev.c.Env.get(dev.c.Env.logs_debug)
         if env is not None and bool(int(env)):
             return logging.DEBUG
 
@@ -67,8 +67,8 @@ def start():
     """
     Start the application.
     """
-    logger.info(f"[start] Started {c.name} v{c.__version__}")
-    cli.cli()
+    logger.info(f"[start] Started {dev.c.name} v{dev.c.__version__}")
+    dev.cli.cli()
     return
 
 
