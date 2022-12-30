@@ -12,6 +12,7 @@ assert SH_EXE.exists(), SH_EXE
 
 def get(shell_script_name: str) -> Path:
     """
+    Retrieve the path for the given shell script name.
 
     Args:
         shell_script_name: name of the shell script with OR without the extension
@@ -32,17 +33,16 @@ def get(shell_script_name: str) -> Path:
 
 def execute(shell_script_path: Path, *args) -> str:
     """
-    Execute the given shell script with the given args.
+    Execute the given shell script with the given args and return the output from it.
 
     Args:
-        shell_script_path: existign path of the shell script to excecute
+        shell_script_path: existing path of the shell script to excecute
         *args: list of argument to pass the shell script
 
     Returns:
         STDOUT of the shell script
 
     Raises:
-        FileNotFoundError: if the shell script can't be found
         RuntimeError: if the shell script produce a non-zero returncode (=error)
     """
 
