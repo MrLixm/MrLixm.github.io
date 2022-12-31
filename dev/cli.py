@@ -57,3 +57,16 @@ def preview(ctx: click.Context):
     pelican.main(["--delete-output-directory"])
     pelican.main(["content"])
     pelican.main(["--autoreload", "--listen"])
+
+
+@cli.command()
+@click.pass_context
+def build(ctx: click.Context):
+    """
+    Build the website to the `output/` directory.
+    """
+    if ctx.obj.get("debug"):
+        pelican.main(["--verbose"])
+
+    pelican.main(["--delete-output-directory"])
+    pelican.main(["content"])
