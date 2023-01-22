@@ -6,6 +6,7 @@ import pelican
 
 import dev.c
 import dev.publish
+import dev.creating
 
 logger = logging.getLogger(__name__)
 
@@ -70,3 +71,17 @@ def build(ctx: click.Context):
 
     pelican.main(["--delete-output-directory"])
     pelican.main(["content"])
+
+
+@cli.command()
+@click.pass_context
+@click.argument("title")
+@click.argument("filename")
+def create_article(ctx: click.Context, title: str, filename: str):
+    """
+    Create new content on the blog.
+
+    TITLE : pretty title for the article
+    FILENAME : file-safe name for the article file on disk
+    """
+    dev.creating.create_new_article(article_title=title, article_file_name=filename)
