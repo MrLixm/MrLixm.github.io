@@ -217,5 +217,5 @@ ij_yaml_spaces_within_brackets = true
 [*.rst]
 charset = utf-8
 max_line_length = 79
-ij_wrap_on_typing = true
+ij_wrap_on_typing = false
 
