@@ -1,0 +1,305 @@
+Creating custom context menu for Windows file explorer.
+#######################################################
+
+:summary: Running Command Line Tools on selected files, as fast as a right
+  click can be.
+:thumbnail: {static}/images/blog/0009/
+
+:status: draft
+:date-created: 2023-01-29 21:15
+:date: 2023-01-29 21:15
+
+:category: tutorial
+:tags: productivity
+:author: Liam Collod
+
+I had always been a fan of contextual menu in interfaces. They are a very fast
+way to run various processes on a selected item. And at the same time you
+don't have to remember which action you can run on the item, or how the
+action was named. You right click and everything you can do with the item is
+available a few pixels away from your cursor.
+
+And I had come to the point where, while browsing my files in the
+file-explorer, I found that I needed to run a specific tool on a file. And
+then 10 min later again, and the next week again ... Each time I had to open
+the tool (so depends how easy it is to find its executable), copy the path of
+the file, and give it to the tool. Hugh ... too long I wish I could automate
+that.
+
+A bit of reasearch, and of course you can. You probably noticed that some
+applications you install doesn't refrain themselves for adding actions to the
+context menu, so why not you ?
+
+.. contents::
+
+Why ?
+-----
+
+You might have clicked on this article because you already knew this sounds
+like something you wanted to do at some point. But for the others why would
+you even need to add new actions to the context menu ?
+
+To get an example that will be familiar for the 3d artists out there let's take
+the case of ``makeTx``. If you are using Arnold you know what I'm going to
+talk about. For every texture you use in your scene, Arnold will usually
+generate a version of it in its own format called ``tx``. This process is
+usually done automatically when you click render but there is multiple reasons
+it can goes wrong, or might not just be the behavior you want. The
+solution to fix it is to manually generate the tx files. To achieve that you
+can use the ``makeTx.exe`` tool that is found alongside the Arnold installation.
+
+The particularity with that tool being that it is a `Command Line
+Interface <https://en.wikipedia.org/wiki/Command-line_interface>`_, which will
+allow us to have something like this :
+
+.. TODO put a GIF of the result
+
+Command Line Interfaces programs
+--------------------------------
+
+A Command Line Interface program is made to be interacted with from the command
+line, and not from a graphical interface like most programs. If you are not familiar
+with :abbr:`CLI <Command Line Interface>`, they are going to look very unpleasant
+to use compared to a :abbr:`GUI <Graphical User Interface>`. But their power
+will be found in the flexibility they offer, especially for automatizing tasks.
+It's like you were ordering the program to perform an action by describing it in
+a sentence.
+
+This is will be useful in our case, because this means that by passing the
+"right sentence" to makeTx, he could generate a tx from the file that has been
+selected from the right-click !
+
+If you ever tried to double click on a .exe just to see a window open and
+close immediatly, it's probably because it was a CLI. By double clicking on it
+you executed it, it execute the task it was made for (in our case nothing
+because you didn't gave it any argument), and then close once finish.
+
+To first see what's going when you don't give it arguments, let's open the
+command line. On Windows, this can be achive using ``Win`` + ``R`` then typing
+``cmd`` and enter. You can also just search for ``Command Prompt`` in the
+Windows search bar.
+
+.. image:: {static}/images/blog/0009/command-prompt-blank.png
+    :target: {static}/images/blog/0009/command-prompt-blank.png
+    :scale: 80%
+    :alt: A blank command prompt.
+
+Then to execute our program you need to pass the path to its executable.
+Easiest way is just to drag and drop the executable from the file explorer
+to the command prompt. You can also just copy and paste its path.
+
+.. note-info::
+
+    On Windows, make sure paths are always wrapped in double quotes like
+    ``"C:/Program Files/xyz/bin/myapp.exe"``
+
+Then press enter to start executing it.
+
+.. image:: {static}/images/blog/0009/command-prompt-maketx.png
+    :target: {static}/images/blog/0009/command-prompt-maketx.png
+    :scale: 80%
+    :alt: Command prompt after executing makeTx.exe
+
+Without any argument, most CLI will just display their documentation. Which
+we will anyway need to open at leat one time to make sure we know what
+arguments the tool expects.
+
+.. note-info::
+
+    Most CLI will display their documentation if you just pass the
+    ``--help`` argument.
+
+Alright, how does makeTx works ? You can see on the line ``Usage : maketx
+[options] file...`` that it expect the path of the file to be provided last,
+and before some options.
+
+The options are listed just under, and there is a lot of them. Usually
+options/arguments are documented but here we will have to rely on their name.
+But don't worry, no need for playing the guess game of which options does
+what we want. How ? Well you know Arnold already auto-convert the tx files
+for you, so it knows which options to use. And thanksfully, the whole command
+used to generate the tx file is actually embeded in the tx's metadata !
+
+But how do I retrieve the tx's metadata ? Well, by using an other CLI that
+we are going to talk just after, I can retrieve it :
+
+.. code:: text
+
+     Software: "OpenImageIO-Arnold 2.4.0dev : maketx G:/whatever/sources/FREDDY_Shoes/texturing/publish/textures-4k.v04\FREDDY_Shoes_Diffuse_Color_1001.exr --opaque-detect --constant-color-detect --monochrome-detect --fixnan box3 --oiio --attrib tiff:half 1 -v -u --unpremult --oiio --format exr"
+
+Seems there is a lot of options used ! One important thing to keep in mind is
+that **those options vary depending on what kind of texture you are converting
+and how the "texture node" in the source DCC is configured.** The most notable option
+being ``--colorconvert`` used to convert the input file to another colorspace.
+
+Anyway we have what we need, the whole command required to convert a file to tx.
+We can now have a look at how to create the context menu !
+
+.. note-default::
+
+    You might have notice that in the above command the filepath is specified
+    before the options, sometimes order matters, but here seems makeTx don't care !
+
+Editing the registry
+---------------------
+
+Unfortunately, not really a simple and easy way to add actions to the context menu
+(there is thanks to some apps on othe interfaces that does the same thing I'm
+going to explain), we will have to edit the `registry <https://en.wikipedia.org/wiki/Windows_Registry>`_.
+
+If you ever have to use it, you know it's not easy to find what you are looking for.
+Or you are probably aware that editing the wrong stuff can easily break
+parts of your system.
+
+To mitigate those issues we will be using ``.reg`` files, instead of browsing
+the registry Editor. Main logic stay the same, the reg file will just create
+new registry keys and set their values. The advantages are :
+
+1.
+    They allow for a reproducible process. That means that if your reformat your system,
+    you don't have to remember which key you created. Just execute the reg file again.
+2.
+    You can create a copy of the initial reg file that does the inverse, meaning
+    removing the keys instead of adding them.
+
+.. note-warning::
+
+    Keep in mind that editing the registry can still be dangerous, so it is
+    recommended to save a backup of it before any change.
+
+Creating the .reg file
+======================
+
+.. block-info:: Documentation
+
+    https://en.wikipedia.org/wiki/Windows_Registry#.REG_files
+
+As a first step, create a blank new file like a ``.txt`` and just replace the
+extension with ``.reg`` (you might need to display file extension in the View
+menu of the file explorer if not set already).
+
+Then right click and open the file with any text/code editor (make sure to not
+click on it else you will be executing it !).
+
+Just so you get an idea of the finished product, here is what we will be
+producing :
+
+.. include:: maketx.reg
+    :code: ini
+
+.. note-info::
+
+    You can add comment lines by starting them with a semi-colon ``;``
+
+On the first line, we have to put this text :
+
+.. code:: ini
+
+    Windows Registry Editor Version 5.00
+
+The next importanty step will be to determine the root location of the key to use.
+This location will determine on which type of file explorer entities the action
+in the context menu will appear.
+
+Here are the few options availables :
+
+.. class:: l-table l-overflow
+
+    ====================== =================================================================
+    Files                  ``HKEY_CURRENT_USER\Software\Classes\{EXTENSION}\shell\``
+    Directories            ``HKEY_CURRENT_USER\Software\Classes\Directory\shell``
+    Directories Background ``HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell``
+    Drive                  ``HKEY_CURRENT_USER\Software\Classes\Drive\shell``
+    ====================== =================================================================
+
+.. note-default::
+
+    If you would like to make the context-menu action available to ALL users of
+    the system you could replace ``HKEY_CURRENT_USER\Software`` with
+    ``HKEY_CLASSES_ROOT``.
+
+As makeTx expect a single file, we will be using the first key location. We
+still need to determine on which file extension the action should appear. Unless
+you want to specifically choose which file format can be converted to tx we will
+consider by laziness that all file formats might be, and as such replace
+``{EXTENSION}`` with ``*``.
+
+Great, we have now the root path for each key. Now time to create the first key.
+We just need a name for it (*special-character-free*). No need to think to hard,
+we will be using just ``makeTx``.
+
+Let's put that into the reg file :
+
+.. code:: ini
+
+    Windows Registry Editor Version 5.00
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]
+
+You notice that I added a new key location ``shell`` after our root key. It's
+needed by Windows. Now we can configure our key. We can start by configuring
+which text will appear in the context-menu for this key :
+
+.. code:: ini
+
+    Windows Registry Editor Version 5.00
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]
+    "MUIVerb"="makeTx"
+
+I could have put any sentence between the 2 double quotes, but I decided to
+stay simple.
+
+Then you might want to add a icon next to your action. It can be achieved like :
+
+.. code:: ini
+
+    Windows Registry Editor Version 5.00
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]
+    "MUIVerb"="makeTx"
+    "icon"="F:\\blog\\demo-icon.ico"
+
+But you have to keep in mind :
+
+- You have to put an absolute path
+- You have to escape backward slashes like ``\\``
+- You have to use an ``.ico`` file. There is plenty of online converter for it.
+- If for whatever reason thet path doesn't exists/is not valid, you will get a default "sheet" icon.
+
+And finally the most important option, what is executed when clicking on the action !
+We have to create a new key ``command`` and then configure it.
+For the configuration we will pass a string as you would execute the program
+from the command prompt.
+
+.. code:: ini
+
+    Windows Registry Editor Version 5.00
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]
+    "MUIVerb"="makeTx"
+    "icon"="F:\\blog\\demo-icon.ico"
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]
+    @="D:\\resources\\maketx.exe"
+
+If you remember what we tested previously, this will only display the documentation
+of makeTx, cause we doesn't provide any argument. But let's move step by step
+and test what we already have.
+
+
+Executing the .reg file
+=======================
+
+Save your reg file from your text/code editor and double click on it. Windows
+will gift you 3 dialogs to accept, but that will be all you have to do !
+
+As a safety let's manually check in the registry if it was registered. Open the
+``Registry Editor`` (you can use windows search). In the window that opens,
+find the "current path" field, right under the menu bar. Inside paste
+the path of the key we created and press enter.
+The editor should directly browse to the key.
+
+.. image:: {static}/images/blog/0009/registry-editor-maketx.png
+    :target: {static}/images/blog/0009/registry-editor-maketx.png
+    :alt: Screenshot of the Registry Editor int he state described above.
