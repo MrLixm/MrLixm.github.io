@@ -35,12 +35,11 @@ skip straight to the `Substance Setup & Workflow`_ section if desired.
 .. note-info::
 
     OCIO was introduced in `Substance-Painter version 7.4 <https://substance3d.adobe.com/documentation/spdoc/version-7-4-223053247.html>`_
+    This is the version used through this article so some features might have
+    changed at the time you are reading this.
 
-    This is the version used through this article and some features might
-    changed at the time you are reading this. I will try to keep the article
-    updated though.
-
-    This article has been updated following the 7.4.2 update from 08/03/22.
+    Note that this article has been updated following the 7.4.2 update from
+    08/03/22.
 
 .. url-preview:: https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html
     :title: Official Documentation
