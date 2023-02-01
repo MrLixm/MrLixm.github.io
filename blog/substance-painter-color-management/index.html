@@ -90,7 +90,7 @@
           </span>
             <span class="l-modified l-flex-item" title="Last Modified">
               updated
-              <time datetime="2022-03-11T11:53:00+01:00">&nbsp;11 March 2022</time>
+              <time datetime="2023-02-01T21:31:00+01:00">&nbsp;01 February 2023</time>
             </span>
           <span class="l-box-author l-flex-item" title="List of Authors">
             <img src="/static/images/global/icons/account.svg" alt="Author icon" >
@@ -113,11 +113,11 @@ color-management works. This can help you debug issues and just not tweak
 settings like a blind machine. This part is not mandatory though. You can
 skip straight to the <a href="#substance-setup-workflow">Substance Setup &amp; Workflow</a> section if desired.</p>
 <aside class="m-note m-info">
-<p>OCIO was introduced in <a href="https://substance3d.adobe.com/documentation/spdoc/version-7-4-223053247.html">Substance-Painter version 7.4</a></p>
-<p>This is the version used through this article and some features might
-changed at the time you are reading this. I will try to keep the article
-updated though.</p>
-<p>This article has been updated following the 7.4.2 update from 08/03/22.</p>
+<p>OCIO was introduced in <a href="https://substance3d.adobe.com/documentation/spdoc/version-7-4-223053247.html">Substance-Painter version 7.4</a>
+This is the version used through this article so some features might have
+changed at the time you are reading this.</p>
+<p>Note that this article has been updated following the 7.4.2 update from
+08/03/22.</p>
 </aside>
 </aside>
 <div class="l-url-box">
@@ -169,45 +169,46 @@ updated though.</p>
 <li><a href="#workspace-setup-in-sp" id="toc-entry-21">Workspace Setup in Sp</a></li>
 <li><a href="#display-setup-in-sp" id="toc-entry-22">Display Setup in Sp</a><ul>
 <li><a href="#displaying-color-and-scalar-data" id="toc-entry-23">Displaying Color and Scalar data</a></li>
+<li><a href="#custom-user-channels" id="toc-entry-24">Custom User Channels</a></li>
 </ul>
 </li>
-<li><a href="#input-setup-in-sp" id="toc-entry-24">Input Setup in Sp</a><ul>
-<li><a href="#shelf-resources" id="toc-entry-25">Shelf Resources</a></li>
-<li><a href="#the-color-picker" id="toc-entry-26">The color-picker</a></li>
-<li><a href="#environment" id="toc-entry-27">Environment</a></li>
-<li><a href="#masks" id="toc-entry-28">Masks</a></li>
+<li><a href="#input-setup-in-sp" id="toc-entry-25">Input Setup in Sp</a><ul>
+<li><a href="#shelf-resources" id="toc-entry-26">Shelf Resources</a></li>
+<li><a href="#the-color-picker" id="toc-entry-27">The color-picker</a></li>
+<li><a href="#environment" id="toc-entry-28">Environment</a></li>
+<li><a href="#masks" id="toc-entry-29">Masks</a></li>
 </ul>
 </li>
-<li><a href="#output-setup-in-sp" id="toc-entry-29">Output Setup in Sp</a></li>
+<li><a href="#output-setup-in-sp" id="toc-entry-30">Output Setup in Sp</a></li>
 </ul>
 </li>
-<li><a href="#aces-workflow" id="toc-entry-30">ACES Workflow</a><ul>
-<li><a href="#aces-config-setup" id="toc-entry-31">ACES - Config setup</a></li>
-<li><a href="#aces-what-to-do-when-working" id="toc-entry-32">ACES - What to do when working</a><ul>
-<li><a href="#aces-display" id="toc-entry-33">ACES - Display</a></li>
-<li><a href="#aces-inputs" id="toc-entry-34">ACES - Inputs</a><ul>
-<li><a href="#aces-environment" id="toc-entry-35">ACES - Environment</a></li>
+<li><a href="#aces-workflow" id="toc-entry-31">ACES Workflow</a><ul>
+<li><a href="#aces-config-setup" id="toc-entry-32">ACES - Config setup</a></li>
+<li><a href="#aces-what-to-do-when-working" id="toc-entry-33">ACES - What to do when working</a><ul>
+<li><a href="#aces-display" id="toc-entry-34">ACES - Display</a></li>
+<li><a href="#aces-inputs" id="toc-entry-35">ACES - Inputs</a><ul>
+<li><a href="#aces-environment" id="toc-entry-36">ACES - Environment</a></li>
 </ul>
 </li>
-<li><a href="#aces-colorpicker" id="toc-entry-36">ACES - Colorpicker</a></li>
-<li><a href="#aces-output" id="toc-entry-37">ACES - Output</a></li>
+<li><a href="#aces-colorpicker" id="toc-entry-37">ACES - Colorpicker</a></li>
+<li><a href="#aces-output" id="toc-entry-38">ACES - Output</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#ocio-implementation-issues" id="toc-entry-38">OCIO Implementation Issues</a><ul>
-<li><a href="#display-issues" id="toc-entry-39">Display Issues</a><ul>
-<li><a href="#display-components-mismatch" id="toc-entry-40">Display components mismatch</a></li>
-<li><a href="#partial-look-support" id="toc-entry-41">Partial Look support</a></li>
+<li><a href="#ocio-implementation-issues" id="toc-entry-39">OCIO Implementation Issues</a><ul>
+<li><a href="#display-issues" id="toc-entry-40">Display Issues</a><ul>
+<li><a href="#display-components-mismatch" id="toc-entry-41">Display components mismatch</a></li>
+<li><a href="#partial-look-support" id="toc-entry-42">Partial Look support</a></li>
 </ul>
 </li>
-<li><a href="#improving-the-substance-ocio-config" id="toc-entry-42">Improving the Substance OCIO config</a></li>
-<li><a href="#issues-recap" id="toc-entry-43">Issues Recap</a></li>
+<li><a href="#improving-the-substance-ocio-config" id="toc-entry-43">Improving the Substance OCIO config</a></li>
+<li><a href="#issues-recap" id="toc-entry-44">Issues Recap</a></li>
 </ul>
 </li>
-<li><a href="#conclusion" id="toc-entry-44">Conclusion</a></li>
-<li><a href="#resources" id="toc-entry-45">Resources</a></li>
-<li><a href="#changelog" id="toc-entry-46">Changelog</a></li>
+<li><a href="#conclusion" id="toc-entry-45">Conclusion</a></li>
+<li><a href="#resources" id="toc-entry-46">Resources</a></li>
+<li><a href="#changelog" id="toc-entry-47">Changelog</a></li>
 </ul>
 </nav>
 </aside>
@@ -742,19 +743,30 @@ view-transform :</p>
 <div class="m-image">
 <a href="https://mrlixm.github.io/static/images/blog/0008/sp-odt-off.png"><img alt="View-transform screenshot, when scalar data is selected." src="https://mrlixm.github.io/static/images/blog/0008/sp-odt-off.png" /></a>
 </div>
+</section>
+<section id="custom-user-channels">
+<h4><a href="#toc-entry-24">Custom User Channels</a></h4>
 <p>If you are using a custom <code>User</code> channel, you will have to manually
-specify if the channel is color-managed though. (By default they are not)</p>
+specify if the channel is color-managed. (By default they are not)
+This is achieved by clicking on the gear icon &gt; <code>Color channel</code>.</p>
+<aside class="m-note m-warning">
+<p>As of today (8.2.0), user channel are buggued in the interface
+(color-picker + color thumbnail, viewport is fine).</p>
+<p>I describe the issue and provide a workaround in this <a href="https://community.adobe.com/t5/substance-3d-painter-bugs/color-managed-user-channel-are-not-considered-as-such-by-the-interface/idi-p/13546584#M420">post on the Adobe
+forum.</a></p>
+</aside>
+</aside>
 </section>
 </section>
 <section id="input-setup-in-sp">
-<h3><a href="#toc-entry-24">Input Setup in Sp</a></h3>
+<h3><a href="#toc-entry-25">Input Setup in Sp</a></h3>
 <p>Texturing is all about mixing already existing images, with some carefully
 crafted paint stroke, and funky procedural resources. All of these, if they
 are color-data, have been created and saved with a specific colorspace.
 We will need to know and then specify this colorspace to sp so the OCIO
 processor can know if it needs conversion to the Workspace colorspace.</p>
 <section id="shelf-resources">
-<h4><a href="#toc-entry-25">Shelf Resources</a></h4>
+<h4><a href="#toc-entry-26">Shelf Resources</a></h4>
 <p>In Sp this manipulation takes place, weirdly, on the images slots of each
 layer. You will not find any option to specify the colorspace in the shelf.</p>
 <div class="l-flex-r l-flex-start l-gap-1">
@@ -781,7 +793,7 @@ only work for one. If I take for example a colorspace name used in the ACES
 config this could give: <code>bricks_wall_albedo_Utility - Linear - sRGB.exr</code>.</p>
 </section>
 <section id="the-color-picker">
-<h4><a href="#toc-entry-26">The color-picker</a></h4>
+<h4><a href="#toc-entry-27">The color-picker</a></h4>
 <aside class="m-note m-info">
 <p>7.4.2 update changed the behavior of the color-picker with huge
 improvements :</p>
@@ -913,7 +925,7 @@ Looking forward to next updates to reach the perfect color-picking
 experience haha.</p>
 </section>
 <section id="environment">
-<h4><a href="#toc-entry-27">Environment</a></h4>
+<h4><a href="#toc-entry-28">Environment</a></h4>
 <p><span class="m-text m-s l-c-color-6">There is no direct option to modify the environment image colorspace.</span></p>
 <p>From 7.4.2 + you can find an option in the <code>Display Settings</code> Menu, to change
 the environment colorspace being used.</p>
@@ -931,14 +943,14 @@ The pre-integrated HDRIs are encoded with a <code>linear - sRGB</code>-like colo
 </aside>
 </section>
 <section id="masks">
-<h4><a href="#toc-entry-28">Masks</a></h4>
+<h4><a href="#toc-entry-29">Masks</a></h4>
 <p>When you right-click on a mask you have the option to <code>Export mask as File</code>.
 Don’t worry, mask seems to always be considered as scalar and exported
 without any treatment.</p>
 </section>
 </section>
 <section id="output-setup-in-sp">
-<h3><a href="#toc-entry-29">Output Setup in Sp</a></h3>
+<h3><a href="#toc-entry-30">Output Setup in Sp</a></h3>
 <p>The Export Textures window didn’t got much new. We doesn’t have any options
 to apply a color-transformation at export time in the Window. The only options
 are the one available into the project settings.</p>
@@ -964,11 +976,11 @@ Interstingly, this colorspace <code>raw</code> doesn’t get written into the
 </section>
 </section>
 <section id="aces-workflow">
-<h2><a href="#toc-entry-30">ACES Workflow</a></h2>
+<h2><a href="#toc-entry-31">ACES Workflow</a></h2>
 <p>I’m not going to get into the what and the why, only the how. Let’s keep the
 rest for a next (potential) article ?</p>
 <section id="aces-config-setup">
-<h3><a href="#toc-entry-31">ACES - Config setup</a></h3>
+<h3><a href="#toc-entry-32">ACES - Config setup</a></h3>
 <p>You could use the one shipped with Substance but I wouldn’t recommend so.
 They are the ones with the hundred colorspaces that will just slow you down
 when you need to choose one.</p>
@@ -1002,18 +1014,18 @@ are the only ones that can’t be modified per-case though; this is the only
 place you can change them.</p>
 </section>
 <section id="aces-what-to-do-when-working">
-<h3><a href="#toc-entry-32">ACES - What to do when working</a></h3>
+<h3><a href="#toc-entry-33">ACES - What to do when working</a></h3>
 <p>I’m only going to give detailed explanations when something is specific to
 ACES. Meanwhile the explanations given in <a href="#substance-setup-workflow">Substance Setup &amp; Workflow</a> still
 apply so make sure you properly understood this section.</p>
 <section id="aces-display">
-<h4><a href="#toc-entry-33">ACES - Display</a></h4>
+<h4><a href="#toc-entry-34">ACES - Display</a></h4>
 <p>Not much new, use the view-transform that correspond to the display you are
 using. (In my case <code>ACES - sRGB</code>, that behind the scene, uses <code>Output -
 sRGB</code>)</p>
 </section>
 <section id="aces-inputs">
-<h4><a href="#toc-entry-34">ACES - Inputs</a></h4>
+<h4><a href="#toc-entry-35">ACES - Inputs</a></h4>
 <p>For every external resource you import, you need to assign the correct
 input colorspace if the automatic one doesn’t correspond. The usual rules
 for the ACES workflow apply.</p>
@@ -1021,7 +1033,7 @@ for the ACES workflow apply.</p>
 <a href="https://mrlixm.github.io/static/images/blog/0008/diagram-aces-idt.jpg"><img alt="ACES IDT Cheatsheet." src="https://mrlixm.github.io/static/images/blog/0008/diagram-aces-idt.jpg" /></a>
 </div>
 <section id="aces-environment">
-<h5><a href="#toc-entry-35">ACES - Environment</a></h5>
+<h5><a href="#toc-entry-36">ACES - Environment</a></h5>
 <p><span class="m-text m-s l-c-color-6">There is unfortunately no direct options to change environment’s
 colorspace.</span></p>
 <p>From 7.4.2+ you can find an option in the <code>Display Settings</code> Menu, to change
@@ -1047,7 +1059,7 @@ doesn’t get properly converted and looks shifted.</p>
 </section>
 </section>
 <section id="aces-colorpicker">
-<h4><a href="#toc-entry-36">ACES - Colorpicker</a></h4>
+<h4><a href="#toc-entry-37">ACES - Colorpicker</a></h4>
 <aside class="m-note m-info">
 The screenshots in this section have not been updated to reflect change
 in the 7.4.2 update. Explanations still apply.</aside>
@@ -1094,7 +1106,7 @@ and Chris <a href="https://chrisbrejon.com/cg-cinematography/chapter-1-5-academy
 </blockquote>
 </section>
 <section id="aces-output">
-<h4><a href="#toc-entry-37">ACES - Output</a></h4>
+<h4><a href="#toc-entry-38">ACES - Output</a></h4>
 <p>Do yourself a favour here and only care about EXR. <a href="https://www.elsksa.me/scientia/cgi-offline-rendering/file-format-debunk">You don’t need anything
 else</a> and this is the file format recommended by the Academy for ACES
 data encoding.</p>
@@ -1108,7 +1120,7 @@ name. (and instead export the textures in a folder named ACEScg)</p>
 </section>
 </section>
 <section id="ocio-implementation-issues">
-<h2><a href="#toc-entry-38">OCIO Implementation Issues</a></h2>
+<h2><a href="#toc-entry-39">OCIO Implementation Issues</a></h2>
 <aside class="m-note m-default">
 The goal here is not to denigrate the dev team’s works but rather to offer
 explanations and solutions for improving the software.</aside>
@@ -1118,11 +1130,11 @@ The team did a fantastic job in the latest updates by adressing some of
 the issues I mentionned !</aside>
 </aside>
 <section id="display-issues">
-<h3><a href="#toc-entry-39">Display Issues</a></h3>
+<h3><a href="#toc-entry-40">Display Issues</a></h3>
 <p>These explanations were made possible thanks to the Chris Brejon’s article
 <a href="https://chrisbrejon.com/articles/ocio-display-transforms-and-misconceptions/">OCIO, Display Transforms and Misconceptions</a>.</p>
 <section id="display-components-mismatch">
-<h4><a href="#toc-entry-40">Display components mismatch</a></h4>
+<h4><a href="#toc-entry-41">Display components mismatch</a></h4>
 <p>OCIO divide the Display section into 3 components :</p>
 <ul>
 <li><code>Display</code> : the physical hardware you are using (monitor, TV, phone, …).</li>
@@ -1176,7 +1188,7 @@ We should even get a third one for looks as we are going to see in the next
 section :</p>
 </section>
 <section id="partial-look-support">
-<h4><a href="#toc-entry-41">Partial Look support</a></h4>
+<h4><a href="#toc-entry-42">Partial Look support</a></h4>
 <p>In above explanations where I mention OCIO Display is build with
 3 components, we now see that I didn’t mention the last one yet: Looks.</p>
 <p>Looks is a color-tansformation performed in any colorspace aimed at
@@ -1223,7 +1235,7 @@ cropped name 😬 But at least it’s working.</p>
 </section>
 </section>
 <section id="improving-the-substance-ocio-config">
-<h3><a href="#toc-entry-42">Improving the Substance OCIO config</a></h3>
+<h3><a href="#toc-entry-43">Improving the Substance OCIO config</a></h3>
 <p>The Substance OCIO config is an OCIO v1 configuration. I don’t know
 what is the reason they decided to not use the v2 for their config because
 it could really helped having a cleaner and better config (even if the artist
@@ -1251,7 +1263,7 @@ Substance config. Have a look at the
 file to see the new features.</p>
 </section>
 <section id="issues-recap">
-<h3><a href="#toc-entry-43">Issues Recap</a></h3>
+<h3><a href="#toc-entry-44">Issues Recap</a></h3>
 <p>
 This list aim at helping the potential Substance dev team members reading
 this, addressing the issues.<br />
@@ -1259,20 +1271,16 @@ this, addressing the issues.<br />
 nor a profesional developer.</em><br />
 </p>
 <ul>
-<li><p>
-Substance config uses the wrong Rec.709 display encoding.<br />
-(see <a href="#the-rec709-transfer-function-issue">the rec709 transfer-function issue</a>)<br />
-</p>
-</li>
-<li><p>Substance config miss simple P3 colorspaces while it offers a Rec2020 one
-(who would use it ??)</p>
-</li>
-<li><p>
-Substance config <code>displays</code> key is not properly built.<br />
-(see <a href="#substance-config-displays-fixed">substance-config-displays-fixed</a> )<br />
-</p>
-</li>
-<li><p>The Substance config could overall, benefits from using OCIO v2 features.</p>
+<li><p>Substance OCIO config</p>
+<ul>
+<li>uses the wrong Rec.709 display encoding. (see <a href="#the-rec709-transfer-function-issue">the rec709
+transfer-function issue</a>)</li>
+<li>miss simple P3 colorspaces while it offers a Rec2020 one
+(who would use it ??)</li>
+<li><code>displays</code> key is not properly built. (see
+<a href="#substance-config-displays-fixed">substance-config-displays-fixed</a> )</li>
+<li>could overall, benefits from using OCIO v2 features.</li>
+</ul>
 </li>
 <li><p>
 <span class="m-text m-s l-c-color-6">OCIO roles are not supported, as such default configuration for
@@ -1331,11 +1339,14 @@ Update: it is less broken in 7.4.2 but there is still no some issues.<br />
 <p>EDIT: This actually affect the color-picker who doesn’t seems to supports
 shared-views.</p>
 </li>
+<li><p>custom user channels doesn’t behave as color-managed in the interface (see
+<a href="#custom-user-channels">Custom User Channels</a>)</p>
+</li>
 </ul>
 </section>
 </section>
 <section id="conclusion">
-<h2><a href="#toc-entry-44">Conclusion</a></h2>
+<h2><a href="#toc-entry-45">Conclusion</a></h2>
 <p>Damn that was a long one. Congrats if you stick to the end, I hope you
 now have an idea of how you could use OCIO in SubstancePainter. If not,
 don’t hesitate to <a href="/pages/contact">contact</a> me to suggest how this
@@ -1348,7 +1359,7 @@ the bottom of this page.</p>
 Mari. 👋</p>
 </section>
 <section id="resources">
-<h2><a href="#toc-entry-45">Resources</a></h2>
+<h2><a href="#toc-entry-46">Resources</a></h2>
 <div class="l-url-box">
 <a class="l-url-a" href="https://hg2dc.com/"></a>
 <div class="l-url-box-image">
@@ -1423,7 +1434,7 @@ cinematography and photography and more.</p>
 </div>
 </section>
 <section id="changelog">
-<h2><a href="#toc-entry-46">Changelog</a></h2>
+<h2><a href="#toc-entry-47">Changelog</a></h2>
 <ul>
 <li><code>17-12-2021</code>: fixed <a href="#the-color-picker">The color-picker</a> section. <a href="https://community.acescentral.com/t/aces-and-substance-painter/2299/42">Discussion available here</a></li>
 <li><code>09-03-2022</code>: Updated article following 7.4.2 update.<ul>
@@ -1432,6 +1443,10 @@ cinematography and photography and more.</p>
 <li><a href="#environment">Environment</a> : updated</li>
 <li><a href="#aces-colorpicker">ACES - Colorpicker</a> : updated</li>
 <li><a href="#issues-recap">Issues Recap</a> : updated</li>
+</ul>
+</li>
+<li><code>01-02-2023</code>: added precision for custom user channels<ul>
+<li><a href="#custom-user-channels">Custom User Channels</a> : section created</li>
 </ul>
 </li>
 </ul>
@@ -1474,7 +1489,7 @@ cinematography and photography and more.</p>
             </span>
               <span class="l-modified l-flex-item" title="Last Modified">
                 updated
-                <time datetime="2022-03-11T11:53:00+01:00">&nbsp;11 March 2022</time>
+                <time datetime="2023-02-01T21:31:00+01:00">&nbsp;01 February 2023</time>
               </span>
             <span class="l-box-author l-flex-item" title="List of Authors">
               <img src="/static/images/global/icons/account.svg" alt="Author icon" >

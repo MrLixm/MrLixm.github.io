@@ -12,29 +12,36 @@ A customized version of [m.css](https://mcss.mosra.cz/>) is used as theme.
 
 ## Git
 
-The branch `dev` **should always be active**. Commit and push on this branch
-whenever you have enough important changes.
+There is 2 active branchs `dev` and `master`.
 
-Once `dev` considered publish-ready you can push it to `master` using 
-[publish-online.py](./dev/publish-online.py).
+- `master` is where the builded static website lives.
+- `dev` is where the code for the website lives.
 
-`gh-pages` branch is only used as an intermediate by the script. Nothing should
-be manually commited to this branch.
+You **never** checkout `master` nor push directly to it.
+
+Any edit shoudl be performed in the `dev` branch then use the actions to build 
+and publish the website.
+
+You can create any branch from `dev` but you have to merge them back to dev,
+THEN publish `dev`. This means it is not recommended to work directly on `dev`.
+
 
 ## Dependencies
 
-Built using `Python==3.6.8`.
+Developed under Windows, using another OS might lead to unexpected results.
+
+### Python
+
 See [pyproject.toml](pyproject.toml) for packages required.
 
-## [dev/](./dev)
+### Misc
 
-Contains a bunch of useful stuff used to work on the website.
+Git Bash for Windows at `C:\Program Files\Git\bin\sh.exe`
 
-### [new-article.py](./dev/writer/new-article.py)
+# Workflow
 
-Run and input new article details in the terminal.
-Will create the hierarchy and prepare the .rst template.
+See the [./dev](./dev) package to see the tools accessible.
 
-### [publish-online.py](./dev/publish-online.py)
-
-Automatize the process of publishing the website online on GitHub.
+```shell
+python -m dev --help
+```
