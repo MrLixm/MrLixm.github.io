@@ -6,7 +6,7 @@ Color-management in Substance Painter with OCIO
 :status: published
 :date-created: 2021-11-24 23:33
 :date: 2021-12-08 19:03
-:modified: 2022-03-11 11:53
+:modified: 2023-02-01 21:31
 :cover: {static}/images/blog/0008/cover.jpg
 
 :category: tutorial
@@ -657,8 +657,21 @@ view-transform :
     :target: {static}/images/blog/0008/sp-odt-off.png
     :alt: View-transform screenshot, when scalar data is selected.
 
+Custom User Channels
+____________________
+
 If you are using a custom ``User`` channel, you will have to manually
-specify if the channel is color-managed though. (By default they are not)
+specify if the channel is color-managed. (By default they are not)
+This is achieved by clicking on the gear icon > ``Color channel``.
+
+.. note-warning::
+
+    As of today (8.2.0), user channel are buggued in the interface
+    (color-picker + color thumbnail, viewport is fine).
+
+    I describe the issue and provide a workaround in this `post on the Adobe
+    forum. <https://community.adobe.com/t5/substance-3d-painter-bugs/color-managed-user-channel-are-not-considered-as-such-by-the-interface/idi-p/13546584#M420>`_
+
 
 
 Input Setup in Sp
@@ -1322,19 +1335,22 @@ Issues Recap
  nor a profesional developer.*
 
 -
-    | Substance config uses the wrong Rec.709 display encoding.
-    | (see `the rec709 transfer-function issue`_)
+    Substance OCIO config
 
--
-    Substance config miss simple P3 colorspaces while it offers a Rec2020 one
-    (who would use it ??)
+    -
+      uses the wrong Rec.709 display encoding. (see `the rec709
+      transfer-function issue`_)
 
--
-    | Substance config ``displays`` key is not properly built.
-    | (see `substance-config-displays-fixed`_ )
+    -
+      miss simple P3 colorspaces while it offers a Rec2020 one
+      (who would use it ??)
 
--
-    The Substance config could overall, benefits from using OCIO v2 features.
+    -
+       ``displays`` key is not properly built. (see
+       `substance-config-displays-fixed`_ )
+
+    -
+       could overall, benefits from using OCIO v2 features.
 
 -
     | :strike:`OCIO roles are not supported, as such default configuration for
@@ -1393,6 +1409,9 @@ Issues Recap
 
     EDIT: This actually affect the color-picker who doesn't seems to supports
     shared-views.
+
+- custom user channels doesn't behave as color-managed in the interface (see
+  `Custom User Channels`_)
 
 
 Conclusion
@@ -1467,3 +1486,8 @@ Changelog
     - `Environment`_ : updated
     - `ACES - Colorpicker`_ : updated
     - `Issues Recap`_ : updated
+
+-
+    ``01-02-2023``: added precision for custom user channels
+
+    - `Custom User Channels`_ : section created
