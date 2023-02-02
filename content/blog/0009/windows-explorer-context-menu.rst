@@ -1,8 +1,8 @@
 Creating custom context menu for Windows file explorer.
 #######################################################
 
-:summary: Running Command Line Tools on selected files, as fast as a right
-  click can be.
+:summary: Making tx, rescaling image, displaying alembic content all as fast as
+          a right click can be.
 :thumbnail: {static}/images/blog/0009/
 
 :status: draft
@@ -140,8 +140,8 @@ We can now have a look at how to create the context menu !
     You might have notice that in the above command the filepath is specified
     before the options, sometimes order matters, but here seems makeTx don't care !
 
-Editing the registry
----------------------
+Editing the registry: Basics
+----------------------------
 
 Unfortunately, not really a simple and easy way to add actions to the context menu
 (there is thanks to some apps on othe interfaces that does the same thing I'm
@@ -303,3 +303,231 @@ The editor should directly browse to the key.
 .. image:: {static}/images/blog/0009/registry-editor-maketx.png
     :target: {static}/images/blog/0009/registry-editor-maketx.png
     :alt: Screenshot of the Registry Editor int he state described above.
+
+If you would want to delete what we did, you could just delete the ``makeTx``
+key (but we will see an alternative later).
+
+Aright in theory it should work, what about practice ? Well pick any file
+in the file explorer (because remember we put it under ``*`` which work for
+all file extensions) and right click on it. You should now see the ``makeTx``
+action near the top !
+
+Let's test it, click on it :
+
+.. image:: {static}/images/blog/0009/rmb-makeTx-demo-1.gif
+    :target: {static}/images/blog/0009/rmb-makeTx-demo-1.gif
+    :alt: gif of right clicking on a file and clicking on the makeTx action
+
+Well ... it just open and close. Not very useful ... But this is normal, remember
+what I explained in the `Command Line Interfaces programs`_, the program execute
+its task and then close. If we want to keep its result displayed we have to
+open it from the command line. And that's a task for the next section !
+
+Editing the registry: Advanced
+------------------------------
+
+The previous section allowed us to add a simple new action to the context menu,
+that just execute the application we gave it. But we are still missing plenty
+of use-cases, like how to keep the interface open in the case of a CLI, or even
+more importantly, how do we pass the path of the file we right-clicked on, to
+the command to execute ?
+
+Calling the command prompt
+==========================
+
+Let's adress the issue we stopped the previous section at. As our tool is a CLI,
+it close once finished. But we want to keep its result visible. Manually the solution
+was to execute it from an existing command prompt window. And we will do exactly
+the same for our context-menu action.
+
+Get back to out .reg file and the last line where we define our command to execute.
+
+To open the command prompt we simply need to prefix our command with
+``cmd /k``, so we have:
+
+.. code:: ini
+
+    Windows Registry Editor Version 5.00
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]
+    "MUIVerb"="makeTx"
+    "icon"="F:\\blog\\demo-icon.ico"
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]
+    @="cmd /k \"D:\\resources\\maketx.exe\""
+
+By safety we also wrapped our path between esapced double quotes, to make sure
+the command prompt doesn't complain.
+
+Save the reg file and execute it again. Find a file again, and execute the
+action in the context-menu as previously.
+
+We now have a command prompt window that open and execute the makeTx.exe. But
+the window stays open because it was not opened by makeTx but by us. Nice.
+
+Retrieving the file selected in the command
+===========================================
+
+Probably the most interesting option for our context-menu. We selected a file
+by right-clicking, this mean we want to execute a program on it, by passing the
+path of this file to the program.
+
+For now our makeTx action only open the documentation of the program cause it
+doesn't receive any argument. By bassing the path of the file it should now
+start the conversion.
+
+To retrieve it simple we will be using the ``%1`` variable (it simply retrieve
+the first argument passed to the command line) :
+
+.. code:: ini
+
+    Windows Registry Editor Version 5.00
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]
+    "MUIVerb"="makeTx"
+    "icon"="F:\\blog\\demo-icon.ico"
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]
+    @="cmd /k \"\"D:\\resources\\maketx.exe\" \"%1\"\""
+
+Again we wrap it between escaped double-quotes by safety BUT we also now `escape
+the whole command <https://ss64.com/nt/syntax-esc.html>`_ using double-quotes
+else we will get a `very funky behavior <https://stackoverflow.com/a/15262019/13806195>`_.
+
+Repeat the usual steps to tests, and you should now see the file right-clicked
+properly converted to tx (if you selected an image format selected by makeTx
+of course).
+
+Passing more arguments
+======================
+
+You remember at the beginning that I extracted the full command used by makeTx
+on an existing .tx file ? There was a lot of additional arguments used.
+Nothing hard here, let's just add all of them.
+
+.. code:: ini
+
+    Windows Registry Editor Version 5.00
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]
+    "MUIVerb"="makeTx"
+    "icon"="F:\\blog\\demo-icon.ico"
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]
+    @="cmd /k \"\"D:\\resources\\maketx.exe\" \"%1\" --opaque-detect --constant-color-detect --monochrome-detect --fixnan box3 --oiio --attrib tiff:half 1 -v -u --unpremult --oiio --format exr\""
+
+No need to espace anything this time but make sure they are part of the
+"global string" passed to ``cmd``.
+
+Test again, you should mainly see much more info being displayed as used the
+``-v`` option for "verbose".
+
+And at that state we have a totally working command, but don't leave yet, we
+still have a few improvements to make !
+
+
+Creating a "uninstall" reg file
+===============================
+
+For now we have a single file that allow us to create the keys in the registry.
+But what if we want the inverse, meaning removing them ? All program can be
+installed and uninstalled, so it should be the same for our context-menu action.
+
+As mentioned before you could manually dig into the registry to delete the key,
+but if we took the time to create a reg file, it's not to end up browsing the
+registry manually to revert it.
+
+The solution is to create a new reg file that delete the keys instead of adding
+them. To start just copy/paste the existing reg file we have been creating.
+
+Also open it in your text/code editor. And now very simple edit, in front of
+each key path, after the first bracket, add a minus character :
+
+.. code:: ini
+
+    Windows Registry Editor Version 5.00
+
+    [-HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]
+    "MUIVerb"="makeTx"
+    "icon"="F:\\blog\\demo-icon.ico"
+
+    [-HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]
+    @="cmd /k \"\"D:\\resources\\maketx.exe\" \"%1\" --opaque-detect --constant-color-detect --monochrome-detect --fixnan box3 --oiio --attrib tiff:half 1 -v -u --unpremult --oiio --format exr\""
+
+That's about it. It's enough to tell window to remove the keys instead of creating them.
+You could simplify the file by removing the line setting values but I will leave
+them so I can remember exactly what I'm removing.
+
+Now that you have 2 files (good idea to keep them side by side), you will need
+to remember that if you add a new key / edit an existing one in the "create" reg
+file, you also need to propagate the changes in the "uninstall" reg file.
+
+And we end up with a pretty robust workflow, "install" your custom context-menu
+in one double-click and "uninstall" it the same way ! Without having to remember
+which key you added or manually browsing the registry editor.
+
+
+Using environment variables for robustness
+==========================================
+
+In all the previous examples we have been using an absolute path to
+``maketx.exe``. Let's imagine your directly picked the maketx located in your
+Maya Arnold installation, or whatever other DCC. What happens if you uninstall
+that version ? Well your command will break. You will have to edit the reg file
+with the new maketx path and edit it again ...
+
+    But wait ! I could just copy maketx.exe to one of my personal resources
+    directory so I'm sure it will not be deleted when uninstalling Arnold !
+
+And you'd be right, maketx is a standalone program that doesn't need anything
+else to work so you could just copy it anywhere else. But what happens when
+you want to upgrade your maketx version ? Or you move it. Well you
+have to go find and update the reg file to execute it again. Not the
+most annoying task, but we can do better.
+
+Introducing `environment variables <https://en.wikipedia.org/wiki/Environment_variable>`_.
+A system wide way to set and query values. I will not make a full tutorial
+on them so we will skip to the essential. Feel free to browse the internet to learn
+more about them.
+
+0. In the Window search bar type "environment" and select "Edit Environment variable"
+1. Select Edit
+2. Create a new variable at user level
+3. Fill the values, we will be naming it ``MAKETX``. Don't forget to escape
+   the path of maketx with quotes if it has special characters like in my case.
+4. "Ok" for all dialogs.
+
+.. image:: {static}/images/blog/0009/env-var-maketx.png
+    :target: {static}/images/blog/0009/env-var-maketx.png
+    :alt: step by step to set environment variable
+
+.. note-warning::
+
+    Be carefull when choosing a name for your envionement variable. It's possible
+    that a program will expect this variable name and use it. In our case
+    ``MAKETX`` has a high chance of being expected by a program, but at the same
+    time it would probably also expect the path to the maketx executable. So
+    in a way it should not break anything.
+
+And now to get the environment variable value in our command we need to use
+the `batch <https://en.wikibooks.org/wiki/Windows_Batch_Scripting>`_ syntax
+``%ENVVARNAME%`` :
+
+.. code:: ini
+
+    Windows Registry Editor Version 5.00
+
+    [-HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]
+    "MUIVerb"="makeTx"
+    "icon"="F:\\blog\\demo-icon.ico"
+
+    [-HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]
+    @="cmd /k %%MAKETX%% \"%1\" --opaque-detect --constant-color-detect --monochrome-detect --fixnan box3 --oiio --attrib tiff:half 1 -v -u --unpremult --oiio --format exr\""
+
+Again we have to escape our variable declaration so it's the command prompt
+we open that resolve the variable. For escaping it we just need to double the
+percent character.
+
+Same routine, save and test. Everyhting should just work like before.
+
+Now you should barely never have to get back to your reg file to edit it.
