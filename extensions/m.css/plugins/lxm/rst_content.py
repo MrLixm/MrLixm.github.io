@@ -14,7 +14,7 @@ from pelican import signals
 
 def set_svg_size(svg, width, height=None):
     """
-    Quick & dirty way to modify the width height attribute of an svg.
+    Quick & dirty way to modify the width height attribute of a svg.
 
     Args:
         svg(str): svg as string.
@@ -29,31 +29,36 @@ def set_svg_size(svg, width, height=None):
     if not height:
         height = width
 
-    # update the width attribute
-    new_svg = re.sub(
-        pattern="""width=["-'](\\d+)["-']""",
-        repl=f"""width=\"{width}\"""",
-        string=svg,
-    )
-    # the width attribute was not existing, add it.
-    if new_svg == svg:
+    width_pattern = re.compile(r"width=[\"-'](\w+)[\"-']")
+    height_pattern = re.compile(r"height=[\"-'](\w+)[\"-']")
+
+    if width_pattern.match(svg):
+
+        new_svg = width_pattern.sub(
+            repl=rf"width=\"{width}\"",
+            string=svg,
+        )
+
+    else:
+
         new_svg = re.sub(
-            pattern="""<svg""",
-            repl=f"""<svg width=\"{width}\"""",
+            pattern="<svg",
+            repl=f'<svg width="{width}"',
+            string=svg,
+        )
+
+    if height_pattern.match(new_svg):
+
+        new_svg = height_pattern.sub(
+            repl=rf"width=\"{width}\"",
             string=new_svg,
         )
 
-    # update the height attribute
-    new_svg = re.sub(
-        pattern="""height=["-'](\\d+)["-']""",
-        repl=f"""height=\"{height}\"""",
-        string=new_svg,
-    )
-    # the height attribute was not existing, add it.
-    if new_svg == svg:
+    else:
+
         new_svg = re.sub(
-            pattern="""<svg""",
-            repl=f"""<svg height=\"{height}\"""",
+            pattern="<svg",
+            repl=f'<svg height="{height}"',
             string=new_svg,
         )
 
