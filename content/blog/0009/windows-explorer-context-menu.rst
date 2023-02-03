@@ -109,6 +109,18 @@ arguments the tool expects.
     Most CLI will display their documentation if you just pass the
     ``--help`` argument.
 
+
+maketx
+======
+
+.. url-preview:: https://openimageio.readthedocs.io/en/latest/maketx.html#maketx
+    :title: OpenImageIO - makeTx
+    :svg: {static}/images/blog/0009/oiio-icon.svg
+    :svg-size: 50
+
+    Official makeTx documentation. Arnold version is slightly different.
+
+
 Alright, how does makeTx works ? You can see on the line ``Usage : maketx
 [options] file...`` that it expect the path of the file to be provided last,
 and before some options.
@@ -121,7 +133,7 @@ for you, so it knows which options to use. And thanksfully, the whole command
 used to generate the tx file is actually embeded in the tx's metadata !
 
 But how do I retrieve the tx's metadata ? Well, by using an other CLI that
-we are going to talk just after, I can retrieve it :
+we are going to see a bit later, I can retrieve it :
 
 .. code:: text
 
@@ -131,6 +143,20 @@ Seems there is a lot of options used ! One important thing to keep in mind is
 that **those options vary depending on what kind of texture you are converting
 and how the "texture node" in the source DCC is configured.** The most notable option
 being ``--colorconvert`` used to convert the input file to another colorspace.
+
+.. note-warning::
+
+    You must be aware that the ``maketx.exe`` from the Arnold installation has
+    been slightly modified from the "official" maketx of OpenImageIO. It append
+    default argument to the command, no matter if you already gave them.
+
+    Those default argument are always :
+
+    .. code:: shell
+
+        --opaque-detect --constant-color-detect --monochrome-detect --fixnan box3 --oiio --attrib tiff:half 1
+
+    And as such doesn't need to be provided again when calling maketx manually.
 
 Anyway we have what we need, the whole command required to convert a file to tx.
 We can now have a look at how to create the context menu !
@@ -402,8 +428,9 @@ Passing more arguments
 ======================
 
 You remember at the beginning that I extracted the full command used by makeTx
-on an existing .tx file ? There was a lot of additional arguments used.
-Nothing hard here, let's just add all of them.
+on an existing .tx file ? There was a lot of additional arguments used. As I am
+personnaly using maketx from the Arnold installtion I will remove all the
+argument that maketx will already add for me anyway.
 
 .. code:: ini
 
@@ -414,7 +441,7 @@ Nothing hard here, let's just add all of them.
     "icon"="F:\\blog\\demo-icon.ico"
 
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]
-    @="cmd /k \"\"D:\\resources\\maketx.exe\" \"%1\" --opaque-detect --constant-color-detect --monochrome-detect --fixnan box3 --oiio --attrib tiff:half 1 -v -u --unpremult --oiio --format exr\""
+    @="cmd /k \"\"D:\\resources\\maketx.exe\" \"%1\" -v -u --unpremult --format exr\""
 
 No need to espace anything this time but make sure they are part of the
 "global string" passed to ``cmd``.
@@ -452,7 +479,7 @@ each key path, after the first bracket, add a minus character :
     "icon"="F:\\blog\\demo-icon.ico"
 
     [-HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]
-    @="cmd /k \"\"D:\\resources\\maketx.exe\" \"%1\" --opaque-detect --constant-color-detect --monochrome-detect --fixnan box3 --oiio --attrib tiff:half 1 -v -u --unpremult --oiio --format exr\""
+    @="cmd /k \"\"D:\\resources\\maketx.exe\" \"%1\" -v -u --unpremult --format exr\""
 
 That's about it. It's enough to tell window to remove the keys instead of creating them.
 You could simplify the file by removing the line setting values but I will leave
@@ -517,12 +544,12 @@ the `batch <https://en.wikibooks.org/wiki/Windows_Batch_Scripting>`_ syntax
 
     Windows Registry Editor Version 5.00
 
-    [-HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]
     "MUIVerb"="makeTx"
     "icon"="F:\\blog\\demo-icon.ico"
 
-    [-HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]
-    @="cmd /k %%MAKETX%% \"%1\" --opaque-detect --constant-color-detect --monochrome-detect --fixnan box3 --oiio --attrib tiff:half 1 -v -u --unpremult --oiio --format exr\""
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]
+    @="cmd /k %%MAKETX%% \"%1\" -v -u --unpremult --oiio --format exr\""
 
 Again we have to escape our variable declaration so it's the command prompt
 we open that resolve the variable. For escaping it we just need to double the
@@ -530,4 +557,74 @@ percent character.
 
 Same routine, save and test. Everyhting should just work like before.
 
-Now you should barely never have to get back to your reg file to edit it.
+Now you should never have to get back to your reg file to edit it.
+
+.. TODO rename "actions" to menu ?
+
+Creating sub-menus
+==================
+
+One feature that you might want to use, would be to have nested menus. For
+example the default "Open With" menu offer multiple options once hovered.
+
+With our example it would be nice to have multiple maketx options, one for
+Arnold, one for Renderman, one with a colorspace conversion, ...
+
+.. code:: ini
+
+    Windows Registry Editor Version 5.00
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]
+    "MUIVerb"="makeTx"
+    "icon"="F:\\blog\\demo-icon.ico"
+    "subCommands"=""
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert]
+    "MUIVerb"="convert to .tx"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert\command]
+    @="cmd /k %%MAKETX%% \"%1\" --opaque-detect --constant-color-detect --monochrome-detect --fixnan box3 --oiio --attrib tiff:half 1 -v -u --unpremult --oiio --format exr\""
+
+What happened ? Well first you can see our root key got a new value set with
+``"subCommands"=""``. We then added a new sub-key. For that we took the root
+key path and added ``shell\`` + a new custom name for that key. That new key
+can use the same options as the root key and I used ``MUIVerb`` again to set
+the text displayed in the interface.
+
+As I don't want to create a new nested sub-menu from it I can copy/paste
+the key path and ``\command`` as before to specify what command it will execute.
+
+Here is the whole example I mentioned before :
+
+.. code:: ini
+
+    Windows Registry Editor Version 5.00
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]
+    "MUIVerb"="makeTx"
+    "icon"="F:\\blog\\demo-icon.ico"
+    "subCommands"=""
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert]
+    "MUIVerb"="convert to .tx"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert\command]
+    @="cmd /k %%MAKETX%% \"%1\" -v -u --unpremult --format exr\""
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvertprman]
+    "MUIVerb"="convert to Renderman .tx"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvertprman\command]
+    @="cmd /k %%MAKETX%% \"%1\" --prman -v -u --unpremult --format exr\""
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvertsrgb]
+    "MUIVerb"="convert to .tx - sRGB source"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvertsrgb\command]
+    @="cmd /k %%MAKETX%% \"%1\" --colorconvert sRGB linear -v -u --unpremult --format exr\""
+
+.. note-warning::
+
+    If you got your maketx executable from Arnold installation the second key
+    with the ``--prman`` option will not work as Arnold always send ``--oiio``
+    which conflict with ``--prman`` :(
+
+.. image:: {static}/images/blog/0009/rmb-makeTx-demo-submenus.gif
+    :target: {static}/images/blog/0009/rmb-makeTx-demo-submenus.gif
+    :alt: example of right clicking on a file with the above setup
