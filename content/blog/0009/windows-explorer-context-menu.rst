@@ -628,3 +628,181 @@ Here is the whole example I mentioned before :
 .. image:: {static}/images/blog/0009/rmb-makeTx-demo-submenus.gif
     :target: {static}/images/blog/0009/rmb-makeTx-demo-submenus.gif
     :alt: example of right clicking on a file with the above setup
+
+
+Auto-generating the .reg files
+==============================
+
+For the more technical person that will be reading this article. I already
+simplified all the steps above by creating a python CLI.
+
+.. url-preview:: https://github.com/MrLixm/Reg-file-creator
+    :title: GitHub - Reg-file-creator
+    :image: https://opengraph.githubassets.com/b156f27a74c59c1a80f31050d52fa66fba750b1d3cf63253bc338b5050f53517/MrLixm/Reg-file-creator
+
+    Python package to create context-menu entries in windows via .reg file.
+
+It doesn't simplify that much the process, but it allow you to write a more
+convenient json file to convert it to the 2 reg files.
+
+Cool use cases ideas for context-menus
+--------------------------------------
+
+Because makeTx is not the only program that is cool to have available has a right
+click, here is a few ideas that could really boost your workflow !
+
+OIIO Tool
+=========
+
+I will start by the most useful of all (for a 3D artist at least). `oiiotool
+<https://openimageio.readthedocs.io/en/latest/oiiotool.html#>`_ is the CLI
+version of the OpenImageIO library and was designed to perform image-processing.
+
+Just have a look at the documentation and the `multiple examples it includes
+<https://openimageio.readthedocs.io/en/latest/oiiotool.html#oiiotool-tutorial-recipes>`_
+to get an idea of how powerful it is.
+
+As it could handle probably hundred of actions you want to perform from a
+context menu, I will just show a few very useful of them.
+
+.. block-default:: How to download it
+
+    oiiotool is part of the `OpenImageIO code library <https://github.com/OpenImageIO/oiio>`_
+    , and as such is not officially downloadable. You have to compile the
+    library yourself to get it.
+
+    Fortunately it's not the only solution :
+
+    -
+      | It is shipped with the Arnold installation !
+      | You can find it in ``C:\Program Files\Autodesk\Arnold\maya{VERSION}\bin``
+      | It's a totally standalone builded application so you can copy it anywhere
+
+    -
+      | `Someone shared pre-compiled version of OIIO <https://www.lfd.uci.edu/~gohlke/pythonlibs/#openimageio>`_
+        Make sure to download the ``x64.zip`` version.
+      | note1: the versions are a bit old but better than nothing
+      | note2: the .exe need some of the ``.dll`` next to it to work
+
+
+.. note-default::
+
+    The following example assume you put the path to ``oiiotool.exe`` in an
+    environment variable ``OIIOTOOL`` as shown previously.
+
+Retrieving image statistic and metadata
+_______________________________________
+
+Especially useful for OpenEXR files. To check what is inside.
+
+.. code:: ini
+
+    Windows Registry Editor Version 5.00
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool]
+    "MUIVerb"="OIIO Tool"
+    "icon"="F:\\softwares\\os\\config\\contextmenus\\oiiotool\\oiiotool.ico"
+    "subCommands"=""
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiioinfo]
+    "MUIVerb"="OIIO Info"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiioinfo\command]
+    @="cmd /k %%OIIOTOOL%% --info -v \"%1\""
+
+
+Rescaling textures
+__________________
+
+It is most common that you exported textures in with big dimensions like
+4096x4096 and that you need to resize them as you don't need that much pixels.
+
+Again with oiiotool, as fast as right click can be !
+
+This time setuping this context-menu will be more complicated. If we were to
+reuse the workflow we used previously we woudl set something like this :
+
+.. code:: ini
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048]
+    "MUIVerb"="OIIO rescale 2048"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048\command]
+    @="cmd /k %%OIIOTOOL%% \"%1\" --resize 2048x0 -o \"%~n1-2048%~x1\""
+
+The issues is in the last argument of the command where we need to pass the path
+of the new file OIIO need to write. If we were to overwrite the existing file,
+easy you can just give ``\"%1\"``. But here we want to create a new file.
+The batch language has a special syntax to make path manipulation on variables.
+Unfortunately the syntax doesn't work when called from ``cmd /k``.
+
+.. block-info:: path manipulation in batch
+
+    https://en.wikibooks.org/wiki/Windows_Batch_Scripting#Percent_tilde
+
+    Let's dissect ``%~n1-2048%~x1`` we are using here :
+
+    - ``%~n1`` : the file name without path and extension of the first argument (1)
+    - ``-2048`` : the suffix we add to the filename.
+    - ``%~x1``: File name extension including the period of the first argument (1)
+
+We need a workaround to be able to use the full batch syntax. This workaround
+could also be used if you need to execute more complex commands. So here we will
+be using a ``.bat`` file to define our command, and the registry command will
+just start the bat file.
+
+Create a new ``.bat`` file (create a .txt and just rename the extension). Open
+it with any text/code editor and inside paste the following :
+
+.. code:: batch
+
+    @echo off
+
+    %OIIOTOOL% "%1" --resize %2x0 -o "%~n1-%2%~x1"
+
+You notice we replace ``2048`` with ``%2`` which imply we will be using the
+2nd argument passed to the .bat to determine the size to rescale. With this we
+can use one .bat to rescale to any size !
+
+Save the .bat somewhere then let's get back to our .reg file :
+
+.. code:: ini
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048]
+    "MUIVerb"="OIIO rescale 2048"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048\command]
+    @="cmd /k \"F:\\blog\\path\\to\\oiiotool-rescale.bat\" %1 2048"
+
+Don't forget to also escape the backward slaches in the path. You notice that
+we just forward the path of the file selected as first argument of the bat, and
+the second argument is indeed the size to use.
+
+You can the just copy the above setup as much time as needed to have multiple
+size options :
+
+.. code:: ini
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale4096]
+    "MUIVerb"="OIIO rescale 4096"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale4096\command]
+    @="cmd /k \"F:\\blog\\path\\to\\oiiotool-rescale.bat\" %1 4096"
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048]
+    "MUIVerb"="OIIO rescale 2048"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048\command]
+    @="cmd /k \"F:\\blog\\path\\to\\oiiotool-rescale.bat\" %1 2048"
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale1024]
+    "MUIVerb"="OIIO rescale 1024"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale1024\command]
+    @="cmd /k \"F:\\blog\\path\\to\\oiiotool-rescale.bat\" %1 1024"
+
+    ...
+
+ABCInfo
+=======
+
+pass
+
+Starting different version of the same DCC
+==========================================
+
+pass
