@@ -23,7 +23,7 @@ And I had come to the point where, while browsing my files in the
 file-explorer, I found that I needed to run a specific tool on a file. And
 then 10 min later again, and the next week again ... Each time I had to open
 the tool (so depends how easy it is to find its executable), copy the path of
-the file, and give it to the tool. Hugh ... too long I wish I could automate
+the file, and give it to the tool. Huh ... too long I wish I could automate
 that.
 
 A bit of reasearch, and of course you can. You probably noticed that some
@@ -582,7 +582,7 @@ Arnold, one for Renderman, one with a colorspace conversion, ...
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert]
     "MUIVerb"="convert to .tx"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert\command]
-    @="cmd /k %%MAKETX%% \"%1\" --opaque-detect --constant-color-detect --monochrome-detect --fixnan box3 --oiio --attrib tiff:half 1 -v -u --unpremult --oiio --format exr\""
+    @="cmd /k %%MAKETX%% \"%1\" -v -u --unpremult --oiio --format exr\""
 
 What happened ? Well first you can see our root key got a new value set with
 ``"subCommands"=""``. We then added a new sub-key. For that we took the root
@@ -628,6 +628,14 @@ Here is the whole example I mentioned before :
 .. image:: {static}/images/blog/0009/rmb-makeTx-demo-submenus.gif
     :target: {static}/images/blog/0009/rmb-makeTx-demo-submenus.gif
     :alt: example of right clicking on a file with the above setup
+
+.. note-info::
+
+    Menus are sorted alphabetically by key name. In the above example even
+    if I first create ``txconvertsrgb``, it will still be displayed after
+    ``txconvertprman``. A workaround for this would be to se a number prefix
+    like ``001txconvertsrgb``, but this also mean you have to edit all your
+    key when you want to insert a new one between existing ones.
 
 
 Auto-generating the .reg files
@@ -685,9 +693,9 @@ context menu, I will just show a few very useful of them.
       | note2: the .exe need some of the ``.dll`` next to it to work
 
 
-.. note-default::
+.. note-warning::
 
-    The following example assume you put the path to ``oiiotool.exe`` in an
+    The following examples assume you put the path to ``oiiotool.exe`` in an
     environment variable ``OIIOTOOL`` as shown previously.
 
 Retrieving image statistic and metadata
@@ -726,7 +734,7 @@ reuse the workflow we used previously we woudl set something like this :
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048]
     "MUIVerb"="OIIO rescale 2048"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048\command]
-    @="cmd /k %%OIIOTOOL%% \"%1\" --resize 2048x0 -o \"%~n1-2048%~x1\""
+    @="cmd /k %%OIIOTOOL%% -v \"%1\" --resize 2048x0 -o \"%~n1-2048%~x1\""
 
 The issues is in the last argument of the command where we need to pass the path
 of the new file OIIO need to write. If we were to overwrite the existing file,
@@ -756,7 +764,7 @@ it with any text/code editor and inside paste the following :
 
     @echo off
 
-    %OIIOTOOL% "%1" --resize %2x0 -o "%~n1-%2%~x1"
+    %OIIOTOOL% -v "%1" --resize %2x0 -o "%~n1-%2%~x1"
 
 You notice we replace ``2048`` with ``%2`` which imply we will be using the
 2nd argument passed to the .bat to determine the size to rescale. With this we
@@ -797,12 +805,92 @@ size options :
 
     ...
 
+.. note-info::
+
+    As you know, using cmd will open a new command prompt every time, that you
+    need to manually close. This can be annoying when processing dozens
+    of textures. Actually nothing prevent you to directly start the .bat
+    without the ``cmd /k``. You will just not be able to know if the the rescaling
+    failed.
+
 ABCInfo
 =======
 
-pass
+Next one : retrieving informations about an Alembic file without even opening
+it in a DCC. We will be using a CLI called ``abcinfo.exe``. *This CLI can only
+be found in Houdini installation* :
+
+.. code:: text
+
+    C:\Program Files\Side Effects Software\Houdini {VERSION}\bin\abcinfo.exe"
+
+The tool is not standalone, meaning you can't just copy it somewhere. I
+recommend to as always set an environement variable to it that you can easily
+update when you update your Houdini version.
+
+.. code:: ini
+
+    Windows Registry Editor Version 5.00
+
+    [HKEY_CURRENT_USER\Software\Classes\.abc\shell\abcinfo]
+    "MUIVerb"="abcinfo"
+    "icon"="C:\\Program Files\\Side Effects Software\\Houdini 18.5.499\\bin\\abcinfo.exe"
+    "subCommands"=""
+
+    [HKEY_CURRENT_USER\Software\Classes\.abc\shell\abcinfo\shell\001abcinfo]
+    "MUIVerb"="abcinfo"
+    [HKEY_CURRENT_USER\Software\Classes\.abc\shell\abcinfo\shell\001abcinfo\command]
+    @="cmd /k %%ABCINFO%% \"%1\""
+
+    [HKEY_CURRENT_USER\Software\Classes\.abc\shell\abcinfo\shell\002abcinfo_verbose]
+    "MUIVerb"="abcinfo verbose"
+    [HKEY_CURRENT_USER\Software\Classes\.abc\shell\abcinfo\shell\002abcinfo_verbose\command]
+    @="cmd /k %%ABCINFO%% -v \"%1\""
+
+This time no need to put it in ``Classes\*``, we only need it for ``.abc``. I
+created 2 commands, one which give most of the time the info I need, another one
+that really give the maximum of info about the file.
+
+You can also notice that for the icon we gave a path to a .exe ! Windows will
+use the icon packed in the .exe (if there is one).
+
 
 Starting different version of the same DCC
 ==========================================
 
-pass
+Maybe you are working on multiple projects at the same time, requiring different
+software versions to be used. And you really would like to just double-click on
+your file to launch it. Well with what we learned you coudl at leat create a
+context-menu to open the selected file in the given DCC version.
+
+Here is an example with Maya :
+
+.. code:: ini
+
+    Windows Registry Editor Version 5.00
+
+    [HKEY_CURRENT_USER\Software\Classes\.ma\shell\mayaopen]
+    "MUIVerb"="abcinfo"
+    "icon"="C:\\Program Files\\Autodesk\\Maya2023\\bin\\maya.exe"
+    "subCommands"=""
+
+    [HKEY_CURRENT_USER\Software\Classes\.ma\shell\mayaopen\shell\maya2023]
+    "MUIVerb"="Open in Maya 2023"
+    [HKEY_CURRENT_USER\Software\Classes\.ma\shell\mayaopen\shell\maya2023\command]
+    @="C:\\Program Files\\Autodesk\\Maya2023\\bin\\maya.exe -file \"%1\""
+
+    [HKEY_CURRENT_USER\Software\Classes\.ma\shell\mayaopen\shell\maya2020]
+    "MUIVerb"="Open in Maya 2020"
+    [HKEY_CURRENT_USER\Software\Classes\.ma\shell\mayaopen\shell\maya2020\command]
+    @="C:\\Program Files\\Autodesk\\Maya2020\\bin\\maya.exe -file \"%1\""
+
+..
+
+    Wait I see you are giving argument to Maya, this mean it's a CLI ?!
+
+Yes it is ! For every .exe try to call ``myDCC.exe --help`` and see what are the
+available options.
+
+Nothing prevent you to instead of calling the .exe, you call a .bat that call
+the .exe but set a bunch of environement variable before, ... There is plenty
+of cool workflow optimization you could perform with customized context menus !
