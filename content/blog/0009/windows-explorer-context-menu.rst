@@ -16,7 +16,7 @@ Creating custom context menu for Windows file explorer.
 I had always been a fan of contextual menu in interfaces. They are a very fast
 way to run various processes on a selected item. And at the same time you
 don't have to remember which action you can run on the item, or how the
-action was named. You right click and everything you can do with the item is
+action was named. You right click and everything doable is
 available a few pixels away from your cursor.
 
 And I had come to the point where, while browsing my files in the
@@ -713,7 +713,7 @@ Especially useful for OpenEXR files. To check what is inside.
     "subCommands"=""
 
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiioinfo]
-    "MUIVerb"="OIIO Info"
+    "MUIVerb"="Display Info"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiioinfo\command]
     @="cmd /k %%OIIOTOOL%% --info -v \"%1\""
 
@@ -732,7 +732,7 @@ reuse the workflow we used previously we woudl set something like this :
 .. code:: ini
 
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048]
-    "MUIVerb"="OIIO rescale 2048"
+    "MUIVerb"="rescale 2048"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048\command]
     @="cmd /k %%OIIOTOOL%% -v \"%1\" --resize 2048x0 -o \"%~n1-2048%~x1\""
 
@@ -775,7 +775,7 @@ Save the .bat somewhere then let's get back to our .reg file :
 .. code:: ini
 
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048]
-    "MUIVerb"="OIIO rescale 2048"
+    "MUIVerb"="rescale 2048"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048\command]
     @="cmd /k \"F:\\blog\\path\\to\\oiiotool-rescale.bat\" %1 2048"
 
@@ -789,17 +789,17 @@ size options :
 .. code:: ini
 
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale4096]
-    "MUIVerb"="OIIO rescale 4096"
+    "MUIVerb"="rescale 4096"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale4096\command]
     @="cmd /k \"F:\\blog\\path\\to\\oiiotool-rescale.bat\" %1 4096"
 
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048]
-    "MUIVerb"="OIIO rescale 2048"
+    "MUIVerb"="rescale 2048"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048\command]
     @="cmd /k \"F:\\blog\\path\\to\\oiiotool-rescale.bat\" %1 2048"
 
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale1024]
-    "MUIVerb"="OIIO rescale 1024"
+    "MUIVerb"="rescale 1024"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale1024\command]
     @="cmd /k \"F:\\blog\\path\\to\\oiiotool-rescale.bat\" %1 1024"
 
@@ -812,6 +812,30 @@ size options :
     of textures. Actually nothing prevent you to directly start the .bat
     without the ``cmd /k``. You will just not be able to know if the the rescaling
     failed.
+
+Converting images to .ico
+_________________________
+
+You saw that we needed to create ``.ico`` file to give pretty icon to our
+context-menus, and it's annoying to go on some random website to convert your
+images. Let's automatize it too !
+
+As previously, in 2 part with a .bat :
+
+.. code:: batch
+
+    @echo off
+    %OIIOTOOL% -v -i "%1" --resize 256x0 --dup --resize 128x0 --dup --resize 64x0 --dup --resize 48x0 --dup --resize 32x0 --dup --resize 24x0 --dup --resize 16x0 --siappendall -o "%~n1.ico"
+
+.. code:: ini
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiioicon]
+    "MUIVerb"="convert to .ico"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiioicon\command]
+    @="cmd /k \"F:\\blog\\path\\to\\oiiotool-ico-convert.bat\" %1"
+
+The only tricky part was to know the ico format store multiple versions of
+the same image at different scales, but again OIIO make that pretty easy !
 
 ABCInfo
 =======
