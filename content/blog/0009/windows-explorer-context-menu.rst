@@ -133,7 +133,8 @@ for you, so it knows which options to use. And thanksfully, the whole command
 used to generate the tx file is actually embeded in the tx's metadata !
 
 But how do I retrieve the tx's metadata ? Well, by using an other CLI that
-we are going to see a bit later, I can retrieve it :
+we are going to see a bit later (oiiotool), I can retrieve it from any
+existing tx:
 
 .. code:: text
 
@@ -141,8 +142,14 @@ we are going to see a bit later, I can retrieve it :
 
 Seems there is a lot of options used ! One important thing to keep in mind is
 that **those options vary depending on what kind of texture you are converting
-and how the "texture node" in the source DCC is configured.** The most notable option
-being ``--colorconvert`` used to convert the input file to another colorspace.
+and how the "texture node" in the source DCC is configured.** The most notable
+variable option being ``--colorconvert``, used to convert the input file to
+another colorspace.
+
+.. note-default::
+
+    You might have notice that in the above command the filepath is specified
+    before the options, sometimes order matters, but here seems makeTx don't care !
 
 .. note-warning::
 
@@ -158,20 +165,18 @@ being ``--colorconvert`` used to convert the input file to another colorspace.
 
     And as such doesn't need to be provided again when calling maketx manually.
 
+    (at least for the 2.4.0dev version I'm using, older Arnold version might
+    not use the same arguments)
+
 Anyway we have what we need, the whole command required to convert a file to tx.
 We can now have a look at how to create the context menu !
-
-.. note-default::
-
-    You might have notice that in the above command the filepath is specified
-    before the options, sometimes order matters, but here seems makeTx don't care !
 
 Editing the registry: Basics
 ----------------------------
 
-Unfortunately, not really a simple and easy way to add actions to the context menu
-(there is thanks to some apps on othe interfaces that does the same thing I'm
-going to explain), we will have to edit the `registry <https://en.wikipedia.org/wiki/Windows_Registry>`_.
+Unfortunately, no really simple and easy way to add actions to the context menu
+(though there might be if you look for them on internet), we will have to
+edit the `registry <https://en.wikipedia.org/wiki/Windows_Registry>`_.
 
 If you ever have to use it, you know it's not easy to find what you are looking for.
 Or you are probably aware that editing the wrong stuff can easily break
@@ -207,8 +212,8 @@ menu of the file explorer if not set already).
 Then right click and open the file with any text/code editor (make sure to not
 click on it else you will be executing it !).
 
-Just so you get an idea of the finished product, here is what we will be
-producing :
+Just so you get an idea of the finished product, here is an example of what we
+will be putting in that reg file :
 
 .. include:: maketx.reg
     :code: ini
@@ -244,10 +249,10 @@ Here are the few options availables :
     the system you could replace ``HKEY_CURRENT_USER\Software`` with
     ``HKEY_CLASSES_ROOT``.
 
-As makeTx expect a single file, we will be using the first key location. We
+As makeTx (and most CLI) expect a single file, we will be using the first key location. We
 still need to determine on which file extension the action should appear. Unless
 you want to specifically choose which file format can be converted to tx we will
-consider by laziness that all file formats might be, and as such replace
+consider by laziness that all file formats might be. As such replace
 ``{EXTENSION}`` with ``*``.
 
 Great, we have now the root path for each key. Now time to create the first key.
@@ -629,13 +634,22 @@ Here is the whole example I mentioned before :
     :target: {static}/images/blog/0009/rmb-makeTx-demo-submenus.gif
     :alt: example of right clicking on a file with the above setup
 
-.. note-info::
+.. block-info:: context-menu action sorting
 
     Menus are sorted alphabetically by key name. In the above example even
     if I first create ``txconvertsrgb``, it will still be displayed after
     ``txconvertprman``. A workaround for this would be to se a number prefix
     like ``001txconvertsrgb``, but this also mean you have to edit all your
     key when you want to insert a new one between existing ones.
+
+.. block-warning:: Nested context-menu limit
+
+    Unfortunately there is a limit of sub context-menu you can create from a
+    root context menu. The root context-menu is the first key definiding the
+    ``subCommand=""`` property and then EVERY other context-menu under that
+    root will be counted until you reach **the maximum of 16 menus**.
+
+    https://stackoverflow.com/questions/48625223/is-there-a-maximum-right-click-context-menu-items-limit
 
 
 Auto-generating the .reg files
@@ -825,7 +839,7 @@ As previously, in 2 part with a .bat :
 .. code:: batch
 
     @echo off
-    %OIIOTOOL% -v -i "%1" --resize 256x0 --dup --resize 128x0 --dup --resize 64x0 --dup --resize 48x0 --dup --resize 32x0 --dup --resize 24x0 --dup --resize 16x0 --siappendall -o "%~n1.ico"
+    %OIIOTOOL% -v -i "%1" --fit 256x256 --dup --resize 128x0 --dup --resize 64x0 --dup --resize 48x0 --dup --resize 32x0 --dup --resize 24x0 --dup --resize 16x0 --siappendall -o "%~n1.ico"
 
 .. code:: ini
 
@@ -879,6 +893,160 @@ You can also notice that for the icon we gave a path to a .exe ! Windows will
 use the icon packed in the .exe (if there is one).
 
 
+ffmpeg
+======
+
+One of the most famous CLI. Powering most of the video-processing applications,
+`ffmpeg <https://ffmpeg.org/>`_ is an invaluable resource for anything video-related.
+
+As for oiiotool, the use-case for it are hundred and I will only show a few of them.
+But at the opposite of oiiotool, `finding a compiled version <https://www.gyan.dev/ffmpeg/builds/#release-builds>`_
+is much easier.
+
+video to gif
+____________
+
+An important problem while converting video to gif is disk size. GIF are cools,
+but can become very heavy if not optimized, and most website have file size limitations.
+
+So when doing a gif we always try to find a good quality/size compromise which
+is achieved by tweaking various parameters : resolution, fps, dithering, ...
+
+You could make a bunch of context-menu action with various "preset" of optimization
+but you will always find yourself with a specific case that need to be under a
+certain size, ...
+
+So here we will be doing something new : we will ask the user for input on variables
+for the conversion.
+
+Generating optimized GIFs will require a pretty complex command. We will
+create a .bat file to store it, and call the batch file from the context menu.
+
+.. code:: batch
+
+    @echo off
+
+    set ask_user=1
+    if not "%~2" == "" (
+        set ask_user=%2
+    )
+
+    if %ask_user% equ 0 (
+        set framerate=%3
+    ) else (
+        set /P framerate=- Target framerate:
+    )
+
+    if %ask_user% equ 0 (
+        set scale_divide=%4
+    ) else (
+        set /P scale_divide=- Target Size Divider:
+    )
+
+    set "file_suffix="
+    if %ask_user% equ 0 (
+        if not "%~5" == "" (
+            set file_suffix=%5
+        )
+    ) else (
+        set /P "file_suffix=- File name suffix (optional):"
+    )
+
+    set "dithering=sierra2_4a"
+    if %ask_user% equ 0 (
+        if not "%~6" == "" (
+            set dithering=%6
+        )
+    ) else (
+        echo " # DITHERING methods"
+        echo "     none"
+        echo " # higher scale = less visible dotted pattern but more banding"
+        echo "     bayer:bayer_scale=0"
+        echo "     bayer:bayer_scale=1"
+        echo "     bayer:bayer_scale=2"
+        echo "     bayer:bayer_scale=3"
+        echo "     bayer:bayer_scale=4"
+        echo "     bayer:bayer_scale=5"
+        echo " # (popular) lighter than bayer"
+        echo "     floyd_steinberg"
+        echo " # even lighter, very pronounced banding"
+        echo "     sierra2"
+        echo " # (default) heavy, subttle dot pattern with few banding."
+        echo "     sierra2_4a"
+        set /P dithering=- Dithering method:
+    )
+
+    set "output=%~n1%file_suffix%.gif"
+    set "filter_graph=fps=%framerate%,scale=iw/%scale_divide%:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse=dither=%dithering%"
+
+
+    :: -y : overwite existing, else use -n
+    %FFMPEG% -y -i "%1" -threads 0 -loop 0 -vf %filter_graph% %output%
+
+But we make sure the script can still be used without having to enter a manual
+input. It's achieved by checking if there is a second argument provided and if
+that argument equal one. With that bat we can then create the following reg file :
+
+.. code:: ini
+
+    Windows Registry Editor Version 5.00
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg]
+    "MUIVerb"="ffmpeg"
+    "icon"="F:\\blog\\demo\\ffmpeg.ico"
+    "subCommands"=""
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\001togifask]
+    "MUIVerb"="convert video to .gif - interactive"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\001togifask\command]
+    @="cmd /k \"F:\\blog\\demo\\ffmpeg-togif.bat\" %1 1"
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif502sierra]
+    "MUIVerb"="convert video to .gif - fps:50 size:/2 dithering:sierra2_4a"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif502sierra\command]
+    @="cmd /k \"\"F:\\blog\\demo\\ffmpeg-togif.bat\" %1 0 50 2 \"\"\" sierra2_4a"
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\003togif501sierra]
+    "MUIVerb"="convert video to .gif - fps:50 size:/1 dithering:sierra2_4a"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\003togif501sierra\command]
+    @="cmd /k \"\"F:\\blog\\demo\\ffmpeg-togif.bat\" %1 0 50 1 \"\"\" sierra2_4a"
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\004togif501floyd]
+    "MUIVerb"="convert video to .gif - fps:50 size:/1 dithering:floyd_steinberg"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\004togif501floyd\command]
+    @="cmd /k \"\"F:\\blog\\demo\\ffmpeg-togif.bat\" %1 0 50 1 \"\"\" floyd_steinberg"
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\005togif242sierra]
+    "MUIVerb"="convert video to .gif - fps:24 size:/2 dithering:sierra2_4a"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\005togif242sierra\command]
+    @="cmd /k \"\"F:\\blog\\demo\\ffmpeg-togif.bat\" %1 0 24 2 \"\"\" sierra2_4a"
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\006togif241sierra]
+    "MUIVerb"="convert video to .gif - fps:24 size:/1 dithering:sierra2_4a"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\006togif241sierra\command]
+    @="cmd /k \"\"F:\\blog\\demo\\ffmpeg-togif.bat\" %1 0 24 1 \"\"\" sierra2_4a"
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\007togif241floyd]
+    "MUIVerb"="convert video to .gif - fps:24 size:/1 dithering:floyd_steinberg"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\007togif241floyd\command]
+    @="cmd /k \"\"F:\\blog\\demo\\ffmpeg-togif.bat\" %1 0 24 1 \"\"\" floyd_steinberg"
+
+You can quickly see why we need an option to let he user give what parameter
+he needs. Else we end up with dozens of actions to cover most of the possibilities.
+I ended-up offering 6 presets for now. I think there is room to optimize them
+but did not spend the time to test what combinaison could be the most versatile.
+
+
+optimized mp4 videos
+____________________
+
+
+image sequence to video
+_______________________
+
+And now the ultimate example, combining oiiotool and ffmpeg.
+
+
 Starting different version of the same DCC
 ==========================================
 
@@ -918,3 +1086,32 @@ available options.
 Nothing prevent you to instead of calling the .exe, you call a .bat that call
 the .exe but set a bunch of environement variable before, ... There is plenty
 of cool workflow optimization you could perform with customized context menus !
+
+
+Troubleshooting
+---------------
+
+Most of the time it will be a character escaping issue.
+
+- Making sure paths in the reg files have their backslashes escaped. Example :
+    ``C:\test\test.bat`` -> ``C:\\test\\test.bat``
+
+- Making sure paths in the reg files are wrapped between double quotes. Example :
+    ``C:\\test\\test.bat`` -> ``\"C:\\test\\test.bat\"``
+
+- When you have more than 1 pair of quote in your expression, you will need to
+    double escape them. Example :
+
+    .. code:: batch
+
+        @="cmd /k \"F:\\softwares\\ffmpeg.bat\" \"D:\\project\\specificvideo.mp4\""
+
+    need to be converted to
+
+    .. code:: batch
+
+        @="cmd /k \"\"F:\\softwares\\ffmpeg.bat\" \"D:\\project\\specificvideo.mp4\"\""
+
+    By doubling the first and last double-quote.
+
+    More on that here : https://ss64.com/nt/syntax-esc.html
