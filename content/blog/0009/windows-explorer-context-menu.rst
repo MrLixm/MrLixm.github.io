@@ -10,7 +10,7 @@ Creating custom context menu for Windows file explorer.
 :date: 2023-01-29 21:15
 
 :category: tutorial
-:tags: productivity
+:tags: productivity, arnold, image-processing, windows
 :author: Liam Collod
 
 I had always been a fan of contextual menu in interfaces. They are a very fast
@@ -993,58 +993,190 @@ that argument equal one. With that bat we can then create the following reg file
 
     [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg]
     "MUIVerb"="ffmpeg"
-    "icon"="F:\\blog\\demo\\ffmpeg.ico"
+    "icon"="F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg.ico"
     "subCommands"=""
 
-    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\001togifask]
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\001togif_ask]
     "MUIVerb"="convert video to .gif - interactive"
-    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\001togifask\command]
-    @="cmd /k \"F:\\blog\\demo\\ffmpeg-togif.bat\" %1 1"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\001togif_ask\command]
+    @="cmd /k \"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\" %1 1"
 
-    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif502sierra]
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets]
+    "MUIVerb"="convert video to .gif [presets]"
+    "subCommands"=""
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\003togif502sierra]
     "MUIVerb"="convert video to .gif - fps:50 size:/2 dithering:sierra2_4a"
-    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif502sierra\command]
-    @="cmd /k \"\"F:\\blog\\demo\\ffmpeg-togif.bat\" %1 0 50 2 \"\"\" sierra2_4a"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\003togif502sierra\command]
+    @="cmd /k \"\"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\" %1 0 50 2 \"\"\" sierra2_4a"
 
-    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\003togif501sierra]
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\004togif501sierra]
     "MUIVerb"="convert video to .gif - fps:50 size:/1 dithering:sierra2_4a"
-    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\003togif501sierra\command]
-    @="cmd /k \"\"F:\\blog\\demo\\ffmpeg-togif.bat\" %1 0 50 1 \"\"\" sierra2_4a"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\004togif501sierra\command]
+    @="cmd /k \"\"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\" %1 0 50 1 \"\"\" sierra2_4a"
 
-    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\004togif501floyd]
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\005togif501floyd]
     "MUIVerb"="convert video to .gif - fps:50 size:/1 dithering:floyd_steinberg"
-    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\004togif501floyd\command]
-    @="cmd /k \"\"F:\\blog\\demo\\ffmpeg-togif.bat\" %1 0 50 1 \"\"\" floyd_steinberg"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\005togif501floyd\command]
+    @="cmd /k \"\"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\" %1 0 50 1 \"\"\" floyd_steinberg"
 
-    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\005togif242sierra]
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\006togif242sierra]
     "MUIVerb"="convert video to .gif - fps:24 size:/2 dithering:sierra2_4a"
-    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\005togif242sierra\command]
-    @="cmd /k \"\"F:\\blog\\demo\\ffmpeg-togif.bat\" %1 0 24 2 \"\"\" sierra2_4a"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\006togif242sierra\command]
+    @="cmd /k \"\"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\" %1 0 24 2 \"\"\" sierra2_4a"
 
-    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\006togif241sierra]
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\007togif241sierra]
     "MUIVerb"="convert video to .gif - fps:24 size:/1 dithering:sierra2_4a"
-    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\006togif241sierra\command]
-    @="cmd /k \"\"F:\\blog\\demo\\ffmpeg-togif.bat\" %1 0 24 1 \"\"\" sierra2_4a"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\007togif241sierra\command]
+    @="cmd /k \"\"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\" %1 0 24 1 \"\"\" sierra2_4a"
 
-    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\007togif241floyd]
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\008togif241floyd]
     "MUIVerb"="convert video to .gif - fps:24 size:/1 dithering:floyd_steinberg"
-    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\007togif241floyd\command]
-    @="cmd /k \"\"F:\\blog\\demo\\ffmpeg-togif.bat\" %1 0 24 1 \"\"\" floyd_steinberg"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\008togif241floyd\command]
+    @="cmd /k \"\"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\" %1 0 24 1 \"\"\" floyd_steinberg"
 
 You can quickly see why we need an option to let he user give what parameter
 he needs. Else we end up with dozens of actions to cover most of the possibilities.
 I ended-up offering 6 presets for now. I think there is room to optimize them
 but did not spend the time to test what combinaison could be the most versatile.
 
+Also remember that we are limited to max 16 keys and I'm already using 6
+of them with just "presets" + 1 for the interactive + 1 for creating a
+sub-menu for presets !
+
 
 optimized mp4 videos
 ____________________
+
+One reason you migh want to use ffmpeg is to convert to one video format to another.
+You produced a "master" video, witht he highest quality possible, and you now
+want to share it on the web, which require encoding it in more optimized and
+light-weight formats.
+
+ffmpeg is a hell of a tool without hundred of commands, The most difficult part
+is finding which argument you need to build your command. As I'm more a ffmpeg
+novice I took advice from more experienced users by using this guide :
+https://richardssam.github.io/ffmpeg-tests/ (which have the advantage of
+focusing on color-accuracy for vfx).
+
+Let's take the same workflow we used for gif conversion. Here is the
+intermediate batch file :
+
+.. code:: batch
+
+    @echo off
+
+    set ask_user=1
+    if not "%~2" == "" (
+        set ask_user=%2
+    )
+
+    if %ask_user% equ 0 (
+        set framerate=%3
+    ) else (
+        echo "[framerate] usually ntsc-film (23.98), 24, ntsc (29.97), 60000/1001 (59.94)"
+        set /P framerate=^> framerate=
+    )
+
+    if %ask_user% equ 0 (
+        set preset=%4
+    ) else (
+        echo "[presets] ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow"
+        set /P preset=^> preset=
+    )
+
+    if %ask_user% equ 0 (
+        set tune=%5
+    ) else (
+        echo " [tune]"
+        echo "     - film : use for high quality movie content; lowers deblocking"
+        echo "     - animation : good for cartoons; uses higher deblocking and more reference frames"
+        echo "     - grain : preserves the grain structure in old, grainy film material"
+        set /P tune=^> tune=
+    )
+
+    if %ask_user% equ 0 (
+        set crf=%6
+    ) else (
+        echo "[crf] Constant Rate Factor. Between 0 (lossless) <- 18 <- 23 <- 28 (worse)"
+        set /P crf=^> crf=
+    )
+
+    if %ask_user% equ 0 (
+        set reso_width=%7
+    ) else (
+        echo "[resolution] Target will be rescaled to the given width, while maintaining aspect ratio."
+        set /P reso_width=^> resolution=
+    )
+
+    set "file_suffix="
+    if %ask_user% equ 0 (
+        if not "%~8" == "" (
+            set file_suffix=%8
+        )
+    ) else (
+        echo "[file_suffix] File name suffix (optional)"
+        set /P "file_suffix=> file_suffix="
+    )
+
+    set "output=%~n1%file_suffix%.mp4"
+    set "filter_graph=scale=%reso_width%:trunc(ow/a/2)*2:flags=lanczos:in_color_matrix=bt709:out_color_matrix=bt709"
+
+    :: -y : overwite existing, else use -n
+    %FFMPEG% -n -i "%1" -threads 0 -r 24 -vf %filter_graph% -c:v libx264 -preset %preset% -tune %tune% -crf %crf% -pix_fmt yuv420p -color_range tv -colorspace bt709 -color_primaries bt709 -color_trc iec61966-2-1 %output%
+
+Much more control than the gif workflow. The reg file then looks like this (
+extending the reg file used for gif)
+
+.. code:: ini
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\009mp4_ask]
+    "MUIVerb"="convert source to optimized .mp4 - interactive"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\009mp4_ask\command]
+    @="cmd /k \"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-mp4-optimize.bat\" %1 1"
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets]
+    "MUIVerb"="convert source to optimized .mp4 [presets]"
+    "subCommands"=""
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets\shell\011mp4_preset2]
+    "MUIVerb"="convert .mp4 - fps:24 size:1920 quality:medium:film:18"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets\shell\011mp4_preset2\command]
+    @="cmd /k \"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-mp4-optimize.bat\" %1 0 24 medium film 18 1920 -opti"
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets\shell\012mp4_preset1]
+    "MUIVerb"="convert .mp4 - fps:24 size:1920 quality:slower:film:12"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets\shell\012mp4_preset1\command]
+    @="cmd /k \"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-mp4-optimize.bat\" %1 0 24 slower film 12 1920 -opti"
+
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets\shell\013mp4_preset3]
+    "MUIVerb"="convert .mp4 - fps:24 size:1920 quality:fast:film:23"
+    [HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets\shell\013mp4_preset3\command]
+    @="cmd /k \"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-mp4-optimize.bat\" %1 0 24 fast film 23 1920 -opti"
+
+
+.. image:: {static}/images/blog/0009/rmb-ffmpeg-mp4.gif
+    :target: {static}/images/blog/0009/rmb-ffmpeg-mp4.gif
+    :alt: example of right clicking on a .mov file and selecting the interactive option
 
 
 image sequence to video
 _______________________
 
-And now the ultimate example, combining oiiotool and ffmpeg.
+And now the ultimate example, combining oiiotool and ffmpeg. The pitch is :
+We have an image sequence of renders, our final scene shot with a bunch of frames.
+We have been working properly and have been rendering ``.exr`` to have maximum
+control for post-production. But we want to quickly check those EXRs before getting
+them in our post-prod software. And as you know finding an image viewer reading
+image sequence can be quite complicated. Or you just really want a video to
+share with your client.
+
+ffmpeg is directly capable of ingesting image sequences and turning them to a
+video. But support for  exr is pretty limited, and even more for color-management.
+The solution is to use oiiotool to produce an image sequence that is "ready-to-go"
+for ffmpeg.
+
+.. TODO
 
 
 Starting different version of the same DCC
@@ -1052,7 +1184,7 @@ Starting different version of the same DCC
 
 Maybe you are working on multiple projects at the same time, requiring different
 software versions to be used. And you really would like to just double-click on
-your file to launch it. Well with what we learned you coudl at leat create a
+your file to launch it. Well with what we learned you could at least create a
 context-menu to open the selected file in the given DCC version.
 
 Here is an example with Maya :
@@ -1069,21 +1201,21 @@ Here is an example with Maya :
     [HKEY_CURRENT_USER\Software\Classes\.ma\shell\mayaopen\shell\maya2023]
     "MUIVerb"="Open in Maya 2023"
     [HKEY_CURRENT_USER\Software\Classes\.ma\shell\mayaopen\shell\maya2023\command]
-    @="C:\\Program Files\\Autodesk\\Maya2023\\bin\\maya.exe -file \"%1\""
+    @="\"\"C:\\Program Files\\Autodesk\\Maya2023\\bin\\maya.exe\" -file \"%1\"\""
 
     [HKEY_CURRENT_USER\Software\Classes\.ma\shell\mayaopen\shell\maya2020]
     "MUIVerb"="Open in Maya 2020"
     [HKEY_CURRENT_USER\Software\Classes\.ma\shell\mayaopen\shell\maya2020\command]
-    @="C:\\Program Files\\Autodesk\\Maya2020\\bin\\maya.exe -file \"%1\""
+    @="\"\"C:\\Program Files\\Autodesk\\Maya2020\\bin\\maya.exe\" -file \"%1\"\""
 
 ..
 
     Wait I see you are giving argument to Maya, this mean it's a CLI ?!
 
-Yes it is ! For every .exe try to call ``myDCC.exe --help`` and see what are the
-available options.
+Yes it is ! It's a CLI, opening a GUI. For every .exe try to call
+``myDCC.exe --help`` and see what are the available options.
 
-Nothing prevent you to instead of calling the .exe, you call a .bat that call
+Nothing prevent you to instead of calling the .exe, calling a .bat that call
 the .exe but set a bunch of environement variable before, ... There is plenty
 of cool workflow optimization you could perform with customized context menus !
 
@@ -1099,7 +1231,7 @@ Most of the time it will be a character escaping issue.
 - Making sure paths in the reg files are wrapped between double quotes. Example :
     ``C:\\test\\test.bat`` -> ``\"C:\\test\\test.bat\"``
 
-- When you have more than 1 pair of quote in your expression, you will need to
+- When you have more than 1 pair of quote in your command line, you will need to
     double escape them. Example :
 
     .. code:: batch
