@@ -567,6 +567,12 @@ class SaneHtmlTranslator(HTMLTranslator):
     # Footnote reference
     def visit_footnote_reference(self, node):
         href = "#" + node["refid"]
+        # HACK: children[0] might break
+        footnote_text_node: docutils.nodes.Text = node.children[0]
+        new_footnote_text_node = footnote_text_node.__class__(
+            f"[{footnote_text_node.astext()}]"
+        )
+        node.children = [new_footnote_text_node]
         self.body.append(self.starttag(node, "a", "", CLASS="m-footnote", href=href))
 
     def depart_footnote_reference(self, node):

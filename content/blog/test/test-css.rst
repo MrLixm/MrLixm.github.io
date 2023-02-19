@@ -93,6 +93,18 @@ https://mrlixm.github.io/
 -
     Third line
 
+Test footnotes
+
+Cum clinias unda, omnes hibridaes aperto bassus, alter terrores. [1]_
+sunt ventuses quaestio bassus, fidelis rectores. fatalis adiurator inciviliter anhelares bursa est.
+cum nuptia credere, omnes specieses imitari fidelis, neuter homoes. [2]_
+cur urbs prarere. [3]_
+
+.. [1] test number 1
+.. [2] https://mrlixm.github.io/
+.. [3] https://github.com/
+
+
 Components
 -----------
 

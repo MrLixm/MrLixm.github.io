@@ -298,18 +298,14 @@ a.m-footnote, dl.m-footnote dd span.m-footnote {
 a.m-footnote, dl.m-footnote dd span.m-footnote a {
   text-decoration: none;
 }
-a.m-footnote::before { content: '['; }
-a.m-footnote::after { content: ']'; }
-dl.m-footnote dt {
-  width: 1.5rem;
-  float: left;
-  clear: both;
-}
-dl.m-footnote dd {
-  margin-left: 1.5rem;
-}
+/*a.m-footnote::before { content: '['; }*/
+/*a.m-footnote::after { content: ']'; }*/
+dl.m-footnote dt {}
+dl.m-footnote dd {}
 dl.m-footnote { /* Same as .m-small */
   font-size: 85.4%;
+    display: grid;
+    grid-template-columns: 20px auto;
 }
 dl.m-footnote dd span.m-footnote a {
   font-weight: bold;
