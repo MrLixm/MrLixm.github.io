@@ -44,16 +44,16 @@ logger = logging.getLogger(__name__)
 
 default_settings = {
     # Language used for hyphenation and smart quotes
-    'M_HTMLSANITY_LANGUAGE': 'en',
+    "M_HTMLSANITY_LANGUAGE": "en",
     # Extra docutils settings
-    'M_HTMLSANITY_DOCUTILS_SETTINGS': {},
+    "M_HTMLSANITY_DOCUTILS_SETTINGS": {},
     # Whether hyphenation is enabled
-    'M_HTMLSANITY_HYPHENATION': False,
+    "M_HTMLSANITY_HYPHENATION": False,
     # Whether smart quotes are enabled
-    'M_HTMLSANITY_SMART_QUOTES': False,
+    "M_HTMLSANITY_SMART_QUOTES": False,
     # List of formatted document-level fields (which should get hyphenation
     # and smart quotes applied as well)
-    'M_HTMLSANITY_FORMATTED_FIELDS': []
+    "M_HTMLSANITY_FORMATTED_FIELDS": [],
 }
 
 settings = None
@@ -61,15 +61,16 @@ settings = None
 # Default docutils settings. Some things added in register() / register_mcss(),
 # and from the M_HTMLSANITY_DOCUTILS_SETTINGS option.
 docutils_settings = {
-    'initial_header_level': '2',
-    'syntax_highlight': 'short',
-    'input_encoding': 'utf-8',
-    'halt_level': 2,
-    'traceback': True,
-    'embed_stylesheet': False
+    "initial_header_level": "2",
+    "syntax_highlight": "short",
+    "input_encoding": "utf-8",
+    "halt_level": 2,
+    "traceback": True,
+    "embed_stylesheet": False,
 }
 
-words_re = re.compile(r'\w+', re.UNICODE|re.X)
+words_re = re.compile(r"\w+", re.UNICODE | re.X)
+
 
 def extract_document_language(document):
     # Take the one from settings as default
@@ -80,9 +81,11 @@ def extract_document_language(document):
         assert isinstance(field[0], nodes.field_name)
         assert isinstance(field[1], nodes.field_body)
         # field_body -> paragraph -> text
-        if field[0][0] == 'lang': return str(field[1][0][0])
+        if field[0][0] == "lang":
+            return str(field[1][0][0])
 
     return language
+
 
 def can_apply_typography(txtnode):
     # Exclude:
@@ -91,23 +94,36 @@ def can_apply_typography(txtnode):
     #  - field names
     #  - bibliographic elements (author, date, ... fields)
     #  - links with title that's the same as URL (or e-mail)
-    if isinstance(txtnode.parent, nodes.literal) or \
-       isinstance(txtnode.parent.parent, nodes.literal) or \
-       isinstance(txtnode.parent, nodes.raw) or \
-       isinstance(txtnode.parent, nodes.field_name) or \
-       isinstance(txtnode.parent, nodes.Bibliographic) or \
-       (isinstance(txtnode.parent, nodes.reference) and
-            (txtnode.astext() == txtnode.parent.get('refuri', '') or 'mailto:' + txtnode.astext() == txtnode.parent.get('refuri', ''))):
+    if (
+        isinstance(txtnode.parent, nodes.literal)
+        or isinstance(txtnode.parent.parent, nodes.literal)
+        or isinstance(txtnode.parent, nodes.raw)
+        or isinstance(txtnode.parent, nodes.field_name)
+        or isinstance(txtnode.parent, nodes.Bibliographic)
+        or (
+            isinstance(txtnode.parent, nodes.reference)
+            and (
+                txtnode.astext() == txtnode.parent.get("refuri", "")
+                or "mailto:" + txtnode.astext() == txtnode.parent.get("refuri", "")
+            )
+        )
+    ):
         return False
 
     # From fields include only the ones that are in M_HTMLSANITY_FORMATTED_FIELDS
     if isinstance(txtnode.parent.parent, nodes.field_body):
-        field_name_index = txtnode.parent.parent.parent.first_child_matching_class(nodes.field_name)
-        if txtnode.parent.parent.parent[field_name_index][0] in settings['M_HTMLSANITY_FORMATTED_FIELDS']:
+        field_name_index = txtnode.parent.parent.parent.first_child_matching_class(
+            nodes.field_name
+        )
+        if (
+            txtnode.parent.parent.parent[field_name_index][0]
+            in settings["M_HTMLSANITY_FORMATTED_FIELDS"]
+        ):
             return True
         return False
 
     return True
+
 
 class SmartQuotes(docutils.transforms.universal.SmartQuotes):
     """Smart quote transform
@@ -125,10 +141,10 @@ class SmartQuotes(docutils.transforms.universal.SmartQuotes):
         # We are using our own config variable instead of
         # self.document.settings.smart_quotes in order to avoid the builtin
         # SmartQuotes to be executed as well
-        if not settings['M_HTMLSANITY_SMART_QUOTES']:
+        if not settings["M_HTMLSANITY_SMART_QUOTES"]:
             return
         try:
-            alternative = settings['M_HTMLSANITY_SMART_QUOTES'].startswith('alt')
+            alternative = settings["M_HTMLSANITY_SMART_QUOTES"].startswith("alt")
         except AttributeError:
             alternative = False
         # print repr(alternative)
@@ -149,9 +165,11 @@ class SmartQuotes(docutils.transforms.universal.SmartQuotes):
             # Patched here to exclude more stuff.
             txtnodes = []
             for txtnode in node.traverse(nodes.Text):
-                if not can_apply_typography(txtnode): continue
+                if not can_apply_typography(txtnode):
+                    continue
                 # Don't convert -- in option strings
-                if isinstance(txtnode.parent, nodes.option_string): continue
+                if isinstance(txtnode.parent, nodes.option_string):
+                    continue
 
                 txtnodes += [txtnode]
 
@@ -159,27 +177,29 @@ class SmartQuotes(docutils.transforms.universal.SmartQuotes):
             lang = node.get_language_code(document_language)
             # use alternative form if `smart-quotes` setting starts with "alt":
             if alternative:
-                if '-x-altquot' in lang:
-                    lang = lang.replace('-x-altquot', '')
+                if "-x-altquot" in lang:
+                    lang = lang.replace("-x-altquot", "")
                 else:
-                    lang += '-x-altquot'
+                    lang += "-x-altquot"
             # drop subtags missing in quotes:
             for tag in utils.normalize_language_tag(lang):
                 if tag in smartquotes.smartchars.quotes:
                     lang = tag
                     break
-            else: # language not supported: (keep ASCII quotes)
-                lang = ''
+            else:  # language not supported: (keep ASCII quotes)
+                lang = ""
 
             # Iterator educating quotes in plain text:
             # '2': set all, using old school en- and em- dash shortcuts
-            teacher = smartquotes.educate_tokens(self.get_tokens(txtnodes),
-                                                 attr='2', language=lang)
+            teacher = smartquotes.educate_tokens(
+                self.get_tokens(txtnodes), attr="2", language=lang
+            )
 
             for txtnode, newtext in zip(txtnodes, teacher):
                 txtnode.parent.replace(txtnode, nodes.Text(newtext))
 
-            self.unsupported_languages = set() # reset
+            self.unsupported_languages = set()  # reset
+
 
 class Pyphen(Transform):
     """Hyphenation using pyphen
@@ -196,7 +216,7 @@ class Pyphen(Transform):
         Transform.__init__(self, document, startnode=startnode)
 
     def apply(self):
-        if not settings['M_HTMLSANITY_HYPHENATION']:
+        if not settings["M_HTMLSANITY_HYPHENATION"]:
             return
 
         document_language = extract_document_language(self.document)
@@ -210,15 +230,17 @@ class Pyphen(Transform):
                 continue
 
             for txtnode in node.traverse(nodes.Text):
-                if not can_apply_typography(txtnode): continue
+                if not can_apply_typography(txtnode):
+                    continue
 
                 # Don't hyphenate document title. Not part of
                 # can_apply_typography() because we *do* want smart quotes for
                 # a document title.
-                if isinstance(txtnode.parent, nodes.title): continue
+                if isinstance(txtnode.parent, nodes.title):
+                    continue
 
                 # Useful for debugging, don't remove ;)
-                #print(repr(txtnode.parent), repr(txtnode.parent.parent), repr(txtnode.parent.parent.parent))
+                # print(repr(txtnode.parent), repr(txtnode.parent.parent), repr(txtnode.parent.parent.parent))
 
                 # Proper language-dependent hyphenation. Can't be done for
                 # `node` as a paragraph can consist of more than one language.
@@ -228,10 +250,22 @@ class Pyphen(Transform):
                 # I'm assuming this is faster than recreating the instance for
                 # every text node
                 if lang not in pyphen_for_lang:
-                    if not pyphen or lang not in pyphen.LANGUAGES: continue
+                    if not pyphen or lang not in pyphen.LANGUAGES:
+                        continue
                     pyphen_for_lang[lang] = pyphen.Pyphen(lang=lang)
 
-                txtnode.parent.replace(txtnode, nodes.Text(words_re.sub(lambda m: pyphen_for_lang[lang].inserted(m.group(0), '\u00AD'), txtnode.astext())))
+                txtnode.parent.replace(
+                    txtnode,
+                    nodes.Text(
+                        words_re.sub(
+                            lambda m: pyphen_for_lang[lang].inserted(
+                                m.group(0), "\u00AD"
+                            ),
+                            txtnode.astext(),
+                        )
+                    ),
+                )
+
 
 class SaneHtmlTranslator(HTMLTranslator):
     """Sane HTML translator
@@ -242,19 +276,21 @@ class SaneHtmlTranslator(HTMLTranslator):
 
     # Overrides the ones from docutils HTML5 writer to enable the soft hyphen
     # character
-    special_characters = {ord('&'): '&amp;',
-                          ord('<'): '&lt;',
-                          ord('"'): '&quot;',
-                          ord('>'): '&gt;',
-                          ord('@'): '&#64;', # may thwart address harvesters
-                          ord('\u00AD'): '&shy;'}
+    special_characters = {
+        ord("&"): "&amp;",
+        ord("<"): "&lt;",
+        ord('"'): "&quot;",
+        ord(">"): "&gt;",
+        ord("@"): "&#64;",  # may thwart address harvesters
+        ord("\u00AD"): "&shy;",
+    }
 
     def __init__(self, document):
         HTMLTranslator.__init__(self, document)
 
         # There's a minor difference between docutils 0.13 and 0.14 that breaks
         # stuff. Monkey-patch it here.
-        if not hasattr(self, 'in_word_wrap_point'):
+        if not hasattr(self, "in_word_wrap_point"):
             self.in_word_wrap_point = HTMLTranslator.sollbruchstelle
 
         # Used by depart_caption() and depart_figure(), see there for details
@@ -265,16 +301,18 @@ class SaneHtmlTranslator(HTMLTranslator):
     # verbatim over
     def visit_docinfo(self, node):
         self.context.append(len(self.body))
-        self.body.append(self.starttag(node, 'table',
-                                       CLASS='docinfo',
-                                       frame="void", rules="none"))
-        self.body.append('<col class="docinfo-name" />\n'
-                         '<col class="docinfo-content" />\n'
-                         '<tbody valign="top">\n')
+        self.body.append(
+            self.starttag(node, "table", CLASS="docinfo", frame="void", rules="none")
+        )
+        self.body.append(
+            '<col class="docinfo-name" />\n'
+            '<col class="docinfo-content" />\n'
+            '<tbody valign="top">\n'
+        )
         self.in_docinfo = True
 
     def depart_docinfo(self, node):
-        self.body.append('</tbody>\n</table>\n')
+        self.body.append("</tbody>\n</table>\n")
         self.in_docinfo = False
         start = self.context.pop()
         self.docinfo = self.body[start:]
@@ -283,36 +321,38 @@ class SaneHtmlTranslator(HTMLTranslator):
     # Have <abbr> properly with title
     def visit_abbreviation(self, node):
         attrs = {}
-        if node.hasattr('title'):
-            attrs['title'] = node['title']
-        self.body.append(self.starttag(node, 'abbr', '', **attrs))
+        if node.hasattr("title"):
+            attrs["title"] = node["title"]
+        self.body.append(self.starttag(node, "abbr", "", **attrs))
 
     def depart_abbreviation(self, node):
-        self.body.append('</abbr>')
+        self.body.append("</abbr>")
 
     # Convert outdated width/height attributes to CSS styles, handle the scale
     # directly inside m.images; don't put URI in alt text.
     def visit_image(self, node):
         atts = {}
-        uri = node['uri']
+        uri = node["uri"]
         ext = os.path.splitext(uri)[1].lower()
-        atts['src'] = uri
-        if 'alt' in node: atts['alt'] = node['alt']
+        atts["src"] = uri
+        if "alt" in node:
+            atts["alt"] = node["alt"]
         style = []
-        if node.get('width'):
-            style += ['width: {}'.format(node['width'])]
-        if node.get('height'):
-            style += ['height: {}'.format(node['height'])]
+        if node.get("width"):
+            style += ["width: {}".format(node["width"])]
+        if node.get("height"):
+            style += ["height: {}".format(node["height"])]
         if style:
-            atts['style'] = '; '.join(style)
-        if (isinstance(node.parent, nodes.TextElement) or
-            (isinstance(node.parent, nodes.reference) and
-             not isinstance(node.parent.parent, nodes.TextElement))):
+            atts["style"] = "; ".join(style)
+        if isinstance(node.parent, nodes.TextElement) or (
+            isinstance(node.parent, nodes.reference)
+            and not isinstance(node.parent.parent, nodes.TextElement)
+        ):
             # Inline context or surrounded by <a>...</a>.
-            suffix = ''
+            suffix = ""
         else:
-            suffix = '\n'
-        self.body.append(self.emptytag(node, 'img', suffix, **atts))
+            suffix = "\n"
+        self.body.append(self.emptytag(node, "img", suffix, **atts))
 
     def depart_image(self, node):
         pass
@@ -320,12 +360,11 @@ class SaneHtmlTranslator(HTMLTranslator):
     # Use HTML5 <section> tag for sections (instead of <div class="section">)
     def visit_section(self, node):
         self.section_level += 1
-        self.body.append(
-            self.starttag(node, 'section'))
+        self.body.append(self.starttag(node, "section"))
 
     def depart_section(self, node):
         self.section_level -= 1
-        self.body.append('</section>\n')
+        self.body.append("</section>\n")
 
     # Legend inside figure. This is handled in a special way inside
     # depart_caption() and depart_figure() already, no need to add any extra
@@ -338,145 +377,152 @@ class SaneHtmlTranslator(HTMLTranslator):
 
     # Literal -- print as <code> (instead of some <span>)
     def visit_literal(self, node):
-        self.body.append(self.starttag(node, 'code', ''))
+        self.body.append(self.starttag(node, "code", ""))
 
     def depart_literal(self, node):
-        self.body.append('</code>')
+        self.body.append("</code>")
 
     # Literal block -- use <pre> without nested <code> and useless classes
     def visit_literal_block(self, node):
-        self.body.append(self.starttag(node, 'pre', ''))
+        self.body.append(self.starttag(node, "pre", ""))
 
     def depart_literal_block(self, node):
-        self.body.append('</pre>\n')
+        self.body.append("</pre>\n")
 
     # Anchor -- drop the useless classes
     def visit_reference(self, node):
         atts = {}
-        if 'refuri' in node:
-            atts['href'] = node['refuri']
-            if ( self.settings.cloak_email_addresses
-                 and atts['href'].startswith('mailto:')):
-                atts['href'] = self.cloak_mailto(atts['href'])
+        if "refuri" in node:
+            atts["href"] = node["refuri"]
+            if self.settings.cloak_email_addresses and atts["href"].startswith(
+                "mailto:"
+            ):
+                atts["href"] = self.cloak_mailto(atts["href"])
                 self.in_mailto = True
         else:
-            assert 'refid' in node, \
-                   'References must have "refuri" or "refid" attribute.'
-            atts['href'] = '#' + node['refid']
+            assert (
+                "refid" in node
+            ), 'References must have "refuri" or "refid" attribute.'
+            atts["href"] = "#" + node["refid"]
         # why?!?!
-        #if not isinstance(node.parent, nodes.TextElement):
-            #assert len(node) == 1 and isinstance(node[0], nodes.image)
+        # if not isinstance(node.parent, nodes.TextElement):
+        # assert len(node) == 1 and isinstance(node[0], nodes.image)
 
         # If the link is a plain URL without explicitly specified title, apply
         # m-link-wrap so it doesn't leak out of the view on narrow screens.
         # This can be disabled by explicitly providing the URL also as a title
         # --- then the node will have a name attribute and we'll skip in that
         # case.
-        if len(node.children) == 1 and isinstance(node.children[0], nodes.Text) and 'name' not in node and 'refuri' in node and node.children[0] == node['refuri']:
-            node['classes'] += ['m-link-wrap']
+        if (
+            len(node.children) == 1
+            and isinstance(node.children[0], nodes.Text)
+            and "name" not in node
+            and "refuri" in node
+            and node.children[0] == node["refuri"]
+        ):
+            node["classes"] += ["m-link-wrap"]
 
-        self.body.append(self.starttag(node, 'a', '', **atts))
+        self.body.append(self.starttag(node, "a", "", **atts))
 
     def depart_reference(self, node):
-        self.body.append('</a>')
+        self.body.append("</a>")
         if not isinstance(node.parent, nodes.TextElement):
-            self.body.append('\n')
+            self.body.append("\n")
         self.in_mailto = False
 
     # Use <aside> for general topics, <nav> for table of contents (but drop the
     # contents class and ID)
     def visit_topic(self, node):
-        self.topic_classes = node['classes']
+        self.topic_classes = node["classes"]
 
-        if 'contents' in node['classes']:
-            node.html_tagname = 'nav'
-            node['classes'].remove('contents')
+        if "contents" in node["classes"]:
+            node.html_tagname = "nav"
+            node["classes"].remove("contents")
             # If the TOC has a title, the ID will be different, and in that
             # case we'll leave it there.
             # // Original commit remove the id but this break the CSS
             # if 'contents' in node['ids']:
             #     node['ids'].remove('contents')
         else:
-            node.html_tagname = 'aside'
+            node.html_tagname = "aside"
 
         self.body.append(self.starttag(node, node.html_tagname))
 
     def depart_topic(self, node):
-        self.body.append('</{}>\n'.format(node.html_tagname))
-        self.body.append('</aside>\n')
+        self.body.append("</{}>\n".format(node.html_tagname))
+        self.body.append("</aside>\n")
         self.topic_classes = []
 
     # Don't use <colgroup> or other shit in tables
     def visit_colspec(self, node):
         self.colspecs.append(node)
         # "stubs" list is an attribute of the tgroup element:
-        node.parent.stubs.append(node.attributes.get('stub'))
+        node.parent.stubs.append(node.attributes.get("stub"))
 
     def depart_colspec(self, node):
         # write out <colgroup> when all colspecs are processed
-        if isinstance(node.next_node(descend=False, siblings=True),
-                      nodes.colspec):
+        if isinstance(node.next_node(descend=False, siblings=True), nodes.colspec):
             return
-        if 'colwidths-auto' in node.parent.parent['classes'] or (
-            'colwidths-auto' in self.settings.table_style and
-            ('colwidths-given' not in node.parent.parent['classes'])):
+        if "colwidths-auto" in node.parent.parent["classes"] or (
+            "colwidths-auto" in self.settings.table_style
+            and ("colwidths-given" not in node.parent.parent["classes"])
+        ):
             return
 
     # Verbatim copied, removing the 'head' class from <th>
     def visit_entry(self, node):
-        atts = {'class': []}
+        atts = {"class": []}
         if node.parent.parent.parent.stubs[node.parent.column]:
             # "stubs" list is an attribute of the tgroup element
-            atts['class'].append('stub')
-        if atts['class'] or isinstance(node.parent.parent, nodes.thead):
-            tagname = 'th'
-            atts['class'] = ' '.join(atts['class'])
+            atts["class"].append("stub")
+        if atts["class"] or isinstance(node.parent.parent, nodes.thead):
+            tagname = "th"
+            atts["class"] = " ".join(atts["class"])
         else:
-            tagname = 'td'
-            del atts['class']
+            tagname = "td"
+            del atts["class"]
         node.parent.column += 1
-        if 'morerows' in node:
-            atts['rowspan'] = node['morerows'] + 1
-        if 'morecols' in node:
-            atts['colspan'] = node['morecols'] + 1
-            node.parent.column += node['morecols']
-        self.body.append(self.starttag(node, tagname, '', **atts))
-        self.context.append('</%s>\n' % tagname.lower())
+        if "morerows" in node:
+            atts["rowspan"] = node["morerows"] + 1
+        if "morecols" in node:
+            atts["colspan"] = node["morecols"] + 1
+            node.parent.column += node["morecols"]
+        self.body.append(self.starttag(node, tagname, "", **atts))
+        self.context.append("</%s>\n" % tagname.lower())
 
     # Don't put comments into the HTML output
-    def visit_comment(self, node,
-                      sub=re.compile('-(?=-)').sub):
+    def visit_comment(self, node, sub=re.compile("-(?=-)").sub):
         raise nodes.SkipNode
 
     # Containers don't need those stupid "docutils" class names
     def visit_container(self, node):
         atts = {}
-        self.body.append(self.starttag(node, 'div', **atts))
+        self.body.append(self.starttag(node, "div", **atts))
 
     def depart_container(self, node):
-        self.body.append('</div>\n')
+        self.body.append("</div>\n")
 
     # Use HTML5 <figure> element for figures
     def visit_figure(self, node):
         atts = {}
-        if node.get('id'):
-            atts['ids'] = [node['id']]
+        if node.get("id"):
+            atts["ids"] = [node["id"]]
         style = []
-        if node.get('width'):
-            style += ['width: {}'.format(node['width'])]
+        if node.get("width"):
+            style += ["width: {}".format(node["width"])]
         if style:
-            atts['style'] = '; '.join(style)
-        self.body.append(self.starttag(node, 'figure', **atts))
+            atts["style"] = "; ".join(style)
+        self.body.append(self.starttag(node, "figure", **atts))
 
     def depart_figure(self, node):
         # See depart_caption() below for details
         if self.in_figure_caption_with_description:
-            self.body.append('</div>\n</figcaption>\n')
+            self.body.append("</div>\n</figcaption>\n")
             self.in_figure_caption_with_description = False
-        self.body.append('</figure>\n')
+        self.body.append("</figure>\n")
 
     def visit_caption(self, node):
-        self.body.append(self.starttag(node, 'figcaption', ''))
+        self.body.append(self.starttag(node, "figcaption", ""))
 
     def depart_caption(self, node):
         # If this is a .m-figure and there's more content after a <figcaption>,
@@ -489,11 +535,15 @@ class SaneHtmlTranslator(HTMLTranslator):
         # TODO this may have false positives if there are reST comments and
         # such, figure out a way to query if there are useful nodes. Can't
         # check for just nodes.legend, as there can be arbitrary other stuff.
-        if 'classes' in node.parent and 'm-figure' in node.parent['classes'] and node.next_node(descend=False, siblings=True) is not None:
-            self.body.append(self.starttag(node, 'div', CLASS='m-figure-description'))
+        if (
+            "classes" in node.parent
+            and "m-figure" in node.parent["classes"]
+            and node.next_node(descend=False, siblings=True) is not None
+        ):
+            self.body.append(self.starttag(node, "div", CLASS="m-figure-description"))
             self.in_figure_caption_with_description = True
         else:
-            self.body.append('</figcaption>\n')
+            self.body.append("</figcaption>\n")
 
     # Line blocks are <p> with lines separated using simple <br />. No need for
     # nested <div>s.
@@ -501,50 +551,56 @@ class SaneHtmlTranslator(HTMLTranslator):
         pass
 
     def depart_line(self, node):
-        self.body.append('<br />\n')
+        self.body.append("<br />\n")
 
     # Footnote list. Replacing the classes with just .m-footnote.
     def visit_footnote(self, node):
-        previous_node = node.parent[node.parent.index(node)-1]
+        previous_node = node.parent[node.parent.index(node) - 1]
         if not isinstance(previous_node, type(node)):
             self.body.append('<dl class="m-footnote">\n')
 
     def depart_footnote(self, node):
-        self.body.append('</dd>\n')
-        if not isinstance(node.next_node(descend=False, siblings=True),
-                          type(node)):
-            self.body.append('</dl>\n')
+        self.body.append("</dd>\n")
+        if not isinstance(node.next_node(descend=False, siblings=True), type(node)):
+            self.body.append("</dl>\n")
 
     # Footnote reference
     def visit_footnote_reference(self, node):
-        href = '#' + node['refid']
-        self.body.append(self.starttag(node, 'a', '', CLASS='m-footnote', href=href))
+        href = "#" + node["refid"]
+        self.body.append(self.starttag(node, "a", "", CLASS="m-footnote", href=href))
 
     def depart_footnote_reference(self, node):
-        self.body.append('</a>')
+        self.body.append("</a>")
 
     # Footnote and citation labels
     def visit_label(self, node):
-        self.body.append(self.starttag(node.parent, 'dt', ''))
+        self.body.append(self.starttag(node.parent, "dt", ""))
 
     def depart_label(self, node):
         if self.settings.footnote_backlinks:
-            backrefs = node.parent['backrefs']
+            backrefs = node.parent["backrefs"]
             if len(backrefs) == 1:
-                self.body.append('</a>')
+                self.body.append("</a>")
         self.body.append('.</dt>\n<dd><span class="m-footnote">')
         if len(backrefs) == 1:
             self.body.append('<a href="#{}">^</a>'.format(backrefs[0]))
         else:
-            self.body.append('^ ')
-            self.body.append(format(' '.join('<a href="#{}">{}</a>'.format(ref, chr(ord('a') + i)) for i, ref in enumerate(backrefs))))
-        self.body.append('</span> ')
+            self.body.append("^ ")
+            self.body.append(
+                format(
+                    " ".join(
+                        '<a href="#{}">{}</a>'.format(ref, chr(ord("a") + i))
+                        for i, ref in enumerate(backrefs)
+                    )
+                )
+            )
+        self.body.append("</span> ")
 
     def visit_line_block(self, node):
-        self.body.append(self.starttag(node, 'p'))
+        self.body.append(self.starttag(node, "p"))
 
     def depart_line_block(self, node):
-        self.body.append('</p>\n')
+        self.body.append("</p>\n")
 
     # Copied from the HTML4 translator, somehow not present in the HTML5 one.
     # Not having this generates *a lot* of <p> tags everywhere.
@@ -552,17 +608,19 @@ class SaneHtmlTranslator(HTMLTranslator):
         """
         Determine if the <p> tags around paragraph ``node`` can be omitted.
         """
-        if (isinstance(node.parent, nodes.document) or
-            isinstance(node.parent, nodes.compound)):
+        if isinstance(node.parent, nodes.document) or isinstance(
+            node.parent, nodes.compound
+        ):
             # Never compact paragraphs in document or compound
             return False
         for key, value in node.attlist():
-            if (node.is_not_default(key) and
-                not (key == 'classes' and value in
-                     ([], ['first'], ['last'], ['first', 'last']))):
+            if node.is_not_default(key) and not (
+                key == "classes"
+                and value in ([], ["first"], ["last"], ["first", "last"])
+            ):
                 # Attribute which needs to survive.
                 return False
-        first = isinstance(node.parent[0], nodes.label) # skip label
+        first = isinstance(node.parent[0], nodes.label)  # skip label
         for child in node.parent.children[first:]:
             # only first paragraph can be compact
             if isinstance(child, nodes.Invisible):
@@ -570,20 +628,28 @@ class SaneHtmlTranslator(HTMLTranslator):
             if child is node:
                 break
             return False
-        parent_length = len([n for n in node.parent if not isinstance(
-            n, (nodes.Invisible, nodes.label))])
-        if ( self.compact_simple
-             or self.compact_field_list
-             or self.compact_p and parent_length == 1):
+        parent_length = len(
+            [
+                n
+                for n in node.parent
+                if not isinstance(n, (nodes.Invisible, nodes.label))
+            ]
+        )
+        if (
+            self.compact_simple
+            or self.compact_field_list
+            or self.compact_p
+            and parent_length == 1
+        ):
             return True
         return False
 
     def visit_paragraph(self, node):
         if self.should_be_compact_paragraph(node):
-            self.context.append('')
+            self.context.append("")
         else:
-            self.body.append(self.starttag(node, 'p', ''))
-            self.context.append('</p>\n')
+            self.body.append(self.starttag(node, "p", ""))
+            self.context.append("</p>\n")
 
     def depart_paragraph(self, node):
         self.body.append(self.context.pop())
@@ -592,48 +658,42 @@ class SaneHtmlTranslator(HTMLTranslator):
     def visit_title(self, node):
         """Only 6 section levels are supported by HTML."""
         check_id = 0  # TODO: is this a bool (False) or a counter?
-        close_tag = '</p>\n'
+        close_tag = "</p>\n"
         if isinstance(node.parent, nodes.topic):
-            self.body.append(
-                  self.starttag(node, 'h3', ''))
-            close_tag = '</h3>\n'
+            self.body.append(self.starttag(node, "h3", ""))
+            close_tag = "</h3>\n"
         elif isinstance(node.parent, nodes.sidebar):
-            self.body.append(
-                  self.starttag(node, 'p', '', CLASS='sidebar-title'))
+            self.body.append(self.starttag(node, "p", "", CLASS="sidebar-title"))
         elif isinstance(node.parent, nodes.Admonition):
-            self.body.append(
-                  self.starttag(node, 'p', '', CLASS='admonition-title'))
+            self.body.append(self.starttag(node, "p", "", CLASS="admonition-title"))
         elif isinstance(node.parent, nodes.table):
-            self.body.append(
-                  self.starttag(node, 'caption', ''))
-            close_tag = '</caption>\n'
+            self.body.append(self.starttag(node, "caption", ""))
+            close_tag = "</caption>\n"
         elif isinstance(node.parent, nodes.document):
-            self.body.append(self.starttag(node, 'h1', '', CLASS='title'))
-            close_tag = '</h1>\n'
+            self.body.append(self.starttag(node, "h1", "", CLASS="title"))
+            close_tag = "</h1>\n"
             self.in_document_title = len(self.body)
         else:
             assert isinstance(node.parent, nodes.section)
             h_level = self.section_level + self.initial_header_level - 1
             atts = {}
-            if (len(node.parent) >= 2 and
-                isinstance(node.parent[1], nodes.subtitle)):
-                atts['CLASS'] = 'with-subtitle'
-            self.body.append(
-                  self.starttag(node, 'h%s' % h_level, '', **atts))
+            if len(node.parent) >= 2 and isinstance(node.parent[1], nodes.subtitle):
+                atts["CLASS"] = "with-subtitle"
+            self.body.append(self.starttag(node, "h%s" % h_level, "", **atts))
             atts = {}
-            if node.hasattr('refid'):
-                atts['href'] = '#' + node['refid']
+            if node.hasattr("refid"):
+                atts["href"] = "#" + node["refid"]
             if atts:
-                self.body.append(self.starttag({}, 'a', '', **atts))
-                close_tag = '</a></h%s>\n' % (h_level)
+                self.body.append(self.starttag({}, "a", "", **atts))
+                close_tag = "</a></h%s>\n" % (h_level)
             else:
-                close_tag = '</h%s>\n' % (h_level)
+                close_tag = "</h%s>\n" % (h_level)
         self.context.append(close_tag)
 
     def depart_title(self, node):
         self.body.append(self.context.pop())
         if self.in_document_title:
-            self.title = self.body[self.in_document_title:-1]
+            self.title = self.body[self.in_document_title : -1]
             self.in_document_title = 0
             self.body_pre_docinfo.extend(self.body)
             self.html_title.extend(self.body)
@@ -647,39 +707,40 @@ class SaneHtmlTranslator(HTMLTranslator):
         self.context.append((self.compact_simple, self.compact_p))
         self.compact_p = None
         self.compact_simple = self.is_compactable(node)
-        self.body.append(self.starttag(node, 'ul', **atts))
+        self.body.append(self.starttag(node, "ul", **atts))
 
     def depart_bullet_list(self, node):
         self.compact_simple, self.compact_p = self.context.pop()
-        self.body.append('</ul>\n')
+        self.body.append("</ul>\n")
 
     def visit_enumerated_list(self, node):
         atts = {}
-        if 'start' in node:
-            atts['start'] = node['start']
-        self.body.append(self.starttag(node, 'ol', **atts))
+        if "start" in node:
+            atts["start"] = node["start"]
+        self.body.append(self.starttag(node, "ol", **atts))
 
     def depart_enumerated_list(self, node):
-        self.body.append('</ol>\n')
+        self.body.append("</ol>\n")
 
     def visit_definition_list(self, node):
-        classes = node.setdefault('classes', [])
-        self.body.append(self.starttag(node, 'dl'))
+        classes = node.setdefault("classes", [])
+        self.body.append(self.starttag(node, "dl"))
 
     def depart_definition_list(self, node):
-        self.body.append('</dl>\n')
+        self.body.append("</dl>\n")
 
     # no class="docutils" in <hr>; if it's m.css .. transition:: directive
     # (having children), put it in a <p> instead
     def visit_transition(self, node):
         if len(node.children) > 0:
-            self.body.append(self.starttag(node, 'p', ''))
+            self.body.append(self.starttag(node, "p", ""))
         else:
-            self.body.append(self.emptytag(node, 'hr'))
+            self.body.append(self.emptytag(node, "hr"))
 
     def depart_transition(self, node):
         if len(node.children) > 0:
-            self.body.append('</p>\n')
+            self.body.append("</p>\n")
+
 
 class _SaneFieldBodyTranslator(SaneHtmlTranslator):
     """
@@ -701,7 +762,7 @@ class _SaneFieldBodyTranslator(SaneHtmlTranslator):
         return SaneHtmlTranslator.should_be_compact_paragraph(self, node)
 
     def astext(self):
-        return ''.join(self.body)
+        return "".join(self.body)
 
     # If this wouldn't be here, the output would have <dd> around. Not useful.
     def visit_field_body(self, node):
@@ -710,6 +771,7 @@ class _SaneFieldBodyTranslator(SaneHtmlTranslator):
     def depart_field_body(self, node):
         pass
 
+
 class SaneHtmlWriter(docutils.writers.html5_polyglot.Writer):
     def __init__(self):
         docutils.writers.html5_polyglot.Writer.__init__(self)
@@ -717,47 +779,63 @@ class SaneHtmlWriter(docutils.writers.html5_polyglot.Writer):
         self.translator_class = SaneHtmlTranslator
 
     def get_transforms(self):
-        return docutils.writers.html5_polyglot.Writer.get_transforms(self) + [SmartQuotes, Pyphen]
+        return docutils.writers.html5_polyglot.Writer.get_transforms(self) + [
+            SmartQuotes,
+            Pyphen,
+        ]
+
 
 def render_rst(value):
     pub = docutils.core.Publisher(
         writer=SaneHtmlWriter(),
         source_class=docutils.io.StringInput,
-        destination_class=docutils.io.StringOutput)
-    pub.set_components('standalone', 'restructuredtext', 'html')
+        destination_class=docutils.io.StringOutput,
+    )
+    pub.set_components("standalone", "restructuredtext", "html")
     pub.writer.translator_class = _SaneFieldBodyTranslator
     pub.process_programmatic_settings(None, docutils_settings, None)
     pub.set_source(source=value)
     pub.publish(enable_exit_status=True)
-    return pub.writer.parts.get('body').strip()
+    return pub.writer.parts.get("body").strip()
+
 
 def rtrim(value):
     return value.rstrip()
 
+
 def hyphenate(value, enable=None, lang=None):
-    if enable is None: enable = settings['M_HTMLSANITY_HYPHENATION']
-    if lang is None: lang = settings['M_HTMLSANITY_LANGUAGE']
-    if not enable or not pyphen: return value
+    if enable is None:
+        enable = settings["M_HTMLSANITY_HYPHENATION"]
+    if lang is None:
+        lang = settings["M_HTMLSANITY_LANGUAGE"]
+    if not enable or not pyphen:
+        return value
     pyphen_ = pyphen.Pyphen(lang=lang)
-    return words_re.sub(lambda m: pyphen_.inserted(m.group(0), '&shy;'), str(value))
+    return words_re.sub(lambda m: pyphen_.inserted(m.group(0), "&shy;"), str(value))
+
 
 def dehyphenate(value, enable=None):
-    if enable is None: enable = settings['M_HTMLSANITY_HYPHENATION']
-    if not enable: return value
-    return value.replace('&shy;', '')
+    if enable is None:
+        enable = settings["M_HTMLSANITY_HYPHENATION"]
+    if not enable:
+        return value
+    return value.replace("&shy;", "")
+
 
 def register_mcss(mcss_settings, jinja_environment, **kwargs):
     global default_settings, settings
     settings = copy.deepcopy(default_settings)
     for key in settings.keys():
-        if key in mcss_settings: settings[key] = mcss_settings[key]
-    docutils_settings['language_code'] = settings['M_HTMLSANITY_LANGUAGE']
-    docutils_settings.update(settings['M_HTMLSANITY_DOCUTILS_SETTINGS'])
+        if key in mcss_settings:
+            settings[key] = mcss_settings[key]
+    docutils_settings["language_code"] = settings["M_HTMLSANITY_LANGUAGE"]
+    docutils_settings.update(settings["M_HTMLSANITY_DOCUTILS_SETTINGS"])
 
-    jinja_environment.filters['rtrim'] = rtrim
-    jinja_environment.filters['render_rst'] = render_rst
-    jinja_environment.filters['hyphenate'] = hyphenate
-    jinja_environment.filters['dehyphenate'] = dehyphenate
+    jinja_environment.filters["rtrim"] = rtrim
+    jinja_environment.filters["render_rst"] = render_rst
+    jinja_environment.filters["hyphenate"] = hyphenate
+    jinja_environment.filters["dehyphenate"] = dehyphenate
+
 
 # Below is only Pelican-specific functionality. If Pelican is not found, these
 # do nothing.
@@ -774,15 +852,17 @@ except ImportError:
 
 pelican_settings = {}
 
+
 def pelican_expand_link(link, content):
     link_regex = r"""^
         (?P<markup>)(?P<quote>)
         (?P<path>{0}(?P<value>.*))
-        $""".format(pelican_settings['INTRASITE_LINK_REGEX'])
+        $""".format(
+        pelican_settings["INTRASITE_LINK_REGEX"]
+    )
     links = re.compile(link_regex, re.X)
-    return links.sub(
-        lambda m: content._link_replacer(content.get_siteurl(), m),
-        link)
+    return links.sub(lambda m: content._link_replacer(content.get_siteurl(), m), link)
+
 
 def pelican_expand_links(text, content):
     # TODO: fields that are in FORMATTED_FIELDS are already expanded, but that
@@ -791,46 +871,56 @@ def pelican_expand_links(text, content):
     # FORMATTED_FIELDS with render_rst as well.
     return content._update_content(text, content.get_siteurl())
 
+
 # To be consistent with both what Pelican does now with '/'.join(SITEURL, url)
 # and with https://github.com/getpelican/pelican/pull/2196. Keep consistent
 # with m.alias.
 def pelican_format_siteurl(url):
-    return urljoin(pelican_settings['SITEURL'] + ('/' if not pelican_settings['SITEURL'].endswith('/') else ''), url)
+    return urljoin(
+        pelican_settings["SITEURL"]
+        + ("/" if not pelican_settings["SITEURL"].endswith("/") else ""),
+        url,
+    )
+
 
 def _pelican_configure(pelicanobj):
-    pelicanobj.settings['JINJA_FILTERS']['rtrim'] = rtrim
-    pelicanobj.settings['JINJA_FILTERS']['render_rst'] = render_rst
-    pelicanobj.settings['JINJA_FILTERS']['expand_link'] = pelican_expand_link
-    pelicanobj.settings['JINJA_FILTERS']['expand_links'] = pelican_expand_links
-    pelicanobj.settings['JINJA_FILTERS']['format_siteurl'] = pelican_format_siteurl
-    pelicanobj.settings['JINJA_FILTERS']['hyphenate'] = hyphenate
-    pelicanobj.settings['JINJA_FILTERS']['dehyphenate'] = dehyphenate
+    pelicanobj.settings["JINJA_FILTERS"]["rtrim"] = rtrim
+    pelicanobj.settings["JINJA_FILTERS"]["render_rst"] = render_rst
+    pelicanobj.settings["JINJA_FILTERS"]["expand_link"] = pelican_expand_link
+    pelicanobj.settings["JINJA_FILTERS"]["expand_links"] = pelican_expand_links
+    pelicanobj.settings["JINJA_FILTERS"]["format_siteurl"] = pelican_format_siteurl
+    pelicanobj.settings["JINJA_FILTERS"]["hyphenate"] = hyphenate
+    pelicanobj.settings["JINJA_FILTERS"]["dehyphenate"] = dehyphenate
 
     # Map the setting key names from Pelican's own
     global default_settings, settings
     settings = copy.deepcopy(default_settings)
     for key, pelicankey in [
-        ('M_HTMLSANITY_LANGUAGE', 'DEFAULT_LANG'),
-        ('M_HTMLSANITY_DOCUTILS_SETTINGS', 'DOCUTILS_SETTINGS'),
-        ('M_HTMLSANITY_FORMATTED_FIELDS', 'FORMATTED_FIELDS')]:
+        ("M_HTMLSANITY_LANGUAGE", "DEFAULT_LANG"),
+        ("M_HTMLSANITY_DOCUTILS_SETTINGS", "DOCUTILS_SETTINGS"),
+        ("M_HTMLSANITY_FORMATTED_FIELDS", "FORMATTED_FIELDS"),
+    ]:
         settings[key] = pelicanobj.settings[pelicankey]
 
     # Settings with the same name both here and in Pelican
-    for key in 'M_HTMLSANITY_HYPHENATION', 'M_HTMLSANITY_SMART_QUOTES':
-        if key in pelicanobj.settings: settings[key] = pelicanobj.settings[key]
+    for key in "M_HTMLSANITY_HYPHENATION", "M_HTMLSANITY_SMART_QUOTES":
+        if key in pelicanobj.settings:
+            settings[key] = pelicanobj.settings[key]
 
     # Save settings needed only for Pelican-specific functionality
     global pelican_settings
-    for key in 'INTRASITE_LINK_REGEX', 'SITEURL':
+    for key in "INTRASITE_LINK_REGEX", "SITEURL":
         pelican_settings[key] = pelicanobj.settings[key]
 
     # Update the docutils settings using the above
-    docutils_settings['language_code'] = settings['M_HTMLSANITY_LANGUAGE']
-    docutils_settings.update(settings['M_HTMLSANITY_DOCUTILS_SETTINGS'])
+    docutils_settings["language_code"] = settings["M_HTMLSANITY_LANGUAGE"]
+    docutils_settings.update(settings["M_HTMLSANITY_DOCUTILS_SETTINGS"])
+
 
 def _pelican_add_reader(readers):
-    readers.reader_classes['rst'] = PelicanSaneRstReader
+    readers.reader_classes["rst"] = PelicanSaneRstReader
 
-def register(): # for Pelican
+
+def register():  # for Pelican
     signals.initialized.connect(_pelican_configure)
     signals.readers_init.connect(_pelican_add_reader)

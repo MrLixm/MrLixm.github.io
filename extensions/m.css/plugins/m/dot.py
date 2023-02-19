@@ -32,23 +32,27 @@ from docutils.parsers.rst.roles import set_classes
 
 import dot2svg
 
+
 def _is_graph_figure(parent):
     # The parent has to be a figure, marked as m-figure
-    if not isinstance(parent, nodes.figure): return False
-    if 'm-figure' not in parent.get('classes', []): return False
+    if not isinstance(parent, nodes.figure):
+        return False
+    if "m-figure" not in parent.get("classes", []):
+        return False
 
     # And as a first visible node of such type
     for child in parent:
-        if not isinstance(child, nodes.Invisible): return False
+        if not isinstance(child, nodes.Invisible):
+            return False
 
     return True
+
 
 class Dot(rst.Directive):
     has_content = True
     optional_arguments = 1
     final_argument_whitespace = True
-    option_spec = {'class': directives.class_option,
-                   'name': directives.unchanged}
+    option_spec = {"class": directives.class_option, "name": directives.unchanged}
 
     def run(self, source):
         set_classes(self.options)
@@ -57,66 +61,92 @@ class Dot(rst.Directive):
         # directly inside
         parent = self.state.parent
         if _is_graph_figure(parent):
-            svg = dot2svg.dot2svg(source, attribs=' class="{}"'.format(' '.join(['m-graph'] + self.options.get('classes', []))))
-            node = nodes.raw('', svg, format='html')
+            svg = dot2svg.dot2svg(
+                source,
+                attribs=' class="{}"'.format(
+                    " ".join(["m-graph"] + self.options.get("classes", []))
+                ),
+            )
+            node = nodes.raw("", svg, format="html")
             return [node]
 
         # Otherwise wrap it in a <div class="m-graph">
         svg = dot2svg.dot2svg(source)
         container = nodes.container(**self.options)
-        container['classes'] = ['m-graph'] + container['classes']
-        node = nodes.raw('', svg, format='html')
+        container["classes"] = ["m-graph"] + container["classes"]
+        node = nodes.raw("", svg, format="html")
         container.append(node)
         return [container]
+
 
 class Digraph(Dot):
     def run(self):
         # We need to pass "" for an empty title to get rid of <title>,
         # otherwise the output contains <title>%3</title> (wtf!)
-        return Dot.run(self, 'digraph "{}" {{\n{}}}'.format(
-            self.arguments[0] if self.arguments else '',
-            '\n'.join(self.content)))
+        return Dot.run(
+            self,
+            'digraph "{}" {{\n{}}}'.format(
+                self.arguments[0] if self.arguments else "", "\n".join(self.content)
+            ),
+        )
+
 
 class StrictDigraph(Dot):
     def run(self):
         # We need to pass "" for an empty title to get rid of <title>,
         # otherwise the output contains <title>%3</title> (wtf!)
-        return Dot.run(self, 'strict digraph "{}" {{\n{}}}'.format(
-            self.arguments[0] if self.arguments else '',
-            '\n'.join(self.content)))
+        return Dot.run(
+            self,
+            'strict digraph "{}" {{\n{}}}'.format(
+                self.arguments[0] if self.arguments else "", "\n".join(self.content)
+            ),
+        )
+
 
 class Graph(Dot):
     def run(self):
         # We need to pass "" for an empty title to get rid of <title>,
         # otherwise the output contains <title>%3</title> (wtf!)
-        return Dot.run(self, 'graph "{}" {{\n{}}}'.format(
-            self.arguments[0] if self.arguments else '',
-            '\n'.join(self.content)))
+        return Dot.run(
+            self,
+            'graph "{}" {{\n{}}}'.format(
+                self.arguments[0] if self.arguments else "", "\n".join(self.content)
+            ),
+        )
+
 
 class StrictGraph(Dot):
     def run(self):
         # We need to pass "" for an empty title to get rid of <title>,
         # otherwise the output contains <title>%3</title> (wtf!)
-        return Dot.run(self, 'strict graph "{}" {{\n{}}}'.format(
-            self.arguments[0] if self.arguments else '',
-            '\n'.join(self.content)))
+        return Dot.run(
+            self,
+            'strict graph "{}" {{\n{}}}'.format(
+                self.arguments[0] if self.arguments else "", "\n".join(self.content)
+            ),
+        )
+
 
 def register_mcss(mcss_settings, **kwargs):
     dot2svg.configure(
-        mcss_settings.get('M_DOT_FONT', 'Source Sans Pro'),
-        mcss_settings.get('M_DOT_FONT_SIZE', 16.0))
-    rst.directives.register_directive('digraph', Digraph)
-    rst.directives.register_directive('strict-digraph', StrictDigraph)
-    rst.directives.register_directive('graph', Graph)
-    rst.directives.register_directive('strict-graph', StrictGraph)
+        mcss_settings.get("M_DOT_FONT", "Source Sans Pro"),
+        mcss_settings.get("M_DOT_FONT_SIZE", 16.0),
+    )
+    rst.directives.register_directive("digraph", Digraph)
+    rst.directives.register_directive("strict-digraph", StrictDigraph)
+    rst.directives.register_directive("graph", Graph)
+    rst.directives.register_directive("strict-graph", StrictGraph)
+
 
 # Below is only Pelican-specific functionality. If Pelican is not found, these
 # do nothing.
 
+
 def _pelican_configure(pelicanobj):
     register_mcss(mcss_settings=pelicanobj.settings)
 
-def register(): # for Pelican
+
+def register():  # for Pelican
     from pelican import signals
 
     signals.initialized.connect(_pelican_configure)
