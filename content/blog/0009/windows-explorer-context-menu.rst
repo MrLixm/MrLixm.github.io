@@ -30,6 +30,11 @@ A bit of reasearch, and of course you can. You probably noticed that some
 applications you install doesn't refrain themselves for adding actions to the
 context menu, so why not you ?
 
+.. block-default:: Technical Level Required
+
+    Beginner, no need to know how to code. Everything is provided and explained
+    as if you were a regular artist who doesn't usually manipulate Windows.
+
 .. contents::
 
 Why ?
@@ -236,24 +241,24 @@ Here are the few options availables :
 
 .. class:: l-table l-overflow
 
-    ====================== =================================================================
-    Files                  ``HKEY_CURRENT_USER\Software\Classes\{EXTENSION}\shell\``
+    ====================== ===============================================================================
+    All Files              ``HKEY_CURRENT_USER\Software\Classes\*\shell\``
+    By File Extension [1]_ ``HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\{EXTENSION}\shell``
     Directories            ``HKEY_CURRENT_USER\Software\Classes\Directory\shell``
     Directories Background ``HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell``
     Drive                  ``HKEY_CURRENT_USER\Software\Classes\Drive\shell``
-    ====================== =================================================================
+    ====================== ===============================================================================
 
 .. note-default::
 
     If you would like to make the context-menu action available to ALL users of
-    the system you could replace ``HKEY_CURRENT_USER\Software`` with
-    ``HKEY_CLASSES_ROOT``.
+    the system you could replace ``HKEY_CURRENT_USER`` with
+    ``HKEY_LOCAL_MACHINE``.
 
-As makeTx (and most CLI) expect a single file, we will be using the first key location. We
-still need to determine on which file extension the action should appear. Unless
-you want to specifically choose which file format can be converted to tx we will
-consider by laziness that all file formats might be. As such replace
-``{EXTENSION}`` with ``*``.
+As makeTx (and most CLI) is designed to work on files we need to choose between
+the 2 first keys. As a lot of image format can be converted to makeTx we are
+going to play the lazy card and just assume we want to this option on all
+file formats so we will be using the first root key.
 
 Great, we have now the root path for each key. Now time to create the first key.
 We just need a name for it (*special-character-free*). No need to think to hard,
@@ -497,6 +502,13 @@ file, you also need to propagate the changes in the "uninstall" reg file.
 And we end up with a pretty robust workflow, "install" your custom context-menu
 in one double-click and "uninstall" it the same way ! Without having to remember
 which key you added or manually browsing the registry editor.
+
+.. note-info::
+
+    I recommend to always execute the "delete" reg file before
+    editing the "add" reg file. Else if you change a key name in the "add" reg file
+    and propagate the change to the "delete" reg file, the previous key name will
+    still be in the registry because you forgot to delete it !
 
 
 Using environment variables for robustness
@@ -851,6 +863,43 @@ As previously, in 2 part with a .bat :
 The only tricky part was to know the ico format store multiple versions of
 the same image at different scales, but again OIIO make that pretty easy !
 
+
+Convert .tx back to another format
+__________________________________
+
+If you ever only received/find that there only the tx left for your asset, you
+can use oiitool to convert them to a more readable format !
+
+Here is just the .bat file where I convert them back to EXR :
+
+.. code:: batch
+
+    @echo off
+
+    set "target_file=%~n1.exr"
+
+    if exist %target_file% (
+        echo "Destination file already exists : %target_file%"
+        set /P override_target=^> do you want to override it (y/n):
+        if not %override_target% == "y" (
+          exit /b
+        )
+    )
+
+    %OIIOTOOL% -v -i "%1" --unmip -o %target_file%
+
+Few notes :
+
+-
+    This time I check that the target file doesn't already exists, we never know !
+    If it exists I ask the user if he wants to overwrite it else I exit.
+
+- I use ``--unmip`` because the tx is mipmapped and I don't care about them.
+
+I let you create the keys in the reg file (also you could add it to the maketx
+menu if this is more logical to you).
+
+
 ABCInfo
 =======
 
@@ -870,19 +919,19 @@ update when you update your Houdini version.
 
     Windows Registry Editor Version 5.00
 
-    [HKEY_CURRENT_USER\Software\Classes\.abc\shell\abcinfo]
+    [HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.abc\shell\abcinfo]
     "MUIVerb"="abcinfo"
     "icon"="C:\\Program Files\\Side Effects Software\\Houdini 18.5.499\\bin\\abcinfo.exe"
     "subCommands"=""
 
-    [HKEY_CURRENT_USER\Software\Classes\.abc\shell\abcinfo\shell\001abcinfo]
+    [HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.abc\shell\abcinfo\shell\001abcinfo]
     "MUIVerb"="abcinfo"
-    [HKEY_CURRENT_USER\Software\Classes\.abc\shell\abcinfo\shell\001abcinfo\command]
+    [HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.abc\shell\abcinfo\shell\001abcinfo\command]
     @="cmd /k %%ABCINFO%% \"%1\""
 
-    [HKEY_CURRENT_USER\Software\Classes\.abc\shell\abcinfo\shell\002abcinfo_verbose]
+    [HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.abc\shell\abcinfo\shell\002abcinfo_verbose]
     "MUIVerb"="abcinfo verbose"
-    [HKEY_CURRENT_USER\Software\Classes\.abc\shell\abcinfo\shell\002abcinfo_verbose\command]
+    [HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.abc\shell\abcinfo\shell\002abcinfo_verbose\command]
     @="cmd /k %%ABCINFO%% -v \"%1\""
 
 This time no need to put it in ``Classes\*``, we only need it for ``.abc``. I
@@ -1123,7 +1172,7 @@ intermediate batch file :
     set "filter_graph=scale=%reso_width%:trunc(ow/a/2)*2:flags=lanczos:in_color_matrix=bt709:out_color_matrix=bt709"
 
     :: -y : overwite existing, else use -n
-    %FFMPEG% -n -i "%1" -threads 0 -r 24 -vf %filter_graph% -c:v libx264 -preset %preset% -tune %tune% -crf %crf% -pix_fmt yuv420p -color_range tv -colorspace bt709 -color_primaries bt709 -color_trc iec61966-2-1 %output%
+    %FFMPEG% -n -i "%1" -threads 0 -r %framerate% -vf %filter_graph% -c:v libx264 -preset %preset% -tune %tune% -crf %crf% -pix_fmt yuv420p -color_range tv -colorspace bt709 -color_primaries bt709 -color_trc iec61966-2-1 %output%
 
 Much more control than the gif workflow. The reg file then looks like this (
 extending the reg file used for gif)
@@ -1163,6 +1212,12 @@ extending the reg file used for gif)
 image sequence to video
 _______________________
 
+.. note-default::
+
+    This kind of more complex script would be `better written in python
+    <https://github.com/jedypod/generate-dailies>`_ but I'm
+    offering a Windows built-in alternative for less technical people.
+
 And now the ultimate example, combining oiiotool and ffmpeg. The pitch is :
 We have an image sequence of renders, our final scene shot with a bunch of frames.
 We have been working properly and have been rendering ``.exr`` to have maximum
@@ -1176,7 +1231,48 @@ video. But support for  exr is pretty limited, and even more for color-managemen
 The solution is to use oiiotool to produce an image sequence that is "ready-to-go"
 for ffmpeg.
 
-.. TODO
+This behavior is described in the previous shared website
+https://richardssam.github.io/ffmpeg-tests/EncodingOverview.html#color-space-conversion--
+which also provide valuable informations for color management of the destination video.
+
+But if now we think about the technical implementation, how do we pass
+multiple files as argument to our .bat/ffmpeg ? Well it would have been convenient
+that the user select the frame of the sequence that he wants to render to video,
+and only those frames are converted. But this is impossible. The reason being
+that the context menu is never aware of multiple files selected. If you select
+multiple files and execute a context-menu action on them, Windows will execute
+the command individually on each file.
+
+If we look at what ffmpeg expect for image-sequences, we can see that luckly
+for us it doesn't expect a list of file path, but a single one with a frame
+token. This mean the user would only need to select one file, and just replace
+the frame number by the token.
+
+Unfortunately there is no way of automatizing the detection of the frame pattern
+easily with the resources we are using since the beginning (you could with
+Python for example). To keep it simple we will let the user handle that and
+ask him to manually replace the frame number in the file name.
+
+.. include:: ffmpeg-seq-to-video.bat
+    :code: batch
+
+We reuse most of the stuff we wrote in the previous section for mp4
+optimization. We now just ask even more the user
+
+Few notes :
+
+- A temporary folder is used to write the oiio image sequence that is then reused
+  for ffmpeg. It got deleted at the end of the process.
+- The user have to set the OCIO environment variable before, or you could
+  improve the script by also asking the path to the ocio config to use.
+- The output video is name like the initial source file. This coudl be improved
+  but it's the most simple solution and is not a big deal.
+
+Again, on your own to write the registry file, nothing new here !
+
+.. image:: {static}/images/blog/0009/rmb-ffmpeg-sequence.gif
+    :target: {static}/images/blog/0009/rmb-ffmpeg-sequence.gif
+    :alt: example of right clicking on a .exr file from a sequence and selecting the interactive option
 
 
 Starting different version of the same DCC
@@ -1193,19 +1289,19 @@ Here is an example with Maya :
 
     Windows Registry Editor Version 5.00
 
-    [HKEY_CURRENT_USER\Software\Classes\.ma\shell\mayaopen]
+    [HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.ma\shell\mayaopen]
     "MUIVerb"="abcinfo"
     "icon"="C:\\Program Files\\Autodesk\\Maya2023\\bin\\maya.exe"
     "subCommands"=""
 
-    [HKEY_CURRENT_USER\Software\Classes\.ma\shell\mayaopen\shell\maya2023]
+    [HKEY_CURRENT_USER\Software\\Classes\SystemFileAssociations\.ma\shell\mayaopen\shell\maya2023]
     "MUIVerb"="Open in Maya 2023"
-    [HKEY_CURRENT_USER\Software\Classes\.ma\shell\mayaopen\shell\maya2023\command]
+    [HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.ma\shell\mayaopen\shell\maya2023\command]
     @="\"\"C:\\Program Files\\Autodesk\\Maya2023\\bin\\maya.exe\" -file \"%1\"\""
 
-    [HKEY_CURRENT_USER\Software\Classes\.ma\shell\mayaopen\shell\maya2020]
+    [HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.ma\shell\mayaopen\shell\maya2020]
     "MUIVerb"="Open in Maya 2020"
-    [HKEY_CURRENT_USER\Software\Classes\.ma\shell\mayaopen\shell\maya2020\command]
+    [HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.ma\shell\mayaopen\shell\maya2020\command]
     @="\"\"C:\\Program Files\\Autodesk\\Maya2020\\bin\\maya.exe\" -file \"%1\"\""
 
 ..
@@ -1216,9 +1312,8 @@ Yes it is ! It's a CLI, opening a GUI. For every .exe try to call
 ``myDCC.exe --help`` and see what are the available options.
 
 Nothing prevent you to instead of calling the .exe, calling a .bat that call
-the .exe but set a bunch of environement variable before, ... There is plenty
-of cool workflow optimization you could perform with customized context menus !
-
+the .exe but set a bunch of environment variable before, ... There is plenty
+of cool workflow optimizations you could perform with customized context menus !
 
 Troubleshooting
 ---------------
@@ -1247,3 +1342,9 @@ Most of the time it will be a character escaping issue.
     By doubling the first and last double-quote.
 
     More on that here : https://ss64.com/nt/syntax-esc.html
+
+
+References
+----------
+
+.. [1] https://stackoverflow.com/a/47745854/13806195
