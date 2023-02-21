@@ -57,7 +57,13 @@ The particularity with that tool being that it is a `Command Line
 Interface <https://en.wikipedia.org/wiki/Command-line_interface>`_, which will
 allow us to have something like this :
 
-.. TODO put a GIF of the result
+.. raw:: html
+
+  <video muted loop autoplay style="width: 100%; height: 100%;">
+    <source src="/static/images/blog/0009/rmb.full_demo.mp4" type="video/mp4">
+  </video>
+
+
 
 Command Line Interfaces programs
 --------------------------------
@@ -659,9 +665,7 @@ Here is the whole example I mentioned before :
     Unfortunately there is a limit of sub context-menu you can create from a
     root context menu. The root context-menu is the first key definiding the
     ``subCommand=""`` property and then EVERY other context-menu under that
-    root will be counted until you reach **the maximum of 16 menus**.
-
-    https://stackoverflow.com/questions/48625223/is-there-a-maximum-right-click-context-menu-items-limit
+    root will be counted until you reach **the maximum of 16 menus**. [2]_
 
 
 Auto-generating the .reg files
@@ -676,8 +680,9 @@ simplified all the steps above by creating a python CLI.
 
     Python package to create context-menu entries in windows via .reg file.
 
-It doesn't simplify that much the process, but it allow you to write a more
-convenient json file to convert it to the 2 reg files.
+It allow to write the key structure as a json whith a bunch of workflow optimizations,
+like relative paths, variables, ... so the whole process should be much
+faster and much less human-error prone.
 
 Cool use cases ideas for context-menus
 --------------------------------------
@@ -921,25 +926,26 @@ update when you update your Houdini version.
 
     [HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.abc\shell\abcinfo]
     "MUIVerb"="abcinfo"
-    "icon"="C:\\Program Files\\Side Effects Software\\Houdini 18.5.499\\bin\\abcinfo.exe"
+    "icon"="%ABCINFO%"
     "subCommands"=""
 
     [HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.abc\shell\abcinfo\shell\001abcinfo]
     "MUIVerb"="abcinfo"
     [HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.abc\shell\abcinfo\shell\001abcinfo\command]
-    @="cmd /k %%ABCINFO%% \"%1\""
+    @="cmd /k \"\"%%ABCINFO%%\" \"%1\"\""
 
     [HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.abc\shell\abcinfo\shell\002abcinfo_verbose]
     "MUIVerb"="abcinfo verbose"
     [HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.abc\shell\abcinfo\shell\002abcinfo_verbose\command]
-    @="cmd /k %%ABCINFO%% -v \"%1\""
+    @="cmd /k \"\"%%ABCINFO%%\" -v \"%1\"\""
 
 This time no need to put it in ``Classes\*``, we only need it for ``.abc``. I
 created 2 commands, one which give most of the time the info I need, another one
 that really give the maximum of info about the file.
 
-You can also notice that for the icon we gave a path to a .exe ! Windows will
-use the icon packed in the .exe (if there is one).
+You can also notice that for the icon we gave the path to a abcinfo.exe ! Windows will
+use the icon packed in the .exe (if there is one). And we also leave the environment
+variable that still work just fine.
 
 
 ffmpeg
@@ -1348,3 +1354,4 @@ References
 ----------
 
 .. [1] https://stackoverflow.com/a/47745854/13806195
+.. [2] https://stackoverflow.com/questions/48625223/is-there-a-maximum-right-click-context-menu-items-limit
