@@ -22,40 +22,44 @@ available a few pixels away from your cursor.
 And I had come to the point where, while browsing my files in the
 file-explorer, I found that I needed to run a specific tool on a file. And
 then 10 min later again, and the next week again ... Each time I had to open
-the tool (so depends how easy it is to find its executable), copy the path of
-the file, and give it to the tool. Huh ... too long I wish I could automate
-that.
+the tool (so depends how easy it is to find its executable on your system),
+copy the path of the file, and give it to the tool. Huh ... too long I wish I
+could automate that.
 
-A bit of reasearch, and of course you can. You probably noticed that some
+A bit of research, and of course you can. You probably noticed that some
 applications you install doesn't refrain themselves for adding actions to the
 context menu, so why not you ?
 
 .. block-default:: Technical Level Required
 
     Beginner, no need to know how to code. Everything is provided and explained
-    as if you were a regular artist who doesn't usually manipulate Windows.
+    as if you were a regular artist who doesn't usually put his hands in
+    Windows depths.
 
 .. contents::
 
 Why ?
 -----
 
-You might have clicked on this article because you already knew this sounds
+You might have clicked on this article because you already knew it sounded
 like something you wanted to do at some point. But for the others why would
 you even need to add new actions to the context menu ?
 
 To get an example that will be familiar for the 3d artists out there let's take
 the case of ``makeTx``. If you are using Arnold you know what I'm going to
 talk about. For every texture you use in your scene, Arnold will usually
-generate a version of it in its own format called ``tx``. This process is
+generate a version of it in its own format called ``tx`` (nearly every
+render-engine has its own). This process is
 usually done automatically when you click render but there is multiple reasons
 it can goes wrong, or might not just be the behavior you want. The
 solution to fix it is to manually generate the tx files. To achieve that you
 can use the ``makeTx.exe`` tool that is found alongside the Arnold installation.
 
 The particularity with that tool being that it is a `Command Line
-Interface <https://en.wikipedia.org/wiki/Command-line_interface>`_, which will
-allow us to have something like this :
+Interface <https://en.wikipedia.org/wiki/Command-line_interface>`_, which mean
+you dont need to go through an interface to execute actions inside.
+
+At the end of this article, you could had something like this :
 
 .. raw:: html
 
@@ -70,7 +74,7 @@ Command Line Interfaces programs
 
 A Command Line Interface program is made to be interacted with from the command
 line, and not from a graphical interface like most programs. If you are not familiar
-with :abbr:`CLI <Command Line Interface>`, they are going to look very unpleasant
+with :abbr:`CLIs <Command Line Interfaces>`, they are going to look very unpleasant
 to use compared to a :abbr:`GUI <Graphical User Interface>`. But their power
 will be found in the flexibility they offer, especially for automatizing tasks.
 It's like you were ordering the program to perform an action by describing it in
@@ -81,12 +85,12 @@ This is will be useful in our case, because this means that by passing the
 selected from the right-click !
 
 If you ever tried to double click on a .exe just to see a window open and
-close immediatly, it's probably because it was a CLI. By double clicking on it
+close immediately, it's probably because it was a CLI. By double clicking on it
 you executed it, it execute the task it was made for (in our case nothing
 because you didn't gave it any argument), and then close once finish.
 
-To first see what's going when you don't give it arguments, let's open the
-command line. On Windows, this can be achive using ``Win`` + ``R`` then typing
+To first see what's going on when you don't give it arguments, let's open the
+command line. On Windows, this can be achieved using ``Win`` + ``R`` then typing
 ``cmd`` and enter. You can also just search for ``Command Prompt`` in the
 Windows search bar.
 
@@ -104,6 +108,12 @@ to the command prompt. You can also just copy and paste its path.
     On Windows, make sure paths are always wrapped in double quotes like
     ``"C:/Program Files/xyz/bin/myapp.exe"``
 
+.. note-info::
+
+    | makeTx program can be found in the ``bin/`` directory of your Arnold
+      installation.
+    | Something like ``C:\Program Files\Autodesk\Arnold\maya2023\bin\maketx.exe``
+
 Then press enter to start executing it.
 
 .. image:: {static}/images/blog/0009/command-prompt-maketx.png
@@ -112,13 +122,13 @@ Then press enter to start executing it.
     :alt: Command prompt after executing makeTx.exe
 
 Without any argument, most CLI will just display their documentation. Which
-we will anyway need to open at leat one time to make sure we know what
+we will anyway need to open at least one time to make sure we know what
 arguments the tool expects.
 
 .. note-info::
 
     Most CLI will display their documentation if you just pass the
-    ``--help`` argument.
+    ``--help`` argument after the path to the executable.
 
 
 maketx
@@ -137,15 +147,18 @@ Alright, how does makeTx works ? You can see on the line ``Usage : maketx
 and before some options.
 
 The options are listed just under, and there is a lot of them. Usually
-options/arguments are documented but here we will have to rely on their name.
+options/arguments are documented but here we only have their name to guess
+what they are doing.
+
 But don't worry, no need for playing the guess game of which options does
 what we want. How ? Well you know Arnold already auto-convert the tx files
-for you, so it knows which options to use. And thanksfully, the whole command
-used to generate the tx file is actually embeded in the tx's metadata !
+for you, so it knows which options to use. And thankfully, the whole command
+used to generate the tx file is actually embedded in the tx's metadata !
 
 But how do I retrieve the tx's metadata ? Well, by using an other CLI that
 we are going to see a bit later (oiiotool), I can retrieve it from any
-existing tx:
+existing tx that have been previously generated. Here is a line stored
+in the metadata of a tx file :
 
 .. code:: text
 
@@ -155,17 +168,19 @@ Seems there is a lot of options used ! One important thing to keep in mind is
 that **those options vary depending on what kind of texture you are converting
 and how the "texture node" in the source DCC is configured.** The most notable
 variable option being ``--colorconvert``, used to convert the input file to
-another colorspace.
+another colorspace that might or might not be specified.
 
 .. note-default::
 
     You might have notice that in the above command the filepath is specified
-    before the options, sometimes order matters, but here seems makeTx don't care !
+    before the options, usually order matters, but here seems makeTx don't care !
+    Maybe because the documentation is incorrect or just both works ...
 
 .. note-warning::
 
     You must be aware that the ``maketx.exe`` from the Arnold installation has
-    been slightly modified from the "official" maketx of OpenImageIO. It append
+    been slightly modified from the "official" maketx of OpenImageIO I linked
+    a bit above. It append
     default argument to the command, no matter if you already gave them.
 
     Those default argument are always :
@@ -176,8 +191,8 @@ another colorspace.
 
     And as such doesn't need to be provided again when calling maketx manually.
 
-    (at least for the 2.4.0dev version I'm using, older Arnold version might
-    not use the same arguments)
+    *(at least for the 2.4.0dev version I'm using, older Arnold version might
+    not append the same arguments)*
 
 Anyway we have what we need, the whole command required to convert a file to tx.
 We can now have a look at how to create the context menu !
@@ -185,28 +200,31 @@ We can now have a look at how to create the context menu !
 Editing the registry: Basics
 ----------------------------
 
-Unfortunately, no really simple and easy way to add actions to the context menu
-(though there might be if you look for them on internet), we will have to
-edit the `registry <https://en.wikipedia.org/wiki/Windows_Registry>`_.
+Unfortunately, there is no really simple and easy way to add actions to the context menu
+(though there might be if you look for them on internet), at least for this article,
+we will have to edit the `registry <https://en.wikipedia.org/wiki/Windows_Registry>`_.
+
+To keep it simple see the registry as a file hierarchy like we use daily, but
+instead of file, we are manipulating "keys" that have different values set on them.
+You can access keys by their path, like you would do for a file.
 
 If you ever have to use it, you know it's not easy to find what you are looking for.
-Or you are probably aware that editing the wrong stuff can easily break
+Or you are probably aware that editing the wrong stuff inside can easily break
 parts of your system.
 
-To mitigate those issues we will be using ``.reg`` files, instead of browsing
-the registry Editor. Main logic stay the same, the reg file will just create
-new registry keys and set their values. The advantages are :
+To mitigate those issues we will be using ``.reg`` files. Instead of browsing
+the registry Editor we specify how we want to edit in the file. The advantages are :
 
 1.
     They allow for a reproducible process. That means that if your reformat your system,
-    you don't have to remember which key you created. Just execute the reg file again.
+    you don't have to remember which registry key you created. Just execute the reg file again.
 2.
-    You can create a copy of the initial reg file that does the inverse, meaning
-    removing the keys instead of adding them.
+    You can easily create a copy of the initial reg file that does the inverse,
+    meaning removing the keys instead of adding them.
 
 .. note-warning::
 
-    Keep in mind that editing the registry can still be dangerous, so it is
+    Keep in mind that editing the registry is always a risk, so it is
     recommended to save a backup of it before any change.
 
 Creating the .reg file
@@ -229,21 +247,23 @@ will be putting in that reg file :
 .. include:: maketx.reg
     :code: ini
 
+As mentioned previously, creating keys by their path, and setting values on those keys.
+
 .. note-info::
 
     You can add comment lines by starting them with a semi-colon ``;``
 
-On the first line, we have to put this text :
+On the first line, we always have to put this text :
 
 .. code:: ini
 
     Windows Registry Editor Version 5.00
 
-The next importanty step will be to determine the root location of the key to use.
+The next important step will be to determine the root location of the key to use.
 This location will determine on which type of file explorer entities the action
 in the context menu will appear.
 
-Here are the few options availables :
+Here are the few options available :
 
 .. class:: l-table l-overflow
 
@@ -304,10 +324,10 @@ Then you might want to add a icon next to your action. It can be achieved like :
 
 But you have to keep in mind :
 
-- You have to put an absolute path
-- You have to escape backward slashes like ``\\``
+- You have to put an absolute path (starting from the drive letter, not relative)
+- You have to escape backward slashes like ``\`` -> ``\\``
 - You have to use an ``.ico`` file. There is plenty of online converter for it.
-- If for whatever reason thet path doesn't exists/is not valid, you will get a default "sheet" icon.
+- If for whatever reason the path doesn't exists/is not valid, you will get a default "sheet" icon.
 
 And finally the most important option, what is executed when clicking on the action !
 We have to create a new key ``command`` and then configure it.
@@ -334,9 +354,9 @@ Executing the .reg file
 =======================
 
 Save your reg file from your text/code editor and double click on it. Windows
-will gift you 3 dialogs to accept, but that will be all you have to do !
+will gift you 3 dialogs to accept, but that will be all you have to do.
 
-As a safety let's manually check in the registry if it was registered. Open the
+As a safety, let's manually check in the registry if it was registered. Open the
 ``Registry Editor`` (you can use windows search). In the window that opens,
 find the "current path" field, right under the menu bar. Inside paste
 the path of the key we created and press enter.
@@ -348,6 +368,9 @@ The editor should directly browse to the key.
 
 If you would want to delete what we did, you could just delete the ``makeTx``
 key (but we will see an alternative later).
+
+It's a good practice that when you follow this tutorial, you casually have a look
+in the Registry Editor to check everything is updated as expected.
 
 Aright in theory it should work, what about practice ? Well pick any file
 in the file explorer (because remember we put it under ``*`` which work for
@@ -368,16 +391,16 @@ open it from the command line. And that's a task for the next section !
 Editing the registry: Advanced
 ------------------------------
 
-The previous section allowed us to add a simple new action to the context menu,
+The previous section allowed us to add a new simple action to the context menu,
 that just execute the application we gave it. But we are still missing plenty
 of use-cases, like how to keep the interface open in the case of a CLI, or even
 more importantly, how do we pass the path of the file we right-clicked on, to
-the command to execute ?
+the command executed ?
 
 Calling the command prompt
 ==========================
 
-Let's adress the issue we stopped the previous section at. As our tool is a CLI,
+Let's address the issue we stopped the previous section at. As our tool is a CLI,
 it close once finished. But we want to keep its result visible. Manually the solution
 was to execute it from an existing command prompt window. And we will do exactly
 the same for our context-menu action.
@@ -398,14 +421,15 @@ To open the command prompt we simply need to prefix our command with
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]
     @="cmd /k \"D:\\resources\\maketx.exe\""
 
-By safety we also wrapped our path between esapced double quotes, to make sure
+By safety we also wrapped our path between escaped double quotes, to make sure
 the command prompt doesn't complain.
 
 Save the reg file and execute it again. Find a file again, and execute the
 action in the context-menu as previously.
 
-We now have a command prompt window that open and execute the makeTx.exe. But
-the window stays open because it was not opened by makeTx but by us. Nice.
+We now have a command prompt window that open and execute the maketx.exe program.
+But as intended, the window stays open because it was not opened by maketx but
+by us. Nice.
 
 Retrieving the file selected in the command
 ===========================================
@@ -415,11 +439,11 @@ by right-clicking, this mean we want to execute a program on it, by passing the
 path of this file to the program.
 
 For now our makeTx action only open the documentation of the program cause it
-doesn't receive any argument. By bassing the path of the file it should now
+doesn't receive any argument. By passing the path of the file it should now
 start the conversion.
 
 To retrieve it simple we will be using the ``%1`` variable (it simply retrieve
-the first argument passed to the command line) :
+the first argument passed to the command line, which is the path of the file) :
 
 .. code:: ini
 
@@ -432,21 +456,22 @@ the first argument passed to the command line) :
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]
     @="cmd /k \"\"D:\\resources\\maketx.exe\" \"%1\"\""
 
-Again we wrap it between escaped double-quotes by safety BUT we also now `escape
-the whole command <https://ss64.com/nt/syntax-esc.html>`_ using double-quotes
-else we will get a `very funky behavior <https://stackoverflow.com/a/15262019/13806195>`_.
+Again we wrap it between escaped double-quotes by safety BUT we also now
+double the first and last quotes, necessary when this more that one pair of quotes [4]_.
+Else we will get a `very funky behavior <https://stackoverflow.com/a/15262019/13806195>`_.
 
 Repeat the usual steps to tests, and you should now see the file right-clicked
-properly converted to tx (if you selected an image format selected by makeTx
+properly converted to tx (if you selected an image format selected by maketx
 of course).
 
 Passing more arguments
 ======================
 
-You remember at the beginning that I extracted the full command used by makeTx
-on an existing .tx file ? There was a lot of additional arguments used. As I am
-personnaly using maketx from the Arnold installtion I will remove all the
-argument that maketx will already add for me anyway.
+You remember at the beginning that I extracted the full command used by maketx
+on an existing .tx file ? There was a lot of additional arguments used.
+Let's add them. As on my side I am using maketx from the Arnold installation
+I will remove all the argument that maketx will already add for me anyway
+(explained at the beginning of the article).
 
 .. code:: ini
 
@@ -457,15 +482,14 @@ argument that maketx will already add for me anyway.
     "icon"="F:\\blog\\demo-icon.ico"
 
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]
-    @="cmd /k \"\"D:\\resources\\maketx.exe\" \"%1\" -v -u --unpremult --format exr\""
+    @="cmd /k \"\"D:\\resources\\maketx.exe\" \"%1\"\" -v -u --unpremult --format exr"
 
-No need to espace anything this time but make sure they are part of the
-"global string" passed to ``cmd``.
+No need to escape the argument this time.
 
-Test again, you should mainly see much more info being displayed as used the
-``-v`` option for "verbose".
+Test again, you should mainly see much more info being displayed as we used the
+``-v`` option which means "verbose".
 
-And at that state we have a totally working command, but don't leave yet, we
+And at that state we have a totally working command 🥳, but don't leave yet, we
 still have a few improvements to make !
 
 
@@ -482,7 +506,6 @@ registry manually to revert it.
 
 The solution is to create a new reg file that delete the keys instead of adding
 them. To start just copy/paste the existing reg file we have been creating.
-
 Also open it in your text/code editor. And now very simple edit, in front of
 each key path, after the first bracket, add a minus character :
 
@@ -497,13 +520,13 @@ each key path, after the first bracket, add a minus character :
     [-HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]
     @="cmd /k \"\"D:\\resources\\maketx.exe\" \"%1\" -v -u --unpremult --format exr\""
 
-That's about it. It's enough to tell window to remove the keys instead of creating them.
+That's about it. It's enough to tell Windows to remove the keys instead of creating them.
 You could simplify the file by removing the line setting values but I will leave
 them so I can remember exactly what I'm removing.
 
-Now that you have 2 files (good idea to keep them side by side), you will need
+Now that you have 2 files (good idea to keep them side by side), **you will need
 to remember that if you add a new key / edit an existing one in the "create" reg
-file, you also need to propagate the changes in the "uninstall" reg file.
+file, you also need to propagate the changes in the "uninstall" reg file**.
 
 And we end up with a pretty robust workflow, "install" your custom context-menu
 in one double-click and "uninstall" it the same way ! Without having to remember
@@ -543,8 +566,8 @@ more about them.
 0. In the Window search bar type "environment" and select "Edit Environment variable"
 1. Select Edit
 2. Create a new variable at user level
-3. Fill the values, we will be naming it ``MAKETX``. Don't forget to escape
-   the path of maketx with quotes if it has special characters like in my case.
+3. Fill the values, we will be naming it ``MAKETX``. (Do NOT wrap it in quotes
+   like in the example picture).
 4. "Ok" for all dialogs.
 
 .. image:: {static}/images/blog/0009/env-var-maketx.png
@@ -553,7 +576,7 @@ more about them.
 
 .. note-warning::
 
-    Be carefull when choosing a name for your envionement variable. It's possible
+    Be careful when choosing a name for your environment variable. It's possible
     that a program will expect this variable name and use it. In our case
     ``MAKETX`` has a high chance of being expected by a program, but at the same
     time it would probably also expect the path to the maketx executable. So
@@ -572,15 +595,20 @@ the `batch <https://en.wikibooks.org/wiki/Windows_Batch_Scripting>`_ syntax
     "icon"="F:\\blog\\demo-icon.ico"
 
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]
-    @="cmd /k %%MAKETX%% \"%1\" -v -u --unpremult --oiio --format exr\""
+    @="cmd /k \"\"%%MAKETX%%\" \"%1\"\" -v -u --unpremult --oiio --format exr"
 
-Again we have to escape our variable declaration so it's the command prompt
-we open that resolve the variable. For escaping it we just need to double the
-percent character.
+A lot going on the "escaping" side here (it is teh biggest source of issue) :
 
-Same routine, save and test. Everyhting should just work like before.
+- the ``%`` need to be escaped by doubling it so the variable is resolved only
+  when cmd dialog is opened.
+- we again need to escape the variable MAKETX with quotes around it as it's a path.
+  Like for ``%1``
+- we need to double escape the first and last quotes in the whole command again
+  (needed when there is more than 2 quotes in the command) [4]_
 
-Now you should never have to get back to your reg file to edit it.
+Same routine, save and test. Everything should just work like before.
+
+Hopefully you should never have to get back to your reg file to edit it now.
 
 .. TODO rename "actions" to menu ?
 
@@ -605,18 +633,22 @@ Arnold, one for Renderman, one with a colorspace conversion, ...
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert]
     "MUIVerb"="convert to .tx"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert\command]
-    @="cmd /k %%MAKETX%% \"%1\" -v -u --unpremult --oiio --format exr\""
+    @="cmd /k \"\"%%MAKETX%%\" \"%1\"\" -v -u --unpremult --oiio --format exr"
 
-What happened ? Well first you can see our root key got a new value set with
-``"subCommands"=""``. We then added a new sub-key. For that we took the root
-key path and added ``shell\`` + a new custom name for that key. That new key
-can use the same options as the root key and I used ``MUIVerb`` again to set
-the text displayed in the interface.
+What happened ?
 
-As I don't want to create a new nested sub-menu from it I can copy/paste
-the key path and ``\command`` as before to specify what command it will execute.
+- Well first you can see our root key got a new value set with
+  ``"subCommands"=""``.
+- We then added a new sub-key. For that we took the root
+  key path and added ``shell\`` + a new custom name for that key
+- that new key can use the same options as the root key so I used
+  ``MUIVerb`` again to set the text displayed in the interface.
 
-Here is the whole example I mentioned before :
+I could create a new sub-key from it, and so on and so on ... but let's stop
+here. Copy/paste the last key path and append ``\command`` as before then add
+the command to execute.
+
+And finally here is the full maketx example with 3 sub-commands :
 
 .. code:: ini
 
@@ -630,22 +662,22 @@ Here is the whole example I mentioned before :
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert]
     "MUIVerb"="convert to .tx"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert\command]
-    @="cmd /k %%MAKETX%% \"%1\" -v -u --unpremult --format exr\""
+    @="cmd /k \"\"%%MAKETX%%\" \"%1\"\" -v -u --unpremult --format exr\""
 
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvertprman]
     "MUIVerb"="convert to Renderman .tx"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvertprman\command]
-    @="cmd /k %%MAKETX%% \"%1\" --prman -v -u --unpremult --format exr\""
+    @="cmd /k \"\"%%MAKETX%%\" \"%1\"\" --prman -v -u --unpremult --format exr\""
 
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvertsrgb]
     "MUIVerb"="convert to .tx - sRGB source"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvertsrgb\command]
-    @="cmd /k %%MAKETX%% \"%1\" --colorconvert sRGB linear -v -u --unpremult --format exr\""
+    @="cmd /k \"\"%%MAKETX%%\" \"%1\"\" --colorconvert sRGB linear -v -u --unpremult --format exr\""
 
 .. note-warning::
 
     If you got your maketx executable from Arnold installation the second key
-    with the ``--prman`` option will not work as Arnold always send ``--oiio``
+    with the ``--prman`` option will not work as Arnold always append ``--oiio``
     which conflict with ``--prman`` :(
 
 .. image:: {static}/images/blog/0009/rmb-makeTx-demo-submenus.gif
@@ -663,7 +695,7 @@ Here is the whole example I mentioned before :
 .. block-warning:: Nested context-menu limit
 
     Unfortunately there is a limit of sub context-menu you can create from a
-    root context menu. The root context-menu is the first key definiding the
+    root context menu. The root context-menu is the first key defining the
     ``subCommand=""`` property and then EVERY other context-menu under that
     root will be counted until you reach **the maximum of 16 menus**. [2]_
 
@@ -680,14 +712,14 @@ simplified all the steps above by creating a python CLI.
 
     Python package to create context-menu entries in windows via .reg file.
 
-It allow to write the key structure as a json whith a bunch of workflow optimizations,
+It allow to write the key structure as a json with a bunch of workflow optimizations,
 like relative paths, variables, ... so the whole process should be much
 faster and much less human-error prone.
 
 Cool use cases ideas for context-menus
 --------------------------------------
 
-Because makeTx is not the only program that is cool to have available has a right
+Because maketx is not the only program that is cool to have available has a right
 click, here is a few ideas that could really boost your workflow !
 
 OIIO Tool
@@ -732,7 +764,7 @@ context menu, I will just show a few very useful of them.
 Retrieving image statistic and metadata
 _______________________________________
 
-Especially useful for OpenEXR files. To check what is inside.
+Especially useful for OpenEXR files. To check what is stored inside.
 
 .. code:: ini
 
@@ -752,22 +784,22 @@ Especially useful for OpenEXR files. To check what is inside.
 Rescaling textures
 __________________
 
-It is most common that you exported textures in with big dimensions like
+It is most common that you exported textures with large dimensions like
 4096x4096 and that you need to resize them as you don't need that much pixels.
 
 Again with oiiotool, as fast as right click can be !
 
-This time setuping this context-menu will be more complicated. If we were to
-reuse the workflow we used previously we woudl set something like this :
+This time setting this context-menu will be more complicated. If we were to
+reuse the workflow we used previously we would set something like this :
 
 .. code:: ini
 
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048]
     "MUIVerb"="rescale 2048"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048\command]
-    @="cmd /k %%OIIOTOOL%% -v \"%1\" --resize 2048x0 -o \"%~n1-2048%~x1\""
+    @="cmd /k %%OIIOTOOL%% -v \"\"%1\" --resize 2048x0 -o \"%~n1-2048%~x1\"\""
 
-The issues is in the last argument of the command where we need to pass the path
+The issues is in the last argument of the command, where we need to pass the path
 of the new file OIIO need to write. If we were to overwrite the existing file,
 easy you can just give ``\"%1\"``. But here we want to create a new file.
 The batch language has a special syntax to make path manipulation on variables.
@@ -779,14 +811,21 @@ Unfortunately the syntax doesn't work when called from ``cmd /k``.
 
     Let's dissect ``%~n1-2048%~x1`` we are using here :
 
-    - ``%~n1`` : the file name without path and extension of the first argument (1)
+    - ``%~n1`` : the file name without path and extension, of the first argument (1)
     - ``-2048`` : the suffix we add to the filename.
-    - ``%~x1``: File name extension including the period of the first argument (1)
+    - ``%~x1``: File name extension (including the period) of the first argument (1)
 
 We need a workaround to be able to use the full batch syntax. This workaround
 could also be used if you need to execute more complex commands. So here we will
 be using a ``.bat`` file to define our command, and the registry command will
 just start the bat file.
+
+.. note-info::
+
+    A batch file (``.bat``) is a text file defining a series of command
+    to be executed in the order they are defined in. [3]_ Double clicking the file
+    will execute it. You can edit its content with any text editor using
+    ``Open With`` from the context menu.
 
 Create a new ``.bat`` file (create a .txt and just rename the extension). Open
 it with any text/code editor and inside paste the following :
@@ -797,9 +836,13 @@ it with any text/code editor and inside paste the following :
 
     %OIIOTOOL% -v "%1" --resize %2x0 -o "%~n1-%2%~x1"
 
-You notice we replace ``2048`` with ``%2`` which imply we will be using the
-2nd argument passed to the .bat to determine the size to rescale. With this we
-can use one .bat to rescale to any size !
+You can observe :
+
+- we replace ``2048`` with ``%2`` which imply we will be using the
+  2nd argument passed to the .bat to determine the size to rescale. With this we
+  can use one .bat to rescale to any size !
+
+- no need to escape quotes characters in bat files !
 
 Save the .bat somewhere then let's get back to our .reg file :
 
@@ -810,7 +853,7 @@ Save the .bat somewhere then let's get back to our .reg file :
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048\command]
     @="cmd /k \"F:\\blog\\path\\to\\oiiotool-rescale.bat\" %1 2048"
 
-Don't forget to also escape the backward slaches in the path. You notice that
+Don't forget to also escape the backward slashes in the path. You notice that
 we just forward the path of the file selected as first argument of the bat, and
 the second argument is indeed the size to use.
 
@@ -899,7 +942,7 @@ Few notes :
     This time I check that the target file doesn't already exists, we never know !
     If it exists I ask the user if he wants to overwrite it else I exit.
 
-- I use ``--unmip`` because the tx is mipmapped and I don't care about them.
+- I use ``--unmip`` because the tx is mipmapped and I don't care about keeping them.
 
 I let you create the keys in the reg file (also you could add it to the maketx
 menu if this is more logical to you).
@@ -908,7 +951,7 @@ menu if this is more logical to you).
 ABCInfo
 =======
 
-Next one : retrieving informations about an Alembic file without even opening
+Next one : retrieving information about an Alembic file without even opening
 it in a DCC. We will be using a CLI called ``abcinfo.exe``. *This CLI can only
 be found in Houdini installation* :
 
@@ -917,7 +960,7 @@ be found in Houdini installation* :
     C:\Program Files\Side Effects Software\Houdini {VERSION}\bin\abcinfo.exe"
 
 The tool is not standalone, meaning you can't just copy it somewhere. I
-recommend to as always set an environement variable to it that you can easily
+recommend to as always set an environment variable to it that you can easily
 update when you update your Houdini version.
 
 .. code:: ini
@@ -956,7 +999,8 @@ One of the most famous CLI. Powering most of the video-processing applications,
 
 As for oiiotool, the use-case for it are hundred and I will only show a few of them.
 But at the opposite of oiiotool, `finding a compiled version <https://www.gyan.dev/ffmpeg/builds/#release-builds>`_
-is much easier.
+is much easier. Download it somewhere an create an environment variable
+(I picked the very original ``FFMPEG`` for the name)
 
 video to gif
 ____________
@@ -1108,7 +1152,7 @@ You produced a "master" video, witht he highest quality possible, and you now
 want to share it on the web, which require encoding it in more optimized and
 light-weight formats.
 
-ffmpeg is a hell of a tool without hundred of commands, The most difficult part
+ffmpeg is a hell of a tool with hundred of argument, The most difficult part
 is finding which argument you need to build your command. As I'm more a ffmpeg
 novice I took advice from more experienced users by using this guide :
 https://richardssam.github.io/ffmpeg-tests/ (which have the advantage of
@@ -1117,68 +1161,8 @@ focusing on color-accuracy for vfx).
 Let's take the same workflow we used for gif conversion. Here is the
 intermediate batch file :
 
-.. code:: batch
-
-    @echo off
-
-    set ask_user=1
-    if not "%~2" == "" (
-        set ask_user=%2
-    )
-
-    if %ask_user% equ 0 (
-        set framerate=%3
-    ) else (
-        echo "[framerate] usually ntsc-film (23.98), 24, ntsc (29.97), 60000/1001 (59.94)"
-        set /P framerate=^> framerate=
-    )
-
-    if %ask_user% equ 0 (
-        set preset=%4
-    ) else (
-        echo "[presets] ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow"
-        set /P preset=^> preset=
-    )
-
-    if %ask_user% equ 0 (
-        set tune=%5
-    ) else (
-        echo " [tune]"
-        echo "     - film : use for high quality movie content; lowers deblocking"
-        echo "     - animation : good for cartoons; uses higher deblocking and more reference frames"
-        echo "     - grain : preserves the grain structure in old, grainy film material"
-        set /P tune=^> tune=
-    )
-
-    if %ask_user% equ 0 (
-        set crf=%6
-    ) else (
-        echo "[crf] Constant Rate Factor. Between 0 (lossless) <- 18 <- 23 <- 28 (worse)"
-        set /P crf=^> crf=
-    )
-
-    if %ask_user% equ 0 (
-        set reso_width=%7
-    ) else (
-        echo "[resolution] Target will be rescaled to the given width, while maintaining aspect ratio."
-        set /P reso_width=^> resolution=
-    )
-
-    set "file_suffix="
-    if %ask_user% equ 0 (
-        if not "%~8" == "" (
-            set file_suffix=%8
-        )
-    ) else (
-        echo "[file_suffix] File name suffix (optional)"
-        set /P "file_suffix=> file_suffix="
-    )
-
-    set "output=%~n1%file_suffix%.mp4"
-    set "filter_graph=scale=%reso_width%:trunc(ow/a/2)*2:flags=lanczos:in_color_matrix=bt709:out_color_matrix=bt709"
-
-    :: -y : overwite existing, else use -n
-    %FFMPEG% -n -i "%1" -threads 0 -r %framerate% -vf %filter_graph% -c:v libx264 -preset %preset% -tune %tune% -crf %crf% -pix_fmt yuv420p -color_range tv -colorspace bt709 -color_primaries bt709 -color_trc iec61966-2-1 %output%
+.. include:: ffmpeg-mp4-optimize.bat
+    :code: batch
 
 Much more control than the gif workflow. The reg file then looks like this (
 extending the reg file used for gif)
@@ -1355,3 +1339,5 @@ References
 
 .. [1] https://stackoverflow.com/a/47745854/13806195
 .. [2] https://stackoverflow.com/questions/48625223/is-there-a-maximum-right-click-context-menu-items-limit
+.. [3] https://en.wikipedia.org/wiki/Batch_file
+.. [4] https://ss64.com/nt/syntax-esc.html
