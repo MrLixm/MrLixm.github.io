@@ -1164,8 +1164,8 @@ intermediate batch file :
 .. include:: ffmpeg-mp4-optimize.bat
     :code: batch
 
-Much more control than the gif workflow. The reg file then looks like this (
-extending the reg file used for gif)
+Much more control than the gif workflow. The reg file then looks like this
+(extending the reg file used for gif)
 
 .. code:: ini
 
@@ -1263,6 +1263,68 @@ Again, on your own to write the registry file, nothing new here !
 .. image:: {static}/images/blog/0009/rmb-ffmpeg-sequence.gif
     :target: {static}/images/blog/0009/rmb-ffmpeg-sequence.gif
     :alt: example of right clicking on a .exr file from a sequence and selecting the interactive option
+
+
+Creating directory hierarchies
+==============================
+
+Another common use case that doesn't involve any external program this time !
+Just creating directories. Imagine you are working in your project's directory
+and there is always that folder structure you always need to recreate. Let's
+make it possible in one right-click.
+
+To make it easy to update our arborescence we will be using ``.bat`` files again.
+But this time we will not get a path to a file as argument, but a path to the
+initial directory to create the hierarchy from.
+
+Let's consider I want to create the whole hierarchy for an individual 3d asset :
+
+.. code:: batch
+
+    @echo off
+
+    MD "%1\assetName"
+
+    MD "%1\assetName\modeling"
+    MD "%1\assetName\modeling\work"
+    MD "%1\assetName\modeling\publish"
+
+    MD "%1\assetName\rig"
+    MD "%1\assetName\rig\work"
+    MD "%1\assetName\rig\publish"
+
+    MD "%1\assetName\texturing"
+    MD "%1\assetName\texturing\work"
+    MD "%1\assetName\texturing\publish"
+
+    MD "%1\assetName\lookdev"
+    MD "%1\assetName\lookdev\work"
+    MD "%1\assetName\lookdev\publish"
+
+Very simple is use ``MD`` which means "MakeDirectory" and just give the absolute path
+to create.
+
+
+And here is the reg file :
+
+.. code:: ini
+
+    Windows Registry Editor Version 5.00
+
+    [HKEY_CURRENT_USER\Software\Classes\Directory\shell\vfxProjectTemplates]
+    "MUIVerb"="VFX Projects Hierarchies"
+    "subCommands"=""
+
+    [HKEY_CURRENT_USER\Software\Classes\Directory\shell\vfxProjectTemplates\shell\001asset]
+    "MUIVerb"="create asset template"
+    [HKEY_CURRENT_USER\Software\Classes\Directory\shell\vfxProjectTemplates\shell\001asset\command]
+    @="\"\"F:\\softwares\\os\\config\\contextmenus\\dir_hierarchies\\batch\\asset_template.bat\" \"%1\"\""
+
+I use ``HKEY_CURRENT_USER\Software\Classes\Directory\shell`` to make the menu
+appear when we right-click on a directory but I could also have used
+``HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell``
+as a root key so it appear when you right click on the background of the file
+explorer.
 
 
 Starting different version of the same DCC
