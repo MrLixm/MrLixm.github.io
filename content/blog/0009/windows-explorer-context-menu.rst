@@ -13,6 +13,9 @@ Creating custom context menu for Windows file explorer.
 :tags: productivity, arnold, image-processing, windows
 :author: Liam Collod
 
+.. role:: text-green
+    :class: m-text m-primary
+
 I had always been a fan of contextual menu in interfaces. They are a very fast
 way to run various processes on a selected item. And at the same time you
 don't have to remember which action you can run on the item, or how the
@@ -77,8 +80,8 @@ line, and not from a graphical interface like most programs. If you are not fami
 with :abbr:`CLIs <Command Line Interfaces>`, they are going to look very unpleasant
 to use compared to a :abbr:`GUI <Graphical User Interface>`. But their power
 will be found in the flexibility they offer, especially for automatizing tasks.
-It's like you were ordering the program to perform an action by describing it in
-a sentence.
+:text-green:`It's like you were ordering the program to perform an action by describing it in
+a sentence.`
 
 This is will be useful in our case, because this means that by passing the
 "right sentence" to makeTx, he could generate a tx from the file that has been
@@ -106,7 +109,8 @@ to the command prompt. You can also just copy and paste its path.
 .. note-info::
 
     On Windows, make sure paths are always wrapped in double quotes like
-    ``"C:/Program Files/xyz/bin/myapp.exe"``
+    ``"C:/Program Files/xyz/bin/myapp.exe"`` else when you have a path it will
+    understand 2 arguments instead of one !
 
 .. note-info::
 
@@ -130,12 +134,18 @@ arguments the tool expects.
     Most CLI will display their documentation if you just pass the
     ``--help`` argument after the path to the executable.
 
+.. note-info::
 
-maketx
-======
+    arguments are piece of text separated by a whitespace. For example, this
+    command ``maketx.exe -u -v --format exr`` has 4 arguments, the last one being
+    needed by the third one.
+
+
+maketx.exe
+==========
 
 .. url-preview:: https://openimageio.readthedocs.io/en/latest/maketx.html#maketx
-    :title: OpenImageIO - makeTx
+    :title: OpenImageIO - maketx
     :svg: {static}/images/blog/0009/oiio-icon.svg
     :svg-size: 50
 
@@ -167,8 +177,8 @@ in the metadata of a tx file :
 Seems there is a lot of options used ! One important thing to keep in mind is
 that **those options vary depending on what kind of texture you are converting
 and how the "texture node" in the source DCC is configured.** The most notable
-variable option being ``--colorconvert``, used to convert the input file to
-another colorspace that might or might not be specified.
+variable option being ``--colorconvert`` (explained later), used to convert the
+input file to another colorspace that might or might not be specified.
 
 .. note-default::
 
@@ -222,10 +232,11 @@ the registry Editor we specify how we want to edit in the file. The advantages a
     You can easily create a copy of the initial reg file that does the inverse,
     meaning removing the keys instead of adding them.
 
-.. note-warning::
+.. note-danger::
 
     Keep in mind that editing the registry is always a risk, so it is
-    recommended to save a backup of it before any change.
+    recommended to `save a backup of it <https://support.microsoft.com/en-us/topic/how-to-back-up-and-restore-the-registry-in-windows-855140ad-e318-2a13-2829-d428a2ab0692>`_
+    before any change.
 
 Creating the .reg file
 ======================
