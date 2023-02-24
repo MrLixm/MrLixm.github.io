@@ -662,17 +662,17 @@ And finally here is the full maketx example with 3 sub-commands :
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert]
     "MUIVerb"="convert to .tx"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert\command]
-    @="cmd /k \"\"%%MAKETX%%\" \"%1\"\" -v -u --unpremult --format exr\""
+    @="cmd /k \"\"%%MAKETX%%\" \"%1\"\" -v -u --unpremult --format exr"
 
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvertprman]
     "MUIVerb"="convert to Renderman .tx"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvertprman\command]
-    @="cmd /k \"\"%%MAKETX%%\" \"%1\"\" --prman -v -u --unpremult --format exr\""
+    @="cmd /k \"\"%%MAKETX%%\" \"%1\"\" --prman -v -u --unpremult --format exr"
 
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvertsrgb]
     "MUIVerb"="convert to .tx - sRGB source"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvertsrgb\command]
-    @="cmd /k \"\"%%MAKETX%%\" \"%1\"\" --colorconvert sRGB linear -v -u --unpremult --format exr\""
+    @="cmd /k \"\"%%MAKETX%%\" \"%1\"\" --colorconvert sRGB linear -v -u --unpremult --format exr"
 
 .. note-warning::
 
@@ -721,6 +721,91 @@ Cool use cases ideas for context-menus
 
 Because maketx is not the only program that is cool to have available has a right
 click, here is a few ideas that could really boost your workflow !
+
+maketx
+=======
+
+Even more of it !
+
+txify entire folders
+____________________
+
+With what we saw we can quickly convert all the texture in a directory by selecting
+them all, and running the context-menu. But we could also implement this by
+selecting a directory and executing the context menu from it.
+
+Of course maketx doesn't accept directories so we need to retrieve files from it.
+We will be creating the usual intermediate batch file :
+
+.. code:: batch
+
+    @echo off
+
+    for %%i in ("%1\*.exr", "%1\*.tiff", "%1\*.png") do (
+        echo - processing %%i
+        start "maketx" /b "%MAKETX%" %%i -v -u --unpremult --oiio --format exr
+    )
+
+What's going on :
+
+- ``("%1\*.exr")`` we find all files with the .exr extension in the given directory
+  (and we can ask multiple extensions separated by a comma)
+- ``start`` we launch the maketx process in a new command prompt. They are launched
+  "asynchronously" which mean all the command are started without waiting for the
+  previous one to complete. Sometimes called **multi-threading**.
+- ``"maketx"`` that new command prompt is named "maketx"
+- ``\b`` we actually don't want to display this new command prompt.
+  This also mean that all text outputs is logged in the current prompt in a pure
+  asynchronous chaos (so you can omit it if you prefer)
+
+You can try it without the ``start "maketx" \b`` and you will see that each
+command will be executed one after the other which will take much more time.
+
+The keys to add in the reg files can looks like this :
+
+.. code:: ini
+
+    [HKEY_CURRENT_USER\Software\Classes\Directory\shell\maketx\shell\convertall]
+    "MUIVerb"="Convert all images to .tx"
+    [HKEY_CURRENT_USER\Software\Classes\Directory\shell\maketx\shell\convertall\command]
+    @="cmd /k \"\"F:\\softwares\\os\\config\\contextmenus\\maketx\\batch\\convert_dir.bat\" \"%1\"\""
+
+If you wish to process the directory recursively, you can use the ``/R`` flag [5]_ :
+
+.. code:: batch
+
+    @echo off
+
+    for /R "%1" %%i in (*.exr, *.tiff, *.png) do (
+        echo - processing %%i
+        start "maketx" /b "%MAKETX%" %%i -v -u --unpremult --oiio --format exr
+    )
+
+colorspace conversions
+______________________
+
+In the final maketx example you may have noticed I created an action that
+assume the source texture is sRGB "Display" encoded and is converted to sRGB Linear.
+It's pretty common to have colorspace conversion as all tx should be encoded
+in the rendering colorspace.
+
+To perform the colorspace conversion I used the ``--colorconvert sRGB linear`` argument.
+The 2 "colorspaces" names I'm giving are builtins [6]_ but there is only 3 of
+them so if you need anything different we will have to rely on
+`OCIO <https://opencolorio.org/>`_. If you are not familiar with it, I'm not
+going to explain it sorry, too long for this article.
+
+Here is the command updated to perform colorspace conversions based on colorspace
+stored in an OCIO configuration (example with the old ACES 1.2 one) :
+
+.. code:: batch
+
+    "%MAKETX%" "%1" --colorconfig "D:\whatever\ACES\config.ocio" --colorconvert "Utility - sRGB - Texture" "ACES - ACEScg" -v -u --unpremult --format exr
+
+.. note-default::
+
+    ``--colorconfig`` is not needed if the ``OCIO`` environment variable
+    is already set properly [7]_
 
 OIIO Tool
 =========
@@ -1403,3 +1488,6 @@ References
 .. [2] https://stackoverflow.com/questions/48625223/is-there-a-maximum-right-click-context-menu-items-limit
 .. [3] https://en.wikipedia.org/wiki/Batch_file
 .. [4] https://ss64.com/nt/syntax-esc.html
+.. [5] https://ss64.com/nt/for_r.html
+.. [6] https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconvert
+.. [7] https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconfig
