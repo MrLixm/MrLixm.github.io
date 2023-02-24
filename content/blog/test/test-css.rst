@@ -182,6 +182,12 @@ Blocks
     primus nomen.
     audax, altus nomens tandem reperire de varius, primus caesium.
 
+.. block-success:: Test `with link <https://mrlixm.github.io/>`_ trabem!
+
+    cur itineris tramitem ire? neuter, teres finiss grauiter amor de magnum,
+    primus nomen.
+    audax, altus nomens tandem reperire de varius, primus caesium.
+
 Misc ?
 ======
 

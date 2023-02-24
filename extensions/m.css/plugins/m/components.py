@@ -109,7 +109,7 @@ class Block(rst.Directive):
 
         title_text = self.arguments[0]
         title_elements, _ = self.state.inline_text(title_text, self.lineno)
-        title_node = nodes.title("", "", *title_elements)
+        title_node = nodes.paragraph("", "", *title_elements)
 
         text = "\n".join(self.content)
         topic_node = nodes.topic(text, **self.options)

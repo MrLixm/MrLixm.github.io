@@ -139,7 +139,7 @@ article > footer p {
   text-align: center;
 }
 
-article .m-block h2, article .m-block h3, article .m-block h4,
+article .m-block > p:first-child, article .m-block h2, article .m-block h3, article .m-block h4,
 article .m-note h1, article .m-note h2, article .m-note h3, article .m-note h4{
   margin-top: 0;
 }
