@@ -6,4 +6,8 @@
     --color-article-main: rgb(190, 190, 190);
     --color-article-darker: rgb(140,140,140);
     --color-disable: rgb(80,80,80);
+
+    --background-color: rgb(12, 15, 17); /*override of mcss*/
+    --background-color-light: rgb(19, 21, 23);
+    --background-color-lighter: rgb(34, 36, 38);
 }
