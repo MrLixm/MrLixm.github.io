@@ -1251,8 +1251,8 @@ light-weight formats.
 ffmpeg is a hell of a tool with hundred of argument, The most difficult part
 is finding which argument you need to build your command. As I'm more a ffmpeg
 novice I took advice from more experienced users by using this guide :
-https://richardssam.github.io/ffmpeg-tests/ (which have the advantage of
-focusing on color-accuracy for vfx).
+https://academysoftwarefoundation.github.io/EncodingGuidelines/
+(which have the advantage of focusing on color-accuracy for vfx).
 
 Let's take the same workflow we used for gif conversion. Here is the
 intermediate batch file :
@@ -1318,7 +1318,7 @@ The solution is to use oiiotool to produce an image sequence that is "ready-to-g
 for ffmpeg.
 
 This behavior is described in the previous shared website
-https://richardssam.github.io/ffmpeg-tests/EncodingOverview.html#color-space-conversion--
+https://academysoftwarefoundation.github.io/EncodingGuidelines/EncodingOverview.html#color-space-conversion--
 which also provide valuable informations for color management of the destination video.
 
 But if now we think about the technical implementation, how do we pass
