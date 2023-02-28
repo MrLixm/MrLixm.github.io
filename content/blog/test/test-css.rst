@@ -93,6 +93,18 @@ https://mrlixm.github.io/
 -
     Third line
 
+Test footnotes
+
+Cum clinias unda, omnes hibridaes aperto bassus, alter terrores. [1]_
+sunt ventuses quaestio bassus, fidelis rectores. fatalis adiurator inciviliter anhelares bursa est.
+cum nuptia credere, omnes specieses imitari fidelis, neuter homoes. [2]_
+cur urbs prarere. [3]_
+
+.. [1] test number 1
+.. [2] https://mrlixm.github.io/
+.. [3] https://github.com/
+
+
 Components
 -----------
 
@@ -165,6 +177,12 @@ Blocks
     audax, altus nomens tandem reperire de varius, primus caesium.
 
 .. block-success:: Demissios trabem!
+
+    cur itineris tramitem ire? neuter, teres finiss grauiter amor de magnum,
+    primus nomen.
+    audax, altus nomens tandem reperire de varius, primus caesium.
+
+.. block-success:: Test `with link <https://mrlixm.github.io/>`_ trabem!
 
     cur itineris tramitem ire? neuter, teres finiss grauiter amor de magnum,
     primus nomen.

@@ -169,7 +169,7 @@ def interactive_publish(dry_run: bool = False):
         f"[interactive_publish] Started with {dry_run=}. "
         f"Target branch is <{TARGET_BRANCH_NAME}>"
     )
-
+    # TODO add current branch warning to make sure we are publishing from dev
     commit_name = get_commit_name()
     infofile = InfoFile(path=INFO_FILE_PATH)
 

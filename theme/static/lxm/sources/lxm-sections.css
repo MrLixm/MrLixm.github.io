@@ -150,11 +150,6 @@ main article h5 {
     margin-top: 4rem;
 }
 
-main article aside h3 {
-    font-size: 1.1rem;
-    font-family: var(--font-C);
-    font-weight: 600;
-}
 /*
     Other common class
 */
@@ -162,7 +157,27 @@ main article li {
     margin: 0.6rem 0 0.6rem;
 }
 
-
+article section a:before,
+article p a:before {
+    content: "";
+    background: url("/static/images/global/icons/link-vertical.svg") no-repeat bottom;
+    width: 0.8rem;
+    height: 0.7rem;
+    display: inline-block;
+}
+article section figure a:before,
+article section .m-figure a:before,
+article section .m-image a:before,
+article section h1 a:before,
+article section h2 a:before,
+article section h3 a:before,
+article section h4 a:before,
+article section h5 a:before,
+article section h6 a:before
+{
+    content: none;
+    background: none;
+}
 /*
     l-article-header
     post context + h1 + summary

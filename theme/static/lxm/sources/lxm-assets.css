@@ -256,3 +256,33 @@ footer .l-line-xs {
     border-color: rgba(41, 171, 224, 0.2);
     background-color: rgba(41, 171, 224, 0.2);
 }
+/*
+    l-table
+*/
+table.l-table {
+    display: block;
+    max-width: 100%;
+    width: max-content;
+    border-collapse: separate;
+    border-spacing: 0px 4px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+}
+table.l-table th,
+table.l-table td {
+    vertical-align: middle;
+    border: 1px solid transparent;
+    background-color: var(--background-color-light);
+    padding: 0.8em;
+    white-space: nowrap;
+    border-radius: 5px;
+}
+table.l-table tr:hover td {
+    background-color: var(--background-color-lighter);
+}
+table.l-table td:first-child {
+    /*border-top-left-radius: 0;*/
+    /*border-bottom-left-radius: 0;*/
+    border-left: 2px solid var(--background-color-lighter)
+}

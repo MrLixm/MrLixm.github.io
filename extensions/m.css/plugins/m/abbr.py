@@ -30,13 +30,16 @@ from docutils.parsers.rst.roles import set_classes
 # to avoid dependencies, link_regexp and parse_link() is common for m.abbr,
 # m.gh, m.gl, m.link and m.vk
 
-link_regexp = re.compile(r'(?P<title>.*) <(?P<link>.+)>')
+link_regexp = re.compile(r"(?P<title>.*) <(?P<link>.+)>")
+
 
 def parse_link(text):
     link = utils.unescape(text)
     m = link_regexp.match(link)
-    if m: return m.group('title', 'link')
+    if m:
+        return m.group("title", "link")
     return None, link
+
 
 def abbr(name, rawtext, text, lineno, inliner, options={}, content=[]):
     abbr, title = parse_link(text)
@@ -45,7 +48,9 @@ def abbr(name, rawtext, text, lineno, inliner, options={}, content=[]):
         return [nodes.abbreviation(title, title, **options)], []
     return [nodes.abbreviation(abbr, abbr, title=title, **options)], []
 
-def register_mcss(**kwargs):
-    rst.roles.register_local_role('abbr', abbr)
 
-register = register_mcss # for Pelican
+def register_mcss(**kwargs):
+    rst.roles.register_local_role("abbr", abbr)
+
+
+register = register_mcss  # for Pelican

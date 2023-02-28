@@ -106,26 +106,6 @@ a {
   color: var(--link-color);
   text-decoration: none;
 }
-article section a:before, article p a:before {
-    content: "";
-    background: url("/static/images/global/icons/link-vertical.svg") no-repeat bottom;
-    width: 0.8rem;
-    height: 0.7rem;
-    display: inline-block;
-}
-article section figure a:before,
-article section .m-figure a:before,
-article section .m-image a:before,
-article section h1 a:before,
-article section h2 a:before,
-article section h3 a:before,
-article section h4 a:before,
-article section h5 a:before,
-article section h6 a:before
-{
-    content: none;
-    background: none;
-}
 a.m-flat {
   text-decoration: none;
 }
@@ -298,18 +278,14 @@ a.m-footnote, dl.m-footnote dd span.m-footnote {
 a.m-footnote, dl.m-footnote dd span.m-footnote a {
   text-decoration: none;
 }
-a.m-footnote::before { content: '['; }
-a.m-footnote::after { content: ']'; }
-dl.m-footnote dt {
-  width: 1.5rem;
-  float: left;
-  clear: both;
-}
-dl.m-footnote dd {
-  margin-left: 1.5rem;
-}
+/*a.m-footnote::before { content: '['; }*/
+/*a.m-footnote::after { content: ']'; }*/
+dl.m-footnote dt {}
+dl.m-footnote dd {}
 dl.m-footnote { /* Same as .m-small */
   font-size: 85.4%;
+    display: grid;
+    grid-template-columns: 20px auto;
 }
 dl.m-footnote dd span.m-footnote a {
   font-weight: bold;
@@ -338,6 +314,10 @@ dl.m-footnote dd span.m-footnote a {
   border-color: var(--line-color);
   padding: 0.9375rem 0.9375rem 0.9375rem 0.75rem;
 }
+.m-block > p:first-child{
+    font-size: 1.1rem;
+    font-weight: 600;
+}
 
 /* Badge */
 .m-block.m-badge::after {
@@ -345,7 +325,8 @@ dl.m-footnote dd span.m-footnote a {
   display: block;
   clear: both;
 }
-.m-block.m-badge h3 {
+.m-block.m-badge h3,
+.m-block.m-badge > p:first-child{
   margin-left: 5rem;
 }
 .m-block.m-badge p {
@@ -973,38 +954,45 @@ figure.m-figure:not(.m-flat) > svg.m-graph:first-child {
 
 /* Colored block, header links in a colored block, colored text, flat label */
 .m-block.m-default { border-color: var(--line-color); }
+.m-block.m-default > p:first-child,
 .m-block.m-default h3, .m-block.m-default h4, .m-block.m-default h5, .m-block.m-default h6,
 .m-text.m-default, .m-label.m-flat.m-default {
   color: var(--default-color);
 }
+.m-block.m-default > p:first-child a,
 .m-block.m-default h3 a, .m-block.m-default h4 a, .m-block.m-default h5 a, .m-block.m-default h6 a {
   color: var(--link-color);
 }
 .m-block.m-primary { border-color: var(--primary-color); }
+.m-block.m-primary > p:first-child, .m-block.m-primary > p:first-child a,
 .m-block.m-primary h3, .m-block.m-primary h4, .m-block.m-primary h5, .m-block.m-primary h6,
 .m-block.m-primary h3 a, .m-block.m-primary h4 a, .m-block.m-primary h5 a, .m-block.m-primary h6 a,
 .m-text.m-primary, .m-label.m-flat.m-primary {
   color: var(--primary-color);
 }
 .m-block.m-success { border-color: var(--success-color); }
+.m-block.m-success > p:first-child, .m-block.m-success > p:first-child a,
 .m-block.m-success h3, .m-block.m-success h4, .m-block.m-success h5, .m-block.m-success h6,
 .m-block.m-success h3 a, .m-block.m-success h4 a, .m-block.m-success h5 a, .m-block.m-success h6 a,
 .m-text.m-success, .m-label.m-flat.m-success {
   color: var(--success-color);
 }
 .m-block.m-warning { border-color: var(--warning-color); }
+.m-block.m-warning > p:first-child, .m-block.m-warning > p:first-child a,
 .m-block.m-warning h3, .m-block.m-warning h4, .m-block.m-warning h5, .m-block.m-warning h6,
 .m-block.m-warning h3 a, .m-block.m-warning h4 a, .m-block.m-warning h5 a, .m-block.m-warning h6 a,
 .m-text.m-warning, .m-label.m-flat.m-warning {
   color: var(--warning-color);
 }
 .m-block.m-danger { border-color: var(--danger-color); }
+.m-block.m-danger > p:first-child, .m-block.m-danger > p:first-child a,
 .m-block.m-danger h3, .m-block.m-danger h4, .m-block.m-danger h5, .m-block.m-danger h6,
 .m-block.m-danger h3 a, .m-block.m-danger h4 a, .m-block.m-danger h5 a, .m-block.m-danger h6 a,
 .m-text.m-danger, .m-label.m-flat.m-danger {
   color: var(--danger-color);
 }
 .m-block.m-info { border-color: var(--info-color); }
+.m-block.m-info > p:first-child, .m-block.m-info > p:first-child a,
 .m-block.m-info h3, .m-block.m-info h4, .m-block.m-info h5, .m-block.m-info h6,
 .m-block.m-info h3 a, .m-block.m-info h4 a, .m-block.m-info h5 a, .m-block.m-info h6 a,
 .m-text.m-info, .m-label.m-flat.m-info {
@@ -1030,36 +1018,42 @@ figure.m-figure:not(.m-flat) > svg.m-graph:first-child {
 
 /* Active link in a block header (gawd, this is verbose as hell). Dim blocks
    have the link colors already defined above. */
+.m-block.m-default > p:first-child a:hover, .m-block.m-default > p:first-child a:focus, .m-block.m-default > p:first-child a:active,
 .m-block.m-default h3 a:hover, .m-block.m-default h3 a:focus, .m-block.m-default h3 a:active,
 .m-block.m-default h4 a:hover, .m-block.m-default h4 a:focus, .m-block.m-default h4 a:active,
 .m-block.m-default h5 a:hover, .m-block.m-default h5 a:focus, .m-block.m-default h5 a:active,
 .m-block.m-default h6 a:hover, .m-block.m-default h6 a:focus, .m-block.m-default h6 a:active {
   color: var(--default-link-active-color);
 }
+.m-block.m-primary > p:first-child a:hover, .m-block.m-primary > p:first-child a:focus, .m-block.m-primary > p:first-child a:active,
 .m-block.m-primary h3 a:hover, .m-block.m-primary h3 a:focus, .m-block.m-primary h3 a:active,
 .m-block.m-primary h4 a:hover, .m-block.m-primary h4 a:focus, .m-block.m-primary h4 a:active,
 .m-block.m-primary h5 a:hover, .m-block.m-primary h5 a:focus, .m-block.m-primary h5 a:active,
 .m-block.m-primary h6 a:hover, .m-block.m-primary h6 a:focus, .m-block.m-primary h6 a:active {
   color: var(--primary-link-active-color);
 }
+.m-block.m-success > p:first-child a:hover, .m-block.m-success > p:first-child a:focus, .m-block.m-success > p:first-child a:active,
 .m-block.m-success h3 a:hover, .m-block.m-success h3 a:focus, .m-block.m-success h3 a:active,
 .m-block.m-success h4 a:hover, .m-block.m-success h4 a:focus, .m-block.m-success h4 a:active,
 .m-block.m-success h5 a:hover, .m-block.m-success h5 a:focus, .m-block.m-success h5 a:active,
 .m-block.m-success h6 a:hover, .m-block.m-success h6 a:focus, .m-block.m-success h6 a:active {
   color: var(--success-link-active-color);
 }
+.m-block.m-warning > p:first-child a:hover, .m-block.m-warning > p:first-child a:focus, .m-block.m-warning > p:first-child a:active,
 .m-block.m-warning h3 a:hover, .m-block.m-warning h3 a:focus, .m-block.m-warning h3 a:active,
 .m-block.m-warning h4 a:hover, .m-block.m-warning h4 a:focus, .m-block.m-warning h4 a:active,
 .m-block.m-warning h5 a:hover, .m-block.m-warning h5 a:focus, .m-block.m-warning h5 a:active,
 .m-block.m-warning h6 a:hover, .m-block.m-warning h6 a:focus, .m-block.m-warning h6 a:active {
   color: var(--warning-link-active-color);
 }
+.m-block.m-danger > p:first-child a:hover, .m-block.m-danger > p:first-child a:focus, .m-block.m-danger > p:first-child a:active,
 .m-block.m-danger h3 a:hover, .m-block.m-danger h3 a:focus, .m-block.m-danger h3 a:active,
 .m-block.m-danger h4 a:hover, .m-block.m-danger h4 a:focus, .m-block.m-danger h4 a:active,
 .m-block.m-danger h5 a:hover, .m-block.m-danger h5 a:focus, .m-block.m-danger h5 a:active,
 .m-block.m-danger h6 a:hover, .m-block.m-danger h6 a:focus, .m-block.m-danger h6 a:active {
   color: var(--danger-link-active-color);
 }
+.m-block.m-info > p:first-child a:hover, .m-block.m-info > p:first-child a:focus, .m-block.m-info > p:first-child a:active,
 .m-block.m-info h3 a:hover, .m-block.m-info h3 a:focus, .m-block.m-info h3 a:active,
 .m-block.m-info h4 a:hover, .m-block.m-info h4 a:focus, .m-block.m-info h4 a:active,
 .m-block.m-info h5 a:hover, .m-block.m-info h5 a:focus, .m-block.m-info h5 a:active,

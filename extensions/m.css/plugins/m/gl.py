@@ -30,54 +30,71 @@ from docutils.parsers.rst.roles import set_classes
 # to avoid dependencies, link_regexp and parse_link() is common for m.abbr,
 # m.gh, m.gl, m.link and m.vk
 
-link_regexp = re.compile(r'(?P<title>.*) <(?P<link>.+)>')
+link_regexp = re.compile(r"(?P<title>.*) <(?P<link>.+)>")
+
 
 def parse_link(text):
     link = utils.unescape(text)
     m = link_regexp.match(link)
-    if m: return m.group('title', 'link')
+    if m:
+        return m.group("title", "link")
     return None, link
+
 
 def glext(name, rawtext, text, lineno, inliner, options={}, content=[]):
     title, extension = parse_link(text)
-    if not title: title = extension
-    prefix = extension.partition('_')[0]
-    url = "https://www.khronos.org/registry/OpenGL/extensions/{}/{}.txt".format(prefix, extension)
+    if not title:
+        title = extension
+    prefix = extension.partition("_")[0]
+    url = "https://www.khronos.org/registry/OpenGL/extensions/{}/{}.txt".format(
+        prefix, extension
+    )
     set_classes(options)
     node = nodes.reference(rawtext, title, refuri=url, **options)
     return [node], []
 
+
 def webglext(name, rawtext, text, lineno, inliner, options={}, content=[]):
     title, extension = parse_link(text)
-    if not title: title = extension
+    if not title:
+        title = extension
     url = "https://www.khronos.org/registry/webgl/extensions/{}/".format(extension)
     set_classes(options)
     node = nodes.reference(rawtext, title, refuri=url, **options)
     return [node], []
 
+
 def glfn(name, rawtext, text, lineno, inliner, options={}, content=[]):
     title, fn = parse_link(text)
-    if not title: title = "gl{}()".format(fn)
-    url = "https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/gl{}.xhtml".format(fn)
+    if not title:
+        title = "gl{}()".format(fn)
+    url = "https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/gl{}.xhtml".format(
+        fn
+    )
     set_classes(options)
     node = nodes.reference(rawtext, title, refuri=url, **options)
     return [node], []
 
+
 def glfnext(name, rawtext, text, lineno, inliner, options={}, content=[]):
     title, extension = parse_link(text)
-    prefix = extension.partition('_')[0]
-    url = "https://www.khronos.org/registry/OpenGL/extensions/{}/{}.txt".format(prefix, extension)
+    prefix = extension.partition("_")[0]
+    url = "https://www.khronos.org/registry/OpenGL/extensions/{}/{}.txt".format(
+        prefix, extension
+    )
     set_classes(options)
     node = nodes.reference(rawtext, "gl" + title + prefix + "()", refuri=url, **options)
     return [node], []
 
+
 def register_mcss(**kwargs):
-    rst.roles.register_local_role('glext', glext)
-    rst.roles.register_local_role('webglext', webglext)
-    rst.roles.register_local_role('glfn', glfn)
-    rst.roles.register_local_role('glfnext', glfnext)
+    rst.roles.register_local_role("glext", glext)
+    rst.roles.register_local_role("webglext", webglext)
+    rst.roles.register_local_role("glfn", glfn)
+    rst.roles.register_local_role("glfnext", glfnext)
+
 
 # Below is only Pelican-specific functionality. If Pelican is not found, these
 # do nothing.
 
-register = register_mcss # for Pelican
+register = register_mcss  # for Pelican

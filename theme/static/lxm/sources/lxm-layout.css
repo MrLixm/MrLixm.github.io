@@ -167,3 +167,9 @@ add a  bottom/top margin with a large size
     margin-top: 2rem;
     margin-bottom: 2rem;
 }
+/*
+.l-overflow
+ */
+.l-overflow {
+    overflow: auto;
+}

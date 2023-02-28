@@ -31,49 +31,68 @@ from urllib.parse import urljoin
 
 logger = logging.getLogger(__name__)
 
+
 class AliasGenerator:
     def __init__(self, context, settings, path, theme, output_path, *args):
         self.output_path = output_path
         self.context = context
-        self.siteurl = settings['SITEURL']
+        self.siteurl = settings["SITEURL"]
 
     # Keep consistent with m.htmlsanity
     def format_siteurl(self, url):
-        return urljoin(self.siteurl + ('/' if not self.siteurl.endswith('/') else ''), url)
+        return urljoin(
+            self.siteurl + ("/" if not self.siteurl.endswith("/") else ""), url
+        )
 
     def generate_output(self, writer):
-        for page in self.context['pages'] + self.context['articles']:
-            aliases = page.metadata.get('alias', '').strip()
-            if not aliases: continue
-            for alias in aliases.split('\n'):
+        for page in self.context["pages"] + self.context["articles"]:
+            aliases = page.metadata.get("alias", "").strip()
+            if not aliases:
+                continue
+            for alias in aliases.split("\n"):
                 alias = alias.strip()
 
                 # Currently only supporting paths starting with /
-                if not alias.startswith('/'): assert False
+                if not alias.startswith("/"):
+                    assert False
                 path = os.path.join(self.output_path, alias[1:])
 
                 # If path ends with /, write it into index.html
                 directory, filename = os.path.split(path)
-                if not filename: filename = 'index.html'
+                if not filename:
+                    filename = "index.html"
 
                 alias_file = os.path.join(directory, filename)
                 alias_target = self.format_siteurl(page.url)
-                logger.info('m.alias: creating alias {} -> {}'.format(alias_file[len(self.output_path):], alias_target))
+                logger.info(
+                    "m.alias: creating alias {} -> {}".format(
+                        alias_file[len(self.output_path) :], alias_target
+                    )
+                )
 
                 # Write the redirect file
                 os.makedirs(directory, exist_ok=True)
-                with open(alias_file, 'w') as f:
-                    f.write("""<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url={}" /></head></html>\n""".format(alias_target))
+                with open(alias_file, "w") as f:
+                    f.write(
+                        """<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url={}" /></head></html>\n""".format(
+                            alias_target
+                        )
+                    )
+
 
 def register_mcss(**kwargs):
-    assert not "This plugin is Pelican-only" # pragma: no cover
+    assert not "This plugin is Pelican-only"  # pragma: no cover
+
 
 # Below is only Pelican-specific functionality. If Pelican is not found, these
 # do nothing.
 
-def _pelican_get_generators(generators): return AliasGenerator
 
-def register(): # for Pelican
+def _pelican_get_generators(generators):
+    return AliasGenerator
+
+
+def register():  # for Pelican
     from pelican import signals
 
     signals.get_generators.connect(_pelican_get_generators)

@@ -30,44 +30,60 @@ from docutils.parsers.rst.roles import set_classes
 # to avoid dependencies, link_regexp and parse_link() is common for m.abbr,
 # m.gh, m.gl, m.link and m.vk
 
-link_regexp = re.compile(r'(?P<title>.*) <(?P<link>.+)>')
+link_regexp = re.compile(r"(?P<title>.*) <(?P<link>.+)>")
+
 
 def parse_link(text):
     link = utils.unescape(text)
     m = link_regexp.match(link)
-    if m: return m.group('title', 'link')
+    if m:
+        return m.group("title", "link")
     return None, link
+
 
 def vkext(name, rawtext, text, lineno, inliner, options={}, content=[]):
     title, extension = parse_link(text)
-    if not title: title = extension
-    url = "https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VK_{}".format(extension)
+    if not title:
+        title = extension
+    url = "https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VK_{}".format(
+        extension
+    )
     set_classes(options)
     node = nodes.reference(rawtext, title, refuri=url, **options)
     return [node], []
+
 
 def vkfn(name, rawtext, text, lineno, inliner, options={}, content=[]):
     title, fn = parse_link(text)
-    if not title: title = "vk{}()".format(fn)
-    url = "https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vk{}.html".format(fn)
+    if not title:
+        title = "vk{}()".format(fn)
+    url = "https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vk{}.html".format(
+        fn
+    )
     set_classes(options)
     node = nodes.reference(rawtext, title, refuri=url, **options)
     return [node], []
+
 
 def vktype(name, rawtext, text, lineno, inliner, options={}, content=[]):
     title, fn = parse_link(text)
-    if not title: title = "Vk{}".format(fn)
-    url = "https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/Vk{}.html".format(fn)
+    if not title:
+        title = "Vk{}".format(fn)
+    url = "https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/Vk{}.html".format(
+        fn
+    )
     set_classes(options)
     node = nodes.reference(rawtext, title, refuri=url, **options)
     return [node], []
 
+
 def register_mcss(**kwargs):
-    rst.roles.register_local_role('vkext', vkext)
-    rst.roles.register_local_role('vkfn', vkfn)
-    rst.roles.register_local_role('vktype', vktype)
+    rst.roles.register_local_role("vkext", vkext)
+    rst.roles.register_local_role("vkfn", vkfn)
+    rst.roles.register_local_role("vktype", vktype)
+
 
 # Below is only Pelican-specific functionality. If Pelican is not found, these
 # do nothing.
 
-register = register_mcss # for Pelican
+register = register_mcss  # for Pelican

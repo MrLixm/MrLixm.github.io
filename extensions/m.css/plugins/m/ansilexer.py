@@ -112,51 +112,51 @@ from pygments.token import *
 # Palette or RGB Foreground colors from command 38 likewise do not interact
 # with the "bright" setting, nor do any background colors.
 class AnsiLexer(RegexLexer):
-    name = 'Ansi escape lexer'
+    name = "Ansi escape lexer"
 
-    _sgrs_and_text = '(?P<commands>(\x1b\\[(\\d*;)*\\d*m)+)(?P<text>[^\x1b]*)'
-    _sgr_split = re.compile('m\x1b\\[|;|m|\x1b\\[')
+    _sgrs_and_text = "(?P<commands>(\x1b\\[(\\d*;)*\\d*m)+)(?P<text>[^\x1b]*)"
+    _sgr_split = re.compile("m\x1b\\[|;|m|\x1b\\[")
 
     _named_colors = [
-        'Black',
-        'Red',
-        'Green',
-        'Yellow',
-        'Blue',
-        'Magenta',
-        'Cyan',
-        'White',
+        "Black",
+        "Red",
+        "Green",
+        "Yellow",
+        "Blue",
+        "Magenta",
+        "Cyan",
+        "White",
     ]
     _palette_start_colors = [
-        '000000',
-        '800000',
-        '008000',
-        '808000',
-        '000080',
-        '800080',
-        '008080',
-        'c0c0c0',
-        '808080',
-        'ff0000',
-        '00ff00',
-        'ffff00',
-        '0000ff',
-        'ff00ff',
-        '00ffff',
-        'ffffff',
+        "000000",
+        "800000",
+        "008000",
+        "808000",
+        "000080",
+        "800080",
+        "008080",
+        "c0c0c0",
+        "808080",
+        "ff0000",
+        "00ff00",
+        "ffff00",
+        "0000ff",
+        "ff00ff",
+        "00ffff",
+        "ffffff",
     ]
-    _palette_cube_steps = ['00', '5f', '87', 'af', 'd7', 'ff']
+    _palette_cube_steps = ["00", "5f", "87", "af", "d7", "ff"]
 
     def __init__(self, **options):
         RegexLexer.__init__(self, **options)
 
         self._bright = False
-        self._foreground = ''
-        self._background = ''
+        self._foreground = ""
+        self._background = ""
 
     def _callback(self, match):
-        commands = match.group('commands')
-        text = match.group('text')
+        commands = match.group("commands")
+        text = match.group("text")
 
         # split the commands strings into their constituent parameter codes
         parameters = self._sgr_split.split(commands)[1:-1]
@@ -168,8 +168,8 @@ class AnsiLexer(RegexLexer):
             command = parameters.pop(0)
             if command == 0:
                 self._bright = False
-                self._foreground = ''
-                self._background = ''
+                self._foreground = ""
+                self._background = ""
             elif command == 1:
                 self._bright = True
             elif command == 22:
@@ -184,7 +184,7 @@ class AnsiLexer(RegexLexer):
                     rgb = self._read_palette_color(parameters)
                 self._foreground = rgb
             elif command == 39:
-                self._foreground = ''
+                self._foreground = ""
             elif command >= 40 and command <= 47:
                 self._background = self._named_colors[command - 40]
             elif command == 48:
@@ -195,26 +195,24 @@ class AnsiLexer(RegexLexer):
                     rgb = self._read_palette_color(parameters)
                 self._background = rgb
             elif command == 49:
-                self._background = ''
+                self._background = ""
             elif command >= 90 and command <= 97:
-                self._foreground = ('Bright' +
-                                    self._named_colors[command - 90])
+                self._foreground = "Bright" + self._named_colors[command - 90]
             elif command >= 100 and command <= 107:
-                self._background = ('Bright' +
-                                    self._named_colors[command - 100])
+                self._background = "Bright" + self._named_colors[command - 100]
 
         if self._bright and self._foreground in self._named_colors:
-            token = 'Bright' + self._foreground
+            token = "Bright" + self._foreground
         elif self._bright and not self._foreground:
-            token = 'BrightDefault'
+            token = "BrightDefault"
         else:
             token = self._foreground
 
-        if (self._background):
-            token += '-On' + self._background
+        if self._background:
+            token += "-On" + self._background
 
         if token:
-            token = 'Generic.Ansi' + token
+            token = "Generic.Ansi" + token
             yield (match.start(), string_to_tokentype(token), text)
         else:
             yield (match.start(), Text, text)
@@ -236,7 +234,7 @@ class AnsiLexer(RegexLexer):
             return self._palette_start_colors[offset]
         elif offset < 232:
             offset = offset - 16
-            offset, b = divmod (offset,6)
+            offset, b = divmod(offset, 6)
             r, g = divmod(offset, 6)
             r = self._palette_cube_steps[r]
             g = self._palette_cube_steps[g]
@@ -247,20 +245,21 @@ class AnsiLexer(RegexLexer):
             return self._to_hex(shade, shade, shade)
 
     def _to_hex(self, r, g, b):
-        return '{:02x}{:02x}{:02x}'.format(r, g, b)
+        return "{:02x}{:02x}{:02x}".format(r, g, b)
 
     tokens = {
-        'root': [
-            ('[^\x1b]+', Text),
+        "root": [
+            ("[^\x1b]+", Text),
             (_sgrs_and_text, _callback),
         ]
     }
 
+
 class HtmlAnsiFormatter(HtmlFormatter):
     _ansi_color_re = re.compile(
         '(?P<Prefix>class="g g-Ansi)'
-        '((?P<RGBForeground>[0-9a-f]{6})|(?P<NamedForeground>[A-Za-z]+))?'
-        '(-On((?P<RGBBackground>[0-9a-f]{6})|(?P<NamedBackground>[A-Za-z]+)))?'
+        "((?P<RGBForeground>[0-9a-f]{6})|(?P<NamedForeground>[A-Za-z]+))?"
+        "(-On((?P<RGBBackground>[0-9a-f]{6})|(?P<NamedBackground>[A-Za-z]+)))?"
         '(?P<Suffix>")'
     )
 
@@ -269,37 +268,37 @@ class HtmlAnsiFormatter(HtmlFormatter):
 
     def _wrap_code(self, source):
         for i, t in source:
-            if i == 1: # it's a line of formatted code
+            if i == 1:  # it's a line of formatted code
                 t = self._ansi_color_re.sub(self._replace_ansi_class, t)
             yield i, t
 
     def _replace_ansi_class(self, match):
-        html_classes = ['g']
+        html_classes = ["g"]
         html_styles = []
 
-        named_foreground = match.group('NamedForeground')
+        named_foreground = match.group("NamedForeground")
         if named_foreground:
             html_classes.append("g-Ansi" + named_foreground)
         else:
-            rgb_foreground = match.group('RGBForeground')
+            rgb_foreground = match.group("RGBForeground")
             if rgb_foreground:
-                html_styles.append('color: #' + rgb_foreground)
+                html_styles.append("color: #" + rgb_foreground)
 
-        named_background = match.group('NamedBackground')
+        named_background = match.group("NamedBackground")
         if named_background:
             html_classes.append("g-AnsiBackground" + named_background)
         else:
-            rgb_background = match.group('RGBBackground')
+            rgb_background = match.group("RGBBackground")
             if rgb_background:
-                html_styles.append('background-color: #' + rgb_background)
+                html_styles.append("background-color: #" + rgb_background)
 
-        result = ''
-        if len(html_classes) > 1: # we don't want to emit just g
-            result = 'class="' + ' '.join(html_classes) + '"'
+        result = ""
+        if len(html_classes) > 1:  # we don't want to emit just g
+            result = 'class="' + " ".join(html_classes) + '"'
 
         if html_styles:
             if result:
-                result += ' '
-            result += 'style="' + '; '.join(html_styles) + '"'
+                result += " "
+            result += 'style="' + "; ".join(html_styles) + '"'
 
         return result
