@@ -7,7 +7,7 @@ Creating custom context menu for Windows file explorer.
 
 :status: draft
 :date-created: 2023-01-29 21:15
-:date: 2023-01-29 21:15
+:date: 2023-02-28 09:49
 
 :category: tutorial
 :tags: productivity, arnold, image-processing, windows
@@ -109,8 +109,8 @@ to the command prompt. You can also just copy and paste its path.
 .. note-info::
 
     On Windows, make sure paths are always wrapped in double quotes like
-    ``"C:/Program Files/xyz/bin/myapp.exe"`` else when you have a path it will
-    understand 2 arguments instead of one !
+    ``"C:/Program Files/xyz/bin/myapp.exe"`` else when you have a whitespace
+    it will understand 2 arguments instead of one !
 
 .. note-info::
 
@@ -621,7 +621,6 @@ Same routine, save and test. Everything should just work like before.
 
 Hopefully you should never have to get back to your reg file to edit it now.
 
-.. TODO rename "actions" to menu ?
 
 Creating sub-menus
 ==================
@@ -1397,9 +1396,8 @@ Let's consider I want to create the whole hierarchy for an individual 3d asset :
     MD "%1\assetName\lookdev\work"
     MD "%1\assetName\lookdev\publish"
 
-Very simple is use ``MD`` which means "MakeDirectory" and just give the absolute path
-to create.
-
+Very simple, it use ``MD`` command which means "MakeDirectory" and just give it
+the absolute directory path to create.
 
 And here is the reg file :
 
@@ -1490,6 +1488,10 @@ Most of the time it will be a character escaping issue.
     By doubling the first and last double-quote.
 
     More on that here : https://ss64.com/nt/syntax-esc.html
+
+Those rules are for the commands in the reg files. Not for batch files !
+
+Do not hesitate to join the discord linked below and ask, if you have any more issue.
 
 
 References
