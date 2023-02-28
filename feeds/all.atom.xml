@@ -1,5 +1,1427 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Liam Collod Website</title><link href="https://mrlixm.github.io/" rel="alternate"></link><link href="https://mrlixm.github.io/feeds/all.atom.xml" rel="self"></link><id>https://mrlixm.github.io/</id><updated>2022-03-30T20:58:00+02:00</updated><entry><title>Instancing in Katana</title><link href="https://mrlixm.github.io/blog/katana_instancing/" rel="alternate"></link><published>2022-03-30T20:58:00+02:00</published><updated>2022-03-30T20:58:00+02:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2022-03-30:/blog/katana_instancing/</id><summary type="html">&lt;p&gt;How OpScript can be used to create a flexible solution for
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Liam Collod Website</title><link href="https://mrlixm.github.io/" rel="alternate"></link><link href="https://mrlixm.github.io/feeds/all.atom.xml" rel="self"></link><id>https://mrlixm.github.io/</id><updated>2023-02-28T09:49:00+01:00</updated><entry><title>Creating custom context menu for Windows file explorer.</title><link href="https://mrlixm.github.io/blog/windows-explorer-context-menu/" rel="alternate"></link><published>2023-02-28T09:49:00+01:00</published><updated>2023-02-28T09:49:00+01:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2023-02-28:/blog/windows-explorer-context-menu/</id><summary type="html">&lt;p&gt;Making tx, rescaling image, displaying alembic content all as fast as
+a right click can be.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;I had always been a fan of contextual menu in interfaces. They are a very fast
+way to run various processes on a selected item. And at the same time you
+don’t have to remember which action you can run on the item, or how the
+action was named. You right click and everything doable is
+available a few pixels away from your cursor.&lt;/p&gt;
+&lt;p&gt;And I had come to the point where, while browsing my files in the
+file-explorer, I found that I needed to run a specific tool on a file. And
+then 10 min later again, and the next week again … Each time I had to open
+the tool (so depends how easy it is to find its executable on your system),
+copy the path of the file, and give it to the tool. Huh … too long I wish I
+could automate that.&lt;/p&gt;
+&lt;p&gt;A bit of research, and of course you can. You probably noticed that some
+applications you install doesn’t refrain themselves for adding actions to the
+context menu, so why not you ?&lt;/p&gt;
+&lt;aside class="m-block m-default"&gt;
+&lt;p&gt;Technical Level Required&lt;/p&gt;
+&lt;p&gt;Beginner, no need to know how to code. Everything is provided and explained
+as if you were a regular artist who doesn’t usually put his hands in
+Windows depths.&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;nav id="contents"&gt;
+&lt;h3&gt;Contents&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="#why" id="toc-entry-1"&gt;Why ?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#command-line-interfaces-programs" id="toc-entry-2"&gt;Command Line Interfaces programs&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#maketx-exe" id="toc-entry-3"&gt;maketx.exe&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#editing-the-registry-basics" id="toc-entry-4"&gt;Editing the registry: Basics&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#creating-the-reg-file" id="toc-entry-5"&gt;Creating the .reg file&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#executing-the-reg-file" id="toc-entry-6"&gt;Executing the .reg file&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#editing-the-registry-advanced" id="toc-entry-7"&gt;Editing the registry: Advanced&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#calling-the-command-prompt" id="toc-entry-8"&gt;Calling the command prompt&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#retrieving-the-file-selected-in-the-command" id="toc-entry-9"&gt;Retrieving the file selected in the command&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#passing-more-arguments" id="toc-entry-10"&gt;Passing more arguments&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#creating-a-uninstall-reg-file" id="toc-entry-11"&gt;Creating a “uninstall” reg file&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#using-environment-variables-for-robustness" id="toc-entry-12"&gt;Using environment variables for robustness&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#creating-sub-menus" id="toc-entry-13"&gt;Creating sub-menus&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#auto-generating-the-reg-files" id="toc-entry-14"&gt;Auto-generating the .reg files&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#cool-use-cases-ideas-for-context-menus" id="toc-entry-15"&gt;Cool use cases ideas for context-menus&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#maketx" id="toc-entry-16"&gt;maketx&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#txify-entire-folders" id="toc-entry-17"&gt;txify entire folders&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#colorspace-conversions" id="toc-entry-18"&gt;colorspace conversions&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#oiio-tool" id="toc-entry-19"&gt;OIIO Tool&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#retrieving-image-statistic-and-metadata" id="toc-entry-20"&gt;Retrieving image statistic and metadata&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#rescaling-textures" id="toc-entry-21"&gt;Rescaling textures&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#converting-images-to-ico" id="toc-entry-22"&gt;Converting images to .ico&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#convert-tx-back-to-another-format" id="toc-entry-23"&gt;Convert .tx back to another format&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#abcinfo" id="toc-entry-24"&gt;ABCInfo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#ffmpeg" id="toc-entry-25"&gt;ffmpeg&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#video-to-gif" id="toc-entry-26"&gt;video to gif&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#optimized-mp4-videos" id="toc-entry-27"&gt;optimized mp4 videos&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#image-sequence-to-video" id="toc-entry-28"&gt;image sequence to video&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#creating-directory-hierarchies" id="toc-entry-29"&gt;Creating directory hierarchies&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#starting-different-version-of-the-same-dcc" id="toc-entry-30"&gt;Starting different version of the same DCC&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#troubleshooting" id="toc-entry-31"&gt;Troubleshooting&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#references" id="toc-entry-32"&gt;References&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/nav&gt;
+&lt;/aside&gt;
+&lt;section id="why"&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-1"&gt;Why ?&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;You might have clicked on this article because you already knew it sounded
+like something you wanted to do at some point. But for the others why would
+you even need to add new actions to the context menu ?&lt;/p&gt;
+&lt;p&gt;To get an example that will be familiar for the 3d artists out there let’s take
+the case of &lt;code&gt;makeTx&lt;/code&gt;. If you are using Arnold you know what I’m going to
+talk about. For every texture you use in your scene, Arnold will usually
+generate a version of it in its own format called &lt;code&gt;tx&lt;/code&gt; (nearly every
+render-engine has its own). This process is
+usually done automatically when you click render but there is multiple reasons
+it can goes wrong, or might not just be the behavior you want. The
+solution to fix it is to manually generate the tx files. To achieve that you
+can use the &lt;code&gt;makeTx.exe&lt;/code&gt; tool that is found alongside the Arnold installation.&lt;/p&gt;
+&lt;p&gt;The particularity with that tool being that it is a &lt;a href="https://en.wikipedia.org/wiki/Command-line_interface"&gt;Command Line
+Interface&lt;/a&gt;, which mean
+you dont need to go through an interface to execute actions inside.&lt;/p&gt;
+&lt;p&gt;At the end of this article, you could had something like this :&lt;/p&gt;
+&lt;video muted loop autoplay style="width: 100%; height: 100%;"&gt;
+  &lt;source src="/static/images/blog/0009/rmb.full_demo.mp4" type="video/mp4"&gt;
+&lt;/video&gt;&lt;/section&gt;
+&lt;section id="command-line-interfaces-programs"&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-2"&gt;Command Line Interfaces programs&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;A Command Line Interface program is made to be interacted with from the command
+line, and not from a graphical interface like most programs. If you are not familiar
+with &lt;abbr title="Command Line Interfaces"&gt;CLIs&lt;/abbr&gt;, they are going to look very unpleasant
+to use compared to a &lt;abbr title="Graphical User Interface"&gt;GUI&lt;/abbr&gt;. But their power
+will be found in the flexibility they offer, especially for automatizing tasks.
+&lt;span class="m-text m-primary"&gt;It’s like you were ordering the program to perform an action by describing it in
+a sentence.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;This is will be useful in our case, because this means that by passing the
+“right sentence” to makeTx, he could generate a tx from the file that has been
+selected from the right-click !&lt;/p&gt;
+&lt;p&gt;If you ever tried to double click on a .exe just to see a window open and
+close immediately, it’s probably because it was a CLI. By double clicking on it
+you executed it, it execute the task it was made for (in our case nothing
+because you didn’t gave it any argument), and then close once finish.&lt;/p&gt;
+&lt;p&gt;To first see what’s going on when you don’t give it arguments, let’s open the
+command line. On Windows, this can be achieved using &lt;code&gt;Win&lt;/code&gt; + &lt;code&gt;R&lt;/code&gt; then typing
+&lt;code&gt;cmd&lt;/code&gt; and enter. You can also just search for &lt;code&gt;Command Prompt&lt;/code&gt; in the
+Windows search bar.&lt;/p&gt;
+&lt;div class="m-image"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0009/command-prompt-blank.png"&gt;&lt;img alt="A blank command prompt." src="https://mrlixm.github.io/static/images/blog/0009/command-prompt-blank.png" style="width: 783px" /&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;Then to execute our program you need to pass the path to its executable.
+Easiest way is just to drag and drop the executable from the file explorer
+to the command prompt. You can also just copy and paste its path.&lt;/p&gt;
+&lt;aside class="m-note m-info"&gt;
+On Windows, make sure paths are always wrapped in double quotes like
+&lt;code&gt;&amp;quot;C:/Program Files/xyz/bin/myapp.exe&amp;quot;&lt;/code&gt; else when you have a whitespace
+it will understand 2 arguments instead of one !&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;aside class="m-note m-info"&gt;
+&lt;p&gt;
+makeTx program can be found in the &lt;code&gt;bin/&lt;/code&gt; directory of your Arnold
+installation.&lt;br /&gt;
+Something like &lt;code&gt;C:\Program Files\Autodesk\Arnold\maya2023\bin\maketx.exe&lt;/code&gt;&lt;br /&gt;
+&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;p&gt;Then press enter to start executing it.&lt;/p&gt;
+&lt;div class="m-image"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0009/command-prompt-maketx.png"&gt;&lt;img alt="Command prompt after executing makeTx.exe" src="https://mrlixm.github.io/static/images/blog/0009/command-prompt-maketx.png" style="width: 994px" /&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;Without any argument, most CLI will just display their documentation. Which
+we will anyway need to open at least one time to make sure we know what
+arguments the tool expects.&lt;/p&gt;
+&lt;aside class="m-note m-info"&gt;
+Most CLI will display their documentation if you just pass the
+&lt;code&gt;--help&lt;/code&gt; argument after the path to the executable.&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;aside class="m-note m-info"&gt;
+arguments are piece of text separated by a whitespace. For example, this
+command &lt;code&gt;maketx.exe -u -v --format exr&lt;/code&gt; has 4 arguments, the last one being
+needed by the third one.&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;section id="maketx-exe"&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-3"&gt;maketx.exe&lt;/a&gt;&lt;/h3&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://openimageio.readthedocs.io/en/latest/maketx.html#maketx"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;svg height="50" width="50" width="340px" height="340px" viewBox="0 0 340 340" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"&gt;
+  &lt;g id="Logo-mark-color"&gt;
+    &lt;path d="M37.7779 0L37.7779 37.7778L56.6667 37.7778L56.6667 0L340 0L340 340L0 340L0 56.6667L37.7771 56.6667L37.7771 37.7778L0 37.7778L0 0L37.7779 0L37.7779 0ZM37.7769 37.7827L37.7769 302.227L302.221 302.227L302.221 37.7827L37.7769 37.7827L37.7769 37.7827ZM56.6685 56.6628L56.6685 100.737L100.743 100.737L100.743 56.6628L56.6685 56.6628L56.6685 56.6628ZM119.628 56.6628L119.628 100.737L163.702 100.737L163.702 56.6628L119.628 56.6628L119.628 56.6628ZM182.594 56.6628L182.594 100.737L226.668 100.737L226.668 56.6628L182.594 56.6628L182.594 56.6628ZM56.6685 119.634L56.6685 163.708L100.743 163.708L100.743 119.634L56.6685 119.634L56.6685 119.634ZM119.628 119.634L119.628 163.708L163.702 163.708L163.702 119.634L119.628 119.634L119.628 119.634ZM56.6685 182.594L56.6685 226.668L100.743 226.668L100.743 182.594L56.6685 182.594L56.6685 182.594Z" id="Vector" fill="#0583D6" fill-rule="evenodd" stroke="none" /&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;OpenImageIO - maketx&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://openimageio.readthedocs.io/en/latest/maketx.html#maketx"&gt;https://openimageio.readthedocs.io/en/latest/maketx.html#maketx&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;Official makeTx documentation. Arnold version is slightly different.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Alright, how does makeTx works ? You can see on the line &lt;code&gt;Usage : maketx
+[options] file...&lt;/code&gt; that it expect the path of the file to be provided last,
+and before some options.&lt;/p&gt;
+&lt;p&gt;The options are listed just under, and there is a lot of them. Usually
+options/arguments are documented but here we only have their name to guess
+what they are doing.&lt;/p&gt;
+&lt;p&gt;But don’t worry, no need for playing the guess game of which options does
+what we want. How ? Well you know Arnold already auto-convert the tx files
+for you, so it knows which options to use. And thankfully, the whole command
+used to generate the tx file is actually embedded in the tx’s metadata !&lt;/p&gt;
+&lt;p&gt;But how do I retrieve the tx’s metadata ? Well, by using an other CLI that
+we are going to see a bit later (oiiotool), I can retrieve it from any
+existing tx that have been previously generated. Here is a line stored
+in the metadata of a tx file :&lt;/p&gt;
+&lt;pre class="m-code"&gt;Software: &amp;quot;OpenImageIO-Arnold 2.4.0dev : maketx G:/whatever/sources/FREDDY_Shoes/texturing/publish/textures-4k.v04\FREDDY_Shoes_Diffuse_Color_1001.exr --opaque-detect --constant-color-detect --monochrome-detect --fixnan box3 --oiio --attrib tiff:half 1 -v -u --unpremult --oiio --format exr&amp;quot;&lt;/pre&gt;
+&lt;p&gt;Seems there is a lot of options used ! One important thing to keep in mind is
+that &lt;strong&gt;those options vary depending on what kind of texture you are converting
+and how the “texture node” in the source DCC is configured.&lt;/strong&gt; The most notable
+variable option being &lt;code&gt;--colorconvert&lt;/code&gt; (explained later), used to convert the
+input file to another colorspace that might or might not be specified.&lt;/p&gt;
+&lt;aside class="m-note m-default"&gt;
+You might have notice that in the above command the filepath is specified
+before the options, usually order matters, but here seems makeTx don’t care !
+Maybe because the documentation is incorrect or just both works …&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;aside class="m-note m-warning"&gt;
+&lt;p&gt;You must be aware that the &lt;code&gt;maketx.exe&lt;/code&gt; from the Arnold installation has
+been slightly modified from the “official” maketx of OpenImageIO I linked
+a bit above. It append
+default argument to the command, no matter if you already gave them.&lt;/p&gt;
+&lt;p&gt;Those default argument are always :&lt;/p&gt;
+&lt;pre class="m-code"&gt;--opaque-detect --constant-color-detect --monochrome-detect --fixnan box3 --oiio --attrib tiff:half &lt;span class="m"&gt;1&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;And as such doesn’t need to be provided again when calling maketx manually.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;(at least for the 2.4.0dev version I’m using, older Arnold version might
+not append the same arguments)&lt;/em&gt;&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;p&gt;Anyway we have what we need, the whole command required to convert a file to tx.
+We can now have a look at how to create the context menu !&lt;/p&gt;
+&lt;/section&gt;
+&lt;/section&gt;
+&lt;section id="editing-the-registry-basics"&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-4"&gt;Editing the registry: Basics&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Unfortunately, there is no really simple and easy way to add actions to the context menu
+(though there might be if you look for them on internet), at least for this article,
+we will have to edit the &lt;a href="https://en.wikipedia.org/wiki/Windows_Registry"&gt;registry&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To keep it simple see the registry as a file hierarchy like we use daily, but
+instead of file, we are manipulating “keys” that have different values set on them.
+You can access keys by their path, like you would do for a file.&lt;/p&gt;
+&lt;p&gt;If you ever have to use it, you know it’s not easy to find what you are looking for.
+Or you are probably aware that editing the wrong stuff inside can easily break
+parts of your system.&lt;/p&gt;
+&lt;p&gt;To mitigate those issues we will be using &lt;code&gt;.reg&lt;/code&gt; files. Instead of browsing
+the registry Editor we specify how we want to edit in the file. The advantages are :&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;They allow for a reproducible process. That means that if your reformat your system,
+you don’t have to remember which registry key you created. Just execute the reg file again.&lt;/li&gt;
+&lt;li&gt;You can easily create a copy of the initial reg file that does the inverse,
+meaning removing the keys instead of adding them.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;aside class="m-note m-danger"&gt;
+Keep in mind that editing the registry is always a risk, so it is
+recommended to &lt;a href="https://support.microsoft.com/en-us/topic/how-to-back-up-and-restore-the-registry-in-windows-855140ad-e318-2a13-2829-d428a2ab0692"&gt;save a backup of it&lt;/a&gt;
+before any change.&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;section id="creating-the-reg-file"&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-5"&gt;Creating the .reg file&lt;/a&gt;&lt;/h3&gt;
+&lt;aside class="m-block m-info"&gt;
+&lt;p&gt;Documentation&lt;/p&gt;
+&lt;p&gt;&lt;a class="m-link-wrap" href="https://en.wikipedia.org/wiki/Windows_Registry#.REG_files"&gt;https://en.wikipedia.org/wiki/Windows_Registry#.REG_files&lt;/a&gt;&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;p&gt;As a first step, create a blank new file like a &lt;code&gt;.txt&lt;/code&gt; and just replace the
+extension with &lt;code&gt;.reg&lt;/code&gt; (you might need to display file extension in the View
+menu of the file explorer if not set already).&lt;/p&gt;
+&lt;p&gt;Then right click and open the file with any text/code editor (make sure to not
+click on it else you will be executing it !).&lt;/p&gt;
+&lt;p&gt;Just so you get an idea of the finished product, here is an example of what we
+will be putting in that reg file :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="na"&gt;Windows Registry Editor Version 5.00&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;makeTx&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;icon&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;F:\\blog\\demo-icon.ico&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;subCommands&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert to .tx&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k %%MAKETX%% \&amp;quot;%1\&amp;quot; --opaque-detect --constant-color-detect --monochrome-detect --fixnan box3 --oiio --attrib tiff:half 1 -v -u --unpremult --oiio --format exr&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;As mentioned previously, creating keys by their path, and setting values on those keys.&lt;/p&gt;
+&lt;aside class="m-note m-info"&gt;
+You can add comment lines by starting them with a semi-colon &lt;code&gt;;&lt;/code&gt;&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;p&gt;On the first line, we always have to put this text :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="na"&gt;Windows Registry Editor Version 5.00&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;The next important step will be to determine the root location of the key to use.
+This location will determine on which type of file explorer entities the action
+in the context menu will appear.&lt;/p&gt;
+&lt;p&gt;Here are the few options available :&lt;/p&gt;
+&lt;table class="l-table l-overflow"&gt;
+&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;All Files&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;HKEY_CURRENT_USER\Software\Classes\*\shell\&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;By File Extension &lt;a class="m-footnote" href="#footnote-1" id="footnote-reference-1"&gt;[1]&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\{EXTENSION}\shell&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Directories&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;HKEY_CURRENT_USER\Software\Classes\Directory\shell&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Directories Background&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Drive&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;HKEY_CURRENT_USER\Software\Classes\Drive\shell&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;aside class="m-note m-default"&gt;
+If you would like to make the context-menu action available to ALL users of
+the system you could replace &lt;code&gt;HKEY_CURRENT_USER&lt;/code&gt; with
+&lt;code&gt;HKEY_LOCAL_MACHINE&lt;/code&gt;.&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;p&gt;As makeTx (and most CLI) is designed to work on files we need to choose between
+the 2 first keys. As a lot of image format can be converted to makeTx we are
+going to play the lazy card and just assume we want to this option on all
+file formats so we will be using the first root key.&lt;/p&gt;
+&lt;p&gt;Great, we have now the root path for each key. Now time to create the first key.
+We just need a name for it (&lt;em&gt;special-character-free&lt;/em&gt;). No need to think to hard,
+we will be using just &lt;code&gt;makeTx&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Let’s put that into the reg file :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="na"&gt;Windows Registry Editor Version 5.00&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;You notice that I added a new key location &lt;code&gt;shell&lt;/code&gt; after our root key. It’s
+needed by Windows. Now we can configure our key. We can start by configuring
+which text will appear in the context-menu for this key :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="na"&gt;Windows Registry Editor Version 5.00&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;makeTx&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;I could have put any sentence between the 2 double quotes, but I decided to
+stay simple.&lt;/p&gt;
+&lt;p&gt;Then you might want to add a icon next to your action. It can be achieved like :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="na"&gt;Windows Registry Editor Version 5.00&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;makeTx&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;icon&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;F:\\blog\\demo-icon.ico&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;But you have to keep in mind :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You have to put an absolute path (starting from the drive letter, not relative)&lt;/li&gt;
+&lt;li&gt;You have to escape backward slashes like &lt;code&gt;\&lt;/code&gt; -&amp;gt; &lt;code&gt;\\&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;You have to use an &lt;code&gt;.ico&lt;/code&gt; file. There is plenty of online converter for it.&lt;/li&gt;
+&lt;li&gt;If for whatever reason the path doesn’t exists/is not valid, you will get a default “sheet” icon.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And finally the most important option, what is executed when clicking on the action !
+We have to create a new key &lt;code&gt;command&lt;/code&gt; and then configure it.
+For the configuration we will pass a string as you would execute the program
+from the command prompt.&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="na"&gt;Windows Registry Editor Version 5.00&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;makeTx&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;icon&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;F:\\blog\\demo-icon.ico&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;D:\\resources\\maketx.exe&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;If you remember what we tested previously, this will only display the documentation
+of makeTx, cause we doesn’t provide any argument. But let’s move step by step
+and test what we already have.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="executing-the-reg-file"&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-6"&gt;Executing the .reg file&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Save your reg file from your text/code editor and double click on it. Windows
+will gift you 3 dialogs to accept, but that will be all you have to do.&lt;/p&gt;
+&lt;p&gt;As a safety, let’s manually check in the registry if it was registered. Open the
+&lt;code&gt;Registry Editor&lt;/code&gt; (you can use windows search). In the window that opens,
+find the “current path” field, right under the menu bar. Inside paste
+the path of the key we created and press enter.
+The editor should directly browse to the key.&lt;/p&gt;
+&lt;div class="m-image"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0009/registry-editor-maketx.png"&gt;&lt;img alt="Screenshot of the Registry Editor int he state described above." src="https://mrlixm.github.io/static/images/blog/0009/registry-editor-maketx.png" /&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;If you would want to delete what we did, you could just delete the &lt;code&gt;makeTx&lt;/code&gt;
+key (but we will see an alternative later).&lt;/p&gt;
+&lt;p&gt;It’s a good practice that when you follow this tutorial, you casually have a look
+in the Registry Editor to check everything is updated as expected.&lt;/p&gt;
+&lt;p&gt;Aright in theory it should work, what about practice ? Well pick any file
+in the file explorer (because remember we put it under &lt;code&gt;*&lt;/code&gt; which work for
+all file extensions) and right click on it. You should now see the &lt;code&gt;makeTx&lt;/code&gt;
+action near the top !&lt;/p&gt;
+&lt;p&gt;Let’s test it, click on it :&lt;/p&gt;
+&lt;div class="m-image"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0009/rmb-makeTx-demo-1.gif"&gt;&lt;img alt="gif of right clicking on a file and clicking on the makeTx action" src="https://mrlixm.github.io/static/images/blog/0009/rmb-makeTx-demo-1.gif" /&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;Well … it just open and close. Not very useful … But this is normal, remember
+what I explained in the &lt;a href="#command-line-interfaces-programs"&gt;Command Line Interfaces programs&lt;/a&gt;, the program execute
+its task and then close. If we want to keep its result displayed we have to
+open it from the command line. And that’s a task for the next section !&lt;/p&gt;
+&lt;/section&gt;
+&lt;/section&gt;
+&lt;section id="editing-the-registry-advanced"&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-7"&gt;Editing the registry: Advanced&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The previous section allowed us to add a new simple action to the context menu,
+that just execute the application we gave it. But we are still missing plenty
+of use-cases, like how to keep the interface open in the case of a CLI, or even
+more importantly, how do we pass the path of the file we right-clicked on, to
+the command executed ?&lt;/p&gt;
+&lt;section id="calling-the-command-prompt"&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-8"&gt;Calling the command prompt&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Let’s address the issue we stopped the previous section at. As our tool is a CLI,
+it close once finished. But we want to keep its result visible. Manually the solution
+was to execute it from an existing command prompt window. And we will do exactly
+the same for our context-menu action.&lt;/p&gt;
+&lt;p&gt;Get back to out .reg file and the last line where we define our command to execute.&lt;/p&gt;
+&lt;p&gt;To open the command prompt we simply need to prefix our command with
+&lt;code&gt;cmd /k&lt;/code&gt;, so we have:&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="na"&gt;Windows Registry Editor Version 5.00&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;makeTx&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;icon&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;F:\\blog\\demo-icon.ico&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;D:\\resources\\maketx.exe\&amp;quot;&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;By safety we also wrapped our path between escaped double quotes, to make sure
+the command prompt doesn’t complain.&lt;/p&gt;
+&lt;p&gt;Save the reg file and execute it again. Find a file again, and execute the
+action in the context-menu as previously.&lt;/p&gt;
+&lt;p&gt;We now have a command prompt window that open and execute the maketx.exe program.
+But as intended, the window stays open because it was not opened by maketx but
+by us. Nice.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="retrieving-the-file-selected-in-the-command"&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-9"&gt;Retrieving the file selected in the command&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Probably the most interesting option for our context-menu. We selected a file
+by right-clicking, this mean we want to execute a program on it, by passing the
+path of this file to the program.&lt;/p&gt;
+&lt;p&gt;For now our makeTx action only open the documentation of the program cause it
+doesn’t receive any argument. By passing the path of the file it should now
+start the conversion.&lt;/p&gt;
+&lt;p&gt;To retrieve it simple we will be using the &lt;code&gt;%1&lt;/code&gt; variable (it simply retrieve
+the first argument passed to the command line, which is the path of the file) :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="na"&gt;Windows Registry Editor Version 5.00&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;makeTx&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;icon&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;F:\\blog\\demo-icon.ico&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;D:\\resources\\maketx.exe\&amp;quot; \&amp;quot;%1\&amp;quot;\&amp;quot;&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;Again we wrap it between escaped double-quotes by safety BUT we also now
+double the first and last quotes, necessary when this more that one pair of quotes &lt;a class="m-footnote" href="#footnote-4" id="footnote-reference-2"&gt;[4]&lt;/a&gt;.
+Else we will get a &lt;a href="https://stackoverflow.com/a/15262019/13806195"&gt;very funky behavior&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Repeat the usual steps to tests, and you should now see the file right-clicked
+properly converted to tx (if you selected an image format selected by maketx
+of course).&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="passing-more-arguments"&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-10"&gt;Passing more arguments&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;You remember at the beginning that I extracted the full command used by maketx
+on an existing .tx file ? There was a lot of additional arguments used.
+Let’s add them. As on my side I am using maketx from the Arnold installation
+I will remove all the argument that maketx will already add for me anyway
+(explained at the beginning of the article).&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="na"&gt;Windows Registry Editor Version 5.00&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;makeTx&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;icon&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;F:\\blog\\demo-icon.ico&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;D:\\resources\\maketx.exe\&amp;quot; \&amp;quot;%1\&amp;quot;\&amp;quot; -v -u --unpremult --format exr&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;No need to escape the argument this time.&lt;/p&gt;
+&lt;p&gt;Test again, you should mainly see much more info being displayed as we used the
+&lt;code&gt;-v&lt;/code&gt; option which means “verbose”.&lt;/p&gt;
+&lt;p&gt;And at that state we have a totally working command 🥳, but don’t leave yet, we
+still have a few improvements to make !&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="creating-a-uninstall-reg-file"&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-11"&gt;Creating a “uninstall” reg file&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;For now we have a single file that allow us to create the keys in the registry.
+But what if we want the inverse, meaning removing them ? All program can be
+installed and uninstalled, so it should be the same for our context-menu action.&lt;/p&gt;
+&lt;p&gt;As mentioned before you could manually dig into the registry to delete the key,
+but if we took the time to create a reg file, it’s not to end up browsing the
+registry manually to revert it.&lt;/p&gt;
+&lt;p&gt;The solution is to create a new reg file that delete the keys instead of adding
+them. To start just copy/paste the existing reg file we have been creating.
+Also open it in your text/code editor. And now very simple edit, in front of
+each key path, after the first bracket, add a minus character :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="na"&gt;Windows Registry Editor Version 5.00&lt;/span&gt;
+
+&lt;span class="k"&gt;[-HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;makeTx&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;icon&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;F:\\blog\\demo-icon.ico&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[-HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;D:\\resources\\maketx.exe\&amp;quot; \&amp;quot;%1\&amp;quot; -v -u --unpremult --format exr\&amp;quot;&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;That’s about it. It’s enough to tell Windows to remove the keys instead of creating them.
+You could simplify the file by removing the line setting values but I will leave
+them so I can remember exactly what I’m removing.&lt;/p&gt;
+&lt;p&gt;Now that you have 2 files (good idea to keep them side by side), &lt;strong&gt;you will need
+to remember that if you add a new key / edit an existing one in the “create” reg
+file, you also need to propagate the changes in the “uninstall” reg file&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;And we end up with a pretty robust workflow, “install” your custom context-menu
+in one double-click and “uninstall” it the same way ! Without having to remember
+which key you added or manually browsing the registry editor.&lt;/p&gt;
+&lt;aside class="m-note m-info"&gt;
+I recommend to always execute the “delete” reg file before
+editing the “add” reg file. Else if you change a key name in the “add” reg file
+and propagate the change to the “delete” reg file, the previous key name will
+still be in the registry because you forgot to delete it !&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;/section&gt;
+&lt;section id="using-environment-variables-for-robustness"&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-12"&gt;Using environment variables for robustness&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;In all the previous examples we have been using an absolute path to
+&lt;code&gt;maketx.exe&lt;/code&gt;. Let’s imagine your directly picked the maketx located in your
+Maya Arnold installation, or whatever other DCC. What happens if you uninstall
+that version ? Well your command will break. You will have to edit the reg file
+with the new maketx path and edit it again …&lt;/p&gt;
+&lt;blockquote&gt;
+But wait ! I could just copy maketx.exe to one of my personal resources
+directory so I’m sure it will not be deleted when uninstalling Arnold !&lt;/blockquote&gt;
+&lt;p&gt;And you’d be right, maketx is a standalone program that doesn’t need anything
+else to work so you could just copy it anywhere else. But what happens when
+you want to upgrade your maketx version ? Or you move it. Well you
+have to go find and update the reg file to execute it again. Not the
+most annoying task, but we can do better.&lt;/p&gt;
+&lt;p&gt;Introducing &lt;a href="https://en.wikipedia.org/wiki/Environment_variable"&gt;environment variables&lt;/a&gt;.
+A system wide way to set and query values. I will not make a full tutorial
+on them so we will skip to the essential. Feel free to browse the internet to learn
+more about them.&lt;/p&gt;
+&lt;ol start="0"&gt;
+&lt;li&gt;In the Window search bar type “environment” and select “Edit Environment variable”&lt;/li&gt;
+&lt;li&gt;Select Edit&lt;/li&gt;
+&lt;li&gt;Create a new variable at user level&lt;/li&gt;
+&lt;li&gt;Fill the values, we will be naming it &lt;code&gt;MAKETX&lt;/code&gt;. (Do NOT wrap it in quotes
+like in the example picture).&lt;/li&gt;
+&lt;li&gt;“Ok” for all dialogs.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="m-image"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0009/env-var-maketx.png"&gt;&lt;img alt="step by step to set environment variable" src="https://mrlixm.github.io/static/images/blog/0009/env-var-maketx.png" /&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;aside class="m-note m-warning"&gt;
+Be careful when choosing a name for your environment variable. It’s possible
+that a program will expect this variable name and use it. In our case
+&lt;code&gt;MAKETX&lt;/code&gt; has a high chance of being expected by a program, but at the same
+time it would probably also expect the path to the maketx executable. So
+in a way it should not break anything.&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;p&gt;And now to get the environment variable value in our command we need to use
+the &lt;a href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting"&gt;batch&lt;/a&gt; syntax
+&lt;code&gt;%ENVVARNAME%&lt;/code&gt; :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="na"&gt;Windows Registry Editor Version 5.00&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;makeTx&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;icon&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;F:\\blog\\demo-icon.ico&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;%%MAKETX%%\&amp;quot; \&amp;quot;%1\&amp;quot;\&amp;quot; -v -u --unpremult --oiio --format exr&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;A lot going on the “escaping” side here (it is teh biggest source of issue) :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the &lt;code&gt;%&lt;/code&gt; need to be escaped by doubling it so the variable is resolved only
+when cmd dialog is opened.&lt;/li&gt;
+&lt;li&gt;we again need to escape the variable MAKETX with quotes around it as it’s a path.
+Like for &lt;code&gt;%1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;we need to double escape the first and last quotes in the whole command again
+(needed when there is more than 2 quotes in the command) &lt;a class="m-footnote" href="#footnote-4" id="footnote-reference-3"&gt;[4]&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Same routine, save and test. Everything should just work like before.&lt;/p&gt;
+&lt;p&gt;Hopefully you should never have to get back to your reg file to edit it now.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="creating-sub-menus"&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-13"&gt;Creating sub-menus&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;One feature that you might want to use, would be to have nested menus. For
+example the default “Open With” menu offer multiple options once hovered.&lt;/p&gt;
+&lt;p&gt;With our example it would be nice to have multiple maketx options, one for
+Arnold, one for Renderman, one with a colorspace conversion, …&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="na"&gt;Windows Registry Editor Version 5.00&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;makeTx&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;icon&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;F:\\blog\\demo-icon.ico&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;subCommands&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert to .tx&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;%%MAKETX%%\&amp;quot; \&amp;quot;%1\&amp;quot;\&amp;quot; -v -u --unpremult --oiio --format exr&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;What happened ?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Well first you can see our root key got a new value set with
+&lt;code&gt;&amp;quot;subCommands&amp;quot;=&amp;quot;&amp;quot;&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;We then added a new sub-key. For that we took the root
+key path and added &lt;code&gt;shell\&lt;/code&gt; + a new custom name for that key&lt;/li&gt;
+&lt;li&gt;that new key can use the same options as the root key so I used
+&lt;code&gt;MUIVerb&lt;/code&gt; again to set the text displayed in the interface.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I could create a new sub-key from it, and so on and so on … but let’s stop
+here. Copy/paste the last key path and append &lt;code&gt;\command&lt;/code&gt; as before then add
+the command to execute.&lt;/p&gt;
+&lt;p&gt;And finally here is the full maketx example with 3 sub-commands :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="na"&gt;Windows Registry Editor Version 5.00&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;makeTx&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;icon&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;F:\\blog\\demo-icon.ico&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;subCommands&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert to .tx&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;%%MAKETX%%\&amp;quot; \&amp;quot;%1\&amp;quot;\&amp;quot; -v -u --unpremult --format exr&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvertprman]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert to Renderman .tx&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvertprman\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;%%MAKETX%%\&amp;quot; \&amp;quot;%1\&amp;quot;\&amp;quot; --prman -v -u --unpremult --format exr&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvertsrgb]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert to .tx - sRGB source&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvertsrgb\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;%%MAKETX%%\&amp;quot; \&amp;quot;%1\&amp;quot;\&amp;quot; --colorconvert sRGB linear -v -u --unpremult --format exr&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;aside class="m-note m-warning"&gt;
+If you got your maketx executable from Arnold installation the second key
+with the &lt;code&gt;--prman&lt;/code&gt; option will not work as Arnold always append &lt;code&gt;--oiio&lt;/code&gt;
+which conflict with &lt;code&gt;--prman&lt;/code&gt; :(&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;div class="m-image"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0009/rmb-makeTx-demo-submenus.gif"&gt;&lt;img alt="example of right clicking on a file with the above setup" src="https://mrlixm.github.io/static/images/blog/0009/rmb-makeTx-demo-submenus.gif" /&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;aside class="m-block m-info"&gt;
+&lt;p&gt;context-menu action sorting&lt;/p&gt;
+&lt;p&gt;Menus are sorted alphabetically by key name. In the above example even
+if I first create &lt;code&gt;txconvertsrgb&lt;/code&gt;, it will still be displayed after
+&lt;code&gt;txconvertprman&lt;/code&gt;. A workaround for this would be to se a number prefix
+like &lt;code&gt;001txconvertsrgb&lt;/code&gt;, but this also mean you have to edit all your
+key when you want to insert a new one between existing ones.&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;aside class="m-block m-warning"&gt;
+&lt;p&gt;Nested context-menu limit&lt;/p&gt;
+&lt;p&gt;Unfortunately there is a limit of sub context-menu you can create from a
+root context menu. The root context-menu is the first key defining the
+&lt;code&gt;subCommand=&amp;quot;&amp;quot;&lt;/code&gt; property and then EVERY other context-menu under that
+root will be counted until you reach &lt;strong&gt;the maximum of 16 menus&lt;/strong&gt;. &lt;a class="m-footnote" href="#footnote-2" id="footnote-reference-4"&gt;[2]&lt;/a&gt;&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;/section&gt;
+&lt;section id="auto-generating-the-reg-files"&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-14"&gt;Auto-generating the .reg files&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;For the more technical person that will be reading this article. I already
+simplified all the steps above by creating a python CLI.&lt;/p&gt;
+&lt;div class="l-url-box"&gt;
+&lt;a class="l-url-a" href="https://github.com/MrLixm/Reg-file-creator"&gt;&lt;/a&gt;
+&lt;div class="l-url-box-image"&gt;
+&lt;img src="https://opengraph.githubassets.com/b156f27a74c59c1a80f31050d52fa66fba750b1d3cf63253bc338b5050f53517/MrLixm/Reg-file-creator" /&gt;
+&lt;/div&gt;
+&lt;div class="l-url-box-details"&gt;
+&lt;p class="l-url-title"&gt;GitHub - Reg-file-creator&lt;/p&gt;
+&lt;div class="l-url-subtitle"&gt;
+&lt;a class="m-link-wrap" href="https://github.com/MrLixm/Reg-file-creator"&gt;https://github.com/MrLixm/Reg-file-creator&lt;/a&gt;
+&lt;/div&gt;
+&lt;p class="l-url-description"&gt;Python package to create context-menu entries in windows via .reg file.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;It allow to write the key structure as a json with a bunch of workflow optimizations,
+like relative paths, variables, … so the whole process should be much
+faster and much less human-error prone.&lt;/p&gt;
+&lt;/section&gt;
+&lt;/section&gt;
+&lt;section id="cool-use-cases-ideas-for-context-menus"&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-15"&gt;Cool use cases ideas for context-menus&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Because maketx is not the only program that is cool to have available has a right
+click, here is a few ideas that could really boost your workflow !&lt;/p&gt;
+&lt;section id="maketx"&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-16"&gt;maketx&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Even more of it !&lt;/p&gt;
+&lt;section id="txify-entire-folders"&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-17"&gt;txify entire folders&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;With what we saw we can quickly convert all the texture in a directory by selecting
+them all, and running the context-menu. But we could also implement this by
+selecting a directory and executing the context menu from it.&lt;/p&gt;
+&lt;p&gt;Of course maketx doesn’t accept directories so we need to retrieve files from it.
+We will be creating the usual intermediate batch file :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="k"&gt;echo&lt;/span&gt; off
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="se"&gt;%%&lt;/span&gt;i &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;\*.exr&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;\*.tiff&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;\*.png&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="k"&gt;echo&lt;/span&gt; - processing &lt;span class="se"&gt;%%&lt;/span&gt;i
+    &lt;span class="k"&gt;start&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;maketx&amp;quot;&lt;/span&gt; /b &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%MAKETX%&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="se"&gt;%%&lt;/span&gt;i -v -u --unpremult --oiio --format exr
+&lt;span class="p"&gt;)&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;What’s going on :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;(&amp;quot;%1\*.exr&amp;quot;)&lt;/code&gt; we find all files with the .exr extension in the given directory
+(and we can ask multiple extensions separated by a comma)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;start&lt;/code&gt; we launch the maketx process in a new command prompt. They are launched
+“asynchronously” which mean all the command are started without waiting for the
+previous one to complete. Sometimes called &lt;strong&gt;multi-threading&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;maketx&amp;quot;&lt;/code&gt; that new command prompt is named “maketx”&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;\b&lt;/code&gt; we actually don’t want to display this new command prompt.
+This also mean that all text outputs is logged in the current prompt in a pure
+asynchronous chaos (so you can omit it if you prefer)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You can try it without the &lt;code&gt;start &amp;quot;maketx&amp;quot; \b&lt;/code&gt; and you will see that each
+command will be executed one after the other which will take much more time.&lt;/p&gt;
+&lt;p&gt;The keys to add in the reg files can looks like this :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\Directory\shell\maketx\shell\convertall]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Convert all images to .tx&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\Directory\shell\maketx\shell\convertall\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;F:\\softwares\\os\\config\\contextmenus\\maketx\\batch\\convert_dir.bat\&amp;quot; \&amp;quot;%1\&amp;quot;\&amp;quot;&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;If you wish to process the directory recursively, you can use the &lt;code&gt;/R&lt;/code&gt; flag &lt;a class="m-footnote" href="#footnote-5" id="footnote-reference-5"&gt;[5]&lt;/a&gt; :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="k"&gt;echo&lt;/span&gt; off
+
+&lt;span class="k"&gt;for&lt;/span&gt; /R &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="se"&gt;%%&lt;/span&gt;i &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;*.exr, *.tiff, *.png&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="k"&gt;echo&lt;/span&gt; - processing &lt;span class="se"&gt;%%&lt;/span&gt;i
+    &lt;span class="k"&gt;start&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;maketx&amp;quot;&lt;/span&gt; /b &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%MAKETX%&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="se"&gt;%%&lt;/span&gt;i -v -u --unpremult --oiio --format exr
+&lt;span class="p"&gt;)&lt;/span&gt;&lt;/pre&gt;
+&lt;/section&gt;
+&lt;section id="colorspace-conversions"&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-18"&gt;colorspace conversions&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;In the final maketx example you may have noticed I created an action that
+assume the source texture is sRGB “Display” encoded and is converted to sRGB Linear.
+It’s pretty common to have colorspace conversion as all tx should be encoded
+in the rendering colorspace.&lt;/p&gt;
+&lt;p&gt;To perform the colorspace conversion I used the &lt;code&gt;--colorconvert sRGB linear&lt;/code&gt; argument.
+The 2 “colorspaces” names I’m giving are builtins &lt;a class="m-footnote" href="#footnote-6" id="footnote-reference-6"&gt;[6]&lt;/a&gt; but there is only 3 of
+them so if you need anything different we will have to rely on
+&lt;a href="https://opencolorio.org/"&gt;OCIO&lt;/a&gt;. If you are not familiar with it, I’m not
+going to explain it sorry, too long for this article.&lt;/p&gt;
+&lt;p&gt;Here is the command updated to perform colorspace conversions based on colorspace
+stored in an OCIO configuration (example with the old ACES 1.2 one) :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%MAKETX%&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; --colorconfig &lt;span class="s2"&gt;&amp;quot;D:\whatever\ACES\config.ocio&amp;quot;&lt;/span&gt; --colorconvert &lt;span class="s2"&gt;&amp;quot;Utility - sRGB - Texture&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ACES - ACEScg&amp;quot;&lt;/span&gt; -v -u --unpremult --format exr&lt;/pre&gt;
+&lt;aside class="m-note m-default"&gt;
+&lt;code&gt;--colorconfig&lt;/code&gt; is not needed if the &lt;code&gt;OCIO&lt;/code&gt; environment variable
+is already set properly &lt;a class="m-footnote" href="#footnote-7" id="footnote-reference-7"&gt;[7]&lt;/a&gt;&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;/section&gt;
+&lt;/section&gt;
+&lt;section id="oiio-tool"&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-19"&gt;OIIO Tool&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;I will start by the most useful of all (for a 3D artist at least). &lt;a href="https://openimageio.readthedocs.io/en/latest/oiiotool.html#"&gt;oiiotool&lt;/a&gt; is the CLI
+version of the OpenImageIO library and was designed to perform image-processing.&lt;/p&gt;
+&lt;p&gt;Just have a look at the documentation and the &lt;a href="https://openimageio.readthedocs.io/en/latest/oiiotool.html#oiiotool-tutorial-recipes"&gt;multiple examples it includes&lt;/a&gt;
+to get an idea of how powerful it is.&lt;/p&gt;
+&lt;p&gt;As it could handle probably hundred of actions you want to perform from a
+context menu, I will just show a few very useful of them.&lt;/p&gt;
+&lt;aside class="m-block m-default"&gt;
+&lt;p&gt;How to download it&lt;/p&gt;
+&lt;p&gt;oiiotool is part of the &lt;a href="https://github.com/OpenImageIO/oiio"&gt;OpenImageIO code library&lt;/a&gt;
+, and as such is not officially downloadable. You have to compile the
+library yourself to get it.&lt;/p&gt;
+&lt;p&gt;Fortunately it’s not the only solution :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;
+It is shipped with the Arnold installation !&lt;br /&gt;
+You can find it in &lt;code&gt;C:\Program Files\Autodesk\Arnold\maya{VERSION}\bin&lt;/code&gt;&lt;br /&gt;
+It’s a totally standalone builded application so you can copy it anywhere&lt;br /&gt;
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;
+&lt;a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#openimageio"&gt;Someone shared pre-compiled version of OIIO&lt;/a&gt;
+Make sure to download the &lt;code&gt;x64.zip&lt;/code&gt; version.&lt;br /&gt;
+note1: the versions are a bit old but better than nothing&lt;br /&gt;
+note2: the .exe need some of the &lt;code&gt;.dll&lt;/code&gt; next to it to work&lt;br /&gt;
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;aside class="m-note m-warning"&gt;
+The following examples assume you put the path to &lt;code&gt;oiiotool.exe&lt;/code&gt; in an
+environment variable &lt;code&gt;OIIOTOOL&lt;/code&gt; as shown previously.&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;section id="retrieving-image-statistic-and-metadata"&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-20"&gt;Retrieving image statistic and metadata&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Especially useful for OpenEXR files. To check what is stored inside.&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="na"&gt;Windows Registry Editor Version 5.00&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;OIIO Tool&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;icon&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;F:\\softwares\\os\\config\\contextmenus\\oiiotool\\oiiotool.ico&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;subCommands&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiioinfo]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Display Info&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiioinfo\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k %%OIIOTOOL%% --info -v \&amp;quot;%1\&amp;quot;&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;/section&gt;
+&lt;section id="rescaling-textures"&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-21"&gt;Rescaling textures&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;It is most common that you exported textures with large dimensions like
+4096x4096 and that you need to resize them as you don’t need that much pixels.&lt;/p&gt;
+&lt;p&gt;Again with oiiotool, as fast as right click can be !&lt;/p&gt;
+&lt;p&gt;This time setting this context-menu will be more complicated. If we were to
+reuse the workflow we used previously we would set something like this :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;rescale 2048&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k %%OIIOTOOL%% -v \&amp;quot;\&amp;quot;%1\&amp;quot; --resize 2048x0 -o \&amp;quot;%~n1-2048%~x1\&amp;quot;\&amp;quot;&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;The issues is in the last argument of the command, where we need to pass the path
+of the new file OIIO need to write. If we were to overwrite the existing file,
+easy you can just give &lt;code&gt;\&amp;quot;%1\&amp;quot;&lt;/code&gt;. But here we want to create a new file.
+The batch language has a special syntax to make path manipulation on variables.
+Unfortunately the syntax doesn’t work when called from &lt;code&gt;cmd /k&lt;/code&gt;.&lt;/p&gt;
+&lt;aside class="m-block m-info"&gt;
+&lt;p&gt;path manipulation in batch&lt;/p&gt;
+&lt;p&gt;&lt;a class="m-link-wrap" href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting#Percent_tilde"&gt;https://en.wikibooks.org/wiki/Windows_Batch_Scripting#Percent_tilde&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Let’s dissect &lt;code&gt;%~n1-2048%~x1&lt;/code&gt; we are using here :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;%~n1&lt;/code&gt; : the file name without path and extension, of the first argument (1)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-2048&lt;/code&gt; : the suffix we add to the filename.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;%~x1&lt;/code&gt;: File name extension (including the period) of the first argument (1)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;p&gt;We need a workaround to be able to use the full batch syntax. This workaround
+could also be used if you need to execute more complex commands. So here we will
+be using a &lt;code&gt;.bat&lt;/code&gt; file to define our command, and the registry command will
+just start the bat file.&lt;/p&gt;
+&lt;aside class="m-note m-info"&gt;
+A batch file (&lt;code&gt;.bat&lt;/code&gt;) is a text file defining a series of command
+to be executed in the order they are defined in. &lt;a class="m-footnote" href="#footnote-3" id="footnote-reference-8"&gt;[3]&lt;/a&gt; Double clicking the file
+will execute it. You can edit its content with any text editor using
+&lt;code&gt;Open With&lt;/code&gt; from the context menu.&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;p&gt;Create a new &lt;code&gt;.bat&lt;/code&gt; file (create a .txt and just rename the extension). Open
+it with any text/code editor and inside paste the following :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="k"&gt;echo&lt;/span&gt; off
+
+&lt;span class="nv"&gt;%OIIOTOOL%&lt;/span&gt; -v &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; --resize &lt;span class="nv"&gt;%2&lt;/span&gt;x0 -o &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%~n1&lt;/span&gt;&lt;span class="s2"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;%2%~x1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;You can observe :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;we replace &lt;code&gt;2048&lt;/code&gt; with &lt;code&gt;%2&lt;/code&gt; which imply we will be using the
+2nd argument passed to the .bat to determine the size to rescale. With this we
+can use one .bat to rescale to any size !&lt;/li&gt;
+&lt;li&gt;no need to escape quotes characters in bat files !&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Save the .bat somewhere then let’s get back to our .reg file :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;rescale 2048&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&amp;quot; %1 2048&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;Don’t forget to also escape the backward slashes in the path. You notice that
+we just forward the path of the file selected as first argument of the bat, and
+the second argument is indeed the size to use.&lt;/p&gt;
+&lt;p&gt;You can the just copy the above setup as much time as needed to have multiple
+size options :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale4096]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;rescale 4096&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale4096\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&amp;quot; %1 4096&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;rescale 2048&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&amp;quot; %1 2048&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale1024]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;rescale 1024&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale1024\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&amp;quot; %1 1024&amp;quot;&lt;/span&gt;
+
+&lt;span class="na"&gt;...&lt;/span&gt;&lt;/pre&gt;
+&lt;aside class="m-note m-info"&gt;
+As you know, using cmd will open a new command prompt every time, that you
+need to manually close. This can be annoying when processing dozens
+of textures. Actually nothing prevent you to directly start the .bat
+without the &lt;code&gt;cmd /k&lt;/code&gt;. You will just not be able to know if the the rescaling
+failed.&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;/section&gt;
+&lt;section id="converting-images-to-ico"&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-22"&gt;Converting images to .ico&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;You saw that we needed to create &lt;code&gt;.ico&lt;/code&gt; file to give pretty icon to our
+context-menus, and it’s annoying to go on some random website to convert your
+images. Let’s automatize it too !&lt;/p&gt;
+&lt;p&gt;As previously, in 2 part with a .bat :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="k"&gt;echo&lt;/span&gt; off
+&lt;span class="nv"&gt;%OIIOTOOL%&lt;/span&gt; -v -i &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; --fit 256x256 --dup --resize 128x0 --dup --resize 64x0 --dup --resize 48x0 --dup --resize 32x0 --dup --resize 24x0 --dup --resize 16x0 --siappendall -o &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%~n1&lt;/span&gt;&lt;span class="s2"&gt;.ico&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;pre class="m-code"&gt;&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiioicon]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert to .ico&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiioicon\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;F:\\blog\\path\\to\\oiiotool-ico-convert.bat\&amp;quot; %1&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;The only tricky part was to know the ico format store multiple versions of
+the same image at different scales, but again OIIO make that pretty easy !&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="convert-tx-back-to-another-format"&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-23"&gt;Convert .tx back to another format&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;If you ever only received/find that there only the tx left for your asset, you
+can use oiitool to convert them to a more readable format !&lt;/p&gt;
+&lt;p&gt;Here is just the .bat file where I convert them back to EXR :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="k"&gt;echo&lt;/span&gt; off
+
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;target_file=&lt;/span&gt;&lt;span class="nv"&gt;%~n1&lt;/span&gt;&lt;span class="s2"&gt;.exr&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="k"&gt;exist&lt;/span&gt; &lt;span class="nv"&gt;%target_file%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Destination file already exists : &lt;/span&gt;&lt;span class="nv"&gt;%target_file%&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="nv"&gt;override_target&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="se"&gt;^&amp;gt;&lt;/span&gt; do you want to override it (y/n&lt;span class="p"&gt;)&lt;/span&gt;:
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="k"&gt;not&lt;/span&gt; &lt;span class="nv"&gt;%override_target%&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;y&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+      &lt;span class="k"&gt;exit&lt;/span&gt; /b
+    &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;)&lt;/span&gt;
+
+&lt;span class="nv"&gt;%OIIOTOOL%&lt;/span&gt; -v -i &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; --unmip -o &lt;span class="nv"&gt;%target_file%&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;Few notes :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This time I check that the target file doesn’t already exists, we never know !
+If it exists I ask the user if he wants to overwrite it else I exit.&lt;/li&gt;
+&lt;li&gt;I use &lt;code&gt;--unmip&lt;/code&gt; because the tx is mipmapped and I don’t care about keeping them.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I let you create the keys in the reg file (also you could add it to the maketx
+menu if this is more logical to you).&lt;/p&gt;
+&lt;/section&gt;
+&lt;/section&gt;
+&lt;section id="abcinfo"&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-24"&gt;ABCInfo&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Next one : retrieving information about an Alembic file without even opening
+it in a DCC. We will be using a CLI called &lt;code&gt;abcinfo.exe&lt;/code&gt;. &lt;em&gt;This CLI can only
+be found in Houdini installation&lt;/em&gt; :&lt;/p&gt;
+&lt;pre class="m-code"&gt;C:\Program Files\Side Effects Software\Houdini {VERSION}\bin\abcinfo.exe&amp;quot;&lt;/pre&gt;
+&lt;p&gt;The tool is not standalone, meaning you can’t just copy it somewhere. I
+recommend to as always set an environment variable to it that you can easily
+update when you update your Houdini version.&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="na"&gt;Windows Registry Editor Version 5.00&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.abc\shell\abcinfo]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;abcinfo&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;icon&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;%ABCINFO%&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;subCommands&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.abc\shell\abcinfo\shell\001abcinfo]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;abcinfo&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.abc\shell\abcinfo\shell\001abcinfo\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;%%ABCINFO%%\&amp;quot; \&amp;quot;%1\&amp;quot;\&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.abc\shell\abcinfo\shell\002abcinfo_verbose]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;abcinfo verbose&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.abc\shell\abcinfo\shell\002abcinfo_verbose\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;%%ABCINFO%%\&amp;quot; -v \&amp;quot;%1\&amp;quot;\&amp;quot;&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;This time no need to put it in &lt;code&gt;Classes\*&lt;/code&gt;, we only need it for &lt;code&gt;.abc&lt;/code&gt;. I
+created 2 commands, one which give most of the time the info I need, another one
+that really give the maximum of info about the file.&lt;/p&gt;
+&lt;p&gt;You can also notice that for the icon we gave the path to a abcinfo.exe ! Windows will
+use the icon packed in the .exe (if there is one). And we also leave the environment
+variable that still work just fine.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="ffmpeg"&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-25"&gt;ffmpeg&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;One of the most famous CLI. Powering most of the video-processing applications,
+&lt;a href="https://ffmpeg.org/"&gt;ffmpeg&lt;/a&gt; is an invaluable resource for anything video-related.&lt;/p&gt;
+&lt;p&gt;As for oiiotool, the use-case for it are hundred and I will only show a few of them.
+But at the opposite of oiiotool, &lt;a href="https://www.gyan.dev/ffmpeg/builds/#release-builds"&gt;finding a compiled version&lt;/a&gt;
+is much easier. Download it somewhere an create an environment variable
+(I picked the very original &lt;code&gt;FFMPEG&lt;/code&gt; for the name)&lt;/p&gt;
+&lt;section id="video-to-gif"&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-26"&gt;video to gif&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;An important problem while converting video to gif is disk size. GIF are cools,
+but can become very heavy if not optimized, and most website have file size limitations.&lt;/p&gt;
+&lt;p&gt;So when doing a gif we always try to find a good quality/size compromise which
+is achieved by tweaking various parameters : resolution, fps, dithering, …&lt;/p&gt;
+&lt;p&gt;You could make a bunch of context-menu action with various “preset” of optimization
+but you will always find yourself with a specific case that need to be under a
+certain size, …&lt;/p&gt;
+&lt;p&gt;So here we will be doing something new : we will ask the user for input on variables
+for the conversion.&lt;/p&gt;
+&lt;p&gt;Generating optimized GIFs will require a pretty complex command. We will
+create a .bat file to store it, and call the batch file from the context menu.&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="k"&gt;echo&lt;/span&gt; off
+
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;ask_user&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;1
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="k"&gt;not&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%~2&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;ask_user&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;%2&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;%ask_user%&lt;/span&gt; &lt;span class="ow"&gt;equ&lt;/span&gt; 0 &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;framerate&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;%3&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="nv"&gt;framerate&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;- Target framerate:
+&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;%ask_user%&lt;/span&gt; &lt;span class="ow"&gt;equ&lt;/span&gt; 0 &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;scale_divide&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;%4&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="nv"&gt;scale_divide&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;- Target Size Divider:
+&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;file_suffix=&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;%ask_user%&lt;/span&gt; &lt;span class="ow"&gt;equ&lt;/span&gt; 0 &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="k"&gt;not&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%~5&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;file_suffix&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;%5&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;file_suffix=- File name suffix (optional):&amp;quot;&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;dithering=sierra2_4a&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;%ask_user%&lt;/span&gt; &lt;span class="ow"&gt;equ&lt;/span&gt; 0 &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="k"&gt;not&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%~6&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;dithering&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;%6&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; # DITHERING methods&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;     none&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; # higher scale = less visible dotted pattern but more banding&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;     bayer:bayer_scale=0&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;     bayer:bayer_scale=1&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;     bayer:bayer_scale=2&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;     bayer:bayer_scale=3&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;     bayer:bayer_scale=4&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;     bayer:bayer_scale=5&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; # (popular) lighter than bayer&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;     floyd_steinberg&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; # even lighter, very pronounced banding&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;     sierra2&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; # (default) heavy, subttle dot pattern with few banding.&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;     sierra2_4a&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="nv"&gt;dithering&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;- Dithering method:
+&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;output=&lt;/span&gt;&lt;span class="nv"&gt;%~n1%file_suffix%&lt;/span&gt;&lt;span class="s2"&gt;.gif&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;filter_graph=fps=&lt;/span&gt;&lt;span class="nv"&gt;%framerate%&lt;/span&gt;&lt;span class="s2"&gt;,scale=iw/&lt;/span&gt;&lt;span class="nv"&gt;%scale_divide%&lt;/span&gt;&lt;span class="s2"&gt;:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse=dither=&lt;/span&gt;&lt;span class="nv"&gt;%dithering%&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+
+
+&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;: -y : overwite existing, else use -n&lt;/span&gt;
+&lt;span class="nv"&gt;%FFMPEG%&lt;/span&gt; -y -i &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; -threads 0 -loop 0 -vf &lt;span class="nv"&gt;%filter_graph%&lt;/span&gt; &lt;span class="nv"&gt;%output%&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;But we make sure the script can still be used without having to enter a manual
+input. It’s achieved by checking if there is a second argument provided and if
+that argument equal one. With that bat we can then create the following reg file :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="na"&gt;Windows Registry Editor Version 5.00&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;ffmpeg&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;icon&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg.ico&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;subCommands&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\001togif_ask]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert video to .gif - interactive&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\001togif_ask\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\&amp;quot; %1 1&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert video to .gif [presets]&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;subCommands&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\003togif502sierra]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert video to .gif - fps:50 size:/2 dithering:sierra2_4a&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\003togif502sierra\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\&amp;quot; %1 0 50 2 \&amp;quot;\&amp;quot;\&amp;quot; sierra2_4a&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\004togif501sierra]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert video to .gif - fps:50 size:/1 dithering:sierra2_4a&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\004togif501sierra\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\&amp;quot; %1 0 50 1 \&amp;quot;\&amp;quot;\&amp;quot; sierra2_4a&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\005togif501floyd]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert video to .gif - fps:50 size:/1 dithering:floyd_steinberg&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\005togif501floyd\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\&amp;quot; %1 0 50 1 \&amp;quot;\&amp;quot;\&amp;quot; floyd_steinberg&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\006togif242sierra]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert video to .gif - fps:24 size:/2 dithering:sierra2_4a&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\006togif242sierra\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\&amp;quot; %1 0 24 2 \&amp;quot;\&amp;quot;\&amp;quot; sierra2_4a&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\007togif241sierra]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert video to .gif - fps:24 size:/1 dithering:sierra2_4a&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\007togif241sierra\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\&amp;quot; %1 0 24 1 \&amp;quot;\&amp;quot;\&amp;quot; sierra2_4a&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\008togif241floyd]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert video to .gif - fps:24 size:/1 dithering:floyd_steinberg&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\008togif241floyd\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\&amp;quot; %1 0 24 1 \&amp;quot;\&amp;quot;\&amp;quot; floyd_steinberg&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;You can quickly see why we need an option to let he user give what parameter
+he needs. Else we end up with dozens of actions to cover most of the possibilities.
+I ended-up offering 6 presets for now. I think there is room to optimize them
+but did not spend the time to test what combinaison could be the most versatile.&lt;/p&gt;
+&lt;p&gt;Also remember that we are limited to max 16 keys and I’m already using 6
+of them with just “presets” + 1 for the interactive + 1 for creating a
+sub-menu for presets !&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="optimized-mp4-videos"&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-27"&gt;optimized mp4 videos&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;One reason you migh want to use ffmpeg is to convert to one video format to another.
+You produced a “master” video, witht he highest quality possible, and you now
+want to share it on the web, which require encoding it in more optimized and
+light-weight formats.&lt;/p&gt;
+&lt;p&gt;ffmpeg is a hell of a tool with hundred of argument, The most difficult part
+is finding which argument you need to build your command. As I’m more a ffmpeg
+novice I took advice from more experienced users by using this guide :
+&lt;a class="m-link-wrap" href="https://academysoftwarefoundation.github.io/EncodingGuidelines/"&gt;https://academysoftwarefoundation.github.io/EncodingGuidelines/&lt;/a&gt;
+(which have the advantage of focusing on color-accuracy for vfx).&lt;/p&gt;
+&lt;p&gt;Let’s take the same workflow we used for gif conversion. Here is the
+intermediate batch file :&lt;/p&gt;
+&lt;pre class="m-code"&gt;    &lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="k"&gt;echo&lt;/span&gt; off
+
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;ask_user&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;1
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="k"&gt;not&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%~2&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;ask_user&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;%2&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;%ask_user%&lt;/span&gt; &lt;span class="ow"&gt;equ&lt;/span&gt; 0 &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;framerate&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;%3&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[framerate] usually ntsc-film (23.98), 24, ntsc (29.97), 60000/1001 (59.94)&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="nv"&gt;framerate&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="se"&gt;^&amp;gt;&lt;/span&gt; framerate=
+    &lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;%ask_user%&lt;/span&gt; &lt;span class="ow"&gt;equ&lt;/span&gt; 0 &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;preset&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;%4&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[presets] ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="nv"&gt;preset&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="se"&gt;^&amp;gt;&lt;/span&gt; preset=
+    &lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;%ask_user%&lt;/span&gt; &lt;span class="ow"&gt;equ&lt;/span&gt; 0 &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;tune&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;%5&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; [tune]&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;     - film : use for high quality movie content; lowers deblocking&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;     - animation : good for cartoons; uses higher deblocking and more reference frames&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;     - grain : preserves the grain structure in old, grainy film material&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="nv"&gt;tune&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="se"&gt;^&amp;gt;&lt;/span&gt; tune=
+    &lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;%ask_user%&lt;/span&gt; &lt;span class="ow"&gt;equ&lt;/span&gt; 0 &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;crf&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;%6&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[crf] Constant Rate Factor. Between 0 (lossless) &amp;lt;- 18 &amp;lt;- 23 &amp;lt;- 28 (worse)&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="nv"&gt;crf&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="se"&gt;^&amp;gt;&lt;/span&gt; crf=
+    &lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;%ask_user%&lt;/span&gt; &lt;span class="ow"&gt;equ&lt;/span&gt; 0 &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;reso_width&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;%7&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[resolution] Target will be rescaled to the given width, while maintaining aspect ratio.&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="nv"&gt;reso_width&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="se"&gt;^&amp;gt;&lt;/span&gt; resolution=
+    &lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;file_suffix=&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;%ask_user%&lt;/span&gt; &lt;span class="ow"&gt;equ&lt;/span&gt; 0 &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="k"&gt;not&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%~8&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+            &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;file_suffix&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;%8&lt;/span&gt;
+        &lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[file_suffix] File name suffix (optional)&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;file_suffix=&amp;gt; file_suffix=&amp;quot;&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;output=&lt;/span&gt;&lt;span class="nv"&gt;%~n1%file_suffix%&lt;/span&gt;&lt;span class="s2"&gt;.mp4&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;filter_graph=scale=&lt;/span&gt;&lt;span class="nv"&gt;%reso_width%&lt;/span&gt;&lt;span class="s2"&gt;:trunc(ow/a/2)*2:flags=lanczos:in_color_matrix=bt709:out_color_matrix=bt709&amp;quot;&lt;/span&gt;
+
+    &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;: -y : overwite existing, else use -n&lt;/span&gt;
+    &lt;span class="nv"&gt;%FFMPEG%&lt;/span&gt; -n -i &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; -threads 0 -r &lt;span class="nv"&gt;%framerate%&lt;/span&gt; -vf &lt;span class="nv"&gt;%filter_graph%&lt;/span&gt; -c:v libx264 -preset &lt;span class="nv"&gt;%preset%&lt;/span&gt; -tune &lt;span class="nv"&gt;%tune%&lt;/span&gt; -crf &lt;span class="nv"&gt;%crf%&lt;/span&gt; -pix_fmt yuv420p -color_range tv -colorspace bt709 -color_primaries bt709 -color_trc iec61966-2-1 &lt;span class="nv"&gt;%output%&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;Much more control than the gif workflow. The reg file then looks like this
+(extending the reg file used for gif)&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\009mp4_ask]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert source to optimized .mp4 - interactive&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\009mp4_ask\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-mp4-optimize.bat\&amp;quot; %1 1&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert source to optimized .mp4 [presets]&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;subCommands&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets\shell\011mp4_preset2]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert .mp4 - fps:24 size:1920 quality:medium:film:18&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets\shell\011mp4_preset2\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-mp4-optimize.bat\&amp;quot; %1 0 24 medium film 18 1920 -opti&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets\shell\012mp4_preset1]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert .mp4 - fps:24 size:1920 quality:slower:film:12&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets\shell\012mp4_preset1\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-mp4-optimize.bat\&amp;quot; %1 0 24 slower film 12 1920 -opti&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets\shell\013mp4_preset3]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert .mp4 - fps:24 size:1920 quality:fast:film:23&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets\shell\013mp4_preset3\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-mp4-optimize.bat\&amp;quot; %1 0 24 fast film 23 1920 -opti&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;div class="m-image"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0009/rmb-ffmpeg-mp4.gif"&gt;&lt;img alt="example of right clicking on a .mov file and selecting the interactive option" src="https://mrlixm.github.io/static/images/blog/0009/rmb-ffmpeg-mp4.gif" /&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+&lt;section id="image-sequence-to-video"&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-28"&gt;image sequence to video&lt;/a&gt;&lt;/h4&gt;
+&lt;aside class="m-note m-default"&gt;
+This kind of more complex script would be &lt;a href="https://github.com/jedypod/generate-dailies"&gt;better written in python&lt;/a&gt; but I’m
+offering a Windows built-in alternative for less technical people.&lt;/aside&gt;
+&lt;/aside&gt;
+&lt;p&gt;And now the ultimate example, combining oiiotool and ffmpeg. The pitch is :
+We have an image sequence of renders, our final scene shot with a bunch of frames.
+We have been working properly and have been rendering &lt;code&gt;.exr&lt;/code&gt; to have maximum
+control for post-production. But we want to quickly check those EXRs before getting
+them in our post-prod software. And as you know finding an image viewer reading
+image sequence can be quite complicated. Or you just really want a video to
+share with your client.&lt;/p&gt;
+&lt;p&gt;ffmpeg is directly capable of ingesting image sequences and turning them to a
+video. But support for  exr is pretty limited, and even more for color-management.
+The solution is to use oiiotool to produce an image sequence that is “ready-to-go”
+for ffmpeg.&lt;/p&gt;
+&lt;p&gt;This behavior is described in the previous shared website
+&lt;a class="m-link-wrap" href="https://academysoftwarefoundation.github.io/EncodingGuidelines/EncodingOverview.html#color-space-conversion"&gt;https://academysoftwarefoundation.github.io/EncodingGuidelines/EncodingOverview.html#color-space-conversion&lt;/a&gt;–
+which also provide valuable informations for color management of the destination video.&lt;/p&gt;
+&lt;p&gt;But if now we think about the technical implementation, how do we pass
+multiple files as argument to our .bat/ffmpeg ? Well it would have been convenient
+that the user select the frame of the sequence that he wants to render to video,
+and only those frames are converted. But this is impossible. The reason being
+that the context menu is never aware of multiple files selected. If you select
+multiple files and execute a context-menu action on them, Windows will execute
+the command individually on each file.&lt;/p&gt;
+&lt;p&gt;If we look at what ffmpeg expect for image-sequences, we can see that luckly
+for us it doesn’t expect a list of file path, but a single one with a frame
+token. This mean the user would only need to select one file, and just replace
+the frame number by the token.&lt;/p&gt;
+&lt;p&gt;Unfortunately there is no way of automatizing the detection of the frame pattern
+easily with the resources we are using since the beginning (you could with
+Python for example). To keep it simple we will let the user handle that and
+ask him to manually replace the frame number in the file name.&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="k"&gt;echo&lt;/span&gt; off
+
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Image sequence to video conversion started.&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;  active OCIO config=&lt;/span&gt;&lt;span class="nv"&gt;%OCIO%&lt;/span&gt;&lt;span class="s2"&gt; &amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;echo&lt;/span&gt;:
+
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[abstract_file_name] Enter the file name with the frame number replace by a &lt;/span&gt;&lt;span class="nv"&gt;%d (no padding) or a %&lt;/span&gt;&lt;span class="s2"&gt;0Nd (with padding) &amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;                     Example: asset-lookdev.v0001.0012 -&amp;gt; asset-lookdev.v0001.&lt;/span&gt;&lt;span class="se"&gt;%%&lt;/span&gt;&lt;span class="s2"&gt;04d                                   &amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;current file name is: &lt;/span&gt;&lt;span class="nv"&gt;%~n1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="nv"&gt;abstract_file_name&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="se"&gt;^&amp;gt;&lt;/span&gt; abstract_file_name=
+&lt;span class="k"&gt;echo&lt;/span&gt;:
+
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[file_suffix] File name suffix (optional)&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;file_suffix=&amp;gt; file_suffix=&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;echo&lt;/span&gt;:
+
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[frame_expression] Enter the frame sequence expression specifying which frames to render for OIIO.&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;                   Example: 1001-1100 render from frame 1001 to 1100                     &amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="nv"&gt;frame_expression&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="se"&gt;^&amp;gt;&lt;/span&gt; frame_expression=
+&lt;span class="k"&gt;echo&lt;/span&gt;:
+
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[frame_start] Enter the number of the first frame of the sequence for ffmpeg.&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="nv"&gt;frame_start&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="se"&gt;^&amp;gt;&lt;/span&gt; frame_start=
+&lt;span class="k"&gt;echo&lt;/span&gt;:
+
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[framerate] usually ntsc-film (23.98), 24, ntsc (29.97), 60000/1001 (59.94)&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="nv"&gt;framerate&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="se"&gt;^&amp;gt;&lt;/span&gt; framerate=
+&lt;span class="k"&gt;echo&lt;/span&gt;:
+
+&lt;span class="k"&gt;echo&lt;/span&gt; // QUALITY :
+&lt;span class="k"&gt;echo&lt;/span&gt;:
+
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[presets] ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="nv"&gt;preset&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="se"&gt;^&amp;gt;&lt;/span&gt; preset=
+&lt;span class="k"&gt;echo&lt;/span&gt;:
+
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; [tune]&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;     - film : use for high quality movie content; lowers deblocking&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;     - animation : good for cartoons; uses higher deblocking and more reference frames&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;     - grain : preserves the grain structure in old, grainy film material&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="nv"&gt;tune&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="se"&gt;^&amp;gt;&lt;/span&gt; tune=
+&lt;span class="k"&gt;echo&lt;/span&gt;:
+
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[crf] Constant Rate Factor. Between 0 (lossless) &amp;lt;- 18 &amp;lt;- 23 &amp;lt;- 28 (worse)&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="nv"&gt;crf&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="se"&gt;^&amp;gt;&lt;/span&gt; crf=
+&lt;span class="k"&gt;echo&lt;/span&gt;:
+
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[resolution] Target will be rescaled to the given width, while maintaining aspect ratio.&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="nv"&gt;reso_width&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="se"&gt;^&amp;gt;&lt;/span&gt; resolution=
+&lt;span class="k"&gt;echo&lt;/span&gt;:
+
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[source_colorspace] OCIO colorspace name in which the input file is encoded in.&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="nv"&gt;source_colorspace&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="se"&gt;^&amp;gt;&lt;/span&gt; source_colorspace=
+&lt;span class="k"&gt;echo&lt;/span&gt;
+
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[target_colorspace] OCIO colorspace name in which the target file must be encoded in.&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="k"&gt;/P&lt;/span&gt; &lt;span class="nv"&gt;target_colorspace&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="se"&gt;^&amp;gt;&lt;/span&gt; target_colorspace=
+&lt;span class="k"&gt;echo&lt;/span&gt;:
+
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;oiio_input=&lt;/span&gt;&lt;span class="nv"&gt;%~dp1%abstract_file_name%%~x1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;oiio_output_dir=&lt;/span&gt;&lt;span class="nv"&gt;%~dp1&lt;/span&gt;&lt;span class="s2"&gt;tempoiio&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;oiio_output=&lt;/span&gt;&lt;span class="nv"&gt;%oiio_output_dir%&lt;/span&gt;&lt;span class="s2"&gt;\&lt;/span&gt;&lt;span class="nv"&gt;%abstract_file_name%&lt;/span&gt;&lt;span class="s2"&gt;.tif&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[oiio_output_dir] writing &lt;/span&gt;&lt;span class="nv"&gt;%oiio_output_dir%&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;MD&lt;/span&gt; &lt;span class="nv"&gt;%oiio_output_dir%&lt;/span&gt;
+
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;(oiiotool) about to start ...&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;%OIIOTOOL%&lt;/span&gt; -v --frames &lt;span class="nv"&gt;%frame_expression%&lt;/span&gt; &lt;span class="nv"&gt;%oiio_input%&lt;/span&gt; --colorconvert &lt;span class="nv"&gt;%source_colorspace%&lt;/span&gt; &lt;span class="nv"&gt;%target_colorspace%&lt;/span&gt; -d uint16 -o &lt;span class="nv"&gt;%oiio_output%&lt;/span&gt;
+
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ffmpeg_input=&lt;/span&gt;&lt;span class="nv"&gt;%oiio_output%&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;output=&lt;/span&gt;&lt;span class="nv"&gt;%~dpn1%file_suffix%&lt;/span&gt;&lt;span class="s2"&gt;.mp4&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;filter_graph=scale=&lt;/span&gt;&lt;span class="nv"&gt;%reso_width%&lt;/span&gt;&lt;span class="s2"&gt;:trunc(ow/a/2)*2:flags=lanczos:in_color_matrix=bt709:out_color_matrix=bt709&amp;quot;&lt;/span&gt;
+
+&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;: -y : overwite existing, else use -n&lt;/span&gt;
+&lt;span class="nv"&gt;%FFMPEG%&lt;/span&gt; -n -start_number &lt;span class="nv"&gt;%frame_start%&lt;/span&gt; -i &lt;span class="nv"&gt;%ffmpeg_input%&lt;/span&gt; -threads 0 -r &lt;span class="nv"&gt;%framerate%&lt;/span&gt; -vf &lt;span class="nv"&gt;%filter_graph%&lt;/span&gt; -c:v libx264 -preset &lt;span class="nv"&gt;%preset%&lt;/span&gt; -tune &lt;span class="nv"&gt;%tune%&lt;/span&gt; -crf &lt;span class="nv"&gt;%crf%&lt;/span&gt; -pix_fmt yuv420p -color_range tv -colorspace bt709 -color_primaries bt709 -color_trc iec61966-2-1 &lt;span class="nv"&gt;%output%&lt;/span&gt;
+
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;(ffmpeg) file written to &lt;/span&gt;&lt;span class="nv"&gt;%output%&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[oiio_output_dir] removing &lt;/span&gt;&lt;span class="nv"&gt;%oiio_output_dir%&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;RD&lt;/span&gt; /q /s &lt;span class="nv"&gt;%oiio_output_dir%&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;We reuse most of the stuff we wrote in the previous section for mp4
+optimization. We now just ask even more the user&lt;/p&gt;
+&lt;p&gt;Few notes :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A temporary folder is used to write the oiio image sequence that is then reused
+for ffmpeg. It got deleted at the end of the process.&lt;/li&gt;
+&lt;li&gt;The user have to set the OCIO environment variable before, or you could
+improve the script by also asking the path to the ocio config to use.&lt;/li&gt;
+&lt;li&gt;The output video is name like the initial source file. This coudl be improved
+but it’s the most simple solution and is not a big deal.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Again, on your own to write the registry file, nothing new here !&lt;/p&gt;
+&lt;div class="m-image"&gt;
+&lt;a href="https://mrlixm.github.io/static/images/blog/0009/rmb-ffmpeg-sequence.gif"&gt;&lt;img alt="example of right clicking on a .exr file from a sequence and selecting the interactive option" src="https://mrlixm.github.io/static/images/blog/0009/rmb-ffmpeg-sequence.gif" /&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+&lt;/section&gt;
+&lt;section id="creating-directory-hierarchies"&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-29"&gt;Creating directory hierarchies&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Another common use case that doesn’t involve any external program this time !
+Just creating directories. Imagine you are working in your project’s directory
+and there is always that folder structure you always need to recreate. Let’s
+make it possible in one right-click.&lt;/p&gt;
+&lt;p&gt;To make it easy to update our arborescence we will be using &lt;code&gt;.bat&lt;/code&gt; files again.
+But this time we will not get a path to a file as argument, but a path to the
+initial directory to create the hierarchy from.&lt;/p&gt;
+&lt;p&gt;Let’s consider I want to create the whole hierarchy for an individual 3d asset :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="k"&gt;echo&lt;/span&gt; off
+
+&lt;span class="k"&gt;MD&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;\assetName&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;MD&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;\assetName\modeling&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;MD&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;\assetName\modeling\work&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;MD&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;\assetName\modeling\publish&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;MD&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;\assetName\rig&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;MD&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;\assetName\rig\work&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;MD&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;\assetName\rig\publish&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;MD&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;\assetName\texturing&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;MD&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;\assetName\texturing\work&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;MD&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;\assetName\texturing\publish&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;MD&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;\assetName\lookdev&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;MD&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;\assetName\lookdev\work&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;MD&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;\assetName\lookdev\publish&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;Very simple, it use &lt;code&gt;MD&lt;/code&gt; command which means “MakeDirectory” and just give it
+the absolute directory path to create.&lt;/p&gt;
+&lt;p&gt;And here is the reg file :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="na"&gt;Windows Registry Editor Version 5.00&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\Directory\shell\vfxProjectTemplates]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;VFX Projects Hierarchies&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;subCommands&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\Directory\shell\vfxProjectTemplates\shell\001asset]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;create asset template&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\Directory\shell\vfxProjectTemplates\shell\001asset\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;\&amp;quot;\&amp;quot;F:\\softwares\\os\\config\\contextmenus\\dir_hierarchies\\batch\\asset_template.bat\&amp;quot; \&amp;quot;%1\&amp;quot;\&amp;quot;&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;I use &lt;code&gt;HKEY_CURRENT_USER\Software\Classes\Directory\shell&lt;/code&gt; to make the menu
+appear when we right-click on a directory but I could also have used
+&lt;code&gt;HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell&lt;/code&gt;
+as a root key so it appear when you right click on the background of the file
+explorer.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="starting-different-version-of-the-same-dcc"&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-30"&gt;Starting different version of the same DCC&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Maybe you are working on multiple projects at the same time, requiring different
+software versions to be used. And you really would like to just double-click on
+your file to launch it. Well with what we learned you could at least create a
+context-menu to open the selected file in the given DCC version.&lt;/p&gt;
+&lt;p&gt;Here is an example with Maya :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="na"&gt;Windows Registry Editor Version 5.00&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.ma\shell\mayaopen]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;abcinfo&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;icon&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;C:\\Program Files\\Autodesk\\Maya2023\\bin\\maya.exe&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;subCommands&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\\Classes\SystemFileAssociations\.ma\shell\mayaopen\shell\maya2023]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Open in Maya 2023&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.ma\shell\mayaopen\shell\maya2023\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;\&amp;quot;\&amp;quot;C:\\Program Files\\Autodesk\\Maya2023\\bin\\maya.exe\&amp;quot; -file \&amp;quot;%1\&amp;quot;\&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.ma\shell\mayaopen\shell\maya2020]&lt;/span&gt;
+&lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Open in Maya 2020&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.ma\shell\mayaopen\shell\maya2020\command]&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;\&amp;quot;\&amp;quot;C:\\Program Files\\Autodesk\\Maya2020\\bin\\maya.exe\&amp;quot; -file \&amp;quot;%1\&amp;quot;\&amp;quot;&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+Wait I see you are giving argument to Maya, this mean it’s a CLI ?!&lt;/blockquote&gt;
+&lt;p&gt;Yes it is ! It’s a CLI, opening a GUI. For every .exe try to call
+&lt;code&gt;myDCC.exe --help&lt;/code&gt; and see what are the available options.&lt;/p&gt;
+&lt;p&gt;Nothing prevent you to instead of calling the .exe, calling a .bat that call
+the .exe but set a bunch of environment variable before, … There is plenty
+of cool workflow optimizations you could perform with customized context menus !&lt;/p&gt;
+&lt;/section&gt;
+&lt;/section&gt;
+&lt;section id="troubleshooting"&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-31"&gt;Troubleshooting&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Most of the time it will be a character escaping issue.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;dl&gt;
+&lt;dt&gt;Making sure paths in the reg files have their backslashes escaped. Example :&lt;/dt&gt;
+&lt;dd&gt;&lt;p&gt;&lt;code&gt;C:\test\test.bat&lt;/code&gt; -&amp;gt; &lt;code&gt;C:\\test\\test.bat&lt;/code&gt;&lt;/p&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;dl&gt;
+&lt;dt&gt;Making sure paths in the reg files are wrapped between double quotes. Example :&lt;/dt&gt;
+&lt;dd&gt;&lt;p&gt;&lt;code&gt;C:\\test\\test.bat&lt;/code&gt; -&amp;gt; &lt;code&gt;\&amp;quot;C:\\test\\test.bat\&amp;quot;&lt;/code&gt;&lt;/p&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;dl&gt;
+&lt;dt&gt;When you have more than 1 pair of quote in your command line, you will need to&lt;/dt&gt;
+&lt;dd&gt;&lt;p&gt;double escape them. Example :&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="p"&gt;@&lt;/span&gt;=&lt;span class="s2"&gt;&amp;quot;cmd /k \&amp;quot;&lt;/span&gt;F:\\softwares\\ffmpeg.bat\&lt;span class="s2"&gt;&amp;quot; \&amp;quot;&lt;/span&gt;D:\\project\\specificvideo.mp4\&lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;need to be converted to&lt;/p&gt;
+&lt;pre class="m-code"&gt;&lt;span class="p"&gt;@&lt;/span&gt;=&lt;span class="s2"&gt;&amp;quot;cmd /k \&amp;quot;&lt;/span&gt;\&lt;span class="s2"&gt;&amp;quot;F:\\softwares\\ffmpeg.bat\&amp;quot;&lt;/span&gt; \&lt;span class="s2"&gt;&amp;quot;D:\\project\\specificvideo.mp4\&amp;quot;&lt;/span&gt;\&lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;By doubling the first and last double-quote.&lt;/p&gt;
+&lt;p&gt;More on that here : &lt;a class="m-link-wrap" href="https://ss64.com/nt/syntax-esc.html"&gt;https://ss64.com/nt/syntax-esc.html&lt;/a&gt;&lt;/p&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Those rules are for the commands in the reg files. Not for batch files !&lt;/p&gt;
+&lt;p&gt;Do not hesitate to join the discord linked below and ask, if you have any more issue.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id="references"&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-32"&gt;References&lt;/a&gt;&lt;/h2&gt;
+&lt;dl class="m-footnote"&gt;
+&lt;dt id="footnote-1"&gt;1&lt;/a&gt;.&lt;/dt&gt;
+&lt;dd&gt;&lt;span class="m-footnote"&gt;&lt;a href="#footnote-reference-1"&gt;^&lt;/a&gt;&lt;/span&gt; &lt;a class="m-link-wrap" href="https://stackoverflow.com/a/47745854/13806195"&gt;https://stackoverflow.com/a/47745854/13806195&lt;/a&gt;&lt;/dd&gt;
+&lt;dt id="footnote-2"&gt;2&lt;/a&gt;.&lt;/dt&gt;
+&lt;dd&gt;&lt;span class="m-footnote"&gt;&lt;a href="#footnote-reference-4"&gt;^&lt;/a&gt;&lt;/span&gt; &lt;a class="m-link-wrap" href="https://stackoverflow.com/questions/48625223/is-there-a-maximum-right-click-context-menu-items-limit"&gt;https://stackoverflow.com/questions/48625223/is-there-a-maximum-right-click-context-menu-items-limit&lt;/a&gt;&lt;/dd&gt;
+&lt;dt id="footnote-3"&gt;3&lt;/a&gt;.&lt;/dt&gt;
+&lt;dd&gt;&lt;span class="m-footnote"&gt;&lt;a href="#footnote-reference-8"&gt;^&lt;/a&gt;&lt;/span&gt; &lt;a class="m-link-wrap" href="https://en.wikipedia.org/wiki/Batch_file"&gt;https://en.wikipedia.org/wiki/Batch_file&lt;/a&gt;&lt;/dd&gt;
+&lt;dt id="footnote-4"&gt;4.&lt;/dt&gt;
+&lt;dd&gt;&lt;span class="m-footnote"&gt;^ &lt;a href="#footnote-reference-2"&gt;a&lt;/a&gt; &lt;a href="#footnote-reference-3"&gt;b&lt;/a&gt;&lt;/span&gt; &lt;a class="m-link-wrap" href="https://ss64.com/nt/syntax-esc.html"&gt;https://ss64.com/nt/syntax-esc.html&lt;/a&gt;&lt;/dd&gt;
+&lt;dt id="footnote-5"&gt;5&lt;/a&gt;.&lt;/dt&gt;
+&lt;dd&gt;&lt;span class="m-footnote"&gt;&lt;a href="#footnote-reference-5"&gt;^&lt;/a&gt;&lt;/span&gt; &lt;a class="m-link-wrap" href="https://ss64.com/nt/for_r.html"&gt;https://ss64.com/nt/for_r.html&lt;/a&gt;&lt;/dd&gt;
+&lt;dt id="footnote-6"&gt;6&lt;/a&gt;.&lt;/dt&gt;
+&lt;dd&gt;&lt;span class="m-footnote"&gt;&lt;a href="#footnote-reference-6"&gt;^&lt;/a&gt;&lt;/span&gt; &lt;a class="m-link-wrap" href="https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconvert"&gt;https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconvert&lt;/a&gt;&lt;/dd&gt;
+&lt;dt id="footnote-7"&gt;7&lt;/a&gt;.&lt;/dt&gt;
+&lt;dd&gt;&lt;span class="m-footnote"&gt;&lt;a href="#footnote-reference-7"&gt;^&lt;/a&gt;&lt;/span&gt; &lt;a class="m-link-wrap" href="https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconfig"&gt;https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconfig&lt;/a&gt;&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;/section&gt;
+</content><category term="tutorial"></category><category term="productivity"></category><category term="arnold"></category><category term="image-processing"></category><category term="windows"></category></entry><entry><title>Instancing in Katana</title><link href="https://mrlixm.github.io/blog/katana_instancing/" rel="alternate"></link><published>2022-03-30T20:58:00+02:00</published><updated>2022-03-30T20:58:00+02:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2022-03-30:/blog/katana_instancing/</id><summary type="html">&lt;p&gt;How OpScript can be used to create a flexible solution for
 instancing.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;Katana, as usual, doesn’t offer a “ready to go” solution for instancing.
 This initial complexity can be overcome by the fact that we can create an
@@ -1202,7 +2624,7 @@ on the PYCO discord (link in the page’s footer) or just e-mail me.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/section&gt;
-</content><category term="tutorial"></category><category term="katana"></category><category term="instancing"></category><category term="lua"></category><category term="software"></category></entry><entry><title>Color-management in Substance Painter with OCIO</title><link href="https://mrlixm.github.io/blog/substance-painter-color-management/" rel="alternate"></link><published>2021-12-08T19:03:00+01:00</published><updated>2022-03-11T11:53:00+01:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-12-08:/blog/substance-painter-color-management/</id><summary type="html">&lt;p&gt;The long-awaited OCIO feature is here, now we gotta find how it works.&lt;/p&gt;
+</content><category term="tutorial"></category><category term="katana"></category><category term="instancing"></category><category term="lua"></category><category term="software"></category></entry><entry><title>Color-management in Substance Painter with OCIO</title><link href="https://mrlixm.github.io/blog/substance-painter-color-management/" rel="alternate"></link><published>2021-12-08T19:03:00+01:00</published><updated>2023-02-01T21:31:00+01:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2021-12-08:/blog/substance-painter-color-management/</id><summary type="html">&lt;p&gt;The long-awaited OCIO feature is here, now we gotta find how it works.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;It’s there ! After so much time, Substance-Painter finally saw itself getting
 a shiny new color-management system with OCIO support. We’re going to dive
 deeper inside and see how it works.&lt;/p&gt;
@@ -1212,11 +2634,11 @@ color-management works. This can help you debug issues and just not tweak
 settings like a blind machine. This part is not mandatory though. You can
 skip straight to the &lt;a href="#substance-setup-workflow"&gt;Substance Setup &amp;amp; Workflow&lt;/a&gt; section if desired.&lt;/p&gt;
 &lt;aside class="m-note m-info"&gt;
-&lt;p&gt;OCIO was introduced in &lt;a href="https://substance3d.adobe.com/documentation/spdoc/version-7-4-223053247.html"&gt;Substance-Painter version 7.4&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;This is the version used through this article and some features might
-changed at the time you are reading this. I will try to keep the article
-updated though.&lt;/p&gt;
-&lt;p&gt;This article has been updated following the 7.4.2 update from 08/03/22.&lt;/p&gt;
+&lt;p&gt;OCIO was introduced in &lt;a href="https://substance3d.adobe.com/documentation/spdoc/version-7-4-223053247.html"&gt;Substance-Painter version 7.4&lt;/a&gt;
+This is the version used through this article so some features might have
+changed at the time you are reading this.&lt;/p&gt;
+&lt;p&gt;Note that this article has been updated following the 7.4.2 update from
+08/03/22.&lt;/p&gt;
 &lt;/aside&gt;
 &lt;/aside&gt;
 &lt;div class="l-url-box"&gt;
@@ -1268,45 +2690,46 @@ updated though.&lt;/p&gt;
 &lt;li&gt;&lt;a href="#workspace-setup-in-sp" id="toc-entry-21"&gt;Workspace Setup in Sp&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#display-setup-in-sp" id="toc-entry-22"&gt;Display Setup in Sp&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="#displaying-color-and-scalar-data" id="toc-entry-23"&gt;Displaying Color and Scalar data&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#custom-user-channels" id="toc-entry-24"&gt;Custom User Channels&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#input-setup-in-sp" id="toc-entry-24"&gt;Input Setup in Sp&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#shelf-resources" id="toc-entry-25"&gt;Shelf Resources&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#the-color-picker" id="toc-entry-26"&gt;The color-picker&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#environment" id="toc-entry-27"&gt;Environment&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#masks" id="toc-entry-28"&gt;Masks&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#input-setup-in-sp" id="toc-entry-25"&gt;Input Setup in Sp&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#shelf-resources" id="toc-entry-26"&gt;Shelf Resources&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#the-color-picker" id="toc-entry-27"&gt;The color-picker&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#environment" id="toc-entry-28"&gt;Environment&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#masks" id="toc-entry-29"&gt;Masks&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#output-setup-in-sp" id="toc-entry-29"&gt;Output Setup in Sp&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#output-setup-in-sp" id="toc-entry-30"&gt;Output Setup in Sp&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#aces-workflow" id="toc-entry-30"&gt;ACES Workflow&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#aces-config-setup" id="toc-entry-31"&gt;ACES - Config setup&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#aces-what-to-do-when-working" id="toc-entry-32"&gt;ACES - What to do when working&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#aces-display" id="toc-entry-33"&gt;ACES - Display&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#aces-inputs" id="toc-entry-34"&gt;ACES - Inputs&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#aces-environment" id="toc-entry-35"&gt;ACES - Environment&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#aces-workflow" id="toc-entry-31"&gt;ACES Workflow&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#aces-config-setup" id="toc-entry-32"&gt;ACES - Config setup&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#aces-what-to-do-when-working" id="toc-entry-33"&gt;ACES - What to do when working&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#aces-display" id="toc-entry-34"&gt;ACES - Display&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#aces-inputs" id="toc-entry-35"&gt;ACES - Inputs&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#aces-environment" id="toc-entry-36"&gt;ACES - Environment&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#aces-colorpicker" id="toc-entry-36"&gt;ACES - Colorpicker&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#aces-output" id="toc-entry-37"&gt;ACES - Output&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#aces-colorpicker" id="toc-entry-37"&gt;ACES - Colorpicker&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#aces-output" id="toc-entry-38"&gt;ACES - Output&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#ocio-implementation-issues" id="toc-entry-38"&gt;OCIO Implementation Issues&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#display-issues" id="toc-entry-39"&gt;Display Issues&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#display-components-mismatch" id="toc-entry-40"&gt;Display components mismatch&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#partial-look-support" id="toc-entry-41"&gt;Partial Look support&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#ocio-implementation-issues" id="toc-entry-39"&gt;OCIO Implementation Issues&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#display-issues" id="toc-entry-40"&gt;Display Issues&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#display-components-mismatch" id="toc-entry-41"&gt;Display components mismatch&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#partial-look-support" id="toc-entry-42"&gt;Partial Look support&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#improving-the-substance-ocio-config" id="toc-entry-42"&gt;Improving the Substance OCIO config&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#issues-recap" id="toc-entry-43"&gt;Issues Recap&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#improving-the-substance-ocio-config" id="toc-entry-43"&gt;Improving the Substance OCIO config&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#issues-recap" id="toc-entry-44"&gt;Issues Recap&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#conclusion" id="toc-entry-44"&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#resources" id="toc-entry-45"&gt;Resources&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#changelog" id="toc-entry-46"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#conclusion" id="toc-entry-45"&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#resources" id="toc-entry-46"&gt;Resources&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#changelog" id="toc-entry-47"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/nav&gt;
 &lt;/aside&gt;
@@ -1841,19 +3264,30 @@ view-transform :&lt;/p&gt;
 &lt;div class="m-image"&gt;
 &lt;a href="https://mrlixm.github.io/static/images/blog/0008/sp-odt-off.png"&gt;&lt;img alt="View-transform screenshot, when scalar data is selected." src="https://mrlixm.github.io/static/images/blog/0008/sp-odt-off.png" /&gt;&lt;/a&gt;
 &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id="custom-user-channels"&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-24"&gt;Custom User Channels&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;If you are using a custom &lt;code&gt;User&lt;/code&gt; channel, you will have to manually
-specify if the channel is color-managed though. (By default they are not)&lt;/p&gt;
+specify if the channel is color-managed. (By default they are not)
+This is achieved by clicking on the gear icon &amp;gt; &lt;code&gt;Color channel&lt;/code&gt;.&lt;/p&gt;
+&lt;aside class="m-note m-warning"&gt;
+&lt;p&gt;As of today (8.2.0), user channel are buggued in the interface
+(color-picker + color thumbnail, viewport is fine).&lt;/p&gt;
+&lt;p&gt;I describe the issue and provide a workaround in this &lt;a href="https://community.adobe.com/t5/substance-3d-painter-bugs/color-managed-user-channel-are-not-considered-as-such-by-the-interface/idi-p/13546584#M420"&gt;post on the Adobe
+forum.&lt;/a&gt;&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="input-setup-in-sp"&gt;
-&lt;h3&gt;&lt;a href="#toc-entry-24"&gt;Input Setup in Sp&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-25"&gt;Input Setup in Sp&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Texturing is all about mixing already existing images, with some carefully
 crafted paint stroke, and funky procedural resources. All of these, if they
 are color-data, have been created and saved with a specific colorspace.
 We will need to know and then specify this colorspace to sp so the OCIO
 processor can know if it needs conversion to the Workspace colorspace.&lt;/p&gt;
 &lt;section id="shelf-resources"&gt;
-&lt;h4&gt;&lt;a href="#toc-entry-25"&gt;Shelf Resources&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-26"&gt;Shelf Resources&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;In Sp this manipulation takes place, weirdly, on the images slots of each
 layer. You will not find any option to specify the colorspace in the shelf.&lt;/p&gt;
 &lt;div class="l-flex-r l-flex-start l-gap-1"&gt;
@@ -1880,7 +3314,7 @@ only work for one. If I take for example a colorspace name used in the ACES
 config this could give: &lt;code&gt;bricks_wall_albedo_Utility - Linear - sRGB.exr&lt;/code&gt;.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="the-color-picker"&gt;
-&lt;h4&gt;&lt;a href="#toc-entry-26"&gt;The color-picker&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-27"&gt;The color-picker&lt;/a&gt;&lt;/h4&gt;
 &lt;aside class="m-note m-info"&gt;
 &lt;p&gt;7.4.2 update changed the behavior of the color-picker with huge
 improvements :&lt;/p&gt;
@@ -2012,7 +3446,7 @@ Looking forward to next updates to reach the perfect color-picking
 experience haha.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="environment"&gt;
-&lt;h4&gt;&lt;a href="#toc-entry-27"&gt;Environment&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-28"&gt;Environment&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;&lt;span class="m-text m-s l-c-color-6"&gt;There is no direct option to modify the environment image colorspace.&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;From 7.4.2 + you can find an option in the &lt;code&gt;Display Settings&lt;/code&gt; Menu, to change
 the environment colorspace being used.&lt;/p&gt;
@@ -2030,14 +3464,14 @@ The pre-integrated HDRIs are encoded with a &lt;code&gt;linear - sRGB&lt;/code&g
 &lt;/aside&gt;
 &lt;/section&gt;
 &lt;section id="masks"&gt;
-&lt;h4&gt;&lt;a href="#toc-entry-28"&gt;Masks&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-29"&gt;Masks&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;When you right-click on a mask you have the option to &lt;code&gt;Export mask as File&lt;/code&gt;.
 Don’t worry, mask seems to always be considered as scalar and exported
 without any treatment.&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="output-setup-in-sp"&gt;
-&lt;h3&gt;&lt;a href="#toc-entry-29"&gt;Output Setup in Sp&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-30"&gt;Output Setup in Sp&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;The Export Textures window didn’t got much new. We doesn’t have any options
 to apply a color-transformation at export time in the Window. The only options
 are the one available into the project settings.&lt;/p&gt;
@@ -2063,11 +3497,11 @@ Interstingly, this colorspace &lt;code&gt;raw&lt;/code&gt; doesn’t get written
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="aces-workflow"&gt;
-&lt;h2&gt;&lt;a href="#toc-entry-30"&gt;ACES Workflow&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-31"&gt;ACES Workflow&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;I’m not going to get into the what and the why, only the how. Let’s keep the
 rest for a next (potential) article ?&lt;/p&gt;
 &lt;section id="aces-config-setup"&gt;
-&lt;h3&gt;&lt;a href="#toc-entry-31"&gt;ACES - Config setup&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-32"&gt;ACES - Config setup&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;You could use the one shipped with Substance but I wouldn’t recommend so.
 They are the ones with the hundred colorspaces that will just slow you down
 when you need to choose one.&lt;/p&gt;
@@ -2101,18 +3535,18 @@ are the only ones that can’t be modified per-case though; this is the only
 place you can change them.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="aces-what-to-do-when-working"&gt;
-&lt;h3&gt;&lt;a href="#toc-entry-32"&gt;ACES - What to do when working&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-33"&gt;ACES - What to do when working&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;I’m only going to give detailed explanations when something is specific to
 ACES. Meanwhile the explanations given in &lt;a href="#substance-setup-workflow"&gt;Substance Setup &amp;amp; Workflow&lt;/a&gt; still
 apply so make sure you properly understood this section.&lt;/p&gt;
 &lt;section id="aces-display"&gt;
-&lt;h4&gt;&lt;a href="#toc-entry-33"&gt;ACES - Display&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-34"&gt;ACES - Display&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;Not much new, use the view-transform that correspond to the display you are
 using. (In my case &lt;code&gt;ACES - sRGB&lt;/code&gt;, that behind the scene, uses &lt;code&gt;Output -
 sRGB&lt;/code&gt;)&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="aces-inputs"&gt;
-&lt;h4&gt;&lt;a href="#toc-entry-34"&gt;ACES - Inputs&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-35"&gt;ACES - Inputs&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;For every external resource you import, you need to assign the correct
 input colorspace if the automatic one doesn’t correspond. The usual rules
 for the ACES workflow apply.&lt;/p&gt;
@@ -2120,7 +3554,7 @@ for the ACES workflow apply.&lt;/p&gt;
 &lt;a href="https://mrlixm.github.io/static/images/blog/0008/diagram-aces-idt.jpg"&gt;&lt;img alt="ACES IDT Cheatsheet." src="https://mrlixm.github.io/static/images/blog/0008/diagram-aces-idt.jpg" /&gt;&lt;/a&gt;
 &lt;/div&gt;
 &lt;section id="aces-environment"&gt;
-&lt;h5&gt;&lt;a href="#toc-entry-35"&gt;ACES - Environment&lt;/a&gt;&lt;/h5&gt;
+&lt;h5&gt;&lt;a href="#toc-entry-36"&gt;ACES - Environment&lt;/a&gt;&lt;/h5&gt;
 &lt;p&gt;&lt;span class="m-text m-s l-c-color-6"&gt;There is unfortunately no direct options to change environment’s
 colorspace.&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;From 7.4.2+ you can find an option in the &lt;code&gt;Display Settings&lt;/code&gt; Menu, to change
@@ -2146,7 +3580,7 @@ doesn’t get properly converted and looks shifted.&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="aces-colorpicker"&gt;
-&lt;h4&gt;&lt;a href="#toc-entry-36"&gt;ACES - Colorpicker&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-37"&gt;ACES - Colorpicker&lt;/a&gt;&lt;/h4&gt;
 &lt;aside class="m-note m-info"&gt;
 The screenshots in this section have not been updated to reflect change
 in the 7.4.2 update. Explanations still apply.&lt;/aside&gt;
@@ -2193,7 +3627,7 @@ and Chris &lt;a href="https://chrisbrejon.com/cg-cinematography/chapter-1-5-acad
 &lt;/blockquote&gt;
 &lt;/section&gt;
 &lt;section id="aces-output"&gt;
-&lt;h4&gt;&lt;a href="#toc-entry-37"&gt;ACES - Output&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-38"&gt;ACES - Output&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;Do yourself a favour here and only care about EXR. &lt;a href="https://www.elsksa.me/scientia/cgi-offline-rendering/file-format-debunk"&gt;You don’t need anything
 else&lt;/a&gt; and this is the file format recommended by the Academy for ACES
 data encoding.&lt;/p&gt;
@@ -2207,7 +3641,7 @@ name. (and instead export the textures in a folder named ACEScg)&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="ocio-implementation-issues"&gt;
-&lt;h2&gt;&lt;a href="#toc-entry-38"&gt;OCIO Implementation Issues&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-39"&gt;OCIO Implementation Issues&lt;/a&gt;&lt;/h2&gt;
 &lt;aside class="m-note m-default"&gt;
 The goal here is not to denigrate the dev team’s works but rather to offer
 explanations and solutions for improving the software.&lt;/aside&gt;
@@ -2217,11 +3651,11 @@ The team did a fantastic job in the latest updates by adressing some of
 the issues I mentionned !&lt;/aside&gt;
 &lt;/aside&gt;
 &lt;section id="display-issues"&gt;
-&lt;h3&gt;&lt;a href="#toc-entry-39"&gt;Display Issues&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-40"&gt;Display Issues&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;These explanations were made possible thanks to the Chris Brejon’s article
 &lt;a href="https://chrisbrejon.com/articles/ocio-display-transforms-and-misconceptions/"&gt;OCIO, Display Transforms and Misconceptions&lt;/a&gt;.&lt;/p&gt;
 &lt;section id="display-components-mismatch"&gt;
-&lt;h4&gt;&lt;a href="#toc-entry-40"&gt;Display components mismatch&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-41"&gt;Display components mismatch&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;OCIO divide the Display section into 3 components :&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;Display&lt;/code&gt; : the physical hardware you are using (monitor, TV, phone, …).&lt;/li&gt;
@@ -2275,7 +3709,7 @@ We should even get a third one for looks as we are going to see in the next
 section :&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="partial-look-support"&gt;
-&lt;h4&gt;&lt;a href="#toc-entry-41"&gt;Partial Look support&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="#toc-entry-42"&gt;Partial Look support&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;In above explanations where I mention OCIO Display is build with
 3 components, we now see that I didn’t mention the last one yet: Looks.&lt;/p&gt;
 &lt;p&gt;Looks is a color-tansformation performed in any colorspace aimed at
@@ -2322,7 +3756,7 @@ cropped name 😬 But at least it’s working.&lt;/p&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="improving-the-substance-ocio-config"&gt;
-&lt;h3&gt;&lt;a href="#toc-entry-42"&gt;Improving the Substance OCIO config&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-43"&gt;Improving the Substance OCIO config&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;The Substance OCIO config is an OCIO v1 configuration. I don’t know
 what is the reason they decided to not use the v2 for their config because
 it could really helped having a cleaner and better config (even if the artist
@@ -2350,7 +3784,7 @@ Substance config. Have a look at the
 file to see the new features.&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="issues-recap"&gt;
-&lt;h3&gt;&lt;a href="#toc-entry-43"&gt;Issues Recap&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a href="#toc-entry-44"&gt;Issues Recap&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;
 This list aim at helping the potential Substance dev team members reading
 this, addressing the issues.&lt;br /&gt;
@@ -2358,20 +3792,16 @@ this, addressing the issues.&lt;br /&gt;
 nor a profesional developer.&lt;/em&gt;&lt;br /&gt;
 &lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;
-Substance config uses the wrong Rec.709 display encoding.&lt;br /&gt;
-(see &lt;a href="#the-rec709-transfer-function-issue"&gt;the rec709 transfer-function issue&lt;/a&gt;)&lt;br /&gt;
-&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Substance config miss simple P3 colorspaces while it offers a Rec2020 one
-(who would use it ??)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;
-Substance config &lt;code&gt;displays&lt;/code&gt; key is not properly built.&lt;br /&gt;
-(see &lt;a href="#substance-config-displays-fixed"&gt;substance-config-displays-fixed&lt;/a&gt; )&lt;br /&gt;
-&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The Substance config could overall, benefits from using OCIO v2 features.&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;Substance OCIO config&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;uses the wrong Rec.709 display encoding. (see &lt;a href="#the-rec709-transfer-function-issue"&gt;the rec709
+transfer-function issue&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;miss simple P3 colorspaces while it offers a Rec2020 one
+(who would use it ??)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;displays&lt;/code&gt; key is not properly built. (see
+&lt;a href="#substance-config-displays-fixed"&gt;substance-config-displays-fixed&lt;/a&gt; )&lt;/li&gt;
+&lt;li&gt;could overall, benefits from using OCIO v2 features.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;
 &lt;span class="m-text m-s l-c-color-6"&gt;OCIO roles are not supported, as such default configuration for
@@ -2430,11 +3860,14 @@ Update: it is less broken in 7.4.2 but there is still no some issues.&lt;br /&gt
 &lt;p&gt;EDIT: This actually affect the color-picker who doesn’t seems to supports
 shared-views.&lt;/p&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p&gt;custom user channels doesn’t behave as color-managed in the interface (see
+&lt;a href="#custom-user-channels"&gt;Custom User Channels&lt;/a&gt;)&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/section&gt;
 &lt;/section&gt;
 &lt;section id="conclusion"&gt;
-&lt;h2&gt;&lt;a href="#toc-entry-44"&gt;Conclusion&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-45"&gt;Conclusion&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Damn that was a long one. Congrats if you stick to the end, I hope you
 now have an idea of how you could use OCIO in SubstancePainter. If not,
 don’t hesitate to &lt;a href="/pages/contact"&gt;contact&lt;/a&gt; me to suggest how this
@@ -2447,7 +3880,7 @@ the bottom of this page.&lt;/p&gt;
 Mari. 👋&lt;/p&gt;
 &lt;/section&gt;
 &lt;section id="resources"&gt;
-&lt;h2&gt;&lt;a href="#toc-entry-45"&gt;Resources&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-46"&gt;Resources&lt;/a&gt;&lt;/h2&gt;
 &lt;div class="l-url-box"&gt;
 &lt;a class="l-url-a" href="https://hg2dc.com/"&gt;&lt;/a&gt;
 &lt;div class="l-url-box-image"&gt;
@@ -2522,7 +3955,7 @@ cinematography and photography and more.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/section&gt;
 &lt;section id="changelog"&gt;
-&lt;h2&gt;&lt;a href="#toc-entry-46"&gt;Changelog&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-47"&gt;Changelog&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;17-12-2021&lt;/code&gt;: fixed &lt;a href="#the-color-picker"&gt;The color-picker&lt;/a&gt; section. &lt;a href="https://community.acescentral.com/t/aces-and-substance-painter/2299/42"&gt;Discussion available here&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;09-03-2022&lt;/code&gt;: Updated article following 7.4.2 update.&lt;ul&gt;
@@ -2531,6 +3964,10 @@ cinematography and photography and more.&lt;/p&gt;
 &lt;li&gt;&lt;a href="#environment"&gt;Environment&lt;/a&gt; : updated&lt;/li&gt;
 &lt;li&gt;&lt;a href="#aces-colorpicker"&gt;ACES - Colorpicker&lt;/a&gt; : updated&lt;/li&gt;
 &lt;li&gt;&lt;a href="#issues-recap"&gt;Issues Recap&lt;/a&gt; : updated&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;01-02-2023&lt;/code&gt;: added precision for custom user channels&lt;ul&gt;
+&lt;li&gt;&lt;a href="#custom-user-channels"&gt;Custom User Channels&lt;/a&gt; : section created&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;

@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;700;900" />
   <link rel="stylesheet" href="https://mrlixm.github.io/static/m-dark.css" />
   <link rel="icon" href="https://mrlixm.github.io/static/images/global/icons/lixm.svg" type="image/x-ico" />
-  <link rel="canonical" href="https://mrlixm.github.io/drafts/windows-explorer-context-menu.html" />
+  <link rel="canonical" href="https://mrlixm.github.io/blog/windows-explorer-context-menu/" />
   <link href="https://mrlixm.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Liam Collod Website" />
   <link href="https://mrlixm.github.io/feeds/tutorial.atom.xml" type="application/atom+xml" rel="alternate" title="Liam Collod Website | tutorial" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,7 +18,7 @@
   <meta property="og:site_name" content="Liam Collod&#39;s Blog" />
   <meta property="og:title" content="Creating custom context menu for Windows file explorer." />
   <meta name="twitter:title" content="Creating custom context menu for Windows file explorer." />
-  <meta property="og:url" content="https://mrlixm.github.io/drafts/windows-explorer-context-menu.html" />
+  <meta property="og:url" content="https://mrlixm.github.io/blog/windows-explorer-context-menu/" />
   <meta property="og:description" content="Making tx, rescaling image, displaying alembic content all as fast as a right click can be." />
   <meta name="twitter:description" content="Making tx, rescaling image, displaying alembic content all as fast as a right click can be." />
   <meta property="og:image" content="https://mrlixm.github.io/static/images/blog/0009/cover.jpg" />
@@ -48,9 +48,6 @@
       <div class="m-container m-container-inflatable">
         <header class="l-article-header" id="article-header">
         <header class="l-post-context l-mrg-s" title="Post Context" id="post-context-header">
-            <span class="l-status l-bgc-yellow-l l-c-ldark l-flex-item" id="s-draft" title="Post status">
-              draft
-            </span>
           <span class="l-category">
             <a href="https://mrlixm.github.io/category/tutorial.html">tutorial</a>
           </span>
@@ -76,7 +73,7 @@
               </span>
         </header>
         <h1 title="Article title">
-          <a href="https://mrlixm.github.io/drafts/windows-explorer-context-menu.html" rel="bookmark" title="Permalink to Creating custom context menu for Windows file explorer.">
+          <a href="https://mrlixm.github.io/blog/windows-explorer-context-menu/" rel="bookmark" title="Permalink to Creating custom context menu for Windows file explorer.">
             Creating custom context menu for Windows file explorer.
           </a>
         </h1>
@@ -85,7 +82,7 @@
         <footer class="l-post-context" id="post-context-footer">
           <span class="l-time l-flex-item" title="Date Created">
             <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-            <time datetime="2023-01-29T21:15:00+01:00">29 January 2023</time>
+            <time datetime="2023-02-28T09:49:00+01:00">28 February 2023</time>
           </span>
           <span class="l-box-author l-flex-item" title="List of Authors">
             <img src="/static/images/global/icons/account.svg" alt="Author icon" >
@@ -219,8 +216,8 @@ Easiest way is just to drag and drop the executable from the file explorer
 to the command prompt. You can also just copy and paste its path.</p>
 <aside class="m-note m-info">
 On Windows, make sure paths are always wrapped in double quotes like
-<code>&quot;C:/Program Files/xyz/bin/myapp.exe&quot;</code> else when you have a path it will
-understand 2 arguments instead of one !</aside>
+<code>&quot;C:/Program Files/xyz/bin/myapp.exe&quot;</code> else when you have a whitespace
+it will understand 2 arguments instead of one !</aside>
 </aside>
 <aside class="m-note m-info">
 <p>
@@ -1161,8 +1158,8 @@ light-weight formats.</p>
 <p>ffmpeg is a hell of a tool with hundred of argument, The most difficult part
 is finding which argument you need to build your command. As I’m more a ffmpeg
 novice I took advice from more experienced users by using this guide :
-<a class="m-link-wrap" href="https://richardssam.github.io/ffmpeg-tests/">https://richardssam.github.io/ffmpeg-tests/</a> (which have the advantage of
-focusing on color-accuracy for vfx).</p>
+<a class="m-link-wrap" href="https://academysoftwarefoundation.github.io/EncodingGuidelines/">https://academysoftwarefoundation.github.io/EncodingGuidelines/</a>
+(which have the advantage of focusing on color-accuracy for vfx).</p>
 <p>Let’s take the same workflow we used for gif conversion. Here is the
 intermediate batch file :</p>
 <pre class="m-code">    <span class="p">@</span><span class="k">echo</span> off
@@ -1272,7 +1269,7 @@ video. But support for  exr is pretty limited, and even more for color-managemen
 The solution is to use oiiotool to produce an image sequence that is “ready-to-go”
 for ffmpeg.</p>
 <p>This behavior is described in the previous shared website
-<a class="m-link-wrap" href="https://richardssam.github.io/ffmpeg-tests/EncodingOverview.html#color-space-conversion">https://richardssam.github.io/ffmpeg-tests/EncodingOverview.html#color-space-conversion</a>–
+<a class="m-link-wrap" href="https://academysoftwarefoundation.github.io/EncodingGuidelines/EncodingOverview.html#color-space-conversion">https://academysoftwarefoundation.github.io/EncodingGuidelines/EncodingOverview.html#color-space-conversion</a>–
 which also provide valuable informations for color management of the destination video.</p>
 <p>But if now we think about the technical implementation, how do we pass
 multiple files as argument to our .bat/ffmpeg ? Well it would have been convenient
@@ -1416,8 +1413,8 @@ initial directory to create the hierarchy from.</p>
 <span class="k">MD</span> <span class="s2">&quot;</span><span class="nv">%1</span><span class="s2">\assetName\lookdev&quot;</span>
 <span class="k">MD</span> <span class="s2">&quot;</span><span class="nv">%1</span><span class="s2">\assetName\lookdev\work&quot;</span>
 <span class="k">MD</span> <span class="s2">&quot;</span><span class="nv">%1</span><span class="s2">\assetName\lookdev\publish&quot;</span></pre>
-<p>Very simple is use <code>MD</code> which means “MakeDirectory” and just give the absolute path
-to create.</p>
+<p>Very simple, it use <code>MD</code> command which means “MakeDirectory” and just give it
+the absolute directory path to create.</p>
 <p>And here is the reg file :</p>
 <pre class="m-code"><span class="na">Windows Registry Editor Version 5.00</span>
 
@@ -1495,6 +1492,8 @@ of cool workflow optimizations you could perform with customized context menus !
 </dl>
 </li>
 </ul>
+<p>Those rules are for the commands in the reg files. Not for batch files !</p>
+<p>Do not hesitate to join the discord linked below and ask, if you have any more issue.</p>
 </section>
 <section id="references">
 <h2><a href="#toc-entry-32">References</a></h2>
@@ -1519,9 +1518,6 @@ of cool workflow optimizations you could perform with customized context menus !
         <footer>
           <div class="l-line-xs" title="Footer Separator"></div>
         <header class="l-post-context l-mrg-xs" title="Post Context" id="post-context-header">
-            <span class="l-status l-bgc-yellow-l l-c-ldark l-flex-item" id="s-draft" title="Post status">
-              draft
-            </span>
           <span class="l-category">
             <a href="https://mrlixm.github.io/category/tutorial.html">tutorial</a>
           </span>
@@ -1549,7 +1545,7 @@ of cool workflow optimizations you could perform with customized context menus !
         <footer class="l-post-context" id="post-context-footer">
           <span class="l-time l-flex-item" title="Date Created">
             <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-            <time datetime="2023-01-29T21:15:00+01:00">29 January 2023</time>
+            <time datetime="2023-02-28T09:49:00+01:00">28 February 2023</time>
           </span>
           <span class="l-box-author l-flex-item" title="List of Authors">
             <img src="/static/images/global/icons/account.svg" alt="Author icon" >
