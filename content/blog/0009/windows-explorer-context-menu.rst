@@ -5,7 +5,6 @@ Creating custom context menu for Windows file explorer.
           a right click can be.
 :thumbnail: {static}/images/blog/0009/cover.jpg
 
-:status: draft
 :date-created: 2023-01-29 21:15
 :date: 2023-02-28 09:49
 
