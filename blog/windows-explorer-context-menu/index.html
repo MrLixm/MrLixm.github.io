@@ -84,6 +84,10 @@
             <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
             <time datetime="2023-02-28T09:49:00+01:00">28 February 2023</time>
           </span>
+            <span class="l-modified l-flex-item" title="Last Modified">
+              updated
+              <time datetime="2023-07-13T11:17:00+02:00">&nbsp;13 July 2023</time>
+            </span>
           <span class="l-box-author l-flex-item" title="List of Authors">
             <img src="/static/images/global/icons/account.svg" alt="Author icon" >
             <span class="l-author" title="A post Author">
@@ -163,7 +167,8 @@ Windows depths.</p>
 </ul>
 </li>
 <li><a href="#troubleshooting" id="toc-entry-31">Troubleshooting</a></li>
-<li><a href="#references" id="toc-entry-32">References</a></li>
+<li><a href="#changelog" id="toc-entry-32">Changelog</a></li>
+<li><a href="#references" id="toc-entry-33">References</a></li>
 </ul>
 </nav>
 </aside>
@@ -743,6 +748,18 @@ faster and much less human-error prone.</p>
 <h2><a href="#toc-entry-15">Cool use cases ideas for context-menus</a></h2>
 <p>Because maketx is not the only program that is cool to have available has a right
 click, here is a few ideas that could really boost your workflow !</p>
+<aside class="m-block m-warning">
+<p>%1 mistake</p>
+<p>In some of the code snippet you will have below, you will sometime
+notice that the <code>%1</code> argument is not wrapped in quotes. This mean that
+if you pass a file with whitespaces to the first argument, it will break.</p>
+<p>So or you make sure none of your files have whitespaces, or you wrap the
+<code>%1</code> in quotes (that might need to be double if there is already quotes
+in the command).</p>
+<p>You can also use <code>&quot;%~1&quot;</code> that will remove the quotes but still work
+with whitespaces (tested and did not work properly for me). <a class="m-footnote" href="#footnote-8" id="footnote-reference-5">[8]</a></p>
+</aside>
+</aside>
 <section id="maketx">
 <h3><a href="#toc-entry-16">maketx</a></h3>
 <p>Even more of it !</p>
@@ -778,7 +795,7 @@ command will be executed one after the other which will take much more time.</p>
 <span class="na">&quot;MUIVerb&quot;</span><span class="o">=</span><span class="s">&quot;Convert all images to .tx&quot;</span>
 <span class="k">[HKEY_CURRENT_USER\Software\Classes\Directory\shell\maketx\shell\convertall\command]</span>
 <span class="na">@</span><span class="o">=</span><span class="s">&quot;cmd /k \&quot;\&quot;F:\\softwares\\os\\config\\contextmenus\\maketx\\batch\\convert_dir.bat\&quot; \&quot;%1\&quot;\&quot;&quot;</span></pre>
-<p>If you wish to process the directory recursively, you can use the <code>/R</code> flag <a class="m-footnote" href="#footnote-5" id="footnote-reference-5">[5]</a> :</p>
+<p>If you wish to process the directory recursively, you can use the <code>/R</code> flag <a class="m-footnote" href="#footnote-5" id="footnote-reference-6">[5]</a> :</p>
 <pre class="m-code"><span class="p">@</span><span class="k">echo</span> off
 
 <span class="k">for</span> /R <span class="s2">&quot;</span><span class="nv">%1</span><span class="s2">&quot;</span> <span class="se">%%</span>i <span class="k">in</span> <span class="p">(</span>*.exr, *.tiff, *.png<span class="p">)</span> <span class="k">do</span> <span class="p">(</span>
@@ -793,7 +810,7 @@ assume the source texture is sRGB “Display” encoded and is converted to sRGB
 It’s pretty common to have colorspace conversion as all tx should be encoded
 in the rendering colorspace.</p>
 <p>To perform the colorspace conversion I used the <code>--colorconvert sRGB linear</code> argument.
-The 2 “colorspaces” names I’m giving are builtins <a class="m-footnote" href="#footnote-6" id="footnote-reference-6">[6]</a> but there is only 3 of
+The 2 “colorspaces” names I’m giving are builtins <a class="m-footnote" href="#footnote-6" id="footnote-reference-7">[6]</a> but there is only 3 of
 them so if you need anything different we will have to rely on
 <a href="https://opencolorio.org/">OCIO</a>. If you are not familiar with it, I’m not
 going to explain it sorry, too long for this article.</p>
@@ -802,7 +819,7 @@ stored in an OCIO configuration (example with the old ACES 1.2 one) :</p>
 <pre class="m-code"><span class="s2">&quot;</span><span class="nv">%MAKETX%</span><span class="s2">&quot;</span> <span class="s2">&quot;</span><span class="nv">%1</span><span class="s2">&quot;</span> --colorconfig <span class="s2">&quot;D:\whatever\ACES\config.ocio&quot;</span> --colorconvert <span class="s2">&quot;Utility - sRGB - Texture&quot;</span> <span class="s2">&quot;ACES - ACEScg&quot;</span> -v -u --unpremult --format exr</pre>
 <aside class="m-note m-default">
 <code>--colorconfig</code> is not needed if the <code>OCIO</code> environment variable
-is already set properly <a class="m-footnote" href="#footnote-7" id="footnote-reference-7">[7]</a></aside>
+is already set properly <a class="m-footnote" href="#footnote-7" id="footnote-reference-8">[7]</a></aside>
 </aside>
 </section>
 </section>
@@ -889,7 +906,7 @@ be using a <code>.bat</code> file to define our command, and the registry comman
 just start the bat file.</p>
 <aside class="m-note m-info">
 A batch file (<code>.bat</code>) is a text file defining a series of command
-to be executed in the order they are defined in. <a class="m-footnote" href="#footnote-3" id="footnote-reference-8">[3]</a> Double clicking the file
+to be executed in the order they are defined in. <a class="m-footnote" href="#footnote-3" id="footnote-reference-9">[3]</a> Double clicking the file
 will execute it. You can edit its content with any text editor using
 <code>Open With</code> from the context menu.</aside>
 </aside>
@@ -909,7 +926,7 @@ can use one .bat to rescale to any size !</li>
 <pre class="m-code"><span class="k">[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048]</span>
 <span class="na">&quot;MUIVerb&quot;</span><span class="o">=</span><span class="s">&quot;rescale 2048&quot;</span>
 <span class="k">[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048\command]</span>
-<span class="na">@</span><span class="o">=</span><span class="s">&quot;cmd /k \&quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&quot; %1 2048&quot;</span></pre>
+<span class="na">@</span><span class="o">=</span><span class="s">&quot;cmd /k \&quot;\&quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&quot; \&quot;%1\&quot;\&quot; 2048&quot;</span></pre>
 <p>Don’t forget to also escape the backward slashes in the path. You notice that
 we just forward the path of the file selected as first argument of the bat, and
 the second argument is indeed the size to use.</p>
@@ -918,17 +935,17 @@ size options :</p>
 <pre class="m-code"><span class="k">[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale4096]</span>
 <span class="na">&quot;MUIVerb&quot;</span><span class="o">=</span><span class="s">&quot;rescale 4096&quot;</span>
 <span class="k">[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale4096\command]</span>
-<span class="na">@</span><span class="o">=</span><span class="s">&quot;cmd /k \&quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&quot; %1 4096&quot;</span>
+<span class="na">@</span><span class="o">=</span><span class="s">&quot;cmd /k \&quot;\&quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&quot; \&quot;%1\&quot;\&quot; 4096&quot;</span>
 
 <span class="k">[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048]</span>
 <span class="na">&quot;MUIVerb&quot;</span><span class="o">=</span><span class="s">&quot;rescale 2048&quot;</span>
 <span class="k">[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048\command]</span>
-<span class="na">@</span><span class="o">=</span><span class="s">&quot;cmd /k \&quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&quot; %1 2048&quot;</span>
+<span class="na">@</span><span class="o">=</span><span class="s">&quot;cmd /k \&quot;\&quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&quot; \&quot;%1\&quot;\&quot; 2048&quot;</span>
 
 <span class="k">[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale1024]</span>
 <span class="na">&quot;MUIVerb&quot;</span><span class="o">=</span><span class="s">&quot;rescale 1024&quot;</span>
 <span class="k">[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale1024\command]</span>
-<span class="na">@</span><span class="o">=</span><span class="s">&quot;cmd /k \&quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&quot; %1 1024&quot;</span>
+<span class="na">@</span><span class="o">=</span><span class="s">&quot;cmd /k \&quot;\&quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&quot; \&quot;%1\&quot;\&quot; 1024&quot;</span>
 
 <span class="na">...</span></pre>
 <aside class="m-note m-info">
@@ -950,7 +967,7 @@ images. Let’s automatize it too !</p>
 <pre class="m-code"><span class="k">[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiioicon]</span>
 <span class="na">&quot;MUIVerb&quot;</span><span class="o">=</span><span class="s">&quot;convert to .ico&quot;</span>
 <span class="k">[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiioicon\command]</span>
-<span class="na">@</span><span class="o">=</span><span class="s">&quot;cmd /k \&quot;F:\\blog\\path\\to\\oiiotool-ico-convert.bat\&quot; %1&quot;</span></pre>
+<span class="na">@</span><span class="o">=</span><span class="s">&quot;cmd /k \&quot;\&quot;F:\\blog\\path\\to\\oiiotool-ico-convert.bat\&quot; \&quot;%1\&quot;\&quot;&quot;</span></pre>
 <p>The only tricky part was to know the ico format store multiple versions of
 the same image at different scales, but again OIIO make that pretty easy !</p>
 </section>
@@ -1495,23 +1512,31 @@ of cool workflow optimizations you could perform with customized context menus !
 <p>Those rules are for the commands in the reg files. Not for batch files !</p>
 <p>Do not hesitate to join the discord linked below and ask, if you have any more issue.</p>
 </section>
+<section id="changelog">
+<h2><a href="#toc-entry-32">Changelog</a></h2>
+<ul>
+<li><code>13-07-2023</code>: fixed some <code>%1</code> argument not wrapped in quotes. Thanks to Slava.</li>
+</ul>
+</section>
 <section id="references">
-<h2><a href="#toc-entry-32">References</a></h2>
+<h2><a href="#toc-entry-33">References</a></h2>
 <dl class="m-footnote">
 <dt id="footnote-1">1</a>.</dt>
 <dd><span class="m-footnote"><a href="#footnote-reference-1">^</a></span> <a class="m-link-wrap" href="https://stackoverflow.com/a/47745854/13806195">https://stackoverflow.com/a/47745854/13806195</a></dd>
 <dt id="footnote-2">2</a>.</dt>
 <dd><span class="m-footnote"><a href="#footnote-reference-4">^</a></span> <a class="m-link-wrap" href="https://stackoverflow.com/questions/48625223/is-there-a-maximum-right-click-context-menu-items-limit">https://stackoverflow.com/questions/48625223/is-there-a-maximum-right-click-context-menu-items-limit</a></dd>
 <dt id="footnote-3">3</a>.</dt>
-<dd><span class="m-footnote"><a href="#footnote-reference-8">^</a></span> <a class="m-link-wrap" href="https://en.wikipedia.org/wiki/Batch_file">https://en.wikipedia.org/wiki/Batch_file</a></dd>
+<dd><span class="m-footnote"><a href="#footnote-reference-9">^</a></span> <a class="m-link-wrap" href="https://en.wikipedia.org/wiki/Batch_file">https://en.wikipedia.org/wiki/Batch_file</a></dd>
 <dt id="footnote-4">4.</dt>
 <dd><span class="m-footnote">^ <a href="#footnote-reference-2">a</a> <a href="#footnote-reference-3">b</a></span> <a class="m-link-wrap" href="https://ss64.com/nt/syntax-esc.html">https://ss64.com/nt/syntax-esc.html</a></dd>
 <dt id="footnote-5">5</a>.</dt>
-<dd><span class="m-footnote"><a href="#footnote-reference-5">^</a></span> <a class="m-link-wrap" href="https://ss64.com/nt/for_r.html">https://ss64.com/nt/for_r.html</a></dd>
+<dd><span class="m-footnote"><a href="#footnote-reference-6">^</a></span> <a class="m-link-wrap" href="https://ss64.com/nt/for_r.html">https://ss64.com/nt/for_r.html</a></dd>
 <dt id="footnote-6">6</a>.</dt>
-<dd><span class="m-footnote"><a href="#footnote-reference-6">^</a></span> <a class="m-link-wrap" href="https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconvert">https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconvert</a></dd>
+<dd><span class="m-footnote"><a href="#footnote-reference-7">^</a></span> <a class="m-link-wrap" href="https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconvert">https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconvert</a></dd>
 <dt id="footnote-7">7</a>.</dt>
-<dd><span class="m-footnote"><a href="#footnote-reference-7">^</a></span> <a class="m-link-wrap" href="https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconfig">https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconfig</a></dd>
+<dd><span class="m-footnote"><a href="#footnote-reference-8">^</a></span> <a class="m-link-wrap" href="https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconfig">https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconfig</a></dd>
+<dt id="footnote-8">8</a>.</dt>
+<dd><span class="m-footnote"><a href="#footnote-reference-5">^</a></span> <a class="m-link-wrap" href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting#Percent_tilde">https://en.wikibooks.org/wiki/Windows_Batch_Scripting#Percent_tilde</a></dd>
 </dl>
 </section>
           <!-- /content -->
@@ -1547,6 +1572,10 @@ of cool workflow optimizations you could perform with customized context menus !
             <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
             <time datetime="2023-02-28T09:49:00+01:00">28 February 2023</time>
           </span>
+            <span class="l-modified l-flex-item" title="Last Modified">
+              updated
+              <time datetime="2023-07-13T11:17:00+02:00">&nbsp;13 July 2023</time>
+            </span>
           <span class="l-box-author l-flex-item" title="List of Authors">
             <img src="/static/images/global/icons/account.svg" alt="Author icon" >
             <span class="l-author" title="A post Author">

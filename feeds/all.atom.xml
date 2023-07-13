@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Liam Collod Website</title><link href="https://mrlixm.github.io/" rel="alternate"></link><link href="https://mrlixm.github.io/feeds/all.atom.xml" rel="self"></link><id>https://mrlixm.github.io/</id><updated>2023-02-28T09:49:00+01:00</updated><entry><title>Creating custom context menu for Windows file explorer.</title><link href="https://mrlixm.github.io/blog/windows-explorer-context-menu/" rel="alternate"></link><published>2023-02-28T09:49:00+01:00</published><updated>2023-02-28T09:49:00+01:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2023-02-28:/blog/windows-explorer-context-menu/</id><summary type="html">&lt;p&gt;Making tx, rescaling image, displaying alembic content all as fast as
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Liam Collod Website</title><link href="https://mrlixm.github.io/" rel="alternate"></link><link href="https://mrlixm.github.io/feeds/all.atom.xml" rel="self"></link><id>https://mrlixm.github.io/</id><updated>2023-07-13T11:17:00+02:00</updated><entry><title>Creating custom context menu for Windows file explorer.</title><link href="https://mrlixm.github.io/blog/windows-explorer-context-menu/" rel="alternate"></link><published>2023-02-28T09:49:00+01:00</published><updated>2023-07-13T11:17:00+02:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2023-02-28:/blog/windows-explorer-context-menu/</id><summary type="html">&lt;p&gt;Making tx, rescaling image, displaying alembic content all as fast as
 a right click can be.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;I had always been a fan of contextual menu in interfaces. They are a very fast
 way to run various processes on a selected item. And at the same time you
@@ -70,7 +70,8 @@ Windows depths.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;a href="#troubleshooting" id="toc-entry-31"&gt;Troubleshooting&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#references" id="toc-entry-32"&gt;References&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#changelog" id="toc-entry-32"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#references" id="toc-entry-33"&gt;References&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/nav&gt;
 &lt;/aside&gt;
@@ -650,6 +651,18 @@ faster and much less human-error prone.&lt;/p&gt;
 &lt;h2&gt;&lt;a href="#toc-entry-15"&gt;Cool use cases ideas for context-menus&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Because maketx is not the only program that is cool to have available has a right
 click, here is a few ideas that could really boost your workflow !&lt;/p&gt;
+&lt;aside class="m-block m-warning"&gt;
+&lt;p&gt;%1 mistake&lt;/p&gt;
+&lt;p&gt;In some of the code snippet you will have below, you will sometime
+notice that the &lt;code&gt;%1&lt;/code&gt; argument is not wrapped in quotes. This mean that
+if you pass a file with whitespaces to the first argument, it will break.&lt;/p&gt;
+&lt;p&gt;So or you make sure none of your files have whitespaces, or you wrap the
+&lt;code&gt;%1&lt;/code&gt; in quotes (that might need to be double if there is already quotes
+in the command).&lt;/p&gt;
+&lt;p&gt;You can also use &lt;code&gt;&amp;quot;%~1&amp;quot;&lt;/code&gt; that will remove the quotes but still work
+with whitespaces (tested and did not work properly for me). &lt;a class="m-footnote" href="#footnote-8" id="footnote-reference-5"&gt;[8]&lt;/a&gt;&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/aside&gt;
 &lt;section id="maketx"&gt;
 &lt;h3&gt;&lt;a href="#toc-entry-16"&gt;maketx&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Even more of it !&lt;/p&gt;
@@ -685,7 +698,7 @@ command will be executed one after the other which will take much more time.&lt;
 &lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Convert all images to .tx&amp;quot;&lt;/span&gt;
 &lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\Directory\shell\maketx\shell\convertall\command]&lt;/span&gt;
 &lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;F:\\softwares\\os\\config\\contextmenus\\maketx\\batch\\convert_dir.bat\&amp;quot; \&amp;quot;%1\&amp;quot;\&amp;quot;&amp;quot;&lt;/span&gt;&lt;/pre&gt;
-&lt;p&gt;If you wish to process the directory recursively, you can use the &lt;code&gt;/R&lt;/code&gt; flag &lt;a class="m-footnote" href="#footnote-5" id="footnote-reference-5"&gt;[5]&lt;/a&gt; :&lt;/p&gt;
+&lt;p&gt;If you wish to process the directory recursively, you can use the &lt;code&gt;/R&lt;/code&gt; flag &lt;a class="m-footnote" href="#footnote-5" id="footnote-reference-6"&gt;[5]&lt;/a&gt; :&lt;/p&gt;
 &lt;pre class="m-code"&gt;&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="k"&gt;echo&lt;/span&gt; off
 
 &lt;span class="k"&gt;for&lt;/span&gt; /R &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="se"&gt;%%&lt;/span&gt;i &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;*.exr, *.tiff, *.png&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
@@ -700,7 +713,7 @@ assume the source texture is sRGB “Display” encoded and is converted to sRGB
 It’s pretty common to have colorspace conversion as all tx should be encoded
 in the rendering colorspace.&lt;/p&gt;
 &lt;p&gt;To perform the colorspace conversion I used the &lt;code&gt;--colorconvert sRGB linear&lt;/code&gt; argument.
-The 2 “colorspaces” names I’m giving are builtins &lt;a class="m-footnote" href="#footnote-6" id="footnote-reference-6"&gt;[6]&lt;/a&gt; but there is only 3 of
+The 2 “colorspaces” names I’m giving are builtins &lt;a class="m-footnote" href="#footnote-6" id="footnote-reference-7"&gt;[6]&lt;/a&gt; but there is only 3 of
 them so if you need anything different we will have to rely on
 &lt;a href="https://opencolorio.org/"&gt;OCIO&lt;/a&gt;. If you are not familiar with it, I’m not
 going to explain it sorry, too long for this article.&lt;/p&gt;
@@ -709,7 +722,7 @@ stored in an OCIO configuration (example with the old ACES 1.2 one) :&lt;/p&gt;
 &lt;pre class="m-code"&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%MAKETX%&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; --colorconfig &lt;span class="s2"&gt;&amp;quot;D:\whatever\ACES\config.ocio&amp;quot;&lt;/span&gt; --colorconvert &lt;span class="s2"&gt;&amp;quot;Utility - sRGB - Texture&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ACES - ACEScg&amp;quot;&lt;/span&gt; -v -u --unpremult --format exr&lt;/pre&gt;
 &lt;aside class="m-note m-default"&gt;
 &lt;code&gt;--colorconfig&lt;/code&gt; is not needed if the &lt;code&gt;OCIO&lt;/code&gt; environment variable
-is already set properly &lt;a class="m-footnote" href="#footnote-7" id="footnote-reference-7"&gt;[7]&lt;/a&gt;&lt;/aside&gt;
+is already set properly &lt;a class="m-footnote" href="#footnote-7" id="footnote-reference-8"&gt;[7]&lt;/a&gt;&lt;/aside&gt;
 &lt;/aside&gt;
 &lt;/section&gt;
 &lt;/section&gt;
@@ -796,7 +809,7 @@ be using a &lt;code&gt;.bat&lt;/code&gt; file to define our command, and the reg
 just start the bat file.&lt;/p&gt;
 &lt;aside class="m-note m-info"&gt;
 A batch file (&lt;code&gt;.bat&lt;/code&gt;) is a text file defining a series of command
-to be executed in the order they are defined in. &lt;a class="m-footnote" href="#footnote-3" id="footnote-reference-8"&gt;[3]&lt;/a&gt; Double clicking the file
+to be executed in the order they are defined in. &lt;a class="m-footnote" href="#footnote-3" id="footnote-reference-9"&gt;[3]&lt;/a&gt; Double clicking the file
 will execute it. You can edit its content with any text editor using
 &lt;code&gt;Open With&lt;/code&gt; from the context menu.&lt;/aside&gt;
 &lt;/aside&gt;
@@ -816,7 +829,7 @@ can use one .bat to rescale to any size !&lt;/li&gt;
 &lt;pre class="m-code"&gt;&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048]&lt;/span&gt;
 &lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;rescale 2048&amp;quot;&lt;/span&gt;
 &lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048\command]&lt;/span&gt;
-&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&amp;quot; %1 2048&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&amp;quot; \&amp;quot;%1\&amp;quot;\&amp;quot; 2048&amp;quot;&lt;/span&gt;&lt;/pre&gt;
 &lt;p&gt;Don’t forget to also escape the backward slashes in the path. You notice that
 we just forward the path of the file selected as first argument of the bat, and
 the second argument is indeed the size to use.&lt;/p&gt;
@@ -825,17 +838,17 @@ size options :&lt;/p&gt;
 &lt;pre class="m-code"&gt;&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale4096]&lt;/span&gt;
 &lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;rescale 4096&amp;quot;&lt;/span&gt;
 &lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale4096\command]&lt;/span&gt;
-&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&amp;quot; %1 4096&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&amp;quot; \&amp;quot;%1\&amp;quot;\&amp;quot; 4096&amp;quot;&lt;/span&gt;
 
 &lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048]&lt;/span&gt;
 &lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;rescale 2048&amp;quot;&lt;/span&gt;
 &lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048\command]&lt;/span&gt;
-&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&amp;quot; %1 2048&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&amp;quot; \&amp;quot;%1\&amp;quot;\&amp;quot; 2048&amp;quot;&lt;/span&gt;
 
 &lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale1024]&lt;/span&gt;
 &lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;rescale 1024&amp;quot;&lt;/span&gt;
 &lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale1024\command]&lt;/span&gt;
-&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&amp;quot; %1 1024&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;F:\\blog\\path\\to\\oiiotool-rescale.bat\&amp;quot; \&amp;quot;%1\&amp;quot;\&amp;quot; 1024&amp;quot;&lt;/span&gt;
 
 &lt;span class="na"&gt;...&lt;/span&gt;&lt;/pre&gt;
 &lt;aside class="m-note m-info"&gt;
@@ -857,7 +870,7 @@ images. Let’s automatize it too !&lt;/p&gt;
 &lt;pre class="m-code"&gt;&lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiioicon]&lt;/span&gt;
 &lt;span class="na"&gt;&amp;quot;MUIVerb&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;convert to .ico&amp;quot;&lt;/span&gt;
 &lt;span class="k"&gt;[HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiioicon\command]&lt;/span&gt;
-&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;F:\\blog\\path\\to\\oiiotool-ico-convert.bat\&amp;quot; %1&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cmd /k \&amp;quot;\&amp;quot;F:\\blog\\path\\to\\oiiotool-ico-convert.bat\&amp;quot; \&amp;quot;%1\&amp;quot;\&amp;quot;&amp;quot;&lt;/span&gt;&lt;/pre&gt;
 &lt;p&gt;The only tricky part was to know the ico format store multiple versions of
 the same image at different scales, but again OIIO make that pretty easy !&lt;/p&gt;
 &lt;/section&gt;
@@ -1402,23 +1415,31 @@ of cool workflow optimizations you could perform with customized context menus !
 &lt;p&gt;Those rules are for the commands in the reg files. Not for batch files !&lt;/p&gt;
 &lt;p&gt;Do not hesitate to join the discord linked below and ask, if you have any more issue.&lt;/p&gt;
 &lt;/section&gt;
+&lt;section id="changelog"&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-32"&gt;Changelog&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;13-07-2023&lt;/code&gt;: fixed some &lt;code&gt;%1&lt;/code&gt; argument not wrapped in quotes. Thanks to Slava.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/section&gt;
 &lt;section id="references"&gt;
-&lt;h2&gt;&lt;a href="#toc-entry-32"&gt;References&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a href="#toc-entry-33"&gt;References&lt;/a&gt;&lt;/h2&gt;
 &lt;dl class="m-footnote"&gt;
 &lt;dt id="footnote-1"&gt;1&lt;/a&gt;.&lt;/dt&gt;
 &lt;dd&gt;&lt;span class="m-footnote"&gt;&lt;a href="#footnote-reference-1"&gt;^&lt;/a&gt;&lt;/span&gt; &lt;a class="m-link-wrap" href="https://stackoverflow.com/a/47745854/13806195"&gt;https://stackoverflow.com/a/47745854/13806195&lt;/a&gt;&lt;/dd&gt;
 &lt;dt id="footnote-2"&gt;2&lt;/a&gt;.&lt;/dt&gt;
 &lt;dd&gt;&lt;span class="m-footnote"&gt;&lt;a href="#footnote-reference-4"&gt;^&lt;/a&gt;&lt;/span&gt; &lt;a class="m-link-wrap" href="https://stackoverflow.com/questions/48625223/is-there-a-maximum-right-click-context-menu-items-limit"&gt;https://stackoverflow.com/questions/48625223/is-there-a-maximum-right-click-context-menu-items-limit&lt;/a&gt;&lt;/dd&gt;
 &lt;dt id="footnote-3"&gt;3&lt;/a&gt;.&lt;/dt&gt;
-&lt;dd&gt;&lt;span class="m-footnote"&gt;&lt;a href="#footnote-reference-8"&gt;^&lt;/a&gt;&lt;/span&gt; &lt;a class="m-link-wrap" href="https://en.wikipedia.org/wiki/Batch_file"&gt;https://en.wikipedia.org/wiki/Batch_file&lt;/a&gt;&lt;/dd&gt;
+&lt;dd&gt;&lt;span class="m-footnote"&gt;&lt;a href="#footnote-reference-9"&gt;^&lt;/a&gt;&lt;/span&gt; &lt;a class="m-link-wrap" href="https://en.wikipedia.org/wiki/Batch_file"&gt;https://en.wikipedia.org/wiki/Batch_file&lt;/a&gt;&lt;/dd&gt;
 &lt;dt id="footnote-4"&gt;4.&lt;/dt&gt;
 &lt;dd&gt;&lt;span class="m-footnote"&gt;^ &lt;a href="#footnote-reference-2"&gt;a&lt;/a&gt; &lt;a href="#footnote-reference-3"&gt;b&lt;/a&gt;&lt;/span&gt; &lt;a class="m-link-wrap" href="https://ss64.com/nt/syntax-esc.html"&gt;https://ss64.com/nt/syntax-esc.html&lt;/a&gt;&lt;/dd&gt;
 &lt;dt id="footnote-5"&gt;5&lt;/a&gt;.&lt;/dt&gt;
-&lt;dd&gt;&lt;span class="m-footnote"&gt;&lt;a href="#footnote-reference-5"&gt;^&lt;/a&gt;&lt;/span&gt; &lt;a class="m-link-wrap" href="https://ss64.com/nt/for_r.html"&gt;https://ss64.com/nt/for_r.html&lt;/a&gt;&lt;/dd&gt;
+&lt;dd&gt;&lt;span class="m-footnote"&gt;&lt;a href="#footnote-reference-6"&gt;^&lt;/a&gt;&lt;/span&gt; &lt;a class="m-link-wrap" href="https://ss64.com/nt/for_r.html"&gt;https://ss64.com/nt/for_r.html&lt;/a&gt;&lt;/dd&gt;
 &lt;dt id="footnote-6"&gt;6&lt;/a&gt;.&lt;/dt&gt;
-&lt;dd&gt;&lt;span class="m-footnote"&gt;&lt;a href="#footnote-reference-6"&gt;^&lt;/a&gt;&lt;/span&gt; &lt;a class="m-link-wrap" href="https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconvert"&gt;https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconvert&lt;/a&gt;&lt;/dd&gt;
+&lt;dd&gt;&lt;span class="m-footnote"&gt;&lt;a href="#footnote-reference-7"&gt;^&lt;/a&gt;&lt;/span&gt; &lt;a class="m-link-wrap" href="https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconvert"&gt;https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconvert&lt;/a&gt;&lt;/dd&gt;
 &lt;dt id="footnote-7"&gt;7&lt;/a&gt;.&lt;/dt&gt;
-&lt;dd&gt;&lt;span class="m-footnote"&gt;&lt;a href="#footnote-reference-7"&gt;^&lt;/a&gt;&lt;/span&gt; &lt;a class="m-link-wrap" href="https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconfig"&gt;https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconfig&lt;/a&gt;&lt;/dd&gt;
+&lt;dd&gt;&lt;span class="m-footnote"&gt;&lt;a href="#footnote-reference-8"&gt;^&lt;/a&gt;&lt;/span&gt; &lt;a class="m-link-wrap" href="https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconfig"&gt;https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconfig&lt;/a&gt;&lt;/dd&gt;
+&lt;dt id="footnote-8"&gt;8&lt;/a&gt;.&lt;/dt&gt;
+&lt;dd&gt;&lt;span class="m-footnote"&gt;&lt;a href="#footnote-reference-5"&gt;^&lt;/a&gt;&lt;/span&gt; &lt;a class="m-link-wrap" href="https://en.wikibooks.org/wiki/Windows_Batch_Scripting#Percent_tilde"&gt;https://en.wikibooks.org/wiki/Windows_Batch_Scripting#Percent_tilde&lt;/a&gt;&lt;/dd&gt;
 &lt;/dl&gt;
 &lt;/section&gt;
 </content><category term="tutorial"></category><category term="productivity"></category><category term="arnold"></category><category term="image-processing"></category><category term="windows"></category></entry><entry><title>Instancing in Katana</title><link href="https://mrlixm.github.io/blog/katana_instancing/" rel="alternate"></link><published>2022-03-30T20:58:00+02:00</published><updated>2022-03-30T20:58:00+02:00</updated><author><name>Liam Collod</name></author><id>tag:mrlixm.github.io,2022-03-30:/blog/katana_instancing/</id><summary type="html">&lt;p&gt;How OpScript can be used to create a flexible solution for
