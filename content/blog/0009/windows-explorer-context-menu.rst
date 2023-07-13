@@ -7,6 +7,7 @@ Creating custom context menu for Windows file explorer.
 
 :date-created: 2023-01-29 21:15
 :date: 2023-02-28 09:49
+:modified: 2023-07-13 11:17
 
 :category: tutorial
 :tags: productivity, arnold, image-processing, windows
@@ -731,6 +732,19 @@ Cool use cases ideas for context-menus
 Because maketx is not the only program that is cool to have available has a right
 click, here is a few ideas that could really boost your workflow !
 
+.. block-warning:: %1 mistake
+
+    In some of the code snippet you will have below, you will sometime
+    notice that the ``%1`` argument is not wrapped in quotes. This mean that
+    if you pass a file with whitespaces to the first argument, it will break.
+
+    So or you make sure none of your files have whitespaces, or you wrap the
+    ``%1`` in quotes (that might need to be double if there is already quotes
+    in the command).
+
+    You can also use ``"%~1"`` that will remove the quotes but still work
+    with whitespaces (tested and did not work properly for me). [8]_
+
 maketx
 =======
 
@@ -945,7 +959,7 @@ Save the .bat somewhere then let's get back to our .reg file :
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048]
     "MUIVerb"="rescale 2048"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048\command]
-    @="cmd /k \"F:\\blog\\path\\to\\oiiotool-rescale.bat\" %1 2048"
+    @="cmd /k \"\"F:\\blog\\path\\to\\oiiotool-rescale.bat\" \"%1\"\" 2048"
 
 Don't forget to also escape the backward slashes in the path. You notice that
 we just forward the path of the file selected as first argument of the bat, and
@@ -959,17 +973,17 @@ size options :
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale4096]
     "MUIVerb"="rescale 4096"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale4096\command]
-    @="cmd /k \"F:\\blog\\path\\to\\oiiotool-rescale.bat\" %1 4096"
+    @="cmd /k \"\"F:\\blog\\path\\to\\oiiotool-rescale.bat\" \"%1\"\" 4096"
 
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048]
     "MUIVerb"="rescale 2048"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale2048\command]
-    @="cmd /k \"F:\\blog\\path\\to\\oiiotool-rescale.bat\" %1 2048"
+    @="cmd /k \"\"F:\\blog\\path\\to\\oiiotool-rescale.bat\" \"%1\"\" 2048"
 
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale1024]
     "MUIVerb"="rescale 1024"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiiorescale1024\command]
-    @="cmd /k \"F:\\blog\\path\\to\\oiiotool-rescale.bat\" %1 1024"
+    @="cmd /k \"\"F:\\blog\\path\\to\\oiiotool-rescale.bat\" \"%1\"\" 1024"
 
     ...
 
@@ -1000,7 +1014,7 @@ As previously, in 2 part with a .bat :
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiioicon]
     "MUIVerb"="convert to .ico"
     [HKEY_CURRENT_USER\Software\Classes\*\shell\OIIO_Tool\shell\oiioicon\command]
-    @="cmd /k \"F:\\blog\\path\\to\\oiiotool-ico-convert.bat\" %1"
+    @="cmd /k \"\"F:\\blog\\path\\to\\oiiotool-ico-convert.bat\" \"%1\"\""
 
 The only tricky part was to know the ico format store multiple versions of
 the same image at different scales, but again OIIO make that pretty easy !
@@ -1493,6 +1507,13 @@ Those rules are for the commands in the reg files. Not for batch files !
 Do not hesitate to join the discord linked below and ask, if you have any more issue.
 
 
+Changelog
+---------
+
+-
+    ``13-07-2023``: fixed some ``%1`` argument not wrapped in quotes. Thanks to Slava.
+
+
 References
 ----------
 
@@ -1503,3 +1524,4 @@ References
 .. [5] https://ss64.com/nt/for_r.html
 .. [6] https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconvert
 .. [7] https://openimageio.readthedocs.io/en/latest/maketx.html#cmdoption-colorconfig
+.. [8] https://en.wikibooks.org/wiki/Windows_Batch_Scripting#Percent_tilde
