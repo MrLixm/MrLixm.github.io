@@ -1,0 +1,69 @@
+<h1 style="display:none;">Index</h1>
+<section class="indexA" aria-label="Introduction">
+  <video muted loop autoplay>
+    <source src="/static/images/global/backgroundA.mp4" type="video/mp4">
+  </video>
+  <div class="l-content">
+    <h2 style="display:none;">Introduction</h2>
+    <p class="l01">Liam Collod</p>
+    <p class="l02">Surfacing - Lighting - TD</p>
+    <p class="ldescription">
+      Hey there, I'm a French VFX artist for 6 years now.
+      I have a strong interest in everything that is rendering-related, but I specialized myself in Lighting. <br>
+      I’m combining my strong artistic and technical skills to help myself and other optimizing their creation workflow.
+    </p>
+    <div class="lsocial">
+      <div class="l-social-image" title="LinkedIn">
+        <a href="https://www.linkedin.com/in/liam-collod/">
+          <img style="opacity:95" alt="linkedin" src="/static/images/global/static/linkedin.svg">
+        </a>
+      </div>
+      <div class="l-social-image" title="Mastodon">
+        <a rel="me" href="https://mastodon.gamedev.place/@liamcollod">
+          <img style="opacity:0.85;padding:4px" alt="twitter" src="/static/images/global/static/mastodon.svg">
+        </a>
+      </div>
+      <div class="l-social-image" title="Artstation">
+        <a href="https://www.artstation.com/monsieur_lixm">
+          <img style="opacity:0.75" alt="artstation" src="/static/images/global/static/artstation.svg">
+        </a>
+      </div>
+      <div class="l-social-image" title="Twitter">
+        <a href="https://twitter.com/MrLixm">
+          <img style="opacity:0.65" alt="twitter" src="/static/images/global/static/twitter.svg">
+        </a>
+      </div>
+      <div class="l-social-image" title="Github">
+        <a href="https://github.com/MrLixm">
+          <img style="opacity:0.6" alt="github" src="/static/images/global/static/github.svg">
+        </a>
+      </div>
+      <div class="l-social-image" title="Email">
+        <a href="mailto:lcollod@gmail.com">
+          <img style="opacity:0.5" alt="email" src="/static/images/global/static/email.svg">
+        </a>
+      </div>
+      <div class="l-social-image" title="Youtube">
+        <a href="https://www.youtube.com/c/LiamCollod">
+          <img style="opacity:0.4" alt="youtube" src="/static/images/global/static/youtube.svg">
+        </a>
+      </div>
+      <div class="l-social-image" title="Gumroad">
+        <a href="https://gumroad.com/pyco">
+          <img style="opacity:0.3" alt="gumroad" src="/static/images/global/static/gumroad.svg" style="padding:0.2rem">
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="indexB" aria-label="Demoreel">
+    <div class="l-embed">
+      <iframe src="https://player.vimeo.com/video/579603827?h=5ddae9d51f&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <script src="https://player.vimeo.com/api/player.js"></script>
+    <h2><a class="l-index-h2" href="https://vimeo.com/579603827">Demoreel</a></h2>
+</section>
+<section class="indexC" aria-label="Blog">
+  <h2><a href="{{ M_BLOG_URL|format_siteurl|e }}">Blog</a></h2>
+  {% include 'latest_posts.html' %}
+</section>
