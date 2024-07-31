@@ -75,6 +75,7 @@ EXTRA_PATH_METADATA = {
     r"pages": {"proot": "pages"},
     r"pages/work": {"proot": "work"},
     f"{L_PROJECTS_PATH}": {"proot": "work/projects"},
+    r"pages/assets": {"proot": "assets"},
 }
 
 TEMPLATE_PAGES = None
