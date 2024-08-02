@@ -25,3 +25,9 @@ Programming
 
 Check my `GitHub <https://github.com/MrLixm>`_.
 
+----
+
+.. block-success:: How to follow all of my work ?
+
+    Those day I'm most active on `Mastodon <https://mastodon.gamedev.place/@liamcollod>`_.
+
