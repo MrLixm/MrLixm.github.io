@@ -4,12 +4,24 @@ Work
 :summary: Summary of my work.
 :modified: 2021-10-17 19:00
 :cover: {static}/images/global/grid.png
+:css: /static/styles/work.css
 
 .. note-warning::
 
-    .. class:: m-text-center m-noindent
+    🚧 work-in-progress page 🚧
 
-        🚧 Coming Soon. 🚧
+VFX
+---
 
-        Have a look at my `Artstation <https://www.artstation.com/monsieur_lixm>`_ in the meanwhile.
+Check my `Artstation <https://www.artstation.com/monsieur_lixm>`_.
+
+Photography
+-----------
+
+Check my `Cara profile <https://cara.app/liamcollod>`_.
+
+Programming
+-----------
+
+Check my `GitHub <https://github.com/MrLixm>`_.
 
