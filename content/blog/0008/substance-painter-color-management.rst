@@ -1460,13 +1460,6 @@ Resources
     This paper from 2012 presents an introduction to the color pipelines
     behind modern feature-film visual-effects and animation.
 
-.. url-preview:: https://discord.gg/jk6u3eB
-    :title: Digital Imaging | Discord Server
-    :svg: {static}/images/global/icons/discord.svg
-    :svg-size: 60
-
-    A Discord server centered around digital imaging - from CGI to digital
-    cinematography and photography and more.
 
 
 
