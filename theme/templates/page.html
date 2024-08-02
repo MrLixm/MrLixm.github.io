@@ -17,7 +17,7 @@
   {% if page.css %}
   {% set styles = page.css.strip().split('\n') %}
   {% for style in styles %}
-  <link rel="stylesheet" href="{{ style|expand_link(page)|e }}" />
+  <link rel="stylesheet" href="{{ style|format_siteurl|e }}" />
   {% endfor %}
   {% endif %}
   {% if M_FAVICON %}

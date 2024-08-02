@@ -1,0 +1,64 @@
+{% extends "page.html" %}
+{% block main %}
+  <div class="content">
+    <div class="title">
+      <h1>Contact</h1>
+      <p>me</p>
+    </div>
+    <div class="header-subline">
+      <p>for questions,</p>
+      <p>for feedback,</p>
+      <p>for work !?</p>
+    </div>
+    <div class="buttons">
+      <div class="button">
+        <p>by good<br>old email</p>
+        <button onclick="location.href='mailto:lcollod@gmail.com'"
+                type="button" class="mail" aria-label="open mail url">
+          <img alt="an email icon"
+               src="/static/images/global/static/email.svg">
+        </button>
+      </div>
+      <div class="button">
+        <p>with<br>mastodon</p>
+        <button
+            onclick="location.href='https://mastodon.gamedev.place/@liamcollod'"
+            type="button" class="mastodon" aria-label="open mastodon url">
+          <img alt="mastodon logo" style="padding: 10%"
+               src="/static/images/global/static/mastodon.svg">
+        </button>
+      </div>
+      <div class="button">
+        <p>or even<br>with linkedin</p>
+        <button
+            onclick="location.href='https://www.linkedin.com/in/liam-collod/'"
+            type="button" class="linkedin" aria-label="open linkedin url">
+          <img alt="linkedin logo"
+               src="/static/images/global/static/linkedin.svg">
+        </button>
+      </div>
+    </div>
+    <div class="about">
+      <h2>About<br>me</h2>
+      <img
+          alt="my profile picture; a portrait of a man with green hair and making a weird face. the image is overexposed with some green tints."
+          src="/static/images/global/profilepicture.jpg"
+          class="profile-picture">
+      <p>
+        Liam Collod is a French artist making pictures for 9 years now. He
+        decided a few years ago to learn the dark art of building software in
+        the hope that it could improve his craft, but has instead found
+        himself fully absorbed by it with the consequence of not really
+        crafting pictures anymore.
+      </p>
+    </div>
+    <div class="topic-cloud">
+      <p class="topic-python">python</p>
+      <p class="topic-texturing">texturing</p>
+      <p class="topic-lighting">lighting</p>
+      <p class="topic-compositing">compositing</p>
+      <p class="topic-photography">photography</p>
+      <p class="topic-color-science">color-science</p>
+    </div>
+  </div>
+{% endblock %}

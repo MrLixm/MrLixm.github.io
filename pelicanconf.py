@@ -62,7 +62,7 @@ ARTICLE_SAVE_AS = "blog/{slug}/index.html"
 ARTICLE_EXCLUDES = ["blog/_template"]
 
 # -- STATIC (relative to PATH)
-STATIC_PATHS = ["images"]
+STATIC_PATHS = ["images", "styles"]
 STATIC_URL = "static/{path}"
 STATIC_SAVE_AS = "static/{path}"
 
