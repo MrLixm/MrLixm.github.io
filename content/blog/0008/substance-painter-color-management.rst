@@ -43,7 +43,7 @@ skip straight to the `Substance Setup & Workflow`_ section if desired.
 
 .. url-preview:: https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html
     :title: Official Documentation
-    :image: https://substance3d.adobe.com/documentation/spdoc/_/7F00010101777233846FC8EC6B4E4F33/1638375621662/resources/unfurl/splash_pt.jpg
+    :image: https://helpx-prod.scene7.com/is/image/HelpxProd/banner-cm-doc?$pjpeg$&jpegSize=200&wid=650
 
 
 
