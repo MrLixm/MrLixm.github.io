@@ -173,8 +173,7 @@ M_SITE_LOGO = "static/images/global/icons/lixm-outline.svg"
 M_SITE_LOGO_TEXT = "Liam Collod"
 
 # SOCIAL
-M_SOCIAL_TWITTER_SITE = "@MrLixm"
-M_SOCIAL_TWITTER_SITE_ID = 713068621203914752
+M_SOCIAL_FEDIVERSE_CREATOR = "@liamcollod@mastodon.gamedev.place"
 M_SOCIAL_BLOG_SUMMARY = "Personal website & blog for Liam Collod (MrLixm)"
 M_SOCIAL_IMAGE = "/static/images/global/cover_social.jpg"
 
