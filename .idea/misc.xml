@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Black">
-    <option name="sdkName" value="Poetry (Blog) (2)" />
+    <option name="enabledOnSave" value="true" />
+    <option name="sdkName" value="uv (MrLixm.github.io)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Poetry (Blog) (2)" project-jdk-type="Python SDK" />
 </project>
