@@ -12,16 +12,16 @@ echo "[build-n-publish.sh] working directory : $PWD"
 echo "[build-n-publish.sh] current branch : $CURRENT_BRANCH"
 echo "[build-n-publish.sh] target branch : $TARGET_BRANCH"
 
-# 1. generate site and comit to master:
+# 1. generate site and comit to main:
 
 pelican content -o output -s publishconf.py
 
 # copy the README to output before commit so it's pushed to master
 cp -v README.md output/README.md
 
-ghp-import -m "$MASTER_COMMIT" -b master output # push ./output to local master
+ghp-import -m "$MASTER_COMMIT" -b $TARGET_BRANCH output # push ./output to local master
 
-git push origin $TARGET_BRANCH  # push local master to remote
+git push origin $TARGET_BRANCH  # push local main to remote
 
 echo "[build-n-publish.sh] blog pushed to \"origin/$TARGET_BRANCH\"."
 

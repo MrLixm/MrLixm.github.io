@@ -1,6 +1,5 @@
-"""
+""" """
 
-"""
 __all__ = ("interactive_publish",)
 
 import json
@@ -15,7 +14,7 @@ import dev.shell
 
 logger = logging.getLogger(__name__)
 
-TARGET_BRANCH_NAME = "master"
+TARGET_BRANCH_NAME = "main"
 
 INFO_FILE_PATH = Path(__file__).parent / "../info.json"
 INFO_FILE_PATH = INFO_FILE_PATH.absolute().resolve()

@@ -3,7 +3,7 @@
 A python package of developer resources for working on the website. 
 
 > All the content in here does not contribute *directly* to the website. This means
-any edit on files done here doesn't need to trigger a publish to master.
+any edit on files done here doesn't need to trigger a publish to main.
 
 # Usage
 
