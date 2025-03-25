@@ -43,7 +43,7 @@ Styling of components used through specific sections of the website.
 .logo-txt {
     color: rgba(243, 243, 243, 0.7);
     font-family: var(--font-B);
-    font-weight: 100;
+    font-weight: 200;
     font-size: 1.9rem;
     text-transform: uppercase;
     letter-spacing: 0.2rem;
@@ -67,7 +67,7 @@ Styling of components used through specific sections of the website.
 .l-nav-menu a {
     color: rgba(243, 243, 243, 0.95);
     font-family: var(--font-B);
-    font-weight: 100;
+    font-weight: 200;
     font-size: 1.5rem;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -127,7 +127,7 @@ main article h3,
 main article h4,
 main article h5{
     font-family: var(--font-B);
-    font-weight: 100;
+    font-weight: 200;
 }
 main article h1 {
     font-size: 3.5rem;
