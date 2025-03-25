@@ -6,28 +6,27 @@ Work
 :cover: {static}/images/global/grid.png
 :css: /static/styles/work.css
 
-.. note-warning::
+.. container:: l-projects
 
-    🚧 work-in-progress page 🚧
+    .. block-primary:: Programming
 
-VFX
----
+        Check my `GitHub <https://github.com/MrLixm>`_.
 
-Check my `Artstation <https://www.artstation.com/monsieur_lixm>`_.
+    .. block-info:: Photography
 
-Photography
------------
+        Check my `Cara profile <https://cara.app/liamcollod>`_.
 
-Check my `Cara profile <https://cara.app/liamcollod>`_.
+    .. block-warning:: VFX
 
-Programming
------------
+        Check my `Artstation <https://www.artstation.com/monsieur_lixm>`_.
 
-Check my `GitHub <https://github.com/MrLixm>`_.
+.. container:: l-projects
 
-----
+    .. block-default:: How to follow all of my work ?
 
-.. block-success:: How to follow all of my work ?
+        Those day I'm most active on `Mastodon <https://mastodon.gamedev.place/@liamcollod>`_.
 
-    Those day I'm most active on `Mastodon <https://mastodon.gamedev.place/@liamcollod>`_.
+.. raw:: html
+    :file: work.html
+
 
