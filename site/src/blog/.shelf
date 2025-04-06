@@ -1,0 +1,2 @@
+disabled_labels: ["categories", "authors"]
+default_template: "blog.html"
