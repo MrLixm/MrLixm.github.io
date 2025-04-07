@@ -6,8 +6,15 @@ import lxmsite
 THISDIR = Path(__file__).parent
 
 SRC_ROOT: Path = THISDIR / "src"
+DST_ROOT: Path | None = THISDIR / ".build"
 TEMPLATES_ROOT: Path = THISDIR / "templates"
 
+# mapping of "nav pretty-name": "relative url path"
+HEADER_NAV = {
+    "Work": "work/index.html",
+    "Blog": "blog/index.html",
+    "Contact": "contact.html",
+}
 
 # determine which page metadata is collected to generate procedurals pages.
 # those names become reserved in the shelf namespace and the root namespace.
@@ -21,6 +28,11 @@ SHELF_LABELS = [
 
 # TODO
 REDIRECTS = {}
+
+# used for making some relative urls absolute
+SITE_URL = "https://mrlixm.github.io"
+# affect how the site is built (mainly urls), i.e. local preview or final web publish.
+PUBLISH_MODE = False
 
 
 # from https://github.com/getpelican/pelican/blob/main/pelican/readers.py#L253

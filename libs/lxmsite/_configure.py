@@ -1,4 +1,5 @@
 import dataclasses
+import json
 import logging
 import runpy
 from pathlib import Path
@@ -21,9 +22,25 @@ class SiteConfig:
     """
 
     SRC_ROOT: Path = mkfield({"type": Path})
+    DST_ROOT: Path | None = mkfield({"type": (Path, type(None))})
     TEMPLATES_ROOT: Path = mkfield({"type": Path})
     SHELF_LABELS: list[ShelfLabel] = mkfield({"type": list})
     DEFAULT_DOCUTILS_SETTINGS: dict = mkfield({"type": dict})
+    SITE_URL: str = mkfield({"type": str})
+    PUBLISH_MODE: bool = mkfield({"type": bool})
+    HEADER_NAV: dict[str, str] = mkfield({"type": dict})
+
+    def sanitize(self):
+        """
+        Perform some user-input sanitization.
+        """
+        self.SRC_ROOT = self.SRC_ROOT.resolve()
+        self.DST_ROOT = self.DST_ROOT.resolve() if self.DST_ROOT else None
+        self.TEMPLATES_ROOT = self.TEMPLATES_ROOT.resolve()
+        self.SITE_URL = self.SITE_URL.rstrip("/")
+        for name, path in self.HEADER_NAV.items():
+            if path.startswith("./"):
+                self.HEADER_NAV[name] = path.removeprefix("./")
 
     @classmethod
     def from_path(cls, path: Path) -> "SiteConfig":
@@ -45,3 +62,13 @@ class SiteConfig:
             config_dict[field.name] = context[field.name]
 
         return cls(**config_dict)
+
+    def debug(self) -> str:
+        """
+        Return the config content as a human-debuggable string.
+        """
+        return "SiteConfig" + json.dumps(
+            dataclasses.asdict(self),
+            indent=4,
+            default=str,
+        )

@@ -4,6 +4,7 @@ from pathlib import Path
 
 from lxmsite import SiteConfig
 from lxmsite import ShelfLabel
+from lxmsite import ShelfResource
 from . import rstlib
 
 LOGGER = logging.getLogger(__name__)
@@ -14,20 +15,25 @@ class PageResource:
     """
     A page is a rst document that will be translated to a single web page.
 
-    A page may or may not belong to a shelf.
+    A page may be child of zero or one shelf.
     """
 
     title: str
     metadata: dict[str, str]
     labels: dict[ShelfLabel, str]
-    file_path: Path
+    shelf: ShelfResource | None
+    url_path: str
     html_content: str
     html_template: str | None
+
+    def __str__(self):
+        return f"<{self.url_path} ({self.title})>"
 
 
 def read_page(
     file_path: Path,
     site_config: SiteConfig,
+    parent_shelf: ShelfResource | None,
 ) -> PageResource:
     publisher = rstlib.read_rst(
         file_path,
@@ -46,17 +52,19 @@ def read_page(
         page_labels[label] = page_label
 
     template = metadata.pop("template", None)
+    if parent_shelf and not template:
+        template = parent_shelf.config.default_template
+
+    url_path: Path = file_path.relative_to(site_config.SRC_ROOT)
+    url_path: Path = url_path.with_suffix(".html")
+    url_path: str = url_path.as_posix()
 
     return PageResource(
         title=title,
         metadata=metadata,
-        file_path=file_path,
-        html_content=content,
         labels=page_labels,
+        shelf=parent_shelf,
+        url_path=url_path,
+        html_content=content,
         html_template=template,
     )
-
-
-def render_page(page: PageResource, site_config: SiteConfig) -> str:
-    # TODO
-    return page.html_content
