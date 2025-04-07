@@ -4,7 +4,6 @@ from pathlib import Path
 
 from lxmsite import SiteConfig
 from lxmsite import ShelfLabel
-from lxmsite import ShelfResource
 from . import rstlib
 
 LOGGER = logging.getLogger(__name__)
@@ -21,7 +20,6 @@ class PageResource:
     title: str
     metadata: dict[str, str]
     labels: dict[ShelfLabel, str]
-    shelf: ShelfResource | None
     url_path: str
     html_content: str
     html_template: str | None
@@ -36,19 +34,10 @@ class PageResource:
         """
         return self.url_path.split("/")[-1]
 
-    def is_shelf_index(self) -> bool:
-        """
-        Return True if the page is to be used as the index page of the self it belongs to.
-        """
-        if not self.shelf:
-            return False
-        return f"{self.shelf.url_path}/{self.slug}" == self.url_path
-
 
 def read_page(
     file_path: Path,
     site_config: SiteConfig,
-    parent_shelf: ShelfResource | None,
 ) -> PageResource:
     publisher = rstlib.read_rst(
         file_path,
@@ -67,8 +56,6 @@ def read_page(
         page_labels[label] = page_label
 
     template = metadata.pop("template", None)
-    if parent_shelf and not template:
-        template = parent_shelf.config.default_template
 
     url_path: Path = file_path.relative_to(site_config.SRC_ROOT)
     url_path: Path = url_path.with_suffix(".html")
@@ -78,7 +65,6 @@ def read_page(
         title=title,
         metadata=metadata,
         labels=page_labels,
-        shelf=parent_shelf,
         url_path=url_path,
         html_content=content,
         html_template=template,

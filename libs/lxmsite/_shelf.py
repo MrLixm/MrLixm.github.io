@@ -3,6 +3,8 @@ import dataclasses
 import logging
 from pathlib import Path
 
+from lxmsite import PageResource
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -84,6 +86,14 @@ class ShelfConfig:
 
 @dataclasses.dataclass
 class ShelfResource:
-    config: ShelfConfig
-    children: list[Path]
     url_path: str
+    config: ShelfConfig
+    children: list[PageResource]
+
+    def is_index(self, page: PageResource) -> bool:
+        """
+        Return True if the page is to be used as the index page of the self it belongs to.
+        """
+        if page not in self.children:
+            return False
+        return f"{self.url_path}/{page.slug}" == page.url_path

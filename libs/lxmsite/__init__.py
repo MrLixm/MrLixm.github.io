@@ -9,11 +9,11 @@ from . import rstlib
 from ._configure import ShelfLabel
 from ._configure import SiteConfig
 
-from ._shelf import ShelfResource
-from ._shelf import ShelfConfig
-
 from ._page import PageResource
 from ._page import read_page
+
+from ._shelf import ShelfResource
+from ._shelf import ShelfConfig
 
 from ._templating import render_page
 from ._templating import SiteGlobalContext
