@@ -8,6 +8,8 @@ from ._shelf import ShelfConfig
 
 from ._configure import SiteConfig
 
+from . import rstlib
+
 from ._page import PageResource
 from ._page import read_page
 from ._page import render_page

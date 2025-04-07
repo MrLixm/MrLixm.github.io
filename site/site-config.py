@@ -32,4 +32,5 @@ DEFAULT_DOCUTILS_SETTINGS = {
     "traceback": True,
     "warning_stream": io.StringIO(),
     "embed_stylesheet": False,
+    "input_encoding": "utf-8",
 }

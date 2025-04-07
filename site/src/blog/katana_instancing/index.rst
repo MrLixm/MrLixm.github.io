@@ -14,7 +14,7 @@ Instancing in Katana
 :author: Liam Collod
 
 Katana, as usual, doesn't offer a "ready to go" solution for instancing.
-This initial complexity can be overcome by the fact that we can create an
+This initial :abbr:`complexity test abbr>` can be overcome by the fact that we can create an
 instancing solution that exactly suits our needs. And that is what we
 are going to address in this post.
 Additionally, I will explain how I tried to create a flexible solution for
