@@ -6,11 +6,11 @@ from ._browse import collect_shelves
 
 from . import rstlib
 
-from ._shelf import ShelfResource
-from ._shelf import ShelfLabel
-from ._shelf import ShelfConfig
-
+from ._configure import ShelfLabel
 from ._configure import SiteConfig
+
+from ._shelf import ShelfResource
+from ._shelf import ShelfConfig
 
 from ._page import PageResource
 from ._page import read_page
