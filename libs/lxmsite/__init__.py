@@ -1,3 +1,5 @@
+from ._logging import configure_logging
+
 from ._browse import read_siteignore
 from ._browse import collect_site_files
 from ._browse import collect_shelves

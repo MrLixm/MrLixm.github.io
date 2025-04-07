@@ -85,10 +85,5 @@ def main(argv: list[str] | None = None):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(
-        level=logging.DEBUG,
-        format="{levelname: <7} | {asctime} [{name}] {message}",
-        style="{",
-        stream=sys.stdout,
-    )
+    lxmsite.configure_logging()
     main()
