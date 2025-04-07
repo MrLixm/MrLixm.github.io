@@ -29,6 +29,21 @@ class PageResource:
     def __str__(self):
         return f"<{self.url_path} ({self.title})>"
 
+    @property
+    def slug(self) -> str:
+        """
+        The last part of the url path (the page "url name")
+        """
+        return self.url_path.split("/")[-1]
+
+    def is_shelf_index(self) -> bool:
+        """
+        Return True if the page is to be used as the index page of the self it belongs to.
+        """
+        if not self.shelf:
+            return False
+        return f"{self.shelf.url_path}/{self.slug}" == self.url_path
+
 
 def read_page(
     file_path: Path,

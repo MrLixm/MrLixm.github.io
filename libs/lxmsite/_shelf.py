@@ -126,3 +126,4 @@ class ShelfConfig:
 class ShelfResource:
     config: ShelfConfig
     children: list[Path]
+    url_path: str

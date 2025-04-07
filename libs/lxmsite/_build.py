@@ -72,6 +72,7 @@ def build_site(config: lxmsite.SiteConfig) -> list[Exception]:
         shelf = ShelfResource(
             config=shelf_config,
             children=children,
+            url_path=shelf_file.parent.relative_to(src_root).as_posix(),
         )
         shelves.append(shelf)
         # create a cache that indicate which shelf each site file belongs to.
@@ -100,7 +101,11 @@ def build_site(config: lxmsite.SiteConfig) -> list[Exception]:
                 errors.append(error)
                 continue
 
-            if len(page.labels) != len(config.SHELF_LABELS):
+            if (
+                parent_shelf
+                and not page.is_shelf_index()
+                and len(page.labels) != len(config.SHELF_LABELS)
+            ):
                 expected = [label.rst_key for label in config.SHELF_LABELS]
                 actual = [label.rst_key for label in page.labels.keys()]
                 LOGGER.warning(
