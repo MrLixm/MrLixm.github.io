@@ -9,6 +9,8 @@ SRC_ROOT: Path = THISDIR / "src"
 DST_ROOT: Path | None = THISDIR / ".build"
 TEMPLATES_ROOT: Path = SRC_ROOT
 
+SITE_ICON: str = ".static/icons/logo-lixm.svg"
+
 # mapping of "nav pretty-name": "relative url path"
 HEADER_NAV = {
     "Work": "work/index.html",

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en" prefix="og: https://ogp.me/ns#">
+<head>
+  <meta charset="utf-8"/>
+  <title>{% block title %}liam collod - {{ Page.title }}{% endblock title %}</title>
+  <link rel="icon" href="{{ Config.SITE_ICON|expand_siteurl }}" type="image/x-ico">
+  <meta name="author" content="Liam Collod">
+  <meta name="description" content="{{ Page.metadata.get("summary", "") }}">
+  <meta name="fediverse:creator" content="@liamcollod@mastodon.gamedev.place">
+  <meta property="og:title" content="{{ self.title() }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ Page.url_path|expand_siteurl }}">
+  <meta property="og:description" content="{{ Page.metadata.get("summary", "") }}">
+  <meta property="og:image" content="{{ Page.metadata.get("thumbnail", "")|expand_siteurl }}">
+</head>
+<body>
+<header>
+</header>
+<main>
+  {%- block main %}
+  {%- endblock %}
+</main>
+<footer>
+</footer>
+</body>
+</html>
