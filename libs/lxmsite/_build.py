@@ -1,5 +1,6 @@
 import datetime
 import logging
+import os
 import shutil
 import traceback
 from pathlib import Path
@@ -178,11 +179,17 @@ def build_page(
     return dst_path
 
 
-def build_site(config: lxmsite.SiteConfig) -> list[Exception]:
+def build_site(
+    config: lxmsite.SiteConfig,
+    symlink_stylesheets: bool,
+) -> list[Exception]:
     """
 
     Args:
         config: config driving the build process.
+        symlink_stylesheets:
+            True to create symlink for stylesheets files instead
+            of a hard copy. Thus allowing live edit of the stylesheet.
 
     Returns:
         collection of errors if any (that are already logged).
@@ -247,10 +254,29 @@ def build_site(config: lxmsite.SiteConfig) -> list[Exception]:
         # TODO build shelves
         pass
 
+    stylesheet_paths = [
+        Path(src_root, page.url_path, p).resolve()
+        for page in pages.values()
+        for p in page.stylesheets
+    ]
+    stylesheet_paths += [
+        Path(src_root, p).resolve() for p in config.DEFAULT_STYLESHEETS
+    ]
+
     for static_path in static_paths:
-        dst_path = Path(dst_root, static_path.relative_to(src_root)).resolve()
+        dst_path = Path(dst_root, static_path.relative_to(src_root))
+        # we can't use Path.resolve because it resolves symlinks
+        dst_path = Path(os.path.abspath(dst_path))
         mkdir(dst_path.parent)
-        LOGGER.debug(f"📦 shutil.copy({static_path}, {dst_path})")
-        shutil.copy(static_path, dst_path)
+
+        if symlink_stylesheets and static_path in stylesheet_paths:
+            if dst_path.exists():
+                LOGGER.debug(f"📦 unlink({dst_path})")
+                dst_path.unlink()
+            LOGGER.debug(f"📦 os.symlink({static_path}, {dst_path})")
+            os.symlink(static_path, dst_path)
+        else:
+            LOGGER.debug(f"📦 shutil.copy({static_path}, {dst_path})")
+            shutil.copy(static_path, dst_path)
 
     return errors

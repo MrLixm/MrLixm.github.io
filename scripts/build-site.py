@@ -87,7 +87,10 @@ def main(argv: list[str] | None = None):
         build_dir.mkdir()
 
     LOGGER.info(f"🔨 building site to '{build_dir}'")
-    errors = lxmsite.build_site(config=config)
+    errors = lxmsite.build_site(
+        config=config,
+        symlink_stylesheets=not publish,
+    )
 
     # post build checkups
     for link in config.HEADER_NAV.values():

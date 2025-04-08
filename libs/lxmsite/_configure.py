@@ -67,6 +67,7 @@ class SiteConfig:
     SITE_URL: str = mkfield({"type": str})
     PUBLISH_MODE: bool = mkfield({"type": bool})
     SITE_ICON: str = mkfield({"type": str})
+    DEFAULT_STYLESHEETS: list[str] = mkfield({"type": list})
     HEADER_NAV: dict[str, str] = mkfield({"type": dict})
 
     def sanitize(self):

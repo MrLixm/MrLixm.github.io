@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8"/>
   <title>{% block title %}liam collod - {{ Page.metadata.title }}{% endblock title %}</title>
-  {#- needs absolute url -#}
-  <link rel="icon" href="{{ Config.SITE_ICON|expand_siteurl }}" type="image/x-ico">
+  {%- if Page.metadata.icon %}
+  <link rel="icon" href="{{ Page.metadata.icon }}" type="image/x-ico">
+  {% endif %}
   {%- for author in Page.metadata.authors %}
     <meta name="author" content="{{ author }}">
   {%- endfor %}
@@ -17,7 +18,7 @@
   <meta property="og:description" content="{{ Page.metadata.description }}">
   {%- if Page.metadata.image %}
   {#- needs absolute url -#}
-  <meta property="og:image" content="{{ Page.metadata.image|expand_siteurl }}">
+  <meta property="og:image" content="{{ Page.metadata.image|mksiteabsurl(Page.url_path) }}">
   {%- endif %}
   {%- if Page.metadata.date_created %}
   <meta name="dcterms.created" content="{{ Page.metadata.date_created }}">
@@ -25,6 +26,9 @@
   {%- if Page.metadata.date_modified %}
   <meta name="dcterms.modified" content="{{ Page.metadata.date_modified }}">
   {%- endif %}
+  {% for stylesheet in Page.stylesheets %}
+  <link rel="stylesheet" href="{{ stylesheet }}" />
+  {% endfor %}
 </head>
 <body>
 <header>

@@ -1,5 +1,6 @@
 import dataclasses
 import logging
+import os
 from pathlib import Path
 
 from lxmsite import ShelfLabel
@@ -25,15 +26,24 @@ class PageMetadata:
     # https://www.w3.org/International/articles/language-tags/
     language: str
 
+    # https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel#icon
+    icon: str
+    """
+    link to an icon file, relative to the page it was extracted from.
+    """
+
     title: str  # https://ogp.me/#metadata
     type: str  # https://ogp.me/#types
     image: str  # https://ogp.me/#metadata
+    """
+    link to an image file, relative to the page it was extracted from.
+    """
 
     description: str  # https://ogp.me/#optional
 
     # anything else that is non-standardized
-    date_created: str
-    date_modified: str
+    date_created: str  # https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http%3a%2f%2fpurl.org%2fdc%2felements%2f1.1%2fdate
+    date_modified: str  # https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http%3a%2f%2fpurl.org%2fdc%2felements%2f1.1%2fdate
     extras: dict[str, str]
 
 
@@ -49,8 +59,15 @@ class PageResource:
     metadata: PageMetadata
     labels: dict[ShelfLabel, str]
     url_path: str
+    """
+    relative to the site root
+    """
     html_content: str
     html_template: str | None
+    stylesheets: list[str]
+    """
+    collections of link to stylesheets file, relative to the page
+    """
 
     def __str__(self):
         return f"<{self.url_path} ({self.title})>"
@@ -91,17 +108,35 @@ def read_page(
 
     template = raw_metadata.pop("template", None)
 
+    def mkpagerel(p: str) -> str:
+        # convert path relative to siteroot, to path relative to this page
+        p = src_root.joinpath(p).resolve()
+        pa = src_root.joinpath(url_path).resolve()
+        return Path(os.path.relpath(p, start=pa.parent)).as_posix()
+
+    stylesheets: list[str] = site_config.DEFAULT_STYLESHEETS
+    stylesheets: list[str] = list(map(mkpagerel, stylesheets))
+    meta_styles: str = raw_metadata.pop("stylesheets", "")
+    if stylesheets_add := meta_styles.startswith("+"):
+        meta_styles = meta_styles[1:]
+    meta_styles: list[str] = [k.strip() for k in meta_styles.split(",") if k.strip()]
+    if meta_styles and stylesheets_add:
+        stylesheets = stylesheets + meta_styles
+    elif meta_styles:
+        stylesheets = meta_styles
+
     image_path = raw_metadata.pop("image", "")
-    if image_path:
-        # image paths are expressed relative to the file they are in
-        #   so make sure its relative to the site root instead.
-        image_path = Path(src_root, url_path, image_path).resolve()
-        image_path = image_path.relative_to(src_root).as_posix()
-    keywords = [k.strip() for k in raw_metadata.pop("tags", "").split(",")]
+
+    keywords = [k.strip() for k in raw_metadata.pop("tags", "").split(",") if k]
+
+    icon = raw_metadata.pop("icon", "")
+    icon = icon or mkpagerel(site_config.SITE_ICON)
+
     metadata = PageMetadata(
         authors=raw_metadata.pop("authors", []),
         keywords=keywords,
         language=raw_metadata.pop("language", "en"),
+        icon=icon,
         title=raw_metadata.pop("title", title),
         type=raw_metadata.pop("type", "website"),
         image=image_path,
@@ -118,4 +153,5 @@ def read_page(
         url_path=url_path,
         html_content=content,
         html_template=template,
+        stylesheets=stylesheets,
     )

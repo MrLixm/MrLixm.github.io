@@ -21,6 +21,17 @@ def get_jinja_env(site_config: SiteConfig) -> jinja2.Environment:
             return f"{site_config.SITE_URL}/{path_}"
         return path_
 
+    def mksiteabsurl(path_: str, page_url_: str) -> str:
+        """
+        Make a page-relative url, absolute to the site; only in publish mode.
+        """
+        if site_config.PUBLISH_MODE:
+            page_abs = site_config.SRC_ROOT.joinpath(page_url_).parent
+            path_abs = page_abs.joinpath(path_).resolve()
+            path_abs = path_abs.relative_to(site_config.SRC_ROOT)
+            return f"{site_config.SITE_URL}/{path_abs.as_posix()}"
+        return path_
+
     def format_link(link_: str) -> str:
         """
         Make site cross-linking prettier by removing file format suffix on publish.
@@ -39,6 +50,7 @@ def get_jinja_env(site_config: SiteConfig) -> jinja2.Environment:
     )
     jinja_env.filters["slugify"] = slugify
     jinja_env.filters["expand_siteurl"] = expand_siteurl
+    jinja_env.filters["mksiteabsurl"] = mksiteabsurl
     jinja_env.filters["format_link"] = format_link
     return jinja_env
 
