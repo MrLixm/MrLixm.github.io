@@ -33,6 +33,20 @@
 </head>
 <body>
 <header>
+  {% block header %}
+    <a id="site-name" href="{{ "index.html"|mkpagerel|prettylink }}">
+      <img src="{{ ".static/icons/logo-lixm-outlines.svg"|mkpagerel }}" alt="my diamond-shape logo; quite minimalisitic." width="32px" height="32px">
+      <span>Liam Collod</span>
+    </a>
+    <nav class="main-nav" aria-label="Main menu">
+      <ul>
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="work" class="{% if Page.url_path.startswith("work") %}active{% endif %}"><a href="{{ "work/index.html"|mkpagerel|prettylink }}"><span>Work</span><span>Work</span></a></li>
+        <li title="blog" class="{% if Page.url_path.startswith("blog") %}active{% endif %}"><a href="{{ "blog/index.html"|mkpagerel|prettylink }}"><span>Blog</span><span>Blog</span></a></li>
+        <li title="contact" class="{% if Page.url_path.startswith("contact") %}active{% endif %}"><a href="{{ "contact.html"|mkpagerel|prettylink }}"><span>Contact</span><span>Contact</span></a></li>
+      </ul>
+    </nav>
+  {% endblock %}
 </header>
 <main>
   {%- block main %}

@@ -1,9 +1,93 @@
 :root {
     font-family: sans-serif;
+    --background-color: rgb(20, 20, 20);
     --color: #dcdcdc;
     --font-B: Montserrat, sans-serif;
     --font-C: Georama, sans-serif;
 }
 body {
     margin: 0;
+    background-color: var(--background-color);
+    color: var(--color);
+}
+/*===========================================================================*/
+/* header styling */
+header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 15px 3%;
+}
+header a, header a:visited {
+    text-decoration: unset;
+    color: unset;
+}
+header #site-name {
+    display: flex;
+    margin-right: auto;
+    align-items: center;
+    gap: 1rem;
+
+    font-family: var(--font-B);
+    font-weight: 200;
+    font-size: 1.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+}
+header #site-name img {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    opacity: 0.35;
+    margin: 0 -2rem 0;
+    overflow: hidden;
+    transition-duration: 0.8s;
+    transition-property: transform;
+}
+header #site-name:hover img {
+    transform: rotate(360deg);
+}
+
+header nav ul {
+    list-style: none;
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    margin: unset;
+
+    text-align: center;
+    font-family: var(--font-B);
+    font-weight: 200;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    /*letter-spacing: 1px;*/
+}
+
+/* === font weight trick: require 2 overlapped spans === */
+/*have the 2 span overlap themselves with grid layout*/
+header nav li a {
+    display: grid;
+}
+header nav li a > * {
+    grid-column-start: 1;
+    grid-row-start: 1;
+}
+/*switch between the 2 span using opacity*/
+header nav li span {
+    font-weight: 200;
+    transition-duration: 0.3s;
+    transition-property: opacity;
+}
+header nav li.active span {
+    font-weight: 600;
+}
+header nav li span:first-child {
+    font-weight: 600;
+    opacity: 0;
+}
+header nav li:hover span {
+    opacity: 0;
+}
+header nav li:hover span:first-child {
+    opacity: 1;
 }
