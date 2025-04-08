@@ -175,7 +175,7 @@ def build_page(
     dst_path = Path(dst_root, page.url_path).resolve()
     mkdir(dst_path.parent)
     LOGGER.debug(f"└ writing page '{dst_path}'")
-    dst_path.write_text(page_html)
+    dst_path.write_text(page_html, encoding="utf-8")
     return dst_path
 
 
