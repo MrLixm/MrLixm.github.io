@@ -42,7 +42,9 @@
       <ul>
         <!-- the duplicated span is a trick to change font-weight on hover -->
         <li title="work" class="{% if Page.url_path.startswith("work") %}active{% endif %}"><a href="{{ "work/index.html"|mkpagerel|prettylink }}"><span>Work</span><span>Work</span></a></li>
+        <li title="assets" class="{% if Page.url_path.startswith("assets") %}active{% endif %}"><a href="{{ "assets/index.html"|mkpagerel|prettylink }}"><span>Assets</span><span>Assets</span></a></li>
         <li title="blog" class="{% if Page.url_path.startswith("blog") %}active{% endif %}"><a href="{{ "blog/index.html"|mkpagerel|prettylink }}"><span>Blog</span><span>Blog</span></a></li>
+        <li title="resources" class="{% if Page.url_path.startswith("resources") %}active{% endif %}"><a href="{{ "resources/index.html"|mkpagerel|prettylink }}"><span>Resources</span><span>Resources</span></a></li>
         <li title="contact" class="{% if Page.url_path.startswith("contact") %}active{% endif %}"><a href="{{ "contact.html"|mkpagerel|prettylink }}"><span>Contact</span><span>Contact</span></a></li>
       </ul>
     </nav>
