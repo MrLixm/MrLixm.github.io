@@ -13,10 +13,14 @@ body {
 /*===========================================================================*/
 /* header styling */
 header {
-    display: flex;
-    flex-direction: row;
+    display: grid;
     align-items: center;
+    justify-items: center;
     padding: 15px 3%;
+}
+header > * {
+    grid-column-start: 1;
+    grid-row-start: 1;
 }
 header a, header a:visited {
     text-decoration: unset;
@@ -24,9 +28,9 @@ header a, header a:visited {
 }
 header #site-name {
     display: flex;
-    margin-right: auto;
     align-items: center;
     gap: 1rem;
+    width: 100%;
 
     font-family: var(--font-B);
     font-weight: 200;
@@ -52,8 +56,10 @@ header nav ul {
     list-style: none;
     align-items: center;
     display: flex;
-    gap: 1rem;
+    column-gap: 1rem;
     margin: unset;
+    padding: unset;
+    flex-wrap: wrap;
 
     text-align: center;
     font-family: var(--font-B);
@@ -62,7 +68,6 @@ header nav ul {
     text-transform: uppercase;
     /*letter-spacing: 1px;*/
 }
-
 /* === font weight trick: require 2 overlapped spans === */
 /*have the 2 span overlap themselves with grid layout*/
 header nav li a {
@@ -90,4 +95,20 @@ header nav li:hover span {
 }
 header nav li:hover span:first-child {
     opacity: 1;
+}
+@media screen and (max-width: 1250px) {
+    header {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    header #site-name {
+        width: unset;
+    }
+    header nav {
+        width: 100%;
+    }
+    header nav ul {
+        justify-content: space-evenly;
+    }
 }
