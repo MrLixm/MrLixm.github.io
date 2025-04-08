@@ -1,7 +1,7 @@
 {% extends ".base.html" %}
 {% block main %}
   <h1 style="display:none;">Index</h1>
-  <section class="indexA" aria-label="Introduction">
+  <section id="introduction" aria-label="Introduction">
     <video muted loop autoplay>
       <source src="lxm-background-loop.mp4" type="video/mp4">
     </video>
@@ -61,7 +61,7 @@
       </div>
     </div>
   </section>
-  <section class="indexB" aria-label="Demoreel">
+  <section id="demoreel" aria-label="Demoreel">
     <div class="l-embed">
       <video controls width="100%">
         <source src="work/demoreel.mp4">
@@ -70,7 +70,7 @@
     <h2><a class="l-index-h2" href="https://vimeo.com/579603827">Demoreel</a>
     </h2>
   </section>
-  <section class="indexC" aria-label="Blog">
+  <section id="blog" aria-label="Blog">
     <h2><a href="{{ "blog/index.html"|format_link }}">Blog</a></h2>
     {#  {% include 'latest_posts.html' %}#}
   </section>

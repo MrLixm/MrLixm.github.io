@@ -1,6 +1,9 @@
 :root {
     font-family: sans-serif;
+    --color: #dcdcdc;
+    --font-B: Montserrat, sans-serif;
+    --font-C: Georama, sans-serif;
 }
-main {
-    margin: 0 30%;
+body {
+    margin: 0;
 }
