@@ -15,11 +15,11 @@
   <meta property="og:title" content="{{ self.title() }}">
   <meta property="og:type" content="{{ Page.metadata.type }}">
   {#- needs absolute url -#}
-  <meta property="og:url" content="{{ Page.url_path|expand_siteurl }}">
+  <meta property="og:url" content="{{ Page.url_path|mksiteabs }}">
   <meta property="og:description" content="{{ Page.metadata.description }}">
   {%- if Page.metadata.image %}
-  {#- needs absolute url -#}
-  <meta property="og:image" content="{{ Page.metadata.image|mksiteabsurl(Page.url_path) }}">
+  {#- needs absolute url; metadata.image is page relative -#}
+  <meta property="og:image" content="{{ Page.metadata.image|mksiterel|mksiteabs }}">
   {%- endif %}
   {%- if Page.metadata.date_created %}
   <meta name="dcterms.created" content="{{ Page.metadata.date_created }}">
