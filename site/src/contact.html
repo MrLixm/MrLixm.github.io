@@ -1,0 +1,55 @@
+{% extends ".base.html" %}
+{% block main %}
+    <div class="title">
+        <h1>Contact</h1>
+        <p>me</p>
+    </div>
+    <div class="header-subline">
+        <p>for questions,</p>
+        <p>for feedback,</p>
+        <p>for work !?</p>
+    </div>
+    <div class="buttons">
+        <div class="button">
+            <p>by good<br>old email</p>
+            <a href="mailto:lcollod@gmail.com" class="mail" aria-label="open mail url">
+                <img alt="an email icon" src=".static/icons/email.svg">
+            </a>
+        </div>
+        <div class="button">
+            <p>with<br>mastodon</p>
+            <a href="https://mastodon.gamedev.place/@liamcollod" class="mastodon" aria-label="open mastodon url">
+                <img alt="mastodon logo" style="padding: 10%" src=".static/icons/mastodon.svg">
+            </a>
+        </div>
+        <div class="button">
+            <p>or even<br>with linkedin</p>
+            <a href="https://www.linkedin.com/in/liam-collod/" class="linkedin" aria-label="open linkedin url">
+                <img alt="linkedin logo" src=".static/icons/linkedin.svg">
+            </a>
+        </div>
+    </div>
+    <div class="about">
+        <h2>About<br>me</h2>
+        <img
+                alt="my profile picture; a portrait of a man with green hair and making a weird face. the image is overexposed with some green tints."
+                src=".static/images/profile-picture.jpg"
+                class="profile-picture">
+        <p>
+            Liam Collod is a French picture maker whose been tinkering with those
+            for the past 10 years.
+            He qualifies himself as a versatile image maker whose able to craft
+            pretty pictures, as much as building the software to make those.
+            He strongly believes in knowledge-sharing and care a lot about
+            improving human experience in the creative process.
+        </p>
+    </div>
+    <div class="topic-cloud">
+        <p class="topic-python">python</p>
+        <p class="topic-texturing">texturing</p>
+        <p class="topic-lighting">lighting</p>
+        <p class="topic-compositing">compositing</p>
+        <p class="topic-photography">photography</p>
+        <p class="topic-color-science">color-science</p>
+    </div>
+{% endblock %}
