@@ -248,10 +248,9 @@ def build_site(config: lxmsite.SiteConfig) -> list[Exception]:
         pass
 
     for static_path in static_paths:
-        LOGGER.debug(f"📦 building static path '{static_path}'")
         dst_path = Path(dst_root, static_path.relative_to(src_root)).resolve()
         mkdir(dst_path.parent)
-        LOGGER.debug(f"└ shutil.copy({static_path}, {dst_path})")
+        LOGGER.debug(f"📦 shutil.copy({static_path}, {dst_path})")
         shutil.copy(static_path, dst_path)
 
     return errors
