@@ -130,7 +130,7 @@ def read_page(
     keywords = [k.strip() for k in raw_metadata.pop("tags", "").split(",") if k]
 
     icon = raw_metadata.pop("icon", "")
-    icon = icon or mkpagerel(site_config.SITE_ICON)
+    icon = icon or mkpagerel(site_config.DEFAULT_PAGE_ICON)
 
     metadata = PageMetadata(
         authors=raw_metadata.pop("authors", []),
