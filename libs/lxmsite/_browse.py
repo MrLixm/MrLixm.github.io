@@ -21,6 +21,7 @@ def read_siteignore(file_path: Path) -> list[Path]:
     ignored = [
         file_path.parent / line
         for line in file_path.read_text(encoding="utf-8").splitlines()
+        if line.strip(" ")
     ]
     ignored_paths = []
     for ignored_expr in ignored:
