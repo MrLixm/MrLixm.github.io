@@ -1,17 +1,17 @@
 Instancing in Katana
 ####################
 
-:summary: How OpScript can be used to create a flexible solution for
+:description: How OpScript can be used to create a flexible solution for
     instancing.
-:thumbnail: {static}/images/blog/0005/cover.jpg
+:image: cover.jpg
 
 :status: published
-:date: 2022-03-30 20:58
-:date-created: 2021-10-23 14:58
+:date-created: 2021-10-23T14:58
+:date-modified: 2022-03-30T20:58
 
 :category: tutorial
 :tags: katana, instancing, lua, software
-:author: Liam Collod
+:authors: Liam Collod
 
 Katana, as usual, doesn't offer a "ready to go" solution for instancing.
 This initial :abbr:`complexity test abbr>` can be overcome by the fact that we can create an

@@ -12,8 +12,10 @@ import docutils.writers.html5_polyglot as docutils_writers
 
 LOGGER = logging.getLogger(__name__)
 
+DocumentType = docutils.nodes.document
 
-def parse_metadata(document: docutils.nodes.document) -> dict[str, str]:
+
+def parse_metadata(document: DocumentType) -> dict[str, str]:
     """
     Extract metadata field from a parsed rst document.
 

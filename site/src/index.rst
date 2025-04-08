@@ -1,6 +1,6 @@
 Home
 ####
 
-:summary: Welcome on my personal website & blog.
-:thumbnail: .static/images/cover-social.jpg
+:description: Welcome on my personal website & blog.
+:image: .static/images/cover-social.jpg
 :template: index.html

@@ -1,7 +1,6 @@
 Blog
 ####
 
-:summary: This is my blog :)
-:thumbnail: {static}/images/blog/0005/cover.jpg
+:description: This is my blog :)
 
 This is my blog :)
