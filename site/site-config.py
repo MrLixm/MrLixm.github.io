@@ -7,7 +7,7 @@ THISDIR = Path(__file__).parent
 
 SRC_ROOT: Path = THISDIR / "src"
 DST_ROOT: Path | None = THISDIR / ".build"
-TEMPLATES_ROOT: Path = THISDIR / "templates"
+TEMPLATES_ROOT: Path = SRC_ROOT
 
 # mapping of "nav pretty-name": "relative url path"
 HEADER_NAV = {
