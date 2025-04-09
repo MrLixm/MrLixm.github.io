@@ -24,6 +24,8 @@
     --font-B: Montserrat, sans-serif;
     --font-C: Georama, sans-serif;
     --font-mono: monospace;
+
+    --radius-S: 8px;
 }
 body {
     min-height: 100vh;
@@ -170,7 +172,7 @@ pre.literal-block, div.highlight {
     font-family: var(--font-mono);
     background-color: var(--bg-color-M);
     border: 1px solid var(--bg-color-MM);
-    border-radius: 8px;
+    border-radius: var(--radius-S);
     padding: 1rem;
     margin: 1rem 0;
 }
@@ -190,18 +192,25 @@ span.docutils.literal {
 }
 
 aside.admonition {
-    border-radius: 8px;
+    position: relative;
+    border-radius: var(--radius-S);
     background-color: var(--bg-color-M);
     border: 1px solid var(--color-WW);
     padding: 1rem;
+    margin-top: 2rem;
     margin-bottom: 1rem;
 }
 aside.admonition p {
     margin: unset;
 }
 aside.admonition p.admonition-title {
+    position: absolute;
     font-weight: bold;
-    margin-bottom: 0.5rem;
+    top: -10px;
+    background: linear-gradient(0deg, var(--bg-color-M) 60%, transparent 100%);
+    padding: 0 4px;
+    border-radius: var(--radius-S);
+    /*text-shadow: 0 0 5px var(--bg-color-M);;*/
 }
 aside.admonition.danger,
 aside.admonition.error {
