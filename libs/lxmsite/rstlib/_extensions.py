@@ -77,34 +77,123 @@ directives.register_directive("code", Pygments)
 directives.register_directive("code-block", Pygments)
 
 
+class BaseAdmonition(Directive):
+    """
+    Copied from the docutils api and edited to allow titles for all admonitions, not just generic.
+    """
+
+    final_argument_whitespace = True
+    option_spec = {
+        "class": directives.class_option,
+        "name": directives.unchanged,
+    }
+    has_content = True
+
+    node_class = NotImplemented
+
+    def run(self):
+        self.assert_has_content()
+        self.options = docutils.parsers.rst.roles.normalized_role_options(self.options)
+
+        text = "\n".join(self.content)
+        admonition_node = self.node_class(text, **self.options)
+        admonition_type = self.node_class.__name__
+        title = self.arguments[0] if self.arguments else admonition_type
+
+        title_node = docutils.nodes.title("", title)
+        admonition_node.insert(0, title_node)
+        admonition_node["classes"].append(admonition_type)
+
+        self.add_name(admonition_node)
+
+        self.state.nested_parse(self.content, self.content_offset, admonition_node)
+        return [admonition_node]
+
+
+class Admonition(BaseAdmonition):
+
+    required_arguments = 1
+    node_class = docutils.nodes.admonition
+
+
+class Attention(BaseAdmonition):
+
+    optional_arguments = 1
+    node_class = docutils.nodes.attention
+
+
+class Caution(BaseAdmonition):
+    optional_arguments = 1
+    node_class = docutils.nodes.caution
+
+
+class Danger(BaseAdmonition):
+    optional_arguments = 1
+    node_class = docutils.nodes.danger
+
+
+class Error(BaseAdmonition):
+    optional_arguments = 1
+    node_class = docutils.nodes.error
+
+
+class Hint(BaseAdmonition):
+    optional_arguments = 1
+    node_class = docutils.nodes.hint
+
+
+class Important(BaseAdmonition):
+    optional_arguments = 1
+    node_class = docutils.nodes.important
+
+
+class Note(BaseAdmonition):
+    optional_arguments = 1
+    node_class = docutils.nodes.note
+
+
+class Tip(BaseAdmonition):
+    optional_arguments = 1
+    node_class = docutils.nodes.tip
+
+
+class Warning(BaseAdmonition):
+    optional_arguments = 1
+    node_class = docutils.nodes.warning
+
+
+directives.register_directive("attention", Attention)
+directives.register_directive("caution", Caution)
+directives.register_directive("danger", Danger)
+directives.register_directive("error", Error)
+directives.register_directive("hint", Hint)
+directives.register_directive("important", Important)
+directives.register_directive("note", Note)
+directives.register_directive("tip", Tip)
+directives.register_directive("warning", Warning)
+directives.register_directive("admonition", Admonition)
+
+
 class AdmonitionsTransform(docutils.transforms.Transform):
     """
-    This is mostly a copy of the builtin docutils admonition transform, but we remove the weirds localisation part
-    that was changing the titles.
+    This is mostly a copy of the builtin docutils admonition transform, but simplified.
 
-    This transform will convert admonition with specific classes to "generaic" admonition class, and add the title node.
+    This transform will convert admonition with specific classes to "generic" admonition class.
     """
 
     default_priority = 920
 
     def apply(self):
         for node in self.document.findall(docutils.nodes.Admonition):
-            node_name = node.__class__.__name__
-            # Set class, so that we know what node this admonition came from.
-            node["classes"].append(node_name)
-
             if isinstance(node, docutils.nodes.admonition):
                 # ignore already generic-admonition
                 continue
-
             # transform specific admonition into a generic one.
             admonition = docutils.nodes.admonition(
                 node.rawsource,
                 *node.children,
                 **node.attributes,
             )
-            title = docutils.nodes.title("", node_name)
-            admonition.insert(0, title)
             node.replace_self(admonition)
 
 
