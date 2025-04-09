@@ -11,6 +11,7 @@ dependencies = [
     "docutils-stubs==0.0.22",
     "docutils>=0.21.2",
     "jinja2>=3.1.6",
+    "pygments>=2.19.1",
 ]
 
 [tool.uv]

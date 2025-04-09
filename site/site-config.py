@@ -10,7 +10,10 @@ DST_ROOT: Path | None = THISDIR / ".build"
 TEMPLATES_ROOT: Path = SRC_ROOT
 
 DEFAULT_PAGE_ICON: str = ".static/icons/logo-lixm.svg"
-DEFAULT_STYLESHEETS: list[str] = [".static/main.css"]
+DEFAULT_STYLESHEETS: list[str] = [
+    ".static/main.css",
+    ".static/pygments.onedark.css",
+]
 
 # mapping of "nav pretty-name": "relative url path"
 HEADER_NAV = {

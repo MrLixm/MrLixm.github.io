@@ -1,7 +1,13 @@
 :root {
     font-family: sans-serif;
-    --background-color: rgb(20, 20, 20);
-    --color: #dcdcdc;
+    --bg-color-W: rgb(5, 5, 5);
+    --bg-color: rgb(20, 20, 20);
+    --bg-color-M: rgb(29, 29, 29);
+    --bg-color-MM: rgb(35, 35, 35);
+    --color-WW: rgb(100, 100, 100);
+    --color-W: rgb(190, 190, 190);
+    --color: rgb(220, 220, 220);
+    --color-M: rgb(245, 245, 245);
     --font-B: Montserrat, sans-serif;
     --font-C: Georama, sans-serif;
 }
@@ -10,9 +16,24 @@ body {
     display: flex;
     flex-direction: column;
     margin: 0;
-    background-color: var(--background-color);
+    background-color: var(--bg-color);
     color: var(--color);
 }
+/* code blocks */
+pre.literal-block, div.highlight {
+    background-color: var(--bg-color-M);
+    border: 1px solid var(--bg-color-MM);
+    border-radius: 8px;
+    padding: 1rem;
+}
+div.highlight > pre {
+    margin: unset;
+}
+div.highlight .linenos {
+    color: var(--color-WW);
+}
+
+
 /*===========================================================================*/
 /* header styling */
 header {

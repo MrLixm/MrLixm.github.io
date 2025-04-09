@@ -10,6 +10,10 @@ import docutils.parsers.rst
 import docutils.readers.standalone
 import docutils.writers.html5_polyglot as docutils_writers
 
+import pygments
+import pygments.lexers
+import pygments.formatters
+
 LOGGER = logging.getLogger(__name__)
 
 DocumentType = docutils.nodes.document
@@ -70,6 +74,35 @@ class LxmHTMLTranslator(docutils_writers.HTMLTranslator):
     def depart_abbreviation(self, node):
         self.body.append("</abbr>")
 
+    def visit_doctest_block(self, node):
+        """
+        Highlight doctest python code using pygments.
+        """
+        new_children = []
+        for child in node.children:
+            lexer = pygments.lexers.get_lexer_by_name("python-console")
+            formatter = pygments.formatters.HtmlFormatter(
+                noclasses=False,
+                cssclass="highlight doctest",
+            )
+            content = child.astext()
+            parsed = pygments.highlight(content, lexer, formatter)
+            new_children.append(docutils.nodes.raw("", parsed, format="html"))
+        node.children = new_children
+
+    def depart_doctest_block(self, node):
+        pass
+
+
+class LxmHtmlWriter(docutils_writers.Writer):
+    def __init__(self):
+        super().__init__()
+        self.translator_class = LxmHTMLTranslator
+
+    def get_transforms(self):
+        transforms = super().get_transforms()
+        return transforms + []
+
 
 def read_rst(
     file_path: Path,
@@ -84,8 +117,7 @@ def read_rst(
     """
     parser = docutils.parsers.rst.Parser()
     reader = docutils.readers.standalone.Reader(parser=parser)
-    writer = docutils_writers.Writer()
-    writer.translator_class = LxmHTMLTranslator
+    writer = LxmHtmlWriter()
 
     option_parser = docutils.frontend.OptionParser(
         components=(parser, writer, reader),
