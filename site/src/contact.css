@@ -119,6 +119,36 @@ img.profile-picture {
     border-radius: 25px;
     filter: drop-shadow(0 0 30px rgba(55, 227, 144, 0.32));
 }
+img.profile-picture:hover {
+    cursor: pointer;
+}
+div.about span.emoji {
+    display: none;
+    position: absolute;
+    font-size: 1.5rem;
+}
+div.about span.emoji.seed {
+    top: -25px;
+    left: 17px;
+    font-size: 2rem;
+}
+div.about span.emoji.eyel {
+    top: 59px;
+    left: -1px;
+}
+div.about span.emoji.eyer {
+    top: 59px;
+    left: 36px;
+}
+input#show-emoji {
+    display: none;
+}
+input#show-emoji:checked + label {
+    position: relative;
+}
+input#show-emoji:checked + label > span.emoji {
+    display: unset;
+}
 @media screen and (max-width: 630px) {
     div.about {
         flex-direction: column;
