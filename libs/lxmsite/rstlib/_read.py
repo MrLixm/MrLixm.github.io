@@ -74,6 +74,16 @@ class LxmHTMLTranslator(docutils_writers.HTMLTranslator):
     def depart_abbreviation(self, node):
         self.body.append("</abbr>")
 
+    def visit_image(self, node):
+        # default docutils behavior is to set the alt with the URL which is worse than no alt
+        node["alt"] = node.get("alt", "")
+        node["classes"] += ["inline"]
+        return super().visit_image(node)
+
+    def visit_figure(self, node):
+        node["classes"] += ["inline"]
+        return super().visit_figure(node)
+
     def visit_doctest_block(self, node):
         """
         Highlight doctest python code using pygments.

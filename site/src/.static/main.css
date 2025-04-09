@@ -8,8 +8,19 @@
     --color-W: rgb(190, 190, 190);
     --color: rgb(220, 220, 220);
     --color-M: rgb(245, 245, 245);
+    --color-primary-W: rgb(62, 173, 123);
+    --color-primary: rgb(86, 217, 164);
+    --color-primary-M: rgb(59, 241, 130);
+    --color-negative: rgb(229, 75, 75);
+    --color-positive: rgb(75, 229, 101);
+    --color-hint: rgb(59, 199, 187);
+    --color-attention: rgb(229, 129, 75);
+    --color-warning: rgb(229, 198, 75);
+    --color-caution: rgb(178, 75, 229);
+
     --font-B: Montserrat, sans-serif;
     --font-C: Georama, sans-serif;
+    --font-mono: monospace;
 }
 body {
     min-height: 100vh;
@@ -19,8 +30,142 @@ body {
     background-color: var(--bg-color);
     color: var(--color);
 }
+a {
+    color: var(--color-primary);
+    text-decoration: unset;
+}
+a:visited {
+    color: var(--color-primary-W);
+}
+a:hover {
+    color: var(--color-primary-M);
+}
+a.reference:before,
+a.brackets:before,
+a.citation-reference:before {
+    content: "";
+    background: url("/.static/icons/link-vertical.svg") no-repeat bottom;
+    width: 0.8rem;
+    height: 0.7rem;
+    display: inline-block;
+}
+a.image-reference:before {
+    content: unset;
+    background: unset;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-B);
+    font-weight: 800;
+    margin: 2rem 0 0.5rem;
+    color: var(--color-primary);
+}
+h1 {
+    font-size: 2.3rem;
+    /*var(--color-primary);*/
+}
+h2 {
+    font-size: 2rem;
+}
+h3 {
+    font-size: 1.5rem;
+}
+h4 {
+    font-size: 1.3rem;
+}
+
+
+img {
+    max-width: 100%;
+}
+
+/*https://developer.mozilla.org/en-US/docs/Web/HTML/Element/abbr*/
+abbr {
+    cursor: help;
+}
+
+/*https://developer.mozilla.org/en-US/docs/Web/HTML/Element/cite*/
+cite {
+
+}
+
+/*https://developer.mozilla.org/en-US/docs/Web/HTML/Element/blockquote*/
+blockquote {
+    border-left: 2px solid var(--color-WW);
+    color: var(--color-W);
+    margin: 0 2rem;
+    padding: 0.25rem 0;
+    padding-left: 2rem;
+    font-style: italic;
+}
+
+/* description lists */
+/*https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dt*/
+dt {
+    font-weight: bold;
+}
+dd {
+    border-left: 2px solid var(--color-WW);
+    margin: 0 0;
+    padding-left: 2rem;
+}
+
+figure {
+    display: table;
+    margin: 0 0;
+}
+figcaption {
+    color: var(--color-W);
+    font-style: italic;
+}
+figcaption p {
+    width: unset;
+    max-width: unset;
+}
+
+/*===========================================================================*/
+/* docutils specific elements */
+
+/* tables */
+table p {
+    margin: unset;
+}
+table.inline {
+    display: block;
+    max-width: 100%;
+    width: max-content;
+    border-spacing: 0 0;
+    border-collapse: separate;
+    border-radius: 15px;
+    margin: 0 auto;
+
+}
+table.inline th,
+table.inline td {
+    vertical-align: middle;
+    white-space: nowrap;
+    padding: 0.8em;
+}
+table.inline th {
+    background-color: var(--bg-color-MM);
+    border-bottom: 2px solid var(--color-WW);
+}
+table.inline tr {
+    background-color: var(--bg-color-M);
+}
+table.inline tr:hover {
+    background-color: var(--bg-color-MM);
+}
+table.inline td {
+    border: 1px solid transparent;
+    border-left: 2px solid var(--bg-color-MM)
+}
+table.inline ul {
+    padding-inline-start: 15px;
+}
+
 /* code blocks */
 pre.literal-block, div.highlight {
+    font-family: var(--font-mono);
     background-color: var(--bg-color-M);
     border: 1px solid var(--bg-color-MM);
     border-radius: 8px;
@@ -31,6 +176,89 @@ div.highlight > pre {
 }
 div.highlight .linenos {
     color: var(--color-WW);
+}
+
+span.docutils.literal {
+    font-family: var(--font-mono);
+    background-color: var(--bg-color-MM);
+    color: var(--color-W);
+    border-radius: 5px;
+    padding: 2px 5px;
+}
+
+aside.admonition {
+    border-radius: 8px;
+    background-color: var(--bg-color-M);
+    border: 1px solid var(--color-WW);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+aside.admonition p {
+    margin: unset;
+}
+aside.admonition p.admonition-title {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+aside.admonition.danger,
+aside.admonition.error {
+    border-color: var(--color-negative);
+}
+.admonition.danger .admonition-title,
+.admonition.error .admonition-title {
+    color: var(--color-negative);
+}
+aside.admonition.attention,
+aside.admonition.important {
+    border-color: var(--color-attention);
+}
+.admonition.attention .admonition-title,
+.admonition.important .admonition-title {
+    color: var(--color-attention);
+}
+aside.admonition.caution {
+    border-color: var(--color-caution);
+}
+.admonition.caution .admonition-title {
+    color: var(--color-caution);
+}
+aside.admonition.hint {
+    border-color: var(--color-hint);
+}
+.admonition.hint .admonition-title {
+    color: var(--color-hint);
+}
+aside.admonition.tip {
+    border-color: var(--color-positive);
+}
+.admonition.tip .admonition-title {
+    color: var(--color-positive);
+}
+aside.admonition.warning {
+    border-color: var(--color-warning);
+}
+.admonition.warning .admonition-title {
+    color: var(--color-warning);
+}
+
+img.inline {
+    display: block;
+}
+
+img.align-center,
+figure.align-center {
+    margin: auto;
+}
+img.align-right,
+figure.align-right {
+    margin-left: auto;
+}
+figure.align-center img {
+    margin: auto;
+}
+figure.align-right img {
+    margin-left: auto;
 }
 
 

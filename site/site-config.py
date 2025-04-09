@@ -51,4 +51,5 @@ DEFAULT_DOCUTILS_SETTINGS = {
     "warning_stream": io.StringIO(),
     "embed_stylesheet": False,
     "input_encoding": "utf-8",
+    "table_style": "inline",
 }
