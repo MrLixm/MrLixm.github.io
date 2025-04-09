@@ -150,6 +150,37 @@ div.topic-cloud > * {
     border-radius: 15px;
     padding: 5px 10px 5px 10px;
 }
+/* https://github.com/IanLunn/Hover/blob/master/css/hover.css#L1023C1-L1049C2 */
+@keyframes hvr-buzz {
+    15% {
+        transform: translate(0px, 3px) rotate(3deg);
+    }
+    25% {
+        transform: translateX(0.5px) rotate(3deg);
+    }
+    40% {
+        transform: translate(0px, 1px) rotate(2deg);
+    }
+    50% {
+        transform: translateX(-0.5px) rotate(3deg);
+    }
+    65% {
+        transform: translate(0px, 2px) rotate(3deg);
+    }
+    85% {
+        transform: translate(0px, -2px) rotate(0deg);
+    }
+}
+.hvr-buzz {
+    transform: perspective(1px) translateZ(0);
+    transform-box: content-box;
+}
+.hvr-buzz, .hvr-buzz:hover, .hvr-buzz:focus, .hvr-buzz:active {
+    animation-name: hvr-buzz;
+    animation-duration: 1.2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
 
 div.topic-cloud .topic-python {
     color: #FDD23B;
