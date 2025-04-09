@@ -1,36 +1,16 @@
 import dataclasses
 import datetime
 import logging
-import os
-from pathlib import Path
 
 import jinja2
 
 from lxmsite import SiteConfig
 from lxmsite import PageResource
 from ._utils import slugify
+from ._utils import mkpagerel
+from ._utils import mksiterel
 
 LOGGER = logging.getLogger(__name__)
-
-
-def mkpagerel(path: str, page_path: str) -> str:
-    """
-    Convert a site-root-relative path, to a path relative to the given page.
-    """
-    root_path: Path = Path("placeholder")
-    pageabs = root_path.joinpath(page_path).resolve()
-    pathabs = root_path.joinpath(path).resolve()
-    return Path(os.path.relpath(pathabs, start=pageabs.parent)).as_posix()
-
-
-def mksiterel(path: str, page_path: str) -> str:
-    """
-    Convert a page-relative path to a path relative to the site root.
-    """
-    root_path: Path = Path("placeholder")
-    pageabs = root_path.joinpath(page_path).resolve()
-    pathabs = pageabs.parent.joinpath(path).resolve()
-    return Path(os.path.relpath(pathabs, start=root_path)).as_posix()
 
 
 def get_jinja_env(

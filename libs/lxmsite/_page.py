@@ -1,11 +1,11 @@
 import dataclasses
 import logging
-import os
 from pathlib import Path
 
 from lxmsite import ShelfLabel
 from lxmsite import SiteConfig
 from . import rstlib
+from ._utils import mkpagerel
 
 LOGGER = logging.getLogger(__name__)
 
@@ -108,14 +108,8 @@ def read_page(
 
     template = raw_metadata.pop("template", None)
 
-    def mkpagerel(p: str) -> str:
-        # convert path relative to siteroot, to path relative to this page
-        p = src_root.joinpath(p).resolve()
-        pa = src_root.joinpath(url_path).resolve()
-        return Path(os.path.relpath(p, start=pa.parent)).as_posix()
-
     stylesheets: list[str] = site_config.DEFAULT_STYLESHEETS
-    stylesheets: list[str] = list(map(mkpagerel, stylesheets))
+    stylesheets: list[str] = [mkpagerel(path, url_path) for path in stylesheets]
     meta_styles: str = raw_metadata.pop("stylesheets", "")
     if stylesheets_add := meta_styles.startswith("+"):
         meta_styles = meta_styles[1:]
@@ -130,7 +124,7 @@ def read_page(
     keywords = [k.strip() for k in raw_metadata.pop("tags", "").split(",") if k]
 
     icon = raw_metadata.pop("icon", "")
-    icon = icon or mkpagerel(site_config.DEFAULT_PAGE_ICON)
+    icon = icon or mkpagerel(site_config.DEFAULT_PAGE_ICON, url_path)
 
     metadata = PageMetadata(
         authors=raw_metadata.pop("authors", []),
