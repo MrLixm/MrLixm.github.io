@@ -14,6 +14,8 @@ import pygments
 import pygments.lexers
 import pygments.formatters
 
+from ._extensions import AdmonitionsTransform
+
 LOGGER = logging.getLogger(__name__)
 
 DocumentType = docutils.nodes.document
@@ -111,7 +113,13 @@ class LxmHtmlWriter(docutils_writers.Writer):
 
     def get_transforms(self):
         transforms = super().get_transforms()
-        return transforms + []
+
+        # remove the builtin transform responsible on adding the title to admonitions so we can add our
+        builtin_adm_transform = docutils.transforms.writer_aux.Admonitions
+        if builtin_adm_transform in transforms:
+            transforms.remove(builtin_adm_transform)
+
+        return transforms + [AdmonitionsTransform]
 
 
 def read_rst(

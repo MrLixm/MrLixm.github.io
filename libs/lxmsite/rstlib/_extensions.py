@@ -5,6 +5,7 @@ import docutils.utils
 import docutils.parsers.rst.roles
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst import directives
+from docutils.parsers.rst.directives import admonitions
 import pygments
 import pygments.lexers
 import pygments.formatters
@@ -74,6 +75,37 @@ class Pygments(Directive):
 
 directives.register_directive("code", Pygments)
 directives.register_directive("code-block", Pygments)
+
+
+class AdmonitionsTransform(docutils.transforms.Transform):
+    """
+    This is mostly a copy of the builtin docutils admonition transform, but we remove the weirds localisation part
+    that was changing the titles.
+
+    This transform will convert admonition with specific classes to "generaic" admonition class, and add the title node.
+    """
+
+    default_priority = 920
+
+    def apply(self):
+        for node in self.document.findall(docutils.nodes.Admonition):
+            node_name = node.__class__.__name__
+            # Set class, so that we know what node this admonition came from.
+            node["classes"].append(node_name)
+
+            if isinstance(node, docutils.nodes.admonition):
+                # ignore already generic-admonition
+                continue
+
+            # transform specific admonition into a generic one.
+            admonition = docutils.nodes.admonition(
+                node.rawsource,
+                *node.children,
+                **node.attributes,
+            )
+            title = docutils.nodes.title("", node_name)
+            admonition.insert(0, title)
+            node.replace_self(admonition)
 
 
 # intentional lowercase name because used to call method in the Translator
