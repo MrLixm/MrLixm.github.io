@@ -108,6 +108,10 @@ blockquote {
     font-style: italic;
 }
 
+ul, ol {
+    padding-inline-start: 15px;
+}
+
 /* description lists */
 /*https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dt*/
 dt {
@@ -120,12 +124,14 @@ dd {
 }
 
 figure {
-    display: table;
+    display: flex;
+    flex-direction: column;
     margin: 0 0;
 }
 figcaption {
     color: var(--color-W);
     font-style: italic;
+    font-size: 0.9rem;
 }
 figcaption p {
     width: unset;
@@ -285,10 +291,12 @@ img.inline {
 img.align-center,
 figure.align-center {
     margin: auto;
+    align-items: center;
 }
 img.align-right,
 figure.align-right {
     margin-left: auto;
+    align-items: end;
 }
 figure.align-center img {
     margin: auto;
