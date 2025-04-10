@@ -196,67 +196,80 @@ aside.admonition {
     border-radius: var(--radius-S);
     background-color: var(--bg-color-M);
     border: 1px solid var(--color-WW);
+    /* top slightly bigger to account for title exceeding block height */
+    padding: 1.3rem 1rem 1rem;
+    margin: 1.4rem 0 1rem;
+
+    .admonition-title {
+        position: absolute;
+        font-weight: bold;
+        top: -10px;
+        background: linear-gradient(0deg, var(--bg-color-M) 60%, transparent 100%);
+        padding: 0 4px;
+        border-radius: var(--radius-S);
+        /*text-shadow: 0 0 5px var(--bg-color-M);;*/
+        margin: 0;
+    }
+
+    *:nth-child(2) {
+        margin-top: 0;
+    }
+    *:last-child {
+        margin-bottom: 0;
+    }
+}
+aside.admonition.highlight-block {
+    /* doesn't have title so no need for extra margin/padding */
+    margin-top: 1rem;
     padding: 1rem;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-}
-aside.admonition p {
-    margin: unset;
-}
-aside.admonition p.admonition-title {
-    position: absolute;
-    font-weight: bold;
-    top: -10px;
-    background: linear-gradient(0deg, var(--bg-color-M) 60%, transparent 100%);
-    padding: 0 4px;
-    border-radius: var(--radius-S);
-    /*text-shadow: 0 0 5px var(--bg-color-M);;*/
+
+    *:first-child {
+        margin-top: 0;
+    }
 }
 aside.admonition.danger,
 aside.admonition.error {
     border-color: var(--color-negative);
-}
-.admonition.danger .admonition-title,
-.admonition.error .admonition-title {
-    color: var(--color-negative);
+    .admonition-title {
+        color: var(--color-negative);
+    }
 }
 aside.admonition.attention,
 aside.admonition.important {
     border-color: var(--color-attention);
-}
-.admonition.attention .admonition-title,
-.admonition.important .admonition-title {
-    color: var(--color-attention);
+    .admonition-title {
+        color: var(--color-attention);
+    }
 }
 aside.admonition.caution {
     border-color: var(--color-caution);
-}
-.admonition.caution .admonition-title {
-    color: var(--color-caution);
+    .admonition-title {
+        color: var(--color-caution);
+    }
 }
 aside.admonition.hint {
     border-color: var(--color-hint);
-}
-.admonition.hint .admonition-title {
-    color: var(--color-hint);
+    .admonition-title {
+        color: var(--color-hint);
+    }
 }
 aside.admonition.note {
     border-color: var(--color-info);
-}
-.admonition.note .admonition-title {
-    color: var(--color-info);
+    .admonition-title {
+        color: var(--color-info);
+    }
 }
 aside.admonition.tip {
     border-color: var(--color-positive);
-}
-.admonition.tip .admonition-title {
-    color: var(--color-positive);
+    .admonition-title {
+        color: var(--color-positive);
+    }
 }
 aside.admonition.warning {
     border-color: var(--color-warning);
-}
-.admonition.warning .admonition-title {
-    color: var(--color-warning);
+    .admonition-title {
+        color: var(--color-warning);
+    }
 }
 
 img.inline {

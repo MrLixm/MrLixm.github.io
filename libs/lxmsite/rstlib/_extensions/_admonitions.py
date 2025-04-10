@@ -18,6 +18,7 @@ class BaseAdmonition(Directive):
     has_content = True
 
     node_class = NotImplemented
+    additional_classes = []
 
     def run(self):
         self.assert_has_content()
@@ -26,11 +27,17 @@ class BaseAdmonition(Directive):
         text = "\n".join(self.content)
         admonition_node = self.node_class(text, **self.options)
         admonition_type = self.node_class.__name__
-        title = self.arguments[0] if self.arguments else admonition_type
 
-        title_node = docutils.nodes.title("", title)
-        admonition_node.insert(0, title_node)
+        if self.node_class is docutils.nodes.admonition:
+            title = self.arguments[0] if self.arguments else None
+        else:
+            title = admonition_type
+
+        if title:
+            title_node = docutils.nodes.title("", title)
+            admonition_node.insert(0, title_node)
         admonition_node["classes"].append(admonition_type)
+        admonition_node["classes"].extend(self.additional_classes)
 
         self.add_name(admonition_node)
 
@@ -87,6 +94,11 @@ class Tip(BaseAdmonition):
 class Warning(BaseAdmonition):
 
     node_class = docutils.nodes.warning
+
+
+class HighlightBlock(BaseAdmonition):
+    additional_classes = ["highlight-block"]
+    node_class = docutils.nodes.admonition
 
 
 class AdmonitionsTransform(Transform):

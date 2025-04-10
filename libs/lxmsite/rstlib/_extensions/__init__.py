@@ -26,3 +26,5 @@ def register_extensions():
     register_directive("tip", _admonitions.Tip)
     register_directive("warning", _admonitions.Warning)
     register_directive("admonition", _admonitions.Admonition)
+
+    register_directive("highlight", _admonitions.HighlightBlock)
