@@ -292,6 +292,81 @@ figure.align-right img {
 }
 
 
+/* custom url-preview directive */
+.url-preview-box {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    margin: 0.5rem 0 1rem;
+    transition: 0.25s;
+
+    > a {
+        /*trick from https://stackoverflow.com/a/67156294/13806195 */
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+}
+.url-preview-box:hover {
+    transform: scale(1.05);
+}
+.url-preview-details{
+    width: 100%;
+    background-color: var(--bg-color-MM);
+    border-radius: var(--radius-S);
+    padding: 1rem;
+}
+.url-preview-image {
+    display: flex;
+    align-items: center;
+    border-radius: 0.5rem;
+    color: var(--color-WW);
+    max-width: 160px;
+}
+@media screen and (max-width: 500px) {
+    .url-preview-image {
+        max-width: 90px;
+    }
+}
+.url-preview-image img{
+    border-radius: var(--radius-S);
+    object-fit: cover;
+    min-height: 100%;
+    width: 100%;
+}
+.url-preview-title {
+    font-weight: 800;
+    margin: 0;
+}
+.url-preview-subtitle {
+    display: flex;
+    margin-bottom: 0.5rem;
+}
+.url-preview-subtitle a {
+    font-size: 0.8rem;
+    color: var(--color-WW);
+}
+.url-preview-subtitle a::before {
+    all: initial;
+}
+.url-preview-description {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--color-W);
+
+    *:first-child {
+        margin-top: 0;
+    }
+    *:last-child {
+        margin-bottom: 0;
+    }
+
+}
+
+
 /*===========================================================================*/
 /* header styling */
 header {

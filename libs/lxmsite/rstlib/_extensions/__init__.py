@@ -1,6 +1,7 @@
 from . import _abbreviation
 from . import _pygments
 from . import _admonitions
+from . import _urlpreview
 from ._admonitions import AdmonitionsTransform
 from ._links import LinksTransform
 
@@ -28,3 +29,5 @@ def register_extensions():
     register_directive("admonition", _admonitions.Admonition)
 
     register_directive("highlight", _admonitions.HighlightBlock)
+
+    register_directive("url-preview", _urlpreview.UrlPreview)

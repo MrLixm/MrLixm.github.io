@@ -1,4 +1,5 @@
 import logging
+import os
 import re
 from pathlib import Path
 from typing import Generator, Callable
@@ -166,36 +167,45 @@ def read_rst(
             arbitrary function that is run on all the document uris.
             It receives the original uri and must return the new desired uri.
     """
-    parser = docutils.parsers.rst.Parser()
-    reader = docutils.readers.standalone.Reader(parser=parser)
-    writer = LxmHtmlWriter(uri_callback=uri_callback)
+    cwd = os.getcwd()
+    # needed by some directives to compute paths expressed in documents
+    os.chdir(file_path.parent)
 
-    option_parser = docutils.frontend.OptionParser(
-        components=(parser, writer, reader),
-        defaults=settings,
-        read_config_files=False,
-        usage=None,
-        description=None,
-    )
-    default_settings = option_parser.get_default_values()
+    try:
+        parser = docutils.parsers.rst.Parser()
+        reader = docutils.readers.standalone.Reader(parser=parser)
+        writer = LxmHtmlWriter(uri_callback=uri_callback)
 
-    source = docutils.io.FileInput(
-        source_path=str(file_path),
-        encoding=default_settings.input_encoding,
-        error_handler=default_settings.input_encoding_error_handler,
-    )
-    destination = docutils.io.StringOutput(
-        encoding=default_settings.output_encoding,
-        error_handler=default_settings.output_encoding_error_handler,
-    )
+        option_parser = docutils.frontend.OptionParser(
+            components=(parser, writer, reader),
+            defaults=settings,
+            read_config_files=False,
+            usage=None,
+            description=None,
+        )
+        default_settings = option_parser.get_default_values()
 
-    publisher = docutils.core.Publisher(
-        reader=reader,
-        parser=parser,
-        writer=writer,
-        source=source,
-        destination=destination,
-        settings=default_settings,
-    )
-    publisher.publish()
+        source = docutils.io.FileInput(
+            source_path=str(file_path),
+            encoding=default_settings.input_encoding,
+            error_handler=default_settings.input_encoding_error_handler,
+        )
+        destination = docutils.io.StringOutput(
+            encoding=default_settings.output_encoding,
+            error_handler=default_settings.output_encoding_error_handler,
+        )
+
+        publisher = docutils.core.Publisher(
+            reader=reader,
+            parser=parser,
+            writer=writer,
+            source=source,
+            destination=destination,
+            settings=default_settings,
+        )
+        publisher.publish()
+
+    finally:
+        os.chdir(cwd)
+
     return publisher
