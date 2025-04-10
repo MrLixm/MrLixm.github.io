@@ -64,6 +64,10 @@ class PageResource:
     """
     html_content: str
     html_template: str | None
+    """
+    path of the template to use relative to the config TEMPLATE_ROOT
+    """
+
     stylesheets: list[str]
     """
     collections of link to stylesheets file, relative to the page
@@ -101,7 +105,7 @@ def read_page(
 
     page_labels: dict[ShelfLabel, str] = {}
     for label in site_config.SHELF_LABELS:
-        page_label = raw_metadata.pop(label.rst_key, None)
+        page_label = raw_metadata.get(label.rst_key, None)
         if not page_label:
             continue
         page_labels[label] = page_label
