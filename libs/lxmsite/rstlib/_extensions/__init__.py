@@ -2,6 +2,7 @@ from . import _abbreviation
 from . import _pygments
 from . import _admonitions
 from ._admonitions import AdmonitionsTransform
+from ._links import LinksTransform
 
 
 def register_extensions():

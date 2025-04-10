@@ -89,8 +89,8 @@ def read_page(
         settings=site_config.DEFAULT_DOCUTILS_SETTINGS,
     )
     parts = publisher.writer.parts
-    content = parts.get("body")
-    title = parts.get("title")
+    content = str(parts.get("body"))
+    title = str(parts.get("title"))
 
     src_root = site_config.SRC_ROOT
     url_path: Path = file_path.relative_to(src_root)

@@ -1,6 +1,7 @@
 import logging
+import re
 from pathlib import Path
-from typing import Generator
+from typing import Generator, Callable
 
 import docutils.core
 import docutils.frontend
@@ -15,6 +16,7 @@ import pygments.lexers
 import pygments.formatters
 
 from ._extensions import AdmonitionsTransform
+from ._extensions import LinksTransform
 
 LOGGER = logging.getLogger(__name__)
 
@@ -107,9 +109,16 @@ class LxmHTMLTranslator(docutils_writers.HTMLTranslator):
 
 
 class LxmHtmlWriter(docutils_writers.Writer):
-    def __init__(self):
+    """
+    Args:
+        uri_callback: arbitrary function that receive the original uri and must return the new desired uri.
+    """
+
+    def __init__(self, uri_callback: Callable[[str], str] = None):
         super().__init__()
+        # also add our custom translator
         self.translator_class = LxmHTMLTranslator
+        self.uri_callback = uri_callback
 
     def get_transforms(self):
         transforms = super().get_transforms()
@@ -118,13 +127,34 @@ class LxmHtmlWriter(docutils_writers.Writer):
         builtin_adm_transform = docutils.transforms.writer_aux.Admonitions
         if builtin_adm_transform in transforms:
             transforms.remove(builtin_adm_transform)
+        transforms.append(AdmonitionsTransform)
 
-        return transforms + [AdmonitionsTransform]
+        if self.uri_callback:
+            transforms.append(LinksTransform)
+
+        return transforms
+
+    def translate(self):
+        super().translate()
+        if self.uri_callback:
+            self.body = self._resolve_uris(self.body)
+
+    def _resolve_uris(self, readen_rst: str) -> str:
+        """
+        Resolve the tokens applied by the LinksTransform transform.
+        """
+        for match in LinksTransform.token_pattern.finditer(readen_rst):
+            original_uri = match.group(1)
+            new_uri = self.uri_callback(original_uri)
+            readen_rst = readen_rst.replace(match.group(0), new_uri)
+
+        return readen_rst
 
 
 def read_rst(
     file_path: Path,
     settings: dict,
+    uri_callback: Callable[[str], str] = None,
 ) -> docutils.core.Publisher:
     """
     Parse a rst file as a docutils Publisher
@@ -132,10 +162,13 @@ def read_rst(
     Args:
         file_path: fileysstem path to an existing rst file.
         settings: docutils settings overrides
+        uri_callback:
+            arbitrary function that is run on all the document uris.
+            It receives the original uri and must return the new desired uri.
     """
     parser = docutils.parsers.rst.Parser()
     reader = docutils.readers.standalone.Reader(parser=parser)
-    writer = LxmHtmlWriter()
+    writer = LxmHtmlWriter(uri_callback=uri_callback)
 
     option_parser = docutils.frontend.OptionParser(
         components=(parser, writer, reader),
