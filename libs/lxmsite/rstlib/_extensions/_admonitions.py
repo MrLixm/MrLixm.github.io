@@ -7,7 +7,7 @@ from docutils.transforms import Transform
 
 class BaseAdmonition(Directive):
     """
-    Copied from the docutils api and edited to allow titles for all admonitions, not just generic.
+    Copied from the docutils api, just simplified the code.
     """
 
     final_argument_whitespace = True
@@ -46,53 +46,52 @@ class Admonition(BaseAdmonition):
 
 class Attention(BaseAdmonition):
 
-    optional_arguments = 1
     node_class = docutils.nodes.attention
 
 
 class Caution(BaseAdmonition):
-    optional_arguments = 1
+
     node_class = docutils.nodes.caution
 
 
 class Danger(BaseAdmonition):
-    optional_arguments = 1
+
     node_class = docutils.nodes.danger
 
 
 class Error(BaseAdmonition):
-    optional_arguments = 1
+
     node_class = docutils.nodes.error
 
 
 class Hint(BaseAdmonition):
-    optional_arguments = 1
+
     node_class = docutils.nodes.hint
 
 
 class Important(BaseAdmonition):
-    optional_arguments = 1
+
     node_class = docutils.nodes.important
 
 
 class Note(BaseAdmonition):
-    optional_arguments = 1
+
     node_class = docutils.nodes.note
 
 
 class Tip(BaseAdmonition):
-    optional_arguments = 1
+
     node_class = docutils.nodes.tip
 
 
 class Warning(BaseAdmonition):
-    optional_arguments = 1
+
     node_class = docutils.nodes.warning
 
 
 class AdmonitionsTransform(Transform):
     """
-    This is mostly a copy of the builtin docutils admonition transform, but simplified.
+    This is mostly a copy of the builtin docutils admonition transform, but simplified (remove title localisation).
 
     This transform will convert admonition with specific classes to "generic" admonition class.
     """
