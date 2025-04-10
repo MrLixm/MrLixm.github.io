@@ -424,6 +424,23 @@ nav.contents {
 
 }
 
+/*===========================================================================*/
+/* custom elements */
+
+/* usually the main block of content*/
+.read-area {
+    margin: 0 30vw;
+}
+@media screen and (max-width: 1600px) {
+    .read-area {
+        margin: 0 25vw;
+    }
+}
+@media screen and (max-width: 900px) {
+    .read-area {
+        margin: 0 10vw;
+    }
+}
 
 /*===========================================================================*/
 /* header styling */
