@@ -180,6 +180,7 @@ pre.literal-block, div.highlight {
     border-radius: var(--radius-S);
     padding: 1rem;
     margin: 1rem 0;
+    overflow: auto;
 }
 div.highlight > pre {
     margin: unset;
