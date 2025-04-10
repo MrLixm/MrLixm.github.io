@@ -223,10 +223,10 @@ aside.admonition {
         margin: 0;
     }
 
-    *:nth-child(2) {
+    > *:nth-child(2) {
         margin-top: 0;
     }
-    *:last-child {
+    > *:last-child {
         margin-bottom: 0;
     }
 }
@@ -235,7 +235,7 @@ aside.admonition.highlight-block {
     margin-top: 1rem;
     padding: 1rem;
 
-    *:first-child {
+    > *:first-child {
         margin-top: 0;
     }
 }
