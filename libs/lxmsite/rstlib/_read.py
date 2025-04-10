@@ -58,6 +58,7 @@ def parse_metadata(document: DocumentType) -> dict[str, str]:
         elif tagname == "authors":  # author list
             key = tagname
             value = [author.astext() for author in node.children]
+            value = ",".join(value)
 
         # any other standard fields
         else:

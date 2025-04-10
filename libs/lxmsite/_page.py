@@ -130,8 +130,11 @@ def read_page(
     icon = raw_metadata.pop("icon", "")
     icon = icon or mkpagerel(site_config.DEFAULT_PAGE_ICON, url_path)
 
+    authors = raw_metadata.pop("authors", "").split(",")
+    authors = authors if authors[0] else []
+
     metadata = PageMetadata(
-        authors=raw_metadata.pop("authors", []),
+        authors=authors,
         keywords=keywords,
         language=raw_metadata.pop("language", "en"),
         icon=icon,
