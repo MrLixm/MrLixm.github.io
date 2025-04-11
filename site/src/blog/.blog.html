@@ -1,0 +1,32 @@
+{% extends ".base.html" %}
+{% block main %}
+  <article class="read-area">
+    <h1>{{ Page.title }}</h1>
+    <section id="metadata-footer">
+      {%- if Page.metadata.description %}
+      <p id="post-description">{{ Page.metadata.description }}</p>
+      {%- endif %}
+      <div class="context">
+        {%- if Page.metadata.date_created %}
+        <span title="Date Created.">
+          {% include '.static/icons/calendar.svg' %}
+          <time datetime="{{ Page.metadata.date_created.isoformat() }}">{{ Page.metadata.date_created.strftime("%d %B %Y") }}</time>
+        </span>
+        {%- endif %}
+        {%- if Page.metadata.date_modified %}
+        <span title="Date Modified.">
+          {% include '.static/icons/calendar-edit.svg' %}
+          <time datetime="{{ Page.metadata.date_modified.isoformat() }}">{{ Page.metadata.date_modified.strftime("%d %B %Y") }}</time>
+        </span>
+        {%- endif %}
+        {%- if Page.metadata.authors %}
+        <span title="Persons who authored the document.">
+          {% include '.static/icons/account.svg' %}
+          {{ ", ".join(Page.metadata.authors) }}
+        </span>
+        {%- endif %}
+      </div>
+    </section>
+    {{ Page.html_content }}
+  </article>
+{% endblock %}

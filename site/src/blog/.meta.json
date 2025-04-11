@@ -1,0 +1,6 @@
+{
+  "stylesheets": [
+    "blog/blog.css"
+  ],
+  "template": "blog/.blog.html"
+}
