@@ -26,16 +26,6 @@ class ShelfConfig:
     list of shelf label slugs that should not be used to generate procedural "browser" pages.
     """
 
-    default_template: str = dataclasses.field(
-        default=None,
-        metadata={"type": str, "required": True},
-    )
-    """
-    Path to a registred jinja template to use for rendering all the page of the shelf.
-
-    This is a default value that can be overriden individually by each page.
-    """
-
     ignored_pages: list[str] = dataclasses.field(
         default_factory=list,
         metadata={"type": list, "required": False},

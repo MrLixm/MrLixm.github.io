@@ -1,0 +1,7 @@
+{
+  "stylesheets": [
+    ".static/main.css",
+    ".static/pygments.onedark.css"
+  ],
+  "template": ".base.html"
+}

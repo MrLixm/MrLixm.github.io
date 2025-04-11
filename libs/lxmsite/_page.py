@@ -70,7 +70,7 @@ class PageResource:
 
     stylesheets: list[str]
     """
-    collections of link to stylesheets file, relative to the page
+    collections of link to stylesheets file, relative to the site root
     """
 
     def __str__(self):
@@ -84,9 +84,20 @@ class PageResource:
         return self.url_path.split("/")[-1]
 
 
+def unserialize_stylesheets(serialized: str) -> list[str]:
+    if serialized:
+        return [
+            stylesheet.strip()
+            for stylesheet in serialized.split(",")
+            if stylesheet.strip()
+        ]
+    return []
+
+
 def read_page(
     file_path: Path,
     site_config: SiteConfig,
+    default_metadata: dict[str, str],
 ) -> PageResource:
     publisher = rstlib.read_rst(
         file_path,
@@ -102,49 +113,53 @@ def read_page(
     url_path: str = url_path.as_posix()
 
     raw_metadata = rstlib.parse_metadata(publisher.document)
+    src_metadata = default_metadata.copy()
+    default_stylesheets = unserialize_stylesheets(src_metadata.pop("stylesheets", ""))
+    default_stylesheets = [mkpagerel(path, url_path) for path in default_stylesheets]
+
+    # page-defined metadata take priority over provided default metadata
+    src_metadata.update(raw_metadata)
 
     page_labels: dict[ShelfLabel, str] = {}
     for label in site_config.SHELF_LABELS:
-        page_label = raw_metadata.get(label.rst_key, None)
+        page_label = src_metadata.get(label.rst_key, None)
         if not page_label:
             continue
         page_labels[label] = page_label
 
-    template = raw_metadata.pop("template", None)
+    template = src_metadata.pop("template", None)
 
-    stylesheets: list[str] = site_config.DEFAULT_STYLESHEETS
-    stylesheets: list[str] = [mkpagerel(path, url_path) for path in stylesheets]
-    meta_styles: str = raw_metadata.pop("stylesheets", "")
-    if stylesheets_add := meta_styles.startswith("+"):
-        meta_styles = meta_styles[1:]
-    meta_styles: list[str] = [k.strip() for k in meta_styles.split(",") if k.strip()]
-    if meta_styles and stylesheets_add:
-        stylesheets = stylesheets + meta_styles
-    elif meta_styles:
-        stylesheets = meta_styles
+    raw_stylesheets: str = src_metadata.pop("stylesheets", "")
+    if stylesheets_add := raw_stylesheets.startswith("+"):
+        raw_stylesheets = raw_stylesheets[1:]
+    stylesheets: list[str] = unserialize_stylesheets(raw_stylesheets)
+    if not stylesheets:
+        stylesheets = default_stylesheets
+    elif stylesheets_add:
+        stylesheets = default_stylesheets + stylesheets
 
-    image_path = raw_metadata.pop("image", "")
+    image_path = src_metadata.pop("image", "")
 
-    keywords = [k.strip() for k in raw_metadata.pop("tags", "").split(",") if k]
+    keywords = [k.strip() for k in src_metadata.pop("tags", "").split(",") if k]
 
-    icon = raw_metadata.pop("icon", "")
+    icon = src_metadata.pop("icon", "")
     icon = icon or mkpagerel(site_config.DEFAULT_PAGE_ICON, url_path)
 
-    authors = raw_metadata.pop("authors", "").split(",")
+    authors = src_metadata.pop("authors", "").split(",")
     authors = authors if authors[0] else []
 
     metadata = PageMetadata(
         authors=authors,
         keywords=keywords,
-        language=raw_metadata.pop("language", "en"),
+        language=src_metadata.pop("language", "en"),
         icon=icon,
-        title=raw_metadata.pop("title", title),
-        type=raw_metadata.pop("type", "website"),
+        title=src_metadata.pop("title", title),
+        type=src_metadata.pop("type", "website"),
         image=image_path,
-        description=raw_metadata.pop("description", ""),
-        date_created=raw_metadata.pop("date-created", ""),
-        date_modified=raw_metadata.pop("date-modified", ""),
-        extras=raw_metadata,
+        description=src_metadata.pop("description", ""),
+        date_created=src_metadata.pop("date-created", ""),
+        date_modified=src_metadata.pop("date-modified", ""),
+        extras=src_metadata,
     )
 
     return PageResource(

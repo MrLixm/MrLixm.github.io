@@ -15,7 +15,7 @@ def mkfile(root: Path, filename: str, content=""):
     return path
 
 
-def test_read_siteignore(tmp_path):
+def test__read_siteignore(tmp_path):
     file1 = mkfile(tmp_path, "file1.txt")
     file1md = mkfile(tmp_path, "file1.md")
     file2 = mkfile(tmp_path, "file2.txt")
@@ -50,7 +50,7 @@ def test_read_siteignore(tmp_path):
     assert len(ignored) == 6
 
 
-def test_collect_site_files(tmp_path):
+def test__collect_site_files(tmp_path):
 
     file1 = mkfile(tmp_path, "file1.txt")
     file1md = mkfile(tmp_path, "file1.md")
@@ -89,7 +89,7 @@ def test_collect_site_files(tmp_path):
     assert len(collected) == 3
 
 
-def test_parse_site_files(tmp_path):
+def test__collect_shelves(tmp_path):
 
     file1 = mkfile(tmp_path, "abc.txt")
     file2 = mkfile(tmp_path, "file2.rst")
@@ -106,9 +106,35 @@ def test_parse_site_files(tmp_path):
     file_blog_post2 = mkfile(dir_blog_post1, "block.html")
 
     collected = lxmsite.collect_site_files(tmp_path)
-    parsed = lxmsite.parse_site_files(collected)
+    parsed = lxmsite.collect_shelves(collected)
 
-    assert len(parsed) == 4
-    shelf = parsed[0]
-    assert isinstance(shelf, lxmsite.ShelfResource)
-    assert len(shelf.children) == 3
+    assert len(parsed) == 1
+    assert shelf_blog in parsed
+    assert len(parsed[shelf_blog]) == 3
+
+
+def test__MetaFileCollection(tmp_path):
+    file_meta = mkfile(
+        tmp_path, ".meta.json", '{"styles": ["main.css", "foo.css"], "label":"coco"}'
+    )
+    file_html = mkfile(tmp_path, "file.html")
+    dir_qwert = mkdir(tmp_path, "qwert")
+    file_qwert_meta = mkfile(
+        dir_qwert, ".meta.json", '{"styles": ["qwert.css"], "label":"azertyuiop"}'
+    )
+    file_qwert_html = mkfile(dir_qwert, "file.html")
+    dir_qwert_banana = mkdir(dir_qwert, "banana")
+    file_qwert_banana_meta = mkfile(
+        dir_qwert_banana, ".meta.json", '{"styles": ["banana.css"], "author":"Sauron"}'
+    )
+    file_qwert_banana_html = mkfile(dir_qwert_banana, "somefile.html")
+
+    site_files = lxmsite.collect_site_files(tmp_path)
+    meta_collection = lxmsite.collect_meta_files(site_files)
+    assert len(meta_collection.meta_files) == 3
+    result = meta_collection.get_path_meta(file_qwert_banana_html, "@")
+    assert result["styles"] == "@".join(
+        ["main.css", "foo.css", "qwert.css", "banana.css"]
+    )
+    assert result["author"] == "Sauron"
+    assert result["label"] == "azertyuiop"

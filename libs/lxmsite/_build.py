@@ -6,7 +6,7 @@ import traceback
 from pathlib import Path
 
 import lxmsite
-from lxmsite import PageResource
+from lxmsite import PageResource, MetaFileCollection
 from lxmsite import ShelfResource
 from lxmsite import SiteConfig
 
@@ -54,6 +54,7 @@ class ExceptionStack(Exception):
 def parse_pages(
     site_files: list[Path],
     site_config: SiteConfig,
+    meta_collection: MetaFileCollection,
 ) -> tuple[dict[Path, PageResource], list[Path]]:
     """
     Convert site file structure to page objects and find additional static files.
@@ -64,11 +65,16 @@ def parse_pages(
 
     for src_path in site_files:
         if src_path.suffix == ".rst":
+            # retrieve default metadata for the page
+            default_meta = meta_collection.get_path_meta(src_path)
+
             LOGGER.debug(f"reading page '{src_path}'")
+            LOGGER.debug(f"└ default_meta={default_meta}")
             try:
                 page = lxmsite.read_page(
                     file_path=src_path,
                     site_config=site_config,
+                    default_metadata=default_meta,
                 )
             except Exception as error:
                 LOGGER.error(f"{fmterr(str(src_path), error)}")
@@ -159,8 +165,6 @@ def build_page(
         )
 
     template = page.html_template
-    if shelf and not template:
-        template = shelf.config.default_template
     if not template:
         raise ValueError(f"No template specified on page '{page.url_path}'.")
 
@@ -206,8 +210,16 @@ def build_site(
     shelf_files: dict[Path, list[Path]] = lxmsite.collect_shelves(site_files)
     LOGGER.debug(f"📚 collected {len(shelf_files)} shelf files")
 
-    # remove shelf files so they are not copied as static files
-    site_files = [path for path in site_files if path not in shelf_files]
+    meta_collection: lxmsite.MetaFileCollection = lxmsite.collect_meta_files(site_files)
+    meta_paths = [meta_file.path for meta_file in meta_collection.meta_files]
+    LOGGER.debug(f"📋 collected {len(meta_paths)} meta files")
+
+    # remove shelf and meta files so they are not copied as static files
+    site_files = [
+        path
+        for path in site_files
+        if not (path in shelf_files) and not (path in meta_paths)
+    ]
 
     # collect pages and static files
     pages: dict[Path, PageResource] = {}
@@ -216,6 +228,7 @@ def build_site(
         pages, static_paths = parse_pages(
             site_files=site_files,
             site_config=config,
+            meta_collection=meta_collection,
         )
     except ExceptionStack as error:
         errors += error.errors

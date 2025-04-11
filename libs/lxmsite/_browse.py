@@ -1,6 +1,11 @@
+import dataclasses
 import glob
+import json
+import logging
 import os
 from pathlib import Path
+
+LOGGER = logging.getLogger(__name__)
 
 
 def read_siteignore(file_path: Path) -> list[Path]:
@@ -84,3 +89,99 @@ def collect_shelves(site_files: list[Path]) -> dict[Path, list[Path]]:
             if path.is_relative_to(shelf_path.parent):
                 shelves[shelf_path].append(path)
     return shelves
+
+
+@dataclasses.dataclass
+class MetaFile:
+    """
+    A file with user arbitrary content that correspond to default values to use for multiple pages metadata.
+
+    The content is a simple mapping of "metadata name": "metadata value" where the name is exactly the same
+    as you would set it in an individual page.
+
+    The value can be a str, or a list str that in that case will be concatanted with any similar parent meta key.
+    """
+
+    path: Path
+    """
+    the original file path for the file
+    """
+
+    content: dict[str, str | list[str]]
+    """
+    mapping of "metadata name": "metadata value"
+    """
+
+    children: list[Path]
+    """
+    list of existing file paths this meta file affects
+    """
+
+    @classmethod
+    def from_path(cls, path: Path) -> "MetaFile":
+        LOGGER.debug(f"reading meta file '{path}'")
+        content = json.loads(path.read_text(encoding="utf-8"))
+        return cls(path=path, content=content, children=[])
+
+
+class MetaFileCollection:
+    """
+    A collection of meta files with their associated path they must be applied to.
+    """
+
+    def __init__(self, meta_files: list[MetaFile]):
+        self._meta_files = meta_files
+        self._meta_by_src: dict[Path, list[MetaFile]] = {}
+        for meta_file in meta_files:
+            for child in meta_file.children:
+                self._meta_by_src.setdefault(child, []).append(meta_file)
+
+    @property
+    def meta_files(self) -> list[MetaFile]:
+        return self._meta_files
+
+    def get_path_meta(self, path: Path, stringify_lists=",") -> dict[str, str]:
+        """
+        Get the meta file metadata corresponding to the given path.
+
+        The path can be any kind of path and may not have any associated metadata, thus returning an empty dict.
+        """
+        meta_files = self._meta_by_src.get(path, [])
+
+        default_meta: dict[str, str | list[str]] = {}
+
+        for meta_file in meta_files:
+            for k, v in meta_file.content.items():
+                # deep merge lists
+                if isinstance(v, list):
+                    default_meta.setdefault(k, []).extend(v)
+                else:
+                    default_meta[k] = v
+
+        default_meta = {
+            k: stringify_lists.join(v) if isinstance(v, list) else v
+            for k, v in default_meta.items()
+        }
+        return default_meta
+
+
+def collect_meta_files(site_files: list[Path]) -> MetaFileCollection:
+    """
+    Browse the given site files to find meta files and their children paths they apply to.
+
+    Returns:
+        collection of meta files.
+    """
+    _site_files = site_files.copy()
+    meta_files = []
+    for path in site_files:
+        if path.name == ".meta.json":
+            meta_files.append(MetaFile.from_path(path))
+            _site_files.remove(path)
+
+    for path in _site_files:
+        for meta_file in meta_files:
+            if path.is_relative_to(meta_file.path.parent):
+                meta_file.children.append(path)
+
+    return MetaFileCollection(meta_files)

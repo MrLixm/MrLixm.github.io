@@ -1,2 +1,0 @@
-disabled_labels: ["categories", "authors"]
-default_template: "asset.html"
