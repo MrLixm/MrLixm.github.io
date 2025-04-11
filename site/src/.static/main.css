@@ -102,8 +102,8 @@ cite {
 blockquote {
     border-left: 2px solid var(--color-WW);
     color: var(--color-W);
-    margin: 0 2rem;
-    padding: 0.25rem 0;
+    margin: 1rem 5px;
+    padding: 0.1rem 0;
     padding-left: 2rem;
     font-style: italic;
 }
