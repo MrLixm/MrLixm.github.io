@@ -491,6 +491,11 @@ nav.contents {
     }
 }
 
+
+.strikethrough {
+    text-decoration: line-through;
+}
+
 /*===========================================================================*/
 /* header styling */
 header {
