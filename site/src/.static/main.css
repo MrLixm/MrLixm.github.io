@@ -132,10 +132,12 @@ figcaption {
     color: var(--color-W);
     font-style: italic;
     font-size: 0.9rem;
+    margin: 7px 0;
 }
 figcaption p {
     width: unset;
     max-width: unset;
+    margin: unset;
 }
 
 /*===========================================================================*/
