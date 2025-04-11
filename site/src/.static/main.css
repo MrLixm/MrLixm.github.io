@@ -430,6 +430,49 @@ nav.contents {
 
 }
 
+/* custom image-grid directive */
+.image-grid {
+    .image-grid-row {
+        white-space: nowrap;
+        /* this a hack to remove the whitespace between inline-block items*/
+        font-size: 0;
+    }
+    figure {
+        display: inline-block;
+        position: relative;
+        margin: 5px;
+    }
+    img {
+        width: 100%;
+        height: 100%;
+    }
+    figcaption {
+        opacity: 0;
+        text-wrap: wrap;
+        font-size: 0.75rem;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        padding: 0.5rem;
+        /*background: linear-gradient(0deg, rgba(0,0,0,0.8) 10%, transparent 100%);*/
+        background-color: rgba(0,0,0,0.5);
+    }
+    figure:hover figcaption {
+        opacity: 1;
+    }
+    figcaption > * {
+        margin: 0;
+    }
+}
+@media screen and (max-width: 600px) {
+    .image-grid figure {
+        display: block;
+        margin: auto;
+        width: unset !important;
+    }
+}
+
 /*===========================================================================*/
 /* custom elements */
 

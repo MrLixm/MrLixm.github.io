@@ -2,10 +2,11 @@ from . import _abbreviation
 from . import _pygments
 from ._pygments import parse_code_to_node
 from . import _admonitions
-from . import _urlpreview
 from ._admonitions import AdmonitionsTransform
+from . import _urlpreview
 from ._links import LinksTransform
 from . import _include
+from . import _image_grid
 
 
 def register_extensions():
@@ -35,3 +36,4 @@ def register_extensions():
     register_directive("url-preview", _urlpreview.UrlPreview)
 
     register_directive("include", _include.Include)
+    register_directive("image-grid", _image_grid.ImageGrid)
