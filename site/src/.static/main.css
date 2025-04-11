@@ -179,7 +179,7 @@ table.inline ul {
 }
 
 /* code blocks */
-pre.literal-block, div.highlight {
+pre.literal-block {
     font-family: var(--font-mono);
     background-color: var(--bg-color-M);
     border: 1px solid var(--bg-color-MM);
@@ -188,10 +188,7 @@ pre.literal-block, div.highlight {
     margin: 1rem 0;
     overflow: auto;
 }
-div.highlight > pre {
-    margin: unset;
-}
-div.highlight .linenos {
+pre.literal-block .linenos {
     color: var(--color-WW);
 }
 

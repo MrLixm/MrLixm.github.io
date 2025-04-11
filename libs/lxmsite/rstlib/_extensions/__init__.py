@@ -1,5 +1,6 @@
 from . import _abbreviation
 from . import _pygments
+from ._pygments import parse_code_to_node
 from . import _admonitions
 from . import _urlpreview
 from ._admonitions import AdmonitionsTransform
@@ -14,8 +15,8 @@ def register_extensions():
 
     from docutils.parsers.rst.directives import register_directive
 
-    register_directive("code", _pygments.Pygments)
-    register_directive("code-block", _pygments.Pygments)
+    register_directive("code", _pygments.PygmentsCode)
+    register_directive("code-block", _pygments.PygmentsCode)
 
     register_directive("attention", _admonitions.Attention)
     register_directive("caution", _admonitions.Caution)

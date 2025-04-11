@@ -9,7 +9,58 @@ import pygments.lexers
 import pygments.formatters
 
 
-class Pygments(Directive):
+class PygmentsHTMLFormatter(pygments.formatters.HtmlFormatter):
+
+    # subclassed to bypass all wrapper blocks; we create thos eourselves with docutils API
+
+    def wrap(self, source):
+        yield from source
+
+    def _wrap_div(self, inner):
+        yield from inner
+
+
+def parse_code_to_node(
+    code: str,
+    lexer_name: str | None = None,
+    options: dict = None,
+) -> docutils.nodes.literal_block:
+    """
+    Parse a piece of arbitrary code to a docutils node using Pygments.
+
+    Args:
+        code: the code to parse
+        lexer_name: name of the lnaguage, as supported by pygments.
+        options: pygments html formatter options.
+    """
+    try:
+        if lexer_name:
+            lexer = pygments.lexers.get_lexer_by_name(lexer_name)
+        else:
+            lexer = pygments.lexers.guess_lexer(code)
+    except pygments.lexers.ClassNotFound:
+        lexer = pygments.lexers.TextLexer()
+        lexer_name = "unknown"
+
+    options = options or {}
+    formatter = PygmentsHTMLFormatter(
+        noclasses=False,
+        nowrap=False,
+        **options,
+    )
+    parsed = pygments.highlight(code, lexer, formatter)
+    parsed = docutils.nodes.raw(code, parsed, format="html")
+    node = docutils.nodes.literal_block(
+        rawsource="",
+        text="",
+        classes=["highlight"],
+        title=f"Block of code in {lexer_name} language.",
+    )
+    node += parsed
+    return node
+
+
+class PygmentsCode(Directive):
     """Source code syntax highlighting."""
 
     required_arguments = 0
@@ -28,8 +79,6 @@ class Pygments(Directive):
         "linenostep": directives.nonnegative_int,
         "lineseparator": directives.unchanged,
         "linespans": directives.unchanged,
-        "nobackground": directives.flag,
-        "nowrap": directives.flag,
         "tagsfile": directives.unchanged,
         "tagurlformat": directives.unchanged,
     }
@@ -39,23 +88,9 @@ class Pygments(Directive):
         self.assert_has_content()
         content = "\n".join(self.content)
 
-        try:
-            if self.arguments:
-                lexer_name = self.arguments[0]
-                lexer = pygments.lexers.get_lexer_by_name(lexer_name)
-            else:
-                lexer = pygments.lexers.guess_lexer(content)
-        except pygments.lexers.ClassNotFound:
-            lexer = pygments.lexers.TextLexer()
-
-        if "linenos" in self.options and self.options["linenos"] not in (
-            "table",
-            "inline",
-        ):
-            if self.options["linenos"] == "none":
+        if "linenos" in self.options:
+            if self.options["linenos"] not in ("table", "inline"):
                 self.options.pop("linenos")
-            else:
-                self.options["linenos"] = "table"
 
         # flags get a None value assigned by docutils, pygments will need a boolean
         enabled_flags = [
@@ -66,6 +101,10 @@ class Pygments(Directive):
         for flag in enabled_flags:
             self.options[flag] = True
 
-        formatter = pygments.formatters.HtmlFormatter(noclasses=False, **self.options)
-        parsed = pygments.highlight(content, lexer, formatter)
-        return [docutils.nodes.raw("", parsed, format="html")]
+        lexer_name = self.arguments[0] if self.arguments else None
+        node = parse_code_to_node(
+            code=content,
+            lexer_name=lexer_name,
+            options=self.options,
+        )
+        return [node]

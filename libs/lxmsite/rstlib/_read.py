@@ -1,6 +1,5 @@
 import logging
 import os
-import re
 from pathlib import Path
 from typing import Generator, Callable
 
@@ -12,12 +11,9 @@ import docutils.parsers.rst
 import docutils.readers.standalone
 import docutils.writers.html5_polyglot as docutils_writers
 
-import pygments
-import pygments.lexers
-import pygments.formatters
-
 from ._extensions import AdmonitionsTransform
 from ._extensions import LinksTransform
+from ._extensions import parse_code_to_node
 
 LOGGER = logging.getLogger(__name__)
 
@@ -71,14 +67,18 @@ def parse_metadata(document: DocumentType) -> dict[str, str]:
 
 
 class LxmHTMLTranslator(docutils_writers.HTMLTranslator):
+
+    def starttag(self, node, tagname, suffix="\n", empty=False, **attributes):
+        title = node.get("title", "")
+        if "title" not in attributes and title:
+            attributes["title"] = title
+        return super().starttag(node, tagname, suffix=suffix, empty=empty, **attributes)
+
     def visit_abbreviation(self, node):
         attrs = {}
         if title := node["explanation"]:
             attrs["title"] = title
         self.body.append(self.starttag(node, "abbr", "", **attrs))
-
-    def depart_abbreviation(self, node):
-        self.body.append("</abbr>")
 
     def visit_image(self, node):
         # default docutils behavior is to set the alt with the URL which is worse than no alt
@@ -96,18 +96,11 @@ class LxmHTMLTranslator(docutils_writers.HTMLTranslator):
         """
         new_children = []
         for child in node.children:
-            lexer = pygments.lexers.get_lexer_by_name("python-console")
-            formatter = pygments.formatters.HtmlFormatter(
-                noclasses=False,
-                cssclass="highlight doctest",
-            )
             content = child.astext()
-            parsed = pygments.highlight(content, lexer, formatter)
-            new_children.append(docutils.nodes.raw("", parsed, format="html"))
+            newnode = parse_code_to_node(code=content, lexer_name="python-console")
+            newnode["classes"].append("doctest")
+            new_children.append(newnode)
         node.children = new_children
-
-    def depart_doctest_block(self, node):
-        pass
 
 
 class LxmHtmlWriter(docutils_writers.Writer):
