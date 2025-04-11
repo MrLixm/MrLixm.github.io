@@ -1,4 +1,5 @@
 import dataclasses
+import datetime
 import logging
 from pathlib import Path
 
@@ -41,9 +42,12 @@ class PageMetadata:
 
     description: str  # https://ogp.me/#optional
 
-    # anything else that is non-standardized
-    date_created: str  # https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http%3a%2f%2fpurl.org%2fdc%2felements%2f1.1%2fdate
-    date_modified: str  # https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http%3a%2f%2fpurl.org%2fdc%2felements%2f1.1%2fdate
+    # // anything else that is non-standardized
+
+    # https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http%3a%2f%2fpurl.org%2fdc%2felements%2f1.1%2fdate
+    date_created: datetime.datetime
+    # https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http%3a%2f%2fpurl.org%2fdc%2felements%2f1.1%2fdate
+    date_modified: datetime.datetime
     extras: dict[str, str]
 
 
@@ -148,6 +152,13 @@ def read_page(
     authors = src_metadata.pop("authors", "").split(",")
     authors = authors if authors[0] else []
 
+    date_created = src_metadata.pop("date-created", "")
+    if date_created:
+        date_created = datetime.datetime.fromisoformat(date_created)
+    date_modified = src_metadata.pop("date-modified", "")
+    if date_modified:
+        date_modified = datetime.datetime.fromisoformat(date_modified)
+
     metadata = PageMetadata(
         authors=authors,
         keywords=keywords,
@@ -157,8 +168,8 @@ def read_page(
         type=src_metadata.pop("type", "website"),
         image=image_path,
         description=src_metadata.pop("description", ""),
-        date_created=src_metadata.pop("date-created", ""),
-        date_modified=src_metadata.pop("date-modified", ""),
+        date_created=date_created,
+        date_modified=date_modified,
         extras=src_metadata,
     )
 

@@ -23,10 +23,10 @@
   <meta property="og:image" content="{{ Page.metadata.image|mksiterel|mksiteabs }}">
   {%- endif %}
   {%- if Page.metadata.date_created %}
-  <meta name="dcterms.created" content="{{ Page.metadata.date_created }}">
+  <meta name="dcterms.created" content="{{ Page.metadata.date_created.isoformat() }}">
   {%- endif %}
   {%- if Page.metadata.date_modified %}
-  <meta name="dcterms.modified" content="{{ Page.metadata.date_modified }}">
+  <meta name="dcterms.modified" content="{{ Page.metadata.date_modified.isoformat() }}">
   {%- endif %}
   {% for stylesheet in Page.stylesheets %}
   <link rel="stylesheet" href="{{ stylesheet }}" />
