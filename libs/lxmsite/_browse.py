@@ -154,7 +154,10 @@ class MetaFileCollection:
             for k, v in meta_file.content.items():
                 # deep merge lists
                 if isinstance(v, list):
-                    default_meta.setdefault(k, []).extend(v)
+                    if k in default_meta and isinstance(default_meta[k], str):
+                        default_meta[k] = [default_meta[k]] + v
+                    else:
+                        default_meta.setdefault(k, []).extend(v)
                 else:
                     default_meta[k] = v
 

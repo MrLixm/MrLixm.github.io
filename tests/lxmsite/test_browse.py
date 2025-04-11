@@ -138,3 +138,37 @@ def test__MetaFileCollection(tmp_path):
     )
     assert result["author"] == "Sauron"
     assert result["label"] == "azertyuiop"
+
+
+def test__MetaFileCollection__list_to_str(tmp_path):
+    # test conversion from str to list in meta fields
+    file_meta = mkfile(tmp_path, ".meta.json", '{"styles": "main.css", "label":"coco"}')
+    dir_qwert = mkdir(tmp_path, "qwert")
+    file_qwert_meta = mkfile(
+        dir_qwert, ".meta.json", '{"styles": ["qwert.css"], "label":"azertyuiop"}'
+    )
+    dir_qwert_banana = mkdir(dir_qwert, "banana")
+    file_qwert_banana_meta = mkfile(
+        dir_qwert_banana, ".meta.json", '{"styles": ["banana.css"], "author":"Sauron"}'
+    )
+    file_qwert_banana_html = mkfile(dir_qwert_banana, "somefile.html")
+
+    dir_qwert_coco = mkdir(dir_qwert, "coco")
+    file_qwert_coco_meta = mkfile(
+        dir_qwert_coco, ".meta.json", '{"styles": "coco.css", "author":"Galadriel"}'
+    )
+    file_qwert_coco_html = mkfile(dir_qwert_coco, "somefile.html")
+
+    site_files = lxmsite.collect_site_files(tmp_path)
+    meta_collection = lxmsite.collect_meta_files(site_files)
+    assert len(meta_collection.meta_files) == 4
+
+    result = meta_collection.get_path_meta(file_qwert_banana_html)
+    assert result["styles"] == ",".join(["main.css", "qwert.css", "banana.css"])
+    assert result["author"] == "Sauron"
+    assert result["label"] == "azertyuiop"
+
+    result = meta_collection.get_path_meta(file_qwert_coco_html)
+    assert result["styles"] == "coco.css"
+    assert result["author"] == "Galadriel"
+    assert result["label"] == "azertyuiop"
