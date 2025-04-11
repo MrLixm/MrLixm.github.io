@@ -52,7 +52,7 @@ def main(argv: list[str] | None = None):
     if u_src_path.is_file():
         paths = [u_src_path]
     else:
-        paths = map(Path, glob.glob(str(u_src_path)))
+        paths = list(map(Path, glob.glob(str(u_src_path))))
 
     for path in paths:
         dst_path = path.with_suffix(".jpg")
