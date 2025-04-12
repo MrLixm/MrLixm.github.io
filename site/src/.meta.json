@@ -1,4 +1,5 @@
 {
+  "image": "/.static/images/cover-social.jpg",
   "stylesheets": [
     ".static/main.css",
     ".static/pygments.onedark.css",
