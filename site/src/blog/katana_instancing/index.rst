@@ -6,8 +6,8 @@ Instancing in Katana
 :image: cover.jpg
 
 :status: published
-:date-created: 2021-10-23T14:58
-:date-modified: 2022-03-30T20:58
+:date-created: 2022-03-30T20:58
+:date-modified: 2025-04-13T15:00
 
 :category: tutorial
 :tags: katana, instancing, lua, software

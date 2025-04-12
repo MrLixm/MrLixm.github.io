@@ -2,7 +2,7 @@ Color-management in Substance Painter with OCIO
 ###############################################
 
 :description: The long-awaited OCIO feature is here, now we gotta find how it works.
-:date-created: 2021-11-24 23:33
+:date-created: 2021-12-08 19:03
 :date-modified: 2023-02-01 21:31
 :image: cover.jpg
 :cover: cover.jpg
