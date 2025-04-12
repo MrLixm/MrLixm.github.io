@@ -148,13 +148,13 @@ table p {
     margin: unset;
 }
 table.inline {
-    display: block;
     max-width: 100%;
+    min-width: 70%;
     width: max-content;
     border-spacing: 0 0;
     border-collapse: separate;
     border-radius: 15px;
-    margin: 0 auto;
+    margin: 1rem auto;
 
 }
 table.inline th,
