@@ -119,7 +119,10 @@ def read_page(
     raw_metadata = rstlib.parse_metadata(publisher.document)
     src_metadata = default_metadata.copy()
     default_stylesheets = unserialize_stylesheets(src_metadata.pop("stylesheets", ""))
-    default_stylesheets = [mkpagerel(path, url_path) for path in default_stylesheets]
+    default_stylesheets = [
+        path if path.startswith("http") else mkpagerel(path, url_path)
+        for path in default_stylesheets
+    ]
 
     # page-defined metadata take priority over provided default metadata
     src_metadata.update(raw_metadata)
