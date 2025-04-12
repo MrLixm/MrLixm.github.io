@@ -7,6 +7,7 @@ from . import _urlpreview
 from ._links import LinksTransform
 from . import _include
 from . import _image_grid
+from ._contents import ContentsTransform
 
 
 def register_extensions():

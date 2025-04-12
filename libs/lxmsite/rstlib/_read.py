@@ -13,6 +13,7 @@ import docutils.writers.html5_polyglot as docutils_writers
 
 from ._extensions import AdmonitionsTransform
 from ._extensions import LinksTransform
+from ._extensions import ContentsTransform
 from ._extensions import parse_code_to_node
 
 LOGGER = logging.getLogger(__name__)
@@ -126,6 +127,8 @@ class LxmHtmlWriter(docutils_writers.Writer):
 
         if self.uri_callback:
             transforms.append(LinksTransform)
+
+        transforms.append(ContentsTransform)
 
         return transforms
 

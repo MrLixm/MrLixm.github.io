@@ -317,7 +317,6 @@ figure.align-right img {
 
 /* table of contents */
 nav.contents {
-
     position: relative;
     padding: 1rem;
     margin: 3rem 0 2rem;
@@ -336,10 +335,11 @@ nav.contents {
         padding: 0 0.5rem;
         top: -15px;
 
+        font-weight: bold;
+        font-size: 1.5rem;
+
         a {
             color: inherit;
-            font-weight: bold;
-            font-size: 1.5rem;
         }
     }
     ul {
@@ -358,13 +358,66 @@ nav.contents {
             display: inline;
         }
     }
-    > ul > li > p {
+    > div > ul > li > p {
         font-weight: 600;
     }
-    > ul > li > ul > li > ul > li > p,
-    > ul > li > ul > li > ul > li > ul > li > p
+    > div > ul > li > ul > li > ul > li > p,
+    > div > ul > li > ul > li > ul > li > ul > li > p
     {
         font-size: 0.9rem;
+    }
+
+}
+@media screen and (min-width: 1600px) {
+    aside.toc-wrapper {
+        position: fixed;
+        top: 15%;
+        left: 2%;
+    }
+    nav.contents {
+        position: sticky;
+        padding: 0 0 0 1rem;
+        margin: 10px 0 0;
+        background-color: unset;
+        border-width: 0 0 0 1px;
+        border-style: solid;
+        border-color: var(--color-WW);
+        border-radius: 0;
+
+        .topic-title {
+            position: unset;
+            padding: unset;
+            background: unset;
+            margin-bottom: 1rem;
+
+            font-weight: 300;
+            font-family: var(--font-B);
+            letter-spacing: 2px;
+        }
+    }
+    nav.contents > .toc-list {
+        padding-left: 1rem;
+
+        max-height: 60vh;
+        overflow-y: auto;
+        /* trick to have scrollbar on left*/
+        direction: rtl;
+
+        opacity: 0.5;
+        line-height: 25px;
+        font-size: 0.9rem;
+
+        scrollbar-width: thin;
+
+        a {
+            color: var(--color);
+        }
+
+        * {
+            /* reset scrollbar trick */
+            direction: ltr;
+        }
+
     }
 
 }
