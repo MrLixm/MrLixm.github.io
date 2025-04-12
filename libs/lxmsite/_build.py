@@ -192,6 +192,7 @@ def build_page(
         template_name=template,
         site_config=site_config,
         context=build_context,
+        shelf=shelf,
     )
 
     dst_path = Path(dst_root, page.url_path).resolve()

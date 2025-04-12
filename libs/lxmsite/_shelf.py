@@ -48,6 +48,8 @@ class ShelfConfig:
         content = file_path.read_text(encoding="utf-8")
         asdict = {}
         for index, line in enumerate(content.splitlines()):
+            if not line:
+                continue
             try:
                 key, value = line.split(":", 1)
                 key = key.strip(" ")
@@ -87,3 +89,13 @@ class ShelfResource:
         if page not in self.children:
             return False
         return f"{self.url_path}/{page.slug}" == page.url_path
+
+    def iterate_children_by_last_created(self, reverse: bool = False):
+
+        def _sorter(page: PageResource) -> str:
+            if not page.metadata.date_created:
+                return ""
+            return page.metadata.date_created.isoformat()
+
+        for child in sorted(self.children, key=_sorter, reverse=reverse):
+            yield child
