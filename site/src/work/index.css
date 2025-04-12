@@ -1,0 +1,81 @@
+h1 {
+    font-weight: 800;
+    font-size: 3rem;
+    color: var(--color-M);
+    text-align: center;
+}
+
+/*top 3 block with social links*/
+div.l-projects {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+@media screen and (max-width: 630px) {
+    div.l-projects {
+        flex-direction: column;
+    }
+}
+div.l-projects .admonition {
+    margin-bottom: unset;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+div.l-projects .admonition p:first-child {
+    font-family: var(--font-B) sans-serif;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    color: unset;
+    letter-spacing: 0.2rem;
+}
+
+p.last-modified {
+    border-top: 1px solid var(--color-WW);
+    padding-top: 5px;
+    font-size: 0.8rem;
+    color: var(--color-WW);
+    text-align: center;
+}
+
+.l-cv-download {
+    margin: 2rem 20%;
+    padding: 1rem;
+    display: block;
+    /*border-top: 1px solid rgba(255, 255, 255, 0.1);*/
+    border: 1px solid var(--color-primary);
+    border-radius: 1rem;
+    text-align: center;
+    font-family: var(--font-B);
+    font-size: 1rem;
+    font-weight: 800;
+
+    /* create a + pattern */
+    background: radial-gradient(circle, transparent 20%, var(--bg-color) 20%, var(--bg-color) 80%, transparent 80%, transparent), radial-gradient(circle, transparent 20%, var(--bg-color) 20%, var(--bg-color) 80%, transparent 80%, transparent) 25px 25px, linear-gradient(var(--color-primary-WW) 2px, transparent 2px) 0 -1px, linear-gradient(90deg, var(--color-primary-WW) 2px, var(--bg-color) 2px) -1px 0;
+    background-size: 50px 50px, 50px 50px, 25px 25px, 25px 25px;
+    box-shadow: color-mix(in srgb, var(--color-primary) 15%, transparent) 0 0 100px;
+
+    span {
+        padding: 0 5px;
+        margin: 0;
+        background-color: var(--bg-color);
+    }
+
+}
+.l-cv-download:hover {
+    background: var(--color-primary);
+
+    span {
+        color: var(--bg-color);
+        background-color: transparent;
+    }
+}
+
+.hover-offset {
+    transition-duration: 0.2s;
+}
+.hover-offset:hover {
+    transform: translate(-10px, -10px);
+    box-shadow: rgba(0,0,0,0.5) 10px 10px;
+}

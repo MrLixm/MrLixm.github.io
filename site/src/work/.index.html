@@ -1,0 +1,14 @@
+{% extends ".base.html" %}
+{% block main %}
+  <div class="read-area">
+    <h1>{{ Page.title }}</h1>
+    {{ Page.html_content }}
+    {% include 'work/.cv.html' %}
+    <p class="last-modified">last modified on {{ Page.metadata.date_modified.strftime("%d %B %Y") }}</p>
+    <a href="cv.pdf" download="LiamCollod.CV.pdf">
+      <div class="l-cv-download hover-offset">
+        <span>Download CV as .pdf</span>
+      </div>
+    </a>
+  </div>
+{% endblock %}
