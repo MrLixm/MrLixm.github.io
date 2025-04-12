@@ -28,6 +28,23 @@ def mkdir(dirpath: Path):
     dirpath.mkdir()
 
 
+def is_file_newer(source: Path, target: Path):
+    """
+    Return true if 'source' exists and is more recently modified than
+    'target', or if 'source' exists and 'target' doesn't.
+    """
+    if not source.exists():
+        return False
+    if not target.exists():
+        return True
+
+    from stat import ST_MTIME
+
+    mtime_src = os.stat(source)[ST_MTIME]
+    mtime_dst = os.stat(target)[ST_MTIME]
+    return mtime_src > mtime_dst
+
+
 def get_context() -> lxmsite.SiteGlobalContext:
     return lxmsite.SiteGlobalContext(
         build_time=datetime.datetime.now(),
@@ -289,7 +306,12 @@ def build_site(
             LOGGER.debug(f"📦 os.symlink({static_path}, {dst_path})")
             os.symlink(static_path, dst_path)
         else:
-            LOGGER.debug(f"📦 shutil.copy({static_path}, {dst_path})")
-            shutil.copy(static_path, dst_path)
+            if is_file_newer(static_path, dst_path):
+                LOGGER.debug(f"📦 shutil.copy({static_path}, {dst_path})")
+                shutil.copy(static_path, dst_path)
+            else:
+                LOGGER.debug(
+                    f"📦⏭️ skipping copy of '{static_path}'; already up-to-date"
+                )
 
     return errors
