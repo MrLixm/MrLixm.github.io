@@ -57,6 +57,7 @@ a.brackets:before,
 a.citation-reference:before {
     content: "";
     background: url("/.static/icons/link-vertical.svg") no-repeat bottom;
+    background-size: contain;
     width: 0.8rem;
     height: 0.7rem;
     display: inline-block;
