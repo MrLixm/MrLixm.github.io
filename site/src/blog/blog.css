@@ -16,6 +16,9 @@ h1 {
     color: var(--color-M);
     text-align: center;
 }
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-primary);
+}
 
 div.article-header-content {
     position: relative;
