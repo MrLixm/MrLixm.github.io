@@ -55,7 +55,7 @@ def get_context() -> lxmsite.SiteGlobalContext:
 
 def fmterr(ctx: str, error: Exception):
     # have shorter traceback by onling priting the 2 last frames
-    last_frame = traceback.extract_tb(error.__traceback__, -2)
+    last_frame = traceback.extract_tb(error.__traceback__)
     frames_str = "\n".join(
         ["|  " + line for line in "".join(last_frame.format()).rstrip("\n").split("\n")]
     )
