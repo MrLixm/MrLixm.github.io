@@ -1,6 +1,9 @@
 {% extends ".base.html" %}
 {% block main %}
   <article class="read-area">
+    {% if Page.metadata.extras.get("cover") %}
+      <img class="blog-cover" src="{{ Page.metadata.extras.get("cover") }}" alt="{{ Page.metadata.extras.get("cover-alt", "") }}">
+    {% endif %}
     <h1>{{ Page.title }}</h1>
     <section id="metadata-footer">
       {%- if Page.metadata.description %}

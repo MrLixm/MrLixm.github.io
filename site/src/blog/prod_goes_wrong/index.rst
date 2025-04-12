@@ -5,6 +5,7 @@ When cgi-production goes wrong.
     wether it's the user fault or the software one. And this is especially true when
     working on 3d animated movies ...
 :image: cover/cover.jpg
+:cover: cover/cover.jpg
 :date-created: 2021-10-16 20:00
 :date-modified: 2021-10-22 13:02
 :authors: Liam Collod, CPasDec team
