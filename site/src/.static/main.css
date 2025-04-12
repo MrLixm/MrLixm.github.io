@@ -368,6 +368,20 @@ nav.contents {
 }
 
 
+.footnote > * {
+    display: inline-block;
+}
+.footnote-list {
+    font-size: 0.75rem;
+
+    > * {
+        margin: 0.5rem;
+    }
+    p {
+        margin: 0;
+    }
+}
+
 /* custom url-preview directive */
 .url-preview-box {
     position: relative;
