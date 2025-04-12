@@ -1,0 +1,12 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx]
+"MUIVerb"="makeTx"
+"icon"="F:\\blog\\demo-icon.ico"
+"subCommands"=""
+
+[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert]
+"MUIVerb"="convert to .tx"
+[HKEY_CURRENT_USER\Software\Classes\*\shell\makeTx\shell\txconvert\command]
+@="cmd /k %%MAKETX%% \"%1\" --opaque-detect --constant-color-detect --monochrome-detect --fixnan box3 --oiio --attrib tiff:half 1 -v -u --unpremult --oiio --format exr"
+
