@@ -194,14 +194,17 @@ pre.literal-block .linenos {
     color: var(--color-WW);
 }
 
+/* inline code */
 span.docutils.literal {
     font-family: var(--font-mono);
     background-color: var(--bg-color-MM);
     color: var(--color-W);
     border-radius: 5px;
     padding: 2px 5px;
+    text-wrap: nowrap;
 }
 
+/* admonitions */
 aside.admonition {
     position: relative;
     border-radius: var(--radius-S);
@@ -283,6 +286,12 @@ aside.admonition.warning {
     }
 }
 
+aside.admonition pre.literal-block,
+aside.admonition span.docutils.literal {
+    background-color: var(--bg-color);
+}
+
+/* images */
 img.inline {
     display: block;
 }
@@ -304,6 +313,7 @@ figure.align-right img {
     margin-left: auto;
 }
 
+/* table of contents */
 nav.contents {
 
     position: relative;
