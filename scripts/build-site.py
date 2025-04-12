@@ -86,6 +86,12 @@ def main(argv: list[str] | None = None):
         LOGGER.debug(f"📁 mkdir({build_dir})")
         build_dir.mkdir()
 
+    serve_file = build_dir.parent / ".server-active.info"
+    if serve_file.exists():
+        serve_adress = serve_file.read_text("utf-8")
+        LOGGER.warning(f"found serve file, overriding SITE_URL to '{serve_adress}'")
+        config.SITE_URL = serve_adress
+
     LOGGER.info(f"🔨 building site to '{build_dir}'")
     errors = lxmsite.build_site(
         config=config,

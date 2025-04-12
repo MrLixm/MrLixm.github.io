@@ -3,7 +3,6 @@ import logging
 import http.server
 import os
 import runpy
-import shutil
 import socketserver
 import sys
 from pathlib import Path
@@ -17,10 +16,18 @@ THISDIR = Path(__file__).parent
 BUILDSCRIPT_PATH = THISDIR / "build-site.py"
 BUILDSCRIPT = runpy.run_path(str(BUILDSCRIPT_PATH))["main"]
 BUILDIR = THISDIR.parent / "site" / ".build"
+SERVEFILE = BUILDIR.parent / ".server-active.info"
+
+PORT = 8000
+ADRESS = f"http://localhost:{PORT}"
 
 # // site build
 
 LOGGER.info(f"📃 building doc to '{BUILDIR}'")
+
+LOGGER.debug(f"writing '{SERVEFILE}'")
+SERVEFILE.write_text(ADRESS)
+
 try:
     BUILDSCRIPT(["--publish", "--target-dir", str(BUILDIR), "--clear"])
 except SystemExit as systemexit:
@@ -29,8 +36,6 @@ except SystemExit as systemexit:
 
 
 # // HTML server
-
-PORT = 8000
 
 
 class LxmHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
@@ -47,10 +52,12 @@ class LxmHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
 os.chdir(BUILDIR)
 with socketserver.TCPServer(("", PORT), LxmHTTPRequestHandler) as httpd:
-    LOGGER.info(f"🌐 serving to http://localhost:{PORT}")
+    LOGGER.info(f"🌐 serving to {ADRESS}")
     LOGGER.warning("note this server doesn't actually auto-build on changes")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
         print("\nKeyboard interrupt received, exiting.")
-        sys.exit(0)
+
+SERVEFILE.unlink(missing_ok=True)
+sys.exit(0)
