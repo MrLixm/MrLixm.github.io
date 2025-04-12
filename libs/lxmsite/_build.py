@@ -2,6 +2,7 @@ import datetime
 import logging
 import os
 import shutil
+import time
 import traceback
 from pathlib import Path
 
@@ -239,6 +240,7 @@ def build_site(
     ]
 
     # collect pages and static files
+    stime = time.time()
     pages: dict[Path, PageResource] = {}
     static_paths: list[Path] = []
     try:
@@ -249,6 +251,10 @@ def build_site(
         )
     except ExceptionStack as error:
         errors += error.errors
+    etime = time.time()
+    LOGGER.debug(
+        f"⌛ parsed pages from {len(site_files)} files in {etime - stime:.2f} seconds"
+    )
 
     # collect shelves and their associated pages
     shelves: list[ShelfResource] = []
@@ -263,6 +269,7 @@ def build_site(
         errors += error.errors
 
     # write html pages to disk
+    stime = time.time()
     for page_path, page in pages.items():
         LOGGER.debug(f"┌ 📃 building page '{page.url_path}'")
         # TODO verify nested shelves support and add it or not
@@ -280,6 +287,9 @@ def build_site(
             errors.append(error)
             continue
 
+    etime = time.time()
+    LOGGER.debug(f"⌛ built {len(pages)} page in {etime - stime:.2f} seconds")
+
     for shelf in shelves:
         # TODO build shelves
         pass
@@ -293,6 +303,7 @@ def build_site(
         Path(src_root, p).resolve() for p in config.DEFAULT_STYLESHEETS
     ]
 
+    stime = time.time()
     for static_path in static_paths:
         dst_path = Path(dst_root, static_path.relative_to(src_root))
         # we can't use Path.resolve because it resolves symlinks
@@ -313,5 +324,10 @@ def build_site(
                 LOGGER.debug(
                     f"📦⏭️ skipping copy of '{static_path}'; already up-to-date"
                 )
+
+    etime = time.time()
+    LOGGER.debug(
+        f"⌛ built {len(static_paths)} static paths in {etime - stime:.2f} seconds"
+    )
 
     return errors

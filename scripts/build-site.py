@@ -108,5 +108,7 @@ def main(argv: list[str] | None = None):
 
 
 if __name__ == "__main__":
-    lxmsite.configure_logging()
+    lxmsite.configure_logging(level=logging.WARNING)
+    LOGGER.setLevel(logging.DEBUG)
+    logging.getLogger(lxmsite.__name__).setLevel(logging.DEBUG)
     main()
