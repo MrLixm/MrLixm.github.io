@@ -10,6 +10,7 @@ import lxmsite
 from lxmsite import PageResource, MetaFileCollection
 from lxmsite import ShelfResource
 from lxmsite import SiteConfig
+from ._utils import gitget
 
 LOGGER = logging.getLogger(__name__)
 
@@ -46,10 +47,11 @@ def is_file_newer(source: Path, target: Path):
     return mtime_src > mtime_dst
 
 
-def get_context() -> lxmsite.SiteGlobalContext:
+def get_context(site_root: Path) -> lxmsite.SiteGlobalContext:
+    git_last_commit = gitget(["rev-parse", "HEAD"], cwd=site_root)
     return lxmsite.SiteGlobalContext(
         build_time=datetime.datetime.now(),
-        last_commit="TODO",
+        last_commit=git_last_commit,
     )
 
 
@@ -221,7 +223,7 @@ def build_site(
 
     src_root = config.SRC_ROOT
     dst_root = config.DST_ROOT
-    build_context = get_context()
+    build_context = get_context(site_root=src_root)
 
     site_files = lxmsite.collect_site_files(src_root)
     LOGGER.debug(f"🗂️ collected {len(site_files)} site files")

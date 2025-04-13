@@ -1,5 +1,7 @@
 import os
 import re
+import shutil
+import subprocess
 from pathlib import Path
 
 import unicodedata
@@ -46,3 +48,13 @@ def mksiterel(path: str, page_path: str) -> str:
     pageabs = root_path.joinpath(page_path).resolve()
     pathabs = pageabs.parent.joinpath(path).resolve()
     return Path(os.path.relpath(pathabs, start=root_path)).as_posix()
+
+
+def gitget(command: list[str], cwd: Path) -> str:
+    """
+    Call git and return its output.
+    """
+    gitpath = shutil.which("git")
+    out = subprocess.check_output([gitpath] + command, cwd=cwd, text=True)
+    out = out.rstrip("\n").rstrip(" ")
+    return out
