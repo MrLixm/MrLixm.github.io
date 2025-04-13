@@ -9,6 +9,7 @@ from pathlib import Path
 import lxmsite
 from lxmsite import PageResource, MetaFileCollection
 from lxmsite import ShelfResource
+from lxmsite import ShelfLibrary
 from lxmsite import SiteConfig
 from ._utils import gitget
 
@@ -155,6 +156,7 @@ def parse_shelves(
 def build_page(
     page: PageResource,
     shelf: ShelfResource | None,
+    shelf_library: ShelfLibrary,
     dst_root: Path,
     site_config: SiteConfig,
     build_context: lxmsite.SiteGlobalContext,
@@ -165,6 +167,7 @@ def build_page(
     Args:
         page: the page resource to build.
         shelf: optional parent shelf the page belongs to.
+        shelf_library: the collection of all the shelves the site has.
         dst_root: root directory where the file can be found.
         site_config: global site configuration.
         build_context: metadata for the build process.
@@ -195,6 +198,7 @@ def build_page(
         site_config=site_config,
         context=build_context,
         shelf=shelf,
+        shelf_library=shelf_library,
     )
 
     dst_path = Path(dst_root, page.url_path).resolve()
@@ -271,6 +275,8 @@ def build_site(
     except ExceptionStack as error:
         errors += error.errors
 
+    shelf_library = ShelfLibrary(shelves=shelves)
+
     # write html pages to disk
     stime = time.time()
     for page_path, page in pages.items():
@@ -281,6 +287,7 @@ def build_site(
             build_page(
                 page=page,
                 shelf=parent_shelf,
+                shelf_library=shelf_library,
                 dst_root=dst_root,
                 site_config=config,
                 build_context=build_context,

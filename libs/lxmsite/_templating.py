@@ -7,6 +7,7 @@ import jinja2
 from lxmsite import SiteConfig
 from lxmsite import PageResource
 from lxmsite import ShelfResource
+from lxmsite import ShelfLibrary
 from ._utils import slugify
 from ._utils import mkpagerel
 from ._utils import mksiterel
@@ -69,6 +70,7 @@ def render_page(
     site_config: SiteConfig,
     context: SiteGlobalContext,
     shelf: ShelfResource | None,
+    shelf_library: ShelfLibrary,
 ) -> str:
     jinja_env = get_jinja_env(
         site_config=site_config,
@@ -80,6 +82,7 @@ def render_page(
         "Config": site_config,
         "Context": context,
         "Shelf": shelf,
+        "ShelfLibrary": shelf_library,
     }
     content = template.render(**attributes)
     return content

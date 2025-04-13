@@ -79,8 +79,15 @@ class ShelfConfig:
 @dataclasses.dataclass
 class ShelfResource:
     url_path: str
+    """
+    path to the shelf directory, relative to site root
+    """
     config: ShelfConfig
     children: list[PageResource]
+
+    @property
+    def name(self):
+        return Path(self.url_path).name
 
     def is_index(self, page: PageResource) -> bool:
         """
@@ -90,7 +97,16 @@ class ShelfResource:
             return False
         return f"{self.url_path}/{page.slug}" == page.url_path
 
-    def iterate_children_by_last_created(self, reverse: bool = False):
+    def iterate_children_by_last_created(
+        self,
+        reverse: bool = False,
+        ignore_index: bool = False,
+    ):
+        """
+        Args:
+            reverse: if True return last created first, and oldest last.
+            ignore_index: if True do not yield the page that is index of the shelf
+        """
 
         def _sorter(page: PageResource) -> str:
             if not page.metadata.date_created:
@@ -98,4 +114,30 @@ class ShelfResource:
             return page.metadata.date_created.isoformat()
 
         for child in sorted(self.children, key=_sorter, reverse=reverse):
+            if ignore_index and self.is_index(child):
+                continue
             yield child
+
+
+@dataclasses.dataclass
+class ShelfLibrary:
+    """
+    A collection of shelves.
+
+    Easier to manipulate from jinja templates than a vanilla list.
+    """
+
+    shelves: list[ShelfResource]
+
+    def __iter__(self):
+        for shelf in self.shelves:
+            yield shelf
+
+    def get(self, shelf_name: str) -> ShelfResource | None:
+        """
+        Get the shelf with the given name.
+        """
+        for shelf in self.shelves:
+            if shelf.name == shelf_name:
+                return shelf
+        return None
