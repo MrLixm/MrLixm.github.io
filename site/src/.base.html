@@ -35,10 +35,10 @@
 <body>
 <header>
   {% block header %}
-    <a id="site-name" href="{{ "index.html"|mkpagerel|prettylink }}">
+    <div id="site-name">
       <img src="{{ ".static/icons/logo-lixm-outlines.svg"|mkpagerel }}" alt="my diamond-shape logo; quite minimalisitic." width="32px" height="32px">
-      <span>Liam Collod</span>
-    </a>
+      <a href="{{ "index.html"|mkpagerel|prettylink }}"><span>Liam Collod</span></a>
+    </div>
     <nav class="main-nav" aria-label="Main menu">
       <ul>
         {% for navname, navlink in Config.HEADER_NAV.items() %}
