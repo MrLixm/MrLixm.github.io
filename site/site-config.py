@@ -19,6 +19,7 @@ DEFAULT_STYLESHEETS: list[str] = [
 HEADER_NAV = {
     "Work": "work/index.html",
     "Blog": "blog/index.html",
+    "Resources": "resources/index.html",
     "Contact": "contact.html",
 }
 
