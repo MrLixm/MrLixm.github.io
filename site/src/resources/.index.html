@@ -21,7 +21,7 @@
               <span class="post-category">{{ page.metadata.extras["category"] }}</span>
               <h2>{{ page.title }}</h2>
               {% if page.metadata.image %}
-                <img src="{{ page.metadata.image|mksiterel(page.url_path)|mkpagerel }}">
+                <img src="{{ page.metadata.image|mksiterel(page.url_path)|mkpagerel }}" alt="{{ page.metadata.image_alt }}">
               {% endif %}
               <p class="post-description">{{ page.metadata.description }}</p>
               <div class="metadata-tags">

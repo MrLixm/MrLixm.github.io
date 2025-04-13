@@ -3,6 +3,7 @@ OpenDRT : a cool alternative to ACES
 
 :description: An open-source alternative to to form images out of high dynamic range data.
 :image: cover.jpg
+:image-alt: A decorative image showcasing the output of OpenDRT on a 3D render, screenshot from the Nuke software.
 :date-created: 2021-10-25T13:54
 :date-modified: 2025-04-11T23:10
 :category: tutorial

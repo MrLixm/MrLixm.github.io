@@ -3,6 +3,7 @@ CGI-related white-papers database
 
 :description: *" 70+ white-papers conveniently ordered for you "*
 :image: cover.jpg
+:image-alt: A screnshot of the database preview.
 :date-created: 2021-11-08 22:34
 :category: resource
 :tags: science, math, shading, lighting, rendering

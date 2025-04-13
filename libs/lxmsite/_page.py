@@ -39,6 +39,7 @@ class PageMetadata:
     """
     link to an image file, relative to the page it was extracted from.
     """
+    image_alt: str
 
     description: str  # https://ogp.me/#optional
 
@@ -170,6 +171,7 @@ def read_page(
         title=src_metadata.pop("title", title),
         type=src_metadata.pop("type", "website"),
         image=image_path,
+        image_alt=src_metadata.pop("image-alt", ""),
         description=src_metadata.pop("description", ""),
         date_created=date_created,
         date_modified=date_modified,

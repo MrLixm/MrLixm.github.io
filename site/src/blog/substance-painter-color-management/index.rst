@@ -5,8 +5,9 @@ Color-management in Substance Painter with OCIO
 :date-created: 2021-12-08 19:03
 :date-modified: 2023-02-01 21:31
 :image: cover.jpg
+:image-alt: A decorative image that shows the meet-mat character in front of a monitor displaying a rainbow-colored pattern.
 :cover: cover.jpg
-:cover-alt: The meet-mat character in front of a rainbow-colored monitor.
+:cover-alt: A decorative image that shows the meet-mat character in front of a monitor displaying a rainbow-colored pattern.
 :category: tutorial
 :tags: substance-painter, color-science, OCIO, ACES
 :authors: Liam Collod

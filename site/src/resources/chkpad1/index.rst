@@ -3,6 +3,7 @@ film-vs-digital asset chkpad1
 
 :description: assets for comparison of film photography rendering against arbitrary digital photography rendering
 :image: cover.png
+:image-alt: Screenshot of Nuke software that show the film picture next to the digital picture. The scene is a color-checker on the floor; illuminated by an Ipad.
 :date-created: 2024-07-31T16:54
 :authors: Liam Collod
 :category: asset

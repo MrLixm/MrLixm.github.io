@@ -5,7 +5,9 @@ When cgi-production goes wrong.
     wether it's the user fault or the software one. And this is especially true when
     working on 3d animated movies ...
 :image: cover/cover.jpg
+:image-alt: A decorative image with the article title.
 :cover: cover/cover.jpg
+:cover-alt: A decorative image with the article title.
 :date-created: 2021-10-16 20:00
 :date-modified: 2021-10-22 13:02
 :authors: Liam Collod, CPasDec team

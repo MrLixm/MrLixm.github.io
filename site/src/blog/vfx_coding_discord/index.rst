@@ -3,6 +3,7 @@ A Discord server for Coding in VFX/CGI
 
 :description: *" A bunch of resources you don't want to miss "*
 :image: cover.png
+:image-alt: screenshot of Discord interface as decorative image
 :date-created: 2021-10-23T22:59
 :date-modified: 2025-04-11T15:15
 :category: resource

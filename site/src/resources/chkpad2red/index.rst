@@ -3,6 +3,7 @@ film-vs-digital asset chkpad2red
 
 :description: assets for comparison of film photography rendering against arbitrary digital photography rendering
 :image: cover.png
+:image-alt: Screenshot of Nuke software that show the film picture next to the digital picture. The scene is a strong red light behing glasses.
 :date-created: 2025-02-22T14:00
 :authors: Liam Collod
 :category: asset

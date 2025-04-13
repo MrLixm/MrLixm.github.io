@@ -22,6 +22,9 @@
   {#- needs absolute url; metadata.image is page relative -#}
   <meta property="og:image" content="{{ Page.metadata.image|mksiterel|mksiteabs }}">
   {%- endif %}
+  {%- if Page.metadata.image_alt %}
+  <meta property="og:image:alt" content="{{ Page.metadata.image_alt }}">
+  {%- endif %}
   {%- if Page.metadata.date_created %}
   <meta name="dcterms.created" content="{{ Page.metadata.date_created.isoformat() }}">
   {%- endif %}

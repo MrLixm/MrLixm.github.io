@@ -4,6 +4,7 @@ Creating custom context menu for Windows file explorer.
 :description: Making tx, rescaling image, displaying alembic content all as fast as
           a right click can be.
 :image: cover.jpg
+:image-alt: a decorative image with a context menu
 :date-created: 2023-01-29 21:15
 :date-modified: 2025-04-12 12:17
 :category: tutorial
