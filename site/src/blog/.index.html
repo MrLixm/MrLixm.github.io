@@ -2,24 +2,7 @@
 {% block main %}
   <article class="read-area">
     <section id="article-header">
-      {%- if Page.metadata.extras.get("cover") %}
-        <img class="blog-cover" src="{{ Page.metadata.extras.get("cover") }}" alt="{{ Page.metadata.extras.get("cover-alt", "") }}">
-      {%- endif %}
       <div class="article-header-content">
-        {%- if Page.metadata.extras.get("category") %}
-          <section id="metadata-header">
-            <div class="metadata-categories">
-              <hr>
-              <p id="post-category" title="the post category">{{ Page.metadata.extras["category"] }}</p>
-              <hr>
-            </div>
-            <div class="metadata-tags">
-              {%- for tag in Page.metadata.keywords %}
-                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: {{ range(1,10)|random / 10 }}s">{{ tag }}</pre>
-              {%- endfor %}
-            </div>
-          </section>
-        {%- endif %}
         <span id="article-header-decoration"></span>
         <h1>{{ Page.title }}</h1>
         <section id="metadata-footer">
