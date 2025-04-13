@@ -581,6 +581,24 @@ nav.contents {
     text-decoration: line-through;
 }
 
+
+.hover-expand-n-shrink {
+    letter-spacing: 0;
+    margin-right: 0;
+    transition:
+            /* interpolation is "backwards" */
+            letter-spacing 0.2s cubic-bezier(.68,-0.55,.27,1.55),
+            margin-right 0.2s cubic-bezier(.68,-0.55,.27,1.55);
+}
+.hover-expand-n-shrink:hover {
+    letter-spacing: 65px;
+    margin-right: -65px;
+    transition:
+            /* interpolation is "backwards" in ease-out */
+            letter-spacing 0.3s cubic-bezier(.18,.89,.32,1.28),
+            margin-right 0.3s cubic-bezier(.18,.89,.32,1.28);
+}
+
 /*===========================================================================*/
 /* header styling */
 header {

@@ -71,7 +71,17 @@
     </h2>
   </section>
   <section id="blog" aria-label="Blog">
-    <h2><a href="{{ "blog/index.html"|prettylink }}">Blog</a></h2>
+    <h2 class="hover-expand-n-shrink"><a href="{{ "blog/index.html"|prettylink }}">Blog</a></h2>
+    {% set blog_shelf = ShelfLibrary.get("blog") %}
+    {# we assume the blog MUST exists and can't be None #}
+    <ul class="latest-posts">
+    {% for post in blog_shelf.iterate_children_by_last_created(reverse=True, ignore_index=True) %}
+      <li>
+        <time datetime="{{ post.metadata.date_created.isoformat() }}">{{ post.metadata.date_created.strftime("%d %B %Y") }}</time>
+        <a href="{{ post.url_path }}"><p>{{ post.title }}</p></a>
+      </li>
+    {% endfor %}
+    </ul>
     {#  {% include 'latest_posts.html' %}#}
   </section>
 {%- endblock %}
