@@ -1,6 +1,7 @@
 {
   "stylesheets": [
-    "blog/blog.css"
+    "blog/blog.css",
+    ".static/shelf.css"
   ],
   "template": "blog/.blog.html"
 }

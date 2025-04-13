@@ -1,6 +1,7 @@
 {
   "stylesheets": [
-    "resources/resources.css"
+    "resources/resources.css",
+    ".static/shelf.css"
   ],
   "template": "resources/.resources.html"
 }
