@@ -1,0 +1,38 @@
+{% extends ".base.html" %}
+{% block main %}
+  <article class="read-area">
+    <section id="article-header">
+      <div class="article-header-content">
+        <span id="article-header-decoration"></span>
+        <h1>{{ Page.title }}</h1>
+        <section id="metadata-footer">
+          {%- if Page.metadata.description %}
+            <p id="post-description" title="the post description">{{ Page.metadata.description }}</p>
+          {%- endif %}
+        </section>
+      </div>
+    </section>
+    {{ Page.html_content }}
+    <section id="resource-library">
+      {%- for page in Shelf.iterate_children_by_last_created(reverse=True) %}
+        {%- if page is not sameas(Page) %}
+          <a href="{{ page.url_path|mkpagerel }}">
+            <div class="resource-item">
+              <span class="post-category">{{ page.metadata.extras["category"] }}</span>
+              <h2>{{ page.title }}</h2>
+              {% if page.metadata.image %}
+                <img src="{{ page.metadata.image|mksiterel(page.url_path)|mkpagerel }}">
+              {% endif %}
+              <p class="post-description">{{ page.metadata.description }}</p>
+              <div class="metadata-tags">
+                {%- for tag in page.metadata.keywords %}
+                  <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: {{ range(1,10)|random / 10 }}s">{{ tag }}</pre>
+                {%- endfor %}
+              </div>
+            </div>
+          </a>
+        {%- endif %}
+      {%- endfor %}
+    </section>
+  </article>
+{% endblock %}

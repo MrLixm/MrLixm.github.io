@@ -1,0 +1,6 @@
+{
+  "stylesheets": [
+    "resources/resources.css"
+  ],
+  "template": "resources/.resources.html"
+}

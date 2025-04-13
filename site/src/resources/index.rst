@@ -1,6 +1,6 @@
 Resources
 #########
 
-:description: Knowledge and external resources that are useful.
-
-Knowledge and external resources that are useful.
+:description: Useful knowledge or assets from myself or external authors.
+:template: resources/.index.html
+:stylesheets: +index.css
