@@ -25,13 +25,13 @@ def get_jinja_env(
         """
         return f"{site_config.SITE_URL}/{_path_.lstrip('/')}"
 
-    def _mksiterel_(_path_: str) -> str:
+    def _mksiterel_(_path_: str, _page_path_=page_rel_url) -> str:
         if _path_.startswith("/"):
             return _path_
-        return mksiterel(_path_, page_rel_url)
+        return mksiterel(_path_, _page_path_)
 
-    def _mkpagerel_(_path_: str) -> str:
-        return mkpagerel(_path_, page_rel_url)
+    def _mkpagerel_(_path_: str, _page_path_=page_rel_url) -> str:
+        return mkpagerel(_path_, _page_path_)
 
     def _format_link_(_link_: str) -> str:
         """
