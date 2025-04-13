@@ -100,10 +100,11 @@ div.about {
     align-items: center;
 }
 div.about > h2 {
-    writing-mode: vertical-rl;
-    font-size: 3rem;
     margin: unset;
     z-index: 2;
+    writing-mode: vertical-rl;
+    font-size: 3rem;
+    font-weight: normal;
     filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
 }
 
