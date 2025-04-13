@@ -26,7 +26,7 @@
     --font-A: "Source Sans Pro", sans-serif;
     --font-B: Montserrat, sans-serif;
     --font-C: Georama, sans-serif;
-    --font-mono: monospace;
+    --font-mono: "Source Code Pro", monospace;
 
     --radius-S: 8px;
 }
@@ -187,6 +187,7 @@ table.inline ul {
 /* code blocks */
 pre.literal-block {
     font-family: var(--font-mono);
+    font-size: 0.85rem;
     background-color: var(--bg-color-M);
     border: 1px solid var(--bg-color-MM);
     border-radius: var(--radius-S);
@@ -201,6 +202,7 @@ pre.literal-block .linenos {
 /* inline code */
 span.docutils.literal {
     font-family: var(--font-mono);
+    font-size: 0.85rem;
     background-color: var(--bg-color-MM);
     color: var(--color-W);
     border-radius: 5px;
@@ -699,10 +701,12 @@ footer {
     text-align: center;
 }
 footer i {
-    font-family: monospace;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-style: normal;
 }
 footer a, footer a:visited {
-    text-decoration: unset;
+    text-decoration: underline;
     color: unset;
 }
 footer a:hover {
