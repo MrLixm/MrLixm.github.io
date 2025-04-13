@@ -48,7 +48,7 @@ def is_file_newer(source: Path, target: Path):
 
 
 def get_context(site_root: Path) -> lxmsite.SiteGlobalContext:
-    git_last_commit = gitget(["rev-parse", "HEAD"], cwd=site_root)
+    git_last_commit = gitget(["rev-parse", "--short", "HEAD"], cwd=site_root)
     return lxmsite.SiteGlobalContext(
         build_time=datetime.datetime.now(),
         last_commit=git_last_commit,
