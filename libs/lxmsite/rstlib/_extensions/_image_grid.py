@@ -36,7 +36,19 @@ class ImageGrid(Directive):
         rows = [[]]
         total_widths = [0]
 
-        for uri_caption in self.content:
+        # pre-group the lines as we allow the caption to span multiple lines
+        grouped_lines = []
+        for line in self.content:
+            if not line:
+                grouped_lines.append([""])
+            elif line.startswith("  "):
+                grouped_lines[-1].append(line.strip(" "))
+            else:
+                grouped_lines.append([line])
+
+        content = [" ".join(lines) for lines in grouped_lines]
+
+        for uri_caption in content:
             # New line, calculating width from 0 again
             if not uri_caption:
                 rows.append([])
