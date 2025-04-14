@@ -301,13 +301,22 @@ aside.admonition span.docutils.literal {
 img.inline {
     display: block;
 }
-
-img.align-center,
+img.inline.align-left,
+figure.align-left {
+    margin: unset;
+    align-items: start;
+}
+img.inline.align-right,
+figure.align-right {
+    margin-left: auto;
+    align-items: end;
+}
+img.inline.align-center,
 figure.align-center {
     margin: auto;
     align-items: center;
 }
-img.align-right,
+img.inline.align-right,
 figure.align-right {
     margin-left: auto;
     align-items: end;
