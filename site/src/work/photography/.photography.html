@@ -1,0 +1,17 @@
+{% extends ".base.html" %}
+{% block title %}liam collod - photography - {{ Page.metadata.title }}{% endblock %}
+{% block main %}
+  <article class="read-area">
+    <section id="article-header">
+      <div class="article-header-content">
+        <h1>{{ Page.title }}</h1>
+        <section id="metadata-footer">
+          {%- if Page.metadata.description %}
+          <p id="post-description" title="the post description">{{ Page.metadata.description }}</p>
+          {%- endif %}
+        </section>
+      </div>
+    </section>
+    {{ Page.html_content }}
+  </article>
+{% endblock %}
