@@ -592,6 +592,31 @@ nav.contents {
          width: 100%;
      }
 
+     .img-fullscreen {
+         display: flex;
+         position: fixed;
+         transform: translate(-50%, -50%);
+         top: 50%;
+         left: 50%;
+         height: 100vh;
+         width: 100vw;
+         max-width: unset;
+         z-index: 10;
+         background-color: rgba(0,0,0,0.85);
+         opacity: 0;
+         visibility: hidden;
+         transition: opacity 0.35s;
+     }
+    .img-fullscreen img {
+        object-fit: contain;
+        margin: 2rem;
+        padding: 0;
+    }
+     .img-fullscreen:target {
+         visibility: visible;
+         opacity: 1;
+     }
+
      .responsive {
          display: none;
      }

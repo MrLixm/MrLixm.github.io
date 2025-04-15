@@ -78,14 +78,30 @@ class ImageGalleryFrame(Directive):
             )
             metadatanode.append(itemnode)
 
-        imgwrapnode = docutils.nodes.container(classes=["image-wrapper"])
-        imgwrapnode.append(imgnode)
-        imgwrapnode.append(metadatanode)
+        wrap_node = docutils.nodes.container(classes=["image-wrapper"])
+        # the link system is to have fullscreen image on click
+        # inspired from https://sylvaindurand.org/overlay-image-in-pure-css/
+        link_id = f"{image_id}-fullscreen"
+        link_node = docutils.nodes.reference(
+            refuri=f"#{link_id}",
+        )
+        link_overlay_node = docutils.nodes.reference(
+            refuri=f"#_",
+            classes=["img-fullscreen"],
+            ids=[link_id],
+        )
+        img_overlay_node = imgnode.copy()
+
+        link_node.append(imgnode)
+        link_overlay_node.append(img_overlay_node)
+        wrap_node.append(link_node)
+        wrap_node.append(link_overlay_node)
+        wrap_node.append(metadatanode)
 
         topnode = ImageGalleryFrameNode(
             img_id=image_id,
             label_id=label_id,
-            img_node=imgwrapnode,
+            img_node=wrap_node,
             label_node=labelnode,
             classes=["image-gallery-frame"] + option_classes,
         )
