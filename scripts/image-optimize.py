@@ -36,6 +36,12 @@ def get_cli(argv: list[str]) -> argparse.Namespace:
         default=None,
         help="maximum dimensions the image must have; specified as {width}x{height}",
     )
+    parser.add_argument(
+        "--suffix",
+        type=str,
+        default="",
+        help="Additional characters to suffix to the output file name.",
+    )
     parsed = parser.parse_args(argv)
     return parsed
 
@@ -46,6 +52,7 @@ def main(argv: list[str] | None = None):
     cli = get_cli(argv)
     u_src_path: Path = cli.src_path
     u_max_size: str = cli.maxsize
+    u_suffix: str = cli.suffix
     max_size = u_max_size.split("x") if u_max_size else None
     max_size = (float(max_size[0]), float(max_size[1])) if max_size else None
 
@@ -54,8 +61,9 @@ def main(argv: list[str] | None = None):
     else:
         paths = list(map(Path, glob.glob(str(u_src_path))))
 
+    dst_suffix = "." + u_suffix if u_suffix else ""
     for path in paths:
-        dst_path = path.with_suffix(".jpg")
+        dst_path = path.with_suffix(f"{dst_suffix}.jpg")
         if dst_path == path:
             LOGGER.warning(f"beware: overwriting '{dst_path}'")
 
