@@ -24,14 +24,24 @@ def get_jinja_env(
         """
         Convert the given site-relative url to absolute.
         """
+        if _path_.startswith("http"):
+            # already absolute path
+            return _path_
         return f"{site_config.SITE_URL}/{_path_.lstrip('/')}"
 
     def _mksiterel_(_path_: str, _page_path_=page_rel_url) -> str:
         if _path_.startswith("/"):
+            # already relative to site root
+            return _path_
+        if _path_.startswith("http"):
+            # cannot make relative, absolute path
             return _path_
         return mksiterel(_path_, _page_path_)
 
     def _mkpagerel_(_path_: str, _page_path_=page_rel_url) -> str:
+        if _path_.startswith("http"):
+            # cannot make relative, absolute path
+            return _path_
         return mkpagerel(_path_, _page_path_)
 
     def _format_link_(_link_: str) -> str:
