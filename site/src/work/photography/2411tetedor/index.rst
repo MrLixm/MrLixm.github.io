@@ -3,7 +3,7 @@ Parc de la Tête d'Or
 
 :description: Sometimes, waking up early has advantages.
 :image: 241229_negscan2411.1177.v0001.jpg
-
+:date-created: 2025-03-05T18:39
 
 .. image-gallery::
     :left: image1, image2, label4
