@@ -24,6 +24,20 @@ class ImageGalleryFrameNode(docutils.nodes.container):
         self.label_node = label_node
 
 
+def read_metadata_option(serialized: str | None) -> dict[str, str]:
+    metadata = {}
+    if not serialized:
+        return metadata
+
+    for line in serialized.splitlines():
+        if not line.strip(" "):
+            continue
+        key, value = line.split(":", maxsplit=1)
+        metadata[key] = value.strip(" ")
+
+    return metadata
+
+
 class ImageGalleryFrame(Directive):
     """
     The internal image part of an ImageGallery.
@@ -39,11 +53,7 @@ class ImageGalleryFrame(Directive):
 
     option_spec = {
         "classes": directives.unchanged,
-        "meta-date": directives.unchanged,
-        "meta-location": directives.unchanged,
-        "meta-film": directives.unchanged,
-        "meta-lens": directives.unchanged,
-        "meta-camera": directives.unchanged,
+        "metadata": directives.unchanged,
     }
 
     def run(self):
@@ -63,18 +73,17 @@ class ImageGalleryFrame(Directive):
         imgnode = docutils.nodes.image(uri=image_path, alt="", ids=[image_id])
 
         metadatanode = docutils.nodes.bullet_list(classes=["metadata"])
-        for option_name in self.option_spec:
-            if not option_name.startswith("meta"):
-                continue
-            if option_name not in self.options:
-                continue
-            value = self.options[option_name]
-            valuenode = docutils.nodes.paragraph(value, value)
+        metadata_option = (
+            self.options["metadata"] if "metadata" in self.options else None
+        )
+        metadata = read_metadata_option(metadata_option)
+        for metadata_key, metadata_value in metadata.items():
+            valuenode = docutils.nodes.paragraph(metadata_value, metadata_value)
             itemnode = docutils.nodes.list_item(
                 "",
                 valuenode,
-                title=option_name.removeprefix("meta-"),
-                classes=[option_name],
+                title=metadata_key,
+                classes=[metadata_key],
             )
             metadatanode.append(itemnode)
 

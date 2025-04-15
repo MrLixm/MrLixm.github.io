@@ -13,11 +13,12 @@ Reflective nights
     :right-width: 60
 
     .. image-frame:: image1 label1 241209_negscan2412.1110.v0002.jpg
-        :meta-date: 2024-12 at night
-        :meta-location: France - Lyon - Rue Pierre Poivre
-        :meta-film: 35mm Cinestill 800T
-        :meta-lens: Nikon 50mm 1:1.8
-        :meta-camera: Nikon F100
+        :metadata:
+            date: 2024-12 at night
+            location: France - Lyon - Rue Pierre Poivre
+            film: 35mm Cinestill 800T
+            lens: Nikon 50mm 1:1.8
+            camera: Nikon F100
 
         :code:`>` "What a lovely street", I went as few seconds later I was setting up
         the tripod to shoot it. Obviously the cobble plays a lot, I love how much
@@ -31,11 +32,12 @@ Reflective nights
         finally release the shutter and take the shot.
 
     .. image-frame:: image2 label2 241209_negscan2412.1105.v0002.jpg
-        :meta-date: 2024-12 at night
-        :meta-location: France - Lyon - Bellecour
-        :meta-film: 35mm Cinestill 800T
-        :meta-lens: Nikon 50mm 1:1.8
-        :meta-camera: Nikon F100
+        :metadata:
+            date: 2024-12 at night
+            location: France - Lyon - Bellecour
+            film: 35mm Cinestill 800T
+            lens: Nikon 50mm 1:1.8
+            camera: Nikon F100
 
         :code:`<` Despite the biting cold of December the mood is festive. It's the
         light celebration day here in Lyon and people are looking for some warmth at
@@ -44,11 +46,12 @@ Reflective nights
         creating beautiful reflections in the wet asphalt.
 
     .. image-frame:: image3 label3 241209_negscan2412.1111.v0001.jpg
-        :meta-date: 2024-12 at night
-        :meta-location: France - Lyon - Croix Rousse
-        :meta-film: 35mm Cinestill 800T
-        :meta-lens: Nikon 50mm 1:1.8
-        :meta-camera: Nikon F100
+        :metadata:
+            date: 2024-12 at night
+            location: France - Lyon - Croix Rousse
+            film: 35mm Cinestill 800T
+            lens: Nikon 50mm 1:1.8
+            camera: Nikon F100
 
         :code:`<` Everybody home, street are mostly empty, if not for the late buses
         still going on. It would be quite dark without the street lamps whose light
@@ -58,11 +61,12 @@ Reflective nights
         feels captivating, and you decide to stay for a few seconds more ...
 
     .. image-frame:: image4 label4 241209_negscan2412.1090.v0002.jpg
-        :meta-date: 2024-12 at night
-        :meta-location: France - Lyon - Croix Rousse
-        :meta-film: 35mm Cinestill 800T
-        :meta-lens: Nikon 50mm 1:1.8
-        :meta-camera: Nikon F100
+        :metadata:
+            date: 2024-12 at night
+            location: France - Lyon - Croix Rousse
+            film: 35mm Cinestill 800T
+            lens: Nikon 50mm 1:1.8
+            camera: Nikon F100
 
         :code:`>` You may know I like green, so I had to take a shot at this
         beautiful sign I stumbled upon while taking the other night shots. It reads a
@@ -71,11 +75,12 @@ Reflective nights
         white light outline spilling on the wall it is attached to.
 
     .. image-frame:: image5 label5 241209_negscan2412.1086.v0001.jpg
-        :meta-date: 2024-12 at night
-        :meta-location: France - Lyon - Croix Rousse
-        :meta-film: 35mm Cinestill 800T
-        :meta-lens: Nikon 50mm 1:1.8
-        :meta-camera: Nikon F100
+        :metadata:
+            date: 2024-12 at night
+            location: France - Lyon - Croix Rousse
+            film: 35mm Cinestill 800T
+            lens: Nikon 50mm 1:1.8
+            camera: Nikon F100
 
         :code:`∧` A narrow passage stuck between building. You think it could looks
         creepy at this time of the night, but its not that dark. A vintage lamp hung at

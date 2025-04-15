@@ -12,10 +12,11 @@ Parc de la Tête d'Or
     :right-width: 65
 
     .. image-frame:: image1 label1 241229_negscan2411.1177.v0001.jpg
-        :meta-date: 2024-11 early morning
-        :meta-location: France - Lyon - Parc de la Tete d’Or
-        :meta-film: 35mm Kodak Gold 200
-        :meta-lens: Minolta MD 35mm
+        :metadata:
+            date: 2024-11 early morning
+            location: France - Lyon - Parc de la Tete d’Or
+            film: 35mm Kodak Gold 200
+            lens: Minolta MD 35mm
 
         :code:`<` Flowers are definitively always a hit to photograph. Roses make no exceptions,
         with their deep relaxing foliage color that strongly contrast with the explosive
@@ -24,10 +25,11 @@ Parc de la Tête d'Or
         but somehow the flower presence brought an intense warmth.
 
     .. image-frame:: image2 label2 241229_negscan2411.1176.v0001.jpg
-        :meta-date: 2024-11 early morning
-        :meta-location: France - Lyon - Parc de la Tete d’Or
-        :meta-film: 35mm Kodak Gold 200
-        :meta-lens: Minolta MD 35mm
+        :metadata:
+            date: 2024-11 early morning
+            location: France - Lyon - Parc de la Tete d’Or
+            film: 35mm Kodak Gold 200
+            lens: Minolta MD 35mm
 
         :code:`<` Floating by the bank of the lake, unbothered,
         moisturized. Happy. A duck ? Is it though ? Because I’m not good at birds and
@@ -37,10 +39,11 @@ Parc de la Tête d'Or
         with satisfying ripples.
 
     .. image-frame:: image3 label3 241229_negscan2411.1178.v0001.jpg
-        :meta-date: 2024-11 early morning
-        :meta-location: France - Lyon - Parc de la Tete d’Or
-        :meta-film: 35mm Kodak Gold 200
-        :meta-lens: Minolta MD 35mm
+        :metadata:
+            date: 2024-11 early morning
+            location: France - Lyon - Parc de la Tete d’Or
+            film: 35mm Kodak Gold 200
+            lens: Minolta MD 35mm
 
         :code:`∧` It’s cold as fuck, the frozen grass crunchs under
         your steps, no sign of the sun to warm it all.
@@ -51,10 +54,11 @@ Parc de la Tête d'Or
         warm in that cold atmosphere.
 
     .. image-frame:: image4 label4 241229_negscan2411.1175.v0001.jpg
-        :meta-date: 2024-11 early morning
-        :meta-location: France - Lyon - Parc de la Tete d’Or
-        :meta-film: 35mm Kodak Gold 200
-        :meta-lens: Minolta MD 35mm
+        :metadata:
+            date: 2024-11 early morning
+            location: France - Lyon - Parc de la Tete d’Or
+            film: 35mm Kodak Gold 200
+            lens: Minolta MD 35mm
 
         :code:`>` I don’t know what feels so peaceful about lakes,
         they just are. Especially early when there is no one around. The pedalo rental
