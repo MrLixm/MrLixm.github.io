@@ -8,6 +8,7 @@ from ._links import LinksTransform
 from . import _include
 from . import _image_grid
 from ._contents import ContentsTransform
+from . import _image_gallery
 
 
 def register_extensions():
@@ -38,3 +39,5 @@ def register_extensions():
 
     register_directive("include", _include.Include)
     register_directive("image-grid", _image_grid.ImageGrid)
+    register_directive("image-gallery", _image_gallery.ImageGallery)
+    register_directive("image-frame", _image_gallery.ImageGalleryFrame)

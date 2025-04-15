@@ -526,7 +526,13 @@ nav.contents {
 
 /* custom image-grid directive */
 .image-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
     .image-grid-row {
+        display: flex;
+        gap: 5px;
         white-space: nowrap;
         /* this a hack to remove the whitespace between inline-block items*/
         font-size: 0;
@@ -534,7 +540,7 @@ nav.contents {
     figure {
         display: inline-block;
         position: relative;
-        margin: 5px;
+        margin: 0;
     }
     img {
         width: 100%;
@@ -564,6 +570,101 @@ nav.contents {
         display: block;
         margin: auto;
         width: unset !important;
+    }
+}
+
+:root {
+     --image-gallery-spacing: 2rem;
+}
+
+/* custom image-gallery directive */
+/* this is a 2 colum layout with ul sticking on left or right */
+.image-gallery {
+     display: flex;
+     flex-direction: row;
+     gap: var(--image-gallery-spacing);
+
+     font-weight: 300;
+
+     p, img, ul {
+         margin-top: var(--image-gallery-spacing);
+         margin-bottom: var(--image-gallery-spacing);
+         width: 100%;
+     }
+
+     .responsive {
+         display: none;
+     }
+     .left {
+         display: initial;
+     }
+     .right {
+         display: initial;
+     }
+
+    .image-wrapper {
+
+        position: relative;
+
+        ul {
+            margin-top: auto;
+            margin-bottom: auto;
+            position: absolute;
+            top: 50%;
+            /* "translate": trick to take in account own height */
+            /* "perspective": trick to avoid blury font rendering with transform */
+            transform: perspective(1px) translateY(-50%);
+
+            padding-inline-start: 0;
+            list-style: none;
+
+            opacity: 0;
+
+            p {
+                margin: 0;
+            }
+
+        }
+    }
+
+    .left ul {
+        text-align: right;
+        margin-left: calc(-1 * var(--image-gallery-spacing));
+        left: -100%;
+    }
+    .right ul {
+        text-align: left;
+        margin-right: 0;
+        left: calc(100% + var(--image-gallery-spacing));
+    }
+
+    .left .image-wrapper:hover ul,
+    .right .image-wrapper:hover ul {
+        opacity: 0.65;
+    }
+}
+@media screen and (max-width: 1000px) {
+    .image-gallery {
+        .responsive {
+            display: flex;
+            flex-direction: column;
+
+            ul, ul:hover {
+                position: relative;
+                top: unset;
+                left: unset;
+                transform: unset;
+                opacity: 1;
+            }
+        }
+
+        .left {
+            display: none;
+        }
+
+        .right {
+            display: none;
+        }
     }
 }
 

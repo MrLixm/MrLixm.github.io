@@ -69,10 +69,34 @@ def parse_metadata(document: DocumentType) -> dict[str, str]:
 
 class LxmHTMLTranslator(docutils_writers.HTMLTranslator):
 
+    def visit_caption(self, node):
+        # we override to convert 'caption' to <label> because docutils is already using
+        # 'label' for some footnote reference stuff I don't want to touch.
+
+        if isinstance(node.parent, docutils.nodes.figure):
+            self.body.append("<figcaption>\n")
+            self.body.append(self.starttag(node, "p", ""))
+            return
+
+        options = {}
+        if "for" in node:
+            options["for"] = node["for"]
+        self.body.append(self.starttag(node, "label", "", CLASS="caption", **options))
+
+    def depart_caption(self, node):
+        if isinstance(node.parent, docutils.nodes.figure):
+            self.body.append("</p>\n")
+            # <figcaption> is closed in depart_figure()
+            return
+        self.body.append("</label>\n")
+
     def starttag(self, node, tagname, suffix="\n", empty=False, **attributes):
         title = node.get("title", "")
         if "title" not in attributes and title:
             attributes["title"] = title
+        style = node.get("style", "")
+        if "style" not in attributes and style:
+            attributes["style"] = style
         return super().starttag(node, tagname, suffix=suffix, empty=empty, **attributes)
 
     def visit_abbreviation(self, node):
