@@ -644,6 +644,8 @@ nav.contents {
             list-style: none;
 
             opacity: 0;
+            letter-spacing: -6px;
+            transition: letter-spacing 0.3s, opacity 0.2s;
 
             p {
                 margin: 0;
@@ -666,6 +668,7 @@ nav.contents {
     .left .image-wrapper:hover ul,
     .right .image-wrapper:hover ul {
         opacity: 0.65;
+        letter-spacing: unset;
     }
 }
 @media screen and (max-width: 1000px) {
