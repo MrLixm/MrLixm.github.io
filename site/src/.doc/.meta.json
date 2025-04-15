@@ -1,0 +1,6 @@
+{
+  "stylesheets": [
+    ".doc/doc.css"
+  ],
+  "template": ".doc/.doc.html"
+}
