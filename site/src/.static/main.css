@@ -234,6 +234,7 @@ aside.admonition {
     > *:nth-child(2) {
         margin-top: 0;
     }
+
     > *:last-child {
         margin-bottom: 0;
     }
@@ -250,6 +251,7 @@ aside.admonition.highlight-block {
 aside.admonition.danger,
 aside.admonition.error {
     border-color: var(--color-negative);
+
     .admonition-title {
         color: var(--color-negative);
     }
@@ -257,36 +259,42 @@ aside.admonition.error {
 aside.admonition.attention,
 aside.admonition.important {
     border-color: var(--color-attention);
+
     .admonition-title {
         color: var(--color-attention);
     }
 }
 aside.admonition.caution {
     border-color: var(--color-caution);
+
     .admonition-title {
         color: var(--color-caution);
     }
 }
 aside.admonition.hint {
     border-color: var(--color-hint);
+
     .admonition-title {
         color: var(--color-hint);
     }
 }
 aside.admonition.note {
     border-color: var(--color-info);
+
     .admonition-title {
         color: var(--color-info);
     }
 }
 aside.admonition.tip {
     border-color: var(--color-positive);
+
     .admonition-title {
         color: var(--color-positive);
     }
 }
 aside.admonition.warning {
     border-color: var(--color-warning);
+
     .admonition-title {
         color: var(--color-warning);
     }
@@ -340,6 +348,7 @@ nav.contents {
     a:before {
         content: none;
     }
+
     .topic-title {
 
         position: absolute;
@@ -355,6 +364,7 @@ nav.contents {
             color: inherit;
         }
     }
+
     ul {
         margin: 0.5rem 0 0;
         padding-inline-start: 20px;
@@ -362,21 +372,25 @@ nav.contents {
         list-style-type: "▫ ";
         color: var(--color-W);
     }
+
     li {
         margin: 0.1rem 0;
+
         > * {
             margin: 0;
         }
+
         > p {
             display: inline;
         }
     }
+
     > div > ul > li > p {
         font-weight: 600;
     }
+
     > div > ul > li > ul > li > ul > li > p,
-    > div > ul > li > ul > li > ul > li > ul > li > p
-    {
+    > div > ul > li > ul > li > ul > li > ul > li > p {
         font-size: 0.9rem;
     }
 
@@ -387,6 +401,7 @@ nav.contents {
         top: 15%;
         left: 2%;
     }
+
     nav.contents {
         position: sticky;
         padding: 0 0 0 1rem;
@@ -408,6 +423,7 @@ nav.contents {
             letter-spacing: 2px;
         }
     }
+
     nav.contents > .toc-list {
         padding-left: 1rem;
 
@@ -445,6 +461,7 @@ nav.contents {
     > * {
         margin: 0.5rem;
     }
+
     p {
         margin: 0;
     }
@@ -471,7 +488,7 @@ nav.contents {
 .url-preview-box:hover {
     transform: scale(1.05);
 }
-.url-preview-details{
+.url-preview-details {
     width: 100%;
     background-color: var(--bg-color-MM);
     border-radius: var(--radius-S);
@@ -489,7 +506,7 @@ nav.contents {
         max-width: 90px;
     }
 }
-.url-preview-image img{
+.url-preview-image img {
     border-radius: var(--radius-S);
     object-fit: cover;
     min-height: 100%;
@@ -518,6 +535,7 @@ nav.contents {
     *:first-child {
         margin-top: 0;
     }
+
     *:last-child {
         margin-bottom: 0;
     }
@@ -537,15 +555,18 @@ nav.contents {
         /* this a hack to remove the whitespace between inline-block items*/
         font-size: 0;
     }
+
     figure {
         display: inline-block;
         position: relative;
         margin: 0;
     }
+
     img {
         width: 100%;
         height: 100%;
     }
+
     figcaption {
         opacity: 0;
         text-wrap: wrap;
@@ -556,11 +577,13 @@ nav.contents {
         left: 0;
         padding: 0.5rem;
         /*background: linear-gradient(0deg, rgba(0,0,0,0.8) 10%, transparent 100%);*/
-        background-color: rgba(0,0,0,0.5);
+        background-color: rgba(0, 0, 0, 0.5);
     }
+
     figure:hover figcaption {
         opacity: 1;
     }
+
     figcaption > * {
         margin: 0;
     }
@@ -574,58 +597,62 @@ nav.contents {
 }
 
 :root {
-     --image-gallery-spacing: 2rem;
+    --image-gallery-spacing: 2rem;
 }
 
 /* custom image-gallery directive */
 /* this is a 2 colum layout with ul sticking on left or right */
 .image-gallery {
-     display: flex;
-     flex-direction: row;
-     gap: var(--image-gallery-spacing);
+    display: flex;
+    flex-direction: row;
+    gap: var(--image-gallery-spacing);
 
-     font-weight: 300;
+    font-weight: 300;
 
-     p, img, ul {
-         margin-top: var(--image-gallery-spacing);
-         margin-bottom: var(--image-gallery-spacing);
-         width: 100%;
-     }
+    p, img, ul {
+        margin-top: var(--image-gallery-spacing);
+        margin-bottom: var(--image-gallery-spacing);
+        width: 100%;
+    }
 
-     .img-fullscreen {
-         display: flex;
-         position: fixed;
-         transform: translate(-50%, -50%);
-         top: 50%;
-         left: 50%;
-         height: 100vh;
-         width: 100vw;
-         max-width: unset;
-         z-index: 10;
-         background-color: rgba(0,0,0,0.85);
-         opacity: 0;
-         visibility: hidden;
-         transition: opacity 0.35s;
-     }
+    .img-fullscreen {
+        display: flex;
+        position: fixed;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        height: 100vh;
+        width: 100vw;
+        max-width: unset;
+        z-index: 10;
+        background-color: rgba(0, 0, 0, 0.85);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.35s;
+    }
+
     .img-fullscreen img {
         object-fit: contain;
         margin: 2rem;
         padding: 0;
     }
-     .img-fullscreen:target {
-         visibility: visible;
-         opacity: 1;
-     }
 
-     .responsive {
-         display: none;
-     }
-     .left {
-         display: initial;
-     }
-     .right {
-         display: initial;
-     }
+    .img-fullscreen:target {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .responsive {
+        display: none;
+    }
+
+    .left {
+        display: initial;
+    }
+
+    .right {
+        display: initial;
+    }
 
     .image-wrapper {
 
@@ -659,6 +686,7 @@ nav.contents {
         margin-left: calc(-1 * var(--image-gallery-spacing));
         left: -100%;
     }
+
     .right ul {
         text-align: left;
         margin-right: 0;
@@ -723,18 +751,14 @@ nav.contents {
 .hover-expand-n-shrink {
     letter-spacing: 0;
     margin-right: 0;
-    transition:
-            /* interpolation is "backwards" */
-            letter-spacing 0.2s cubic-bezier(.68,-0.55,.27,1.55),
-            margin-right 0.2s cubic-bezier(.68,-0.55,.27,1.55);
+    transition: /* interpolation is "backwards" */ letter-spacing 0.2s cubic-bezier(.68, -0.55, .27, 1.55),
+    margin-right 0.2s cubic-bezier(.68, -0.55, .27, 1.55);
 }
 .hover-expand-n-shrink:hover {
     letter-spacing: 65px;
     margin-right: -65px;
-    transition:
-            /* interpolation is "backwards" in ease-out */
-            letter-spacing 0.3s cubic-bezier(.18,.89,.32,1.28),
-            margin-right 0.3s cubic-bezier(.18,.89,.32,1.28);
+    transition: /* interpolation is "backwards" in ease-out */ letter-spacing 0.3s cubic-bezier(.18, .89, .32, 1.28),
+    margin-right 0.3s cubic-bezier(.18, .89, .32, 1.28);
 }
 
 /*===========================================================================*/
@@ -829,12 +853,15 @@ header nav li:hover span:first-child {
         flex-direction: column;
         gap: 1rem;
     }
+
     header #site-name {
         width: unset;
     }
+
     header nav {
         width: 100%;
     }
+
     header nav ul {
         justify-content: space-evenly;
     }
@@ -875,11 +902,11 @@ footer p {
     margin: unset;
 }
 footer p:nth-child(2):hover {
-	animation-name: color-rainbow;
-	animation-duration: 5s;
-	animation-iteration-count: infinite;
-	animation-direction: alternate;
-	animation-timing-function: linear;
+    animation-name: color-rainbow;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: linear;
 }
 @keyframes color-rainbow {
     0% {
