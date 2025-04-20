@@ -6,8 +6,8 @@ Parc de la Tête d'Or
 :date-created: 2025-03-05T18:39
 
 .. image-gallery::
-    :left: image1, image2, label4
-    :right: label1, image3, label3, label2, image4
+    :left: image1, image2, label4, label5
+    :right: label1, image3, label3, label2, image4, image5
     :left-width: 35
     :right-width: 65
 
@@ -68,3 +68,20 @@ Parc de la Tête d'Or
         wind moves some waterside plants with a fuzzy feel. It’s good to sit there and
         just listen, to the noise of leaves dancing.
 
+    .. image-frame:: image5 label5 241229_negscan2411.1174.v0001.jpg
+        :metadata:
+            date: 2024-11 early morning
+            location: France - Lyon - Parc de la Tete d’Or
+            film: 35mm Kodak Gold 200
+            lens: Minolta MD 35mm
+
+        :code:`>` A giraffe on a stone pillar, intriguing right ? It signed Lasco, yes
+        the same name as those prehistoric caves. And it make sense when you wander
+        around Lyon, you will catch numerous of its other pieces on the city wall,
+        all with the same theme: animals painted like we were 2.8 millions years back
+        in the past. But the canvas has changed. As eye-catchy as it is my shot was
+        missing something ... So I decided to not invert the negative. Bright stone
+        and cold sky turn to darker warm shades, and the giraffe now nicely layer
+        like an upper relief on its canvas. And the grass, turn to funky purple shades,
+        quite unsettling ? But maybe that plays nicely with what the street-artist
+        wanted, prehistoric drawings in our modern era is quite intriguing right ?
