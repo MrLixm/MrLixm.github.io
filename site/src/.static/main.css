@@ -614,7 +614,7 @@ nav.contents {
 
     font-weight: 300;
 
-    p, img, ul {
+    p, img, ul, div.line-block {
         margin-top: var(--image-gallery-spacing);
         margin-bottom: var(--image-gallery-spacing);
         width: 100%;
