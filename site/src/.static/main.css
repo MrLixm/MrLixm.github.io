@@ -693,6 +693,14 @@ nav.contents {
         left: calc(100% + var(--image-gallery-spacing));
     }
 
+    .responsive ul {
+        letter-spacing: unset;
+        text-align: center;
+        font-size: 0.9rem;
+        font-weight: 400;
+        color: var(--color-WW);
+    }
+
     .left .image-wrapper:hover ul,
     .right .image-wrapper:hover ul {
         opacity: 0.65;
