@@ -139,6 +139,7 @@ name               description
 ``date-modified``  Date at which the page was last modified. Format is ``YYYY-MM-DDThh:mm``. See https://en.wikipedia.org/wiki/ISO_8601
 ``template``       Relative file path to the html template to use for rendering the page.
 ``stylesheets``    Comma separated list of stylesheet path relative to the page. Prefix with a + to inherit the parent stylesheets.
+``status``         either ``published`` (no effect) or ``unlisted`` (will be excluded from being listed in its parent shelf)
 =================  ===========
 
 Some extra fields may be used depending on the context:

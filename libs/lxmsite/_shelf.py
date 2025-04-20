@@ -116,6 +116,8 @@ class ShelfResource:
         for child in sorted(self.children, key=_sorter, reverse=reverse):
             if ignore_index and self.is_index(child):
                 continue
+            if child.status == child.status.unlisted:
+                continue
             yield child
 
 

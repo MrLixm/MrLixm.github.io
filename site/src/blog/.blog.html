@@ -48,6 +48,9 @@
               {%- endif %}
               <hr>
             </div>
+          {%- if Page.status == Page.status.unlisted %}
+          <span class="post-status-unlisted" title="post status">unlisted</span>
+          {%- endif  %}
         </section>
       </div>
     </section>

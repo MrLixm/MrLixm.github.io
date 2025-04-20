@@ -1,5 +1,6 @@
 import dataclasses
 import datetime
+import enum
 import logging
 from pathlib import Path
 
@@ -52,6 +53,14 @@ class PageMetadata:
     extras: dict[str, str]
 
 
+class PageStatus(enum.Enum):
+    published = enum.auto()
+    unlisted = enum.auto()
+    """
+    page is built and published but not listed in shelf
+    """
+
+
 @dataclasses.dataclass
 class PageResource:
     """
@@ -63,6 +72,7 @@ class PageResource:
     title: str
     metadata: PageMetadata
     labels: dict[ShelfLabel, str]
+    status: PageStatus
     url_path: str
     """
     relative to the site root
@@ -178,10 +188,17 @@ def read_page(
         extras=src_metadata,
     )
 
+    status = raw_metadata.pop("status", "")
+    if status:
+        status = getattr(PageStatus, status, PageStatus.published)
+    else:
+        status = PageStatus.published
+
     return PageResource(
         title=title,
         metadata=metadata,
         labels=page_labels,
+        status=status,
         url_path=url_path,
         html_content=content,
         html_template=template,

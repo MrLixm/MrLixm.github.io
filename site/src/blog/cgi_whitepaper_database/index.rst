@@ -7,6 +7,7 @@ CGI-related white-papers database
 :date-created: 2021-11-08 22:34
 :category: resource
 :tags: science, math, shading, lighting, rendering
+:status: unlisted
 
 As an artist, I found white-papers absolutely fascinating and so useful
 to understand how the software we are using are built.
