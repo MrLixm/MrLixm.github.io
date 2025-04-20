@@ -4,7 +4,7 @@
     <section id="article-header">
       <div class="article-header-content">
         <span id="article-header-decoration"></span>
-        <h1>{{ Page.title }}</h1>
+        <h1 class="hover-expand-n-shrink">{{ Page.title }}</h1>
         <section id="metadata-footer">
           {%- if Page.metadata.description %}
             <p id="post-description" title="the post description">{{ Page.metadata.description }}</p>
@@ -19,6 +19,9 @@
           <a href="{{ page.url_path|mkpagerel }}">
             <div class="resource-item">
               <span class="post-category">{{ page.metadata.extras["category"] }}</span>
+              <span class="box-decoration box-decoration-1"></span>
+              <span class="box-decoration box-decoration-2"></span>
+              <span class="box-decoration box-decoration-3"></span>
               <div class="center-content">
                 {% if page.metadata.image %}
                 <img src="{{ page.metadata.image|mksiterel(page.url_path)|mkpagerel }}" alt="{{ page.metadata.image_alt }}">
