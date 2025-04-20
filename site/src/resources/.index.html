@@ -19,10 +19,12 @@
           <a href="{{ page.url_path|mkpagerel }}">
             <div class="resource-item">
               <span class="post-category">{{ page.metadata.extras["category"] }}</span>
-              <h2>{{ page.title }}</h2>
-              {% if page.metadata.image %}
+              <div class="center-content">
+                {% if page.metadata.image %}
                 <img src="{{ page.metadata.image|mksiterel(page.url_path)|mkpagerel }}" alt="{{ page.metadata.image_alt }}">
-              {% endif %}
+                {% endif %}
+                <h2>{{ page.title }}</h2>
+              </div>
               <p class="post-description">{{ page.metadata.description }}</p>
               <div class="metadata-tags">
                 {%- for tag in page.metadata.keywords %}
