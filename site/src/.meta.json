@@ -1,7 +1,7 @@
 {
   "image": "/.static/images/cover-social.jpg",
   "stylesheets": [
-    ".static/main.css",
+    ".static/global.css",
     ".static/pygments.onedark.css"
   ],
   "template": ".base.html"
