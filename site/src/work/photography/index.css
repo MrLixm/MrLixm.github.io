@@ -1,62 +1,253 @@
-@import url(https://fonts.bunny.net/css?family=covered-by-your-grace:400);
-
-h1 {
-    text-shadow: white 0 0 100px, white 0 0 100px, white 0 0 50px;
+@import "../../.static/header.css";
+@import "../../.static/footer.css";
+@font-face {
+    font-family: 'ClashDisplay';
+    src: url('../../.static/fonts/ClashDisplay-Variable.woff2') format('woff2'),
+    url('../../.static/fonts/ClashDisplay-Variable.woff') format('woff'),
+    url('../../.static/fonts/ClashDisplay-Variable.ttf') format('truetype');
+    font-weight: 200 700;
+    font-display: swap;
+    font-style: normal;
 }
 
-article.read-area {
-    margin: 0 15vw;
+:root {
+    --bg-color: rgb(25, 132, 53);
+    --color-compl: rgb(4, 77, 189);
+    --color-compl-WW: rgb(13, 44, 103);
+    --color-opp: rgb(240, 37, 42);
+    --color: rgb(250, 250, 250);
+    --anticolor: rgb(5, 5, 5);
+
+    --logo-frame-size: 260px;
+    --logo-frame-height: calc(var(--logo-frame-size) - 40px);
+    --logo-bg-width: 190px;
+    --logo-bg-height: calc(var(--logo-frame-size) * 2);
+}
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    font-family: "ClashDisplay", sans-serif;
+    color: var(--color);
+    background: url("noise.dust.dark.svg"), url("noise.dust.light.svg"), url("noise.svg"), var(--bg-color);
+    background-blend-mode: normal, normal, overlay;
+}
+a {
+    color: unset;
+    text-decoration: unset;
+}
+a:visited {
+    color: unset;
+}
+a:hover {
+    color: unset;
 }
 
-section#photography-library {
+header {
+    #site-name {
+        display: none;
+    }
+
+    nav {
+        color: var(--anticolor);
+    }
+
+    margin-bottom: calc(var(--logo-frame-height) * 0.5 - 60px);
+}
+header .fujistyle-logo-frame {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: var(--logo-frame-size);
+    height: var(--logo-frame-height);
+    overflow: hidden;
+    filter: drop-shadow(0 0 2px rgba(190, 255, 255, 0.5));
+
+    svg {
+        position: absolute;
+        width: calc(var(--logo-frame-size) * 0.6);
+        height: calc(var(--logo-frame-size) * 0.6);
+        top: 35%;
+        left: 45%;
+        transform: translate(-50%, -50%);
+        transition: 0.1s;
+        color: var(--color-opp);
+        filter: drop-shadow(0 0 2px rgba(255, 150, 150, 1));
+    }
+
+    svg:hover {
+        filter: drop-shadow(5px 5px 0 var(--bg-color)) drop-shadow(10px 10px 0 var(--bg-color));
+        transform: translate(-55%, -55%);
+    }
+
+    .fujistyle-logo-bg {
+        position: absolute;
+        width: var(--logo-bg-width);
+        height: var(--logo-bg-height);
+        transform: translate(
+                calc(var(--logo-frame-size) / 2 - var(--logo-bg-width) / 2),
+                calc(var(--logo-frame-size) / 2 - var(--logo-bg-height) / 2)
+        ) rotate(-45deg) translate(15%);
+        background-color: var(--color);
+    }
+}
+
+footer {
+    color: var(--anticolor);
+    font-weight: 500;
+}
+
+section#main-header {
+    margin-left: 3rem;
+    position: relative;
+    text-transform: uppercase;
+    left: var(--logo-frame-size);
+
+    .title {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .title p {
+        margin: 0;
+    }
+
+    .title h1 {
+        margin: 0;
+        padding: 0 1rem;
+        font-family: "ClashDisplay", sans-serif;
+        font-size: 4.5rem;
+        font-weight: 500;
+        letter-spacing: 5px;
+
+        background-size: 8px 8px;
+        background-image: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2) 0.9px, transparent 0.9px, transparent);
+        text-shadow: rgba(180, 255, 255, 0.3) 0 0 2px;
+    }
+
+    nav.subtitle {
+        margin-top: 0.5rem;
+    }
+
+    nav.subtitle ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        gap: 1rem;
+    }
+
+    nav.subtitle a:hover {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+    }
+
+}
+
+section.box {
+    margin: 2rem 2%;
+    padding: 1.5rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    border: 2px solid var(--color);
+    box-shadow: rgba(180, 255, 255, 1) 0 0 2px;
+
+    --heading-size: 2.5rem;
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-transform: uppercase;
+    }
+
+    .section-header p {
+        margin: 0;
+    }
+
+    .section-header-decoration {
+        position: relative;
+        width: 3rem;
+        height: var(--heading-size);
+        background-color: var(--color-compl);
+        box-shadow: var(--color-compl-WW) -1px 0 0 1px;
+    }
+
+    .section-header-decoration:after {
+        content: "";
+        position: absolute;
+        width: 0.8rem;
+        height: 100%;
+        right: 0;
+        background-color: var(--color);
+        box-shadow: rgba(180, 255, 255, 1) 0 0 2px;
+    }
+
+    hr {
+        margin: 0;
+        border: 1px solid var(--color);
+    }
+
+    h2 {
+        margin: 0;
+        font-family: "ClashDisplay", sans-serif;
+        color: var(--color);
+        font-size: var(--heading-size);
+        font-weight: normal;
+    }
+
+}
+
+.photography-gallery {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 1rem;
-    justify-content: center;
-}
-.photography-item {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    flex: 1 0 30%;
+    justify-content: start;
 
-    margin-top: 5px;
-    padding: 0.5rem;
+    background-color: var(--color);
+    padding: 1rem;
+
+    a:hover h3 {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+
+    }
+
+    a:hover img {
+        border: 10px solid var(--color-opp);
+        box-sizing: border-box;
+        box-shadow: var(--color-opp) 0 0 2px;
+    }
+
+}
+
+.photography-gallery-item {
+    display: flex;
+    flex-direction: row;
+
     height: 100%;
-    /*max-width: 50%;*/
     position: relative;
 
-    background: linear-gradient(rgb(253,253,253), rgb(225, 228, 232), rgb(253,253,253));
-    border-radius: 3px;
-    border: 1px solid rgba(0,0,0,0.2);
-    transform: rotate(var(--random-rot));
-    transition: transform 0.3s;
-
-    h2 {
-        margin: 0 0 0 -5px;
-        padding: 0.5rem;
-        font-size: 1.1rem;
-        font-family: "Covered By Your Grace", sans-serif;
-        color: rgb(9,9,9);
-        background-color: rgb(250, 250, 244);
-        transform: rotate(-3deg);
-        box-shadow: rgba(0,0,0,0.2) 0 0 2px;
+    h3 {
+        margin: 0 0.5rem;
+        writing-mode: sideways-lr;
+        color: var(--anticolor);
+        font-size: 1rem;
+        font-family: "ClashDisplay", sans-serif;
+        font-weight: normal;
     }
+
     img {
-        border-radius: 3px;
         margin: 0;
-        width: 256px;
-        height: 256px;
+        width: 340px;
+        height: 340px;
         object-fit: cover;
     }
-    time {
-        text-align: right;
-        font-family: var(--font-mono);
-        color: rgb(9,9,9);
-    }
 
-}
-.photography-item:hover {
-    transform: translate(-5px, -10px);
 }
