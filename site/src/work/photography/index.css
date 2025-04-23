@@ -1,10 +1,19 @@
 @import url(https://fonts.bunny.net/css?family=covered-by-your-grace:400);
 
+h1 {
+    text-shadow: white 0 0 100px, white 0 0 100px, white 0 0 50px;
+}
+
+article.read-area {
+    margin: 0 15vw;
+}
+
 section#photography-library {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 1rem;
+    justify-content: center;
 }
 .photography-item {
     display: flex;
@@ -13,7 +22,7 @@ section#photography-library {
     flex: 1 0 30%;
 
     margin-top: 5px;
-    padding: 1rem;
+    padding: 0.5rem;
     height: 100%;
     /*max-width: 50%;*/
     position: relative;
@@ -27,7 +36,7 @@ section#photography-library {
     h2 {
         margin: 0 0 0 -5px;
         padding: 0.5rem;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-family: "Covered By Your Grace", sans-serif;
         color: rgb(9,9,9);
         background-color: rgb(250, 250, 244);
