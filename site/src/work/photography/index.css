@@ -248,6 +248,12 @@ section.box {
 
 }
 
+.information-txt {
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
 .photography-gallery {
     display: flex;
     flex-direction: row;

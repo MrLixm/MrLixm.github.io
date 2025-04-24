@@ -10,6 +10,7 @@
 {% endblock %}
 {% block main %}
   <section id="main-header">
+    <span class="information-txt">website best viewed on screen > 1250px wide</span>
     <div class="title">
       <h1>{{ Page.title }}</h1>
       <p>photographie<br>fotografia<br>fotographika</p>
@@ -27,6 +28,7 @@
       <h2>Sessions</h2>
       <p>sessions<br>sessioni<br>sesje</p>
     </div>
+    <span class="information-txt">collection of shots took around the same time, with a similar thematic;<br>click the cover image to view the whole session</span>
     <hr>
     <div class="photography-gallery">
       {%- for page in Shelf.iterate_children_by_last_created(reverse=True) %}
