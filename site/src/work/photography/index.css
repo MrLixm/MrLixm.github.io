@@ -44,6 +44,10 @@ a:hover {
     color: unset;
 }
 
+main {
+    overflow-x: hidden;
+}
+
 header {
     #site-name {
         display: none;
@@ -89,7 +93,24 @@ header .fujistyle-logo-frame {
                 calc(var(--logo-frame-size) / 2 - var(--logo-bg-width) / 2),
                 calc(var(--logo-frame-size) / 2 - var(--logo-bg-height) / 2)
         ) rotate(-45deg) translate(15%);
-        background-color: var(--color);
+        background: url("noise.svg"), var(--color);
+        background-blend-mode: color-burn;
+    }
+}
+@media screen and (max-width: 1250px) {
+
+    :root {
+        --logo-frame-size: 200px;
+        --logo-bg-width: 130px;
+    }
+
+    header .fujistyle-logo-frame {
+        position: unset;
+
+        svg {
+            top: 40%;
+        }
+
     }
 }
 
@@ -107,6 +128,7 @@ section#main-header {
     .title {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
         gap: 0.5rem;
     }
 
@@ -144,6 +166,29 @@ section#main-header {
         text-underline-offset: 4px;
     }
 
+}
+@media screen and (max-width: 1250px) {
+
+    html {
+        font-size: 14px;
+    }
+
+    section#main-header {
+        left: unset;
+        margin: 0 1rem;
+
+        .title {
+            justify-content: center;
+        }
+
+        .title h1 {
+            word-wrap: anywhere;
+        }
+
+        nav.subtitle ul {
+            justify-content: center;
+        }
+    }
 }
 
 section.box {
@@ -250,4 +295,10 @@ section.box {
         object-fit: cover;
     }
 
+}
+@media screen and (max-width: 1250px) {
+    .photography-gallery-item img {
+        width: 290px;
+        height: 290px;
+    }
 }

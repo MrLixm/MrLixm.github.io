@@ -1,12 +1,12 @@
 {% extends ".base.html" %}
 {% block header %}
+  {{ super() }}
   <div class="fujistyle-logo-frame">
     <div class="fujistyle-logo-bg"></div>
     <a href="{{ "index.html"|mkpagerel|prettylink }}">
       {% include 'work/photography/logotype.liam.fuji-style.svg' %}
     </a>
   </div>
-  {{ super() }}
 {% endblock %}
 {% block main %}
   <section id="main-header">
