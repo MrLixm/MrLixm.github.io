@@ -2,7 +2,30 @@
 {% block main %}
   <div class="read-area">
     <h1>{{ Page.title }}</h1>
-    {{ Page.html_content }}
+    <div class="work-topics">
+      <a href="https://github.com/MrLixm">
+        <aside class="admonition">
+          <p class="admonition-title">Programming</p>
+          <img src="programming-cover.png" alt="decorative programming image">
+        </aside>
+      </a>
+      <a href="{{ "photography/index.html"|prettylink }}">
+        <aside class="admonition">
+          <p class="admonition-title">Photography</p>
+          <img src="photography/2411tetedor/241229_negscan2411.1177.v0001.jpg" alt="decorative photography image">
+        </aside>
+      </a>
+      <a href="https://www.artstation.com/monsieur_lixm">
+        <aside class="admonition">
+          <p class="admonition-title">VFX</p>
+          <img src="vfx-cover.png" alt="decorative vfx image">
+        </aside>
+      </a>
+    </div>
+    <aside class="admonition" id="follow-my-work">
+      <p class="admonition-title"> How to follow all of my work ?</p>
+      <p>Those day I'm most active on <a href="https://mastodon.gamedev.place/@liamcollod">Mastodon</a>.</p>
+    </aside>
     {% include 'work/.cv.html' %}
     <p class="last-modified">last modified on {{ Page.metadata.date_modified.strftime("%d %B %Y") }}</p>
     <a href="cv.pdf" download="LiamCollod.CV.pdf">

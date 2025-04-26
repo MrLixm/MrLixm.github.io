@@ -5,30 +5,54 @@ h1 {
     text-align: center;
 }
 
-/*top 3 block with social links*/
-div.l-projects {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-@media screen and (max-width: 630px) {
-    div.l-projects {
-        flex-direction: column;
-    }
-}
-div.l-projects .admonition {
+.admonition {
     margin-bottom: unset;
-    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: 0.3s;
 }
-div.l-projects .admonition p:first-child {
-    font-family: var(--font-B) sans-serif;
-    text-transform: uppercase;
-    margin-bottom: 5px;
-    color: unset;
-    letter-spacing: 0.2rem;
+/*top 3 block with social links*/
+div.work-topics {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    .admonition p:first-child {
+        font-family: var(--font-B) sans-serif;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+        color: unset;
+        letter-spacing: 0.2rem;
+    }
+    .admonition:hover {
+        transform: scale(1.1);
+    }
+    img {
+        width: 256px;
+        height: 256px;
+        object-fit: cover;
+        border-radius: var(--radius-S);
+    }
+}
+@media screen and (max-width: 630px) {
+    div.work-topics {
+        flex-direction: column;
+    }
+}
+div.work-topics > * {
+    width: 100%;
+}
+
+#follow-my-work {
+    opacity: 0.6;
+}
+
+/*===========================================================================*/
+/* cv */
+
+section#cv {
+    margin: 5rem 0 2rem;
 }
 
 p.last-modified {
@@ -38,7 +62,6 @@ p.last-modified {
     color: var(--color-WW);
     text-align: center;
 }
-
 .l-cv-download {
     margin: 2rem 20%;
     padding: 1rem;
