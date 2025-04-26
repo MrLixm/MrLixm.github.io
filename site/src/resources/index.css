@@ -15,7 +15,7 @@ h1 {
     font-family: "Jersey 10", sans-serif;
 }
 header #site-name {
-    font-family: "Tiny5", inherit, sans-serif;
+    font-family: "Tiny5", sans-serif;
 }
 
 section#resource-library {
@@ -130,4 +130,121 @@ section#resource-library > * {
     transform: translate(-10px, -10px);
     box-shadow: rgba(0, 0, 0, 0.5) 10px 10px;
     border-color: var(--color-primary-WW);
+}
+
+
+@keyframes decoration-pulse-1 {
+    0% {
+        opacity: 0;
+    }
+    0% {
+        opacity: 0;
+    }
+    16% {
+        opacity: 0.38;
+    }
+    100% {
+        opacity: 0.38;
+    }
+}
+#header-decoration-pulse-1 {
+    --decoration-size: 295px;
+    border-width: 40px;
+    animation-name: decoration-pulse-1;
+}
+@keyframes decoration-pulse-2 {
+    0% {
+        opacity: 0;
+    }
+    16% {
+        opacity: 0;
+    }
+    32% {
+        opacity: 0.25;
+    }
+    100% {
+        opacity: 0.25;
+    }
+}
+#header-decoration-pulse-2 {
+    --decoration-size: 200px;
+    border-width: 30px;
+    animation-name: decoration-pulse-2;
+}
+@keyframes decoration-pulse-3 {
+    0% {
+        opacity: 0;
+    }
+    32% {
+        opacity: 0;
+    }
+    48% {
+        opacity: 0.14;
+    }
+    100% {
+        opacity: 0.14;
+    }
+}
+#header-decoration-pulse-3 {
+    --decoration-size: 130px;
+    border-width: 25px;
+    animation-name: decoration-pulse-3;
+}
+@keyframes decoration-pulse-4 {
+    0% {
+        opacity: 0;
+    }
+    48% {
+        opacity: 0;
+    }
+    64% {
+        opacity: 0.1;
+    }
+    100% {
+        opacity: 0.1;
+    }
+}
+#header-decoration-pulse-4 {
+    --decoration-size: 70px;
+    border-width: 15px;
+    animation-name: decoration-pulse-4;
+}
+@keyframes decoration-pulse-5 {
+    0% {
+        opacity: 0;
+    }
+    64% {
+        opacity: 0;
+    }
+    80% {
+        opacity: 0.06;
+    }
+    100% {
+        opacity: 0.06;
+    }
+}
+#header-decoration-pulse-5 {
+    --decoration-size: 30px;
+    border-width: 0;
+    background-color: var(--color-primary-M);
+    animation-name: decoration-pulse-5;
+}
+.pulse-decoration {
+    position: absolute;
+    z-index: -1;
+    left: calc(50% - var(--decoration-size) / 2);
+    bottom: calc(50% - var(--decoration-size) / 2);
+    width: var(--decoration-size);
+    height: var(--decoration-size);
+    border: 10px solid var(--color-primary-M);
+    border-radius: 500px;
+
+    animation-direction: alternate;
+    animation-duration: 0.8s;
+    animation-iteration-count: infinite;
+
+    pointer-events: none;
+}
+.pulse-decoration-box {
+    opacity: 0.5;
 }
