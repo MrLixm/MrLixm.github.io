@@ -41,6 +41,28 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'Escabeau';
+    src: url('.static/fonts/Escabeau/Escabeau.woff2') format('woff2'),
+    url('.static/fonts/Escabeau/Escabeau.woff') format('woff'),
+    url('.static/fonts/Escabeau/Escabeau.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'BBBManifontGrotesk';
+    src: url('.static/fonts/BBBManifontGrotesk/BBBManifontGrotesk-Book.woff2') format('woff2'),
+    url('.static/fonts/BBBManifontGrotesk/BBBManifontGrotesk-Book.woff') format('woff'),
+    url('.static/fonts/BBBManifontGrotesk/BBBManifontGrotesk-Book.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Elastic';
+    src: url('.static/fonts/Barlow-Elastic/Barlow-elasticc.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 :root {
     --bg-color: rgb(0, 0, 0);
@@ -354,55 +376,165 @@ section#demoreel h2:hover {
 }
 
 /*===========================================================================*/
+/* message-loop section */
+
+@keyframes marquee {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
+
+section#message-loop {
+    max-width: 100%;
+    overflow: hidden;
+    margin: 1rem 0;
+
+    .message-loop-band {
+        white-space: nowrap;
+        overflow: hidden;
+        display: inline-block;
+        animation: marquee 10s linear infinite;
+    }
+
+    .message-loop-band:first-child {
+        font-family: "Escabeau", sans-serif;
+        font-size: 40px;
+    }
+
+    .message-loop-band:nth-child(2) {
+        font-family: "Elastic", sans-serif;
+        font-size: 30px;
+    }
+
+    .message-loop-band p {
+        margin: 0;
+        display: inline-block;
+    }
+}
+
+/*===========================================================================*/
 /* blog section */
 
 section#blog {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 51vh;
+    gap: 2rem;
+    padding: 10rem 0;
+
+    color: black;
+    background: url("index/texture-halftone-rgb.jpg"), rgb(214, 250, 97);
+    background-blend-mode: soft-light;
+    background-size: 25em;
+
 }
-section#blog h2 {
-    margin-top: 2rem;
+section#blog a {
+    color: unset;
 }
-section#blog h2 a {
-    color: rgb(250, 250, 250);
-    opacity: 0.5;
-    font-family: var(--font-B);
-    font-size: 5rem;
-    font-weight: 100;
-    text-transform: uppercase;
+section#blog .font-info {
+    font-family: "Elastic", sans-serif;
+    font-size: 18px;
+    writing-mode: sideways-lr;
+
+    a:hover {
+        text-decoration: underline;
+    }
 }
-section#blog h2 a:hover {
-    opacity: 0.65;
+section#blog .blog-heading {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+
+    h2 {
+        margin-top: 0;
+        margin-bottom: 0;
+        display: inline;
+        font-family: "Escabeau", serif;
+        font-size: 174px;
+        padding-left: 20px;
+    }
+
+    h2:hover {
+        background-color: white;
+    }
+
+    .font-info:first-child {
+        font-size: 10px;
+    }
 }
-section#blog ul.latest-posts {
-    margin: 2rem;
+section#blog .latest-posts {
+    display: flex;
+    margin: 0 2rem;
+
+    .font-info:first-child {
+        font-size: 10px;
+    }
+}
+section#blog .latest-posts ul {
+    margin: 0;
     list-style: unset;
     padding-inline-start: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-left: 2rem;
 
     li {
+        margin: 0;
         display: flex;
         flex-direction: row;
         align-items: center;
-    }
-
-    @media screen and (max-width: 600px) {
-        li {
-            flex-direction: column;
-            align-items: flex-start;
-            margin-bottom: 0.9rem;
-        }
+        gap: 1rem;
     }
 
     time {
-        font-family: Source Sans Pro, sans-serif;
+        font-family: "Orbit", monospace;
         font-size: 0.8rem;
         width: 8rem;
     }
 
     p {
+        font-family: "BBBManifontGrotesk", sans-serif;
         margin: 0;
+        padding: 2px 3px;
+        font-size: 16px;
+    }
+
+    p:hover {
+        background-color: white;
+    }
+}
+@media screen and (max-width: 750px) {
+
+    .font-info {
+        writing-mode: unset !important;
+    }
+
+    section#blog .blog-heading {
+        flex-direction: column;
+
+        h2 {
+            font-size: 90px;
+            padding-left: 0;
+        }
+    }
+
+    section#blog .latest-posts {
+        flex-direction: column;
+    }
+    section#blog .latest-posts ul {
+        padding-left: 0;
+        padding-top: 2rem;
+        border-top: 1px solid black;
+    }
+    section#blog .latest-posts ul li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
     }
 }

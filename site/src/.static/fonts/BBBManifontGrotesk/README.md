@@ -1,0 +1,6 @@
+# BBB Manifont Grotesk
+
+La BBB Manifont Grotesk est un fork post-binaire de la fonte libre Manifont Grotesk dessinée par [Alexandre Liziard](https://alexandre-liziard.be/) & [Étienne Ozeray](http://www.etienneozeray.fr/) elle même issu d'un fork de la Vremena Grotesk dessinée par Roman Gornitsky. Le fork post-binaire est initialement dessiné par [Sophie Vela](https://www.sophievela.zd.lu/) et [Max Lillo](https://maxlilllo.tumblr.com/) pour la mise en page de la Revue After, catalogue des diplomé·es 2024 de [ENSAD-PSL](https://www.ensad.fr/fr/universite-psl) mis en page par la collective [Bye Bye Binary](https://www.byebyebinary.space/) ([Léna Salabert-Triby](https://lenasalaberttriby.com/) et [Enz@ Le Garrec](https://enzolegarrec.fr/)). La BBB Manifont Grotesk est disponible en deux graisses; book et italique. Elle est maintenant distribuée sous licence CUTE pour l’usage de tous·tes.
+
+![BBB Manifont Grotesk](specimen/25_GuideUtilisation_BBBManifont4.jpg)
+![BBB Manifont Grotesk](specimen/25_GuideUtilisation_BBBManifont3.jpg)

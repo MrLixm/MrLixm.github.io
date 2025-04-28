@@ -154,19 +154,56 @@ LUT_3D_INPUT_RANGE 0.0 1.0
     <h2><a class="l-index-h2" href="https://vimeo.com/579603827">Demoreel</a>
     </h2>
   </section>
+  <section id="message-loop">
+    <div class="message-loop-band">
+      <p>
+        | No A.I. shit was involved in the making of this website, please enjoy this 100% tea-flavored-human-sweat powered content
+      </p>
+      <p>
+        | No A.I. shit was involved in the making of this website, please enjoy this 100% tea-flavored-human-sweat powered content
+      </p>
+    </div>
+    <div class="message-loop-band">
+      <p>
+        ~ One human was potentially harmed during the making of this website (this is a friendly reminder to stay hydrated and take breaks (bonus if grass touched))
+      </p>
+      <p>
+        ~ One human was potentially harmed during the making of this website (this is a friendly reminder to stay hydrated and take breaks (bonus if grass touched))
+      </p>
+    </div>
+  </section>
   <section id="blog" aria-label="Blog">
-    <h2 class="hover-expand-n-shrink">
-      <a href="{{ "blog/index.html"|prettylink }}">Blog</a></h2>
-    {% set blog_shelf = ShelfLibrary.get("blog") %}
-    {# we assume the blog MUST exists and can't be None #}
-    <ul class="latest-posts">
-      {% for post in blog_shelf.iterate_children_by_last_created(reverse=True, ignore_index=True) %}
-        <li>
-          <time datetime="{{ post.metadata.date_created.isoformat() }}">{{ post.metadata.date_created.strftime("%d %B %Y") }}</time>
-          <a href="{{ post.url_path }}"><p>{{ post.title }}</p></a>
-        </li>
-      {% endfor %}
-    </ul>
-    {#  {% include 'latest_posts.html' %}#}
+    <div class="blog-heading">
+      <span class="font-info">
+        <a href="https://typotheque.le75.be/">Elastic</a>
+      </span>
+      <span class="font-info">
+        <a href="https://typotheque.genderfluid.space/fr/fontes/escabeau">Escabeau</a>
+      </span>
+      <h2 class="hover-expand-n-shrink">
+        <a href="{{ "blog/index.html"|prettylink }}">Blog</a>
+      </h2>
+    </div>
+    <div class="latest-posts">
+      <span class="font-info">
+        <a href="https://typotheque.le75.be/">Elastic</a>
+      </span>
+      <span class="font-info">
+        <a href="https://github.com/JAMO-TYPEFACE/Orbit/">Orbit</a>
+      </span>
+      <span class="font-info">
+        <a href="https://typotheque.genderfluid.space/fr/fontes/bbb-manifont-grotesk">BBB Manifont Grotesk</a>
+      </span>
+      <ul>
+        {% set blog_shelf = ShelfLibrary.get("blog") %}
+        {# we assume the blog MUST exists and can't be None #}
+        {% for post in blog_shelf.iterate_children_by_last_created(reverse=True, ignore_index=True) %}
+          <li>
+            <time datetime="{{ post.metadata.date_created.isoformat() }}">{{ post.metadata.date_created.strftime("%d %B %Y") }}</time>
+            <a href="{{ post.url_path }}"><p>{{ post.title }}</p></a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
   </section>
 {%- endblock %}

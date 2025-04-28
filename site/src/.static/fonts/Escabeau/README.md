@@ -1,0 +1,3 @@
+# Escabeau
+
+Escabeau est une mécane bien costaud posé sur ses solides empattement intimement relié aux slogans militants. C'est un caractère full capital là pour se faire entendre, porter, crier plus haut. Escbeau, à l'image du mouvement queer féministe, cherche la convergence des luttes et aborde ainsi des glyphs anti-capitaliste et aucun glyphs monétaire. Elle est open-source et voué à être abimé, coupé ou retracer à la main sur des pancartes.
