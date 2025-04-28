@@ -66,6 +66,8 @@
 
 :root {
     --bg-color: rgb(0, 0, 0);
+    --color-blue-v: rgb(20, 37, 227);
+    --color-lime: rgb(190, 250, 24);
 }
 
 /*===========================================================================*/
@@ -78,7 +80,7 @@ section#introduction p {
 }
 section#introduction {
     position: relative;
-    background: radial-gradient(circle, #1d1d1d 10%, transparent 11%),
+    background: radial-gradient(circle, #addf22 5%, transparent 11%),
     url("work/photography/noise.svg"),
     var(--bg-color);
     background-blend-mode: normal, hard-light;
@@ -133,7 +135,7 @@ section#introduction #self-job-title {
 
     span {
         padding: 0 0.5rem;
-        color: rgb(61, 238, 114);
+        color: var(--color-lime);
         font-family: "Mon Hugo out", sans-serif;
         text-shadow: rgba(83, 39, 13, 0.5) 5px 5px 5px;
     }
@@ -148,14 +150,12 @@ section#introduction #self-description {
     gap: 1rem;
     position: relative;
 
-    background-color: rgb(20, 37, 227);
+    background-color: var(--color-blue-v);
     color: var(--color);
     border: 2px solid rgb(250, 250, 250);
     font-size: 15px;
     font-family: "DepartureMono", monospace;
     z-index: 2;
-
-    box-shadow: rgba(10, 18, 131, 0.5) 5px 5px;
 
     .decoration-left {
         width: 30%;
@@ -176,36 +176,44 @@ section#introduction #self-description {
     }
 }
 section#introduction #self-socials {
+    margin: 1rem 0;
     display: flex;
     width: 100%;
-    box-shadow: rgba(7, 94, 48, 0.5) 5px 5px;
+    /*box-shadow: rgba(7, 94, 48, 0.5) 5px 5px;*/
     flex-wrap: wrap;
     z-index: 1;
+    position: relative;
+    justify-content: space-between;
+
+    .self-socials-bg {
+        position: absolute;
+        left: -30px;
+        top: -35px;
+        height: 70px;
+        width: 100%;
+        border: 8px solid var(--color-blue-v);
+        background: url("index/texture-pixels.jpg"), var(--color-lime);
+        background-size: 64px;
+        background-blend-mode: overlay;
+        box-shadow: rgba(139, 230, 29, 0.5) 10px 10px;
+    }
 
     .social-item {
-
-        --bg-color: var(--color-primary);
-
-        flex-grow: 1;
-        display: flex;
-        justify-content: center;
-        position: relative;
-
-        background: center url(".static/images/profile-picture.jpg") var(--bg-color);
-        background-blend-mode: exclusion;
-        background-size: cover;
+        background-color: var(--color-blue-v);
+        border-radius: 128px;
+        z-index: 1;
+        transition: 0.25s;
     }
 
     .social-item img {
-        width: 50px;
+        display: block;
         position: relative;
-        top: 50%;
-        transition: 0.25s;
-        filter: drop-shadow(5px 5px 0 rgba(0, 0, 0, 0.5));
-        z-index: 1;
+        width: 60px;
+        height: 60px;
+        padding: 10px;
     }
 
-    .social-item a:hover img {
+    .social-item:hover {
         transform: scale(1.2);
     }
 }
@@ -252,10 +260,10 @@ section#introduction img.photo-pixel {
 section#introduction .negative-box {
     width: 452px;
     height: 86px;
-    background-color: rgb(168, 96, 52);
-    mix-blend-mode: difference;
     top: 120px;
     left: -217px;
+    background-color: rgb(156, 168, 52);
+    mix-blend-mode: difference;
 }
 section#introduction .glass-box {
     width: 420px;
@@ -297,7 +305,7 @@ section#introduction .bricks-frog {
     left: 676px;
     width: 21%;
     transform: rotate(-5deg);
-    filter: drop-shadow(5px 5px #338443) drop-shadow(-5px -5px #2043cc);
+    filter: drop-shadow(5px 5px var(--color-lime)) drop-shadow(-5px -5px var(--color-blue-v));
 }
 section#introduction .camera {
     top: 31px;
@@ -527,11 +535,13 @@ section#blog .latest-posts ul {
     section#blog .latest-posts {
         flex-direction: column;
     }
+
     section#blog .latest-posts ul {
         padding-left: 0;
         padding-top: 2rem;
         border-top: 1px solid black;
     }
+
     section#blog .latest-posts ul li {
         flex-direction: column;
         align-items: flex-start;
