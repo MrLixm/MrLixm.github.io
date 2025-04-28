@@ -1,43 +1,43 @@
 @font-face {
     font-family: 'CoasterSans';
-    src: url('.static/fonts/CoasterSans-Regular.woff2') format('woff2'),
-    url('.static/fonts/CoasterSans-Regular.woff') format('woff'),
-    url('.static/fonts/CoasterSans-Regular.otf') format('opentype');
+    src: url('.static/fonts/CoasterSans/CoasterSans-Regular.woff2') format('woff2'),
+    url('.static/fonts/CoasterSans/CoasterSans-Regular.woff') format('woff'),
+    url('.static/fonts/CoasterSans/CoasterSans-Regular.otf') format('opentype');
     font-weight: normal;
     font-display: swap;
     font-style: normal;
 }
 @font-face {
     font-family: 'DepartureMono';
-    src: url('.static/fonts/DepartureMono-Regular.woff2') format('woff2'),
-    url('.static/fonts/DepartureMono-Regular.woff') format('woff'),
-    url('.static/fonts/DepartureMono-Regular.otf') format('opentype');
+    src: url('.static/fonts/DepartureMono/DepartureMono-Regular.woff2') format('woff2'),
+    url('.static/fonts/DepartureMono/DepartureMono-Regular.woff') format('woff'),
+    url('.static/fonts/DepartureMono/DepartureMono-Regular.otf') format('opentype');
     font-weight: normal;
     font-display: swap;
     font-style: normal;
 }
 @font-face {
     font-family: 'MonHugo-in';
-    src: url('.static/fonts/MonHugo-in.woff2') format('woff2'),
-    url('.static/fonts/MonHugo-in.woff') format('woff'),
-    url('.static/fonts/MonHugo-in.ttf') format('truetype');
+    src: url('.static/fonts/MonHugo/MonHugo-in.woff2') format('woff2'),
+    url('.static/fonts/MonHugo/MonHugo-in.woff') format('woff'),
+    url('.static/fonts/MonHugo/MonHugo-in.ttf') format('truetype');
     font-weight: normal;
     font-display: swap;
     font-style: normal;
 }
 @font-face {
     font-family: 'MonHugo-out';
-    src: url('.static/fonts/MonHugo-out.woff2') format('woff2'),
-    url('.static/fonts/MonHugo-out.woff') format('woff'),
-    url('.static/fonts/MonHugo-out.ttf') format('truetype');
+    src: url('.static/fonts/MonHugo/MonHugo-out.woff2') format('woff2'),
+    url('.static/fonts/MonHugo/MonHugo-out.woff') format('woff'),
+    url('.static/fonts/MonHugo/MonHugo-out.ttf') format('truetype');
     font-weight: normal;
     font-display: swap;
     font-style: normal;
 }
 @font-face {
     font-family: 'Orbit';
-    src: url('.static/fonts/Orbit-Regular.woff2') format('woff2'),
-    url('.static/fonts/Orbit-Regular.ttf') format('truetype');
+    src: url('.static/fonts/Orbit/Orbit-Regular.woff2') format('woff2'),
+    url('.static/fonts/Orbit/Orbit-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }

@@ -2,9 +2,9 @@
 @import "../../.static/footer.css";
 @font-face {
     font-family: 'ClashDisplay';
-    src: url('../../.static/fonts/ClashDisplay-Variable.woff2') format('woff2'),
-    url('../../.static/fonts/ClashDisplay-Variable.woff') format('woff'),
-    url('../../.static/fonts/ClashDisplay-Variable.ttf') format('truetype');
+    src: url('../../.static/fonts/ClashDisplay/ClashDisplay-Variable.woff2') format('woff2'),
+    url('../../.static/fonts/ClashDisplay/ClashDisplay-Variable.woff') format('woff'),
+    url('../../.static/fonts/ClashDisplay/ClashDisplay-Variable.ttf') format('truetype');
     font-weight: 200 700;
     font-display: swap;
     font-style: normal;
