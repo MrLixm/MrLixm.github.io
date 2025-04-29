@@ -179,6 +179,22 @@ section#introduction #self-description {
         background-size: 100% 100%, auto;
     }
 }
+
+@keyframes offset-glitch {
+    0% {
+        background-position: 0 0;
+    }
+    33% {
+        background-position: 100px 50px;
+    }
+    66% {
+        background-position: 300px 250px;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
 section#introduction #self-socials {
     margin: 1rem 0;
     display: flex;
@@ -191,15 +207,16 @@ section#introduction #self-socials {
 
     .self-socials-bg {
         position: absolute;
-        left: -30px;
+        left: 26px;
         top: -35px;
         height: 70px;
-        width: 100%;
+        width: 92.5%;
         border: 8px solid var(--color-blue-v);
-        background: url("index/texture-pixels.jpg"), var(--color-lime);
+        background: linear-gradient(white, black), url("index/texture-pixels.jpg"), var(--color-lime);
         background-size: 64px;
-        background-blend-mode: overlay;
+        background-blend-mode: overlay, overlay;
         box-shadow: rgba(139, 230, 29, 0.5) 10px 10px;
+        animation: offset-glitch 5s steps(4, end) infinite;
     }
 
     .social-item {
