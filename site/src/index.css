@@ -116,6 +116,9 @@ section#introduction .font-info:hover {
     text-decoration: underline;
     font-size: 16px;
 }
+section#introduction .responsive-warning {
+    display: none;
+}
 section#introduction #self-name {
     padding: 1rem 2rem;
     position: relative;
@@ -131,13 +134,14 @@ section#introduction #self-job-title {
     color: rgb(250, 250, 250);
     font-size: 40px;
     font-family: "Mon Hugo in", sans-serif;
+    text-wrap: balance;
     z-index: 3;
 
     span {
         padding: 0 0.5rem;
         color: var(--color-lime);
         font-family: "Mon Hugo out", sans-serif;
-        text-shadow: rgba(83, 39, 13, 0.5) 5px 5px 5px;
+        text-shadow: rgba(2, 2, 2, 0.32) 5px 5px 5px;
     }
 }
 section#introduction #self-description {
@@ -217,11 +221,6 @@ section#introduction #self-socials {
         transform: scale(1.2);
     }
 }
-@media screen and (max-width: 700px) {
-    section#introduction #self-socials .social-item {
-        flex-basis: 25%;
-    }
-}
 
 section#introduction .decorations {
     z-index: 0;
@@ -233,8 +232,8 @@ section#introduction .decorations {
 
 }
 section#introduction .decoration-circle-xl {
-    top: 1%;
-    left: -20%;
+    top: 5px;
+    left: -140px;
     width: 550px;
     height: 550px;
     border-radius: 100%;
@@ -243,15 +242,15 @@ section#introduction .decoration-circle-xl {
 section#introduction img.plants {
     top: -155px;
     left: 258px;
-    width: 50%;
+    width: 350px;
 }
 section#introduction img.texture-halftone {
-    width: 50%;
+    width: 350px;
     top: 105px;
     left: 178px;
 }
 section#introduction img.photo-pixel {
-    width: 61%;
+    width: 427px;
     top: -113px;
     left: -150px;
     image-rendering: pixelated;
@@ -280,31 +279,31 @@ section#introduction .glass-box {
 section#introduction img.fujichrome {
     top: 259px;
     left: 315px;
-    width: 68%;
+    width: 476px;
 }
 section#introduction .bricks-plate {
     top: 329px;
     left: 251px;
-    width: 29%;
+    width: 203px;
     transform: rotate(25deg);
 }
 section#introduction .bricks-2x4 {
     top: 374px;
     left: 308px;
-    width: 30%;
+    width: 210px;
     transform: rotate(45deg);
 }
 section#introduction .bricks-1x1 {
     top: 415px;
     left: 209px;
-    width: 17%;
+    width: 119px;
     transform: rotate(-25deg);
 }
 section#introduction .bricks-frog {
     position: absolute;
     top: 251px;
     left: 716px;
-    width: 11%;
+    width: 77px;
     transform: rotate(-5deg);
     filter: drop-shadow(5px 5px var(--color-lime)) drop-shadow(-5px -5px var(--color-blue-v));
 }
@@ -314,7 +313,7 @@ section#introduction .bricks-frog:hover {
 section#introduction .camera {
     top: 31px;
     left: 497px;
-    width: 55%;
+    width: 385px;
     transform: rotate(-25deg);
 }
 section#introduction .code-demo {
@@ -337,7 +336,74 @@ section#introduction .lut-numbers {
     font-family: DepartureMono, monospace;
     opacity: 0.4;
 }
+@media screen and (max-width: 700px) {
 
+    section#introduction {
+        background: unset;
+        padding: 70px 0 100px;
+        overflow: clip;
+    }
+
+    section#introduction .section-content {
+        margin: 0;
+        overflow-x: clip;
+    }
+
+    section#introduction .font-info {
+        display: none;
+    }
+
+    section#introduction .responsive-warning {
+        margin: 5px;
+        width: 100%;
+        display: initial;
+        font-family: "Orbit", monospace;
+        font-size: 10px;
+        text-align: center;
+        z-index: 10;
+    }
+
+    section#introduction #self-description {
+        .decoration-right {
+            display: none;
+        }
+    }
+
+    section#introduction #self-socials {
+
+        padding: 0 1.5rem;
+        justify-content: center;
+        gap: 8px;
+        overflow-x: clip;
+
+        .self-socials-bg {
+            width: 130%;
+        }
+    }
+
+    section#introduction .decorations > * {
+        display: none;
+    }
+
+    section#introduction .decorations img.photo-pixel {
+        display: inherit;
+        top: -40px;
+        left: 0;
+    }
+
+    section#introduction .decorations .glass-box {
+        display: inherit;
+        top: 0;
+        left: 0;
+    }
+
+    section#introduction .decorations .lut-numbers {
+        display: inherit;
+        top: 0;
+        left: 20%;
+        font-size: 15px;
+    }
+}
 
 @keyframes frog-anim {
     0% {
@@ -406,6 +472,7 @@ section#introduction #maxi-frog:target {
 section#demoreel {
     position: relative;
     background-color: rgba(12, 19, 30, 0.5);
+    margin-top: 40px;
 }
 section#demoreel .l-embed {
     position: relative;
