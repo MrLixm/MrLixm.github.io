@@ -448,6 +448,20 @@ Testing ``.. image-grid::``
         multiple lines if it's too long.
     ../.static/images/profile-picture.jpg
 
+link-images enable
+
+.. image-grid::
+    :link-images:
+
+    ../.static/images/cover-social.jpg
+    ../.static/images/profile-picture.jpg
+
+    ../.static/images/profile-picture.jpg some caption that will be displayed under
+    ../.static/images/cover-social.jpg the caption can span
+        multiple lines if it's too long.
+    ../.static/images/profile-picture.jpg
+
+
 Testing ``.. image-gallery::``
 
 .. image-gallery::

@@ -552,11 +552,8 @@ nav.contents {
 .image-grid {
     display: flex;
     flex-direction: column;
-    gap: 5px;
 
     .image-grid-row {
-        display: flex;
-        gap: 5px;
         white-space: nowrap;
         /* this a hack to remove the whitespace between inline-block items*/
         font-size: 0;
@@ -574,6 +571,7 @@ nav.contents {
     }
 
     figcaption {
+        margin: 0;
         opacity: 0;
         text-wrap: wrap;
         font-size: 0.75rem;
