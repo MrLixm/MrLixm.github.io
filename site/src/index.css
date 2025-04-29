@@ -301,11 +301,15 @@ section#introduction .bricks-1x1 {
     transform: rotate(-25deg);
 }
 section#introduction .bricks-frog {
-    top: 226px;
-    left: 676px;
-    width: 21%;
+    position: absolute;
+    top: 251px;
+    left: 716px;
+    width: 11%;
     transform: rotate(-5deg);
     filter: drop-shadow(5px 5px var(--color-lime)) drop-shadow(-5px -5px var(--color-blue-v));
+}
+section#introduction .bricks-frog:hover {
+    transform: scale(1.1);
 }
 section#introduction .camera {
     top: 31px;
@@ -332,6 +336,68 @@ section#introduction .lut-numbers {
     top: -159px;
     font-family: DepartureMono, monospace;
     opacity: 0.4;
+}
+
+
+@keyframes frog-anim {
+    0% {
+        background: url("index/frog-anim/lego-frog.0001.png") no-repeat center;
+        background-size: 100%;
+    }
+    11.1% {
+        background: url("index/frog-anim/lego-frog.0002.png") no-repeat center;
+        background-size: 100%;
+    }
+    22.2% {
+        background: url("index/frog-anim/lego-frog.0003.png") no-repeat center;
+        background-size: 100%;
+    }
+    33.3% {
+        background: url("index/frog-anim/lego-frog.0004.png") no-repeat center;
+        background-size: 100%;
+    }
+    44.4% {
+        background: url("index/frog-anim/lego-frog.0005.png") no-repeat center;
+        background-size: 100%;
+    }
+    55.5% {
+        background: url("index/frog-anim/lego-frog.0006.png") no-repeat center;
+        background-size: 100%;
+    }
+    66.6% {
+        background: url("index/frog-anim/lego-frog.0007.png") no-repeat center;
+        background-size: 100%;
+    }
+    77.7% {
+        background: url("index/frog-anim/lego-frog.0008.png") no-repeat center;
+        background-size: 100%;
+    }
+    88.8% {
+        background: url("index/frog-anim/lego-frog.0009.png") no-repeat center;
+        background-size: 100%;
+    }
+    100% {
+        background: url("index/frog-anim/lego-frog.0001.png") no-repeat center;
+        background-size: 100%;
+    }
+}
+
+
+section#introduction #maxi-frog {
+    --frog-size: 40%;
+    visibility: hidden;
+    position: fixed;
+    top: calc((100% - var(--frog-size)) / 2);
+    left: calc((100% - var(--frog-size)) / 2);
+    height: var(--frog-size);
+    width: var(--frog-size);
+
+    z-index: 100;
+    animation: frog-anim 2s linear infinite;
+    filter: drop-shadow(0 0 150px rgba(46, 213, 72, 0.64));
+}
+section#introduction #maxi-frog:target {
+    visibility: visible;
 }
 
 /*===========================================================================*/
@@ -388,10 +454,10 @@ section#demoreel h2:hover {
 
 @keyframes marquee {
     0% {
-        transform: translate3d(0, 0, 0);
+        transform: translateX(0);
     }
     100% {
-        transform: translate3d(-50%, 0, 0);
+        transform: translateX(-50%);
     }
 }
 
@@ -407,17 +473,34 @@ section#message-loop {
         animation: marquee 10s linear infinite;
     }
 
-    .message-loop-band:first-child {
+    .message-loop-band.frogs {
+
+        display: flex;
+        width: fit-content;
+
+        span {
+            display: inline-block;
+        }
+
+        img {
+            width: 64px;
+            max-width: unset;
+        }
+
+        animation-duration: 15s;
+    }
+
+    .message-loop-band:nth-child(2) {
         font-family: "Escabeau", sans-serif;
         font-size: 40px;
     }
 
-    .message-loop-band:nth-child(2) {
+    .message-loop-band:nth-child(3) {
         font-family: "Elastic", sans-serif;
         font-size: 30px;
     }
 
-    .message-loop-band p {
+    .message-loop-band > * {
         margin: 0;
         display: inline-block;
     }

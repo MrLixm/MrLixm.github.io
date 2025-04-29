@@ -71,6 +71,7 @@
           </a>
         </div>
       </div>
+      <a href="#"><div id="maxi-frog"></div></a>
       <div class="decorations">
         <pre class="lut-numbers">
 TITLE "Kodak 2383"
@@ -136,7 +137,7 @@ LUT_3D_INPUT_RANGE 0.0 1.0
         <img class="bricks-plate" src="index/lego-bricks.plate.png" alt="decorative lego bricks image">
         <img class="bricks-1x1" src="index/lego-bricks.1x1.png" alt="decorative lego bricks image">
         <img class="bricks-2x4" src="index/lego-bricks.2x4.png" alt="decorative lego bricks image">
-        <img class="bricks-frog" src="index/lego-bricks.frog.png" alt="decorative lego bricks image">
+        <div class="bricks-frog"><a href="#maxi-frog"><img src="index/lego-bricks.frog.png" alt="decorative lego bricks image"></a></div>
         <div class="negative-box"></div>
         <div class="glass-box">
           <a class="font-info" href="https://github.com/JAMO-TYPEFACE/Orbit">* the font indicating the font is Orbit</a>
@@ -155,6 +156,11 @@ LUT_3D_INPUT_RANGE 0.0 1.0
     </h2>
   </section>
   <section id="message-loop">
+    <div class="message-loop-band frogs">
+      {% for x in range(80) %}
+        <span><img src="index/lego-bricks.frog.png" alt="the lego frog part"></span>
+      {% endfor %}
+    </div>
     <div class="message-loop-band">
       <p>
         | No A.I. shit was involved in the making of this website, please enjoy this 100% tea-flavored-human-sweat powered content
@@ -170,6 +176,11 @@ LUT_3D_INPUT_RANGE 0.0 1.0
       <p>
         ~ One human was potentially harmed during the making of this website (this is a friendly reminder to stay hydrated and take breaks (bonus if grass touched))
       </p>
+    </div>
+    <div class="message-loop-band frogs">
+      {% for x in range(80) %}
+        <span><img src="index/lego-bricks.frog.png" alt="the lego frog part"></span>
+      {% endfor %}
     </div>
   </section>
   <section id="blog" aria-label="Blog">
