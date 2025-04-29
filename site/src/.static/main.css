@@ -3,6 +3,72 @@
 @import url(https://fonts.bunny.net/css?family=montserrat:100,200,300,400,500,600,700,800,900);
 @import url(https://fonts.bunny.net/css?family=georama:400,500,600,700);
 
+@font-face {
+    font-family: 'CoasterSans';
+    src: url('fonts/CoasterSans/CoasterSans-Regular.woff2') format('woff2'),
+    url('fonts/CoasterSans/CoasterSans-Regular.woff') format('woff'),
+    url('fonts/CoasterSans/CoasterSans-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'DepartureMono';
+    src: url('fonts/DepartureMono/DepartureMono-Regular.woff2') format('woff2'),
+    url('fonts/DepartureMono/DepartureMono-Regular.woff') format('woff'),
+    url('fonts/DepartureMono/DepartureMono-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'MonHugo-in';
+    src: url('fonts/MonHugo/MonHugo-in.woff2') format('woff2'),
+    url('fonts/MonHugo/MonHugo-in.woff') format('woff'),
+    url('fonts/MonHugo/MonHugo-in.ttf') format('truetype');
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'MonHugo-out';
+    src: url('fonts/MonHugo/MonHugo-out.woff2') format('woff2'),
+    url('fonts/MonHugo/MonHugo-out.woff') format('woff'),
+    url('fonts/MonHugo/MonHugo-out.ttf') format('truetype');
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Orbit';
+    src: url('fonts/Orbit/Orbit-Regular.woff2') format('woff2'),
+    url('fonts/Orbit/Orbit-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Escabeau';
+    src: url('fonts/Escabeau/Escabeau.woff2') format('woff2'),
+    url('fonts/Escabeau/Escabeau.woff') format('woff'),
+    url('fonts/Escabeau/Escabeau.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'BBBManifontGrotesk';
+    src: url('fonts/BBBManifontGrotesk/BBBManifontGrotesk-Book.woff2') format('woff2'),
+    url('fonts/BBBManifontGrotesk/BBBManifontGrotesk-Book.woff') format('woff'),
+    url('fonts/BBBManifontGrotesk/BBBManifontGrotesk-Book.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Elastic';
+    src: url('fonts/Barlow-Elastic/Barlow-elasticc.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 :root {
     font-family: sans-serif;
     --bg-color-W: rgb(5, 5, 5);
@@ -64,7 +130,7 @@ a.reference:before,
 a.brackets:before,
 a.citation-reference:before {
     content: "";
-    background: url("/.static/icons/link-vertical.svg") no-repeat bottom;
+    background: url("icons/link-vertical.svg") no-repeat bottom;
     background-size: contain;
     width: 0.8rem;
     height: 0.7rem;
