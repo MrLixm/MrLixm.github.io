@@ -1,0 +1,33 @@
+:root {
+    font-family: sans-serif;
+    --bg-color-W: rgb(5, 5, 5);
+    --bg-color: rgb(20, 20, 20);
+    --bg-color-M: rgb(29, 29, 29);
+    --bg-color-MM: rgb(35, 35, 35);
+
+    --color-WW: rgb(100, 100, 100);
+    --color-W: rgb(190, 190, 190);
+    --color: rgb(220, 220, 220);
+    --color-M: rgb(245, 245, 245);
+    --color-primary-WWW: rgb(22, 75, 49);
+    --color-primary-WW: rgb(39, 128, 84);
+    --color-primary-W: rgb(62, 173, 123);
+    --color-primary: rgb(86, 217, 164);
+    --color-primary-M: rgb(59, 241, 130);
+
+    --color-negative: rgb(229, 75, 75);
+    --color-positive: rgb(104, 222, 122);
+    --color-hint: rgb(59, 199, 187);
+    --color-info: rgb(59, 129, 199);
+    --color-caution: rgb(178, 75, 229);
+    --color-attention: rgb(229, 129, 75);
+    --color-attention-WW: rgb(114, 62, 38);
+    --color-warning: rgb(211, 188, 94);
+
+    --font-A: "Source Sans Pro", sans-serif;
+    --font-B: Montserrat, sans-serif;
+    --font-C: Georama, sans-serif;
+    --font-mono: "Source Code Pro", monospace;
+
+    --radius-S: 8px;
+}

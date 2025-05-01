@@ -1,5 +1,6 @@
 footer {
     font-size: 0.8rem;
+    font-family: var(--font-A);
     display: flex;
     flex-direction: column;
     align-items: center;
