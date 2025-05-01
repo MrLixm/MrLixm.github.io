@@ -1,5 +1,10 @@
 @import url(https://fonts.bunny.net/css?family=tiny5:400);
 
+h1 {
+    font-family: "Escabeau", sans-serif;
+    font-size: 3rem;
+}
+
 section#blog-posts {
     display: flex;
     flex-direction: column;

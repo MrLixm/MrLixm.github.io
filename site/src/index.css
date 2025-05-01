@@ -4,6 +4,17 @@
     --color-lime: rgb(190, 250, 24);
 }
 
+header #site-name {
+    font-family: "CoasterSans", sans-serif;
+    text-transform: lowercase;
+    letter-spacing: unset;
+
+    img {
+        opacity: 0.5;
+    }
+
+}
+
 /*===========================================================================*/
 /* introduction section*/
 section#introduction a {
