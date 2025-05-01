@@ -101,6 +101,7 @@ class PageResource:
 
 def unserialize_stylesheets(serialized: str) -> list[str]:
     if serialized:
+        serialized = serialized.replace("\n", "")
         return [
             stylesheet.strip()
             for stylesheet in serialized.split(",")
