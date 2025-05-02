@@ -1,5 +1,32 @@
-section#cv {
+body {
+    background: url("../.static/images/textures/white-noise.jpg") repeat center / 200px,
+    radial-gradient(59.74% 80.93% at 18.66% 3.98%, rgba(63, 255, 186, 0.20) 0%, rgba(0, 0, 0, 0.00) 100%),
+    radial-gradient(74.49% 50% at 50% 50%, rgba(128, 246, 225, 0.12) 0%, rgba(0, 0, 0, 0.12) 100%),
+    #0D1117;
+    background-blend-mode: overlay;
+}
+
+.read-area {
+    margin-top: 5rem;
     margin-bottom: 2rem;
+}
+h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 200;
+
+}
+p.last-modified {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--color-WW);
+}
+
+section#cv {
+    margin: 1rem 0;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 section#cv .primary {
     color: var(--color-primary);
@@ -7,12 +34,6 @@ section#cv .primary {
 section#cv .tertiary {
     color: rgba(255, 255, 255, 0.4);
 }
-section#cv h2 {
-    font-size: 1.2rem;
-    padding: 5px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-section#cv h2,
 section#cv h3 {
     margin-top: 2rem;
     font-weight: 200;
@@ -188,10 +209,22 @@ div.l-cv-skills {
         /*filter: drop-shadow(1px 1px 5px rgba(0,0,0,1));*/
         background: linear-gradient(0deg, var(--bg-color) 50%, transparent 100%);;
     }
+
     p {
         text-align: left;
         font-size: 0.9rem;
         margin: 0;
+    }
+}
+
+@media screen and (max-width: 630px) {
+    div.l-cv-skills-box {
+        flex-direction: column;
+        align-items: start;
+    }
+
+    div.l-cv-skills-list {
+        flex-direction: column;
     }
 }
 
@@ -205,7 +238,8 @@ div.l-cv-last {
 @media screen and (max-width: 630px) {
     div.l-cv-last {
         flex-direction: column;
-        align-items: center;
+        align-items: start;
+
     }
 }
 div.l-cv-projects-box li {
@@ -226,7 +260,49 @@ div.l-cv-education-box p {
     font-size: 0.9rem;
 }
 @media screen and (max-width: 630px) {
-    div.l-cv-education-box p  {
+    div.l-cv-education-box p {
         text-align: left;
     }
+
+    section#cv div.l-cv-education-box h3 {
+        margin-top: 0;
+    }
+}
+
+.l-cv-download {
+    margin: 2rem 20%;
+    padding: 1rem;
+    display: block;
+    /*border-top: 1px solid rgba(255, 255, 255, 0.1);*/
+    border: 1px solid var(--color-primary);
+    border-radius: 1rem;
+    text-align: center;
+    font-family: var(--font-B);
+    font-size: 1rem;
+    font-weight: 800;
+
+    box-shadow: color-mix(in srgb, var(--color-primary) 15%, transparent) 0 0 100px;
+
+    span {
+        padding: 0 5px;
+        margin: 0;
+        background-color: var(--bg-color);
+    }
+
+}
+.l-cv-download:hover {
+    background: var(--color-primary);
+
+    span {
+        color: var(--bg-color);
+        background-color: transparent;
+    }
+}
+
+.hover-offset {
+    transition-duration: 0.2s;
+}
+.hover-offset:hover {
+    transform: translate(-10px, -10px);
+    box-shadow: rgba(0, 0, 0, 0.5) 10px 10px;
 }

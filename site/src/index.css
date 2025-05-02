@@ -157,7 +157,7 @@ section#introduction #self-socials {
         height: 70px;
         width: 92.5%;
         border: 8px solid var(--color-blue-v);
-        background: linear-gradient(white, black), url("index/texture-pixels.jpg"), var(--color-lime);
+        background: linear-gradient(white, black), url(".static/images/textures/pixels.jpg"), var(--color-lime);
         background-size: 64px;
         background-blend-mode: overlay, overlay;
         box-shadow: rgba(139, 230, 29, 0.5) 10px 10px;
@@ -548,7 +548,7 @@ section#blog {
     padding: 10rem 0;
 
     color: black;
-    background: url("index/texture-halftone-rgb.jpg"), rgb(214, 250, 97);
+    background: url(".static/images/textures/halftone-rgb-1.jpg"), rgb(214, 250, 97);
     background-blend-mode: soft-light;
     background-size: 25em;
 
