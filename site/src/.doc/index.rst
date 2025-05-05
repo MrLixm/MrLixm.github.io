@@ -447,14 +447,63 @@ Writing page html templates
 ---------------------------
 
 All html templates are processed with `Jinja <https://jinja.palletsprojects.com/en/stable/>`_.
+Refers to their documentation for how to write Jinja templates.
 
-.. highlight::
-    :class: warning
+In addition to the standard Jinja syntax, the following objects are available (some
+explained in details after):
 
-    TBD
+**filters:**
 
-cross-referrencing
-==================
+- ``slugify``: make the string url-compatible
+- ``mksiteabs``: Convert the given site-relative url to absolute.
+- ``mksiterel``: make an internal link relative to the site root
+- ``mkpagerel``: make an internal link relative to the current page
+- ``prettylink``: remove the ".html" or "index.html" of internal links
+
+**variables:**
+
+- ``Page``: the page instance being rendered.
+- ``Config``: the global site config used.
+- ``Context``: additional variables specific to this build.
+- ``Shelf``: optional parent shelf the page belongs to (can be None).
+- ``ShelfLibrary``: collection of all shelves the site has.
+- ``include_script_output``: function to include the output of a python script.
+
+
+script system
+=============
+
+The jinja syntax is not enough and you wish some part of the template was procedurally
+generated ? You can use the script include system to run an arbitrary python script
+that generates html (or actually anything).
+
+To create a script, create a standard python file next to the template (can actually
+be stored anywhere but you need to specify its path relative to the template it is used
+in). Inside, you only need to declare one mandatory function:
+
+.. code-block:: python
+
+    def generate(template_renderer: lxmsite.TemplateRenderer) -> str:
+        # your implementation here
+
+The function when executed will return the text that need to be included in the template.
+The only argument ``template_renderer`` is a copy of the instance that is responsible
+of rendering the template that the script was called from. It allows in theory to
+recursively render another jinja template from the script or use its attributes for
+whatever you might need.
+
+To use a script inside a template you use the ``include_script_output`` variable that is
+actually a function to call with the script path (relative to the template):
+
+.. code-block:: html
+
+    <div>
+        {{ include_script_output("script_name.py") }}
+    </div>
+
+
+cross-referencing
+=================
 
 How to link to other html pages or static content ?
 

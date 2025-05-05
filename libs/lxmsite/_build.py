@@ -48,11 +48,12 @@ def is_file_newer(source: Path, target: Path):
     return mtime_src > mtime_dst
 
 
-def get_context(site_root: Path) -> lxmsite.SiteGlobalContext:
+def get_context(site_root: Path, site_files: list[Path]) -> lxmsite.SiteGlobalContext:
     git_last_commit = gitget(["rev-parse", "--short", "HEAD"], cwd=site_root)
     return lxmsite.SiteGlobalContext(
         build_time=datetime.datetime.now(),
         last_commit=git_last_commit,
+        site_files=site_files,
     )
 
 
@@ -227,7 +228,6 @@ def build_site(
 
     src_root = config.SRC_ROOT
     dst_root = config.DST_ROOT
-    build_context = get_context(site_root=src_root)
 
     site_files = lxmsite.collect_site_files(src_root)
     LOGGER.debug(f"🗂️ collected {len(site_files)} site files")
@@ -238,6 +238,8 @@ def build_site(
     meta_collection: lxmsite.MetaFileCollection = lxmsite.collect_meta_files(site_files)
     meta_paths = [meta_file.path for meta_file in meta_collection.meta_files]
     LOGGER.debug(f"📋 collected {len(meta_paths)} meta files")
+
+    build_context = get_context(site_root=src_root, site_files=site_files)
 
     # remove shelf and meta files so they are not copied as static files
     site_files = [

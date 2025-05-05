@@ -20,5 +20,6 @@ from ._shelf import ShelfLibrary
 
 from ._templating import render_page
 from ._templating import SiteGlobalContext
+from ._templating import TemplateRenderer
 
 from ._build import build_site
