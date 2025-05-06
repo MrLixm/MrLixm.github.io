@@ -1,6 +1,14 @@
+import logging
+from pathlib import Path
+
 import docutils.nodes
+import docutils.statemachine
 from docutils.parsers.rst import directives
 from docutils.parsers.rst import Directive
+
+from lxmsite import read_image_meta_file
+
+LOGGER = logging.getLogger(__name__)
 
 
 class ImageGalleryFrameNode(docutils.nodes.container):
@@ -24,7 +32,7 @@ class ImageGalleryFrameNode(docutils.nodes.container):
         self.label_node = label_node
 
 
-def read_metadata_option(serialized: str | None) -> dict[str, str]:
+def _read_metadata_option(serialized: str | None) -> dict[str, str]:
     metadata = {}
     if not serialized:
         return metadata
@@ -56,27 +64,54 @@ class ImageGalleryFrame(Directive):
         "metadata": directives.unchanged,
     }
 
-    def run(self):
-        self.assert_has_content()
-
-        option_classes = (
-            self.options["classes"].split(" ") if "classes" in self.options else []
-        )
-
+    def _get_image_attributes(self):
         image_id, label_id, image_path = self.arguments
+
+        metadata = {}
+
+        if image_path.endswith(".meta"):
+            meta_path = Path(image_path)
+            image_path = image_path.removesuffix(".meta")
+            if not Path(image_path).exists():
+                LOGGER.warning(
+                    f"Meta file path refers to a non-existing image path '{image_path}'"
+                )
+            LOGGER.debug(f"reading meta file '{meta_path}'")
+            try:
+                metadata = read_image_meta_file(meta_path)
+            except Exception:
+                LOGGER.error(f"error while reading meta file '{meta_path}'")
+                raise
+
+        metadata_option = self.options["metadata"] if "metadata" in self.options else {}
+        metadata_overrides = _read_metadata_option(metadata_option)
+        metadata.update(metadata_overrides)
+
+        if self.content:
+            caption = "\n".join(self.content.data)
+            for meta_name, meta_value in metadata.items():
+                if f"{{{meta_name}}}" in caption:
+                    caption = caption.format(**{meta_name: meta_value})
+            metadata.pop("caption", None)
+        else:
+            caption = metadata.pop("caption", "")
+
+        caption = docutils.statemachine.StringList(caption.splitlines())
+
+        return image_path, image_id, label_id, caption, metadata
+
+    def run(self):
+
+        image_path, image_id, label_id, caption, metadata = self._get_image_attributes()
 
         labeloptions = {"ids": [label_id], "for": image_id}
         labelnode = docutils.nodes.caption(**labeloptions)
         # content is RST formatted so parse it too.
-        self.state.nested_parse(self.content, self.content_offset, labelnode)
+        self.state.nested_parse(caption, self.content_offset, labelnode)
 
         imgnode = docutils.nodes.image(uri=image_path, alt="", ids=[image_id])
 
         metadatanode = docutils.nodes.bullet_list(classes=["metadata"])
-        metadata_option = (
-            self.options["metadata"] if "metadata" in self.options else None
-        )
-        metadata = read_metadata_option(metadata_option)
         for metadata_key, metadata_value in metadata.items():
             valuenode = docutils.nodes.paragraph(metadata_value, metadata_value)
             itemnode = docutils.nodes.list_item(
@@ -106,6 +141,10 @@ class ImageGalleryFrame(Directive):
         wrap_node.append(link_node)
         wrap_node.append(link_overlay_node)
         wrap_node.append(metadatanode)
+
+        option_classes = (
+            self.options["classes"].split(" ") if "classes" in self.options else []
+        )
 
         topnode = ImageGalleryFrameNode(
             img_id=image_id,

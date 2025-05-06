@@ -356,9 +356,14 @@ You add as much ``image-frame`` directive as there is image to showcase.
 image-frame
 +++++++++++
 
-This other directive expects 3 mandatory arguments and 1 optional option.
+This directive allow to declare an image, its identifier, and its metadata. It have
+2 "modes" to specify the metadata: inline in the rst file or retrieved from a meta file.
+The 2 modes can be used together where the inline metadata will override any metadata
+specified in the file.
 
-The 3 arguments are in order: "image id", "label id", "image uri"
+It expects 3 mandatory arguments, 1 optional option and optional content.
+
+The 3 arguments are in order: "image id", "label id", "image uri / meta file path"
 
 The 1 options is ``:metadata:`` which expect to define a mapping of "metadata name": "value",
 formalized as a list of line where each line is a pair.
@@ -368,6 +373,7 @@ formalized as a list of line where each line is a pair.
     Each pair will correspond to a list item that will receive the metadata name as
     css-class which allow indifidual styling based on the metadata.
 
+The content will be the image caption (its "label").
 
 Example:
 
@@ -389,15 +395,49 @@ Example:
             some of the text descrption of the image
             that can span multiple lines
 
-        .. image-frame:: image2 label2 photo2.jpg
+        .. image-frame:: image2 label2 photo2.jpg.meta
             :metadata:
-                date: 2024-11 early morning
-                location: France - Lyon - Parc de la Tete d’Or
-                film: 35mm Kodak Gold 200
-                lens: Minolta MD 35mm
+                author: Liam
 
-           some of the text descrption of the image
-           that can span multiple lines
+            -- {caption} -- (shot on {camera})
+
+
+In the above example, we define the first image inline, while the second image
+relies on a meta file. However for that second image we add an extra metadata key
+"author" and we slightly improve the meta file caption thanks to tokens ``{meta name}``.
+
+.. tip::
+
+    Any metadata key defined in the meta file can be used in the directive content.
+
+image .meta file
+****************
+
+A meta file allow to specify an image metadata as key: value pair with a quite
+human-friendly syntax (close to yaml but not yaml).
+
+The meta file name MUST the full image filename it characterize (including the file format suffix)
++ the ``.meta`` suffix. Example::
+
+    photo-cat.png > photo-cat.png.meta
+
+For its content, each line represent a metadata to set. The syntax is ``metadata name: value``.
+It's possible the value span multiple lines if you indent the following lines with at
+least 2 spaces. Example::
+
+    camera: Lumix S5IIX
+    description: here is some text that
+        will be spanning multiple lines
+    date: Monday
+
+The metadata names can be whatever you want except for ``caption`` that must correspond
+to the caption used to label the image.
+
+.. warning::
+
+    Do not put empty lines between metadatas as they will be treated as part of the value
+    of the last metadata defined. However you can add an empty line at the end of the
+    document and it will be ignored.
 
 
 .meta.json files
