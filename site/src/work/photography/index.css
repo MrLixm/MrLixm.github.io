@@ -241,6 +241,11 @@ section.box {
 
 }
 
+.translation {
+    display: flex;
+    flex-direction: column;
+}
+
 .information-txt {
     font-size: 0.7rem;
     letter-spacing: 0.5px;
