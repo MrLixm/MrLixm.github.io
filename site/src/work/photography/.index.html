@@ -44,6 +44,18 @@
     </div>
   </section>
   <section id="shots">
-
+    <section class="box">
+      <div class="section-header">
+        <div class="section-header-decoration"></div>
+        <h2>Shots</h2>
+        <p>clichés<br>foto<br>klisza</p>
+      </div>
+      <span class="information-txt">individual shots presented in a random order</span>
+    </section>
+    <div class="shot-gallery">
+      <div class="background-override"></div>
+      {{ include_script_output("get-shots.py") }}
+    </div>
+    <hr>
   </section>
 {% endblock %}
