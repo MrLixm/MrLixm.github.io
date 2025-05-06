@@ -1,5 +1,5 @@
 :root {
-    --bg-color: rgb(2,2,2);
+    --bg-color: rgb(2, 2, 2);
 }
 h1 {
     text-align: center;
@@ -29,11 +29,18 @@ h1 {
         }
     }
 }
-/* we use the <code> element to isolate the direction arrow <>∧∨ that are only useful
-for the non-responsive layout */
-.image-gallery label code {
-    font-size: 1.5rem;
+.image-gallery {
+
+    /* we use the <code> element to isolate the direction arrow <>∧∨ that are only useful
+    for the non-responsive layout */
+
+    label code {
+        font-size: 1.5rem;
+    }
 }
-.image-gallery .responsive label code {
-    display: none;
+.image-gallery .responsive {
+
+    label code {
+        display: none;
+    }
 }

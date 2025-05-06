@@ -461,10 +461,19 @@ nav.contents {
 
     font-weight: 300;
 
-    p, img, ul, div.line-block {
+    img, ul, div.line-block {
         margin-top: var(--image-gallery-spacing);
         margin-bottom: var(--image-gallery-spacing);
         width: 100%;
+    }
+    p {
+        margin: 0.6rem 0;
+    }
+    p:first-child {
+        margin-top: var(--image-gallery-spacing);
+    }
+    p:last-child {
+        margin-bottom: var(--image-gallery-spacing);
     }
 
     .img-fullscreen {
