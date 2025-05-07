@@ -1,6 +1,5 @@
 {
   "stylesheets": [
-    ".static/styles/shelf.css",
     "work/photography/photography.css"
   ],
   "template": "work/photography/.photography.html",
