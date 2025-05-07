@@ -25,7 +25,7 @@ def build_column(
         caption = metadata.get("caption", "")
         caption = jinja2.filters.escape(caption)
         image_id = image_path.parent.name + "-" + image_path.stem
-        img_node = f'<img src={{{{"{image_url}"|mkpagerel}}}} alt="{caption}" title="{caption}">'
+        img_node = f'<img loading="lazy" src={{{{"{image_url}"|mkpagerel}}}} alt="{caption}" title="{caption}">'
         template += [
             '  <div class="shot-item">',
             f'    <a href="#{image_id}">{img_node}</a>',
