@@ -6,7 +6,7 @@ A Discord server for Coding in VFX
 :image-alt: screenshot of Discord interface as decorative image
 :date-created: 2021-10-23T22:59
 :date-modified: 2025-04-11T15:15
-:category: link
+:category: learning
 :authors: Liam Collod
 :tags: programming, python, vfx
 

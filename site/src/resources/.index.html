@@ -1,49 +1,41 @@
 {% extends ".base.html" %}
 {% block main %}
-  <article class="read-area">
-    <section id="article-header">
-      <div class="article-header-content">
-        <span id="article-header-decoration"></span>
-        <div class="pulse-decoration-box">
-          <span id="header-decoration-pulse-1" class="pulse-decoration"></span>
-          <span id="header-decoration-pulse-2" class="pulse-decoration"></span>
-          <span id="header-decoration-pulse-3" class="pulse-decoration"></span>
-          <span id="header-decoration-pulse-4" class="pulse-decoration"></span>
-          <span id="header-decoration-pulse-5" class="pulse-decoration"></span>
-        </div>
-        <h1 class="hover-expand-n-shrink">{{ Page.title }}</h1>
-        <section id="metadata-footer">
-          {%- if Page.metadata.description %}
-            <p id="post-description" title="the post description">{{ Page.metadata.description }}</p>
-          {%- endif %}
-        </section>
-      </div>
+  <article>
+    <section id="decorative-header"><p>resources.exe</p></section>
+    <section id="header">
+      <h1>{{ Page.title }}</h1>
+      {%- if Page.metadata.description %}
+        <p id="post-description" title="the post description">{{ Page.metadata.description }}</p>
+      {%- endif %}
     </section>
     {{ Page.html_content }}
     <section id="resource-library">
-      {%- for page in Shelf.iterate_children_by_last_created(reverse=True) %}
-        {%- if page is not sameas(Page) %}
-          <a href="{{ page.url_path|mkpagerel }}">
-            <div class="resource-item">
-              <span class="post-category">{{ page.metadata.extras["category"] }}</span>
-              <span class="box-decoration box-decoration-1"></span>
-              <span class="box-decoration box-decoration-2"></span>
-              <span class="box-decoration box-decoration-3"></span>
-              <div class="center-content">
-                {% if page.metadata.image %}
-                <img src="{{ page.metadata.image|mksiterel(page.url_path)|mkpagerel }}" alt="{{ page.metadata.image_alt }}">
-                {% endif %}
-                <h2>{{ page.title }}</h2>
+      {%- for category, pages in Shelf.group_children_by_metadata("category", ignore_index=True).items() %}
+        <h2>{{ category }}</h2>
+        <div class="resource-category-library">
+          {%- for page in pages %}
+            <a href="{{ page.url_path|mkpagerel }}">
+              <div class="resource-item">
+                <div class="row">
+                  <div class="image">
+                  {% if page.metadata.image %}
+                    <img src="{{ page.metadata.image|mksiterel(page.url_path)|mkpagerel }}" alt="{{ page.metadata.image_alt }}">
+                  {% endif %}
+                  </div>
+                  <div class="information">
+                    <h3>{{ page.title }}</h3>
+                    <p class="post-description">{{ page.metadata.description }}</p>
+                  </div>
+                </div>
+                <div class="tags">
+                  {%- for tag in page.metadata.keywords %}
+                    <pre class="tag" title="a post keyword">{{ tag }}</pre>
+                  {%- endfor %}
+                </div>
               </div>
-              <p class="post-description">{{ page.metadata.description }}</p>
-              <div class="metadata-tags">
-                {%- for tag in page.metadata.keywords %}
-                  <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: {{ range(1,10)|random / 10 }}s">{{ tag }}</pre>
-                {%- endfor %}
-              </div>
-            </div>
-          </a>
-        {%- endif %}
+            </a>
+          {%- endfor %}
+        </div>
       {%- endfor %}
     </section>
   </article>
