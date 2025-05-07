@@ -67,12 +67,15 @@ def main(argv: list[str] | None = None):
         if dst_path == path:
             LOGGER.warning(f"beware: overwriting '{dst_path}'")
 
+        presize = path.stat().st_size / 1024 / 1024
+
         with PIL.Image.open(path) as image:
             image = image.convert("RGB")
             if max_size:
                 image.thumbnail(max_size)
             LOGGER.info(f"writing '{dst_path}'")
             # https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html#jpeg-saving
+            # note this intentionally doesn't preserve any metadata
             image.save(
                 dst_path,
                 "JPEG",
@@ -80,9 +83,13 @@ def main(argv: list[str] | None = None):
                 subsampling=1,
             )
 
+        postsize = dst_path.stat().st_size / 1024 / 1024
+        LOGGER.info(f"optimized from {presize:.1f}MiB to {postsize:.1f}MiB")
+
     LOGGER.info(f"finished optimizing '{len(paths)}' images")
 
 
 if __name__ == "__main__":
-    lxmsite.configure_logging()
+    lxmsite.configure_logging(logging.WARNING)
+    LOGGER.setLevel(logging.DEBUG)
     main()
