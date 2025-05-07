@@ -3,48 +3,8 @@ import json
 import logging
 import runpy
 from pathlib import Path
-from typing import Callable
 
 LOGGER = logging.getLogger(__name__)
-
-
-@dataclasses.dataclass(frozen=True)
-class ShelfLabel:
-    """
-    A page's metadata field collected to generate procedural "browser" pages.
-    """
-
-    name: str
-    """
-    An human-readable pretty name with any characters.
-    """
-
-    rst_key: str
-    """
-    The name of the rst field from which the page will get its label.
-    """
-
-    slug: str
-    """
-    url-safe name to use for web page generation
-    """
-
-    sorter: Callable[[list[str]], list[str]] = sorted
-    """
-    Determine how to sort the collection of metadata aggregated from all the pages.
-
-    This is a Callable (function) that:
-
-    - Receives: a list of strings whose value is the raw one from the source page.
-    - Returns: the same values but sorted as preferred for this driver.
-    """
-
-    @classmethod
-    def from_name(cls, name: str) -> "ShelfLabel":
-        """
-        A shortand method where the name is used to derives all other fields.
-        """
-        return cls(name=name, rst_key=name, slug=name)
 
 
 def mkfield(metadata):
@@ -62,7 +22,6 @@ class SiteConfig:
     SRC_ROOT: Path = mkfield({"type": Path})
     DST_ROOT: Path | None = mkfield({"type": (Path, type(None))})
     TEMPLATES_ROOT: Path = mkfield({"type": Path})
-    SHELF_LABELS: list[ShelfLabel] = mkfield({"type": list})
     DEFAULT_DOCUTILS_SETTINGS: dict = mkfield({"type": dict})
     SITE_URL: str = mkfield({"type": str})
     PUBLISH_MODE: bool = mkfield({"type": bool})

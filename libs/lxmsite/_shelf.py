@@ -18,14 +18,6 @@ class ShelfConfig:
     Defines how to handle the pages belonging to a specific shelf.
     """
 
-    disabled_labels: list[str] = dataclasses.field(
-        default_factory=list,
-        metadata={"type": list, "required": False},
-    )
-    """
-    list of shelf label slugs that should not be used to generate procedural "browser" pages.
-    """
-
     ignored_pages: list[str] = dataclasses.field(
         default_factory=list,
         metadata={"type": list, "required": False},

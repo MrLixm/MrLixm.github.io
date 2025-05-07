@@ -10,7 +10,6 @@ from ._imaging import read_image_meta_file
 
 from . import rstlib
 
-from ._configure import ShelfLabel
 from ._configure import SiteConfig
 
 from ._page import PageResource

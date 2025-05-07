@@ -23,15 +23,6 @@ HEADER_NAV = {
     "Contact": "contact.html",
 }
 
-# determine which page metadata is collected to generate procedurals pages.
-# those names become reserved in the shelf namespace and the root namespace.
-# ex: 'categories' for the page './blog/hello.rst' will reserve './blog/categories' and './categories'
-SHELF_LABELS = [
-    lxmsite.ShelfLabel.from_name("authors"),
-    lxmsite.ShelfLabel.from_name("categories"),
-    lxmsite.ShelfLabel.from_name("tags"),
-]
-
 
 # TODO
 REDIRECTS = {}

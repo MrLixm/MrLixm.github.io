@@ -176,18 +176,6 @@ def build_page(
     Returns:
         absolute path to the created html file
     """
-    if (
-        shelf
-        and not shelf.is_index(page)
-        and len(page.labels) != len(site_config.SHELF_LABELS)
-    ):
-        expected = [label.rst_key for label in site_config.SHELF_LABELS]
-        actual = [label.rst_key for label in page.labels.keys()]
-        LOGGER.warning(
-            f"| page '{page.url_path}' have missing labels in its metadata: "
-            f"expected {expected}; got {actual}."
-        )
-
     template = page.html_template
     if not template:
         raise ValueError(f"No template specified on page '{page.url_path}'.")

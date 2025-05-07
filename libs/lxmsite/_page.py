@@ -4,7 +4,6 @@ import enum
 import logging
 from pathlib import Path
 
-from lxmsite import ShelfLabel
 from lxmsite import SiteConfig
 from . import rstlib
 from ._utils import mkpagerel
@@ -71,7 +70,6 @@ class PageResource:
 
     title: str
     metadata: PageMetadata
-    labels: dict[ShelfLabel, str]
     status: PageStatus
     url_path: str
     """
@@ -139,13 +137,6 @@ def read_page(
     # page-defined metadata take priority over provided default metadata
     src_metadata.update(raw_metadata)
 
-    page_labels: dict[ShelfLabel, str] = {}
-    for label in site_config.SHELF_LABELS:
-        page_label = src_metadata.get(label.rst_key, None)
-        if not page_label:
-            continue
-        page_labels[label] = page_label
-
     template = src_metadata.pop("template", None)
 
     raw_stylesheets: str = src_metadata.pop("stylesheets", "")
@@ -198,7 +189,6 @@ def read_page(
     return PageResource(
         title=title,
         metadata=metadata,
-        labels=page_labels,
         status=status,
         url_path=url_path,
         html_content=content,
