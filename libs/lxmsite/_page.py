@@ -3,6 +3,7 @@ import datetime
 import enum
 import logging
 from pathlib import Path
+from typing import Any
 
 from lxmsite import SiteConfig
 from . import rstlib
@@ -50,6 +51,21 @@ class PageMetadata:
     # https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http%3a%2f%2fpurl.org%2fdc%2felements%2f1.1%2fdate
     date_modified: datetime.datetime
     extras: dict[str, str]
+
+    def get(self, name: str) -> Any:
+        """
+        Get a metadata based on its name, no matter if it's a known attribute or an extra.
+        """
+        if name in vars(self):
+            return getattr(self, name)
+        if name in self.extras:
+            return self.extras[name]
+
+        available = list(vars(self)) + list(self.extras)
+        raise ValueError(
+            f"No metadata with name '{name}' found; "
+            f"must be one of {','.join(available)}"
+        )
 
 
 class PageStatus(enum.Enum):

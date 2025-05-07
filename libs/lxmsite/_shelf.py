@@ -2,6 +2,7 @@ import ast
 import dataclasses
 import logging
 from pathlib import Path
+from typing import Any
 
 from lxmsite import PageResource
 
@@ -111,6 +112,30 @@ class ShelfResource:
             if child.status == child.status.unlisted:
                 continue
             yield child
+
+    def group_children_by_metadata(
+        self,
+        metadata_name: str,
+        ignore_index: bool = False,
+    ) -> dict[Any, list[PageResource]]:
+        """
+        Return children grouped by their value for the given metadata.
+
+        Args:
+            metadata_name: valid name of a metadata for pages.
+            ignore_index: if True do not yield the page that is index of the shelf
+
+        Returns:
+            mapping of metadata value: list of pages
+        """
+        groups = {}
+        for child in self.children:
+            if ignore_index and self.is_index(child):
+                continue
+            value = child.metadata.get(metadata_name)
+            groups.setdefault(value, []).append(child)
+
+        return groups
 
 
 @dataclasses.dataclass
