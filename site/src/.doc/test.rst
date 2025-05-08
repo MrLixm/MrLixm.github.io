@@ -29,6 +29,10 @@ Testing line blocks:
 |     are preserved.
 | Continuation lines are wrapped
 
+Testing emojis :emoji:`yes-cool` while being inline. I hope you do like cats ! :emoji:`cat-nerd`.
+According to all known laws of aviation, there is no way a bee should be able to fly.
+Its wings are too small to get its fat little body off the ground.
+
 time to test heading (this h2)
 ==============================
 

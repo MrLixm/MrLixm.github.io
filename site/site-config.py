@@ -44,4 +44,6 @@ DEFAULT_DOCUTILS_SETTINGS = {
     "embed_stylesheet": False,
     "input_encoding": "utf-8",
     "table_style": "inline",
+    # custom :emoji: role
+    "emojis_dir": SRC_ROOT / ".static" / "images" / "emojis",
 }

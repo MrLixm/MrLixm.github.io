@@ -9,6 +9,7 @@ from . import _include
 from . import _image_grid
 from ._contents import ContentsTransform
 from . import _image_gallery
+from . import _emojis
 
 
 def register_extensions():
@@ -16,6 +17,7 @@ def register_extensions():
     from docutils.parsers.rst.roles import register_local_role
 
     register_local_role("abbr", _abbreviation.abbr_role)
+    register_local_role("emoji", _emojis.docutils_emoji_role)
 
     from docutils.parsers.rst.directives import register_directive
 

@@ -592,3 +592,17 @@ nav.contents {
         }
     }
 }
+
+/* custom @emoji: role */
+.emoji-role.inline {
+    display: inline;
+    vertical-align: middle;
+    height: 1.3em;
+}
+.emoji-role.inline:hover {
+    transform: scale(2);
+    background-color: var(--bg-color);
+    padding: 2px;
+    border-radius: 2px;
+}
+
