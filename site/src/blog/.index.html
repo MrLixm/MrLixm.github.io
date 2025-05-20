@@ -21,7 +21,7 @@
               {% include '.static/icons/calendar.svg' %}
               <time datetime="{{ page.metadata.date_created.isoformat() }}">{{ page.metadata.date_created.strftime("%d %B %Y") }}</time>
             </span>
-            <a href="{{ page.url_path|mkpagerel }}"><h2>{{ page.title }}</h2></a>
+            <a href="{{ page.url_path|mkpagerel|prettylink }}"><h2>{{ page.title }}</h2></a>
             <p class="post-description">{{ page.metadata.description }}</p>
             <div class="metadata-tags">
               {%- for tag in page.metadata.keywords %}
