@@ -7,10 +7,3 @@ First Post
 :description: Gotta start somewhere ayy ?
 
 You might want to have a look at my `demoreel <https://vimeo.com/579603827>`_ instead 👀.
-
-----
-
-2025 notes
-==========
-
-Well time flies right ?
