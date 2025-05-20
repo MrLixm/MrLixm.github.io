@@ -15,8 +15,7 @@ header #site-name {
     font-family: "Tiny5", monospace;
 }
 
-
-article {
+main {
     margin: 2%;
     border: var(--border-thick) solid var(--color-primary);
     font-family: "Tiny5", monospace;
