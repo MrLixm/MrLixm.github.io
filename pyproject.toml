@@ -3,7 +3,7 @@ name = "MrLixm.github.io"
 version = "2.0.0"
 description = "Personal website and blog repository."
 authors = [
-    {name="Liam Collod", email = "monsieurlixm@gmail.com"},
+    { name = "Liam Collod" },
 ]
 readme = "README.md"
 requires-python = ">=3.10,<=3.11"
