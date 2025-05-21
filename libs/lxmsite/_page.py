@@ -21,36 +21,36 @@ class PageMetadata:
     """
 
     # https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name
-    authors: list[str]
-    keywords: list[str]
+    authors: list[str] = dataclasses.field(default_factory=list)
+    keywords: list[str] = dataclasses.field(default_factory=list)
 
     # https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang
     # https://www.w3.org/International/articles/language-tags/
-    language: str
+    language: str = "en"
 
     # https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel#icon
-    icon: str
+    icon: str = ""
     """
     link to an icon file, relative to the page it was extracted from.
     """
 
-    title: str  # https://ogp.me/#metadata
-    type: str  # https://ogp.me/#types
-    image: str  # https://ogp.me/#metadata
+    title: str = ""  # https://ogp.me/#metadata
+    type: str = ""  # https://ogp.me/#types
+    image: str = ""  # https://ogp.me/#metadata
     """
     link to an image file, relative to the page it was extracted from.
     """
-    image_alt: str
+    image_alt: str = ""
 
-    description: str  # https://ogp.me/#optional
+    description: str = ""  # https://ogp.me/#optional
 
     # // anything else that is non-standardized
 
     # https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http%3a%2f%2fpurl.org%2fdc%2felements%2f1.1%2fdate
-    date_created: datetime.datetime
+    date_created: datetime.datetime | None = None
     # https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http%3a%2f%2fpurl.org%2fdc%2felements%2f1.1%2fdate
-    date_modified: datetime.datetime
-    extras: dict[str, str]
+    date_modified: datetime.datetime | None = None
+    extras: dict[str, str] = dataclasses.field(default_factory=dict)
 
     def get(self, name: str) -> Any:
         """
@@ -86,18 +86,19 @@ class PageResource:
 
     title: str
     metadata: PageMetadata
-    status: PageStatus
     url_path: str
     """
     relative to the site root
     """
     html_content: str
-    html_template: str | None
+    html_template: str | None = None
     """
     path of the template to use relative to the config TEMPLATE_ROOT
     """
 
-    stylesheets: list[str]
+    status: PageStatus = PageStatus.published
+
+    stylesheets: list[str] = dataclasses.field(default_factory=list)
     """
     collections of link to stylesheets file, relative to the site root
     """
@@ -174,10 +175,10 @@ def read_page(
     authors = src_metadata.pop("authors", "").split(",")
     authors = authors if authors[0] else []
 
-    date_created = src_metadata.pop("date-created", "")
+    date_created = src_metadata.pop("date-created", None)
     if date_created:
         date_created = datetime.datetime.fromisoformat(date_created)
-    date_modified = src_metadata.pop("date-modified", "")
+    date_modified = src_metadata.pop("date-modified", None)
     if date_modified:
         date_modified = datetime.datetime.fromisoformat(date_modified)
 
