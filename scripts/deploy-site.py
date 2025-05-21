@@ -168,7 +168,7 @@ def main(argv: list[str] | None = None):
 
     # // start the build and publish
 
-    with publish_context(build_dir, commit_msgs, dry_run=True):
+    with publish_context(build_dir, commit_msgs, dry_run=False):
         LOGGER.info(f"🔨 building site to '{build_dir}'")
         errors = lxmsite.build_site(
             config=config,
