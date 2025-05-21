@@ -284,13 +284,13 @@ Example:
 
 .. code-block:: rst
 
-    .. url-preview:: https://mrlixm.github.io/
+    .. url-preview:: https://liamcollod.xyz
         :title: Website - Liam Collod
         :image: ../.static/images/cover-social.jpg
 
         Check my website & blog. VFX, imaging and software development.
 
-.. url-preview:: https://mrlixm.github.io/
+.. url-preview:: https://liamcollod.xyz
     :title: Website - Liam Collod
     :image: ../.static/images/cover-social.jpg
 

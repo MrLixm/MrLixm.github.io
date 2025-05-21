@@ -33,7 +33,7 @@ REDIRECTIONS = {
 REDIRECTIONS_TEMPLATE = ".redirect.html"
 
 # used for making some relative urls absolute
-SITE_URL = "https://mrlixm.github.io"
+SITE_URL = "https://liamcollod.xyz"
 # affect how the site is built (mainly urls), i.e. local preview or final web publish.
 PUBLISH_MODE = False
 
