@@ -1,0 +1,15 @@
+{
+  "image": "/.static/images/cover-social.jpg",
+  "stylesheets": [
+    ".static/styles/themes/default.css",
+    ".static/fonts/Montserrat/Montserrat.css",
+    ".static/fonts/SourceCodePro/SourceCodePro.css",
+    ".static/fonts/SourceSansPro/SourceSansPro.css",
+    ".static/styles/themes/pygments.onedark.css",
+    ".static/styles/header.css",
+    ".static/styles/footer.css",
+    ".static/styles/base.css",
+    ".static/styles/rst.css"
+  ],
+  "template": ".base.html"
+}

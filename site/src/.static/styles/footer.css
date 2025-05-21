@@ -1,0 +1,59 @@
+footer {
+    font-size: 0.8rem;
+    font-family: var(--font-A);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0.6;
+    text-align: center;
+}
+footer i {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-style: normal;
+}
+footer a, footer a:visited {
+    text-decoration: underline;
+    color: unset;
+}
+footer a:hover {
+    text-decoration: underline;
+}
+footer p:nth-child(2) {
+    font-size: 0.6rem;
+}
+footer p {
+    margin: unset;
+}
+footer p:nth-child(2):hover {
+    animation-name: color-rainbow;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: linear;
+}
+@keyframes color-rainbow {
+    0% {
+        color: rgb(218, 70, 70);
+    }
+    15.1% {
+        color: rgb(229, 126, 50);
+    }
+    29.5% {
+        color: rgb(229, 239, 67);
+    }
+    45.8% {
+        color: rgb(118, 210, 114);
+    }
+    61.5% {
+        color: rgb(107, 208, 208);
+    }
+    76.4% {
+        color: rgb(90, 95, 225);
+    }
+    92.4% {
+        color: rgb(204, 106, 231);
+    }
+}

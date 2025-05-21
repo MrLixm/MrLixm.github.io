@@ -1,0 +1,70 @@
+@import url(https://fonts.bunny.net/css?family=tiny5:400);
+
+h1 {
+    font-family: "Escabeau", sans-serif;
+    font-size: 3rem;
+}
+
+section#blog-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.blog-post {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    margin-top: 10px;
+    padding: 1rem;
+    border: 1px solid var(--color-WW);
+
+    background-color: var(--bg-color-M);
+
+    transition-duration: 0.2s;
+
+    h2 {
+        margin: 0;
+        padding: 0.5rem;
+        border: 1px solid var(--color-WW);
+        font-size: 1.5rem;
+    }
+    h2:hover {
+        color: var(--bg-color);
+        background-color: var(--color-primary);
+    }
+
+    .date-created {
+        padding: 0 0.5rem;
+
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        position: absolute;
+        top: -10px;
+
+        background: linear-gradient(0deg, var(--bg-color-M) 50%, transparent 100%);
+        font-family: 'Tiny5', monospace;
+
+    }
+
+    .post-description {
+        color: var(--color-W);
+        margin-bottom: 0;
+    }
+
+    .metadata-tags {
+        justify-content: start;
+    }
+
+    svg {
+        width: 16px;
+    }
+
+}
+
+.blog-post:hover {
+    transform: translate(-10px, -10px);
+    box-shadow: rgba(0,0,0,0.5) 10px 10px;
+}

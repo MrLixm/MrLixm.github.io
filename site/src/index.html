@@ -1,0 +1,221 @@
+{% extends ".base.html" %}
+{% block main %}
+  <h1 style="display:none;">Index</h1>
+  <section id="introduction" aria-label="Introduction">
+    <div class="section-content">
+      <h2 style="display:none;">Introduction</h2>
+      <p class="responsive-warning">this page is best viewed on desktop</p>
+      <div id="self-name">
+        <aside class="font-info" title="the typeface in use on the right > ">
+          <a href="https://mother-type.de/fonts/coaster-sans">CoasterSans*</a>
+        </aside>
+        <p title="my name">liam collod</p>
+      </div>
+      <div id="self-job-title">
+        <aside class="font-info" title="the typeface in use on the right > ">
+          <a href="https://montifonti.tilda.ws/mon_hugo">Mon Hugo*</a>
+        </aside>
+        <p title="my job title">vfx artist <wbr><span>software developer</span></p>
+      </div>
+      <div id="self-description">
+        <aside class="font-info" title="the typeface in use on the right > ">
+          <a href="https://departuremono.com/">Departure Mono*</a>
+        </aside>
+        <div class="decoration-left">
+          <div class="in-line1"></div>
+          <div class="in-line2"></div>
+        </div>
+        <p title="self description">
+          French picture maker, I have been exploring the digital medium for the past 10
+          years. I consider myself as a versatile tinkerer whose able to craft pretty
+          pictures, as much as building the software to make them. I strongly believe in
+          knowledge-sharing and care a lot about improving human experience in the
+          creative process.
+        </p>
+        <div class="decoration-right"></div>
+      </div>
+      <div id="self-socials">
+        <div class="self-socials-bg"></div>
+        <div style="--bg-color: rgb(30,244,95);" class="social-item" title="LinkedIn">
+          <a href="https://www.linkedin.com/in/liam-collod/">
+            <img alt="linkedin" src=".static/icons/linkedin.svg">
+          </a>
+        </div>
+        <div style="--bg-color: rgb(31,217,137);" class="social-item" title="Mastodon">
+          <a rel="me" href="https://mastodon.gamedev.place/@liamcollod">
+            <img alt="mastodon logo" src=".static/icons/mastodon.svg">
+          </a>
+        </div>
+        <div style="--bg-color: rgb(128,245,167);" class="social-item" title="Cara">
+          <a href="https://cara.app/liamcollod">
+            <img alt="cara logo" src=".static/icons/cara.svg">
+          </a>
+        </div>
+        <div style="--bg-color: rgb(36,131,76);" class="social-item" title="Github">
+          <a href="https://github.com/MrLixm">
+            <img alt="github" src=".static/icons/github.svg">
+          </a>
+        </div>
+        <div style="--bg-color: rgb(57,197,197);" class="social-item" title="Email">
+          <a href="mailto:lcollod@gmail.com">
+            <img alt="email" src=".static/icons/email.svg">
+          </a>
+        </div>
+        <div style="--bg-color: rgb(210,210,210);" class="social-item" title="Youtube">
+          <a href="https://www.youtube.com/c/LiamCollod">
+            <img alt="youtube" src=".static/icons/youtube.svg">
+          </a>
+        </div>
+        <div style="--bg-color: rgb(38,38,38);" class="social-item" title="Gumroad">
+          <a href="https://gumroad.com/pyco">
+            <img alt="gumroad" src=".static/icons/gumroad.svg">
+          </a>
+        </div>
+      </div>
+      <a href="#"><div id="maxi-frog"></div></a>
+      <div class="decorations">
+        <pre class="lut-numbers">
+TITLE "Kodak 2383"
+LUT_3D_SIZE 33
+LUT_3D_INPUT_RANGE 0.0 1.0
+0.027455 0.027940 0.030632
+0.028771 0.028640 0.031588
+0.029688 0.029229 0.032502
+0.033218 0.029886 0.033110
+0.038679 0.030846 0.033368
+0.040203 0.032147 0.033662
+0.045908 0.033592 0.033716
+0.060469 0.035176 0.033571
+0.074147 0.038764 0.033567
+0.086850 0.042979 0.032703
+0.109447 0.045148 0.030796
+0.141233 0.047389 0.027518
+0.171253 0.050028 0.015106
+0.203916 0.052315 0.000920
+0.245081 0.053624 0.000000
+0.293532 0.051818 0.000000
+0.343678 0.046793 0.000000
+0.390342 0.037880 0.000000
+0.431468 0.005177 0.000000
+0.472838 0.000000 0.000000
+0.511870 0.000000 0.000000
+0.545101 0.000000 0.000000
+0.571750 0.000000 0.000000
+0.594285 0.000000 0.000000
+0.613485 0.000000 0.000000
+0.629549 0.000000 0.000000
+0.642509 0.000000 0.000000
+0.652898 0.000000 0.000000
+0.661570 0.000000 0.000000
+0.668915 0.000000 0.000000
+0.674400 0.000000 0.000000
+0.678920 0.000000 0.000000
+0.683616 0.000000 0.000000
+0.027112 0.030111 0.031707
+0.028601 0.030703 0.032538
+0.028601 0.030703 0.032538
+0.029392 0.031250 0.033394
+0.032931 0.031871 0.033955
+0.038694 0.032812 0.034168
+0.040230 0.034168 0.034502
+        </pre>
+        <img class="photo-pixel" src="index/photo-pixelated.jpg" alt="a pixelated image of plants">
+        <span class="decoration-circle-xl"></span>
+        <img class="plants" src="index/plants.png" alt="decorative plants image">
+        <img class="camera" src="index/camera.png" alt="photo of a Minolta X500 camera">
+        <pre class="code-demo">
+          <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+          <span class="kn">import</span><span class="w"> </span><span class="nn">OpenImageIO</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">oiio</span>
+
+
+          <span class="k">def</span><span class="w"> </span><span class="nf">read_image</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">oiio</span><span class="o">.</span><span class="n">ImageBuf</span><span class="p">:</span>
+          <span class="w">    </span><span class="sd">"""</span>
+          <span class="sd">    Read given image from disk as oiio buffer.</span>
+          <span class="sd">    """</span>
+          <span class="k">return</span> <span class="n">oiio</span><span class="o">.</span><span class="n">ImageBuf</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+        </pre>
+        <img class="fujichrome" src="index/fujichrome-box.png" alt="decorative fujichrome film box image">
+        <img class="bricks-plate" src="index/lego-bricks.plate.png" alt="decorative lego bricks image">
+        <img class="bricks-1x1" src="index/lego-bricks.1x1.png" alt="decorative lego bricks image">
+        <img class="bricks-2x4" src="index/lego-bricks.2x4.png" alt="decorative lego bricks image">
+        <div class="bricks-frog"><a href="#maxi-frog"><img src="index/lego-bricks.frog.png" alt="decorative lego bricks image"></a></div>
+        <div class="negative-box"></div>
+        <div class="glass-box">
+          <a class="font-info" href="https://github.com/JAMO-TYPEFACE/Orbit">* the font indicating the font is Orbit</a>
+        </div>
+        <img class="texture-halftone" src="index/texture-halftone.jpg" alt="a texture with an abstract pattern">
+      </div>
+    </div>
+  </section>
+  <section id="demoreel" aria-label="Demoreel">
+    <div class="l-embed">
+      <video controls width="100%">
+        <source src="work/demoreel.mp4">
+      </video>
+    </div>
+    <h2><a class="l-index-h2" href="#demoreel">Demoreel</a>
+    </h2>
+  </section>
+  <section id="message-loop">
+    <div class="message-loop-band frogs">
+      {% for x in range(80) %}
+        <span><img src="index/lego-bricks.frog.png" alt="the lego frog part"></span>
+      {% endfor %}
+    </div>
+    <div class="message-loop-band">
+      <p>
+        | No A.I. shit was involved in the making of this website, please enjoy this 100% tea-flavored-human-sweat powered content
+      </p>
+      <p>
+        | No A.I. shit was involved in the making of this website, please enjoy this 100% tea-flavored-human-sweat powered content
+      </p>
+    </div>
+    <div class="message-loop-band">
+      <p>
+        ~ One human was potentially harmed during the making of this website (this is a friendly reminder to stay hydrated and take breaks (bonus if grass touched))
+      </p>
+      <p>
+        ~ One human was potentially harmed during the making of this website (this is a friendly reminder to stay hydrated and take breaks (bonus if grass touched))
+      </p>
+    </div>
+    <div class="message-loop-band frogs">
+      {% for x in range(80) %}
+        <span><img src="index/lego-bricks.frog.png" alt="the lego frog part"></span>
+      {% endfor %}
+    </div>
+  </section>
+  <section id="blog" aria-label="Blog">
+    <div class="blog-heading">
+      <span class="font-info">
+        <a href="https://typotheque.le75.be/">Elastic</a>
+      </span>
+      <span class="font-info">
+        <a href="https://typotheque.genderfluid.space/fr/fontes/escabeau">Escabeau</a>
+      </span>
+      <h2 class="hover-expand-n-shrink">
+        <a href="{{ "blog/index.html"|prettylink }}">Blog</a>
+      </h2>
+    </div>
+    <div class="latest-posts">
+      <span class="font-info">
+        <a href="https://typotheque.le75.be/">Elastic</a>
+      </span>
+      <span class="font-info">
+        <a href="https://github.com/JAMO-TYPEFACE/Orbit/">Orbit</a>
+      </span>
+      <span class="font-info">
+        <a href="https://typotheque.genderfluid.space/fr/fontes/bbb-manifont-grotesk">BBB Manifont Grotesk</a>
+      </span>
+      <ul>
+        {% set blog_shelf = ShelfLibrary.get("blog") %}
+        {# we assume the blog MUST exists and can't be None #}
+        {% for post in blog_shelf.iterate_children_by_last_created(reverse=True, ignore_index=True) %}
+          <li>
+            <time datetime="{{ post.metadata.date_created.isoformat() }}">{{ post.metadata.date_created.strftime("%d %B %Y") }}</time>
+            <a href="{{ post.url_path }}"><p>{{ post.title }}</p></a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+{%- endblock %}

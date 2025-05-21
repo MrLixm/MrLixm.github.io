@@ -1,0 +1,69 @@
+<!doctype html>
+<!-- 🐸🐸𓆏🐸 who puts frogs in the html !!! 𓆏𓆏🐸 -->
+<html lang="{{ Page.metadata.language }}" prefix="og: https://ogp.me/ns#">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}liam collod - {{ Page.metadata.title }}{% endblock title %}</title>
+  {%- if Page.metadata.icon %}
+  <link rel="icon" href="{{ Page.metadata.icon }}" type="image/x-ico">
+  {% endif %}
+  {%- for author in Page.metadata.authors %}
+    <meta name="author" content="{{ author }}">
+  {%- endfor %}
+  <meta name="description" content="{{ Page.metadata.description }}">
+  <meta name="fediverse:creator" content="@liamcollod@mastodon.gamedev.place">
+  <meta property="og:title" content="{{ self.title() }}">
+  <meta property="og:type" content="{{ Page.metadata.type }}">
+  {#- needs absolute url -#}
+  <meta property="og:url" content="{{ Page.url_path|mksiteabs }}">
+  <meta property="og:description" content="{{ Page.metadata.description }}">
+  {%- if Page.metadata.image %}
+  {#- needs absolute url; metadata.image is page relative -#}
+  <meta property="og:image" content="{{ Page.metadata.image|mksiterel|mksiteabs }}">
+  {%- endif %}
+  {%- if Page.metadata.image_alt %}
+  <meta property="og:image:alt" content="{{ Page.metadata.image_alt }}">
+  {%- endif %}
+  {%- if Page.metadata.date_created %}
+  <meta name="dcterms.created" content="{{ Page.metadata.date_created.isoformat() }}">
+  {%- endif %}
+  {%- if Page.metadata.date_modified %}
+  <meta name="dcterms.modified" content="{{ Page.metadata.date_modified.isoformat() }}">
+  {%- endif %}
+  {% for stylesheet in Page.stylesheets %}
+  <link rel="stylesheet" href="{{ stylesheet }}" />
+  {% endfor %}
+</head>
+<body>
+<header>
+  {% block header %}
+    <div id="site-name">
+      <img src="{{ ".static/icons/logo-lixm-outlines.svg"|mkpagerel }}" alt="my diamond-shape logo; quite minimalisitic." width="32px" height="32px">
+      <a href="{{ "index.html"|mkpagerel|prettylink }}"><span>Liam Collod</span></a>
+    </div>
+    <nav class="main-nav" aria-label="Main menu">
+      <ul>
+        {% for navname, navlink in Config.HEADER_NAV.items() %}
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="{{ navname }}" class="{% if Page.url_path.startswith(navname.lower()) %}active{% endif %}"><a href="{{ navlink|mkpagerel|prettylink }}"><span>{{ navname }}</span><span>{{ navname }}</span></a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+  {% endblock %}
+</header>
+<main>
+  {%- block main %}
+    <h1>{{ Page.title }}</h1>
+    {{ Page.html_content }}
+  {%- endblock %}
+</main>
+<footer>
+  {% block footer %}
+    <p>Static website <a href="{{ ".doc/index.html"|mkpagerel|prettylink }}"><i>hand-crafted</i></a> using 🐍 Python !
+      Last built on <i>{{ Context.build_time.isoformat(timespec='minutes') }}</i> from commit <i>{{ Context.last_commit }}</i></p>
+    <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
+  {% endblock %}
+</footer>
+</body>
+</html>

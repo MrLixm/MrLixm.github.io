@@ -1,0 +1,8 @@
+{
+  "stylesheets": [
+    "resources/resources.css",
+    ".static/fonts/FT88/FT88.css",
+    ".static/fonts/Tiny5/Tiny5.css"
+  ],
+  "template": "resources/.resources.html"
+}

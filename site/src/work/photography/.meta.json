@@ -1,0 +1,7 @@
+{
+  "stylesheets": [
+    "work/photography/photography.css"
+  ],
+  "template": "work/photography/.photography.html",
+  "description": "A photography project by Liam Collod."
+}

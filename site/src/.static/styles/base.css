@@ -1,0 +1,153 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--color);
+    font-family: var(--font-A);
+}
+a {
+    color: var(--color-primary);
+    text-decoration: unset;
+}
+a:visited {
+    color: var(--color-primary-W);
+}
+a:hover {
+    color: var(--color-primary-M);
+}
+a.reference:before,
+a.brackets:before,
+a.citation-reference:before {
+    content: "";
+    background: url("../icons/link-vertical.svg") no-repeat bottom;
+    background-size: contain;
+    width: 0.8rem;
+    height: 0.7rem;
+    display: inline-block;
+}
+a.image-reference:before {
+    content: unset;
+    background: unset;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-B);
+    font-weight: 800;
+    margin: 2rem 0 0.5rem;
+}
+h1 {
+    font-size: 2.3rem;
+    /*var(--color-primary);*/
+}
+h2 {
+    font-size: 2rem;
+}
+h3 {
+    font-size: 1.5rem;
+}
+h4 {
+    font-size: 1.3rem;
+}
+
+
+img {
+    max-width: 100%;
+}
+
+/*https://developer.mozilla.org/en-US/docs/Web/HTML/Element/abbr*/
+abbr {
+    cursor: help;
+}
+
+/*https://developer.mozilla.org/en-US/docs/Web/HTML/Element/cite*/
+cite {
+
+}
+
+/*https://developer.mozilla.org/en-US/docs/Web/HTML/Element/blockquote*/
+blockquote {
+    border-left: 2px solid var(--color-WW);
+    color: var(--color-W);
+    margin: 1rem 5px;
+    padding: 0.1rem 0;
+    padding-left: 2rem;
+    font-style: italic;
+}
+
+ul, ol {
+    padding-inline-start: 15px;
+}
+
+/* description lists */
+/*https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dt*/
+dt {
+    font-weight: bold;
+}
+dd {
+    border-left: 2px solid var(--color-WW);
+    margin: 0 0;
+    padding-left: 2rem;
+}
+
+figure {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0;
+}
+figcaption {
+    color: var(--color-W);
+    font-style: italic;
+    font-size: 0.9rem;
+    margin: 7px 0;
+}
+figcaption p {
+    width: unset;
+    max-width: unset;
+    margin: unset;
+}
+
+/*===========================================================================*/
+/* custom elements */
+
+/* usually the main block of content*/
+.read-area {
+    margin: 0 30vw;
+}
+@media screen and (max-width: 1600px) {
+    .read-area {
+        margin: 0 25vw;
+    }
+}
+@media screen and (max-width: 900px) {
+    .read-area {
+        margin: 0 10vw;
+    }
+}
+
+
+.strikethrough {
+    text-decoration: line-through;
+}
+
+
+.hover-expand-n-shrink {
+    letter-spacing: 0;
+    margin-right: 0;
+    transition: /* interpolation is "backwards" */ letter-spacing 0.2s cubic-bezier(.68, -0.55, .27, 1.55),
+    margin-right 0.2s cubic-bezier(.68, -0.55, .27, 1.55);
+}
+.hover-expand-n-shrink:hover {
+    letter-spacing: 65px;
+    margin-right: -65px;
+    transition: /* interpolation is "backwards" in ease-out */ letter-spacing 0.3s cubic-bezier(.18, .89, .32, 1.28),
+    margin-right 0.3s cubic-bezier(.18, .89, .32, 1.28);
+}
+
+main {
+    flex: 1;
+}

@@ -16,6 +16,5 @@ build/
 .idea/*.iml
 
 # Project relatives
-output/
-cache/
-*desktop.files.json
+.build/
+.server-active.info

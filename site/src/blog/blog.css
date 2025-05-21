@@ -1,0 +1,17 @@
+img.blog-cover {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: var(--radius-S);
+    margin-bottom: 2rem;
+}
+.post-status-unlisted {
+    margin: auto;
+    padding: 5px;
+    border-radius: var(--radius-S);
+    border: 1px solid var(--color-attention);
+    background-color: var(--color-attention-WW);
+    color: var(--color-attention);
+    text-align: center;
+    opacity: 0.8;
+}

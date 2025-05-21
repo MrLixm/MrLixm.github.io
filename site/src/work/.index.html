@@ -1,0 +1,53 @@
+{% extends ".base.html" %}
+{% block main %}
+  <section class="title">
+    <aside class="font-info"><a href="https://github.com/froyotam/ferrite-core">FerritCoreDX</a></aside>
+    <h1>{{ Page.title }}</h1>
+    <div class="decoration-h-band"></div>
+    <div class="decoration-h-band-ramp"></div>
+    <div class="decoration-v-band"></div>
+    <div class="decoration-circle-center"></div>
+    <div class="decoration-arrow"></div>
+    <div class="decoration-line-box-main">
+      <div class="decoration-square-r-1"></div>
+      <div class="decoration-square-l-1"></div>
+      <div class="decoration-square-l-2"></div>
+    </div>
+    <div class="decoration-line-box-in-v"></div>
+    <div class="decoration-line-box-in-h"></div>
+    <div class="decoration-line-box-side-1"></div>
+    <div class="decoration-line-box-side-2"></div>
+    <div class="decoration-line-box-side-3"></div>
+    <div class="decoration-line-box-side-4"></div>
+  </section>
+  <section id="topics">
+    <div class="vfx">
+      <aside class="font-info"><a href="https://pippin.gimp.org/0xA000/">0XA000 Mono</a></aside>
+      <a href="{{ "https://www.artstation.com/monsieur_lixm" }}"><h2>vfx</h2></a>
+    </div>
+    <div class="programming">
+      <aside class="font-info"><a href="https://velvetyne.fr/fonts/degheest/">FT88 Regular</a></aside>
+      <a href="{{ "https://github.com/MrLixm" }}"><h2>programming</h2></a>
+    </div>
+    <div class="photography">
+      <aside class="font-info"><a href="https://www.fontshare.com/fonts/clash-display">Clash Display</a></aside>
+      <a href="{{ "photography/index.html"|prettylink }}"><h2>photography</h2></a></div>
+    <div class="other-medium" style="display: none">
+      <aside class="font-info"><a href="https://typotheque.le75.be/">Elastic</a></aside>
+      <a href="{{ ""|prettylink }}"><h2>other mediums</h2></a>
+    </div>
+    <div class="cv">
+      <aside class="font-info"><a href="https://mother-type.de/fonts/coaster-sans">Coaster Sans</a></aside>
+      <a href="{{ "cv.html"|prettylink }}"><h2>c.v.</h2></a>
+    </div>
+  </section>
+  <section id="follow-my-work">
+    <div class="panel">
+      {% include ".static/icons/mastodon-pixel-42.svg" %}
+      <p>You can follow all of <br> my work on
+        <a href="https://mastodon.gamedev.place/@liamcollod">Mastodon</a>.</p>
+    </div>
+    <div class="decoration-bg-box"></div>
+    <div class="decoration-v-band"></div>
+  </section>
+{% endblock %}
