@@ -53,6 +53,7 @@ def publish_context(
     LOGGER.debug(f"git worktree add {build_dir} gh-pages")
     gitc(["worktree", "add", str(build_dir), "gh-pages"], cwd=THISDIR)
     try:
+        gitc(["pull"], cwd=build_dir)
         # ensure to clean the gh-pages content at each build
         gitc(["rm", "--quiet", "--ignore-unmatch", "-r", "*"], cwd=build_dir)
 
