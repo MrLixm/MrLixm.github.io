@@ -1,7 +1,7 @@
 Work
 ####
 
-:summary: Where you can find my work, and check my CV.
+:description: Where you can find my work, and check my CV.
 :date-modified: 2025-04-12 22:32
 :template: work/.index.html
 :stylesheets:
