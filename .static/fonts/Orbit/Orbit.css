@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'Orbit';
+    src: url('Orbit-Regular.woff2') format('woff2'),
+    url('Orbit-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

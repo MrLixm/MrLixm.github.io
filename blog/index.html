@@ -1,606 +1,195 @@
-<!DOCTYPE html>
-<html lang="en" prefix="og: http://ogp.me/ns#">
+<!doctype html>
+<!-- 🐸🐸𓆏🐸 who puts frogs in the html !!! 𓆏𓆏🐸 -->
+<html lang="en" prefix="og: https://ogp.me/ns#">
 <head>
-  <meta charset="UTF-8" />
-  <title>Liam Collod&#39;s Blog</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700%7CSource+Code+Pro:400,400i,600" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Georama:wght@400;500;600;700" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;700;900" />
-  <link rel="stylesheet" href="https://mrlixm.github.io/static/m-dark.css" />
-  <link rel="icon" href="https://mrlixm.github.io/static/images/global/icons/lixm.svg" type="image/x-ico" />
-  <link href="https://mrlixm.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Liam Collod Website" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#20FC8F" />
-  <meta name="fediverse:creator" content="@liamcollod@mastodon.gamedev.place" />
-  <meta property="og:site_name" content="Liam Collod&#39;s Blog" />
-  <meta property="og:title" content="Liam Collod&#39;s Blog" />
-  <meta name="twitter:title" content="Liam Collod&#39;s Blog" />
-  <meta property="og:url" content="https://mrlixm.github.io/blog" />
-  <meta property="og:description" content="Personal website &amp; blog for Liam Collod (MrLixm)" />
-  <meta name="twitter:description" content="Personal website &amp; blog for Liam Collod (MrLixm)" />
-  <meta property="og:image" content="https://mrlixm.github.io/static/images/global/cover_social.jpg" />
-  <meta name="twitter:image" content="https://mrlixm.github.io/static/images/global/cover_social.jpg" />
-  <meta name="twitter:card" content="summary" />
-  <meta property="og:type" content="website" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>liam collod - Blog</title>
+  <link rel="icon" href="../.static/icons/logo-lixm.svg" type="image/x-ico">
+  
+  <meta name="description" content="This is my blog :)">
+  <meta name="fediverse:creator" content="@liamcollod@mastodon.gamedev.place">
+  <meta property="og:title" content="liam collod - Blog">
+  <meta property="og:type" content="website"><meta property="og:url" content="https://mrlixm.github.io/blog/index.html">
+  <meta property="og:description" content="This is my blog :)"><meta property="og:image" content="https://mrlixm.github.io/.static/images/cover-social.jpg">
+  
+  <link rel="stylesheet" href="../.static/styles/themes/default.css" />
+  
+  <link rel="stylesheet" href="../.static/fonts/Montserrat/Montserrat.css" />
+  
+  <link rel="stylesheet" href="../.static/fonts/SourceCodePro/SourceCodePro.css" />
+  
+  <link rel="stylesheet" href="../.static/fonts/SourceSansPro/SourceSansPro.css" />
+  
+  <link rel="stylesheet" href="../.static/styles/themes/pygments.onedark.css" />
+  
+  <link rel="stylesheet" href="../.static/styles/header.css" />
+  
+  <link rel="stylesheet" href="../.static/styles/footer.css" />
+  
+  <link rel="stylesheet" href="../.static/styles/base.css" />
+  
+  <link rel="stylesheet" href="../.static/styles/rst.css" />
+  
+  <link rel="stylesheet" href="blog.css" />
+  
+  <link rel="stylesheet" href="../.static/styles/shelf.css" />
+  
+  <link rel="stylesheet" href=".index.css" />
+  
+  <link rel="stylesheet" href="../.static/fonts/Escabeau/Escabeau.css" />
+  
 </head>
 <body>
-<header id="header">
-  <nav id="nav-box">
-    <a href="https://mrlixm.github.io/" id="logo" class="">
-      <img src="https://mrlixm.github.io/static/images/global/icons/lixm-outline.svg" alt="" id="logo-img"/>
-      <span class="logo-txt">Liam Collod</span>
-    </a>
-    <div class="l-nav-menu" id="nav-menu">
-      <ol>
-          <li><a href="https://mrlixm.github.io/work">Work</a></li>
-          <li><a href="https://mrlixm.github.io/blog" class="l-nav-active">Blog</a></li>
-          <li><a href="https://mrlixm.github.io/pages/contact">Contact</a></li>
-      </ol>
+<header>
+  
+    <div id="site-name">
+      <img src="../.static/icons/logo-lixm-outlines.svg" alt="my diamond-shape logo; quite minimalisitic." width="32px" height="32px">
+      <a href="../"><span>Liam Collod</span></a>
     </div>
-  </nav>
-  <div class="l-gradient-line"></div>
+    <nav class="main-nav" aria-label="Main menu">
+      <ul>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Work" class=""><a href="../work/"><span>Work</span><span>Work</span></a></li>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Blog" class="active"><a href="."><span>Blog</span><span>Blog</span></a></li>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Resources" class=""><a href="../resources/"><span>Resources</span><span>Resources</span></a></li>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Contact" class=""><a href="../contact"><span>Contact</span><span>Contact</span></a></li>
+        
+      </ul>
+    </nav>
+  
 </header>
 <main>
-  <section class="m-container m-container-inflatable">
-    <header title="Articles filters" id="filters">
-      <div class="l-line-v-s"></div>
-      <div class="l-filters-box m-col-l-none">
-        <input class="l-radio-none" id="filter-A" name="filter-radio" type="radio">
-        <input class="l-radio-none" id="filter-B" name="filter-radio" type="radio">
-        <input class="l-radio-none" id="filter-C" name="filter-radio" type="radio">
-        <input class="l-radio-none" id="filter-D" name="filter-radio" type="radio">
-        <form class="l-filters-toolbar">
-          <span class="l-filters-title">Filters</span>
-          <label class="l-filters-tab" id="filter-tab-A" for="filter-A">Categories</label>
-          <label class="l-filters-tab" id="filter-tab-B" for="filter-B">Tags</label>
-          <label class="l-filters-tab" id="filter-tab-C" for="filter-C">Authors</label>
-          <label class="l-filters-tab" id="filter-tab-D" for="filter-D" title="Hide filters">X</label>
-        </form>
-        <div class="l-filters-panels-box">
-          <div class="l-filters-panel" id="filter-panel-A" title="Categories list">
-              <span class="l-category l-flex-item" title="category">
-                <a href="https://mrlixm.github.io/category/breakdown.html">breakdown</a>
-              </span>
-              <span class="l-category l-flex-item" title="category">
-                <a href="https://mrlixm.github.io/category/meta.html">meta</a>
-              </span>
-              <span class="l-category l-flex-item" title="category">
-                <a href="https://mrlixm.github.io/category/resource.html">resource</a>
-              </span>
-              <span class="l-category l-flex-item" title="category">
-                <a href="https://mrlixm.github.io/category/tutorial.html">tutorial</a>
-              </span>
-          </div>
-          <div class="l-filters-panel" id="filter-panel-B" title="Tags list">
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/aces.html">ACES</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/arnold.html">arnold</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/coding.html">coding</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/color-science.html">color-science</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/discord.html">discord</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/image-processing.html">image-processing</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/instancing.html">instancing</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/katana.html">katana</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/lighting.html">lighting</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/lua.html">lua</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/mari.html">mari</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/math.html">math</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/maya.html">maya</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/memes.html">memes</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/nuke.html">nuke</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/ocio.html">OCIO</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/osl.html">osl</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/production.html">production</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/productivity.html">productivity</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/python.html">python</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/qt.html">qt</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/rendering.html">rendering</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/resolve.html">resolve</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/resources.html">resources</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/science.html">science</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/shading.html">shading</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/software.html">software</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/substance-painter.html">substance-painter</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/tonemapping.html">tonemapping</a>
-                </span>
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/tag/windows.html">windows</a>
-                </span>
-          </div>
-          <div class="l-filters-panel" id="filter-panel-C" title="Authors list">
-                <span class="l-tag l-flex-item l-flex-item-s" title="tag">
-                  <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a>
-                </span>
-          </div>
-          <div class="l-filters-panel" id="filter-panel-D" title="Hide filter panel">
-          </div>
-        </div>
+  <article class="read-area">
+    <section id="article-header">
+      <div class="article-header-content">
+        <span id="article-header-decoration"></span>
+        <h1 class="hover-expand-n-shrink">Blog</h1>
+        <section id="metadata-footer">
+            <p id="post-description" title="the post description">This is my blog :)</p>
+        </section>
       </div>
-    </header>
-      <article>
-        <header class="l-article-header" id="article-header">
-          <header class="l-post-context l-mrg-s" title="Post Context" id="post-context-header">
-            <span class="l-category">
-              <a href="https://mrlixm.github.io/category/tutorial.html">tutorial</a>
-            </span>
-              &nbsp;
-              &nbsp;
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/productivity.html">productivity</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/arnold.html">arnold</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/image-processing.html">image-processing</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/windows.html">windows</a>
-                </span>
-          </header>
-          <h1 title="Article title">
-            <a href="https://mrlixm.github.io/blog/windows-explorer-context-menu/" rel="bookmark" title="Permalink to Creating custom context menu for Windows file explorer.">
-              Creating custom context menu for Windows file explorer.
-            </a>
-          </h1>
-          <p>Making tx, rescaling image, displaying alembic content all as fast as
-          a right click can be.</p>
-          <footer class="l-post-context" id="post-context-footer">
-            <span class="l-time l-flex-item" title="Date Created">
-              <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-              <time datetime="2023-02-28T09:49:00+01:00">28 February 2023</time>
-            </span>
-              <span class="l-modified l-flex-item" title="Last Modified">
-                updated
-                <time datetime="2023-07-13T11:17:00+02:00">&nbsp;13 July 2023</time>
-              </span>
-            <span class="l-box-author l-flex-item" title="List of Authors">
-              <img src="/static/images/global/icons/account.svg" alt="Author icon" >
-              <span class="l-author" title="A post Author">
-                  <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a>
-              </span>
-            </span>
-          </footer>
-        </header>
-          <div class="m-clearfix-l"></div>
-        </article>
-      <article>
-        <header class="l-article-header" id="article-header">
-          <header class="l-post-context l-mrg-s" title="Post Context" id="post-context-header">
-            <span class="l-category">
-              <a href="https://mrlixm.github.io/category/tutorial.html">tutorial</a>
-            </span>
-              &nbsp;
-              &nbsp;
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/katana.html">katana</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/instancing.html">instancing</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/lua.html">lua</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/software.html">software</a>
-                </span>
-          </header>
-          <h1 title="Article title">
-            <a href="https://mrlixm.github.io/blog/katana_instancing/" rel="bookmark" title="Permalink to Instancing in Katana">
-              Instancing in Katana
-            </a>
-          </h1>
-          <p>How OpScript can be used to create a flexible solution for
-          instancing.</p>
-          <footer class="l-post-context" id="post-context-footer">
-            <span class="l-time l-flex-item" title="Date Created">
-              <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-              <time datetime="2022-03-30T20:58:00+02:00">30 March 2022</time>
-            </span>
-            <span class="l-box-author l-flex-item" title="List of Authors">
-              <img src="/static/images/global/icons/account.svg" alt="Author icon" >
-              <span class="l-author" title="A post Author">
-                  <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a>
-              </span>
-            </span>
-          </footer>
-        </header>
-          <div class="m-clearfix-l"></div>
-        </article>
-      <article>
-        <header class="l-article-header" id="article-header">
-          <header class="l-post-context l-mrg-s" title="Post Context" id="post-context-header">
-            <span class="l-category">
-              <a href="https://mrlixm.github.io/category/tutorial.html">tutorial</a>
-            </span>
-              &nbsp;
-              &nbsp;
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/substance-painter.html">substance-painter</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/color-science.html">color-science</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/ocio.html">OCIO</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/aces.html">ACES</a>
-                </span>
-          </header>
-          <h1 title="Article title">
-            <a href="https://mrlixm.github.io/blog/substance-painter-color-management/" rel="bookmark" title="Permalink to Color-management in Substance Painter with OCIO">
-              Color-management in Substance Painter with OCIO
-            </a>
-          </h1>
-          <p>The long-awaited OCIO feature is here, now we gotta find how it works.</p>
-          <footer class="l-post-context" id="post-context-footer">
-            <span class="l-time l-flex-item" title="Date Created">
-              <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-              <time datetime="2021-12-08T19:03:00+01:00">08 December 2021</time>
-            </span>
-              <span class="l-modified l-flex-item" title="Last Modified">
-                updated
-                <time datetime="2023-02-01T21:31:00+01:00">&nbsp;01 February 2023</time>
-              </span>
-            <span class="l-box-author l-flex-item" title="List of Authors">
-              <img src="/static/images/global/icons/account.svg" alt="Author icon" >
-              <span class="l-author" title="A post Author">
-                  <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a>
-              </span>
-            </span>
-          </footer>
-        </header>
-          <div class="m-clearfix-l"></div>
-        </article>
-      <article>
-        <header class="l-article-header" id="article-header">
-          <header class="l-post-context l-mrg-s" title="Post Context" id="post-context-header">
-            <span class="l-category">
-              <a href="https://mrlixm.github.io/category/tutorial.html">tutorial</a>
-            </span>
-              &nbsp;
-              &nbsp;
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/nuke.html">nuke</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/resolve.html">resolve</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/aces.html">ACES</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/tonemapping.html">tonemapping</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/color-science.html">color-science</a>
-                </span>
-          </header>
-          <h1 title="Article title">
-            <a href="https://mrlixm.github.io/blog/opendrt/" rel="bookmark" title="Permalink to OpenDRT : a nice (experimental) alternative to ACES">
-              OpenDRT : a nice (experimental) alternative to ACES
-            </a>
-          </h1>
-          <p>An open-source alternative to convert scene-linear data to SDR or
-          HDR display image.</p>
-          <footer class="l-post-context" id="post-context-footer">
-            <span class="l-time l-flex-item" title="Date Created">
-              <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-              <time datetime="2021-11-24T19:02:00+01:00">24 November 2021</time>
-            </span>
-            <span class="l-box-author l-flex-item" title="List of Authors">
-              <img src="/static/images/global/icons/account.svg" alt="Author icon" >
-              <span class="l-author" title="A post Author">
-                  <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a>
-              </span>
-            </span>
-          </footer>
-        </header>
-          <div class="m-clearfix-l"></div>
-        </article>
-      <article>
-        <header class="l-article-header" id="article-header">
-          <header class="l-post-context l-mrg-s" title="Post Context" id="post-context-header">
-            <span class="l-category">
-              <a href="https://mrlixm.github.io/category/resource.html">resource</a>
-            </span>
-              &nbsp;
-              &nbsp;
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/science.html">science</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/math.html">math</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/shading.html">shading</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/lighting.html">lighting</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/rendering.html">rendering</a>
-                </span>
-          </header>
-          <h1 title="Article title">
-            <a href="https://mrlixm.github.io/blog/cgi_whitepaper_database/" rel="bookmark" title="Permalink to CGI-related white-papers database">
-              CGI-related white-papers database
-            </a>
-          </h1>
-          <p><em>“ 70+ white-papers conveniently ordered for you “</em></p>
-          <footer class="l-post-context" id="post-context-footer">
-            <span class="l-time l-flex-item" title="Date Created">
-              <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-              <time datetime="2021-11-08T22:34:00+01:00">08 November 2021</time>
-            </span>
-            <span class="l-box-author l-flex-item" title="List of Authors">
-              <img src="/static/images/global/icons/account.svg" alt="Author icon" >
-              <span class="l-author" title="A post Author">
-                  <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a>
-              </span>
-            </span>
-          </footer>
-        </header>
-          <div class="m-clearfix-l"></div>
-        </article>
-      <article>
-        <header class="l-article-header" id="article-header">
-          <header class="l-post-context l-mrg-s" title="Post Context" id="post-context-header">
-            <span class="l-category">
-              <a href="https://mrlixm.github.io/category/resource.html">resource</a>
-            </span>
-              &nbsp;
-              &nbsp;
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/python.html">python</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/osl.html">osl</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/lua.html">lua</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/katana.html">katana</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/mari.html">mari</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/maya.html">maya</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/qt.html">qt</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/discord.html">discord</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/resources.html">resources</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/coding.html">coding</a>
-                </span>
-          </header>
-          <h1 title="Article title">
-            <a href="https://mrlixm.github.io/blog/vfx_coding_discord/" rel="bookmark" title="Permalink to A Discord server for Coding in VFX/CGI">
-              A Discord server for Coding in VFX/CGI
-            </a>
-          </h1>
-          <p><em>“ A bunch of resources you don’t want to miss “</em></p>
-          <footer class="l-post-context" id="post-context-footer">
-            <span class="l-time l-flex-item" title="Date Created">
-              <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-              <time datetime="2021-10-23T22:59:00+02:00">23 October 2021</time>
-            </span>
-            <span class="l-box-author l-flex-item" title="List of Authors">
-              <img src="/static/images/global/icons/account.svg" alt="Author icon" >
-              <span class="l-author" title="A post Author">
-                  <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a>
-              </span>
-            </span>
-          </footer>
-        </header>
-          <div class="m-clearfix-l"></div>
-        </article>
-      <article>
-        <header class="l-article-header" id="article-header">
-          <header class="l-post-context l-mrg-s" title="Post Context" id="post-context-header">
-            <span class="l-category">
-              <a href="https://mrlixm.github.io/category/breakdown.html">breakdown</a>
-            </span>
-              &nbsp;
-              &nbsp;
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/production.html">production</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/memes.html">memes</a>
-                </span>
-          </header>
-          <h1 title="Article title">
-            <a href="https://mrlixm.github.io/blog/prod_goes_wrong/" rel="bookmark" title="Permalink to When cgi-production goes wrong.">
-              When cgi-production goes wrong.
-            </a>
-          </h1>
-          <p>Producing content using a computer can lead sometimes to unexcepted results,
-          wether it’s the user fault or the software one. And this is especially true when
-          working on 3d animated movies …</p>
-          <footer class="l-post-context" id="post-context-footer">
-            <span class="l-time l-flex-item" title="Date Created">
-              <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-              <time datetime="2021-10-16T20:00:00+02:00">16 October 2021</time>
-            </span>
-              <span class="l-modified l-flex-item" title="Last Modified">
-                updated
-                <time datetime="2021-10-22T13:02:00+02:00">&nbsp;22 October 2021</time>
-              </span>
-            <span class="l-box-author l-flex-item" title="List of Authors">
-              <img src="/static/images/global/icons/account.svg" alt="Author icon" >
-              <span class="l-author" title="A post Author">
-                  <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a>
-              </span>
-            </span>
-          </footer>
-        </header>
-          <div class="m-clearfix-l"></div>
-        </article>
-      <article>
-        <header class="l-article-header" id="article-header">
-          <header class="l-post-context l-mrg-s" title="Post Context" id="post-context-header">
-              <span class="l-status l-bgc-red-l l-c-ldark l-flex-item" id="s-archived" title="Post status">
-                archived
-              </span>
-            <span class="l-category">
-              <a href="https://mrlixm.github.io/category/meta.html">meta</a>
-            </span>
-          </header>
-          <h1 title="Article title">
-            <a href="https://mrlixm.github.io/blog/first_post/" rel="bookmark" title="Permalink to First Post">
-              First Post
-            </a>
-          </h1>
-          <p>Gotta start somewhere huh ?</p>
-          <footer class="l-post-context" id="post-context-footer">
-            <span class="l-time l-flex-item" title="Date Created">
-              <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-              <time datetime="2021-10-10T19:00:00+02:00">10 October 2021</time>
-            </span>
-            <span class="l-box-author l-flex-item" title="List of Authors">
-              <img src="/static/images/global/icons/account.svg" alt="Author icon" >
-              <span class="l-author" title="A post Author">
-                  <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a>
-              </span>
-            </span>
-          </footer>
-        </header>
-          <div class="m-clearfix-l"></div>
-        </article>
     </section>
+    
+    <section id="blog-posts">
+          <div class="blog-post">
+            <span class="date-created" title="Date Created.">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <title>calendar-month</title>
+    <path fill="currentColor" d="M9,10V12H7V10H9M13,10V12H11V10H13M17,10V12H15V10H17M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H6V1H8V3H16V1H18V3H19M19,19V8H5V19H19M9,14V16H7V14H9M13,14V16H11V14H13M17,14V16H15V14H17Z"/>
+</svg>
+              <time datetime="2023-01-29T21:15:00">29 January 2023</time>
+            </span>
+            <a href="windows-explorer-context-menu/"><h2>Creating custom context menu for Windows file explorer.</h2></a>
+            <p class="post-description">Making tx, rescaling image, displaying alembic content all as fast as
+a right click can be.</p>
+            <div class="metadata-tags">
+                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.4s">productivity</pre>
+                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.6s">arnold</pre>
+                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.3s">image-processing</pre>
+                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.9s">windows</pre>
+            </div>
+          </div>
+          <div class="blog-post">
+            <span class="date-created" title="Date Created.">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <title>calendar-month</title>
+    <path fill="currentColor" d="M9,10V12H7V10H9M13,10V12H11V10H13M17,10V12H15V10H17M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H6V1H8V3H16V1H18V3H19M19,19V8H5V19H19M9,14V16H7V14H9M13,14V16H11V14H13M17,14V16H15V14H17Z"/>
+</svg>
+              <time datetime="2022-03-30T20:58:00">30 March 2022</time>
+            </span>
+            <a href="katana_instancing/"><h2>Instancing in Katana</h2></a>
+            <p class="post-description">How OpScript can be used to create a flexible solution for
+instancing.</p>
+            <div class="metadata-tags">
+                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.9s">katana</pre>
+                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.8s">instancing</pre>
+                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.7s">lua</pre>
+                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.5s">software</pre>
+            </div>
+          </div>
+          <div class="blog-post">
+            <span class="date-created" title="Date Created.">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <title>calendar-month</title>
+    <path fill="currentColor" d="M9,10V12H7V10H9M13,10V12H11V10H13M17,10V12H15V10H17M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H6V1H8V3H16V1H18V3H19M19,19V8H5V19H19M9,14V16H7V14H9M13,14V16H11V14H13M17,14V16H15V14H17Z"/>
+</svg>
+              <time datetime="2021-12-08T19:03:00">08 December 2021</time>
+            </span>
+            <a href="substance-painter-color-management/"><h2>Color-management in Substance Painter with OCIO</h2></a>
+            <p class="post-description">The long-awaited OCIO feature is here, now we gotta find how it works.</p>
+            <div class="metadata-tags">
+                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.2s">substance-painter</pre>
+                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.2s">color-science</pre>
+                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.9s">OCIO</pre>
+                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.5s">ACES</pre>
+            </div>
+          </div>
+          <div class="blog-post">
+            <span class="date-created" title="Date Created.">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <title>calendar-month</title>
+    <path fill="currentColor" d="M9,10V12H7V10H9M13,10V12H11V10H13M17,10V12H15V10H17M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H6V1H8V3H16V1H18V3H19M19,19V8H5V19H19M9,14V16H7V14H9M13,14V16H11V14H13M17,14V16H15V14H17Z"/>
+</svg>
+              <time datetime="2021-10-25T13:54:00">25 October 2021</time>
+            </span>
+            <a href="opendrt/"><h2>OpenDRT : a cool alternative to ACES</h2></a>
+            <p class="post-description">An open-source alternative to to form images out of high dynamic range data.</p>
+            <div class="metadata-tags">
+                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.6s">nuke</pre>
+                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.6s">resolve</pre>
+                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.3s">ACES</pre>
+                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.5s">tonemapping</pre>
+                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.8s">color-science</pre>
+            </div>
+          </div>
+          <div class="blog-post">
+            <span class="date-created" title="Date Created.">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <title>calendar-month</title>
+    <path fill="currentColor" d="M9,10V12H7V10H9M13,10V12H11V10H13M17,10V12H15V10H17M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H6V1H8V3H16V1H18V3H19M19,19V8H5V19H19M9,14V16H7V14H9M13,14V16H11V14H13M17,14V16H15V14H17Z"/>
+</svg>
+              <time datetime="2021-10-16T20:00:00">16 October 2021</time>
+            </span>
+            <a href="prod_goes_wrong/"><h2>When cgi-production goes wrong.</h2></a>
+            <p class="post-description">Crafting images using a computer can sometimes lead to unexcepted results,
+wether it's the user fault or the software one. And this is especially true when
+working on 3d animated movies ...</p>
+            <div class="metadata-tags">
+                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.5s">production</pre>
+                <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.5s">memes</pre>
+            </div>
+          </div>
+          <div class="blog-post">
+            <span class="date-created" title="Date Created.">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <title>calendar-month</title>
+    <path fill="currentColor" d="M9,10V12H7V10H9M13,10V12H11V10H13M17,10V12H15V10H17M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H6V1H8V3H16V1H18V3H19M19,19V8H5V19H19M9,14V16H7V14H9M13,14V16H11V14H13M17,14V16H15V14H17Z"/>
+</svg>
+              <time datetime="2021-10-10T19:00:00">10 October 2021</time>
+            </span>
+            <a href="first_post/"><h2>First Post</h2></a>
+            <p class="post-description">Gotta start somewhere ayy ?</p>
+            <div class="metadata-tags">
+            </div>
+          </div>
+    </section>
+  </article>
+
 </main>
 <footer>
-  <nav aria-label="Website informations.">
-    <div class="m-container">
-      <div class="m-row">
-        <div class="m-col-l-10 m-push-l-1">
-          <p>Copyright © <a href="mailto:lcollod&#64;gmail.com">Liam Collod</a> 2021 - 2025. All rights
-        reserved. Made with <a href="https://blog.getpelican.com/">Pelican</a> and
-        <a href="https://mcss.mosra.cz/">m.css</a> .</p>
-        </div>
-      </div>
-    </div>
-  </nav>
+  
+    <p>Static website <a href="../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
+      Last built on <i>2025-05-21T12:51</i> from commit <i>dca4b70</i></p>
+    <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
+  
 </footer>
 </body>
 </html>

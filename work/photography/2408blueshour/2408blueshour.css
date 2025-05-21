@@ -1,0 +1,27 @@
+@import url(https://fonts.bunny.net/css?family=spectral:400i);
+
+body {
+    background:
+            linear-gradient(180deg, rgba(2, 16, 35, 0.5) 0%, rgba(30, 20, 8, 0.5) 100%),
+            url("../noise.dust.light.svg"),
+            url("../noise.svg"),
+            rgb(10, 11, 17);
+    /*background-blend-mode: multiply, color-dodge;*/
+}
+.article-header-content, h1 {
+    font-family: "Spectral", serif;
+}
+.image-gallery {
+    .line, .line code {
+        font-size: 1.3rem;
+        font-family: "Spectral", serif;
+        line-height: 1.9rem;
+        text-align: center;
+    }
+    label {
+        font-family: "Spectral", serif;
+    }
+    img {
+        box-shadow: black 0 0 50px;
+    }
+}

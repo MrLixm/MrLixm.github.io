@@ -1,0 +1,12 @@
+@font-face {
+    font-family: '0XA000-Mono';
+    src: url('0xA000-Mono-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: '0xA000-Pixelated';
+    src: url('0xA000-Pixelated.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

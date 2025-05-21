@@ -1,0 +1,643 @@
+<!doctype html>
+<!-- 🐸🐸𓆏🐸 who puts frogs in the html !!! 𓆏𓆏🐸 -->
+<html lang="en" prefix="og: https://ogp.me/ns#">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>liam collod - Site Developer Documentation</title>
+  <link rel="icon" href="../.static/icons/logo-lixm.svg" type="image/x-ico">
+  
+  <meta name="description" content="The developer documentation for building this html site.">
+  <meta name="fediverse:creator" content="@liamcollod@mastodon.gamedev.place">
+  <meta property="og:title" content="liam collod - Site Developer Documentation">
+  <meta property="og:type" content="website"><meta property="og:url" content="https://mrlixm.github.io/.doc/index.html">
+  <meta property="og:description" content="The developer documentation for building this html site."><meta property="og:image" content="https://mrlixm.github.io/.static/images/cover-social.jpg">
+  
+  <link rel="stylesheet" href="../.static/styles/themes/default.css" />
+  
+  <link rel="stylesheet" href="../.static/fonts/Montserrat/Montserrat.css" />
+  
+  <link rel="stylesheet" href="../.static/fonts/SourceCodePro/SourceCodePro.css" />
+  
+  <link rel="stylesheet" href="../.static/fonts/SourceSansPro/SourceSansPro.css" />
+  
+  <link rel="stylesheet" href="../.static/styles/themes/pygments.onedark.css" />
+  
+  <link rel="stylesheet" href="../.static/styles/header.css" />
+  
+  <link rel="stylesheet" href="../.static/styles/footer.css" />
+  
+  <link rel="stylesheet" href="../.static/styles/base.css" />
+  
+  <link rel="stylesheet" href="../.static/styles/rst.css" />
+  
+  <link rel="stylesheet" href="doc.css" />
+  
+</head>
+<body>
+<header>
+  
+    <div id="site-name">
+      <img src="../.static/icons/logo-lixm-outlines.svg" alt="my diamond-shape logo; quite minimalisitic." width="32px" height="32px">
+      <a href="../"><span>Liam Collod</span></a>
+    </div>
+    <nav class="main-nav" aria-label="Main menu">
+      <ul>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Work" class=""><a href="../work/"><span>Work</span><span>Work</span></a></li>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Blog" class=""><a href="../blog/"><span>Blog</span><span>Blog</span></a></li>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Resources" class=""><a href="../resources/"><span>Resources</span><span>Resources</span></a></li>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Contact" class=""><a href="../contact"><span>Contact</span><span>Contact</span></a></li>
+        
+      </ul>
+    </nav>
+  
+</header>
+<main>
+  <article class="read-area">
+    <h1>Site Developer Documentation</h1>
+    <p>The developer documentation for building this html site.</p>
+    <div class="nav-button docutils container">
+<p><a class="reference external" href="test.html">&lt; previous page</a> <a class="reference external" href="test.html">next page &gt;</a></p>
+</div>
+<aside class="toc-wrapper sidebar">
+<nav class="contents" id="table-of-contents">
+<p class="topic-title"><a class="reference internal" href="#top">Table Of Contents</a></p>
+<div class="toc-list docutils container">
+<ul class="simple">
+<li><p><a class="reference internal" href="#basics" id="toc-entry-1">Basics</a></p>
+<ul>
+<li><p><a class="reference internal" href="#siteignore-files" id="toc-entry-2">.siteignore files</a></p></li>
+<li><p><a class="reference internal" href="#shelf-feature" id="toc-entry-3">shelf feature</a></p></li>
+<li><p><a class="reference internal" href="#build-process" id="toc-entry-4">build process</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#creating-a-page" id="toc-entry-5">Creating a page</a></p>
+<ul>
+<li><p><a class="reference internal" href="#writing-rst-content" id="toc-entry-6">writing rst content</a></p></li>
+<li><p><a class="reference internal" href="#page-metadata" id="toc-entry-7">page metadata</a></p></li>
+<li><p><a class="reference internal" href="#rst-directives" id="toc-entry-8">rst directives</a></p>
+<ul>
+<li><p><a class="reference internal" href="#code-code-block" id="toc-entry-9">code, code-block</a></p></li>
+<li><p><a class="reference internal" href="#admonitions" id="toc-entry-10">admonitions</a></p>
+<ul>
+<li><p><a class="reference internal" href="#highlight" id="toc-entry-11">highlight</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#url-preview" id="toc-entry-12">url-preview</a></p></li>
+<li><p><a class="reference internal" href="#image-grid" id="toc-entry-13">image-grid</a></p></li>
+<li><p><a class="reference internal" href="#image-gallery" id="toc-entry-14">image-gallery</a></p>
+<ul>
+<li><p><a class="reference internal" href="#image-frame" id="toc-entry-15">image-frame</a></p>
+<ul>
+<li><p><a class="reference internal" href="#image-meta-file" id="toc-entry-16">image .meta file</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#meta-json-files" id="toc-entry-17">.meta.json files</a></p></li>
+<li><p><a class="reference internal" href="#writing-page-html-templates" id="toc-entry-18">Writing page html templates</a></p>
+<ul>
+<li><p><a class="reference internal" href="#script-system" id="toc-entry-19">script system</a></p></li>
+<li><p><a class="reference internal" href="#cross-referencing" id="toc-entry-20">cross-referencing</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+</aside>
+<p>This is a static website, meaning all its content is generated before being
+published online and every page correspond to a single html file.</p>
+<p>The published website is just HTML and CSS, that are generated using a custom
+workflow based on Python, rst and Jinja.</p>
+<section id="basics">
+<h2><a class="toc-backref" href="#toc-entry-1" role="doc-backlink">Basics</a></h2>
+<p>The philoshophy for this website is that the source file structure represents
+the published site structure. It tries to be as explicit as possible.</p>
+<p>So let's say your website is published at <span class="docutils literal"><span class="pre">https://mywebsite.com</span></span>, then
+<span class="docutils literal"><span class="pre">https://mywebsite.com/blog/index.html</span></span> implies there must be a
+<span class="docutils literal">/blog/index.rst</span> file. Same for <span class="docutils literal"><span class="pre">https://mywebsite.com/images/art.jpg</span></span> which
+implies <span class="docutils literal">images/art.jpg</span> must exist in the source file structure.</p>
+<aside class="admonition hint">
+<p class="admonition-title">hint</p>
+<p>A common convention for the web is that <span class="docutils literal"><span class="pre">https://mywebsite.com/blog</span></span> will redirect
+to <span class="docutils literal"><span class="pre">https://mywebsite.com/blog/index.html</span></span> which is why you will usually
+create an <span class="docutils literal">index.rst</span> file in every directory.</p>
+<p>(this convention depends on the web server serving your files).</p>
+</aside>
+<p>It is possible to exclude some file in the source hierarchy to be collected.
+This is achieved using the <span class="docutils literal">.siteignore</span> mechanism.</p>
+<p>Another feature which affect the file structure is <em>shelves</em>. A shelf will
+allow to group and browse multiple pages.</p>
+<aside class="admonition caution">
+<p class="admonition-title">caution</p>
+<p>All paths/urls are assumed to be made without whitespace. Adding whitespace
+may have unexpected consequences when being parsed.</p>
+</aside>
+<section id="siteignore-files">
+<h3><a class="toc-backref" href="#toc-entry-2" role="doc-backlink">.siteignore files</a></h3>
+<p>A .siteignore is a file that indicate which path must not be collected to build
+the site. It can be fond at root but also in any directory.</p>
+<p>It's file format is as follow:</p>
+<ul class="simple">
+<li><p>each line defines a &quot;path expression&quot; which resolves to multiple paths to ignore.</p></li>
+<li><p>a line can be empty</p></li>
+<li><p><em>path expression</em> follow the python <a class="reference external" href="https://docs.python.org/3/library/glob.html">glob</a> syntax</p></li>
+<li><p><em>path expression</em> MUST be relative to the .siteignore file directory</p></li>
+<li><p><em>path expression</em> may resolve to non-existing paths</p></li>
+</ul>
+<p>.siteignore files are cumulative, this means that their paths are made absolute
+then grouped together and its this list which is used to ignore paths.</p>
+<p>Example:</p>
+<pre class="literal-block">.siteignore
+   **/.*.html
+   *.txt
+index.html
+somestuff.txt
+blog/
+   .siteignore
+      **/*.cpp
+   index.html
+   .template.html
+   snippet.cpp
+   resource.txt</pre>
+<p>In the above we have an expression at root that will ignore all html files
+that starts with a dot, the <span class="docutils literal">**</span> is a glob pattern which express recursion,
+meaning that <span class="docutils literal"><span class="pre">blog/.template.html</span></span> will be ignored. We will also ignore
+<span class="docutils literal">somestuff.txt</span> but NOT <span class="docutils literal">resource.txt</span>.</p>
+<p>We then ignore <span class="docutils literal">blog/snippet.cpp</span>.</p>
+</section>
+<section id="shelf-feature">
+<h3><a class="toc-backref" href="#toc-entry-3" role="doc-backlink">shelf feature</a></h3>
+<p>TBD</p>
+</section>
+<section id="build-process">
+<h3><a class="toc-backref" href="#toc-entry-4" role="doc-backlink">build process</a></h3>
+<p>This is how the source file structure is parsed the site final file structure:</p>
+<ul class="simple">
+<li><p>collect all file paths in the source directory and ignore some paths using the .siteignore files.</p></li>
+<li><p>read and convert rst file as pages</p></li>
+<li><p>collect shelves</p></li>
+<li><p>render pages with their template and write to disk</p></li>
+<li><p>write shelves pages to disk</p></li>
+<li><p>copy static resources</p></li>
+</ul>
+<p>See <span class="docutils literal">lxmsite._build</span> for the code implementation.</p>
+</section>
+</section>
+<section id="creating-a-page">
+<h2><a class="toc-backref" href="#toc-entry-5" role="doc-backlink">Creating a page</a></h2>
+<p>All pages MUST have an .rst file, even if it just have a title. You are then
+free to define its content using the standard rst syntax or to manually
+create the html with a template.</p>
+<section id="writing-rst-content">
+<h3><a class="toc-backref" href="#toc-entry-6" role="doc-backlink">writing rst content</a></h3>
+<p>See <a class="reference external" href="https://docutils.sourceforge.io/docs/user/rst/quickref.html">https://docutils.sourceforge.io/docs/user/rst/quickref.html</a>.</p>
+</section>
+<section id="page-metadata">
+<h3><a class="toc-backref" href="#toc-entry-7" role="doc-backlink">page metadata</a></h3>
+<p>This are the fields that are understood as page metadata:</p>
+<table class="inline">
+<thead>
+<tr><th class="head"><p>name</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr><td><p><span class="docutils literal">authors</span></p></td>
+<td><p>Comma separated list of person who authored the page. See <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name">https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name</a></p></td>
+</tr>
+<tr><td><p><span class="docutils literal">tags</span></p></td>
+<td><p>List of tags matching the page topics</p></td>
+</tr>
+<tr><td><p><span class="docutils literal">language</span></p></td>
+<td><p>Language of the page. As standardized by <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang">https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang</a> and <a class="reference external" href="https://www.w3.org/International/articles/language-tags/">https://www.w3.org/International/articles/language-tags/</a></p></td>
+</tr>
+<tr><td><p><span class="docutils literal">title</span></p></td>
+<td><p>Additional override if the rst file title is not desired. See <a class="reference external" href="https://ogp.me/#metadata">https://ogp.me/#metadata</a></p></td>
+</tr>
+<tr><td><p><span class="docutils literal">type</span></p></td>
+<td><p>Caracterize the kind of content of the page. As standardized by <a class="reference external" href="https://ogp.me/#types">https://ogp.me/#types</a></p></td>
+</tr>
+<tr><td><p><span class="docutils literal">image</span></p></td>
+<td><p>Relative file path to the image to use as cover for the page. See <a class="reference external" href="https://ogp.me/#metadata">https://ogp.me/#metadata</a></p></td>
+</tr>
+<tr><td><p><span class="docutils literal"><span class="pre">image-alt</span></span></p></td>
+<td><p>Alt text to describe the content of the <span class="docutils literal">image</span> field.</p></td>
+</tr>
+<tr><td><p><span class="docutils literal">description</span></p></td>
+<td><p>Short, human-readable summary of the page content. See <a class="reference external" href="https://ogp.me/#optional">https://ogp.me/#optional</a></p></td>
+</tr>
+<tr><td><p><span class="docutils literal"><span class="pre">date-created</span></span></p></td>
+<td><p>Date at which the page was created. Format is <span class="docutils literal"><span class="pre">YYYY-MM-DDThh:mm</span></span>. See <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">https://en.wikipedia.org/wiki/ISO_8601</a></p></td>
+</tr>
+<tr><td><p><span class="docutils literal"><span class="pre">date-modified</span></span></p></td>
+<td><p>Date at which the page was last modified. Format is <span class="docutils literal"><span class="pre">YYYY-MM-DDThh:mm</span></span>. See <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">https://en.wikipedia.org/wiki/ISO_8601</a></p></td>
+</tr>
+<tr><td><p><span class="docutils literal">template</span></p></td>
+<td><p>Relative file path to the html template to use for rendering the page.</p></td>
+</tr>
+<tr><td><p><span class="docutils literal">stylesheets</span></p></td>
+<td><p>Comma separated list of stylesheet path relative to the page. Prefix with a + to inherit the parent stylesheets.</p></td>
+</tr>
+<tr><td><p><span class="docutils literal">status</span></p></td>
+<td><p>either <span class="docutils literal">published</span> (no effect) or <span class="docutils literal">unlisted</span> (will be excluded from being listed in its parent shelf)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Some extra fields may be used depending on the context:</p>
+<dl>
+<dt>blog context:</dt>
+<dd><table class="inline">
+<thead>
+<tr><th class="head"><p>name</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr><td><p><span class="docutils literal">category</span></p></td>
+<td><p>(optional) which type of content is the page</p></td>
+</tr>
+<tr><td><p><span class="docutils literal">cover</span></p></td>
+<td><p>(optional) path to an image to display on top of the blog post.</p></td>
+</tr>
+<tr><td><p><span class="docutils literal"><span class="pre">cover-alt</span></span></p></td>
+<td><p>(optional) the alt text for the cover image.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt>resources context:</dt>
+<dd><table class="inline">
+<thead>
+<tr><th class="head"><p>name</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr><td><p><span class="docutils literal">category</span></p></td>
+<td><p>(optional) which type of content is the page</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<p>A field is specified under the page title as <span class="docutils literal"><span class="pre">:field-name:</span> value</span>. Example:</p>
+<pre class="highlight literal-block" title="Block of code in rst language."><span class="gh">my page</span>
+<span class="gh">=======</span>
+
+<span class="nc">:description:</span> this is quite a long summary that would be
+   cool to wrap on 2 lines.
+</pre>
+<aside class="admonition note">
+<p class="admonition-title">note</p>
+<ul class="simple">
+<li><p>All file paths must be relative to the parent directory of the rst file.</p></li>
+<li><p>All file paths use posix-like forward slashes, like <span class="docutils literal">my/path/to/file</span>.</p></li>
+<li><p>All file paths refer to the built site, not files in the source directory.</p></li>
+</ul>
+</aside>
+<p>See <span class="docutils literal">lxmsite._page</span> for the code implementation.</p>
+</section>
+<section id="rst-directives">
+<h3><a class="toc-backref" href="#toc-entry-8" role="doc-backlink">rst directives</a></h3>
+<p>In extent to the builtin rst directives ( <a class="reference external" href="https://docutils.sourceforge.io/docs/ref/rst/directives.html">https://docutils.sourceforge.io/docs/ref/rst/directives.html</a> ), we provides
+additional directives, or edit the existing ones.</p>
+<p>Here is a quick directive's glossary as reminder:</p>
+<pre class="highlight literal-block" title="Block of code in rst language."><span class="p">..</span> <span class="ow">directivename</span><span class="p">::</span> argument1 argument2
+    <span class="nc">:option1:</span>
+    <span class="nc">:option2:</span>
+
+    content
+</pre>
+<section id="code-code-block">
+<h4><a class="toc-backref" href="#toc-entry-9" role="doc-backlink">code, code-block</a></h4>
+<p>You can embed code snippets with the <span class="docutils literal">code</span> and <span class="docutils literal"><span class="pre">code-block</span></span> directives. They use <a class="reference external" href="https://pygments.org/">pygments</a>
+to provide syntax highlighting.</p>
+<ul class="simple">
+<li><p>The list of supported languages: <a class="reference external" href="https://pygments.org/languages/">https://pygments.org/languages/</a></p></li>
+<li><p>The list of supported options: <a class="reference external" href="https://pygments.org/docs/formatters/#HtmlFormatter">https://pygments.org/docs/formatters/#HtmlFormatter</a></p></li>
+</ul>
+<p>Example:</p>
+<pre class="highlight literal-block" title="Block of code in rst language."><span class="p">..</span> <span class="ow">code</span><span class="p">::</span> languageName
+    <span class="nc">:option1:</span> optionValue
+
+    your code
+    in multiple lines
+</pre>
+</section>
+<section id="admonitions">
+<h4><a class="toc-backref" href="#toc-entry-10" role="doc-backlink">admonitions</a></h4>
+<p>Admonitions are builtin to rst and there is no changes to them.</p>
+<blockquote>
+<div class="line-block">
+<div class="line">admonition, attention, caution, danger, error, hint, important, note, tip, warning</div>
+<div class="line">-- <a class="reference external" href="https://docutils.sourceforge.io/docs/ref/rst/directives.html#admonitions">https://docutils.sourceforge.io/docs/ref/rst/directives.html#admonitions</a></div>
+</div>
+</blockquote>
+<p>If you want to render a specific admonition type with a custom title you can use the generic <span class="docutils literal">.. admonition::</span> and
+add the class option with the type. Example:</p>
+<pre class="highlight literal-block" title="Block of code in rst language."><span class="p">..</span> <span class="ow">admonition</span><span class="p">::</span> 🍕 About pizza
+    <span class="nc">:class:</span> warning
+
+    Pineapple do belongs on them.
+</pre>
+<p>Will render:</p>
+<aside class="admonition warning">
+<p class="admonition-title">🍕 About pizza</p>
+<p>Pineapple do belongs on them.</p>
+</aside>
+<section id="highlight">
+<h5><a class="toc-backref" href="#toc-entry-11" role="doc-backlink">highlight</a></h5>
+<p>It is however possible to have an admonition without a title using the custom directive <span class="docutils literal">.. highlight::</span>:</p>
+<pre class="highlight literal-block" title="Block of code in rst language."><span class="p">..</span> <span class="ow">highlight</span><span class="p">::</span>
+    <span class="nc">:class:</span> tip
+
+    Look ma&#39;, no hands !
+</pre>
+<p>Will render:</p>
+<aside class="admonition tip highlight-block">
+<p>Look ma', no hands !</p>
+</aside>
+</section>
+</section>
+<section id="url-preview">
+<h4><a class="toc-backref" href="#toc-entry-12" role="doc-backlink">url-preview</a></h4>
+<p>This is a customd directive which allow you to share links as &quot;static embeds&quot;, meaning they have the box with rich
+content that is prettier than just a link, but you actually have to write all the rich content yourself instead of
+having fetch using javascript.</p>
+<p>It required one mandatory argument which is the url to &quot;prettify&quot;.</p>
+<p>The directive have 4 options:</p>
+<ul class="simple">
+<li><p><span class="docutils literal">title</span>: title to use for the preview</p></li>
+<li><p><span class="docutils literal">image</span>: url to an image file (relative or absolute).</p></li>
+<li><p><span class="docutils literal">svg</span>: relative url to a local svg file (relative to the page directory).</p></li>
+<li><p><span class="docutils literal">color</span>: the css color of the svg.</p></li>
+<li><p><span class="docutils literal"><span class="pre">svg-size</span></span>: 1 or 2 number indicating the size of the svg. ex: '64' will set the svg to 64x64 px</p></li>
+</ul>
+<p>The content of the directive will be used as description.</p>
+<p>Example:</p>
+<pre class="highlight literal-block" title="Block of code in rst language."><span class="p">..</span> <span class="ow">url-preview</span><span class="p">::</span> https://mrlixm.github.io/
+    <span class="nc">:title:</span> Website - Liam Collod
+    <span class="nc">:image:</span> ../.static/images/cover-social.jpg
+
+    Check my website &amp; blog. VFX, imaging and software development.
+</pre>
+<div class="url-preview-box docutils container">
+<a class="reference external" href="https://mrlixm.github.io/">
+</a>
+<div class="url-preview-image docutils container">
+<img alt="" class="inline" src="../.static/images/cover-social.jpg" />
+</div>
+<div class="url-preview-details docutils container">
+<p class="url-preview-title">Website - Liam Collod</p>
+<div class="url-preview-subtitle docutils container">
+<a class="reference external" href="https://mrlixm.github.io/">
+https://mrlixm.github.io/</a>
+</div>
+<div class="url-preview-description docutils container">
+<p>Check my website &amp; blog. VFX, imaging and software development.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="image-grid">
+<h4><a class="toc-backref" href="#toc-entry-13" role="doc-backlink">image-grid</a></h4>
+<p>When needing to display a lot of image in a non-sequential layout (so as a grid), you
+can use the <span class="docutils literal">.. <span class="pre">image-grid::</span></span> directive.</p>
+<p>It accept no argument, neither options and all works based on its content.</p>
+<p>Each line of the content is treated as an image. You group images into one row
+by separating them by a blank line. The line must start by the image uri, relative
+to the page its in and is optionally followed by the image caption.</p>
+<aside class="admonition warning">
+<p class="admonition-title">warning</p>
+<p>The image path cannot contains whitespaces</p>
+</aside>
+<p>It is possible the image caption span multiple line; in that case the following lines
+must start with a 2+ spaced indent.</p>
+<p>Example:</p>
+<pre class="highlight literal-block" title="Block of code in rst language."><span class="p">..</span> <span class="ow">image-grid</span><span class="p">::</span>
+
+    path/to/image1.jpg
+    path/to/image2.jpg
+
+    path/to/image3.jpg some caption that will be displayed under
+    path/to/image4.jpg the caption can span
+        multiple lines if it&#39;s too long.
+    path/to/image5.jpg
+</pre>
+</section>
+<section id="image-gallery">
+<h4><a class="toc-backref" href="#toc-entry-14" role="doc-backlink">image-gallery</a></h4>
+<p>The <span class="docutils literal">.. <span class="pre">image-gallery::</span></span> is a more advanced directive to showcase images,
+their metdata and their caption.</p>
+<p>It's build upon a 2-column layout in which you choose to add images or their caption
+independently.</p>
+<p>The directive have no arguments and expect 4 mandatory options:</p>
+<ul class="simple">
+<li><p><span class="docutils literal">:left:</span> comma separated list of items id to add to the left column (in order).</p></li>
+<li><p><span class="docutils literal">:right:</span> comma separated list of items id to add to the right column (in order).</p></li>
+<li><p><span class="docutils literal"><span class="pre">:left-width:</span></span> a single float, the width in percent of the left column</p></li>
+<li><p><span class="docutils literal"><span class="pre">:right-width:</span></span> a single float, the width in percent of the right column</p></li>
+</ul>
+<p>The content will allow to specify which image to display and configure their caption
+and metadata. This is achieved by using another directive <span class="docutils literal">.. <span class="pre">image-frame::</span></span>.</p>
+<p>You add as much <span class="docutils literal"><span class="pre">image-frame</span></span> directive as there is image to showcase.</p>
+<section id="image-frame">
+<h5><a class="toc-backref" href="#toc-entry-15" role="doc-backlink">image-frame</a></h5>
+<p>This directive allow to declare an image, its identifier, and its metadata. It have
+2 &quot;modes&quot; to specify the metadata: inline in the rst file or retrieved from a meta file.
+The 2 modes can be used together where the inline metadata will override any metadata
+specified in the file.</p>
+<p>It expects 3 mandatory arguments, 1 optional option and optional content.</p>
+<p>The 3 arguments are in order: &quot;image id&quot;, &quot;label id&quot;, &quot;image uri / meta file path&quot;</p>
+<p>The 1 options is <span class="docutils literal">:metadata:</span> which expect to define a mapping of &quot;metadata name&quot;: &quot;value&quot;,
+formalized as a list of line where each line is a pair.</p>
+<aside class="admonition tip">
+<p class="admonition-title">tip</p>
+<p>Each pair will correspond to a list item that will receive the metadata name as
+css-class which allow indifidual styling based on the metadata.</p>
+</aside>
+<p>The content will be the image caption (its &quot;label&quot;).</p>
+<p>Example:</p>
+<pre class="highlight literal-block" title="Block of code in rst language."><span class="p">..</span> <span class="ow">image-gallery</span><span class="p">::</span>
+    <span class="nc">:left:</span> image1
+    <span class="nc">:right:</span> label1, image2, label2
+    <span class="nc">:left-width:</span> 35
+    <span class="nc">:right-width:</span> 65
+
+<span class="p">    ..</span> <span class="ow">image-frame</span><span class="p">::</span> image1 label1 photo1.jpg
+        <span class="nc">:metadata:</span>
+            date: 2024-11 early morning
+            location: France - Lyon - Parc de la Tete d’Or
+            film: 35mm Kodak Gold 200
+            lens: Minolta MD 35mm
+
+        some of the text descrption of the image
+        that can span multiple lines
+
+<span class="p">    ..</span> <span class="ow">image-frame</span><span class="p">::</span> image2 label2 photo2.jpg.meta
+        <span class="nc">:metadata:</span>
+            author: Liam
+
+        -- {caption} -- (shot on {camera})
+</pre>
+<p>In the above example, we define the first image inline, while the second image
+relies on a meta file. However for that second image we add an extra metadata key
+&quot;author&quot; and we slightly improve the meta file caption thanks to tokens <span class="docutils literal">{meta name}</span>.</p>
+<aside class="admonition tip">
+<p class="admonition-title">tip</p>
+<p>Any metadata key defined in the meta file can be used in the directive content.</p>
+</aside>
+<section id="image-meta-file">
+<h6><a class="toc-backref" href="#toc-entry-16" role="doc-backlink">image .meta file</a></h6>
+<p>A meta file allow to specify an image metadata as key: value pair with a quite
+human-friendly syntax (close to yaml but not yaml).</p>
+<p>The meta file name MUST the full image filename it characterize (including the file format suffix)
++ the <span class="docutils literal">.meta</span> suffix. Example:</p>
+<pre class="literal-block">photo-cat.png &gt; photo-cat.png.meta</pre>
+<p>For its content, each line represent a metadata to set. The syntax is <span class="docutils literal">metadata name: value</span>.
+It's possible the value span multiple lines if you indent the following lines with at
+least 2 spaces. Example:</p>
+<pre class="literal-block">camera: Lumix S5IIX
+description: here is some text that
+    will be spanning multiple lines
+date: Monday</pre>
+<p>The metadata names can be whatever you want except for <span class="docutils literal">caption</span> that must correspond
+to the caption used to label the image.</p>
+<aside class="admonition warning">
+<p class="admonition-title">warning</p>
+<p>Do not put empty lines between metadatas as they will be treated as part of the value
+of the last metadata defined. However you can add an empty line at the end of the
+document and it will be ignored.</p>
+</aside>
+</section>
+</section>
+</section>
+</section>
+</section>
+<section id="meta-json-files">
+<h2><a class="toc-backref" href="#toc-entry-17" role="doc-backlink">.meta.json files</a></h2>
+<p>We see previously that each rst page can define some metadata at its top. However
+specifying everytime some of those fields is a repetitive task. To adress this issue
+you can use meta files.</p>
+<p>Meta files are json files whose content specify default metadata value to use for all
+files that are next or children in the hierarchy of the meta file. The meta file hierachy
+is recursively merged so the meta file &quot;closest&quot; to your page will get priority.</p>
+<p>Example:</p>
+<pre class="highlight literal-block" title="Block of code in text language.">.meta.json
+index.rst
+blog/
+    .meta.json
+    index.rst
+    post1.rst
+    post2.rst
+</pre>
+<!--  -->
+<blockquote>
+<p>In the above example <span class="docutils literal">.meta.json</span> at root will affect <span class="docutils literal">index.rst</span> but also all
+files in the <span class="docutils literal">blog/</span> directory. However the content of <span class="docutils literal"><span class="pre">blog/.meta.json</span></span> will take
+priority over the root one.</p>
+</blockquote>
+<p>Meta file use standard JSON syntax, where a non-nested dict is expected. Each root key
+defines the name of the metadata to set, which is the same as you would use in the rst
+page. The value can either be a string or list of string.</p>
+<p>List of strings are handled differently but allow merging, this mean that the child
+meta file will <span class="docutils literal">extend()</span> the parent meta file list if it exists. When resolved
+in the rst file, lists are converted back to string by joining its items with a <span class="docutils literal">,</span>.</p>
+<p>It's also totally possibel that for the same metadata key, switch between a list type
+or a str type. A str type will override any list value defined before, and a list value
+when the previous value was a string, will cast the previous value to a list automatically.</p>
+<p><em>The code logic can be found in</em> <span class="docutils literal">lmxsite._browse</span>.</p>
+</section>
+<section id="writing-page-html-templates">
+<h2><a class="toc-backref" href="#toc-entry-18" role="doc-backlink">Writing page html templates</a></h2>
+<p>All html templates are processed with <a class="reference external" href="https://jinja.palletsprojects.com/en/stable/">Jinja</a>.
+Refers to their documentation for how to write Jinja templates.</p>
+<p>In addition to the standard Jinja syntax, the following objects are available (some
+explained in details after):</p>
+<p><strong>filters:</strong></p>
+<ul class="simple">
+<li><p><span class="docutils literal">slugify</span>: make the string url-compatible</p></li>
+<li><p><span class="docutils literal">mksiteabs</span>: Convert the given site-relative url to absolute.</p></li>
+<li><p><span class="docutils literal">mksiterel</span>: make an internal link relative to the site root</p></li>
+<li><p><span class="docutils literal">mkpagerel</span>: make an internal link relative to the current page</p></li>
+<li><p><span class="docutils literal">prettylink</span>: remove the &quot;.html&quot; or &quot;index.html&quot; of internal links</p></li>
+</ul>
+<p><strong>variables:</strong></p>
+<ul class="simple">
+<li><p><span class="docutils literal">Page</span>: the page instance being rendered.</p></li>
+<li><p><span class="docutils literal">Config</span>: the global site config used.</p></li>
+<li><p><span class="docutils literal">Context</span>: additional variables specific to this build.</p></li>
+<li><p><span class="docutils literal">Shelf</span>: optional parent shelf the page belongs to (can be None).</p></li>
+<li><p><span class="docutils literal">ShelfLibrary</span>: collection of all shelves the site has.</p></li>
+<li><p><span class="docutils literal">include_script_output</span>: function to include the output of a python script.</p></li>
+</ul>
+<section id="script-system">
+<h3><a class="toc-backref" href="#toc-entry-19" role="doc-backlink">script system</a></h3>
+<p>The jinja syntax is not enough and you wish some part of the template was procedurally
+generated ? You can use the script include system to run an arbitrary python script
+that generates html (or actually anything).</p>
+<p>To create a script, create a standard python file next to the template (can actually
+be stored anywhere but you need to specify its path relative to the template it is used
+in). Inside, you only need to declare one mandatory function:</p>
+<pre class="highlight literal-block" title="Block of code in python language."><span class="k">def</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="n">template_renderer</span><span class="p">:</span> <span class="n">lxmsite</span><span class="o">.</span><span class="n">TemplateRenderer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="c1"># your implementation here</span>
+</pre>
+<p>The function when executed will return the text that need to be included in the template.
+The only argument <span class="docutils literal">template_renderer</span> is a copy of the instance that is responsible
+of rendering the template that the script was called from. It allows in theory to
+recursively render another jinja template from the script or use its attributes for
+whatever you might need.</p>
+<p>To use a script inside a template you use the <span class="docutils literal">include_script_output</span> variable that is
+actually a function to call with the script path (relative to the template):</p>
+<pre class="highlight literal-block" title="Block of code in html language."><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    {{ include_script_output(&quot;script_name.py&quot;) }}
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+</section>
+<section id="cross-referencing">
+<h3><a class="toc-backref" href="#toc-entry-20" role="doc-backlink">cross-referencing</a></h3>
+<p>How to link to other html pages or static content ?</p>
+<p>First, reminder that all relative urls are relative to the page they are on.
+This mean that if you want to link to a resources based on its site root location,
+like <span class="docutils literal">.static/icon/icon.svg</span> you will need to make it relative to the page
+instead. This is easily done using the custom jinja filter <span class="docutils literal">mkpagerel</span>.</p>
+<p>Example:</p>
+<pre class="highlight literal-block" title="Block of code in html+jinja language."><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="s2">&quot;.static/icons/icon.svg&quot;</span><span class="o">|</span><span class="nf">mkpagerel</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="p">&gt;</span>
+</pre>
+<p>If you need the opposite you can also use <span class="docutils literal">mksiterel</span> to make an page-relative
+url; relative to the site root instead.</p>
+<p>And if you ever need an absolute url you can use <span class="docutils literal">mksiteabs</span> that will prepend
+the site url but only on publish.</p>
+<p>Then when linking pages or content, you must link a file, never a directory.
+While once published <span class="docutils literal">work/myproject/</span> might resolve fine by the server,
+locally it will not and you will need to link <span class="docutils literal">work/myproject/index.html</span>
+instead. However just because this make links uglier you can use <span class="docutils literal">prettylink</span>
+that will shorten the links on publish; best of both worlds !</p>
+</section>
+</section>
+
+  </article>
+
+</main>
+<footer>
+  
+    <p>Static website <a href="."><i>hand-crafted</i></a> using 🐍 Python !
+      Last built on <i>2025-05-21T12:51</i> from commit <i>dca4b70</i></p>
+    <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
+  
+</footer>
+</body>
+</html>

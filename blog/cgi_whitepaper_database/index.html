@@ -1,222 +1,146 @@
-<!DOCTYPE html>
-<html lang="en" prefix="og: http://ogp.me/ns#">
+<!doctype html>
+<!-- 🐸🐸𓆏🐸 who puts frogs in the html !!! 𓆏𓆏🐸 -->
+<html lang="en" prefix="og: https://ogp.me/ns#">
 <head>
-  <meta charset="UTF-8" />
-  <title>CGI-related white-papers database | Liam Collod&#39;s Blog</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700%7CSource+Code+Pro:400,400i,600" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Georama:wght@400;500;600;700" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;700;900" />
-  <link rel="stylesheet" href="https://mrlixm.github.io/static/m-dark.css" />
-  <link rel="icon" href="https://mrlixm.github.io/static/images/global/icons/lixm.svg" type="image/x-ico" />
-  <link rel="canonical" href="https://mrlixm.github.io/blog/cgi_whitepaper_database/" />
-  <link href="https://mrlixm.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Liam Collod Website" />
-  <link href="https://mrlixm.github.io/feeds/resource.atom.xml" type="application/atom+xml" rel="alternate" title="Liam Collod Website | resource" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#20FC8F" />
-  <meta name="fediverse:creator" content="@liamcollod@mastodon.gamedev.place" />
-  <meta property="og:site_name" content="Liam Collod&#39;s Blog" />
-  <meta property="og:title" content="CGI-related white-papers database" />
-  <meta name="twitter:title" content="CGI-related white-papers database" />
-  <meta property="og:url" content="https://mrlixm.github.io/blog/cgi_whitepaper_database/" />
-  <meta property="og:description" content="“ 70+ white-papers conveniently ordered for you “" />
-  <meta name="twitter:description" content="“ 70+ white-papers conveniently ordered for you “" />
-  <meta property="og:image" content="https://mrlixm.github.io/static/images/blog/0006/cover.png" />
-  <meta name="twitter:image" content="https://mrlixm.github.io/static/images/blog/0006/cover.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta property="og:type" content="article" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>liam collod - CGI-related white-papers database</title>
+  <link rel="icon" href="../../.static/icons/logo-lixm.svg" type="image/x-ico">
+  
+  <meta name="description" content="" 70+ white-papers conveniently ordered for you "">
+  <meta name="fediverse:creator" content="@liamcollod@mastodon.gamedev.place">
+  <meta property="og:title" content="liam collod - CGI-related white-papers database">
+  <meta property="og:type" content="website"><meta property="og:url" content="https://mrlixm.github.io/blog/cgi_whitepaper_database/index.html">
+  <meta property="og:description" content="" 70+ white-papers conveniently ordered for you ""><meta property="og:image" content="https://mrlixm.github.io/blog/cgi_whitepaper_database/cover.jpg">
+  <meta property="og:image:alt" content="A screnshot of the database preview.">
+  <meta name="dcterms.created" content="2021-11-08T22:34:00">
+  
+  <link rel="stylesheet" href="../../.static/styles/themes/default.css" />
+  
+  <link rel="stylesheet" href="../../.static/fonts/Montserrat/Montserrat.css" />
+  
+  <link rel="stylesheet" href="../../.static/fonts/SourceCodePro/SourceCodePro.css" />
+  
+  <link rel="stylesheet" href="../../.static/fonts/SourceSansPro/SourceSansPro.css" />
+  
+  <link rel="stylesheet" href="../../.static/styles/themes/pygments.onedark.css" />
+  
+  <link rel="stylesheet" href="../../.static/styles/header.css" />
+  
+  <link rel="stylesheet" href="../../.static/styles/footer.css" />
+  
+  <link rel="stylesheet" href="../../.static/styles/base.css" />
+  
+  <link rel="stylesheet" href="../../.static/styles/rst.css" />
+  
+  <link rel="stylesheet" href="../blog.css" />
+  
+  <link rel="stylesheet" href="../../.static/styles/shelf.css" />
+  
 </head>
 <body>
-<header id="header">
-  <nav id="nav-box">
-    <a href="https://mrlixm.github.io/" id="logo" class="">
-      <img src="https://mrlixm.github.io/static/images/global/icons/lixm-outline.svg" alt="" id="logo-img"/>
-      <span class="logo-txt">Liam Collod</span>
-    </a>
-    <div class="l-nav-menu" id="nav-menu">
-      <ol>
-          <li><a href="https://mrlixm.github.io/work">Work</a></li>
-          <li><a href="https://mrlixm.github.io/blog" class="l-nav-active">Blog</a></li>
-          <li><a href="https://mrlixm.github.io/pages/contact">Contact</a></li>
-      </ol>
+<header>
+  
+    <div id="site-name">
+      <img src="../../.static/icons/logo-lixm-outlines.svg" alt="my diamond-shape logo; quite minimalisitic." width="32px" height="32px">
+      <a href="../../"><span>Liam Collod</span></a>
     </div>
-  </nav>
-  <div class="l-gradient-line"></div>
+    <nav class="main-nav" aria-label="Main menu">
+      <ul>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Work" class=""><a href="../../work/"><span>Work</span><span>Work</span></a></li>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Blog" class="active"><a href="../"><span>Blog</span><span>Blog</span></a></li>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Resources" class=""><a href="../../resources/"><span>Resources</span><span>Resources</span></a></li>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Contact" class=""><a href="../../contact"><span>Contact</span><span>Contact</span></a></li>
+        
+      </ul>
+    </nav>
+  
 </header>
 <main>
-    <article id="m-jumbo">
-      <header>
-        <div class="m-container">
-          <div id="cover-img" style="
-            background-image: url('https://mrlixm.github.io/static/images/blog/0006/cover.png');
-">
+  <article class="read-area">
+    <section id="article-header">
+      <div class="article-header-content">
+        <section id="metadata-header">
+          <div class="metadata-categories">
+            <hr>
+            <p id="post-category" title="the post category">resource</p>
+            <hr>
           </div>
-          <header class="l-article-header" id="article-header">
-        <header class="l-post-context l-mrg-s" title="Post Context" id="post-context-header">
-          <span class="l-category">
-            <a href="https://mrlixm.github.io/category/resource.html">resource</a>
-          </span>
-            &nbsp;
-            &nbsp;
-              <span class="l-tag l-flex-item" title="tag">
-                <a href="https://mrlixm.github.io/tag/science.html">science</a>
+          <div class="metadata-tags">
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.2s">science</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.7s">math</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.4s">shading</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.7s">lighting</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.7s">rendering</pre>
+          </div>
+        </section>
+        <span id="article-header-decoration"></span>
+        <h1>CGI-related white-papers database</h1>
+        <section id="metadata-footer">
+          <p id="post-description" title="the post description">" 70+ white-papers conveniently ordered for you "</p>
+          <div class="metadata-essential">
+              <hr>
+              <span title="Date Created.">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <title>calendar-month</title>
+    <path fill="currentColor" d="M9,10V12H7V10H9M13,10V12H11V10H13M17,10V12H15V10H17M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H6V1H8V3H16V1H18V3H19M19,19V8H5V19H19M9,14V16H7V14H9M13,14V16H11V14H13M17,14V16H15V14H17Z"/>
+</svg>
+                <time datetime="2021-11-08T22:34:00">08 November 2021</time>
               </span>
-                <!--Invisible to the use but picked when copy/pasting-->
-                <span class="l-txt-invisible">,</span>
-              <span class="l-tag l-flex-item" title="tag">
-                <a href="https://mrlixm.github.io/tag/math.html">math</a>
-              </span>
-                <!--Invisible to the use but picked when copy/pasting-->
-                <span class="l-txt-invisible">,</span>
-              <span class="l-tag l-flex-item" title="tag">
-                <a href="https://mrlixm.github.io/tag/shading.html">shading</a>
-              </span>
-                <!--Invisible to the use but picked when copy/pasting-->
-                <span class="l-txt-invisible">,</span>
-              <span class="l-tag l-flex-item" title="tag">
-                <a href="https://mrlixm.github.io/tag/lighting.html">lighting</a>
-              </span>
-                <!--Invisible to the use but picked when copy/pasting-->
-                <span class="l-txt-invisible">,</span>
-              <span class="l-tag l-flex-item" title="tag">
-                <a href="https://mrlixm.github.io/tag/rendering.html">rendering</a>
-              </span>
-        </header>
-        <h1 title="Article title">
-          <a href="https://mrlixm.github.io/blog/cgi_whitepaper_database/" rel="bookmark" title="Permalink to CGI-related white-papers database">
-            CGI-related white-papers database
-          </a>
-        </h1>
-        <p><em>“ 70+ white-papers conveniently ordered for you “</em></p>
-        <footer class="l-post-context" id="post-context-footer">
-          <span class="l-time l-flex-item" title="Date Created">
-            <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-            <time datetime="2021-11-08T22:34:00+01:00">08 November 2021</time>
-          </span>
-          <span class="l-box-author l-flex-item" title="List of Authors">
-            <img src="/static/images/global/icons/account.svg" alt="Author icon" >
-            <span class="l-author" title="A post Author">
-                <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a>
-            </span>
-          </span>
-        </footer>
-      </header>
-        </div>
-      </header>
-        <div class="m-container m-container-inflatable">
-          <!-- content -->
-          <p>As an artist, I found white-papers absolutely fascinating and so useful
+              <hr>
+            </div>
+          <span class="post-status-unlisted" title="post status">unlisted</span>
+        </section>
+      </div>
+    </section>
+    <p>As an artist, I found white-papers absolutely fascinating and so useful
 to understand how the software we are using are built.
-Even if platform like the <a href="https://dl.acm.org">ACM digital library</a> regroup
+Even if platform like the <a class="reference external" href="https://dl.acm.org">ACM digital library</a> regroup
 most of them, it can be hard to find only the pertinent one when you are
 interested only about CGI in a VFX context.</p>
-<p class="m-transition">.</p>
 <p>So in my free-time I regrouped the one I find most pertinent, for the above
 context, in a Notion database :</p>
-<div class="l-url-box">
-<a class="l-url-a" href="https://liamcollod.notion.site/CGI-White-Papers-0ed5f781e8164b569a419802972afc34"></a>
-<div class="l-url-box-image">
-<img src="https://images.pexels.com/photos/240163/pexels-photo-240163.jpeg" />
+<div class="url-preview-box docutils container">
+<a class="reference external" href="https://liamcollod.notion.site/CGI-White-Papers-0ed5f781e8164b569a419802972afc34">
+</a>
+<div class="url-preview-image docutils container">
+<img alt="" class="inline" src="https://images.pexels.com/photos/240163/pexels-photo-240163.jpeg" />
 </div>
-<div class="l-url-box-details">
-<p class="l-url-title">CGI-White-Papers</p>
-<div class="l-url-subtitle">
-<a class="m-link-wrap" href="https://liamcollod.notion.site/CGI-White-Papers-0ed5f781e8164b569a419802972afc34">https://liamcollod.notion.site/CGI-White-Papers-0ed5f781e8164b569a419802972afc34</a>
+<div class="url-preview-details docutils container">
+<p class="url-preview-title">CGI-White-Papers</p>
+<div class="url-preview-subtitle docutils container">
+<a class="reference external" href="https://liamcollod.notion.site/CGI-White-Papers-0ed5f781e8164b569a419802972afc34">
+https://liamcollod.notion.site/CGI-White-Papers-0ed5f781e8164b569a419802972afc34</a>
 </div>
-<p class="l-url-description"></p>
+<div class="url-preview-description docutils container">
 </div>
 </div>
-<p class="m-transition">.</p>
-<p>
-I tried to keep most of them as “free” but some of them might be locked
-behind a paywall…<br />
-As I’m someone that definitively think core knowledge should be lock behind
-a paywall I would absolutely  not recommend to use <a href="https://sci-hub.mksa.top/">Sci-hub</a> to find a free illegal version of these paid papers. (here is
-the full url to be sure you doesn’t click on it <a class="m-link-wrap" href="https://sci-hub.mksa.top/">https://sci-hub.mksa.top/</a> ).<br />
-</p>
-          <!-- /content -->
-        </div>
-      <footer>
-        <div class="m-container">
-          <div class="m-col-l-none m-nopadb">
-            <div class="l-line-xs" title="Footer Separator"></div>
-          <header class="l-post-context l-mrg-xs" title="Post Context" id="post-context-header">
-            <span class="l-category">
-              <a href="https://mrlixm.github.io/category/resource.html">resource</a>
-            </span>
-              &nbsp;
-              &nbsp;
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/science.html">science</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/math.html">math</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/shading.html">shading</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/lighting.html">lighting</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/rendering.html">rendering</a>
-                </span>
-          </header>
-          <footer class="l-post-context" id="post-context-footer">
-            <span class="l-time l-flex-item" title="Date Created">
-              <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-              <time datetime="2021-11-08T22:34:00+01:00">08 November 2021</time>
-            </span>
-            <span class="l-box-author l-flex-item" title="List of Authors">
-              <img src="/static/images/global/icons/account.svg" alt="Author icon" >
-              <span class="l-author" title="A post Author">
-                  <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a>
-              </span>
-            </span>
-          </footer>
-          <div class="l-box-post-connections">
-            <div class="l-box-kofi">
-              <p>If this was of any help you can:</p>
-              <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'>
-              </script>
-              <script type='text/javascript'>
-                kofiwidget2.init('Support Me on Ko-fi !', '#29abe0', 'E1E3ALNSG');kofiwidget2.draw();
-              </script>
-            </div>
-            <div class="l-box-discord">
-              <p>No comment system yet so instead:</p>
-              <div class="l-btn-discord  l-flex-r l-flex-center">
-                <a  class="l-btn-discord-img" href="https://discord.gg/47ySGqMEAj">
-                  <img src="/static/images/global/static/discord.svg" alt="Discord Icon">
-                </a>
-                <a href="https://discord.gg/47ySGqMEAj">Join the Discord to discuss</a>
-              </div>
-            </div>
-          </div>
-          </div>
-        </div>
-      </footer>
-    </article>
+</div>
+<div class="line-block">
+<div class="line">I tried to keep most of them as &quot;free&quot; but some of them might be locked
+behind a paywall...</div>
+<div class="line">As I'm someone that definitively think core knowledge should be lock behind
+a paywall I would absolutely NOT recommend to use <a class="reference external" href="https://sci-hub.mksa.top/">Sci-hub</a> to find a free illegal version of these paid papers. (here is
+the full url to be sure you doen't visit it <a class="reference external" href="https://sci-hub.mksa.top/">https://sci-hub.mksa.top/</a>).</div>
+</div>
+
+  </article>
+
 </main>
 <footer>
-  <nav aria-label="Website informations.">
-    <div class="m-container">
-      <div class="m-row">
-        <div class="m-col-l-10 m-push-l-1">
-          <p>Copyright © <a href="mailto:lcollod&#64;gmail.com">Liam Collod</a> 2021 - 2025. All rights
-        reserved. Made with <a href="https://blog.getpelican.com/">Pelican</a> and
-        <a href="https://mcss.mosra.cz/">m.css</a> .</p>
-        </div>
-      </div>
-    </div>
-  </nav>
+  
+    <p>Static website <a href="../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
+      Last built on <i>2025-05-21T12:51</i> from commit <i>dca4b70</i></p>
+    <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
+  
 </footer>
 </body>
 </html>

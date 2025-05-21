@@ -1,0 +1,23 @@
+.inline-label {
+    padding: 1px 4px;
+    border-radius: 2px;
+}
+.inline-label.delight {
+    background-color: rgba(218, 62, 62, 0.76)
+}
+.inline-label.arnold {
+    background-color: rgba(40, 180, 183, 0.8)
+}
+.inline-label.prman {
+    background-color: rgba(37, 147, 224, 0.76)
+}
+
+.split-50-50 {
+    display: flex;
+    max-width: 100%;
+    justify-content: space-between;
+}
+.split-50-50 > * {
+    width: 49%;
+    object-fit: cover;
+}

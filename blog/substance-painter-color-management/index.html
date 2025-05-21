@@ -1,227 +1,261 @@
-<!DOCTYPE html>
-<html lang="en" prefix="og: http://ogp.me/ns#">
+<!doctype html>
+<!-- 🐸🐸𓆏🐸 who puts frogs in the html !!! 𓆏𓆏🐸 -->
+<html lang="en" prefix="og: https://ogp.me/ns#">
 <head>
-  <meta charset="UTF-8" />
-  <title>Color-management in Substance Painter with OCIO | Liam Collod&#39;s Blog</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700%7CSource+Code+Pro:400,400i,600" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Georama:wght@400;500;600;700" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;700;900" />
-  <link rel="stylesheet" href="https://mrlixm.github.io/static/m-dark.css" />
-  <link rel="icon" href="https://mrlixm.github.io/static/images/global/icons/lixm.svg" type="image/x-ico" />
-  <link rel="canonical" href="https://mrlixm.github.io/blog/substance-painter-color-management/" />
-  <link href="https://mrlixm.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Liam Collod Website" />
-  <link href="https://mrlixm.github.io/feeds/tutorial.atom.xml" type="application/atom+xml" rel="alternate" title="Liam Collod Website | tutorial" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#20FC8F" />
-  <meta name="fediverse:creator" content="@liamcollod@mastodon.gamedev.place" />
-  <meta property="og:site_name" content="Liam Collod&#39;s Blog" />
-  <meta property="og:title" content="Color-management in Substance Painter with OCIO" />
-  <meta name="twitter:title" content="Color-management in Substance Painter with OCIO" />
-  <meta property="og:url" content="https://mrlixm.github.io/blog/substance-painter-color-management/" />
-  <meta property="og:description" content="The long-awaited OCIO feature is here, now we gotta find how it works." />
-  <meta name="twitter:description" content="The long-awaited OCIO feature is here, now we gotta find how it works." />
-  <meta property="og:image" content="https://mrlixm.github.io/static/images/blog/0008/cover.jpg" />
-  <meta name="twitter:image" content="https://mrlixm.github.io/static/images/blog/0008/cover.jpg" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta property="og:type" content="article" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>liam collod - Color-management in Substance Painter with OCIO</title>
+  <link rel="icon" href="../../.static/icons/logo-lixm.svg" type="image/x-ico">
+  
+    <meta name="author" content="Liam Collod">
+  <meta name="description" content="The long-awaited OCIO feature is here, now we gotta find how it works.">
+  <meta name="fediverse:creator" content="@liamcollod@mastodon.gamedev.place">
+  <meta property="og:title" content="liam collod - Color-management in Substance Painter with OCIO">
+  <meta property="og:type" content="website"><meta property="og:url" content="https://mrlixm.github.io/blog/substance-painter-color-management/index.html">
+  <meta property="og:description" content="The long-awaited OCIO feature is here, now we gotta find how it works."><meta property="og:image" content="https://mrlixm.github.io/blog/substance-painter-color-management/cover.jpg">
+  <meta property="og:image:alt" content="A decorative image that shows the meet-mat character in front of a monitor displaying a rainbow-colored pattern.">
+  <meta name="dcterms.created" content="2021-12-08T19:03:00">
+  <meta name="dcterms.modified" content="2023-02-01T21:31:00">
+  
+  <link rel="stylesheet" href="../../.static/styles/themes/default.css" />
+  
+  <link rel="stylesheet" href="../../.static/fonts/Montserrat/Montserrat.css" />
+  
+  <link rel="stylesheet" href="../../.static/fonts/SourceCodePro/SourceCodePro.css" />
+  
+  <link rel="stylesheet" href="../../.static/fonts/SourceSansPro/SourceSansPro.css" />
+  
+  <link rel="stylesheet" href="../../.static/styles/themes/pygments.onedark.css" />
+  
+  <link rel="stylesheet" href="../../.static/styles/header.css" />
+  
+  <link rel="stylesheet" href="../../.static/styles/footer.css" />
+  
+  <link rel="stylesheet" href="../../.static/styles/base.css" />
+  
+  <link rel="stylesheet" href="../../.static/styles/rst.css" />
+  
+  <link rel="stylesheet" href="../blog.css" />
+  
+  <link rel="stylesheet" href="../../.static/styles/shelf.css" />
+  
+  <link rel="stylesheet" href="substance-painter-color-management.css" />
+  
 </head>
 <body>
-<header id="header">
-  <nav id="nav-box">
-    <a href="https://mrlixm.github.io/" id="logo" class="">
-      <img src="https://mrlixm.github.io/static/images/global/icons/lixm-outline.svg" alt="" id="logo-img"/>
-      <span class="logo-txt">Liam Collod</span>
-    </a>
-    <div class="l-nav-menu" id="nav-menu">
-      <ol>
-          <li><a href="https://mrlixm.github.io/work">Work</a></li>
-          <li><a href="https://mrlixm.github.io/blog" class="l-nav-active">Blog</a></li>
-          <li><a href="https://mrlixm.github.io/pages/contact">Contact</a></li>
-      </ol>
+<header>
+  
+    <div id="site-name">
+      <img src="../../.static/icons/logo-lixm-outlines.svg" alt="my diamond-shape logo; quite minimalisitic." width="32px" height="32px">
+      <a href="../../"><span>Liam Collod</span></a>
     </div>
-  </nav>
-  <div class="l-gradient-line"></div>
+    <nav class="main-nav" aria-label="Main menu">
+      <ul>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Work" class=""><a href="../../work/"><span>Work</span><span>Work</span></a></li>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Blog" class="active"><a href="../"><span>Blog</span><span>Blog</span></a></li>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Resources" class=""><a href="../../resources/"><span>Resources</span><span>Resources</span></a></li>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Contact" class=""><a href="../../contact"><span>Contact</span><span>Contact</span></a></li>
+        
+      </ul>
+    </nav>
+  
 </header>
 <main>
-    <article id="m-jumbo">
-      <header>
-        <div class="m-container">
-          <div id="cover-img" style="
-            background-image: url('https://mrlixm.github.io/static/images/blog/0008/cover.jpg');
-">
+  <article class="read-area">
+    <section id="article-header">
+        <img class="blog-cover" src="cover.jpg" alt="A decorative image that shows the meet-mat character in front of a monitor displaying a rainbow-colored pattern.">
+      <div class="article-header-content">
+        <section id="metadata-header">
+          <div class="metadata-categories">
+            <hr>
+            <p id="post-category" title="the post category">tutorial</p>
+            <hr>
           </div>
-          <header class="l-article-header" id="article-header">
-        <header class="l-post-context l-mrg-s" title="Post Context" id="post-context-header">
-          <span class="l-category">
-            <a href="https://mrlixm.github.io/category/tutorial.html">tutorial</a>
-          </span>
-            &nbsp;
-            &nbsp;
-              <span class="l-tag l-flex-item" title="tag">
-                <a href="https://mrlixm.github.io/tag/substance-painter.html">substance-painter</a>
+          <div class="metadata-tags">
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.9s">substance-painter</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.4s">color-science</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.1s">OCIO</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.9s">ACES</pre>
+          </div>
+        </section>
+        <span id="article-header-decoration"></span>
+        <h1>Color-management in Substance Painter with OCIO</h1>
+        <section id="metadata-footer">
+          <p id="post-description" title="the post description">The long-awaited OCIO feature is here, now we gotta find how it works.</p>
+          <div class="metadata-essential">
+              <hr>
+              <span title="Date Created.">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <title>calendar-month</title>
+    <path fill="currentColor" d="M9,10V12H7V10H9M13,10V12H11V10H13M17,10V12H15V10H17M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H6V1H8V3H16V1H18V3H19M19,19V8H5V19H19M9,14V16H7V14H9M13,14V16H11V14H13M17,14V16H15V14H17Z"/>
+</svg>
+                <time datetime="2021-12-08T19:03:00">08 December 2021</time>
               </span>
-                <!--Invisible to the use but picked when copy/pasting-->
-                <span class="l-txt-invisible">,</span>
-              <span class="l-tag l-flex-item" title="tag">
-                <a href="https://mrlixm.github.io/tag/color-science.html">color-science</a>
+              <span title="Date Modified.">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <title>calendar-edit</title>
+    <path fill="currentColor" d="M19,3H18V1H16V3H8V1H6V3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H10V19H5V8H19V9H21V5A2,2 0 0,0 19,3M21.7,13.35L20.7,14.35L18.65,12.35L19.65,11.35C19.85,11.14 20.19,11.13 20.42,11.35L21.7,12.63C21.89,12.83 21.89,13.15 21.7,13.35M12,18.94L18.07,12.88L20.12,14.88L14.06,21H12V18.94Z"/>
+</svg>
+                <time datetime="2023-02-01T21:31:00">01 February 2023</time>
               </span>
-                <!--Invisible to the use but picked when copy/pasting-->
-                <span class="l-txt-invisible">,</span>
-              <span class="l-tag l-flex-item" title="tag">
-                <a href="https://mrlixm.github.io/tag/ocio.html">OCIO</a>
+              <span title="Persons who authored the document.">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <title>account</title>
+    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/>
+</svg>
+                Liam Collod
               </span>
-                <!--Invisible to the use but picked when copy/pasting-->
-                <span class="l-txt-invisible">,</span>
-              <span class="l-tag l-flex-item" title="tag">
-                <a href="https://mrlixm.github.io/tag/aces.html">ACES</a>
-              </span>
-        </header>
-        <h1 title="Article title">
-          <a href="https://mrlixm.github.io/blog/substance-painter-color-management/" rel="bookmark" title="Permalink to Color-management in Substance Painter with OCIO">
-            Color-management in Substance Painter with OCIO
-          </a>
-        </h1>
-        <p>The long-awaited OCIO feature is here, now we gotta find how it works.</p>
-        <footer class="l-post-context" id="post-context-footer">
-          <span class="l-time l-flex-item" title="Date Created">
-            <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-            <time datetime="2021-12-08T19:03:00+01:00">08 December 2021</time>
-          </span>
-            <span class="l-modified l-flex-item" title="Last Modified">
-              updated
-              <time datetime="2023-02-01T21:31:00+01:00">&nbsp;01 February 2023</time>
-            </span>
-          <span class="l-box-author l-flex-item" title="List of Authors">
-            <img src="/static/images/global/icons/account.svg" alt="Author icon" >
-            <span class="l-author" title="A post Author">
-                <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a>
-            </span>
-          </span>
-        </footer>
-      </header>
-        </div>
-      </header>
-        <div class="m-container m-container-inflatable">
-          <!-- content -->
-          <p>It’s there ! After so much time, Substance-Painter finally saw itself getting
-a shiny new color-management system with OCIO support. We’re going to dive
+              <hr>
+            </div>
+        </section>
+      </div>
+    </section>
+    <p>It's there ! After so much time, Substance-Painter finally saw itself getting
+a shiny new color-management system with OCIO support. We're going to dive
 deeper inside and see how it works.</p>
 <p>The article is divided into two parts.
 You got first a theoretical part that will try to explain how
 color-management works. This can help you debug issues and just not tweak
 settings like a blind machine. This part is not mandatory though. You can
-skip straight to the <a href="#substance-setup-workflow">Substance Setup &amp; Workflow</a> section if desired.</p>
-<aside class="m-note m-info">
-<p>OCIO was introduced in <a href="https://substance3d.adobe.com/documentation/spdoc/version-7-4-223053247.html">Substance-Painter version 7.4</a>
-This is the version used through this article so some features might have
+skip straight to the <a class="reference internal" href="#substance-setup-workflow">Substance Setup &amp; Workflow</a> section if desired.</p>
+<aside class="admonition important">
+<p class="admonition-title">important</p>
+<p>OCIO was introduced in <a class="reference external" href="https://substance3d.adobe.com/documentation/spdoc/version-7-4-223053247.html">Substance-Painter version 7.4</a>
+This is the version used through this article; meaning some features might have
 changed at the time you are reading this.</p>
-<p>Note that this article has been updated following the 7.4.2 update from
-08/03/22.</p>
+<p>An update has been done following the 7.4.2 update from 08 March 2022.</p>
 </aside>
-</aside>
-<div class="l-url-box">
-<a class="l-url-a" href="https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html"></a>
-<div class="l-url-box-image">
-<img src="https://helpx-prod.scene7.com/is/image/HelpxProd/banner-cm-doc?$pjpeg$&amp;jpegSize=200&amp;wid=650" />
+<div class="url-preview-box docutils container">
+<a class="reference external" href="https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html">
+</a>
+<div class="url-preview-image docutils container">
+<img alt="" class="inline" src="https://helpx-prod.scene7.com/is/image/HelpxProd/banner-cm-doc?$pjpeg$&amp;jpegSize=200&amp;wid=650" />
 </div>
-<div class="l-url-box-details">
-<p class="l-url-title">Official Documentation</p>
-<div class="l-url-subtitle">
-<a class="m-link-wrap" href="https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html">https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html</a>
+<div class="url-preview-details docutils container">
+<p class="url-preview-title">Official Documentation</p>
+<div class="url-preview-subtitle docutils container">
+<a class="reference external" href="https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html">
+https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html</a>
 </div>
-<p class="l-url-description"></p>
+<div class="url-preview-description docutils container">
 </div>
 </div>
-<nav id="contents">
-<h3>Contents</h3>
+</div>
+<aside class="toc-wrapper sidebar">
+<nav class="contents" id="contents">
+<p class="topic-title"><a class="reference internal" href="#top">Contents</a></p>
+<div class="toc-list docutils container">
+<ul class="simple">
+<li><p><a class="reference internal" href="#color-managed-workflow" id="toc-entry-1">Color-managed Workflow</a></p>
 <ul>
-<li><a href="#color-managed-workflow" id="toc-entry-1">Color-managed Workflow</a><ul>
-<li><a href="#data-types-color-and-scalar" id="toc-entry-2">Data types: Color and Scalar</a><ul>
-<li><a href="#scalar" id="toc-entry-3">Scalar</a></li>
-<li><a href="#color" id="toc-entry-4">Color</a></li>
-<li><a href="#in-substance" id="toc-entry-5">In Substance</a></li>
+<li><p><a class="reference internal" href="#data-types-color-and-scalar" id="toc-entry-2">Data types: Color and Scalar</a></p>
+<ul>
+<li><p><a class="reference internal" href="#scalar" id="toc-entry-3">Scalar</a></p></li>
+<li><p><a class="reference internal" href="#color" id="toc-entry-4">Color</a></p></li>
+<li><p><a class="reference internal" href="#in-substance" id="toc-entry-5">In Substance</a></p></li>
 </ul>
 </li>
-<li><a href="#workflow-sections" id="toc-entry-6">Workflow Sections</a><ul>
-<li><a href="#input" id="toc-entry-7">Input</a></li>
-<li><a href="#workspace" id="toc-entry-8">Workspace</a></li>
-<li><a href="#display" id="toc-entry-9">Display</a></li>
-<li><a href="#output" id="toc-entry-10">Output</a></li>
-<li><a href="#example" id="toc-entry-11">Example</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#substance-setup-workflow" id="toc-entry-12">Substance Setup &amp; Workflow</a><ul>
-<li><a href="#new-project" id="toc-entry-13">New Project</a></li>
-<li><a href="#ocio-config" id="toc-entry-14">OCIO config</a><ul>
-<li><a href="#custom-config" id="toc-entry-15">Custom config</a></li>
-<li><a href="#environment-variable" id="toc-entry-16">Environment variable</a><ul>
-<li><a href="#global-settings" id="toc-entry-17">Global Settings</a></li>
-<li><a href="#set-locally-at-startup" id="toc-entry-18">Set locally at startup</a></li>
-</ul>
-</li>
-<li><a href="#substance-parameters-for-ocio-configs" id="toc-entry-19">Substance parameters for OCIO configs</a></li>
-</ul>
-</li>
-<li><a href="#new-project-conclusion" id="toc-entry-20">New Project : Conclusion</a></li>
-<li><a href="#workspace-setup-in-sp" id="toc-entry-21">Workspace Setup in Sp</a></li>
-<li><a href="#display-setup-in-sp" id="toc-entry-22">Display Setup in Sp</a><ul>
-<li><a href="#displaying-color-and-scalar-data" id="toc-entry-23">Displaying Color and Scalar data</a></li>
-<li><a href="#custom-user-channels" id="toc-entry-24">Custom User Channels</a></li>
-</ul>
-</li>
-<li><a href="#input-setup-in-sp" id="toc-entry-25">Input Setup in Sp</a><ul>
-<li><a href="#shelf-resources" id="toc-entry-26">Shelf Resources</a></li>
-<li><a href="#the-color-picker" id="toc-entry-27">The color-picker</a></li>
-<li><a href="#environment" id="toc-entry-28">Environment</a></li>
-<li><a href="#masks" id="toc-entry-29">Masks</a></li>
-</ul>
-</li>
-<li><a href="#output-setup-in-sp" id="toc-entry-30">Output Setup in Sp</a></li>
-</ul>
-</li>
-<li><a href="#aces-workflow" id="toc-entry-31">ACES Workflow</a><ul>
-<li><a href="#aces-config-setup" id="toc-entry-32">ACES - Config setup</a></li>
-<li><a href="#aces-what-to-do-when-working" id="toc-entry-33">ACES - What to do when working</a><ul>
-<li><a href="#aces-display" id="toc-entry-34">ACES - Display</a></li>
-<li><a href="#aces-inputs" id="toc-entry-35">ACES - Inputs</a><ul>
-<li><a href="#aces-environment" id="toc-entry-36">ACES - Environment</a></li>
-</ul>
-</li>
-<li><a href="#aces-colorpicker" id="toc-entry-37">ACES - Colorpicker</a></li>
-<li><a href="#aces-output" id="toc-entry-38">ACES - Output</a></li>
+<li><p><a class="reference internal" href="#workflow-sections" id="toc-entry-6">Workflow Sections</a></p>
+<ul>
+<li><p><a class="reference internal" href="#input" id="toc-entry-7">Input</a></p></li>
+<li><p><a class="reference internal" href="#workspace" id="toc-entry-8">Workspace</a></p></li>
+<li><p><a class="reference internal" href="#display" id="toc-entry-9">Display</a></p></li>
+<li><p><a class="reference internal" href="#output" id="toc-entry-10">Output</a></p></li>
+<li><p><a class="reference internal" href="#example" id="toc-entry-11">Example</a></p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#ocio-implementation-issues" id="toc-entry-39">OCIO Implementation Issues</a><ul>
-<li><a href="#display-issues" id="toc-entry-40">Display Issues</a><ul>
-<li><a href="#display-components-mismatch" id="toc-entry-41">Display components mismatch</a></li>
-<li><a href="#partial-look-support" id="toc-entry-42">Partial Look support</a></li>
+<li><p><a class="reference internal" href="#substance-setup-workflow" id="toc-entry-12">Substance Setup &amp; Workflow</a></p>
+<ul>
+<li><p><a class="reference internal" href="#new-project" id="toc-entry-13">New Project</a></p></li>
+<li><p><a class="reference internal" href="#ocio-config" id="toc-entry-14">OCIO config</a></p>
+<ul>
+<li><p><a class="reference internal" href="#custom-config" id="toc-entry-15">Custom config</a></p></li>
+<li><p><a class="reference internal" href="#environment-variable" id="toc-entry-16">Environment variable</a></p>
+<ul>
+<li><p><a class="reference internal" href="#global-settings" id="toc-entry-17">Global Settings</a></p></li>
+<li><p><a class="reference internal" href="#set-locally-at-startup" id="toc-entry-18">Set locally at startup</a></p></li>
 </ul>
 </li>
-<li><a href="#improving-the-substance-ocio-config" id="toc-entry-43">Improving the Substance OCIO config</a></li>
-<li><a href="#issues-recap" id="toc-entry-44">Issues Recap</a></li>
+<li><p><a class="reference internal" href="#substance-parameters-for-ocio-configs" id="toc-entry-19">Substance parameters for OCIO configs</a></p></li>
 </ul>
 </li>
-<li><a href="#conclusion" id="toc-entry-45">Conclusion</a></li>
-<li><a href="#resources" id="toc-entry-46">Resources</a></li>
-<li><a href="#changelog" id="toc-entry-47">Changelog</a></li>
+<li><p><a class="reference internal" href="#new-project-conclusion" id="toc-entry-20">New Project : Conclusion</a></p></li>
+<li><p><a class="reference internal" href="#workspace-setup-in-sp" id="toc-entry-21">Workspace Setup in Sp</a></p></li>
+<li><p><a class="reference internal" href="#display-setup-in-sp" id="toc-entry-22">Display Setup in Sp</a></p>
+<ul>
+<li><p><a class="reference internal" href="#displaying-color-and-scalar-data" id="toc-entry-23">Displaying Color and Scalar data</a></p></li>
+<li><p><a class="reference internal" href="#custom-user-channels" id="toc-entry-24">Custom User Channels</a></p></li>
 </ul>
+</li>
+<li><p><a class="reference internal" href="#input-setup-in-sp" id="toc-entry-25">Input Setup in Sp</a></p>
+<ul>
+<li><p><a class="reference internal" href="#shelf-resources" id="toc-entry-26">Shelf Resources</a></p></li>
+<li><p><a class="reference internal" href="#the-color-picker" id="toc-entry-27">The color-picker</a></p></li>
+<li><p><a class="reference internal" href="#environment" id="toc-entry-28">Environment</a></p></li>
+<li><p><a class="reference internal" href="#masks" id="toc-entry-29">Masks</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#output-setup-in-sp" id="toc-entry-30">Output Setup in Sp</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#aces-workflow" id="toc-entry-31">ACES Workflow</a></p>
+<ul>
+<li><p><a class="reference internal" href="#aces-config-setup" id="toc-entry-32">ACES - Config setup</a></p></li>
+<li><p><a class="reference internal" href="#aces-what-to-do-when-working" id="toc-entry-33">ACES - What to do when working</a></p>
+<ul>
+<li><p><a class="reference internal" href="#aces-display" id="toc-entry-34">ACES - Display</a></p></li>
+<li><p><a class="reference internal" href="#aces-inputs" id="toc-entry-35">ACES - Inputs</a></p>
+<ul>
+<li><p><a class="reference internal" href="#aces-environment" id="toc-entry-36">ACES - Environment</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#aces-colorpicker" id="toc-entry-37">ACES - Colorpicker</a></p></li>
+<li><p><a class="reference internal" href="#aces-output" id="toc-entry-38">ACES - Output</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#ocio-implementation-issues" id="toc-entry-39">OCIO Implementation Issues</a></p>
+<ul>
+<li><p><a class="reference internal" href="#display-issues" id="toc-entry-40">Display Issues</a></p>
+<ul>
+<li><p><a class="reference internal" href="#display-components-mismatch" id="toc-entry-41">Display components mismatch</a></p></li>
+<li><p><a class="reference internal" href="#partial-look-support" id="toc-entry-42">Partial Look support</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#improving-the-substance-ocio-config" id="toc-entry-43">Improving the Substance OCIO config</a></p></li>
+<li><p><a class="reference internal" href="#issues-recap" id="toc-entry-44">Issues Recap</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#conclusion" id="toc-entry-45">Conclusion</a></p></li>
+<li><p><a class="reference internal" href="#resources" id="toc-entry-46">Resources</a></p></li>
+<li><p><a class="reference internal" href="#changelog" id="toc-entry-47">Changelog</a></p></li>
+</ul>
+</div>
 </nav>
 </aside>
 <section id="color-managed-workflow">
-<h2><a href="#toc-entry-1">Color-managed Workflow</a></h2>
-<aside class="m-note m-info">
-This part is aimed at beginners, but introduce a too vast topic for this
+<h2><a class="toc-backref" href="#toc-entry-1" role="doc-backlink">Color-managed Workflow</a></h2>
+<aside class="admonition note">
+<p class="admonition-title">note</p>
+<p>This part is aimed at beginners, but introduce a topic too vast for this
 article. I recommend reading
-<a href="https://chrisbrejon.com/cg-cinematography/chapter-1-color-management#rgb-colorspace-and-its-components">Chris Brejon article’s section about colorspaces</a> first, to be sure you understand
-some of the technical vocabularies employed.</aside>
+<a class="reference external" href="https://chrisbrejon.com/cg-cinematography/chapter-1-color-management#rgb-colorspace-and-its-components">Chris Brejon article's section about colorspaces</a> first, to be sure you understand
+some of the technical vocabularies employed.</p>
 </aside>
-<p>We can break the workflow into 4 sections : <code>Input</code>, <code>Workspace</code>,
-<code>Display</code> and <code>Output</code></p>
-<div class="l-c-color l-mrg-l l-flex-c l-flex-center">
+<p>We can break the workflow into 4 sections : <span class="docutils literal">Input</span>, <span class="docutils literal">Workspace</span>,
+<span class="docutils literal">Display</span> and <span class="docutils literal">Output</span></p>
+<div class="center-block docutils container">
 <svg width="80%" height="80%" viewBox="0 0 630 153" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;">
     <path d="M15,97L153,97C160.732,97 167,103.268 167,111L167,138C167,145.732 160.732,152 153,152L15,152C7.268,152 1,145.732 1,138L1,111C1,103.268 7.268,97 15,97ZM246,97L384,97C391.732,97 398,103.268 398,111L398,138C398,145.732 391.732,152 384,152L246,152C238.268,152 232,145.732 232,138L232,111C232,103.268 238.268,97 246,97ZM246,1L384,1C391.732,1 398,7.268 398,15L398,42C398,49.732 391.732,56 384,56L246,56C238.268,56 232,49.732 232,42L232,15C232,7.268 238.268,1 246,1ZM477,97L615,97C622.732,97 629,103.268 629,111L629,138C629,145.732 622.732,152 615,152L477,152C469.268,152 463,145.732 463,138L463,111C463,103.268 469.268,97 477,97Z" style="fill:none;fill-rule:nonzero;stroke:currentColor;stroke-width:2px;"/>
     <path d="M231.454,126.575C232.039,125.99 232.039,125.04 231.454,124.454L221.908,114.908C221.322,114.322 220.372,114.322 219.786,114.908C219.201,115.494 219.201,116.444 219.786,117.029L228.272,125.515L219.786,134C219.201,134.586 219.201,135.535 219.786,136.121C220.372,136.707 221.322,136.707 221.908,136.121L231.454,126.575ZM316.454,57.454C315.868,56.868 314.918,56.868 314.332,57.454L304.786,67C304.201,67.586 304.201,68.536 304.786,69.121C305.372,69.707 306.322,69.707 306.908,69.121L315.393,60.636L323.878,69.121C324.464,69.707 325.414,69.707 326,69.121C326.585,68.536 326.585,67.586 326,67L316.454,57.454ZM462.454,126.575C463.039,125.99 463.039,125.04 462.454,124.454L452.908,114.908C452.322,114.322 451.372,114.322 450.786,114.908C450.201,115.494 450.201,116.444 450.786,117.029L459.272,125.515L450.786,134C450.201,134.586 450.201,135.535 450.786,136.121C451.372,136.707 452.322,136.707 452.908,136.121L462.454,126.575ZM168.393,127.015L230.393,127.015L230.393,124.015L168.393,124.015L168.393,127.015ZM316.893,96.515L316.893,58.515L313.893,58.515L313.893,96.515L316.893,96.515ZM399.393,127.015L461.393,127.015L461.393,124.015L399.393,124.015L399.393,127.015Z" style="fill:currentColor;fill-rule:nonzero;"/>
@@ -254,60 +288,61 @@ some of the technical vocabularies employed.</aside>
     <path d="M577.578,116.203L577.578,119.32L579.746,119.32L579.746,121.805L577.578,121.805L577.578,128.133C577.578,128.602 577.668,128.938 577.848,129.141C578.027,129.344 578.371,129.445 578.879,129.445C579.254,129.445 579.586,129.418 579.875,129.363L579.875,131.93C579.211,132.133 578.527,132.234 577.824,132.234C575.449,132.234 574.238,131.035 574.191,128.637L574.191,121.805L572.34,121.805L572.34,119.32L574.191,119.32L574.191,116.203L577.578,116.203Z" style="fill:currentColor;fill-rule:nonzero;"/>
 </svg>
 </div>
-<p>You transfer <code>data</code> between each of these section. Data that must be
+<p>You transfer <span class="docutils literal">data</span> between each of these section. Data that must be
 potentially decoded and then encoded, depending on what the section required.
-In Substance Painter this <code>data</code> is most of the time pixels, encoded
+In Substance Painter this <span class="docutils literal">data</span> is most of the time pixels, encoded
 using the RGB color model.</p>
 <p>All of these data-transfers allow me to introduce the most important rule:
-<span class="m-text m-primary">you always need to know where you start to know where you are
+<span class="text-green">you always need to know where you start to know where you are
 going</span>.
-As an example, in the above diagram, to convert the <code>Input</code> data to the
-<code>Workspace</code> data, we need to know how the <code>Input</code> data is encoded (in our
+As an example, in the above diagram, to convert the <span class="docutils literal">Input</span> data to the
+<span class="docutils literal">Workspace</span> data, we need to know how the <span class="docutils literal">Input</span> data is encoded (in our
 case, which colorspace).</p>
 <section id="data-types-color-and-scalar">
-<h3><a href="#toc-entry-2">Data types: Color and Scalar</a></h3>
-<p>“Where you start” means first, what type of data are you manipulating ?</p>
-<p>There are only two types : <code>color</code> and <code>scalar</code>.</p>
+<h3><a class="toc-backref" href="#toc-entry-2" role="doc-backlink">Data types: Color and Scalar</a></h3>
+<p>&quot;Where you start&quot; means first, what type of data are you manipulating ?</p>
+<p>There are only two types : <span class="docutils literal">color</span> and <span class="docutils literal">scalar</span>.</p>
 <p>It is important to know which one your data belongs to because the scalar
-one doesn’t require your data to be color-managed and as such skip a
+one doesn't require your data to be color-managed and as such skip a
 complex part.</p>
 <section id="scalar">
-<h4><a href="#toc-entry-3">Scalar</a></h4>
+<h4><a class="toc-backref" href="#toc-entry-3" role="doc-backlink">Scalar</a></h4>
 <p>Scalar data has no means to be displayed directly, the data store numbers
 that can be used to drive other types of data. We are only interested in the
 original value of these numbers and as such this kind of data <strong>must never
 be altered by color-transformations.</strong></p>
 <p>To get to more concrete examples scalar data include but is not limited to:
-roughness, normals, masks, displacement, vectors, …</p>
-<aside class="m-note m-warning">
-This is not because the data, when displayed, is not grayscale, that it
-is color data. For example normal maps, even if colored, ARE scalar data.</aside>
+roughness, normals, masks, displacement, vectors, ...</p>
+<aside class="admonition warning">
+<p class="admonition-title">warning</p>
+<p>This is not because the data, when displayed, is not grayscale, that it
+is color data. For example normal maps, even if colored, ARE scalar data.</p>
 </aside>
 </section>
 <section id="color">
-<h4><a href="#toc-entry-4">Color</a></h4>
+<h4><a class="toc-backref" href="#toc-entry-4" role="doc-backlink">Color</a></h4>
 <p>Everything that is not scalar. Values stored are intended to be displayed
 directly. These values are always encoded in some colorspace and require to be
 decoded properly.</p>
 <p>This include but is not limited to : diffuse/albedo/base-color, subsurface
-color, specular color, refraction color, every image displayed on the web, …</p>
+color, specular color, refraction color, every image displayed on the web, ...</p>
 </section>
 <section id="in-substance">
-<h4><a href="#toc-entry-5">In Substance</a></h4>
+<h4><a class="toc-backref" href="#toc-entry-5" role="doc-backlink">In Substance</a></h4>
 <p>In Substance you will find this separation depending on the channel you
-are working on. <a href="https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html#section5">The full list of color-managed channels is available here.</a></p>
+are working on. <a class="reference external" href="https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html#section5">The full list of color-managed channels is available here.</a></p>
 <p>As Substance is aware if the channel needs to be color-managed, some operations
-will be adjusted/skipped. An application of this is the <code>view transform</code>
+will be adjusted/skipped. An application of this is the <span class="docutils literal">view transform</span>
 that will be disabled when viewing a scalar channel.</p>
 <p>This notion will be also applied by yourself when needed to specify the
-colorspace encoding of a resource (images, alphas, materials, …).
+colorspace encoding of a resource (images, alphas, materials, ...).
 If you import a roughness texture, as it is scalar data you will have to
-specify the “colorspace” as “raw”, so no special decoding is applied.</p>
+specify the &quot;colorspace&quot; as &quot;raw&quot;, so no special decoding is applied.</p>
 </section>
 </section>
 <section id="workflow-sections">
-<h3><a href="#toc-entry-6">Workflow Sections</a></h3>
-<div class="l-c-color l-mrg-l l-flex-c l-flex-center">
+<h3><a class="toc-backref" href="#toc-entry-6" role="doc-backlink">Workflow Sections</a></h3>
+<div class="center-block docutils container">
 <svg width="80%" height="80%" viewBox="0 0 630 153" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;">
     <path d="M15,97L153,97C160.732,97 167,103.268 167,111L167,138C167,145.732 160.732,152 153,152L15,152C7.268,152 1,145.732 1,138L1,111C1,103.268 7.268,97 15,97ZM246,97L384,97C391.732,97 398,103.268 398,111L398,138C398,145.732 391.732,152 384,152L246,152C238.268,152 232,145.732 232,138L232,111C232,103.268 238.268,97 246,97ZM246,1L384,1C391.732,1 398,7.268 398,15L398,42C398,49.732 391.732,56 384,56L246,56C238.268,56 232,49.732 232,42L232,15C232,7.268 238.268,1 246,1ZM477,97L615,97C622.732,97 629,103.268 629,111L629,138C629,145.732 622.732,152 615,152L477,152C469.268,152 463,145.732 463,138L463,111C463,103.268 469.268,97 477,97Z" style="fill:none;fill-rule:nonzero;stroke:currentColor;stroke-width:2px;"/>
     <path d="M231.454,126.575C232.039,125.99 232.039,125.04 231.454,124.454L221.908,114.908C221.322,114.322 220.372,114.322 219.786,114.908C219.201,115.494 219.201,116.444 219.786,117.029L228.272,125.515L219.786,134C219.201,134.586 219.201,135.535 219.786,136.121C220.372,136.707 221.322,136.707 221.908,136.121L231.454,126.575ZM316.454,57.454C315.868,56.868 314.918,56.868 314.332,57.454L304.786,67C304.201,67.586 304.201,68.536 304.786,69.121C305.372,69.707 306.322,69.707 306.908,69.121L315.393,60.636L323.878,69.121C324.464,69.707 325.414,69.707 326,69.121C326.585,68.536 326.585,67.586 326,67L316.454,57.454ZM462.454,126.575C463.039,125.99 463.039,125.04 462.454,124.454L452.908,114.908C452.322,114.322 451.372,114.322 450.786,114.908C450.201,115.494 450.201,116.444 450.786,117.029L459.272,125.515L450.786,134C450.201,134.586 450.201,135.535 450.786,136.121C451.372,136.707 452.322,136.707 452.908,136.121L462.454,126.575ZM168.393,127.015L230.393,127.015L230.393,124.015L168.393,124.015L168.393,127.015ZM316.893,96.515L316.893,58.515L313.893,58.515L313.893,96.515L316.893,96.515ZM399.393,127.015L461.393,127.015L461.393,124.015L399.393,124.015L399.393,127.015Z" style="fill:currentColor;fill-rule:nonzero;"/>
@@ -341,39 +376,39 @@ specify the “colorspace” as “raw”, so no special decoding is applied.</p
 </svg>
 </div>
 <section id="input">
-<h4><a href="#toc-entry-7">Input</a></h4>
+<h4><a class="toc-backref" href="#toc-entry-7" role="doc-backlink">Input</a></h4>
 <p>Data that need to be processed, can be anything but in our case it is
-pixel data, like an image texture, a brushstroke, a procedural noise, …</p>
-<p>If it is scalar, we don’t need to decode it. We must specify that we don’t
-want color-transformations by specifying for example the colorspace=”raw”.</p>
+pixel data, like an image texture, a brushstroke, a procedural noise, ...</p>
+<p>If it is scalar, we don't need to decode it. We must specify that we don't
+want color-transformations by specifying for example the colorspace=&quot;raw&quot;.</p>
 <p>If it is color this means that <strong>the data has been mandatorily encoded in a given
 colorspace</strong>. You can hope that this encoding is specified somewhere, like in
-the name, in the metadata, … But as color-management is a big mess still in
-2021 most of the time we will assume that it’s in sRGB colorspace with
+the name, in the metadata, ... But as color-management is a big mess still in
+2021 most of the time we will assume that it's in sRGB colorspace with
 a transfer-function depending on the file format used.</p>
 <p>In sp the Input section can be found on the image slot of each layer.
-See <a href="#input-setup-in-sp">Input Setup in Sp</a> ..</p>
+See <a class="reference internal" href="#input-setup-in-sp">Input Setup in Sp</a> ..</p>
 </section>
 <section id="workspace">
-<h4><a href="#toc-entry-8">Workspace</a></h4>
+<h4><a class="toc-backref" href="#toc-entry-8" role="doc-backlink">Workspace</a></h4>
 <p>Everything you create, modify go through it. We define how it is configured
-so we can always know “where to go” when transforming an Input.
-In sp this is the “Working color space”. In OCIO term it corresponds the
-<code>scene_linear</code> role (also the <code>reference</code> one).</p>
-<p>Even though sp doesn’t support OCIO role, it read the
-<code>scene_linear</code> one to use it as the Working Colorspace.</p>
+so we can always know &quot;where to go&quot; when transforming an Input.
+In sp this is the &quot;Working color space&quot;. In OCIO term it corresponds the
+<span class="docutils literal">scene_linear</span> role (also the <span class="docutils literal">reference</span> one).</p>
+<p>Even though sp doesn't support OCIO role, it read the
+<span class="docutils literal">scene_linear</span> one to use it as the Working Colorspace.</p>
 </section>
 <section id="display">
-<h4><a href="#toc-entry-9">Display</a></h4>
+<h4><a class="toc-backref" href="#toc-entry-9" role="doc-backlink">Display</a></h4>
 <p>Once the data has been processed through the Workspace you might want to
 preview it. To do so, everybody will be using some kind of hardware display,
 usually a computer monitor. This might sound dumb but it is a critical step.
 So here we need to convert the Workspace data to Display data, and there is a
 lot to do here.</p>
-<p>We can see the Workspace as an “open-domain”, where data can
-be stored in some fancy colorspaces, reach some very high values, … (it
+<p>We can see the Workspace as an &quot;open-domain&quot;, where data can
+be stored in some fancy colorspaces, reach some very high values, ... (it
 can also be closed with data being already closer to the Display domain).
-We can then see the Display as a “closed-domain”, it except a kind of
+We can then see the Display as a &quot;closed-domain&quot;, it except a kind of
 particularly encoded signal and has limits clearly defined. Knowing the
 source (Workspace) we can define the transformations required to convert it
 to the target (Display). This involved at his core, colorspace primaries
@@ -381,203 +416,209 @@ conversion (if Workspace colorspace is different from the Display ones),
 transfer-function encoding/re-encoding (to convert a linear Workspace to
 a Display requiring the sRGB transfer-function), and at a more advanced stage,
 a dynamic-range conversion (still if required). This last step is usually
-called “tonemapping” where we try to make the open-domain that is the Workspace
+called &quot;tonemapping&quot; where we try to make the open-domain that is the Workspace
 fit into the Display closed-domain.</p>
-<p>Damn that’s a complicated one, but anyway, what you have to keep in mind is
+<p>Damn that's a complicated one, but anyway, what you have to keep in mind is
 we are encoding data for a delimited domain defined by the display you are
 using.</p>
-<p>In sp the Display section is handled by the <code>view-transform</code> dropdown, that
+<p>In sp the Display section is handled by the <span class="docutils literal"><span class="pre">view-transform</span></span> dropdown, that
 you can find at the top-right of your viewport.
-See <a href="#display-setup-in-sp">Display Setup in Sp</a> .</p>
+See <a class="reference internal" href="#display-setup-in-sp">Display Setup in Sp</a> .</p>
 </section>
 <section id="output">
-<h4><a href="#toc-entry-10">Output</a></h4>
-<p>But isn’t the Display the Output ? Yes, it can be, if you are at the end of the
+<h4><a class="toc-backref" href="#toc-entry-10" role="doc-backlink">Output</a></h4>
+<p>But isn't the Display the Output ? Yes, it can be, if you are at the end of the
 chain. But here in sp, the end of the chain is our exported texture files. The
 Display only allow us to have a preview of how they could look.</p>
 <p>So here, we will encode the Workspace data, has it is required for the next
 pipeline step. Encoding will depend on what you need in the next step and what
 container (image format) you chose.</p>
 <p>In sp the Output section happens during the textures export process.
-See <a href="#output-setup-in-sp">Output Setup in Sp</a> .</p>
+See <a class="reference internal" href="#output-setup-in-sp">Output Setup in Sp</a> .</p>
 </section>
 <section id="example">
-<h4><a href="#toc-entry-11">Example</a></h4>
+<h4><a class="toc-backref" href="#toc-entry-11" role="doc-backlink">Example</a></h4>
 <p>To illustrate the theory here is a diagram representing a section of a
 potential VFX-pipeline. I hope this will not confuse you more than this topic
 already is.</p>
-<figure class="m-figure">
-<a href="https://mrlixm.github.io/static/images/blog/0008/diagramB.jpg"><img alt="Color-managed pipeline example diagram" src="https://mrlixm.github.io/static/images/blog/0008/diagramB.jpg" /></a>
-<figcaption>Example of a color-managed pipeline with various colorspace configuration
-used for each section.</figcaption>
+<figure class="inline">
+<a class="reference external image-reference" href="diagramB.jpg">
+<img alt="Color-managed pipeline example diagram" class="inline" src="diagramB.jpg" />
+</a>
+<figcaption>
+<p>Example of a color-managed pipeline with various colorspace configuration
+used for each section.</p>
+</figcaption>
 </figure>
-<ul>
-<li>I voluntary chose different colorspace across departments and sections to
-accentuate potential transformations.</li>
-<li>It has been chose to work with ACES for the color-management.</li>
-<li>Let’s assume all the users working on this pipeline have access to the
-same display which is a DCI-P3 calibrated monitor.</li>
+<ul class="simple">
+<li><p>I voluntary chose different colorspace across departments and sections to
+accentuate potential transformations.</p></li>
+<li><p>It has been chose to work with ACES for the color-management.</p></li>
+<li><p>Let's assume all the users working on this pipeline have access to the
+same display which is a DCI-P3 calibrated monitor.</p></li>
 </ul>
-<aside class="m-block m-danger">
-<p>Substance Painter</p>
+<aside class="admonition danger">
+<p class="admonition-title">Substance Painter</p>
 <p>If we look at the Substance Painter department, we can see that our workspace
-is <code>linear - sRGB</code>. The artist decided to not bother working with <code>ACEScg</code>
-colorspace but instead is using <code>sRGB</code> primaries.
+is <span class="docutils literal">linear - sRGB</span>. The artist decided to not bother working with <span class="docutils literal">ACEScg</span>
+colorspace but instead is using <span class="docutils literal">sRGB</span> primaries.
 This means that for the Display, the chain of color-transformation is the
 following :</p>
-<pre>linear - sRGB &gt; linear - ACES 2065-1 + ACES RRT &gt; 2.6 gamma - DCI-P3</pre>
-<div class="m-row">
-<div class="m-container-inflate m-col-l-4 m-left-l">
-<figure class="m-figure">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-odt-p3.png"><img alt="sp view-transform set to ACES - P3-D60" src="https://mrlixm.github.io/static/images/blog/0008/sp-odt-p3.png" /></a>
-<figcaption>Located at the top-right of the viewport</figcaption>
+<pre class="literal-block">linear - sRGB &gt; linear - ACES 2065-1 + ACES RRT &gt; 2.6 gamma - DCI-P3</pre>
+<div class="sp-split docutils container">
+<figure class="inline">
+<a class="reference external image-reference" href="sp-odt-p3.jpg">
+<img alt="sp view-transform set to ACES - P3-D60" class="inline" src="sp-odt-p3.jpg" />
+</a>
+<figcaption>
+<p>Located at the top-right of the viewport</p>
+</figcaption>
 </figure>
-</div>
-<div class="m-col-l-8">
-And all of these transformation are magically handled by the OCIO
+<div class="docutils container">
+<p>And all of these transformation are magically handled by the OCIO
 config, the artist only specify what display is he using by
-modifying the view-transform colorspace.</div>
+modifying the view-transform colorspace.</p>
+</div>
 </div>
 <p>We finally export the textures in the same Workspace colorspace.</p>
 </aside>
-</aside>
-<aside class="m-block m-primary">
-<p>Maya</p>
-<p>
-Now we are in Maya. We need to apply the textures on the asset and the
+<aside class="admonition hint">
+<p class="admonition-title">Maya</p>
+<div class="line-block">
+<div class="line">Now we are in Maya. We need to apply the textures on the asset and the
 end goal is to create a render out of it.
-The Workspace is now <code>ACEScg</code> .
+The Workspace is now <span class="docutils literal">ACEScg</span> .
 This mean we need to convert our texture which are in sRGB to this
 colorspace. The Display is the same, only the source colorspace
-change, which is now ACEScg.<br />
-Let’s skip quickly to the last department.<br />
-</p>
+change, which is now ACEScg.</div>
+<div class="line">Let's skip quickly to the last department.</div>
+</div>
 </aside>
-</aside>
-<aside class="m-block m-warning">
-<p>Nuke</p>
+<aside class="admonition warning">
+<p class="admonition-title">Nuke</p>
 <p>Nuke keep the same Workspace as Maya, as our Input render is already in ACEScg
-we don’t need conversion. As this is the end of the pipeline we have a few
+we don't need conversion. As this is the end of the pipeline we have a few
 more possibilities here for the Output. Here we want to also be able to
 see the composited render on an sRGB Display. As such this mean the
 Output needs to be encoded for an sRGB Display, we cannot use the Output
 encoded for a DCI-P3 Display.</p>
 </aside>
-</aside>
-<p class="m-transition">~</p>
-<p>You made it yay ! Color-science is a complex topic, so don’t worry if you
-don’t get everything the first time. You will find additional resources to
+<p>You made it yay ! Color-science is a complex topic, so don't worry if you
+don't get everything the first time. You will find additional resources to
 continue your exploration at the end of this article.</p>
-<p>Now, let’s put into practice the theory …</p>
+<p>Now, let's put into practice the theory ...</p>
 </section>
 </section>
 </section>
 <section id="substance-setup-workflow">
-<h2><a href="#toc-entry-12">Substance Setup &amp; Workflow</a></h2>
-<div class="m-image">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-project-legacy.png"><img alt="New project window with color-management tab" src="https://mrlixm.github.io/static/images/blog/0008/sp-project-legacy.png" /></a>
-</div>
+<h2><a class="toc-backref" href="#toc-entry-12" role="doc-backlink">Substance Setup &amp; Workflow</a></h2>
+<a class="reference external image-reference" href="sp-project-legacy.jpg">
+<img alt="New project window with color-management tab" class="inline" src="sp-project-legacy.jpg" />
+</a>
 <p>Color-management is not application-dependent but project-dependant.
 As such, you will not find any options in the applications settings but in
 project ones.</p>
 <section id="new-project">
-<h3><a href="#toc-entry-13">New Project</a></h3>
-<p>The first occurrence of these new options can be found on the <code>New project</code>
-window. You will find a <code>Color Management</code> sub-menu at the bottom.</p>
-<div class="m-image">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-project-cm-options.png"><img alt="New project window with color-management tab" src="https://mrlixm.github.io/static/images/blog/0008/sp-project-cm-options.png" /></a>
-</div>
-<aside class="m-note m-info">
-You can change all the color-management settings at any moment in
+<h3><a class="toc-backref" href="#toc-entry-13" role="doc-backlink">New Project</a></h3>
+<p>The first occurrence of these new options can be found on the <span class="docutils literal">New project</span>
+window. You will find a <span class="docutils literal">Color Management</span> sub-menu at the bottom.</p>
+<a class="reference external image-reference" href="sp-project-cm-options.jpg">
+<img alt="New project window with color-management tab" class="inline" src="sp-project-cm-options.jpg" />
+</a>
+<aside class="admonition note">
+<p class="admonition-title">note</p>
+<p>You can change all the color-management settings at any moment in
 the project settings. Keep in mind that big changes could break your
-project though.</aside>
+project though.</p>
 </aside>
-<p>You will be offered between two modes <code>Legacy</code> and <code>OpenColorIO</code>.
-<code>Legacy</code> corresponds to the pre-release way sp was working with. We will
+<p>You will be offered between two modes <span class="docutils literal">Legacy</span> and <span class="docutils literal">OpenColorIO</span>.
+<span class="docutils literal">Legacy</span> corresponds to the pre-release way sp was working with. We will
 skip this mode as it is not useful anymore.</p>
-<aside class="m-note m-info">
-Even if you don’t need to use any specific OCIO config, substance offer a
+<aside class="admonition note">
+<p class="admonition-title">note</p>
+<p>Even if you don't need to use any specific OCIO config, substance offer a
 default one for the sRGB workflow which made <strong>the OCIO mode recommended
-to use.</strong></aside>
+to use.</strong></p>
 </aside>
 </section>
 <section id="ocio-config">
-<h3><a href="#toc-entry-14">OCIO config</a></h3>
-<div class="m-image">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-project-OCIO-01.png"><img alt="New project window with OCIO options" src="https://mrlixm.github.io/static/images/blog/0008/sp-project-OCIO-01.png" /></a>
-</div>
-<p>But wait, wait … what is OCIO ? Why should I use it ?</p>
-<p><a href="https://opencolorio.readthedocs.io">OCIO</a>
+<h3><a class="toc-backref" href="#toc-entry-14" role="doc-backlink">OCIO config</a></h3>
+<a class="reference external image-reference" href="sp-project-OCIO-01.jpg">
+<img alt="New project window with OCIO options" class="inline" src="sp-project-OCIO-01.jpg" />
+</a>
+<p>But wait, wait ... what is OCIO ? Why should I use it ?</p>
+<p><a class="reference external" href="https://opencolorio.readthedocs.io">OCIO</a>
 is a color-management solution developed originally by Sony Picture Imageworks
 aiming at enforcing color-management consistency between DCCs.
-I recommend <a href="https://opencolorio.readthedocs.io/en/latest/concepts/overview/overview.html">having a read at the documentation</a> .</p>
+I recommend <a class="reference external" href="https://opencolorio.readthedocs.io/en/latest/concepts/overview/overview.html">having a read at the documentation</a> .</p>
 <p>OCIO itself only define standards of utilisation and give you the tools to work
-but the core of the system is the <strong>OCIO config</strong> (a <code>.ocio</code> file).
+but the core of the system is the <strong>OCIO config</strong> (a <span class="docutils literal">.ocio</span> file).
 This is where all the color-transforms and options are defined.
 For example, ACES is a color-management system on his own but ship a version
 through OCIO.</p>
 <p>The main advantage is that OCIO is supported by most software (even if the
 implementation wildly differs between each 😬 ) so you could get the same look
 through all of your DCCs (in theory).</p>
-<p class="m-transition">~</p>
+<hr class="docutils" />
 <p>For our convenience sp already ships with 3 OCIO configs :</p>
-<ul>
-<li>Substance</li>
-<li>ACES 1.0.3</li>
-<li>ACES 1.2</li>
+<ul class="simple">
+<li><p>Substance</p></li>
+<li><p>ACES 1.0.3</p></li>
+<li><p>ACES 1.2</p></li>
 </ul>
 <p>You can find them in the sp installation folder like this one :</p>
-<pre class="m-code">C:\Program Files\Allegorithmic\Adobe Substance 3D Painter\resources\ocio</pre>
-<p>Honestly, I don’t know why did they include two ACES versions, only the last
-one was needed, but it is awesome to have a default “Substance” config.</p>
-<p>
-Lot of flexibility here. First option is to use the shipped configs.
-In my opinion only the <code>Substance</code> config is interesting here.<br />
-The 2 ACES ones are the “default” dev configs with the hundred of
+<pre class="highlight literal-block" title="Block of code in text language.">C:\Program Files\Allegorithmic\Adobe Substance 3D Painter\resources\ocio
+</pre>
+<p>Honestly, I don't know why did they include two ACES versions, only the last
+one was needed, but it is awesome to have a default &quot;Substance&quot; config.</p>
+<div class="line-block">
+<div class="line">Lot of flexibility here. First option is to use the shipped configs.
+In my opinion only the <span class="docutils literal">Substance</span> config is interesting here.</div>
+<div class="line">The 2 ACES ones are the &quot;default&quot; dev configs with the hundred of
 colorspaces you will never need. It is better to use a lightweight ACES
-config like <a href="https://caveacademy.com/product/cave-cg-animation-aces-ocio-config/">the one from CAVE academy</a>. (see <a href="#aces-workflow">ACES Workflow</a>
-section)<br />
-</p>
-<p>The <code>Substance</code> config will be a good fit if you are using the traditional
+config like <a class="reference external" href="https://caveacademy.com/product/cave-cg-animation-aces-ocio-config/">the one from CAVE academy</a>. (see <a class="reference internal" href="#aces-workflow">ACES Workflow</a>
+section)</div>
+</div>
+<p>The <span class="docutils literal">Substance</span> config will be a good fit if you are using the traditional
 sRGB linear workflow and do not wish to use an OCIO config in every DCC.
 You will still have enough control to have a proper color-managed workflow.</p>
-<p>Let’s now see how you could load a custom OCIO config.</p>
+<p>Let's now see how you could load a custom OCIO config.</p>
 <section id="custom-config">
-<h4><a href="#toc-entry-15">Custom config</a></h4>
-<div class="m-image">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-project-ocio-custom.png"><img alt="New project window with OCIO option set with a custom config." src="https://mrlixm.github.io/static/images/blog/0008/sp-project-ocio-custom.png" /></a>
-</div>
-<p>The first option is to use the <code>Custom</code> option and manually look for
-the path to the <code>config.ocio</code> file on your disk.</p>
-<aside class="m-block m-warning">
-<p>Only a reference to the config path is saved in the project.</p>
-<p>When submitting a OCIO config through the <code>Custom</code> option, <strong>the
+<h4><a class="toc-backref" href="#toc-entry-15" role="doc-backlink">Custom config</a></h4>
+<a class="reference external image-reference" href="sp-project-ocio-custom.jpg">
+<img alt="New project window with OCIO option set with a custom config." class="inline" src="sp-project-ocio-custom.jpg" />
+</a>
+<p>The first option is to use the <span class="docutils literal">Custom</span> option and manually look for
+the path to the <span class="docutils literal">config.ocio</span> file on your disk.</p>
+<aside class="admonition warning">
+<p class="admonition-title">Only a reference to the config path is saved in the project.</p>
+<p>When submitting a OCIO config through the <span class="docutils literal">Custom</span> option, <strong>the
 config is always loaded live from the disk</strong>.
 This means if you share a substance project with
-someone that doesn’t have the OCIO config at the exact same path, you will
+someone that doesn't have the OCIO config at the exact same path, you will
 see this message pop up :</p>
-<div class="m-image">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-project-ocio-custom-error.png"><img alt="Error window when the custom config can't be found." src="https://mrlixm.github.io/static/images/blog/0008/sp-project-ocio-custom-error.png" /></a>
-</div>
+<a class="reference external image-reference" href="sp-project-ocio-custom-error.jpg">
+<img alt="Error window when the custom config can't be found." class="inline" src="sp-project-ocio-custom-error.jpg" />
+</a>
 </aside>
-</aside>
-<p>See the bottom section <a href="#substance-parameters-for-ocio-configs">Substance parameters for OCIO configs</a> to continue
+<p>See the bottom section <a class="reference internal" href="#substance-parameters-for-ocio-configs">Substance parameters for OCIO configs</a> to continue
 the setup.</p>
 </section>
 <section id="environment-variable">
-<h4><a href="#toc-entry-16">Environment variable</a></h4>
+<h4><a class="toc-backref" href="#toc-entry-16" role="doc-backlink">Environment variable</a></h4>
 <p>The above might be enough for individual artists but being in a pipeline
 environment requires other ways to set OCIO automatically.</p>
-<aside class="m-note m-info">
-If the OCIO environment variable is present and has a valid configuration
-file it will take over to override and disable the UI settings.</aside>
+<aside class="admonition note">
+<p class="admonition-title">note</p>
+<p>If the OCIO environment variable is present and has a valid configuration
+file it will take over to override and disable the UI settings.</p>
 </aside>
 <p>On Windows you have 2 ways to set environment variables :</p>
 <section id="global-settings">
-<h5><a href="#toc-entry-17">Global Settings</a></h5>
-<div class="m-image">
-<a href="https://mrlixm.github.io/static/images/blog/0008/ocio-env-global.png"><img alt="Windows creating the OCIO environment variable." src="https://mrlixm.github.io/static/images/blog/0008/ocio-env-global.png" /></a>
-</div>
+<h5><a class="toc-backref" href="#toc-entry-17" role="doc-backlink">Global Settings</a></h5>
+<a class="reference external image-reference" href="ocio-env-global.jpg">
+<img alt="Windows creating the OCIO environment variable." class="inline" src="ocio-env-global.jpg" />
+</a>
 <p>You create a new variable named OCIO with the path to the config.
 This variable will be used by ALL software that can read it. (unless
 overridden).</p>
@@ -586,41 +627,47 @@ overridden).</p>
 will be broken.</p>
 </section>
 <section id="set-locally-at-startup">
-<h5><a href="#toc-entry-18">Set locally at startup</a></h5>
+<h5><a class="toc-backref" href="#toc-entry-18" role="doc-backlink">Set locally at startup</a></h5>
 <p>You defined the environment variable in a start-up script.
-This is the cleanest way to do it but means you can’t use the Windows shortcut
+This is the cleanest way to do it but means you can't use the Windows shortcut
 to start your software :</p>
-<p>We use a <code>.bat</code> to configure and launch the software. Here is a basic <code>.bat</code>
+<p>We use a <span class="docutils literal">.bat</span> to configure and launch the software. Here is a basic <span class="docutils literal">.bat</span>
 that will set the OCIO variable and then launch sp.</p>
-<pre class="m-code"><span class="nb">set</span> <span class="s2">&quot;OCIO=C:\aces_1.1\config.ocio&quot;</span>
+<pre class="highlight literal-block" title="Block of code in shell language."><span class="nb">set</span><span class="w"> </span><span class="s2">&quot;OCIO=C:\aces_1.1\config.ocio&quot;</span>
 
-start <span class="s2">&quot;&quot;</span> <span class="s2">&quot;C:\Program Files\Allegorithmic\Adobe Substance 3D Painter\Adobe</span>
-<span class="s2">Substance 3D Painter.exe&quot;</span></pre>
-<aside class="m-note m-default">
-To create a <code>.bat</code> just create a new <code>.txt</code> file, paste the above code,
+start<span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="s2">&quot;C:\Program Files\Allegorithmic\Adobe Substance 3D Painter\Adobe</span>
+<span class="s2">Substance 3D Painter.exe&quot;</span>
+</pre>
+<aside class="admonition tip">
+<p class="admonition-title">tip</p>
+<p>To create a <span class="docutils literal">.bat</span> just create a new <span class="docutils literal">.txt</span> file, paste the above code,
 modify it with the path to your config, save it, and then just replace
-the <code>.txt</code> with <code>.bat</code> in the file’s name.</aside>
+the <span class="docutils literal">.txt</span> with <span class="docutils literal">.bat</span> in the file's name.</p>
 </aside>
-<p>
-This means that to launch Substance you will have to always use this .bat.
-No “double-clicking” on file to open them either.<br />
-You can have a look on internet at <a href="https://superuser.com/questions/656611/how-to-pin-a-batch-file-to-the-taskbar-quicklaunch/656649">how to pin a .bat to the taskbar</a> .<br />
-</p>
+<div class="line-block">
+<div class="line">This means that to launch Substance you will have to always use this .bat.
+No &quot;double-clicking&quot; on file to open them either.</div>
+<div class="line">You can have a look on internet at <a class="reference external" href="https://superuser.com/questions/656611/how-to-pin-a-batch-file-to-the-taskbar-quicklaunch/656649">how to pin a .bat to the taskbar</a> .</div>
+</div>
 <p>But this guarantees a very robust software configuration per project.</p>
 </section>
 </section>
 <section id="substance-parameters-for-ocio-configs">
-<h4><a href="#toc-entry-19">Substance parameters for OCIO configs</a></h4>
-<figure class="m-figure">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-project-ocio-options.png"><img alt="Options for OCIO mode in sp.." src="https://mrlixm.github.io/static/images/blog/0008/sp-project-ocio-options.png" /></a>
-<figcaption>OCIO with Substance config default settings.</figcaption>
+<h4><a class="toc-backref" href="#toc-entry-19" role="doc-backlink">Substance parameters for OCIO configs</a></h4>
+<figure class="inline">
+<a class="reference external image-reference" href="sp-project-ocio-options.jpg">
+<img alt="Options for OCIO mode in sp.." class="inline" src="sp-project-ocio-options.jpg" />
+</a>
+<figcaption>
+<p>OCIO with Substance config default settings.</p>
+</figcaption>
 </figure>
 <p>It corresponds to all the sections below the color-management mode. It allows
 to configure how inputs react with the OCIO config, i.e which colorspace is
 being assigned by default.</p>
-<p>Usually, in other software, this section is configured using the <a href="https://opencolorio.readthedocs.io/en/latest/guides/authoring/overview.html#roles">OCIO roles</a> defined in the OCIO configuration.
-<span class="m-text m-danger">But currently sp support only its own OCIO roles.</span> Which mean
-<span class="m-text m-danger">you might have to manually setup this section</span> to get a correct
+<p>Usually, in other software, this section is configured using the <a class="reference external" href="https://opencolorio.readthedocs.io/en/latest/guides/authoring/overview.html#roles">OCIO roles</a> defined in the OCIO configuration.
+<span class="text-danger">But currently sp support only its own OCIO roles.</span> Which mean
+<span class="text-danger">you might have to manually setup this section</span> to get a correct
 result with the auto settings OR make sure the OCIO config you are using
 have the OCIO roles supported by Sp.</p>
 <p>If you look at the above image, this is how it is supposed to look when picking
@@ -628,78 +675,85 @@ the Substance config. As the Substance config have the supported OCIO roles
 defined, the parameters are properly configured.</p>
 <p>But if you are loading a custom config, make sure these options are properly
 configured with the intended colorspaces for each format if you want all the
-<code>auto</code> options to work properly. Most of them (except Export ones) can be
+<span class="docutils literal">auto</span> options to work properly. Most of them (except Export ones) can be
 changed in context in last resort.</p>
-<p>Visit the <a href="#aces-workflow">ACES Workflow</a> section to find how this should be considered if you
+<p>Visit the <a class="reference internal" href="#aces-workflow">ACES Workflow</a> section to find how this should be considered if you
 are using the ACES config.</p>
-<p class="m-transition">~</p>
-<p>Since 7.4.2 you can also find a new <code>Standard sRGB color space</code> parameter
+<hr class="docutils" />
+<p>Since 7.4.2 you can also find a new <span class="docutils literal">Standard sRGB color space</span> parameter
 which is a very nice add for having UI elements properly managed. If the name
-doesn’t looks clear, it correspond to the <code>sRGB - Display encoded</code>
+doesn't looks clear, it correspond to the <span class="docutils literal">sRGB - Display encoded</span>
 colorspace. From the documentation, it is used :</p>
-<ul>
-<li>To convert color set in the hexadecimal field of the color picker.</li>
-<li>To save and load color swatches within the color picker.</li>
-<li>To be listed as a Display in the color picker list.</li>
+<ul class="simple">
+<li><p>To convert color set in the hexadecimal field of the color picker.</p></li>
+<li><p>To save and load color swatches within the color picker.</p></li>
+<li><p>To be listed as a Display in the color picker list.</p></li>
 </ul>
 <p>This update also adds support for specific OCIO role which are the following :</p>
-<pre class="m-code">substance_3d_painter_bitmap_import_8bit
+<pre class="highlight literal-block" title="Block of code in text language.">substance_3d_painter_bitmap_import_8bit
 substance_3d_painter_bitmap_import_16bit
 substance_3d_painter_bitmap_import_floating
 substance_3d_painter_bitmap_export_8bit
 substance_3d_painter_bitmap_export_16bit
 substance_3d_painter_bitmap_export_floating
-substance_3d_painter_substance_material</pre>
-<p>Check <a href="https://substance3d.adobe.com/documentation/spdoc/color-management-with-opencolorio-225969419.html#section3">the Substance’s OCIO documentation</a> for more details but make sure your OCIO config have these
+substance_3d_painter_substance_material
+</pre>
+<p>Check <a class="reference external" href="https://substance3d.adobe.com/documentation/spdoc/color-management-with-opencolorio-225969419.html#section3">the Substance's OCIO documentation</a> for more details but make sure your OCIO config have these
 fellas set with the corresponding colorspace if you want it to be properly
 read in Sp.</p>
 </section>
 </section>
 <section id="new-project-conclusion">
-<h3><a href="#toc-entry-20">New Project : Conclusion</a></h3>
-<p>Alright, to recap’ everything for a new project you need :</p>
-<ol>
-<li>Change the color-management mode to OCIO</li>
-<li>Choose the OCIO config (already chosen if env variable set)</li>
-<li>Check the OCIO options to have the correct default colorspaces working.</li>
+<h3><a class="toc-backref" href="#toc-entry-20" role="doc-backlink">New Project : Conclusion</a></h3>
+<p>Alright, to recap' everything for a new project you need :</p>
+<ol class="arabic simple">
+<li><p>Change the color-management mode to OCIO</p></li>
+<li><p>Choose the OCIO config (already chosen if env variable set)</p></li>
+<li><p>Check the OCIO options to have the correct default colorspaces working.</p></li>
 </ol>
 <p>And of course, setting the other parameters related to your texturing.</p>
 <p>Now you are good to start the texturing workflow. The workflow will be
 divided into the same sections explained in the theoretical part of this
-article (see <a href="#color-managed-workflow">Color-managed Workflow</a>).</p>
+article (see <a class="reference internal" href="#color-managed-workflow">Color-managed Workflow</a>).</p>
 </section>
 <section id="workspace-setup-in-sp">
-<h3><a href="#toc-entry-21">Workspace Setup in Sp</a></h3>
-<p>The Workspace, in software is actually an “abstract” section. It just
+<h3><a class="toc-backref" href="#toc-entry-21" role="doc-backlink">Workspace Setup in Sp</a></h3>
+<p>The Workspace, in software is actually an &quot;abstract&quot; section. It just
 represents the colorspace used as a reference, target or source for every color
 transformation. It is defined in the OCIO config and cannot be changed outside
 of it.</p>
-<aside class="m-note m-info">
-In the OCIO config it corresponds to the <code>scene_linear</code> role.</aside>
+<aside class="admonition hint">
+<p class="admonition-title">hint</p>
+<p>In the OCIO config it corresponds to the <span class="docutils literal">scene_linear</span> role.</p>
 </aside>
-<figure class="m-figure">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-project-ocio-workspace.png"><img alt="The Working Colorspace displayed in the Color-management tab." src="https://mrlixm.github.io/static/images/blog/0008/sp-project-ocio-workspace.png" /></a>
-<figcaption>Visible in the Project’s Color-management section (Using the ACES 1.2 OCIO
-config here)</figcaption>
+<figure class="inline">
+<a class="reference external image-reference" href="sp-project-ocio-workspace.jpg">
+<img alt="The Working Colorspace displayed in the Color-management tab." class="inline" src="sp-project-ocio-workspace.jpg" />
+</a>
+<figcaption>
+<p>Visible in the Project's Color-management section (Using the ACES 1.2 OCIO
+config here)</p>
+</figcaption>
 </figure>
 <p>It is just good to know what is the colorspace being used here.</p>
 </section>
 <section id="display-setup-in-sp">
-<h3><a href="#toc-entry-22">Display Setup in Sp</a></h3>
-<div class="m-image">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-odt-default.png"><img alt="View-transform screenshot." src="https://mrlixm.github.io/static/images/blog/0008/sp-odt-default.png" /></a>
-</div>
+<h3><a class="toc-backref" href="#toc-entry-22" role="doc-backlink">Display Setup in Sp</a></h3>
+<a class="reference external image-reference" href="sp-odt-default.jpg">
+<img alt="View-transform screenshot." class="inline" src="sp-odt-default.jpg" />
+</a>
 <p>A good first step before working is to make sure the Display part is
-properly configured so you don’t start texturing while viewing the wrong
+properly configured so you don't start texturing while viewing the wrong
 colors. This Display part can be configured using what we usually called a
 <cite>view-transform</cite> menu. In sp, you can find it at the top-right of your
 viewport.</p>
-<p>What you have to remember is that <span class="m-text m-primary">you need to choose the option
+<p>What you have to remember is that <span class="text-green">you need to choose the option
 that corresponds to your display.</span> If your display is calibrated to the
 Display P3 colorspace (Apple displays), choose the Display P3 option.</p>
-<p>But what if I don’t know what my display is calibrated to ?</p>
+<p>But what if I don't know what my display is calibrated to ?</p>
 <blockquote>
-A safe choice would be to assume you are using an sRGB-like display.</blockquote>
+<p>A safe choice would be to assume you are using an sRGB-like display.</p>
+</blockquote>
 <p id="the-rec709-transfer-function-issue">I see some people using Rec.709 instead of sRGB, why ?</p>
 <blockquote>
 <p>sRGB and Rec.709 share the same primaries, so you can use both without
@@ -708,129 +762,138 @@ transfer function being used. But fasten your seat-belt, here comes the
 mess : Rec.709 only defined an <abbr title="opto-electrical transfer function">OETF</abbr>
 which is intended for camera signal encoding, not data display encoding !
 For display encoding with the Rec.709 colorspace, one should use the
-<a href="https://www.itu.int/dms_pubrec/itu-r/rec/bt/R-REC-BT.1886-0-201103-I!!PDF-E.pdf">BT.1886</a>
+<a class="reference external" href="https://www.itu.int/dms_pubrec/itu-r/rec/bt/R-REC-BT.1886-0-201103-I!!PDF-E.pdf">BT.1886</a>
 standard which can be resumed as a simple 2.4
 <abbr title="= gamma">power-function</abbr>.</p>
 <p>So how to know which one of these two is being used ? Simple, if when
-compared to sRGB, the image looks darker, it’s the OETF, if it’s looking
-less contrasty, it’s BT.1886.</p>
+compared to sRGB, the image looks darker, it's the OETF, if it's looking
+less contrasty, it's BT.1886.</p>
 <p>If you do the test, the Substance config use the OETF (which should not
 be used), while the ACES config uses BT.1886.</p>
 </blockquote>
-<p>You didn’t answer my question !? I’m just more confused now !</p>
+<p>You didn't answer my question !? I'm just more confused now !</p>
 <blockquote>
 <p>As written previously, you need to choose the option that corresponds to
 your display, so if your display is not calibrated to Rec.709+BT.1886
-don’t use it. But some people like the look of it, being less contrasty,
-that’s why it’s being chosen. But the display should not be a creative
+don't use it. But some people like the look of it, being less contrasty,
+that's why it's being chosen. But the display should not be a creative
 choice. If you like a less contrasty look, you should apply it in the Look
 (see under).</p>
 <p>Just to add more confusion, the BT.1886 difference with sRGB can
 actually be used as a viewing environment compensation. So it can actually
 justify why using Rec709+BT.1886 instead of sRGB.</p>
 </blockquote>
-<p>Anyways, I’m going too far from the subject, and someone already
+<p>Anyways, I'm going too far from the subject, and someone already
 wrote about this topic, I let you read this mind-blowing article from
-Chris Brejon <a href="https://chrisbrejon.com/articles/ocio-display-transforms-and-misconceptions/">OCIO, Display Transforms and Misconceptions</a>.</p>
+Chris Brejon <a class="reference external" href="https://chrisbrejon.com/articles/ocio-display-transforms-and-misconceptions/">OCIO, Display Transforms and Misconceptions</a>.</p>
 <section id="displaying-color-and-scalar-data">
-<h4><a href="#toc-entry-23">Displaying Color and Scalar data</a></h4>
+<h4><a class="toc-backref" href="#toc-entry-23" role="doc-backlink">Displaying Color and Scalar data</a></h4>
 <p>Sp will handle it for you automatically, depending on the channel you
 are previewing.</p>
-<p><a href="https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html#section5">The full list of color-managed channels is available here.</a></p>
+<p><a class="reference external" href="https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html#section5">The full list of color-managed channels is available here.</a></p>
 <p>For example, selecting the Roughness channel for preview will disable the
 view-transform :</p>
-<div class="m-image">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-odt-off.png"><img alt="View-transform screenshot, when scalar data is selected." src="https://mrlixm.github.io/static/images/blog/0008/sp-odt-off.png" /></a>
-</div>
+<a class="reference external image-reference" href="sp-odt-off.jpg">
+<img alt="View-transform screenshot, when scalar data is selected." class="inline" src="sp-odt-off.jpg" />
+</a>
 </section>
 <section id="custom-user-channels">
-<h4><a href="#toc-entry-24">Custom User Channels</a></h4>
-<p>If you are using a custom <code>User</code> channel, you will have to manually
+<h4><a class="toc-backref" href="#toc-entry-24" role="doc-backlink">Custom User Channels</a></h4>
+<p>If you are using a custom <span class="docutils literal">User</span> channel, you will have to manually
 specify if the channel is color-managed. (By default they are not)
-This is achieved by clicking on the gear icon &gt; <code>Color channel</code>.</p>
-<aside class="m-note m-warning">
+This is achieved by clicking on the gear icon &gt; <span class="docutils literal">Color channel</span>.</p>
+<aside class="admonition warning">
+<p class="admonition-title">warning</p>
 <p>As of today (8.2.0), user channel are buggued in the interface
 (color-picker + color thumbnail, viewport is fine).</p>
-<p>I describe the issue and provide a workaround in this <a href="https://community.adobe.com/t5/substance-3d-painter-bugs/color-managed-user-channel-are-not-considered-as-such-by-the-interface/idi-p/13546584#M420">post on the Adobe
+<p>I describe the issue and provide a workaround in this <a class="reference external" href="https://community.adobe.com/t5/substance-3d-painter-bugs/color-managed-user-channel-are-not-considered-as-such-by-the-interface/idi-p/13546584#M420">post on the Adobe
 forum.</a></p>
-</aside>
 </aside>
 </section>
 </section>
 <section id="input-setup-in-sp">
-<h3><a href="#toc-entry-25">Input Setup in Sp</a></h3>
+<h3><a class="toc-backref" href="#toc-entry-25" role="doc-backlink">Input Setup in Sp</a></h3>
 <p>Texturing is all about mixing already existing images, with some carefully
 crafted paint stroke, and funky procedural resources. All of these, if they
 are color-data, have been created and saved with a specific colorspace.
 We will need to know and then specify this colorspace to sp so the OCIO
 processor can know if it needs conversion to the Workspace colorspace.</p>
 <section id="shelf-resources">
-<h4><a href="#toc-entry-26">Shelf Resources</a></h4>
+<h4><a class="toc-backref" href="#toc-entry-26" role="doc-backlink">Shelf Resources</a></h4>
 <p>In Sp this manipulation takes place, weirdly, on the images slots of each
 layer. You will not find any option to specify the colorspace in the shelf.</p>
-<div class="l-flex-r l-flex-start l-gap-1">
-<figure class="m-figure">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-in-bobross-7.4.2.png"><img alt="Screenshots of the Input colorspace option for layers." src="https://mrlixm.github.io/static/images/blog/0008/sp-in-bobross-7.4.2.png" /></a>
-<figcaption>Updated menu design on versions 7.4.2 +</figcaption>
+<div class="split-50-50 docutils container">
+<figure class="inline align-center">
+<a class="reference external image-reference" href="sp-in-bobross-7.4.2.jpg">
+<img alt="Screenshots of the Input colorspace option for layers." class="inline" src="sp-in-bobross-7.4.2.jpg" />
+</a>
+<figcaption>
+<p>Updated menu design on versions 7.4.2 +</p>
+</figcaption>
 </figure>
-<figure class="m-figure">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-in-menudisplay.png"><img alt="Screenshots of the Input colorspace option for layers." src="https://mrlixm.github.io/static/images/blog/0008/sp-in-menudisplay.png" /></a>
-<figcaption>If the menu is not visible, you can toggle it just above.</figcaption>
+<figure class="inline align-center">
+<a class="reference external image-reference" href="sp-in-menudisplay.jpg">
+<img alt="Screenshots of the Input colorspace option for layers." class="inline" src="sp-in-menudisplay.jpg" />
+</a>
+<figcaption>
+<p>If the menu is not visible, you can toggle it just above.</p>
+</figcaption>
 </figure>
 </div>
-<p>
-By default, it is set to <code>auto</code>, which will use the settings specified in
-the project color-management menu explained above.<br />
-(<a href="#substance-parameters-for-ocio-configs">Substance parameters for OCIO configs</a>).<br />
-</p>
+<div class="line-block">
+<div class="line">By default, it is set to <span class="docutils literal">auto</span>, which will use the settings specified in
+the project color-management menu explained above.</div>
+<div class="line">(<a class="reference internal" href="#substance-parameters-for-ocio-configs">Substance parameters for OCIO configs</a>).</div>
+</div>
 <p>I recommend always modifying this option to the proper colorspace to be sure
 the resource is properly color-managed.</p>
 <p>Another option is to have the source colorspace specified in the file name.
-That’s in my opinion a bit messy because the colorspace has to be the exact
+That's in my opinion a bit messy because the colorspace has to be the exact
 name used in the config. If 2 configs used a different name, your image will
 only work for one. If I take for example a colorspace name used in the ACES
-config this could give: <code>bricks_wall_albedo_Utility - Linear - sRGB.exr</code>.</p>
+config this could give: <span class="docutils literal">bricks_wall_albedo_Utility - Linear - sRGB.exr</span>.</p>
 </section>
 <section id="the-color-picker">
-<h4><a href="#toc-entry-27">The color-picker</a></h4>
-<aside class="m-note m-info">
+<h4><a class="toc-backref" href="#toc-entry-27" role="doc-backlink">The color-picker</a></h4>
+<aside class="admonition note">
+<p class="admonition-title">note</p>
 <p>7.4.2 update changed the behavior of the color-picker with huge
 improvements :</p>
-<ul>
-<li>Swapped working and display space for the widgets, the <code>eds</code> is now
-expressed in the display space specified by the <code>tcd</code> and you can
-have a look at the working colorspace value just under.</li>
-<li>Color-picker behavior is more consistent overall .</li>
-<li>You will also notice that the <code>tcd</code> disapear when picking color in a
-scalar channel/role (which is logic).</li>
+<ul class="simple">
+<li><p>Swapped working and display space for the widgets, the <span class="docutils literal">eds</span> is now
+expressed in the display space specified by the <span class="docutils literal">tcd</span> and you can
+have a look at the working colorspace value just under.</p></li>
+<li><p>Color-picker behavior is more consistent overall .</p></li>
+<li><p>You will also notice that the <span class="docutils literal">tcd</span> disapear when picking color in a
+scalar channel/role (which is logic).</p></li>
 </ul>
 <p>The following section has been updated to reflect the change and <strong>will
 not be valid for version under 7.4.2</strong></p>
 </aside>
-</aside>
-<div class="l-flex-r l-flex-start l-gap-1">
-<div class="m-image">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-colorpicker.png"><img alt="Screenshot of the color picker." src="https://mrlixm.github.io/static/images/blog/0008/sp-colorpicker.png" /></a>
-</div>
-<div class="l-flex-shrink-2">
+<div class="sp-split docutils container">
+<a class="reference external image-reference" href="sp-colorpicker.jpg">
+<img alt="Screenshot of the color picker." class="inline" src="sp-colorpicker.jpg" />
+</a>
+<div class="docutils container">
 <p>As used as feared by artists. It never react how the artist wants
 and looks to be made out of dark magic (at least in Mari 🙃 ).
-Did the sp implementation bring any good news ? Let’s see.</p>
+Did the sp implementation bring any good news ? Let's see.</p>
 <p>Abbreviations used:</p>
-<ul>
-<li><code>tcd</code> : top colorspace dropdown</li>
-<li><code>eds</code> : editable sliders, where you can manually enter your color
-components.</li>
+<ul class="simple">
+<li><p><span class="docutils literal">tcd</span> : top colorspace dropdown</p></li>
+<li><p><span class="docutils literal">eds</span> : editable sliders, where you can manually enter your color
+components.</p></li>
 </ul>
 <p>A good feature is the little info icon, giving explicit
 info on how the widget works. If we have a look at the info message
-next to the <code>tcd</code> we can read :</p>
+next to the <span class="docutils literal">tcd</span> we can read :</p>
 <blockquote>
-Color mixing space, this is the space in which a color is edited
+<p>Color mixing space, this is the space in which a color is edited
 before being converted into the working color space. It usually
-matches the monitor to be easily viewed.</blockquote>
-<p>Which means the values in the <code>eds</code> are in the colorspace
-specified by the <code>tcd</code>, then they are converted to the working
+matches the monitor to be easily viewed.</p>
+</blockquote>
+<p>Which means the values in the <span class="docutils literal">eds</span> are in the colorspace
+specified by the <span class="docutils literal">tcd</span>, then they are converted to the working
 colorspace. (you can check the result of this conversion just under.)</p>
 <p>This is a valid workflow, which allow you to get the same color seen
 in the UI on the final textures.</p>
@@ -838,85 +901,93 @@ in the UI on the final textures.</p>
 </div>
 <p>But keep in mind that you have to be careful on the color
 you are chosing, the fact that it looks as you want (perceptual)
-doesn’t mean the scene-refered values (working colorspace) have a
+doesn't mean the scene-refered values (working colorspace) have a
 physically plausible value. For exemple, in an ACES workflow you might want
-to make sure that no channel’s value goes up to 1.0, which mean you are
-reaching the boundary of the ACEScg gamut which is comparable to a laser’s
+to make sure that no channel's value goes up to 1.0, which mean you are
+reaching the boundary of the ACEScg gamut which is comparable to a laser's
 color.</p>
-<aside class="m-note m-info">
-<p>Ideally the <code>tcd</code> and the view-transform should use the same
+<aside class="admonition note">
+<p class="admonition-title">note</p>
+<p>Ideally the <span class="docutils literal">tcd</span> and the view-transform should use the same
 colorspace. This is especially true if you are using the actual picker.
 Unless you need to enter specific value you already know
 which colorspae they are encoded in.</p>
 <p>Luckily, this is already done automatically. Change the
-view-transform and you will see the <code>tcd</code> update to reflect the change !</p>
-</aside>
+view-transform and you will see the <span class="docutils literal">tcd</span> update to reflect the change !</p>
 </aside>
 <p id="picker">What about the actual picker ?</p>
 <blockquote>
 <p>The picker will pick the value at display, so with the view-transform
 applied (if not disabled). Consider this as the input, and will convert
-from the <code>tcd</code> colorspace to the working colorspace. You then get
-back “nearly” the same value (with some math precisions issue ).</p>
+from the <span class="docutils literal">tcd</span> colorspace to the working colorspace. You then get
+back &quot;nearly&quot; the same value (with some math precisions issue ).</p>
 <p>What I recommend though, is to change the view-transform to a
-“no-operation” colorspace (usually called <code>raw</code>), pick the color, and
+&quot;no-operation&quot; colorspace (usually called <span class="docutils literal">raw</span>), pick the color, and
 re-apply the previous view-transform. This will avoid the
 potential colorspace invertibility and imprecisions issues.</p>
-<figure class="m-figure">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-colorpicker-picker.gif"><img alt="GIF showing the trick explained above." src="https://mrlixm.github.io/static/images/blog/0008/sp-colorpicker-picker.gif" /></a>
-<figcaption>Using Filmic config, original value is RGB(1,0.5,0).</figcaption>
+<figure class="inline">
+<a class="reference external image-reference" href="sp-colorpicker-picker.gif">
+<img alt="GIF showing the trick explained above." class="inline" src="sp-colorpicker-picker.gif" />
+</a>
+<figcaption>
+<p>Using Filmic config, original value is RGB(1,0.5,0).</p>
+</figcaption>
 </figure>
 </blockquote>
-<aside class="m-note m-info">
-The color-picker is unfortunately clamped between the 0-1 range, which is
+<aside class="admonition note">
+<p class="admonition-title">note</p>
+<p>The color-picker is unfortunately clamped between the 0-1 range, which is
 at the same time ok because for texturing you usually want to avoid
 values to goes outside this range, but also means color-picking operation
 are clamped which create inconsistency for some of them yielding result
-above 1.</aside>
+above 1.</p>
 </aside>
-<aside class="m-note m-warning">
-Sometimes, when switching colorspaces in the <code>tcd</code>, some UI elements
-like the  <code>eds</code> will not update and you might have to move the sliders
-slightly to force an update.</aside>
+<aside class="admonition warning">
+<p class="admonition-title">warning</p>
+<p>Sometimes, when switching colorspaces in the <span class="docutils literal">tcd</span>, some UI elements
+like the  <span class="docutils literal">eds</span> will not update and you might have to move the sliders
+slightly to force an update.</p>
 </aside>
-<aside class="m-block m-info">
-<p>Hexadecimal</p>
-<p>If you need to enter hexadecimal values, the field will assume they are “
-sRGB-Display“ encoded and use the <code>Standard sRGB color space</code> defined
+<aside class="admonition note">
+<p class="admonition-title">Hexadecimal</p>
+<p>If you need to enter hexadecimal values, the field will assume they are
+<span class="docutils literal"><span class="pre">sRGB-Display</span></span> encoded and use the <span class="docutils literal">Standard sRGB color space</span> defined
 in the config to convert it to the working color-space.
-(Field that seems to be bugged, I can’t edit edit it, only copy/paste
+(Field that seems to be bugged, I can't edit edit it, only copy/paste
 value inside).</p>
 </aside>
-</aside>
-<aside class="m-block m-warning">
-<p>OCIO v2 issue</p>
-<p>Seems the OCIO v2 feature called “shared views” is not supported properly
-by the color-picker. If you use a “colorspace” (actually a <code>display
-view</code>) which make use of a shared view (using <code>&lt;Views&gt;</code>), the widget
+<aside class="admonition warning">
+<p class="admonition-title">OCIO v2 issue</p>
+<p>Seems the OCIO v2 feature called &quot;shared views&quot; is not supported properly
+by the color-picker. If you use a &quot;colorspace&quot; (actually a <span class="docutils literal">display view</span>) which make use of a shared view (using <span class="docutils literal">&lt;Views&gt;</span>), the widget
 displaying the working colorspace values will disapear.</p>
 </aside>
-</aside>
-<aside class="m-block m-info">
-<p>Swatches</p>
+<aside class="admonition note">
+<p class="admonition-title">Swatches</p>
 <p>You can save colors as swatches for easier re-use. Quoting from the
-<a href="https://substance3d.adobe.com/documentation/spdoc/color-picker-220857079.html#section7">swatches documentation</a> :
-<code>Swatch color are managed and saved as sRGB colors, whatever the current
-color management configuration is set to</code>. The steps are as follow :</p>
-<ul>
-<li><code>saving</code> : <code>working colorspace</code> converted to <code>sRGB standard
-colorspace</code> then converted to hexadecimal.</li>
-<li><code>importing</code> : <code>sRGB standard colorspace</code> converted to <code>working colorspace</code></li>
+<a class="reference external" href="https://substance3d.adobe.com/documentation/spdoc/color-picker-220857079.html#section7">swatches documentation</a> :</p>
+<blockquote>
+<p>Swatch color are managed and saved as sRGB colors, whatever the current
+color management configuration is set to.</p>
+</blockquote>
+<p>The steps are as follow :</p>
+<ul class="simple">
+<li><p><span class="docutils literal">saving</span> : <span class="docutils literal">working colorspace</span> converted to <span class="docutils literal">sRGB standard colorspace</span> then converted to hexadecimal.</p></li>
+<li><p><span class="docutils literal">importing</span> : <span class="docutils literal">sRGB standard colorspace</span> converted to <span class="docutils literal">working colorspace</span></p></li>
 </ul>
-<p>No matter how the <code>tcd</code> is set this is how it works EXCEPT if the <code>tcd</code>
-is set to a scalar colorspace (<code>isdata=true</code> in the config). In that case
+<p>No matter how the <span class="docutils literal">tcd</span> is set this is how it works EXCEPT if the <span class="docutils literal">tcd</span>
+is set to a scalar colorspace (<span class="docutils literal">isdata=true</span> in the config). In that case
 and as expected the swatch is imported without conversion so straight
-hexadecimal to RGB values (which doesn’t looks like the original color of
+hexadecimal to RGB values (which doesn't looks like the original color of
 course.)</p>
 </aside>
-</aside>
-<figure class="m-figure">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-colorpicker-infograph.jpg"><img alt="Color-picker infographic." src="https://mrlixm.github.io/static/images/blog/0008/sp-colorpicker-infograph.jpg" /></a>
-<figcaption>Small infographic to resume colorspace transformations.</figcaption>
+<figure class="inline">
+<a class="reference external image-reference" href="sp-colorpicker-infograph.jpg">
+<img alt="Color-picker infographic." class="inline" src="sp-colorpicker-infograph.jpg" />
+</a>
+<figcaption>
+<p>Small infographic to resume colorspace transformations.</p>
+</figcaption>
 </figure>
 <p>So I must say that the latest update have greatly improved the color-picking
 experience which behave a bit more as you would except. Cool stuff !
@@ -924,122 +995,126 @@ Looking forward to next updates to reach the perfect color-picking
 experience haha.</p>
 </section>
 <section id="environment">
-<h4><a href="#toc-entry-28">Environment</a></h4>
-<p><span class="m-text m-s l-c-color-6">There is no direct option to modify the environment image colorspace.</span></p>
-<p>From 7.4.2 + you can find an option in the <code>Display Settings</code> Menu, to change
+<h4><a class="toc-backref" href="#toc-entry-28" role="doc-backlink">Environment</a></h4>
+<p><span class="strikethrough">There is no direct option to modify the environment image colorspace.</span></p>
+<p>From 7.4.2 + you can find an option in the <span class="docutils literal">Display Settings</span> Menu, to change
 the environment colorspace being used.</p>
 <p>For the other versions you still have the following options:</p>
-<ul>
-<li>Modify the default <code>Linear</code> colorspace in the project settings. The
-environments maps will use it.</li>
-<li>Include the source colorspace in the name of the HDRI. It has to be the
+<ul class="simple">
+<li><p>Modify the default <span class="docutils literal">Linear</span> colorspace in the project settings. The
+environments maps will use it.</p></li>
+<li><p>Include the source colorspace in the name of the HDRI. It has to be the
 <strong>exact same name</strong> as defined in the config. Example :
-<code>myhdri_ACES - ACEScg.exr</code>. (you can find an example in <a href="#aces-environment">ACES -
-Environment</a>)</li>
+<span class="docutils literal">myhdri_ACES - ACEScg.exr</span>. (you can find an example in <a class="reference internal" href="#aces-environment">ACES -
+Environment</a>)</p></li>
 </ul>
-<aside class="m-note m-info">
-The pre-integrated HDRIs are encoded with a <code>linear - sRGB</code>-like colorspace.</aside>
+<aside class="admonition note">
+<p class="admonition-title">note</p>
+<p>The pre-integrated HDRIs are encoded with a <span class="docutils literal">linear - sRGB</span>-like colorspace.</p>
 </aside>
 </section>
 <section id="masks">
-<h4><a href="#toc-entry-29">Masks</a></h4>
-<p>When you right-click on a mask you have the option to <code>Export mask as File</code>.
-Don’t worry, mask seems to always be considered as scalar and exported
+<h4><a class="toc-backref" href="#toc-entry-29" role="doc-backlink">Masks</a></h4>
+<p>When you right-click on a mask you have the option to <span class="docutils literal">Export mask as File</span>.
+Don't worry, mask seems to always be considered as scalar and exported
 without any treatment.</p>
 </section>
 </section>
 <section id="output-setup-in-sp">
-<h3><a href="#toc-entry-30">Output Setup in Sp</a></h3>
-<p>The Export Textures window didn’t got much new. We doesn’t have any options
+<h3><a class="toc-backref" href="#toc-entry-30" role="doc-backlink">Output Setup in Sp</a></h3>
+<p>The Export Textures window didn't got much new. We doesn't have any options
 to apply a color-transformation at export time in the Window. The only options
 are the one available into the project settings.</p>
-<div class="m-image">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-project-export.png"><img alt="Sp project settings export options." src="https://mrlixm.github.io/static/images/blog/0008/sp-project-export.png" /></a>
-</div>
+<a class="reference external image-reference" href="sp-project-export.jpg">
+<img alt="Sp project settings export options." class="inline" src="sp-project-export.jpg" />
+</a>
 <p>Basically, integer format should be sRGB display encoded. Floating point format
 should use the same working colorspace.</p>
-<p>What’s new though is the <code>$colorspace</code> token in the Output Templates tab.</p>
-<div class="m-image">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-export-template.png"><img alt="Sp Export window, Output template tab." src="https://mrlixm.github.io/static/images/blog/0008/sp-export-template.png" /></a>
-</div>
+<p>What's new though is the <span class="docutils literal">$colorspace</span> token in the Output Templates tab.</p>
+<a class="reference external image-reference" href="sp-export-template.jpg">
+<img alt="Sp Export window, Output template tab." class="inline" src="sp-export-template.jpg" />
+</a>
 <p>Which is simply replaced by the colorspace defined in the project settings.
-(You can have a preview of the file name in the <code>LIST OF EXPORT</code> tab).</p>
-<p>I’m personaly not fan of this option as this might introduce special characters
-in the file’s name, depending on how the colorspace is named. It is, I think,
+(You can have a preview of the file name in the <span class="docutils literal">LIST OF EXPORT</span> tab).</p>
+<p>I'm personaly not fan of this option as this might introduce special characters
+in the file's name, depending on how the colorspace is named. It is, I think,
 a better option to have the texture name without the colorspace, but exported
 in a directory with the colorspace name.</p>
 <p>For scalar channels, sp will not apply any color-transformation
-and consider them using the colorspace <code>raw</code> (no matter the config).
-Interstingly, this colorspace <code>raw</code> doesn’t get written into the
-<code>$colorspace</code> token as it should. <em>(fixed in 7.4.1)</em></p>
+and consider them using the colorspace <span class="docutils literal">raw</span> (no matter the config).
+Interstingly, this colorspace <span class="docutils literal">raw</span> doesn't get written into the
+<span class="docutils literal">$colorspace</span> token as it should. <em>(fixed in 7.4.1)</em></p>
 </section>
 </section>
 <section id="aces-workflow">
-<h2><a href="#toc-entry-31">ACES Workflow</a></h2>
-<p>I’m not going to get into the what and the why, only the how. Let’s keep the
+<h2><a class="toc-backref" href="#toc-entry-31" role="doc-backlink">ACES Workflow</a></h2>
+<p>I'm not going to get into the what and the why, only the how. Let's keep the
 rest for a next (potential) article ?</p>
 <section id="aces-config-setup">
-<h3><a href="#toc-entry-32">ACES - Config setup</a></h3>
-<p>You could use the one shipped with Substance but I wouldn’t recommend so.
+<h3><a class="toc-backref" href="#toc-entry-32" role="doc-backlink">ACES - Config setup</a></h3>
+<p>You could use the one shipped with Substance but I wouldn't recommend so.
 They are the ones with the hundred colorspaces that will just slow you down
 when you need to choose one.</p>
 <p>Instead, it would be smarter to use a config with only what you need like
-<a href="https://caveacademy.com/product/cave-cg-animation-aces-ocio-config/">the one from CAVE academy</a>.</p>
+<a class="reference external" href="https://caveacademy.com/product/cave-cg-animation-aces-ocio-config/">the one from CAVE academy</a>.</p>
 <p>Then you will need to configure the default colorspaces. Using the Cave config
 (which have the same nomenclature as the official ACES ones) here is what I
 recommend :</p>
-<div class="m-image">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-aces-project.png"><img alt="Substance project window with ACES setuped properly." src="https://mrlixm.github.io/static/images/blog/0008/sp-aces-project.png" /></a>
-</div>
+<a class="reference external image-reference" href="sp-aces-project.jpg">
+<img alt="Substance project window with ACES setuped properly." class="inline" src="sp-aces-project.jpg" />
+</a>
 <p>Import settings are the usual stuff, most of the 8bit texture, if not all
-are sRGB display encoded files so <code>Utility - sRGB - Texture</code> correspond.
+are sRGB display encoded files so <span class="docutils literal">Utility - sRGB - Texture</span> correspond.
 Floating point images like EXRs should always be linear so the alternative
-version <code>Utility - Linear - sRGB</code> is the right choice. Remember these options
-are just applied by default (with the <code>auto</code> colorspace) but can be
+version <span class="docutils literal">Utility - Linear - sRGB</span> is the right choice. Remember these options
+are just applied by default (with the <span class="docutils literal">auto</span> colorspace) but can be
 changed anytime.</p>
-<p>I choose <code>Utility - sRGB - Texture</code> for <code>Substance materials</code> because
+<p>I choose <span class="docutils literal">Utility - sRGB - Texture</span> for <span class="docutils literal">Substance materials</span> because
 it seems the output is always sRGB display encoded as the screenshot under
 show. (colorspace options can be modified on the material anyway).</p>
-<figure class="m-figure">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-mat-colorspace.png"><img alt="Substance viewport screenshot with different default for materials." src="https://mrlixm.github.io/static/images/blog/0008/sp-mat-colorspace.png" /></a>
-<figcaption>Model by <a href="https://www.artstation.com/ashimara">Emmanuel-Xuân Dubois</a></figcaption>
+<figure class="inline">
+<a class="reference external image-reference" href="sp-mat-colorspace.jpg">
+<img alt="Substance viewport screenshot with different default for materials." class="inline" src="sp-mat-colorspace.jpg" />
+</a>
+<figcaption>
+<p>Model by <a class="reference external" href="https://www.artstation.com/ashimara">Emmanuel-Xuân Dubois</a></p>
+</figcaption>
 </figure>
-<p>Now for the output my choice is not the only option. To me, you shouldn’t
+<p>Now for the output my choice is not the only option. To me, you shouldn't
 export ACEScg 8bit files, that why I re-encode them back to sRGB by using
-<code>Utility - sRGB - Texture</code>. The right option is to export EXRs (floating
-point images) in the same working colorspace: ACEScg. And don’t worry for
+<span class="docutils literal">Utility - sRGB - Texture</span>. The right option is to export EXRs (floating
+point images) in the same working colorspace: ACEScg. And don't worry for
 scalar channel they will be handled automatically at export. These options
-are the only ones that can’t be modified per-case though; this is the only
+are the only ones that can't be modified per-case though; this is the only
 place you can change them.</p>
 </section>
 <section id="aces-what-to-do-when-working">
-<h3><a href="#toc-entry-33">ACES - What to do when working</a></h3>
-<p>I’m only going to give detailed explanations when something is specific to
-ACES. Meanwhile the explanations given in <a href="#substance-setup-workflow">Substance Setup &amp; Workflow</a> still
+<h3><a class="toc-backref" href="#toc-entry-33" role="doc-backlink">ACES - What to do when working</a></h3>
+<p>I'm only going to give detailed explanations when something is specific to
+ACES. Meanwhile the explanations given in <a class="reference internal" href="#substance-setup-workflow">Substance Setup &amp; Workflow</a> still
 apply so make sure you properly understood this section.</p>
 <section id="aces-display">
-<h4><a href="#toc-entry-34">ACES - Display</a></h4>
+<h4><a class="toc-backref" href="#toc-entry-34" role="doc-backlink">ACES - Display</a></h4>
 <p>Not much new, use the view-transform that correspond to the display you are
-using. (In my case <code>ACES - sRGB</code>, that behind the scene, uses <code>Output -
-sRGB</code>)</p>
+using. (In my case <span class="docutils literal">ACES - sRGB</span>, that behind the scene, uses <span class="docutils literal">Output - sRGB</span>)</p>
 </section>
 <section id="aces-inputs">
-<h4><a href="#toc-entry-35">ACES - Inputs</a></h4>
+<h4><a class="toc-backref" href="#toc-entry-35" role="doc-backlink">ACES - Inputs</a></h4>
 <p>For every external resource you import, you need to assign the correct
-input colorspace if the automatic one doesn’t correspond. The usual rules
+input colorspace if the automatic one doesn't correspond. The usual rules
 for the ACES workflow apply.</p>
-<div class="m-image">
-<a href="https://mrlixm.github.io/static/images/blog/0008/diagram-aces-idt.jpg"><img alt="ACES IDT Cheatsheet." src="https://mrlixm.github.io/static/images/blog/0008/diagram-aces-idt.jpg" /></a>
-</div>
+<a class="reference external image-reference" href="diagram-aces-idt.jpg">
+<img alt="ACES IDT Cheatsheet." class="inline" src="diagram-aces-idt.jpg" />
+</a>
 <section id="aces-environment">
-<h5><a href="#toc-entry-36">ACES - Environment</a></h5>
-<p><span class="m-text m-s l-c-color-6">There is unfortunately no direct options to change environment’s
+<h5><a class="toc-backref" href="#toc-entry-36" role="doc-backlink">ACES - Environment</a></h5>
+<p><span class="strikethrough">There is unfortunately no direct options to change environment's
 colorspace.</span></p>
-<p>From 7.4.2+ you can find an option in the <code>Display Settings</code> Menu, to change
+<p>From 7.4.2+ you can find an option in the <span class="docutils literal">Display Settings</span> Menu, to change
 the environment colorspace being used.</p>
 <p>Environment follow default colorspace rules. Being floating point image
-, they will use the pre-defined <code>Utility - Linear - sRGB</code> colorspace.
-So as long as they are <code>sRGB - linear</code>-like encoded, they will be properly
+, they will use the pre-defined <span class="docutils literal">Utility - Linear - sRGB</span> colorspace.
+So as long as they are <span class="docutils literal">sRGB - linear</span>-like encoded, they will be properly
 displayed.</p>
 <p>If that not the case you can use the mentioned override option, but
 in the case you are using an older version here is my previous solution :</p>
@@ -1047,139 +1122,156 @@ in the case you are using an older version here is my previous solution :</p>
 <p>But what if I want to import an already converted ACEScg HDRI ?</p>
 <p>There is a way to have it working. You can specify the colorspace in the
 file name. The colorspace has to be <strong>the exact same name</strong> as the one
-defined in the config. An example would be: <code>myhdri_ACES - ACEScg.exr</code>.</p>
+defined in the config. An example would be: <span class="docutils literal">myhdri_ACES - ACEScg.exr</span>.</p>
 <p>Left one is sRGB encoded, middle and right ACEScg encoded. Right one
-doesn’t get properly converted and looks shifted.</p>
-<figure class="m-figure">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-aces-hdri-comparison.png"><img alt="Sp viewport screenshot with hdri comparison." src="https://mrlixm.github.io/static/images/blog/0008/sp-aces-hdri-comparison.png" /></a>
-<figcaption>Model and texturing by <a href="https://www.artstation.com/ashimara">Emmanuel-Xuân Dubois</a></figcaption>
+doesn't get properly converted and looks shifted.</p>
+<figure class="inline">
+<a class="reference external image-reference" href="sp-aces-hdri-comparison.jpg">
+<img alt="Sp viewport screenshot with hdri comparison." class="inline" src="sp-aces-hdri-comparison.jpg" />
+</a>
+<figcaption>
+<p>Model and texturing by <a class="reference external" href="https://www.artstation.com/ashimara">Emmanuel-Xuân Dubois</a></p>
+</figcaption>
 </figure>
 </blockquote>
 </section>
 </section>
 <section id="aces-colorpicker">
-<h4><a href="#toc-entry-37">ACES - Colorpicker</a></h4>
-<aside class="m-note m-info">
-The screenshots in this section have not been updated to reflect change
-in the 7.4.2 update. Explanations still apply.</aside>
+<h4><a class="toc-backref" href="#toc-entry-37" role="doc-backlink">ACES - Colorpicker</a></h4>
+<aside class="admonition note">
+<p class="admonition-title">note</p>
+<p>The screenshots in this section have not been updated to reflect change
+in the 7.4.2 update. Explanations still apply.</p>
 </aside>
-<p>Everything in <a href="#the-color-picker">The color-picker</a> section applies here. You can just except
+<p>Everything in <a class="reference internal" href="#the-color-picker">The color-picker</a> section applies here. You can just except
 more odd behavior as a wider-gamut and more complex view-transform will not
 play well with it. The first potential issue that came to my mind is the
 combinaison of 0-1 clamping + ACES ODT : If you are picking a pure value of
-RGB(1,1,1) considered encoded as <code>Output - sRGB</code>, you would usually get back
+RGB(1,1,1) considered encoded as <span class="docutils literal">Output - sRGB</span>, you would usually get back
 a scene-referred value of RGB(16.2,16.2,16.2). But the color-picker is
 clamped between the 0-1 range so you will end up with just RGB(1,1,1).</p>
 <p>Then consider the following example :</p>
-<figure class="m-figure">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-aces-colorpicker.png"><img alt="Substance colorpicker with ACES workflow." src="https://mrlixm.github.io/static/images/blog/0008/sp-aces-colorpicker.png" /></a>
-<figcaption>Model by <a href="https://www.artstation.com/ashimara">Emmanuel-Xuân Dubois</a></figcaption>
+<figure class="inline">
+<a class="reference external image-reference" href="sp-aces-colorpicker.jpg">
+<img alt="Substance colorpicker with ACES workflow." class="inline" src="sp-aces-colorpicker.jpg" />
+</a>
+<figcaption>
+<p>Model by <a class="reference external" href="https://www.artstation.com/ashimara">Emmanuel-Xuân Dubois</a></p>
+</figcaption>
 </figure>
 <p>I have an ACEScg value of (1,0,0) which is damn too saturated
 and no object except laser are that saturated.</p>
-<aside class="m-note m-warning">
-This mean you have to be careful
+<aside class="admonition warning">
+<p class="admonition-title">warning</p>
+<p>This mean you have to be careful
 when picking values, and always keep a look at the scene-refered ACEScg
-values.</aside>
+values.</p>
 </aside>
 <p>What if I want to apply a color we gave me as hexadecimal ?</p>
 <blockquote>
-<p>Consider my brand’s green picked from <a class="m-link-wrap" href="https://coolors.co">https://coolors.co</a> .</p>
-<div class="m-image">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-aces-colorpicker-hex.png"><img alt="Substance colorpicker with ACES workflow." src="https://mrlixm.github.io/static/images/blog/0008/sp-aces-colorpicker-hex.png" /></a>
-</div>
-<p>Well … the less brain-damaging solution would be to just eyeball the
+<p>Consider my brand's green picked from <a class="reference external" href="https://coolors.co">https://coolors.co</a> .</p>
+<a class="reference external image-reference" href="sp-aces-colorpicker-hex.jpg">
+<img alt="Substance colorpicker with ACES workflow." class="inline" src="sp-aces-colorpicker-hex.jpg" />
+</a>
+<p>Well ... the less brain-damaging solution would be to just eyeball the
 color.</p>
 <p>Luckily, the 7.4.2 update made thing easier for us. The hexadecimal color
-will assume to be encoded in the <code>sRGB standard colorspace</code> and converted
+will assume to be encoded in the <span class="docutils literal">sRGB standard colorspace</span> and converted
 to the working colorspace. So just copy/paste your color in the hexadecimal
 field and you should have your color converted.</p>
 <p>Even with this, you might notice that the color is still not similar to
 the sRGB one. This is normal and inherent to the ACES ODT which apply a
-“creative” and “technical” transformation on display.</p>
-<p>So keep this in mind: <span class="m-text m-primary">you will never be able to match the look
+&quot;creative&quot; and &quot;technical&quot; transformation on display.</p>
+<p>So keep this in mind: <span class="text-green">you will never be able to match the look
 of the sRGB workflow with the ACES workflow.</span> (unless cheating).</p>
-<p>I’m not going to dive into further explanations as there is <a href="https://community.acescentral.com/t/preserving-logos-and-graphics-in-aces/2861">enough
+<p>I'm not going to dive into further explanations as there is <a class="reference external" href="https://community.acescentral.com/t/preserving-logos-and-graphics-in-aces/2861">enough
 ACES central threads</a>  on this subject
-and Chris <a href="https://chrisbrejon.com/cg-cinematography/chapter-1-5-academy-color-encoding-system-aces/#inverted-odt-workflow">is also explaining it here</a>.</p>
+and Chris <a class="reference external" href="https://chrisbrejon.com/cg-cinematography/chapter-1-5-academy-color-encoding-system-aces/#inverted-odt-workflow">is also explaining it here</a>.</p>
 </blockquote>
 </section>
 <section id="aces-output">
-<h4><a href="#toc-entry-38">ACES - Output</a></h4>
-<p>Do yourself a favour here and only care about EXR. <a href="https://www.elsksa.me/scientia/cgi-offline-rendering/file-format-debunk">You don’t need anything
+<h4><a class="toc-backref" href="#toc-entry-38" role="doc-backlink">ACES - Output</a></h4>
+<p>Do yourself a favour here and only care about EXR. <a class="reference external" href="https://www.elsksa.me/scientia/cgi-offline-rendering/file-format-debunk">You don't need anything
 else</a> and this is the file format recommended by the Academy for ACES
 data encoding.</p>
 <p>If you choose EXR, you have nothing to care about. Color channel will be
-exported in <code>ACEScg</code> while scalar channel will bypass any
+exported in <span class="docutils literal">ACEScg</span> while scalar channel will bypass any
 color-transform encoding. Simple as that.</p>
-<p>Reminder that you can choose to remove the <code>$colorspace</code> token in your
+<!-- figure:::: sp-aces-export.jpg
+:target: sp-aces-export.jpg
+:alt: Substance Export window screenshot.
+
+You can check the LIST OF EXPORTS tab to see how it's going to be exported. -->
+<p>Reminder that you can choose to remove the <span class="docutils literal">$colorspace</span> token in your
 export template map name to avoid unwanted special characters in your file
 name. (and instead export the textures in a folder named ACEScg)</p>
 </section>
 </section>
 </section>
 <section id="ocio-implementation-issues">
-<h2><a href="#toc-entry-39">OCIO Implementation Issues</a></h2>
-<aside class="m-note m-default">
-The goal here is not to denigrate the dev team’s works but rather to offer
-explanations and solutions for improving the software.</aside>
-</aside>
-<aside class="m-note m-info">
-The team did a fantastic job in the latest updates by adressing some of
-the issues I mentionned !</aside>
+<h2><a class="toc-backref" href="#toc-entry-39" role="doc-backlink">OCIO Implementation Issues</a></h2>
+<aside class="admonition note">
+<p class="admonition-title">note</p>
+<p>The goal here is not to denigrate the dev team's works but rather to offer
+explanations and solutions for improving the software.</p>
+<p>The team actually did a fantastic job in the latest updates by adressing some of
+the issues I mentionned !</p>
 </aside>
 <section id="display-issues">
-<h3><a href="#toc-entry-40">Display Issues</a></h3>
-<p>These explanations were made possible thanks to the Chris Brejon’s article
-<a href="https://chrisbrejon.com/articles/ocio-display-transforms-and-misconceptions/">OCIO, Display Transforms and Misconceptions</a>.</p>
+<h3><a class="toc-backref" href="#toc-entry-40" role="doc-backlink">Display Issues</a></h3>
+<p>These explanations were made possible thanks to the Chris Brejon's article
+<a class="reference external" href="https://chrisbrejon.com/articles/ocio-display-transforms-and-misconceptions/">OCIO, Display Transforms and Misconceptions</a>.</p>
 <section id="display-components-mismatch">
-<h4><a href="#toc-entry-41">Display components mismatch</a></h4>
+<h4><a class="toc-backref" href="#toc-entry-41" role="doc-backlink">Display components mismatch</a></h4>
 <p>OCIO divide the Display section into 3 components :</p>
-<ul>
-<li><code>Display</code> : the physical hardware you are using (monitor, TV, phone, …).</li>
-<li><code>View</code> : a way to encode the data for a specific viewing purpose.</li>
-<li><code>Look</code> : a creative layer of modification on the data. ex: a grade.</li>
+<ul class="simple">
+<li><p><span class="docutils literal">Display</span> : the physical hardware you are using (monitor, TV, phone, ...).</p></li>
+<li><p><span class="docutils literal">View</span> : a way to encode the data for a specific viewing purpose.</p></li>
+<li><p><span class="docutils literal">Look</span> : a creative layer of modification on the data. ex: a grade.</p></li>
 </ul>
 <p>Why do I explain you this ? Because these components are often mismatched
 or forgotten. Unfortunately, Substance makes no exception here.</p>
-<div class="m-image">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-odt-default.png"><img alt="View-transform screenshot." src="https://mrlixm.github.io/static/images/blog/0008/sp-odt-default.png" /></a>
-</div>
+<a class="reference external image-reference" href="sp-odt-default.jpg">
+<img alt="View-transform screenshot." class="inline" src="sp-odt-default.jpg" />
+</a>
 <p>If you look at the view-transform screenshot above, you can see that each
-option has the <code>Default</code> prefix.
-If we have a look at the <code>config.ocio</code> file from the Substance config,
+option has the <span class="docutils literal">Default</span> prefix.
+If we have a look at the <span class="docutils literal">config.ocio</span> file from the Substance config,
 we can see why :</p>
-<figure class="m-figure">
-<a href="https://mrlixm.github.io/static/images/blog/0008/config-substance-displays.png"><img alt="Screenshot of the displays part of the Substance Ocio config." src="https://mrlixm.github.io/static/images/blog/0008/config-substance-displays.png" /></a>
+<figure class="inline">
+<a class="reference external image-reference" href="config-substance-displays.jpg">
+<img alt="Screenshot of the displays part of the Substance Ocio config." class="inline" src="config-substance-displays.jpg" />
+</a>
 </figure>
-<p>What should be a <code>display</code> or a separate <code>view</code> is actually all merged
-into a single <code>view</code> component !</p>
+<p>What should be a <span class="docutils literal">display</span> or a separate <span class="docutils literal">view</span> is actually all merged
+into a single <span class="docutils literal">view</span> component !</p>
 <p id="substance-config-displays-fixed">Here is how it should look :</p>
-<pre class="m-code"><span class="nt">displays</span><span class="p">:</span>
-  <span class="nt">sRGB</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="kt">!&lt;View&gt;</span> <span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span> <span class="nv">Display</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span> <span class="nv">sRGB</span><span class="p p-Indicator">}</span>
-    <span class="p p-Indicator">-</span> <span class="kt">!&lt;View&gt;</span> <span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span> <span class="nv">ACES</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span> <span class="nv">ACES sRGB</span><span class="p p-Indicator">}</span>
-    <span class="p p-Indicator">-</span> <span class="kt">!&lt;View&gt;</span> <span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span> <span class="nv">False Color</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span> <span class="nv">False Color</span><span class="p p-Indicator">}</span>
-    <span class="p p-Indicator">-</span> <span class="kt">!&lt;View&gt;</span> <span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span> <span class="nv">Raw</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span> <span class="nv">Raw</span><span class="p p-Indicator">}</span>
-  <span class="nt">Display P3</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="kt">!&lt;View&gt;</span> <span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span> <span class="nv">Display</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span> <span class="nv">Display P3</span><span class="p p-Indicator">}</span>
-    <span class="p p-Indicator">-</span> <span class="kt">!&lt;View&gt;</span> <span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span> <span class="nv">False Color</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span> <span class="nv">False Color</span><span class="p p-Indicator">}</span>
-    <span class="p p-Indicator">-</span> <span class="kt">!&lt;View&gt;</span> <span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span> <span class="nv">Raw</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span> <span class="nv">Raw</span><span class="p p-Indicator">}</span>
-  <span class="nt">Rec709 </span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="kt">!&lt;View&gt;</span> <span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span> <span class="nv">Display</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span> <span class="nv">Rec709</span><span class="p p-Indicator">}</span>
-    <span class="p p-Indicator">-</span> <span class="kt">!&lt;View&gt;</span> <span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span> <span class="nv">False Color</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span> <span class="nv">False Color</span><span class="p p-Indicator">}</span>
-    <span class="p p-Indicator">-</span> <span class="kt">!&lt;View&gt;</span> <span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span> <span class="nv">Raw</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span> <span class="nv">Raw</span><span class="p p-Indicator">}</span>
-  <span class="nt">Rec2020 </span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="kt">!&lt;View&gt;</span> <span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span> <span class="nv">Display</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span> <span class="nv">Rec2020</span><span class="p p-Indicator">}</span>
-    <span class="p p-Indicator">-</span> <span class="kt">!&lt;View&gt;</span> <span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span> <span class="nv">False Color</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span> <span class="nv">False Color</span><span class="p p-Indicator">}</span>
-    <span class="p p-Indicator">-</span> <span class="kt">!&lt;View&gt;</span> <span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span> <span class="nv">Raw</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span> <span class="nv">Raw</span><span class="p p-Indicator">}</span></pre>
+<pre class="highlight literal-block" title="Block of code in yaml language."><span class="nt">displays</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">sRGB</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!&lt;View&gt;</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">Display</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span><span class="w"> </span><span class="nv">sRGB</span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!&lt;View&gt;</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">ACES</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span><span class="w"> </span><span class="nv">ACES sRGB</span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!&lt;View&gt;</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">False Color</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span><span class="w"> </span><span class="nv">False Color</span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!&lt;View&gt;</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">Raw</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span><span class="w"> </span><span class="nv">Raw</span><span class="p p-Indicator">}</span>
+<span class="w">  </span><span class="nt">Display P3</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!&lt;View&gt;</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">Display</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span><span class="w"> </span><span class="nv">Display P3</span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!&lt;View&gt;</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">False Color</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span><span class="w"> </span><span class="nv">False Color</span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!&lt;View&gt;</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">Raw</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span><span class="w"> </span><span class="nv">Raw</span><span class="p p-Indicator">}</span>
+<span class="w">  </span><span class="nt">Rec709 </span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!&lt;View&gt;</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">Display</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span><span class="w"> </span><span class="nv">Rec709</span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!&lt;View&gt;</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">False Color</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span><span class="w"> </span><span class="nv">False Color</span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!&lt;View&gt;</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">Raw</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span><span class="w"> </span><span class="nv">Raw</span><span class="p p-Indicator">}</span>
+<span class="w">  </span><span class="nt">Rec2020 </span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!&lt;View&gt;</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">Display</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span><span class="w"> </span><span class="nv">Rec2020</span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!&lt;View&gt;</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">False Color</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span><span class="w"> </span><span class="nv">False Color</span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!&lt;View&gt;</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">Raw</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span><span class="w"> </span><span class="nv">Raw</span><span class="p p-Indicator">}</span>
+</pre>
 <p>Here is the result of the above in Substance Painter :</p>
-<div class="m-image">
-<a href="https://mrlixm.github.io/static/images/blog/0008/config-substance-fixed-sp.png"><img alt="Screenshot of the displays part of the Substance Ocio config." src="https://mrlixm.github.io/static/images/blog/0008/config-substance-fixed-sp.png" /></a>
-</div>
+<a class="reference external image-reference" href="config-substance-fixed-sp.jpg">
+<img alt="Screenshot of the displays part of the Substance Ocio config." class="inline" src="config-substance-fixed-sp.jpg" />
+</a>
 <p>Using OCIO v2 there are other ways to improve how the config is built.
-Heads up to <a href="#improving-the-substance-ocio-config">Improving the Substance OCIO config</a> to see how.</p>
-<p>But even with this fix, it’s not very friendly to have a long list of merged
+Heads up to <a class="reference internal" href="#improving-the-substance-ocio-config">Improving the Substance OCIO config</a> to see how.</p>
+<p>But even with this fix, it's not very friendly to have a long list of merged
 (display + view) while you would only need one Display most of the time. <strong>The
 best solution here would be to have 2 dropdowns</strong> :
 One to choose the Display, and one to choose the corresponding available View.
@@ -1187,335 +1279,267 @@ We should even get a third one for looks as we are going to see in the next
 section :</p>
 </section>
 <section id="partial-look-support">
-<h4><a href="#toc-entry-42">Partial Look support</a></h4>
+<h4><a class="toc-backref" href="#toc-entry-42" role="doc-backlink">Partial Look support</a></h4>
 <p>In above explanations where I mention OCIO Display is build with
-3 components, we now see that I didn’t mention the last one yet: Looks.</p>
+3 components, we now see that I didn't mention the last one yet: Looks.</p>
 <p>Looks is a color-tansformation performed in any colorspace aimed at
 modifying the data in a creative way. This would allow for example the
 artist to have a first look at how its renders could looks like after the
 <abbr title="Digital Intermediate = grading process">di</abbr> pass.</p>
 <p>Usually, Looks are defined similar to colorspaces, as a list, but you can also
-make a Look available in a display’s view:</p>
-<pre class="m-code"><span class="nt">displays</span><span class="p">:</span>
-    <span class="nt">sRGB</span><span class="p">:</span>
-        <span class="p p-Indicator">-</span> <span class="kt">!&lt;View&gt;</span> <span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span> <span class="nv">Display</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span> <span class="nv">sRGB-Display</span><span class="p p-Indicator">}</span>
-        <span class="p p-Indicator">-</span> <span class="kt">!&lt;View&gt;</span> <span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span> <span class="nv">Display Grade A</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span> <span class="nv">sRGB-Display</span><span class="p p-Indicator">,</span><span class="nt"> looks</span><span class="p">:</span> <span class="nv">gradeA</span><span class="p p-Indicator">}</span>
+make a Look available in a display's view:</p>
+<pre class="highlight literal-block" title="Block of code in yaml language."><span class="nt">displays</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">sRGB</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!&lt;View&gt;</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">Display</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span><span class="w"> </span><span class="nv">sRGB-Display</span><span class="p p-Indicator">}</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!&lt;View&gt;</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">Display Grade A</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span><span class="w"> </span><span class="nv">sRGB-Display</span><span class="p p-Indicator">,</span><span class="nt"> looks</span><span class="p">:</span><span class="w"> </span><span class="nv">gradeA</span><span class="p p-Indicator">}</span>
 
 <span class="nt">looks</span><span class="p">:</span>
-<span class="p p-Indicator">-</span> <span class="kt">!&lt;Look&gt;</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gradeA</span>
-  <span class="nt">process_space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rclg16</span>
-  <span class="nt">transform</span><span class="p">:</span> <span class="kt">!&lt;FileTransform&gt;</span> <span class="p p-Indicator">{</span><span class="nt">src</span><span class="p">:</span> <span class="nv">look_A.cc</span><span class="p p-Indicator">,</span><span class="nt"> interpolation</span><span class="p">:</span> <span class="nv">linear</span><span class="p p-Indicator">}</span></pre>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!&lt;Look&gt;</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gradeA</span>
+<span class="w">  </span><span class="nt">process_space</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rclg16</span>
+<span class="w">  </span><span class="nt">transform</span><span class="p">:</span><span class="w"> </span><span class="kt">!&lt;FileTransform&gt;</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="nv">look_A.cc</span><span class="p p-Indicator">,</span><span class="nt"> interpolation</span><span class="p">:</span><span class="w"> </span><span class="nv">linear</span><span class="p p-Indicator">}</span>
+</pre>
 <p>In the best case, we should have a dropdown menu that would allow us to combine
-the current <code>view-transform</code> with any Look defined. A good example of this
+the current <span class="docutils literal"><span class="pre">view-transform</span></span> with any Look defined. A good example of this
 is Blender :</p>
-<figure class="m-figure">
-<a href="https://mrlixm.github.io/static/images/blog/0008/blender-cm.png"><img alt="Screenshot of Blender color-management menu." src="https://mrlixm.github.io/static/images/blog/0008/blender-cm.png" /></a>
-<figcaption>Notice how it respects the 3 components of an OCIO display.</figcaption>
+<figure class="inline align-center">
+<a class="reference external image-reference" href="blender-cm.jpg">
+<img alt="Screenshot of Blender color-management menu." class="inline" src="blender-cm.jpg" />
+</a>
+<figcaption>
+<p>Notice how it respects the 3 components of an OCIO display.</p>
+</figcaption>
 </figure>
-<p>Unfortunately, sp didn’t implement this feature yet. So we can only rely
+<p>Unfortunately, sp didn't implement this feature yet. So we can only rely
 on merging the look in a display view for now.</p>
-<p>A good way to test this is using the <a href="https://github.com/sobotka/filmic-blender">Filmic</a> OCIO config by Troy Sobotka.
-The filmic encoding is correctly available in a <code>View</code> but require an
+<p>A good way to test this is using the <a class="reference external" href="https://github.com/sobotka/filmic-blender">Filmic</a> OCIO config by Troy Sobotka.
+The filmic encoding is correctly available in a <span class="docutils literal">View</span> but require an
 extra step to be correctly displayed. By default it is a flat log
 representation, and require choosing a Look with the desired contrast amount.</p>
-<p>To have it working in sp, it is required to merge the Look in a new <code>View</code>.</p>
-<pre class="m-code"><span class="nt">displays</span><span class="p">:</span>
-    <span class="nt">sRGB</span><span class="p">:</span>
-        <span class="p p-Indicator">-</span> <span class="kt">!&lt;View&gt;</span> <span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span> <span class="nv">sRGB OETF</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span> <span class="nv">sRGB OETF</span><span class="p p-Indicator">}</span>
-        <span class="l l-Scalar l-Scalar-Plain">...</span>
-        <span class="p p-Indicator">-</span> <span class="kt">!&lt;View&gt;</span> <span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span> <span class="nv">Filmic Very High Contrast</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span> <span class="nv">Filmic Log Encoding</span><span class="p p-Indicator">,</span><span class="nt"> look</span><span class="p">:</span> <span class="nv">+Very High Contrast</span><span class="p p-Indicator">}</span>
-        <span class="l l-Scalar l-Scalar-Plain">...</span></pre>
+<p>To have it working in sp, it is required to merge the Look in a new <span class="docutils literal">View</span>.</p>
+<pre class="highlight literal-block" title="Block of code in yaml language."><span class="nt">displays</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">sRGB</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!&lt;View&gt;</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">sRGB OETF</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span><span class="w"> </span><span class="nv">sRGB OETF</span><span class="p p-Indicator">}</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="kt">!&lt;View&gt;</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">Filmic Very High Contrast</span><span class="p p-Indicator">,</span><span class="nt"> colorspace</span><span class="p">:</span><span class="w"> </span><span class="nv">Filmic Log Encoding</span><span class="p p-Indicator">,</span><span class="nt"> look</span><span class="p">:</span><span class="w"> </span><span class="nv">+Very High Contrast</span><span class="p p-Indicator">}</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+</pre>
 <p id="sp-odt-name-cropped">Which in sp, if we kept all the contrast amount, give us a very long list of
-cropped name 😬 But at least it’s working.</p>
-<div class="m-image">
-<a href="https://mrlixm.github.io/static/images/blog/0008/sp-odt-filmic.png"><img alt="Screenshot of sp view-transform with filmic view." src="https://mrlixm.github.io/static/images/blog/0008/sp-odt-filmic.png" /></a>
-</div>
+cropped name 😬 But at least it's working.</p>
+<a class="reference external image-reference" href="sp-odt-filmic.jpg">
+<img alt="Screenshot of sp view-transform with filmic view." class="inline align-center" src="sp-odt-filmic.jpg" />
+</a>
 </section>
 </section>
 <section id="improving-the-substance-ocio-config">
-<h3><a href="#toc-entry-43">Improving the Substance OCIO config</a></h3>
-<p>The Substance OCIO config is an OCIO v1 configuration. I don’t know
+<h3><a class="toc-backref" href="#toc-entry-43" role="doc-backlink">Improving the Substance OCIO config</a></h3>
+<p>The Substance OCIO config is an OCIO v1 configuration. I don't know
 what is the reason they decided to not use the v2 for their config because
 it could really helped having a cleaner and better config (even if the artist
-wouldn’t see that much of a difference).</p>
+wouldn't see that much of a difference).</p>
 <p>By curiosity I tried to put my hand on OCIO v2 and create a config that could
 be a substitution of the Substance config. Documentation was pretty straight
 forward and I manage to build a nice config using python. You can find the
 result here :</p>
-<div class="l-url-box">
-<a class="l-url-a" href="https://github.com/MrLixm/OCIO.Liam"></a>
-<div class="l-url-box-image">
-<img src="https://repository-images.githubusercontent.com/433153908/03fa53a5-a654-4728-a5ed-60ab1ac6babd" />
+<div class="url-preview-box docutils container">
+<a class="reference external" href="https://github.com/MrLixm/OCIO.Liam">
+</a>
+<div class="url-preview-image docutils container">
+<img alt="" class="inline" src="https://repository-images.githubusercontent.com/433153908/03fa53a5-a654-4728-a5ed-60ab1ac6babd" />
 </div>
-<div class="l-url-box-details">
-<p class="l-url-title">OCIO.Liam</p>
-<div class="l-url-subtitle">
-<a class="m-link-wrap" href="https://github.com/MrLixm/OCIO.Liam">https://github.com/MrLixm/OCIO.Liam</a>
+<div class="url-preview-details docutils container">
+<p class="url-preview-title">OCIO.Liam</p>
+<div class="url-preview-subtitle docutils container">
+<a class="reference external" href="https://github.com/MrLixm/OCIO.Liam">
+https://github.com/MrLixm/OCIO.Liam</a>
 </div>
-<p class="l-url-description">Personal OCIO resources, including configs.</p>
+<div class="url-preview-description docutils container">
+<p>Personal OCIO resources, including configs.</p>
 </div>
 </div>
-<p>I called it <code>Versatile</code>. It only misses the <code>false color</code> view from the
+</div>
+<p>I called it <span class="docutils literal">Versatile</span>. It only misses the <span class="docutils literal">false color</span> view from the
 Substance config. Have a look at the
-<a href="https://github.com/MrLixm/OCIO.Liam/blob/main/versatile/config/config.ocio">config.ocio</a>
+<a class="reference external" href="https://github.com/MrLixm/OCIO.Liam/blob/main/versatile/config/config.ocio">config.ocio</a>
 file to see the new features.</p>
 </section>
 <section id="issues-recap">
-<h3><a href="#toc-entry-44">Issues Recap</a></h3>
-<p>
-This list aim at helping the potential Substance dev team members reading
-this, addressing the issues.<br />
-<em>Keep in mind that this is my personal opinion, i’m not a color-scientist
-nor a profesional developer.</em><br />
-</p>
+<h3><a class="toc-backref" href="#toc-entry-44" role="doc-backlink">Issues Recap</a></h3>
+<div class="line-block">
+<div class="line">This list aim at helping the potential Substance dev team members reading
+this, addressing the issues.</div>
+<div class="line"><em>Keep in mind that this is my personal opinion, i'm not a color-scientist
+nor a profesional developer.</em></div>
+</div>
 <ul>
 <li><p>Substance OCIO config</p>
-<ul>
-<li>uses the wrong Rec.709 display encoding. (see <a href="#the-rec709-transfer-function-issue">the rec709
-transfer-function issue</a>)</li>
-<li>miss simple P3 colorspaces while it offers a Rec2020 one
-(who would use it ??)</li>
-<li><code>displays</code> key is not properly built. (see
-<a href="#substance-config-displays-fixed">substance-config-displays-fixed</a> )</li>
-<li>could overall, benefits from using OCIO v2 features.</li>
+<ul class="simple">
+<li><p>uses the wrong Rec.709 display encoding. (see <a class="reference internal" href="#the-rec709-transfer-function-issue">the rec709
+transfer-function issue</a>)</p></li>
+<li><p>miss simple P3 colorspaces while it offers a Rec2020 one
+(who would use it ??)</p></li>
+<li><p><span class="docutils literal">displays</span> key is not properly built. (see
+<a class="reference internal" href="#substance-config-displays-fixed">substance-config-displays-fixed</a> )</p></li>
+<li><p>could overall, benefits from using OCIO v2 features.</p></li>
 </ul>
 </li>
-<li><p>
-<span class="m-text m-s l-c-color-6">OCIO roles are not supported, as such default configuration for
-projects is wrong and can confuse artists.</span><br />
-(implemented on 7.4.2 !)(see <a href="#substance-parameters-for-ocio-configs">Substance parameters for OCIO configs</a>)<br />
-</p>
-</li>
-<li><p>
-The view-transform dropdown is too small in width. When selecting long
-<code>display</code> names, they got cropped.<br />
-(see <a href="#sp-odt-name-cropped">sp-odt-name-cropped</a>)<br />
-</p>
-</li>
-<li><p>
-The view-transform dropdown could be split into 2 dropdowns. One for
-Displays and one for Views.<br />
-(see <a href="#substance-config-displays-fixed">substance-config-displays-fixed</a> )<br />
-</p>
-</li>
-<li><p>Colorspace on resources (images, …) should be performable from the shelf
-and not from a layer’s slot. A resource doesn’t have its original
-colorspace changing depending on where it’s used !</p>
-</li>
-<li><p>
-<span class="m-text m-s l-c-color-6">There is no direct option to change the environment image colorspace.
-Having the above suggestion implemented would solve this one too.</span><br />
-(implemented on 7.4.2 !)(see <a href="#environment">Environment</a> )<br />
-</p>
-</li>
-<li><p>
-<span class="m-text m-s l-c-color-6">Color-picker : modifying the top colorspace should affect the
+<li><p><span class="strikethrough">OCIO roles are not supported, as such default configuration for
+projects is wrong and can confuse artists.</span>
+(implemented on 7.4.2 !)(see <a class="reference internal" href="#substance-parameters-for-ocio-configs">Substance parameters for OCIO configs</a>)</p></li>
+<li><p>The view-transform dropdown is too small in width. When selecting long
+<span class="docutils literal">display</span> names, they got cropped.
+(see <a class="reference internal" href="#sp-odt-name-cropped">sp-odt-name-cropped</a>)</p></li>
+<li><p>The view-transform dropdown could be split into 2 dropdowns. One for
+Displays and one for Views.
+(see <a class="reference internal" href="#substance-config-displays-fixed">substance-config-displays-fixed</a> )</p></li>
+<li><p>Colorspace on resources (images, ...) should be performable from the shelf
+and not from a layer's slot. A resource doesn't have its original
+colorspace changing depending on where it's used !</p></li>
+<li><p><span class="strikethrough">There is no direct option to change the environment image colorspace.
+Having the above suggestion implemented would solve this one too.</span>
+(implemented on 7.4.2 !)(see <a class="reference internal" href="#environment">Environment</a> )</p></li>
+<li><p><span class="strikethrough">Color-picker : modifying the top colorspace should affect the
 editable values. Where the top colorspace represents the colorspace used
 to enter values so they can be converted to the working colorspace
-behind the scene.</span><br />
-(implemented on 7.4.2 !)<br />
-</p>
-</li>
-<li><p>
-<span class="m-text m-s l-c-color-6">With the above, add a way to see what values are being used in
-the workspace.</span><br />
-(implemented on 7.4.2 !)<br />
-</p>
-</li>
-<li><p>
-Color-picker is broken. It react differently depending of the OCIO
-config version use.<br />
-(see <a href="#picker">picker</a> section for details).<br />
-Update: it is less broken in 7.4.2 but there is still no some issues.<br />
-</p>
-</li>
-<li><p>No options to set a specific colorspace for textures at export time.</p>
-</li>
+behind the scene.</span>
+(implemented on 7.4.2 !)</p></li>
+<li><p><span class="strikethrough">With the above, add a way to see what values are being used in
+the workspace.</span>
+(implemented on 7.4.2 !)</p></li>
+<li><p>Color-picker is broken. It react differently depending of the OCIO
+config version use.
+(see <a class="reference internal" href="#picker">picker</a> section for details).
+Update: it is less broken in 7.4.2 but there is still no some issues.</p></li>
+<li><p>No options to set a specific colorspace for textures at export time.</p></li>
 <li><p>When use the following OCIO v2 colorspace name token, an error is logged:</p>
-<pre class="m-code">[ColorManagement] Error while creating OpenColorIO colorspace transform: Color space &#39;&lt;USE_DISPLAY_NAME&gt;&#39; could not be found</pre>
+<pre class="highlight literal-block" title="Block of code in text language.">[ColorManagement] Error while creating OpenColorIO colorspace transform: Color space &#39;&lt;USE_DISPLAY_NAME&gt;&#39; could not be found
+</pre>
 <p>But displays still manage to work without issues.</p>
-<p>EDIT: This actually affect the color-picker who doesn’t seems to supports
+<p>EDIT: This actually affect the color-picker who doesn't seems to supports
 shared-views.</p>
 </li>
-<li><p>custom user channels doesn’t behave as color-managed in the interface (see
-<a href="#custom-user-channels">Custom User Channels</a>)</p>
-</li>
+<li><p>custom user channels doesn't behave as color-managed in the interface (see
+<a class="reference internal" href="#custom-user-channels">Custom User Channels</a>)</p></li>
 </ul>
 </section>
 </section>
 <section id="conclusion">
-<h2><a href="#toc-entry-45">Conclusion</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-45" role="doc-backlink">Conclusion</a></h2>
 <p>Damn that was a long one. Congrats if you stick to the end, I hope you
 now have an idea of how you could use OCIO in SubstancePainter. If not,
-don’t hesitate to <a href="/pages/contact">contact</a> me to suggest how this
+don't hesitate to <a class="reference external" href="/pages/contact">contact</a> me to suggest how this
 article could be improved. (you can also join the discord, click on the purple
 button at the bottom of this page)</p>
 <p>If you like this post and wish to support me you could buy some of my
-scripts on <a href="https://app.gumroad.com/pyco">my Gumroad</a> or check my ko-fi at
+scripts on <a class="reference external" href="https://app.gumroad.com/pyco">my Gumroad</a> or check my ko-fi at
 the bottom of this page.</p>
-<p>I see you in the next one that would probably be on the same topic but on
-Mari. 👋</p>
+<p><span class="strikethrough">I see you in the next one that would probably be on the same topic but on
+Mari 👋</span> (2025 and still not there 💀)</p>
 </section>
 <section id="resources">
-<h2><a href="#toc-entry-46">Resources</a></h2>
-<div class="l-url-box">
-<a class="l-url-a" href="https://hg2dc.com/"></a>
-<div class="l-url-box-image">
-<img src="https://hg2dc.files.wordpress.com/2019/12/hg2dc-header-1.png" />
+<h2><a class="toc-backref" href="#toc-entry-46" role="doc-backlink">Resources</a></h2>
+<div class="url-preview-box docutils container">
+<a class="reference external" href="https://hg2dc.com/">
+</a>
+<div class="url-preview-image docutils container">
+<img alt="" class="inline" src="https://hg2dc.files.wordpress.com/2019/12/hg2dc-header-1.png" />
 </div>
-<div class="l-url-box-details">
-<p class="l-url-title">The Hitchhiker’s Guide to Digital Colour</p>
-<div class="l-url-subtitle">
-<a class="m-link-wrap" href="https://hg2dc.com/">https://hg2dc.com/</a>
+<div class="url-preview-details docutils container">
+<p class="url-preview-title">The Hitchhiker's Guide to Digital Colour</p>
+<div class="url-preview-subtitle docutils container">
+<a class="reference external" href="https://hg2dc.com/">
+https://hg2dc.com/</a>
 </div>
-<p class="l-url-description">The step by step guidebook for digital pixel pushers trying to get a firm
+<div class="url-preview-description docutils container">
+<p>The step by step guidebook for digital pixel pushers trying to get a firm
 grasp on colour to get sh*t done…</p>
 </div>
 </div>
-<div class="l-url-box">
-<a class="l-url-a" href="https://chrisbrejon.com/cg-cinematography/chapter-1-color-management"></a>
-<div class="l-url-box-image">
-<img src="https://i0.wp.com/news.umbc.edu/wp-content/uploads/2016/02/mantis-shrimp.jpg?resize=1920%2C768&amp;ssl=1" />
 </div>
-<div class="l-url-box-details">
-<p class="l-url-title">Chris Brejon’s Book</p>
-<div class="l-url-subtitle">
-<a class="m-link-wrap" href="https://chrisbrejon.com/cg-cinematography/chapter-1-color-management">https://chrisbrejon.com/cg-cinematography/chapter-1-color-management</a>
+<div class="url-preview-box docutils container">
+<a class="reference external" href="https://chrisbrejon.com/cg-cinematography/chapter-1-color-management">
+</a>
+<div class="url-preview-image docutils container">
+<img alt="" class="inline" src="https://i0.wp.com/news.umbc.edu/wp-content/uploads/2016/02/mantis-shrimp.jpg?resize=1920%2C768&amp;ssl=1" />
 </div>
-<p class="l-url-description">CG Cinematography Color Management is about this beautiful yet annoying
+<div class="url-preview-details docutils container">
+<p class="url-preview-title">Chris Brejon's Book</p>
+<div class="url-preview-subtitle docutils container">
+<a class="reference external" href="https://chrisbrejon.com/cg-cinematography/chapter-1-color-management">
+https://chrisbrejon.com/cg-cinematography/chapter-1-color-management</a>
+</div>
+<div class="url-preview-description docutils container">
+<p>CG Cinematography Color Management is about this beautiful yet annoying
 and essential topic of gamut. Definitely not the easiest way to start.</p>
 </div>
 </div>
-<div class="l-url-box">
-<a class="l-url-a" href="https://community.acescentral.com/"></a>
-<div class="l-url-box-image">
-<img src="https://community.acescentral.com/uploads/default/original/2X/c/cd5dcf316e1618c7bff0c0e4bd3b01825010b554.png" />
 </div>
-<div class="l-url-box-details">
-<p class="l-url-title">ACES Central</p>
-<div class="l-url-subtitle">
-<a class="m-link-wrap" href="https://community.acescentral.com/">https://community.acescentral.com/</a>
+<div class="url-preview-box docutils container">
+<a class="reference external" href="https://community.acescentral.com/">
+</a>
+<div class="url-preview-image docutils container">
+<img alt="" class="inline" src="https://community.acescentral.com/uploads/default/original/2X/c/cd5dcf316e1618c7bff0c0e4bd3b01825010b554.png" />
 </div>
-<p class="l-url-description">ACES Community Forum</p>
+<div class="url-preview-details docutils container">
+<p class="url-preview-title">ACES Central</p>
+<div class="url-preview-subtitle docutils container">
+<a class="reference external" href="https://community.acescentral.com/">
+https://community.acescentral.com/</a>
+</div>
+<div class="url-preview-description docutils container">
+<p>ACES Community Forum</p>
 </div>
 </div>
-<div class="l-url-box">
-<a class="l-url-a" href="https://cinematiccolor.org/"></a>
-<div class="l-url-box-image">
-<img src="https://pbs.twimg.com/profile_banners/75077867/1516422798/1080x360" />
 </div>
-<div class="l-url-box-details">
-<p class="l-url-title">Cinematic Color</p>
-<div class="l-url-subtitle">
-<a class="m-link-wrap" href="https://cinematiccolor.org/">https://cinematiccolor.org/</a>
+<div class="url-preview-box docutils container">
+<a class="reference external" href="https://cinematiccolor.org/">
+</a>
+<div class="url-preview-image docutils container">
+<img alt="" class="inline" src="https://pbs.twimg.com/profile_banners/75077867/1516422798/1080x360" />
 </div>
-<p class="l-url-description">This paper from 2012 presents an introduction to the color pipelines
+<div class="url-preview-details docutils container">
+<p class="url-preview-title">Cinematic Color</p>
+<div class="url-preview-subtitle docutils container">
+<a class="reference external" href="https://cinematiccolor.org/">
+https://cinematiccolor.org/</a>
+</div>
+<div class="url-preview-description docutils container">
+<p>This paper from 2012 presents an introduction to the color pipelines
 behind modern feature-film visual-effects and animation.</p>
+</div>
 </div>
 </div>
 </section>
 <section id="changelog">
-<h2><a href="#toc-entry-47">Changelog</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-47" role="doc-backlink">Changelog</a></h2>
+<ul class="simple">
+<li><p><span class="docutils literal"><span class="pre">17-12-2021</span></span>: fixed <a class="reference internal" href="#the-color-picker">The color-picker</a> section. <a class="reference external" href="https://community.acescentral.com/t/aces-and-substance-painter/2299/42">Discussion available here</a></p></li>
+<li><p><span class="docutils literal"><span class="pre">09-03-2022</span></span>: Updated article following 7.4.2 update.</p>
 <ul>
-<li><code>17-12-2021</code>: fixed <a href="#the-color-picker">The color-picker</a> section. <a href="https://community.acescentral.com/t/aces-and-substance-painter/2299/42">Discussion available here</a></li>
-<li><code>09-03-2022</code>: Updated article following 7.4.2 update.<ul>
-<li><a href="#substance-parameters-for-ocio-configs">Substance parameters for OCIO configs</a> : updated</li>
-<li><a href="#the-color-picker">The color-picker</a> : whole section re-wrote</li>
-<li><a href="#environment">Environment</a> : updated</li>
-<li><a href="#aces-colorpicker">ACES - Colorpicker</a> : updated</li>
-<li><a href="#issues-recap">Issues Recap</a> : updated</li>
+<li><p><a class="reference internal" href="#substance-parameters-for-ocio-configs">Substance parameters for OCIO configs</a> : updated</p></li>
+<li><p><a class="reference internal" href="#the-color-picker">The color-picker</a> : whole section re-wrote</p></li>
+<li><p><a class="reference internal" href="#environment">Environment</a> : updated</p></li>
+<li><p><a class="reference internal" href="#aces-colorpicker">ACES - Colorpicker</a> : updated</p></li>
+<li><p><a class="reference internal" href="#issues-recap">Issues Recap</a> : updated</p></li>
 </ul>
 </li>
-<li><code>01-02-2023</code>: added precision for custom user channels<ul>
-<li><a href="#custom-user-channels">Custom User Channels</a> : section created</li>
+<li><p><span class="docutils literal"><span class="pre">01-02-2023</span></span>: added precision for custom user channels</p>
+<ul>
+<li><p><a class="reference internal" href="#custom-user-channels">Custom User Channels</a> : section created</p></li>
 </ul>
 </li>
 </ul>
 </section>
-          <!-- /content -->
-        </div>
-      <footer>
-        <div class="m-container">
-          <div class="m-col-l-none m-nopadb">
-            <div class="l-line-xs" title="Footer Separator"></div>
-          <header class="l-post-context l-mrg-xs" title="Post Context" id="post-context-header">
-            <span class="l-category">
-              <a href="https://mrlixm.github.io/category/tutorial.html">tutorial</a>
-            </span>
-              &nbsp;
-              &nbsp;
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/substance-painter.html">substance-painter</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/color-science.html">color-science</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/ocio.html">OCIO</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/aces.html">ACES</a>
-                </span>
-          </header>
-          <footer class="l-post-context" id="post-context-footer">
-            <span class="l-time l-flex-item" title="Date Created">
-              <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-              <time datetime="2021-12-08T19:03:00+01:00">08 December 2021</time>
-            </span>
-              <span class="l-modified l-flex-item" title="Last Modified">
-                updated
-                <time datetime="2023-02-01T21:31:00+01:00">&nbsp;01 February 2023</time>
-              </span>
-            <span class="l-box-author l-flex-item" title="List of Authors">
-              <img src="/static/images/global/icons/account.svg" alt="Author icon" >
-              <span class="l-author" title="A post Author">
-                  <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a>
-              </span>
-            </span>
-          </footer>
-          <div class="l-box-post-connections">
-            <div class="l-box-kofi">
-              <p>If this was of any help you can:</p>
-              <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'>
-              </script>
-              <script type='text/javascript'>
-                kofiwidget2.init('Support Me on Ko-fi !', '#29abe0', 'E1E3ALNSG');kofiwidget2.draw();
-              </script>
-            </div>
-            <div class="l-box-discord">
-              <p>No comment system yet so instead:</p>
-              <div class="l-btn-discord  l-flex-r l-flex-center">
-                <a  class="l-btn-discord-img" href="https://discord.gg/47ySGqMEAj">
-                  <img src="/static/images/global/static/discord.svg" alt="Discord Icon">
-                </a>
-                <a href="https://discord.gg/47ySGqMEAj">Join the Discord to discuss</a>
-              </div>
-            </div>
-          </div>
-          </div>
-        </div>
-      </footer>
-    </article>
+
+  </article>
+
 </main>
 <footer>
-  <nav aria-label="Website informations.">
-    <div class="m-container">
-      <div class="m-row">
-        <div class="m-col-l-10 m-push-l-1">
-          <p>Copyright © <a href="mailto:lcollod&#64;gmail.com">Liam Collod</a> 2021 - 2025. All rights
-        reserved. Made with <a href="https://blog.getpelican.com/">Pelican</a> and
-        <a href="https://mcss.mosra.cz/">m.css</a> .</p>
-        </div>
-      </div>
-    </div>
-  </nav>
+  
+    <p>Static website <a href="../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
+      Last built on <i>2025-05-21T12:51</i> from commit <i>dca4b70</i></p>
+    <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
+  
 </footer>
 </body>
 </html>

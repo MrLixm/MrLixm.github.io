@@ -1,692 +1,1075 @@
-<!DOCTYPE html>
-<html lang="en" prefix="og: http://ogp.me/ns#">
+<!doctype html>
+<!-- 🐸🐸𓆏🐸 who puts frogs in the html !!! 𓆏𓆏🐸 -->
+<html lang="en" prefix="og: https://ogp.me/ns#">
 <head>
-  <meta charset="UTF-8" />
-  <title>When cgi-production goes wrong. | Liam Collod&#39;s Blog</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700%7CSource+Code+Pro:400,400i,600" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Georama:wght@400;500;600;700" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;700;900" />
-  <link rel="stylesheet" href="https://mrlixm.github.io/static/m-dark.css" />
-  <link rel="icon" href="https://mrlixm.github.io/static/images/global/icons/lixm.svg" type="image/x-ico" />
-  <link rel="canonical" href="https://mrlixm.github.io/blog/prod_goes_wrong/" />
-  <link href="https://mrlixm.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Liam Collod Website" />
-  <link href="https://mrlixm.github.io/feeds/breakdown.atom.xml" type="application/atom+xml" rel="alternate" title="Liam Collod Website | breakdown" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#20FC8F" />
-  <meta name="fediverse:creator" content="@liamcollod@mastodon.gamedev.place" />
-  <meta property="og:site_name" content="Liam Collod&#39;s Blog" />
-  <meta property="og:title" content="When cgi-production goes wrong." />
-  <meta name="twitter:title" content="When cgi-production goes wrong." />
-  <meta property="og:url" content="https://mrlixm.github.io/blog/prod_goes_wrong/" />
-  <meta property="og:description" content="Producing content using a computer can lead sometimes to unexcepted results, wether it’s the user fault or the software one. And this is especially true when working on 3d animated movies …" />
-  <meta name="twitter:description" content="Producing content using a computer can lead sometimes to unexcepted results, wether it’s the user fault or the software one. And this is especially true when working on 3d animated movies …" />
-  <meta property="og:image" content="https://mrlixm.github.io/static/images/blog/0003/cover/cover.jpg" />
-  <meta name="twitter:image" content="https://mrlixm.github.io/static/images/blog/0003/cover/cover.jpg" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta property="og:type" content="article" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>liam collod - When cgi-production goes wrong.</title>
+  <link rel="icon" href="../../.static/icons/logo-lixm.svg" type="image/x-ico">
+  
+    <meta name="author" content="Liam Collod">
+    <meta name="author" content="CPasDec team">
+  <meta name="description" content="Crafting images using a computer can sometimes lead to unexcepted results,
+wether it's the user fault or the software one. And this is especially true when
+working on 3d animated movies ...">
+  <meta name="fediverse:creator" content="@liamcollod@mastodon.gamedev.place">
+  <meta property="og:title" content="liam collod - When cgi-production goes wrong.">
+  <meta property="og:type" content="website"><meta property="og:url" content="https://mrlixm.github.io/blog/prod_goes_wrong/index.html">
+  <meta property="og:description" content="Crafting images using a computer can sometimes lead to unexcepted results,
+wether it's the user fault or the software one. And this is especially true when
+working on 3d animated movies ..."><meta property="og:image" content="https://mrlixm.github.io/blog/prod_goes_wrong/cover/cover.jpg">
+  <meta property="og:image:alt" content="A decorative image with the article title.">
+  <meta name="dcterms.created" content="2021-10-16T20:00:00">
+  <meta name="dcterms.modified" content="2021-10-22T13:02:00">
+  
+  <link rel="stylesheet" href="../../.static/styles/themes/default.css" />
+  
+  <link rel="stylesheet" href="../../.static/fonts/Montserrat/Montserrat.css" />
+  
+  <link rel="stylesheet" href="../../.static/fonts/SourceCodePro/SourceCodePro.css" />
+  
+  <link rel="stylesheet" href="../../.static/fonts/SourceSansPro/SourceSansPro.css" />
+  
+  <link rel="stylesheet" href="../../.static/styles/themes/pygments.onedark.css" />
+  
+  <link rel="stylesheet" href="../../.static/styles/header.css" />
+  
+  <link rel="stylesheet" href="../../.static/styles/footer.css" />
+  
+  <link rel="stylesheet" href="../../.static/styles/base.css" />
+  
+  <link rel="stylesheet" href="../../.static/styles/rst.css" />
+  
+  <link rel="stylesheet" href="../blog.css" />
+  
+  <link rel="stylesheet" href="../../.static/styles/shelf.css" />
+  
 </head>
 <body>
-<header id="header">
-  <nav id="nav-box">
-    <a href="https://mrlixm.github.io/" id="logo" class="">
-      <img src="https://mrlixm.github.io/static/images/global/icons/lixm-outline.svg" alt="" id="logo-img"/>
-      <span class="logo-txt">Liam Collod</span>
-    </a>
-    <div class="l-nav-menu" id="nav-menu">
-      <ol>
-          <li><a href="https://mrlixm.github.io/work">Work</a></li>
-          <li><a href="https://mrlixm.github.io/blog" class="l-nav-active">Blog</a></li>
-          <li><a href="https://mrlixm.github.io/pages/contact">Contact</a></li>
-      </ol>
+<header>
+  
+    <div id="site-name">
+      <img src="../../.static/icons/logo-lixm-outlines.svg" alt="my diamond-shape logo; quite minimalisitic." width="32px" height="32px">
+      <a href="../../"><span>Liam Collod</span></a>
     </div>
-  </nav>
-  <div class="l-gradient-line"></div>
+    <nav class="main-nav" aria-label="Main menu">
+      <ul>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Work" class=""><a href="../../work/"><span>Work</span><span>Work</span></a></li>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Blog" class="active"><a href="../"><span>Blog</span><span>Blog</span></a></li>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Resources" class=""><a href="../../resources/"><span>Resources</span><span>Resources</span></a></li>
+        
+        <!-- the duplicated span is a trick to change font-weight on hover -->
+        <li title="Contact" class=""><a href="../../contact"><span>Contact</span><span>Contact</span></a></li>
+        
+      </ul>
+    </nav>
+  
 </header>
 <main>
-    <article id="m-jumbo">
-      <header>
-        <div class="m-container">
-          <div id="cover-img" style="
-            background-image: url('https://mrlixm.github.io/static/images/blog/0003/cover/cover.jpg');
-background-size: 100%;">
+  <article class="read-area">
+    <section id="article-header">
+        <img class="blog-cover" src="cover/cover.jpg" alt="A decorative image with the article title.">
+      <div class="article-header-content">
+        <section id="metadata-header">
+          <div class="metadata-categories">
+            <hr>
+            <p id="post-category" title="the post category">breakdown</p>
+            <hr>
           </div>
-          <header class="l-article-header" id="article-header">
-        <header class="l-post-context l-mrg-s" title="Post Context" id="post-context-header">
-          <span class="l-category">
-            <a href="https://mrlixm.github.io/category/breakdown.html">breakdown</a>
-          </span>
-            &nbsp;
-            &nbsp;
-              <span class="l-tag l-flex-item" title="tag">
-                <a href="https://mrlixm.github.io/tag/production.html">production</a>
+          <div class="metadata-tags">
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.5s">production</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.5s">memes</pre>
+          </div>
+        </section>
+        <span id="article-header-decoration"></span>
+        <h1>When cgi-production goes wrong.</h1>
+        <section id="metadata-footer">
+          <p id="post-description" title="the post description">Crafting images using a computer can sometimes lead to unexcepted results,
+wether it's the user fault or the software one. And this is especially true when
+working on 3d animated movies ...</p>
+          <div class="metadata-essential">
+              <hr>
+              <span title="Date Created.">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <title>calendar-month</title>
+    <path fill="currentColor" d="M9,10V12H7V10H9M13,10V12H11V10H13M17,10V12H15V10H17M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H6V1H8V3H16V1H18V3H19M19,19V8H5V19H19M9,14V16H7V14H9M13,14V16H11V14H13M17,14V16H15V14H17Z"/>
+</svg>
+                <time datetime="2021-10-16T20:00:00">16 October 2021</time>
               </span>
-                <!--Invisible to the use but picked when copy/pasting-->
-                <span class="l-txt-invisible">,</span>
-              <span class="l-tag l-flex-item" title="tag">
-                <a href="https://mrlixm.github.io/tag/memes.html">memes</a>
+              <span title="Date Modified.">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <title>calendar-edit</title>
+    <path fill="currentColor" d="M19,3H18V1H16V3H8V1H6V3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H10V19H5V8H19V9H21V5A2,2 0 0,0 19,3M21.7,13.35L20.7,14.35L18.65,12.35L19.65,11.35C19.85,11.14 20.19,11.13 20.42,11.35L21.7,12.63C21.89,12.83 21.89,13.15 21.7,13.35M12,18.94L18.07,12.88L20.12,14.88L14.06,21H12V18.94Z"/>
+</svg>
+                <time datetime="2021-10-22T13:02:00">22 October 2021</time>
               </span>
-        </header>
-        <h1 title="Article title">
-          <a href="https://mrlixm.github.io/blog/prod_goes_wrong/" rel="bookmark" title="Permalink to When cgi-production goes wrong.">
-            When cgi-production goes wrong.
-          </a>
-        </h1>
-        <p>Producing content using a computer can lead sometimes to unexcepted results,
-        wether it’s the user fault or the software one. And this is especially true when
-        working on 3d animated movies …</p>
-        <footer class="l-post-context" id="post-context-footer">
-          <span class="l-time l-flex-item" title="Date Created">
-            <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-            <time datetime="2021-10-16T20:00:00+02:00">16 October 2021</time>
-          </span>
-            <span class="l-modified l-flex-item" title="Last Modified">
-              updated
-              <time datetime="2021-10-22T13:02:00+02:00">&nbsp;22 October 2021</time>
-            </span>
-          <span class="l-box-author l-flex-item" title="List of Authors">
-            <img src="/static/images/global/icons/account.svg" alt="Author icon" >
-            <span class="l-author" title="A post Author">
-                <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a>
-            </span>
-          </span>
-        </footer>
-      </header>
-        </div>
-      </header>
-        <div class="m-container m-container-inflatable">
-          <!-- content -->
-          <p>Enjoy this compilation of no-context pictures from the production of
-short-movies at <a href="https://liamcollod.notion.site/CPasDec-Association-4105082a881e499b9e385d84f6da933d">CpasDec</a>.</p>
-<div class="m-imagegrid m-container-inflate">
-<div>
-<figure style="width: 61.803%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/blendshapes.png.png"><img src="https://mrlixm.github.io/static/images/blog/0003/blendshapes.png.png" /><figcaption>blendshapes.png</figcaption>
-</a>
-</figure>
-<figure style="width: 38.197%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Peak_Grooming.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Peak_Grooming.png" /><figcaption>Peak Grooming</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 29.797%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Crying_in_groom.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Crying_in_groom.png" /><figcaption>Crying in groom</figcaption>
-</a>
-</figure>
-<figure style="width: 12.825%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/BONJOUR.PNG"><img src="https://mrlixm.github.io/static/images/blog/0003/BONJOUR.PNG" /><figcaption>BONJOUR</figcaption>
-</a>
-</figure>
-<figure style="width: 57.378%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Aways_a_funny_one_to_Lookdev.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Aways_a_funny_one_to_Lookdev.png" /><figcaption>Aways a funny one to Lookdev</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 17.691%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/He_got_too_much_ketamine.png"><img src="https://mrlixm.github.io/static/images/blog/0003/He_got_too_much_ketamine.png" /><figcaption>He saw things …</figcaption>
-</a>
-</figure>
-<figure style="width: 46.044%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/A_famous_French_politician_....PNG"><img src="https://mrlixm.github.io/static/images/blog/0003/A_famous_French_politician_....PNG" /><figcaption>A famous French politician …</figcaption>
-</a>
-</figure>
-<figure style="width: 36.265%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Somebody_toucha_my_spaghet.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Somebody_toucha_my_spaghet.png" /><figcaption>Somebody toucha my spaghet</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 62.282%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Merfi.PNG"><img src="https://mrlixm.github.io/static/images/blog/0003/Merfi.PNG" /><figcaption>Merfi</figcaption>
-</a>
-</figure>
-<figure style="width: 37.718%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/CHONK_UVs.png"><img src="https://mrlixm.github.io/static/images/blog/0003/CHONK_UVs.png" /><figcaption>CHONK UVs</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 81.065%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Oh_no_I_added_to_much_-101.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Oh_no_I_added_to_much_-101.png" /><figcaption>Oh no I added to much a̵̵̢̡͉͉̟̒̾͑͆̚̕͜b̴̵̢͍̼͚̙̿̔͒̓͌͜b̸̴̡̻̘͙͙̺͑͑̀͌͠͝e̴̸̡̦͉̺̫̫͌̓̒̽͠r̸̵̡̺̟̫̦̈́̾̾̚͠͠a̴̸͙̘̦̺̙̺͊̒̔͝͝͝t̵̵͔͇̫͚̾͒̔̕͜͜͠i̵̸͔̞̪̠̝̪̐̐̕̚͝o̸̴͚͚͎͕̻͛͋̈́̚͠͝n̸̴̦͎̪̘̫̺͋̽͐̔͌͝</figcaption>
-</a>
-</figure>
-<figure style="width: 18.935%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/ahhhhhhhhh.png"><img src="https://mrlixm.github.io/static/images/blog/0003/ahhhhhhhhh.png" /><figcaption>ahhhhhhhhh</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 34.358%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Curvature_being_affected_by_gravity.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Curvature_being_affected_by_gravity.png" /><figcaption>Curvature being affected by gravity</figcaption>
-</a>
-</figure>
-<figure style="width: 65.642%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/She_probably_dropped_something_important.PNG"><img src="https://mrlixm.github.io/static/images/blog/0003/She_probably_dropped_something_important.PNG" /><figcaption>She probably dropped something important</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 72.560%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Awaken_2.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Awaken_2.png" /><figcaption>Awaken 2</figcaption>
-</a>
-</figure>
-<figure style="width: 27.440%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Squidward_IS_pissed.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Squidward_IS_pissed.png" /><figcaption>Squidward IS pissed</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 52.356%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Plouf.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Plouf.png" /><figcaption>Plouf</figcaption>
-</a>
-</figure>
-<figure style="width: 26.821%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Disco_flask.gif"><img src="https://mrlixm.github.io/static/images/blog/0003/Disco_flask.gif" /><figcaption>Disco flask</figcaption>
-</a>
-</figure>
-<figure style="width: 20.823%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/O~O.png"><img src="https://mrlixm.github.io/static/images/blog/0003/O~O.png" /><figcaption>O~O</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 39.843%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Leaked_new_Gucci_dress_collection.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Leaked_new_Gucci_dress_collection.png" /><figcaption>Leaked new Gucci dress collection</figcaption>
-</a>
-</figure>
-<figure style="width: 60.157%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/martinunknown.png"><img src="https://mrlixm.github.io/static/images/blog/0003/martinunknown.png" /><figcaption>when you’re on your 10th coffee</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 49.127%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Mrs_I_think_your_forgot_something.PNG"><img src="https://mrlixm.github.io/static/images/blog/0003/Mrs_I_think_your_forgot_something.PNG" /><figcaption>Mrs I think your forgot something</figcaption>
-</a>
-</figure>
-<figure style="width: 50.873%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Team's_Lighter_will_remember_this_cathedral_....png"><img src="https://mrlixm.github.io/static/images/blog/0003/Team's_Lighter_will_remember_this_cathedral_....png" /><figcaption>Team’s Lighters will remember this cathedral …</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 33.924%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Ahh_blendshapes.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Ahh_blendshapes.png" /><figcaption>Ahh blendshapes</figcaption>
-</a>
-</figure>
-<figure style="width: 66.076%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Bacterias_when_you_pickup_the_dropped_food_in_less_than_5s.PNG"><img src="https://mrlixm.github.io/static/images/blog/0003/Bacterias_when_you_pickup_the_dropped_food_in_less_than_5s.PNG" /><figcaption>Bacterias when you pickup the dropped food in less than 5s</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 24.954%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Why_all_men_can't_looks_like_this_-1-1-1.jpg"><img src="https://mrlixm.github.io/static/images/blog/0003/Why_all_men_can't_looks_like_this_-1-1-1.jpg" /><figcaption>Why all men can’t looks like this ???</figcaption>
-</a>
-</figure>
-<figure style="width: 26.664%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/When_the_deadline_was_yesterday.png"><img src="https://mrlixm.github.io/static/images/blog/0003/When_the_deadline_was_yesterday.png" /><figcaption>When the deadline was yesterday</figcaption>
-</a>
-</figure>
-<figure style="width: 48.382%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Bababoei.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Bababoei.png" /><figcaption>Bababoei</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 37.024%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/ah.PNG"><img src="https://mrlixm.github.io/static/images/blog/0003/ah.PNG" /><figcaption>ah</figcaption>
-</a>
-</figure>
-<figure style="width: 62.976%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Ohoh_my_animation_caught_something.jpg"><img src="https://mrlixm.github.io/static/images/blog/0003/Ohoh_my_animation_caught_something.jpg" /><figcaption>Ohoh my animation caught something</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 47.066%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/WindowsXp_vibes.jpg"><img src="https://mrlixm.github.io/static/images/blog/0003/WindowsXp_vibes.jpg" /><figcaption>WindowsXp vibes</figcaption>
-</a>
-</figure>
-<figure style="width: 52.934%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/-200.png"><img src="https://mrlixm.github.io/static/images/blog/0003/-200.png" /><figcaption>0*0</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 38.946%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Blendshape_hell.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Blendshape_hell.png" /><figcaption>Blendshape hell</figcaption>
-</a>
-</figure>
-<figure style="width: 32.796%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Some_special_kind_of_leaves.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Some_special_kind_of_leaves.png" /><figcaption>Some special kind of leaves</figcaption>
-</a>
-</figure>
-<figure style="width: 28.258%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Mondays_be_like.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Mondays_be_like.png" /><figcaption>Mondays be like</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 45.205%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Maya_+_Xgen.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Maya_+_Xgen.png" /><figcaption>Maya + Xgen</figcaption>
-</a>
-</figure>
-<figure style="width: 54.795%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/He_have_ASCENDED.png"><img src="https://mrlixm.github.io/static/images/blog/0003/He_have_ASCENDED.png" /><figcaption>He have ASCENDED</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 42.193%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Angary_House.jpg"><img src="https://mrlixm.github.io/static/images/blog/0003/Angary_House.jpg" /><figcaption>Angary House</figcaption>
-</a>
-</figure>
-<figure style="width: 32.113%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Next_level_of_tired.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Next_level_of_tired.png" /><figcaption>Next level of tired</figcaption>
-</a>
-</figure>
-<figure style="width: 25.695%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Can_I_get_uuuuh_..._your_soul_-1.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Can_I_get_uuuuh_..._your_soul_-1.png" /><figcaption>Can I get uuuuh … your soul ?</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 56.688%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/romain0564654.png"><img src="https://mrlixm.github.io/static/images/blog/0003/romain0564654.png" /><figcaption>production ready</figcaption>
-</a>
-</figure>
-<figure style="width: 43.312%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Bro_I_can't_stand_being_unwrapped_anymore_…_please.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Bro_I_can't_stand_being_unwrapped_anymore_…_please.png" /><figcaption>Bro I can’t stand being unwrapped anymore … please</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 57.029%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Render_MotionBlur_in_Render_plz.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Render_MotionBlur_in_Render_plz.png" /><figcaption>Render MotionBlur in Render plz</figcaption>
-</a>
-</figure>
-<figure style="width: 42.971%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Berthe_travel_to_hyperspace.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Berthe_travel_to_hyperspace.png" /><figcaption>Berthe travel to hyperspace</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 29.610%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Hehe.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Hehe.png" /><figcaption>Hehe</figcaption>
-</a>
-</figure>
-<figure style="width: 41.081%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/A_very_hairy_child.png"><img src="https://mrlixm.github.io/static/images/blog/0003/A_very_hairy_child.png" /><figcaption>A very hairy child</figcaption>
-</a>
-</figure>
-<figure style="width: 29.308%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Grandma_where_are_your_clothes_-1-1-1.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Grandma_where_are_your_clothes_-1-1-1.png" /><figcaption>Grandma where are your clothes ???</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 72.349%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Checking_your_weekend_renders_be_like.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Checking_your_weekend_renders_be_like.png" /><figcaption>Checking your weekend renders be like</figcaption>
-</a>
-</figure>
-<figure style="width: 27.651%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Tired_level_max.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Tired_level_max.png" /><figcaption>Tired level max</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 59.066%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/omw2doUrMom.gif"><img src="https://mrlixm.github.io/static/images/blog/0003/omw2doUrMom.gif" /><figcaption>omw2doUrMom</figcaption>
-</a>
-</figure>
-<figure style="width: 40.934%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Oh_you_have_games_on_your_phone_-1-1.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Oh_you_have_games_on_your_phone_-1-1.png" /><figcaption>Oh you have games on your phone ??</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 24.754%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Blendshape_from_hell.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Blendshape_from_hell.png" /><figcaption>Blendshape from hell</figcaption>
-</a>
-</figure>
-<figure style="width: 29.752%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Robin_got_an_upgrade.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Robin_got_an_upgrade.png" /><figcaption>Robin got an upgrade</figcaption>
-</a>
-</figure>
-<figure style="width: 45.494%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Very_Fuzzy_groom.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Very_Fuzzy_groom.png" /><figcaption>Very Fuzzy groom</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 30.266%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/-5duckface-5.png"><img src="https://mrlixm.github.io/static/images/blog/0003/-5duckface-5.png" /><figcaption><em>duckface</em></figcaption>
-</a>
-</figure>
-<figure style="width: 36.000%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Your_Magical_Inquisitor.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Your_Magical_Inquisitor.png" /><figcaption>Your Magical Inquisitor</figcaption>
-</a>
-</figure>
-<figure style="width: 33.735%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Ficello_le_fromage_trop_rigolo.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Ficello_le_fromage_trop_rigolo.png" /><figcaption>Ficello, le fromage trop rigolo</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 56.611%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Cmpositing.png.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Cmpositing.png.png" /><figcaption>Cmpositing.png</figcaption>
-</a>
-</figure>
-<figure style="width: 22.205%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Oh_no_my_-100_dropped.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Oh_no_my_-100_dropped.png" /><figcaption>Oh no my m̴͕̪̼̒́̐o̵̠̺̟̒͝o̴͎̻̺͐̽d̵̘̪͓͆͠ dropped</figcaption>
-</a>
-</figure>
-<figure style="width: 21.184%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Stoned.png.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Stoned.png.png" /><figcaption>Stoned.png</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 39.663%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/He_can_see_your_sins.png"><img src="https://mrlixm.github.io/static/images/blog/0003/He_can_see_your_sins.png" /><figcaption>He can see your sins</figcaption>
-</a>
-</figure>
-<figure style="width: 27.825%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Shrek_6_Leak.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Shrek_6_Leak.png" /><figcaption>Shrek 6 Leak</figcaption>
-</a>
-</figure>
-<figure style="width: 32.512%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Why_is_my_hair_flying_-1_Wish_I_knew_child_....png"><img src="https://mrlixm.github.io/static/images/blog/0003/Why_is_my_hair_flying_-1_Wish_I_knew_child_....png" /><figcaption>Why is my hair flying ? Wish I knew child …</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 39.898%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/The_berth-bike.png"><img src="https://mrlixm.github.io/static/images/blog/0003/The_berth-bike.png" /><figcaption>The berth-bike</figcaption>
-</a>
-</figure>
-<figure style="width: 60.102%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/boom.gif"><img src="https://mrlixm.github.io/static/images/blog/0003/boom.gif" /><figcaption>boom</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 45.222%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/CharaDesign_at_his_best.png"><img src="https://mrlixm.github.io/static/images/blog/0003/CharaDesign_at_his_best.png" /><figcaption>CharaDesign at his best</figcaption>
-</a>
-</figure>
-<figure style="width: 54.778%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Join_church_we_have_cookies.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Join_church_we_have_cookies.png" /><figcaption>Join church we have cookies</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 28.972%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/UV_mapping_except_it's_in_3D.png"><img src="https://mrlixm.github.io/static/images/blog/0003/UV_mapping_except_it's_in_3D.png" /><figcaption>UV mapping except it’s in 3D</figcaption>
-</a>
-</figure>
-<figure style="width: 44.448%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/How2KillRenderTimes.png"><img src="https://mrlixm.github.io/static/images/blog/0003/How2KillRenderTimes.png" /><figcaption>How2KillRenderTimes</figcaption>
-</a>
-</figure>
-<figure style="width: 26.580%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/I_don't_feel_good_MrStark.png"><img src="https://mrlixm.github.io/static/images/blog/0003/I_don't_feel_good_MrStark.png" /><figcaption>I don’t feel good MrStark</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 29.779%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Monke_is_not_fine.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Monke_is_not_fine.png" /><figcaption>Monke is not fine</figcaption>
-</a>
-</figure>
-<figure style="width: 35.003%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Assassin's_Creed_vibe.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Assassin's_Creed_vibe.png" /><figcaption>Assassin’s Creed vibe</figcaption>
-</a>
-</figure>
-<figure style="width: 35.218%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/This_guy_slap_your_girl_WYD_-1-1.png"><img src="https://mrlixm.github.io/static/images/blog/0003/This_guy_slap_your_girl_WYD_-1-1.png" /><figcaption>This guy slap your girl WYD ??</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 23.954%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/awaken.png.png"><img src="https://mrlixm.github.io/static/images/blog/0003/awaken.png.png" /><figcaption>awaken.png</figcaption>
-</a>
-</figure>
-<figure style="width: 46.112%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Mitosis_be_like.jpg"><img src="https://mrlixm.github.io/static/images/blog/0003/Mitosis_be_like.jpg" /><figcaption>Mitosis be like</figcaption>
-</a>
-</figure>
-<figure style="width: 29.934%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Maya_+_Setdress_=_-33.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Maya_+_Setdress_=_-33.png" /><figcaption>Maya + Setdress = &lt;3</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 37.789%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Evolve_to_green.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Evolve_to_green.png" /><figcaption>Evolve to green</figcaption>
-</a>
-</figure>
-<figure style="width: 29.229%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/A_ncie_boy.png"><img src="https://mrlixm.github.io/static/images/blog/0003/A_ncie_boy.png" /><figcaption>A ncie boy</figcaption>
-</a>
-</figure>
-<figure style="width: 32.981%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/uggggggh.png"><img src="https://mrlixm.github.io/static/images/blog/0003/uggggggh.png" /><figcaption>uggggggh</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 41.256%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Yeeeesh.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Yeeeesh.png" /><figcaption>Yeeeesh</figcaption>
-</a>
-</figure>
-<figure style="width: 58.744%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/-5_Stare_at_you_-5_OwO.png"><img src="https://mrlixm.github.io/static/images/blog/0003/-5_Stare_at_you_-5_OwO.png" /><figcaption>* Stare at you * OwO</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 41.386%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Groom_issue_n°45636.PNG"><img src="https://mrlixm.github.io/static/images/blog/0003/Groom_issue_n°45636.PNG" /><figcaption>Groom issue n°45636</figcaption>
-</a>
-</figure>
-<figure style="width: 58.614%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/hahaCFXFUN.gif"><img src="https://mrlixm.github.io/static/images/blog/0003/hahaCFXFUN.gif" /><figcaption>hahaCFXFUN</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 33.713%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/shrink.png"><img src="https://mrlixm.github.io/static/images/blog/0003/shrink.png" /><figcaption>shrink</figcaption>
-</a>
-</figure>
-<figure style="width: 66.287%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/bonk.png"><img src="https://mrlixm.github.io/static/images/blog/0003/bonk.png" /><figcaption>bonk</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 100.000%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/bottom_text.jpg"><img src="https://mrlixm.github.io/static/images/blog/0003/bottom_text.jpg" /><figcaption>bottom text</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 57.296%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/-1-1-1-1.png"><img src="https://mrlixm.github.io/static/images/blog/0003/-1-1-1-1.png" /><figcaption>????</figcaption>
-</a>
-</figure>
-<figure style="width: 22.003%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/-5satisfaction-5.png"><img src="https://mrlixm.github.io/static/images/blog/0003/-5satisfaction-5.png" /><figcaption><em>satisfaction</em></figcaption>
-</a>
-</figure>
-<figure style="width: 20.701%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/--0116546.PNG"><img src="https://mrlixm.github.io/static/images/blog/0003/--0116546.PNG" /><div>
-</div>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 12.231%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/best_poster.png"><img src="https://mrlixm.github.io/static/images/blog/0003/best_poster.png" /><figcaption>best poster</figcaption>
-</a>
-</figure>
-<figure style="width: 52.494%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/deathtrooper.png"><img src="https://mrlixm.github.io/static/images/blog/0003/deathtrooper.png" /><figcaption>deathtrooper</figcaption>
-</a>
-</figure>
-<figure style="width: 35.275%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/grOomfuckGroooooommmmh.png"><img src="https://mrlixm.github.io/static/images/blog/0003/grOomfuckGroooooommmmh.png" /><figcaption>grOomfuckGroooooommmmh</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 24.935%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/he_found_the_ketamine.PNG"><img src="https://mrlixm.github.io/static/images/blog/0003/he_found_the_ketamine.PNG" /><figcaption>he found the ketamine</figcaption>
-</a>
-</figure>
-<figure style="width: 75.065%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/He_broke_the_matrix.png"><img src="https://mrlixm.github.io/static/images/blog/0003/He_broke_the_matrix.png" /><figcaption>He broke the matrix</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 48.258%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/I_am_the_senate.png"><img src="https://mrlixm.github.io/static/images/blog/0003/I_am_the_senate.png" /><figcaption>I am the senate</figcaption>
-</a>
-</figure>
-<figure style="width: 51.742%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Is_this_a_jojo_reference-1-1.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Is_this_a_jojo_reference-1-1.png" /><figcaption>Is this a jojo reference??</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 48.473%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/I_dont_even_know.png"><img src="https://mrlixm.github.io/static/images/blog/0003/I_dont_even_know.png" /><figcaption>I dont even know</figcaption>
-</a>
-</figure>
-<figure style="width: 51.527%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/I_let_you_caption_this_one.PNG"><img src="https://mrlixm.github.io/static/images/blog/0003/I_let_you_caption_this_one.PNG" /><figcaption>I let you caption this one</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 33.914%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/mamamia.PNG"><img src="https://mrlixm.github.io/static/images/blog/0003/mamamia.PNG" /><figcaption>mamamia</figcaption>
-</a>
-</figure>
-<figure style="width: 32.049%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/New_LooneyTunes_just_dropped.png"><img src="https://mrlixm.github.io/static/images/blog/0003/New_LooneyTunes_just_dropped.png" /><figcaption>New LooneyTunes just dropped</figcaption>
-</a>
-</figure>
-<figure style="width: 34.037%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Smooth.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Smooth.png" /><figcaption>Smooth</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 76.967%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/The_crossover.png"><img src="https://mrlixm.github.io/static/images/blog/0003/The_crossover.png" /><figcaption>The crossover</figcaption>
-</a>
-</figure>
-<figure style="width: 23.033%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/we_used_this_as_a_texture.png"><img src="https://mrlixm.github.io/static/images/blog/0003/we_used_this_as_a_texture.png" /><figcaption>we used this as a texture</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 45.867%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/From_child_safe_to_horror_movie.png"><img src="https://mrlixm.github.io/static/images/blog/0003/From_child_safe_to_horror_movie.png" /><figcaption>From child safe to horror movie</figcaption>
-</a>
-</figure>
-<figure style="width: 54.133%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/Money_in_the_bag_NOW.png"><img src="https://mrlixm.github.io/static/images/blog/0003/Money_in_the_bag_NOW.png" /><figcaption>Money in the bag NOW</figcaption>
-</a>
-</figure>
-</div>
-<div>
-<figure style="width: 100.000%">
-<a href="https://mrlixm.github.io/static/images/blog/0003/ThisIsFine.gif"><img src="https://mrlixm.github.io/static/images/blog/0003/ThisIsFine.gif" /><figcaption>ThisIsFine</figcaption>
-</a>
-</figure>
-</div>
-</div>
-          <!-- /content -->
-        </div>
-      <footer>
-        <div class="m-container">
-          <div class="m-col-l-none m-nopadb">
-            <div class="l-line-xs" title="Footer Separator"></div>
-          <header class="l-post-context l-mrg-xs" title="Post Context" id="post-context-header">
-            <span class="l-category">
-              <a href="https://mrlixm.github.io/category/breakdown.html">breakdown</a>
-            </span>
-              &nbsp;
-              &nbsp;
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/production.html">production</a>
-                </span>
-                  <!--Invisible to the use but picked when copy/pasting-->
-                  <span class="l-txt-invisible">,</span>
-                <span class="l-tag l-flex-item" title="tag">
-                  <a href="https://mrlixm.github.io/tag/memes.html">memes</a>
-                </span>
-          </header>
-          <footer class="l-post-context" id="post-context-footer">
-            <span class="l-time l-flex-item" title="Date Created">
-              <img src="/static/images/global/icons/calendar.svg" alt="Calendar icon" >
-              <time datetime="2021-10-16T20:00:00+02:00">16 October 2021</time>
-            </span>
-              <span class="l-modified l-flex-item" title="Last Modified">
-                updated
-                <time datetime="2021-10-22T13:02:00+02:00">&nbsp;22 October 2021</time>
+              <span title="Persons who authored the document.">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <title>account</title>
+    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/>
+</svg>
+                Liam Collod, CPasDec team
               </span>
-            <span class="l-box-author l-flex-item" title="List of Authors">
-              <img src="/static/images/global/icons/account.svg" alt="Author icon" >
-              <span class="l-author" title="A post Author">
-                  <a href="https://mrlixm.github.io/author/liam-collod.html">Liam Collod</a>
-              </span>
-            </span>
-          </footer>
-          <div class="l-box-post-connections">
-            <div class="l-box-kofi">
-              <p>If this was of any help you can:</p>
-              <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'>
-              </script>
-              <script type='text/javascript'>
-                kofiwidget2.init('Support Me on Ko-fi !', '#29abe0', 'E1E3ALNSG');kofiwidget2.draw();
-              </script>
+              <hr>
             </div>
-            <div class="l-box-discord">
-              <p>No comment system yet so instead:</p>
-              <div class="l-btn-discord  l-flex-r l-flex-center">
-                <a  class="l-btn-discord-img" href="https://discord.gg/47ySGqMEAj">
-                  <img src="/static/images/global/static/discord.svg" alt="Discord Icon">
-                </a>
-                <a href="https://discord.gg/47ySGqMEAj">Join the Discord to discuss</a>
-              </div>
-            </div>
-          </div>
-          </div>
-        </div>
-      </footer>
-    </article>
+        </section>
+      </div>
+    </section>
+    <p>Enjoy this compilation of no-context pictures from the production of
+short-movies at <a class="reference external" href="https://liamcollod.notion.site/CPasDec-Association-4105082a881e499b9e385d84f6da933d">CpasDec</a>.</p>
+<div class="image-grid docutils container">
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./blendshapes.png.jpg">
+<figure class="inline" style="width: 61.803%">
+<img alt="blendshapes.png" class="inline" loading="lazy" src="./blendshapes.png.jpg" />
+<figcaption>
+<p>blendshapes.png</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Peak_Grooming.jpg">
+<figure class="inline" style="width: 38.197%">
+<img alt="Peak Grooming" class="inline" loading="lazy" src="./Peak_Grooming.jpg" />
+<figcaption>
+<p>Peak Grooming</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Crying_in_groom.jpg">
+<figure class="inline" style="width: 29.797%">
+<img alt="Crying in groom" class="inline" loading="lazy" src="./Crying_in_groom.jpg" />
+<figcaption>
+<p>Crying in groom</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./BONJOUR.jpg">
+<figure class="inline" style="width: 12.825%">
+<img alt="BONJOUR" class="inline" loading="lazy" src="./BONJOUR.jpg" />
+<figcaption>
+<p>BONJOUR</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Aways_a_funny_one_to_Lookdev.jpg">
+<figure class="inline" style="width: 57.378%">
+<img alt="Aways a funny one to Lookdev" class="inline" loading="lazy" src="./Aways_a_funny_one_to_Lookdev.jpg" />
+<figcaption>
+<p>Aways a funny one to Lookdev</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./He_got_too_much_ketamine.jpg">
+<figure class="inline" style="width: 17.691%">
+<img alt="He saw things ..." class="inline" loading="lazy" src="./He_got_too_much_ketamine.jpg" />
+<figcaption>
+<p>He saw things ...</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./A_famous_French_politician_....jpg">
+<figure class="inline" style="width: 46.044%">
+<img alt="A famous French politician ..." class="inline" loading="lazy" src="./A_famous_French_politician_....jpg" />
+<figcaption>
+<p>A famous French politician ...</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Somebody_toucha_my_spaghet.jpg">
+<figure class="inline" style="width: 36.265%">
+<img alt="Somebody toucha my spaghet" class="inline" loading="lazy" src="./Somebody_toucha_my_spaghet.jpg" />
+<figcaption>
+<p>Somebody toucha my spaghet</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Merfi.jpg">
+<figure class="inline" style="width: 62.282%">
+<img alt="Merfi" class="inline" loading="lazy" src="./Merfi.jpg" />
+<figcaption>
+<p>Merfi</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./CHONK_UVs.jpg">
+<figure class="inline" style="width: 37.718%">
+<img alt="CHONK UVs" class="inline" loading="lazy" src="./CHONK_UVs.jpg" />
+<figcaption>
+<p>CHONK UVs</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Oh_no_I_added_to_much_-101.jpg">
+<figure class="inline" style="width: 81.065%">
+<img alt="Oh no I added to much a̵̵̢̡͉͉̟̒̾͑͆̚̕͜b̴̵̢͍̼͚̙̿̔͒̓͌͜b̸̴̡̻̘͙͙̺͑͑̀͌͠͝e̴̸̡̦͉̺̫̫͌̓̒̽͠r̸̵̡̺̟̫̦̈́̾̾̚͠͠a̴̸͙̘̦̺̙̺͊̒̔͝͝͝t̵̵͔͇̫͚̾͒̔̕͜͜͠i̵̸͔̞̪̠̝̪̐̐̕̚͝o̸̴͚͚͎͕̻͛͋̈́̚͠͝n̸̴̦͎̪̘̫̺͋̽͐̔͌͝" class="inline" loading="lazy" src="./Oh_no_I_added_to_much_-101.jpg" />
+<figcaption>
+<p>Oh no I added to much a̵̵̢̡͉͉̟̒̾͑͆̚̕͜b̴̵̢͍̼͚̙̿̔͒̓͌͜b̸̴̡̻̘͙͙̺͑͑̀͌͠͝e̴̸̡̦͉̺̫̫͌̓̒̽͠r̸̵̡̺̟̫̦̈́̾̾̚͠͠a̴̸͙̘̦̺̙̺͊̒̔͝͝͝t̵̵͔͇̫͚̾͒̔̕͜͜͠i̵̸͔̞̪̠̝̪̐̐̕̚͝o̸̴͚͚͎͕̻͛͋̈́̚͠͝n̸̴̦͎̪̘̫̺͋̽͐̔͌͝</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./ahhhhhhhhh.jpg">
+<figure class="inline" style="width: 18.935%">
+<img alt="ahhhhhhhhh" class="inline" loading="lazy" src="./ahhhhhhhhh.jpg" />
+<figcaption>
+<p>ahhhhhhhhh</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Curvature_being_affected_by_gravity.jpg">
+<figure class="inline" style="width: 34.358%">
+<img alt="Curvature being affected by gravity" class="inline" loading="lazy" src="./Curvature_being_affected_by_gravity.jpg" />
+<figcaption>
+<p>Curvature being affected by gravity</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./She_probably_dropped_something_important.jpg">
+<figure class="inline" style="width: 65.642%">
+<img alt="She probably dropped something important" class="inline" loading="lazy" src="./She_probably_dropped_something_important.jpg" />
+<figcaption>
+<p>She probably dropped something important</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Awaken_2.jpg">
+<figure class="inline" style="width: 72.560%">
+<img alt="Awaken 2" class="inline" loading="lazy" src="./Awaken_2.jpg" />
+<figcaption>
+<p>Awaken 2</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Squidward_IS_pissed.jpg">
+<figure class="inline" style="width: 27.440%">
+<img alt="Squidward IS pissed" class="inline" loading="lazy" src="./Squidward_IS_pissed.jpg" />
+<figcaption>
+<p>Squidward IS pissed</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Plouf.jpg">
+<figure class="inline" style="width: 52.356%">
+<img alt="Plouf" class="inline" loading="lazy" src="./Plouf.jpg" />
+<figcaption>
+<p>Plouf</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Disco_flask.gif">
+<figure class="inline" style="width: 26.821%">
+<img alt="Disco flask" class="inline" loading="lazy" src="./Disco_flask.gif" />
+<figcaption>
+<p>Disco flask</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./O~O.jpg">
+<figure class="inline" style="width: 20.823%">
+<img alt="O~O" class="inline" loading="lazy" src="./O~O.jpg" />
+<figcaption>
+<p>O~O</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Leaked_new_Gucci_dress_collection.jpg">
+<figure class="inline" style="width: 39.843%">
+<img alt="Leaked new Gucci dress collection" class="inline" loading="lazy" src="./Leaked_new_Gucci_dress_collection.jpg" />
+<figcaption>
+<p>Leaked new Gucci dress collection</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./martinunknown.jpg">
+<figure class="inline" style="width: 60.157%">
+<img alt="when you're on your 10th coffee" class="inline" loading="lazy" src="./martinunknown.jpg" />
+<figcaption>
+<p>when you're on your 10th coffee</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Mrs_I_think_your_forgot_something.jpg">
+<figure class="inline" style="width: 49.127%">
+<img alt="Mrs I think your forgot something" class="inline" loading="lazy" src="./Mrs_I_think_your_forgot_something.jpg" />
+<figcaption>
+<p>Mrs I think your forgot something</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Team's_Lighter_will_remember_this_cathedral_....jpg">
+<figure class="inline" style="width: 50.873%">
+<img alt="The lighters team will remember this cathedral ..." class="inline" loading="lazy" src="./Team's_Lighter_will_remember_this_cathedral_....jpg" />
+<figcaption>
+<p>The lighters team will remember this cathedral ...</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Ahh_blendshapes.jpg">
+<figure class="inline" style="width: 33.924%">
+<img alt="Ahh blendshapes" class="inline" loading="lazy" src="./Ahh_blendshapes.jpg" />
+<figcaption>
+<p>Ahh blendshapes</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Bacterias_when_you_pickup_the_dropped_food_in_less_than_5s.jpg">
+<figure class="inline" style="width: 66.076%">
+<img alt="Bacterias when you pickup the dropped food in less than 5s" class="inline" loading="lazy" src="./Bacterias_when_you_pickup_the_dropped_food_in_less_than_5s.jpg" />
+<figcaption>
+<p>Bacterias when you pickup the dropped food in less than 5s</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Why_all_men_can't_looks_like_this_-1-1-1.jpg">
+<figure class="inline" style="width: 24.954%">
+<img alt="Why can't all men looks like this ???" class="inline" loading="lazy" src="./Why_all_men_can't_looks_like_this_-1-1-1.jpg" />
+<figcaption>
+<p>Why can't all men looks like this ???</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./When_the_deadline_was_yesterday.jpg">
+<figure class="inline" style="width: 26.664%">
+<img alt="When the deadline was yesterday" class="inline" loading="lazy" src="./When_the_deadline_was_yesterday.jpg" />
+<figcaption>
+<p>When the deadline was yesterday</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Bababoei.jpg">
+<figure class="inline" style="width: 48.382%">
+<img alt="Bababoei" class="inline" loading="lazy" src="./Bababoei.jpg" />
+<figcaption>
+<p>Bababoei</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./ah.jpg">
+<figure class="inline" style="width: 37.024%">
+<img alt="ah" class="inline" loading="lazy" src="./ah.jpg" />
+<figcaption>
+<p>ah</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Ohoh_my_animation_caught_something.jpg">
+<figure class="inline" style="width: 62.976%">
+<img alt="Ohoh my animation caught something" class="inline" loading="lazy" src="./Ohoh_my_animation_caught_something.jpg" />
+<figcaption>
+<p>Ohoh my animation caught something</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./WindowsXp_vibes.jpg">
+<figure class="inline" style="width: 47.066%">
+<img alt="WindowsXP vibes" class="inline" loading="lazy" src="./WindowsXp_vibes.jpg" />
+<figcaption>
+<p>WindowsXP vibes</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./-200.jpg">
+<figure class="inline" style="width: 52.934%">
+<img alt="0*0" class="inline" loading="lazy" src="./-200.jpg" />
+<figcaption>
+<p>0*0</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Blendshape_hell.jpg">
+<figure class="inline" style="width: 38.946%">
+<img alt="Blendshape hell" class="inline" loading="lazy" src="./Blendshape_hell.jpg" />
+<figcaption>
+<p>Blendshape hell</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Some_special_kind_of_leaves.jpg">
+<figure class="inline" style="width: 32.796%">
+<img alt="Some special kind of leaves" class="inline" loading="lazy" src="./Some_special_kind_of_leaves.jpg" />
+<figcaption>
+<p>Some special kind of leaves</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Mondays_be_like.jpg">
+<figure class="inline" style="width: 28.258%">
+<img alt="Mondays be like" class="inline" loading="lazy" src="./Mondays_be_like.jpg" />
+<figcaption>
+<p>Mondays be like</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Maya_+_Xgen.jpg">
+<figure class="inline" style="width: 45.205%">
+<img alt="Maya + Xgen" class="inline" loading="lazy" src="./Maya_+_Xgen.jpg" />
+<figcaption>
+<p>Maya + Xgen</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./He_have_ASCENDED.jpg">
+<figure class="inline" style="width: 54.795%">
+<img alt="He have ASCENDED" class="inline" loading="lazy" src="./He_have_ASCENDED.jpg" />
+<figcaption>
+<p>He have ASCENDED</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Angary_House.jpg">
+<figure class="inline" style="width: 42.198%">
+<img alt="Angary House" class="inline" loading="lazy" src="./Angary_House.jpg" />
+<figcaption>
+<p>Angary House</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Next_level_of_tired.jpg">
+<figure class="inline" style="width: 32.110%">
+<img alt="Next level of tired" class="inline" loading="lazy" src="./Next_level_of_tired.jpg" />
+<figcaption>
+<p>Next level of tired</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Can_I_get_uuuuh_..._your_soul_-1.jpg">
+<figure class="inline" style="width: 25.692%">
+<img alt="Can I get uuuuh ... your soul ?" class="inline" loading="lazy" src="./Can_I_get_uuuuh_..._your_soul_-1.jpg" />
+<figcaption>
+<p>Can I get uuuuh ... your soul ?</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./romain0564654.jpg">
+<figure class="inline" style="width: 56.688%">
+<img alt="production ready" class="inline" loading="lazy" src="./romain0564654.jpg" />
+<figcaption>
+<p>production ready</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Bro_I_can't_stand_being_unwrapped_anymore_…_please.jpg">
+<figure class="inline" style="width: 43.312%">
+<img alt="Bro I can't stand being unwrapped anymore … please" class="inline" loading="lazy" src="./Bro_I_can't_stand_being_unwrapped_anymore_…_please.jpg" />
+<figcaption>
+<p>Bro I can't stand being unwrapped anymore … please</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Render_MotionBlur_in_Render_plz.jpg">
+<figure class="inline" style="width: 57.029%">
+<img alt="Render MotionBlur in Render plz" class="inline" loading="lazy" src="./Render_MotionBlur_in_Render_plz.jpg" />
+<figcaption>
+<p>Render MotionBlur in Render plz</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Berthe_travel_to_hyperspace.jpg">
+<figure class="inline" style="width: 42.971%">
+<img alt="Berthe travel to hyperspace" class="inline" loading="lazy" src="./Berthe_travel_to_hyperspace.jpg" />
+<figcaption>
+<p>Berthe travel to hyperspace</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Hehe.jpg">
+<figure class="inline" style="width: 29.610%">
+<img alt="Hehe" class="inline" loading="lazy" src="./Hehe.jpg" />
+<figcaption>
+<p>Hehe</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./A_very_hairy_child.jpg">
+<figure class="inline" style="width: 41.081%">
+<img alt="A very hairy child" class="inline" loading="lazy" src="./A_very_hairy_child.jpg" />
+<figcaption>
+<p>A very hairy child</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Grandma_where_are_your_clothes_-1-1-1.jpg">
+<figure class="inline" style="width: 29.308%">
+<img alt="Grandma where are your clothes ???" class="inline" loading="lazy" src="./Grandma_where_are_your_clothes_-1-1-1.jpg" />
+<figcaption>
+<p>Grandma where are your clothes ???</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Checking_your_weekend_renders_be_like.jpg">
+<figure class="inline" style="width: 72.349%">
+<img alt="Checking your weekend renders be like" class="inline" loading="lazy" src="./Checking_your_weekend_renders_be_like.jpg" />
+<figcaption>
+<p>Checking your weekend renders be like</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Tired_level_max.jpg">
+<figure class="inline" style="width: 27.651%">
+<img alt="Tired level max" class="inline" loading="lazy" src="./Tired_level_max.jpg" />
+<figcaption>
+<p>Tired level max</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./omw2doUrMom.gif">
+<figure class="inline" style="width: 59.066%">
+<img alt="omw2doUrMom" class="inline" loading="lazy" src="./omw2doUrMom.gif" />
+<figcaption>
+<p>omw2doUrMom</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Oh_you_have_games_on_your_phone_-1-1.jpg">
+<figure class="inline" style="width: 40.934%">
+<img alt="Oh you have games on your phone ??" class="inline" loading="lazy" src="./Oh_you_have_games_on_your_phone_-1-1.jpg" />
+<figcaption>
+<p>Oh you have games on your phone ??</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Blendshape_from_hell.jpg">
+<figure class="inline" style="width: 24.754%">
+<img alt="Blendshape from hell" class="inline" loading="lazy" src="./Blendshape_from_hell.jpg" />
+<figcaption>
+<p>Blendshape from hell</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Robin_got_an_upgrade.jpg">
+<figure class="inline" style="width: 29.752%">
+<img alt="Robin got an upgrade" class="inline" loading="lazy" src="./Robin_got_an_upgrade.jpg" />
+<figcaption>
+<p>Robin got an upgrade</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Very_Fuzzy_groom.jpg">
+<figure class="inline" style="width: 45.494%">
+<img alt="Very Fuzzy groom" class="inline" loading="lazy" src="./Very_Fuzzy_groom.jpg" />
+<figcaption>
+<p>Very Fuzzy groom</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./-5duckface-5.jpg">
+<figure class="inline" style="width: 30.266%">
+<img alt="*duckface*" class="inline" loading="lazy" src="./-5duckface-5.jpg" />
+<figcaption>
+<p><em>duckface</em></p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Your_Magical_Inquisitor.jpg">
+<figure class="inline" style="width: 36.000%">
+<img alt="Your Magical Inquisitor" class="inline" loading="lazy" src="./Your_Magical_Inquisitor.jpg" />
+<figcaption>
+<p>Your Magical Inquisitor</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Ficello_le_fromage_trop_rigolo.jpg">
+<figure class="inline" style="width: 33.735%">
+<img alt="Ficello, le fromage trop rigolo" class="inline" loading="lazy" src="./Ficello_le_fromage_trop_rigolo.jpg" />
+<figcaption>
+<p>Ficello, le fromage trop rigolo</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Cmpositing.png.jpg">
+<figure class="inline" style="width: 56.611%">
+<img alt="Compositing.png" class="inline" loading="lazy" src="./Cmpositing.png.jpg" />
+<figcaption>
+<p>Compositing.png</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Oh_no_my_-100_dropped.jpg">
+<figure class="inline" style="width: 22.205%">
+<img alt="Oh no my m̴͕̪̼̒́̐o̵̠̺̟̒͝o̴͎̻̺͐̽d̵̘̪͓͆͠ dropped" class="inline" loading="lazy" src="./Oh_no_my_-100_dropped.jpg" />
+<figcaption>
+<p>Oh no my m̴͕̪̼̒́̐o̵̠̺̟̒͝o̴͎̻̺͐̽d̵̘̪͓͆͠ dropped</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Stoned.png.jpg">
+<figure class="inline" style="width: 21.184%">
+<img alt="Stoned.png" class="inline" loading="lazy" src="./Stoned.png.jpg" />
+<figcaption>
+<p>Stoned.png</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./He_can_see_your_sins.jpg">
+<figure class="inline" style="width: 39.663%">
+<img alt="He can see your sins" class="inline" loading="lazy" src="./He_can_see_your_sins.jpg" />
+<figcaption>
+<p>He can see your sins</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Shrek_6_Leak.jpg">
+<figure class="inline" style="width: 27.825%">
+<img alt="Shrek 6 Leak" class="inline" loading="lazy" src="./Shrek_6_Leak.jpg" />
+<figcaption>
+<p>Shrek 6 Leak</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Why_is_my_hair_flying_-1_Wish_I_knew_child_....jpg">
+<figure class="inline" style="width: 32.512%">
+<img alt="Why is my hair flying ? Wish I knew child ..." class="inline" loading="lazy" src="./Why_is_my_hair_flying_-1_Wish_I_knew_child_....jpg" />
+<figcaption>
+<p>Why is my hair flying ? Wish I knew child ...</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./The_berth-bike.jpg">
+<figure class="inline" style="width: 39.898%">
+<img alt="The berth-bike" class="inline" loading="lazy" src="./The_berth-bike.jpg" />
+<figcaption>
+<p>The berth-bike</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./boom.gif">
+<figure class="inline" style="width: 60.102%">
+<img alt="boom" class="inline" loading="lazy" src="./boom.gif" />
+<figcaption>
+<p>boom</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./CharaDesign_at_his_best.jpg">
+<figure class="inline" style="width: 45.222%">
+<img alt="CharaDesign at his best" class="inline" loading="lazy" src="./CharaDesign_at_his_best.jpg" />
+<figcaption>
+<p>CharaDesign at his best</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Join_church_we_have_cookies.jpg">
+<figure class="inline" style="width: 54.778%">
+<img alt="Join church we have cookies" class="inline" loading="lazy" src="./Join_church_we_have_cookies.jpg" />
+<figcaption>
+<p>Join church we have cookies</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./UV_mapping_except_it's_in_3D.jpg">
+<figure class="inline" style="width: 28.977%">
+<img alt="UV mapping except it's in 3D" class="inline" loading="lazy" src="./UV_mapping_except_it's_in_3D.jpg" />
+<figcaption>
+<p>UV mapping except it's in 3D</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./How2KillRenderTimes.jpg">
+<figure class="inline" style="width: 44.438%">
+<img alt="How2KillRenderTimes" class="inline" loading="lazy" src="./How2KillRenderTimes.jpg" />
+<figcaption>
+<p>How2KillRenderTimes</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./I_don't_feel_good_MrStark.jpg">
+<figure class="inline" style="width: 26.585%">
+<img alt="I don't feel good MrStark" class="inline" loading="lazy" src="./I_don't_feel_good_MrStark.jpg" />
+<figcaption>
+<p>I don't feel good MrStark</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Monke_is_not_fine.jpg">
+<figure class="inline" style="width: 29.779%">
+<img alt="Monke is not fine" class="inline" loading="lazy" src="./Monke_is_not_fine.jpg" />
+<figcaption>
+<p>Monke is not fine</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Assassin's_Creed_vibe.jpg">
+<figure class="inline" style="width: 35.003%">
+<img alt="Assassin's Creed vibe" class="inline" loading="lazy" src="./Assassin's_Creed_vibe.jpg" />
+<figcaption>
+<p>Assassin's Creed vibe</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./This_guy_slap_your_girl_WYD_-1-1.jpg">
+<figure class="inline" style="width: 35.218%">
+<img alt="This guy slap your girl WYD ??" class="inline" loading="lazy" src="./This_guy_slap_your_girl_WYD_-1-1.jpg" />
+<figcaption>
+<p>This guy slap your girl WYD ??</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./awaken.png.jpg">
+<figure class="inline" style="width: 23.954%">
+<img alt="awaken.png" class="inline" loading="lazy" src="./awaken.png.jpg" />
+<figcaption>
+<p>awaken.png</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Mitosis_be_like.jpg">
+<figure class="inline" style="width: 46.112%">
+<img alt="Mitosis be like" class="inline" loading="lazy" src="./Mitosis_be_like.jpg" />
+<figcaption>
+<p>Mitosis be like</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Maya_+_Setdress_=_-33.jpg">
+<figure class="inline" style="width: 29.934%">
+<img alt="Maya + Setdress = &lt;3" class="inline" loading="lazy" src="./Maya_+_Setdress_=_-33.jpg" />
+<figcaption>
+<p>Maya + Setdress = &lt;3</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Evolve_to_green.jpg">
+<figure class="inline" style="width: 37.789%">
+<img alt="Evolve to green" class="inline" loading="lazy" src="./Evolve_to_green.jpg" />
+<figcaption>
+<p>Evolve to green</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./A_ncie_boy.jpg">
+<figure class="inline" style="width: 29.229%">
+<img alt="A nice boy" class="inline" loading="lazy" src="./A_ncie_boy.jpg" />
+<figcaption>
+<p>A nice boy</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./uggggggh.jpg">
+<figure class="inline" style="width: 32.981%">
+<img alt="uggggggh" class="inline" loading="lazy" src="./uggggggh.jpg" />
+<figcaption>
+<p>uggggggh</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Yeeeesh.jpg">
+<figure class="inline" style="width: 41.256%">
+<img alt="Yeeeesh" class="inline" loading="lazy" src="./Yeeeesh.jpg" />
+<figcaption>
+<p>Yeeeesh</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./-5_Stare_at_you_-5_OwO.jpg">
+<figure class="inline" style="width: 58.744%">
+<img alt="* Stare at you * OwO" class="inline" loading="lazy" src="./-5_Stare_at_you_-5_OwO.jpg" />
+<figcaption>
+<p>* Stare at you * OwO</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./Groom_issue_n°45636.jpg">
+<figure class="inline" style="width: 41.386%">
+<img alt="Groom issue n°45636" class="inline" loading="lazy" src="./Groom_issue_n°45636.jpg" />
+<figcaption>
+<p>Groom issue n°45636</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./hahaCFXFUN.gif">
+<figure class="inline" style="width: 58.614%">
+<img alt="hahaCFXFUN" class="inline" loading="lazy" src="./hahaCFXFUN.gif" />
+<figcaption>
+<p>hahaCFXFUN</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./shrink.jpg">
+<figure class="inline" style="width: 33.713%">
+<img alt="shrink" class="inline" loading="lazy" src="./shrink.jpg" />
+<figcaption>
+<p>shrink</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./bonk.jpg">
+<figure class="inline" style="width: 66.287%">
+<img alt="bonk" class="inline" loading="lazy" src="./bonk.jpg" />
+<figcaption>
+<p>bonk</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./bottom_text.jpg">
+<figure class="inline" style="width: 100.000%">
+<img alt="bottom text" class="inline" loading="lazy" src="./bottom_text.jpg" />
+<figcaption>
+<p>bottom text</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./-1-1-1-1.jpg">
+<figure class="inline" style="width: 57.296%">
+<img alt="????" class="inline" loading="lazy" src="./-1-1-1-1.jpg" />
+<figcaption>
+<p>????</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./-5satisfaction-5.jpg">
+<figure class="inline" style="width: 22.003%">
+<img alt="*satisfaction*" class="inline" loading="lazy" src="./-5satisfaction-5.jpg" />
+<figcaption>
+<p><em>satisfaction</em></p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./--0116546.jpg">
+<figure class="inline" style="width: 20.701%">
+<img alt="" class="inline" loading="lazy" src="./--0116546.jpg" />
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./best_poster.jpg">
+<figure class="inline" style="width: 12.231%">
+<img alt="best poster" class="inline" loading="lazy" src="./best_poster.jpg" />
+<figcaption>
+<p>best poster</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./deathtrooper.jpg">
+<figure class="inline" style="width: 52.494%">
+<img alt="deathtrooper" class="inline" loading="lazy" src="./deathtrooper.jpg" />
+<figcaption>
+<p>deathtrooper</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./grOomfuckGroooooommmmh.jpg">
+<figure class="inline" style="width: 35.275%">
+<img alt="grOomfuckGroooooommmmh" class="inline" loading="lazy" src="./grOomfuckGroooooommmmh.jpg" />
+<figcaption>
+<p>grOomfuckGroooooommmmh</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./he_found_the_ketamine.jpg">
+<figure class="inline" style="width: 24.935%">
+<img alt="he found the ketamine" class="inline" loading="lazy" src="./he_found_the_ketamine.jpg" />
+<figcaption>
+<p>he found the ketamine</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./He_broke_the_matrix.jpg">
+<figure class="inline" style="width: 75.065%">
+<img alt="He broke the matrix" class="inline" loading="lazy" src="./He_broke_the_matrix.jpg" />
+<figcaption>
+<p>He broke the matrix</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./I_am_the_senate.jpg">
+<figure class="inline" style="width: 48.258%">
+<img alt="I am the senate" class="inline" loading="lazy" src="./I_am_the_senate.jpg" />
+<figcaption>
+<p>I am the senate</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Is_this_a_jojo_reference-1-1.jpg">
+<figure class="inline" style="width: 51.742%">
+<img alt="Is this a jojo reference??" class="inline" loading="lazy" src="./Is_this_a_jojo_reference-1-1.jpg" />
+<figcaption>
+<p>Is this a jojo reference??</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./I_dont_even_know.jpg">
+<figure class="inline" style="width: 48.473%">
+<img alt="I dont even know" class="inline" loading="lazy" src="./I_dont_even_know.jpg" />
+<figcaption>
+<p>I dont even know</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./I_let_you_caption_this_one.jpg">
+<figure class="inline" style="width: 51.527%">
+<img alt="I let you caption this one" class="inline" loading="lazy" src="./I_let_you_caption_this_one.jpg" />
+<figcaption>
+<p>I let you caption this one</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./mamamia.jpg">
+<figure class="inline" style="width: 33.914%">
+<img alt="mamamia" class="inline" loading="lazy" src="./mamamia.jpg" />
+<figcaption>
+<p>mamamia</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./New_LooneyTunes_just_dropped.jpg">
+<figure class="inline" style="width: 32.049%">
+<img alt="New LooneyTunes just dropped" class="inline" loading="lazy" src="./New_LooneyTunes_just_dropped.jpg" />
+<figcaption>
+<p>New LooneyTunes just dropped</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Smooth.jpg">
+<figure class="inline" style="width: 34.037%">
+<img alt="Smooth" class="inline" loading="lazy" src="./Smooth.jpg" />
+<figcaption>
+<p>Smooth</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./The_crossover.jpg">
+<figure class="inline" style="width: 76.967%">
+<img alt="The crossover" class="inline" loading="lazy" src="./The_crossover.jpg" />
+<figcaption>
+<p>The crossover</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./we_used_this_as_a_texture.jpg">
+<figure class="inline" style="width: 23.033%">
+<img alt="we used this as a texture" class="inline" loading="lazy" src="./we_used_this_as_a_texture.jpg" />
+<figcaption>
+<p>we used this as a texture</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./From_child_safe_to_horror_movie.jpg">
+<figure class="inline" style="width: 45.867%">
+<img alt="From child safe to horror movie" class="inline" loading="lazy" src="./From_child_safe_to_horror_movie.jpg" />
+<figcaption>
+<p>From child safe to horror movie</p>
+</figcaption>
+</figure>
+</a>
+<a class="reference external image-reference" href="./Money_in_the_bag_NOW.jpg">
+<figure class="inline" style="width: 54.133%">
+<img alt="Money in the bag NOW" class="inline" loading="lazy" src="./Money_in_the_bag_NOW.jpg" />
+<figcaption>
+<p>Money in the bag NOW</p>
+</figcaption>
+</figure>
+</a>
+</div>
+<div class="image-grid-row docutils container">
+<a class="reference external image-reference" href="./ThisIsFine.gif">
+<figure class="inline" style="width: 100.000%">
+<img alt="ThisIsFine" class="inline" loading="lazy" src="./ThisIsFine.gif" />
+<figcaption>
+<p>ThisIsFine</p>
+</figcaption>
+</figure>
+</a>
+</div>
+</div>
+
+  </article>
+
 </main>
 <footer>
-  <nav aria-label="Website informations.">
-    <div class="m-container">
-      <div class="m-row">
-        <div class="m-col-l-10 m-push-l-1">
-          <p>Copyright © <a href="mailto:lcollod&#64;gmail.com">Liam Collod</a> 2021 - 2025. All rights
-        reserved. Made with <a href="https://blog.getpelican.com/">Pelican</a> and
-        <a href="https://mcss.mosra.cz/">m.css</a> .</p>
-        </div>
-      </div>
-    </div>
-  </nav>
+  
+    <p>Static website <a href="../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
+      Last built on <i>2025-05-21T12:51</i> from commit <i>dca4b70</i></p>
+    <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
+  
 </footer>
 </body>
 </html>

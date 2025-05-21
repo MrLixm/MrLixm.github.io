@@ -1,0 +1,16 @@
+.warning-color {
+    color: var(--color-warning);
+}
+
+.odrt-split {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+.odrt-split img {
+    max-width: unset;
+}
+.odrt-split blockquote {
+    padding-top: 0;
+    padding-bottom: 0;
+}

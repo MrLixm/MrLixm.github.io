@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'CoasterSans';
+    src: url('CoasterSans-Regular.woff2') format('woff2'),
+    url('CoasterSans-Regular.woff') format('woff'),
+    url('CoasterSans-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+}

@@ -1,0 +1,126 @@
+:root {
+    --color-primary: rgb(0, 255, 38);
+    --border-thick: 2px;
+
+    --bg-color: black;
+    --bg-color-W: rgb(5, 5, 5);
+    --bg-color-M: rgb(8, 8, 8);
+    --bg-color-MM: rgb(15, 15, 15);
+
+    --radius-S: 0;
+}
+header {
+    background: linear-gradient(180deg, var(--bg-color), transparent);
+}
+header #site-name {
+    font-family: "Tiny5", monospace;
+
+    img {
+        opacity: 0.65;
+    }
+
+}
+footer {
+    background: linear-gradient(0deg, var(--bg-color), transparent);
+}
+
+body {
+    /*https://codepen.io/edmundojr/pen/xOYJGw*/
+    --dot-bg: var(--bg-color);
+    --dot-color: rgba(0, 255, 38, 0.5);
+    --dot-size: 1px;
+    --dot-space: 22px;
+    background: linear-gradient(90deg, var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
+    linear-gradient(var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
+    var(--dot-color);
+    box-shadow: rgba(0, 255, 38, 0.2) 0 0 50px;
+}
+article {
+    border: var(--border-thick) solid var(--color-primary);
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+@media screen and (max-width: 500px) {
+    .read-area {
+        margin: 0;
+    }
+}
+
+section#article-header {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    font-family: "FT88-Regular", monospace;
+
+    h1 {
+        margin: 0;
+        font-family: inherit;
+        color: var(--color-primary);
+        letter-spacing: -2px;
+        word-spacing: -3px;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    #post-category::before {
+        content: "///";
+    }
+
+    div.metadata-essential {
+        margin: 0.5rem 0;
+        padding: 0.2rem 0.5rem;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+        gap: 1rem;
+
+        color: var(--bg-color);
+        background-color: var(--color-primary);
+        font-family: "Tiny5", monospace;
+
+        span {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.15rem;
+
+            /* icons */
+
+            img, svg {
+                width: 18px;
+            }
+        }
+    }
+
+    @media screen and (max-width: 500px) {
+        div.metadata-essential {
+            flex-direction: column;
+
+            hr {
+                display: none;
+            }
+
+        }
+    }
+}
+
+
+.metadata-tags {
+    display: flex;
+    gap: 0.2rem;
+    flex-wrap: wrap;
+
+    .metadata-tag {
+        margin: 0;
+        padding: 0 0.2rem;
+        color: var(--bg-color);
+        background-color: var(--color-primary);
+        font-family: inherit;
+    }
+}

@@ -1,0 +1,18 @@
+@font-face {
+    font-family: 'MonHugo-in';
+    src: url('MonHugo-in.woff2') format('woff2'),
+    url('MonHugo-in.woff') format('woff'),
+    url('MonHugo-in.ttf') format('truetype');
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'MonHugo-out';
+    src: url('MonHugo-out.woff2') format('woff2'),
+    url('MonHugo-out.woff') format('woff'),
+    url('MonHugo-out.ttf') format('truetype');
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+}

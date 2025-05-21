@@ -1,0 +1,32 @@
+.text-green {
+    color: var(--color-positive);
+}
+
+.text-danger {
+    color: var(--color-negative);
+}
+.center-block {
+    margin: 2rem auto;
+    text-align: center;
+}
+.sp-split {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+}
+.sp-split > *:first-child {
+    flex: 1;
+}
+.sp-split > *:nth-child(2) {
+    flex: 1.5;
+}
+.split-50-50 {
+    display: flex;
+    max-width: 100%;
+    justify-content: space-between;
+}
+.split-50-50 > * {
+    width: 49%;
+    object-fit: cover;
+}
