@@ -128,12 +128,23 @@ def main(argv: list[str] | None = None):
 
     # // git checks before build
 
+    git_status = gitget(["status", "--porcelain"], cwd=git_dir)
     git_last_commit = gitget(["rev-parse", "HEAD"], cwd=git_dir)
     git_current_branch = gitget(["branch", "--show-current"], cwd=git_dir)
     git_remote_status = gitget(["status", "--short", "--b", "--porcelain"], cwd=git_dir)
 
     if git_current_branch != "main":
         errexit(f"expected current git branch to be 'main'; got '{git_current_branch}'")
+
+    for line in git_status.splitlines():
+        # https://git-scm.com/docs/git-status#_output
+        if line.strip(" ")[0] not in ["?", "!"]:
+            try:
+                errexit(f"Uncommited changes found:\n{git_status}")
+            except SystemExit:
+                answer = input("Do you still wish to continue [y/N] ?")
+                if answer.lower() not in ["y", "yes"]:
+                    raise
 
     if re.search(rf"## {git_current_branch}.+\[ahead", git_remote_status):
         errexit("current git branch is ahead of its remote (need push).")
@@ -169,6 +180,13 @@ def main(argv: list[str] | None = None):
         if errors:
             errors_str = "\n - ".join(map(str, errors))
             errexit(f"{len(errors)} errors generated during build:\n - {errors_str}")
+
+        answer = input(
+            f"you are about to deploy the website to '{config.SITE_URL}'; "
+            f"do you wish to continue [y/N] ?"
+        )
+        if answer.lower() not in ["y", "yes"]:
+            errexit(f"deploy aborted by user")
 
     LOGGER.info(
         f"site deployed at '{config.SITE_URL}'; check it again in a few minutes."
