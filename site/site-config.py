@@ -23,9 +23,14 @@ HEADER_NAV = {
     "Contact": "contact.html",
 }
 
-
-# TODO
-REDIRECTS = {}
+# mapping of "relative page path": "target redirection url"
+REDIRECTIONS = {
+    "assets/chkpad1/index.html": "resources/chkpad1/index.html",
+    "assets/chkpad2red/index.html": "resources/chkpad2red/index.html",
+    "pages/contact/index.html": "contact.html",
+}
+# jinja template path to use to render redirections page (relative to TEMPLATES_ROOT)
+REDIRECTIONS_TEMPLATE = ".redirect.html"
 
 # used for making some relative urls absolute
 SITE_URL = "https://mrlixm.github.io"

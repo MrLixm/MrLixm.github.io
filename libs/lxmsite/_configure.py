@@ -28,6 +28,8 @@ class SiteConfig:
     DEFAULT_PAGE_ICON: str = mkfield({"type": str})
     DEFAULT_STYLESHEETS: list[str] = mkfield({"type": list})
     HEADER_NAV: dict[str, str] = mkfield({"type": dict})
+    REDIRECTIONS: dict[str, str] = mkfield({"type": dict})
+    REDIRECTIONS_TEMPLATE: str = mkfield({"type": str})
 
     def sanitize(self):
         """

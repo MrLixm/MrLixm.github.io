@@ -7,7 +7,9 @@ import traceback
 from pathlib import Path
 
 import lxmsite
-from lxmsite import PageResource, MetaFileCollection
+from lxmsite import PageResource
+from lxmsite import PageMetadata
+from lxmsite import MetaFileCollection
 from lxmsite import ShelfResource
 from lxmsite import ShelfLibrary
 from lxmsite import SiteConfig
@@ -197,6 +199,46 @@ def build_page(
     return dst_path
 
 
+def build_redirection(
+    redirection_path: Path,
+    redirection_dst: str,
+    shelf_library: ShelfLibrary,
+    site_config: SiteConfig,
+    build_context: lxmsite.SiteGlobalContext,
+    built_pages: list[Path],
+):
+    """
+    Create a page intended for redirecting to another page.
+    """
+    page_url = redirection_path.relative_to(site_config.SRC_ROOT).as_posix()
+    page = PageResource(
+        title=f"Redirecting to '{redirection_dst}'",
+        metadata=PageMetadata(extras={"redirect": redirection_dst}),
+        url_path=page_url,
+        html_content="",
+        html_template=site_config.REDIRECTIONS_TEMPLATE,
+    )
+    LOGGER.debug(f"┌ 📃>🔗 building redirection page '{page_url}'")
+    LOGGER.debug(f"| rendering page with template '{page.html_template}'")
+    page_html = lxmsite.render_page(
+        page=page,
+        template_name=page.html_template,
+        site_config=site_config,
+        context=build_context,
+        shelf=None,
+        shelf_library=shelf_library,
+    )
+    dst_path = Path(site_config.DST_ROOT, page.url_path).resolve()
+    if dst_path in built_pages:
+        raise FileExistsError(
+            f"Cannot create redirection for '{page_url}': "
+            f"a page already exists at the given url."
+        )
+    mkdir(dst_path.parent)
+    LOGGER.debug(f"└ writing page '{dst_path}'")
+    dst_path.write_text(page_html, encoding="utf-8")
+
+
 def build_site(
     config: lxmsite.SiteConfig,
     symlink_stylesheets: bool,
@@ -238,6 +280,7 @@ def build_site(
 
     # collect pages and static files
     stime = time.time()
+    # mapping of "absolute path": "Page instance"
     pages: dict[Path, PageResource] = {}
     static_paths: list[Path] = []
     try:
@@ -269,12 +312,13 @@ def build_site(
 
     # write html pages to disk
     stime = time.time()
+    built_pages = []
     for page_path, page in pages.items():
         LOGGER.debug(f"┌ 📃 building page '{page.url_path}'")
         # TODO verify nested shelves support and add it or not
         parent_shelf: ShelfResource | None = page_by_shelves.get(page_path)
         try:
-            build_page(
+            built_page = build_page(
                 page=page,
                 shelf=parent_shelf,
                 shelf_library=shelf_library,
@@ -282,6 +326,7 @@ def build_site(
                 site_config=config,
                 build_context=build_context,
             )
+            built_pages.append(built_page)
         except Exception as error:
             LOGGER.error(f"└ {fmterr(str(page), error)}")
             errors.append(error)
@@ -289,6 +334,32 @@ def build_site(
 
     etime = time.time()
     LOGGER.debug(f"⌛ built {len(pages)} page in {etime - stime:.2f} seconds")
+
+    # build redirections pages
+    stime = time.time()
+    for redirection_src, redirection_dst in config.REDIRECTIONS.items():
+        redirection_src_path = src_root / redirection_src
+        try:
+            LOGGER.debug(
+                f"📃>🔗 building redirection page '{redirection_src}' to '{redirection_dst}'"
+            )
+            build_redirection(
+                redirection_path=redirection_src_path,
+                redirection_dst=redirection_dst,
+                site_config=config,
+                shelf_library=shelf_library,
+                build_context=build_context,
+                built_pages=built_pages,
+            )
+        except Exception as error:
+            LOGGER.error(f"└ {fmterr(redirection_src, error)}")
+            errors.append(error)
+            continue
+
+    etime = time.time()
+    LOGGER.debug(
+        f"⌛ built {len(config.REDIRECTIONS)} redirection pages in {etime - stime:.2f} seconds"
+    )
 
     for shelf in shelves:
         # TODO build shelves

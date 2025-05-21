@@ -13,6 +13,8 @@ from . import rstlib
 from ._configure import SiteConfig
 
 from ._page import PageResource
+from ._page import PageMetadata
+from ._page import PageStatus
 from ._page import read_page
 
 from ._shelf import ShelfConfig
