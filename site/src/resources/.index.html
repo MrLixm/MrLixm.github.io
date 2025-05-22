@@ -13,7 +13,7 @@
       <h2>{{ category }}</h2>
       <div class="resource-category-library">
         {%- for page in pages %}
-          <a href="{{ page.url_path|mkpagerel }}">
+          <a href="{{ page.url_path|mkpagerel|prettylink }}">
             <div class="resource-item">
               <div class="row">
                 <div class="image">
