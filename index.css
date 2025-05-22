@@ -78,14 +78,14 @@ section#introduction #self-job-title {
     position: relative;
     color: rgb(250, 250, 250);
     font-size: 40px;
-    font-family: "Mon Hugo in", sans-serif;
+    font-family: "MonHugo-in", sans-serif;
     text-wrap: balance;
     z-index: 3;
 
     span {
         padding: 0 0.5rem;
         color: var(--color-lime);
-        font-family: "Mon Hugo out", sans-serif;
+        font-family: "MonHugo-out", sans-serif;
         text-shadow: rgba(2, 2, 2, 0.32) 5px 5px 5px;
     }
 }

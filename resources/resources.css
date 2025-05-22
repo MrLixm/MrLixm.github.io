@@ -35,13 +35,14 @@ body {
     var(--dot-color);
     box-shadow: rgba(0, 255, 38, 0.2) 0 0 50px;
 }
-article {
-    border: var(--border-thick) solid var(--color-primary);
+article.read-area {
+    margin-top: 2rem;
     padding: 2rem;
+    border: var(--border-thick) solid var(--color-primary);
     background-color: rgba(0, 0, 0, 0.8);
 }
 @media screen and (max-width: 500px) {
-    .read-area {
+    article.read-area {
         margin: 0;
     }
 }
