@@ -137,15 +137,14 @@ def main(argv: list[str] | None = None):
     if git_current_branch != "main":
         errexit(f"expected current git branch to be 'main'; got '{git_current_branch}'")
 
-    for line in git_status.splitlines():
-        # https://git-scm.com/docs/git-status#_output
-        if line.strip(" ")[0] not in ["?", "!"]:
-            try:
-                errexit(f"Uncommited changes found:\n{git_status}")
-            except SystemExit:
-                answer = input("Do you still wish to continue [y/N] ?")
-                if answer.lower() not in ["y", "yes"]:
-                    raise
+    if git_status:
+        try:
+            errexit(f"Uncommited changes found:\n{git_status}")
+        except SystemExit:
+            print("(you will deploy content that is not version controlled)")
+            answer = input("Do you still wish to continue [y/N] ?")
+            if answer.lower() not in ["y", "yes"]:
+                raise
 
     if re.search(rf"## {git_current_branch}.+\[ahead", git_remote_status):
         errexit("current git branch is ahead of its remote (need push).")
