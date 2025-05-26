@@ -33,6 +33,7 @@ header #site-name img {
     overflow: hidden;
     transition-duration: 0.8s;
     transition-property: transform;
+    z-index: -1;
 }
 header #site-name:hover img {
     transform: rotate(360deg);

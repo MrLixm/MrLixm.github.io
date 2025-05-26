@@ -14,11 +14,6 @@ header {
 }
 header #site-name {
     font-family: "Tiny5", monospace;
-
-    img {
-        opacity: 0.65;
-    }
-
 }
 footer {
     background: linear-gradient(0deg, var(--bg-color), transparent);
