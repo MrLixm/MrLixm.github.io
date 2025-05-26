@@ -5,13 +5,9 @@
 }
 
 header #site-name {
-    font-family: "CoasterSans", sans-serif;
+    font-family: "DepartureMono", sans-serif;
     text-transform: lowercase;
     letter-spacing: unset;
-
-    img {
-        opacity: 0.5;
-    }
 
 }
 
@@ -125,50 +121,30 @@ section#introduction #self-description {
     }
 }
 
-@keyframes offset-glitch {
-    0% {
-        background-position: 0 0;
-    }
-    33% {
-        background-position: 100px 50px;
-    }
-    66% {
-        background-position: 300px 250px;
-    }
-    100% {
-        background-position: 0 0;
-    }
-}
-
 section#introduction #self-socials {
-    margin: 1rem 0;
     display: flex;
     width: 100%;
-    /*box-shadow: rgba(7, 94, 48, 0.5) 5px 5px;*/
     flex-wrap: wrap;
-    z-index: 1;
     position: relative;
-    justify-content: space-between;
+    left: -10px;
+    z-index: 1;
+    justify-content: end;
 
     .self-socials-bg {
         position: absolute;
-        left: 26px;
-        top: -35px;
-        height: 70px;
-        width: 92.5%;
-        border: 8px solid var(--color-blue-v);
-        background: linear-gradient(white, black), url(".static/images/textures/pixels.jpg"), var(--color-lime);
-        background-size: 64px;
-        background-blend-mode: overlay, overlay;
-        box-shadow: rgba(139, 230, 29, 0.5) 10px 10px;
-        animation: offset-glitch 5s steps(4, end) infinite;
+        left: 208px;
+        top: 19px;
+        height: 19px;
+        width: 75%;
+        border: 2px solid white;
     }
 
     .social-item {
         background-color: var(--color-blue-v);
-        border-radius: 128px;
         z-index: 1;
         transition: 0.25s;
+        box-shadow: rgba(12, 87, 220, 0.6) 0 5px 50px;
+        border-bottom: 2px solid transparent;
     }
 
     .social-item img {
@@ -181,6 +157,7 @@ section#introduction #self-socials {
 
     .social-item:hover {
         transform: scale(1.2);
+        border-bottom: 2px solid white;
     }
 }
 
@@ -333,13 +310,12 @@ section#introduction .lut-numbers {
 
     section#introduction #self-socials {
 
-        padding: 0 1.5rem;
-        justify-content: center;
-        gap: 8px;
+        padding: 0 1rem;
         overflow-x: clip;
+        left: 0;
 
         .self-socials-bg {
-            width: 130%;
+           display: none;
         }
     }
 
