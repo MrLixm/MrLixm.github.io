@@ -15,6 +15,7 @@ from ._extensions import AdmonitionsTransform
 from ._extensions import LinksTransform
 from ._extensions import ContentsTransform
 from ._extensions import parse_code_to_node
+from .._utils import slugify
 
 LOGGER = logging.getLogger(__name__)
 
@@ -68,6 +69,17 @@ def parse_metadata(document: DocumentType) -> dict[str, str]:
 
 
 class LxmHTMLTranslator(docutils_writers.HTMLTranslator):
+
+    def visit_title(self, node: docutils.nodes.title) -> None:
+        if (
+            node.has_key("refid")
+            and node["refid"].startswith("toc-entry")
+            and node.parent.hasattr("ids")
+            and node.parent["ids"]
+        ):
+            new_id = node.parent["ids"][0]
+            node["refid"] = new_id
+        super().visit_title(node)
 
     def visit_caption(self, node):
         # we override to convert 'caption' to <label> because docutils is already using
@@ -190,6 +202,7 @@ def read_rst(
     """
     cwd = os.getcwd()
     # needed by some directives to compute paths expressed in documents
+    # TODO this prevent threading ! fixing it is complex and require refactoring multiple directives
     os.chdir(file_path.parent)
 
     try:
