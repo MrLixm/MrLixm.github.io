@@ -19,6 +19,7 @@ def test__read_siteignore(tmp_path):
     file1 = mkfile(tmp_path, "file1.txt")
     file1md = mkfile(tmp_path, "file1.md")
     file2 = mkfile(tmp_path, "file2.txt")
+    file3 = mkfile(tmp_path, ".file3.rss.jinja2")
 
     dir_foo = mkdir(tmp_path, "foo")
     file_foo_1 = mkfile(dir_foo, "file_foo_1.txt")
@@ -32,13 +33,14 @@ def test__read_siteignore(tmp_path):
     dir_feur = mkdir(tmp_path, "feur")
 
     sitignore_path = tmp_path / ".siteignore"
-    sitignore_content = "file1.*\nfoo/*\nbar/**/*.txt\nfeur/"
+    sitignore_content = "file1.*\nfoo/*\nbar/**/*.txt\nfeur/\n*.jinja2"
     sitignore_path.write_text(sitignore_content)
 
     ignored = lxmsite.read_siteignore(sitignore_path)
     assert file1 in ignored
     assert file1md in ignored
     assert file2 not in ignored
+    assert file3 in ignored
     assert dir_foo not in ignored
     assert file_foo_1 in ignored
     assert file_foo_2 in ignored
@@ -47,7 +49,7 @@ def test__read_siteignore(tmp_path):
     assert file_barachat_1 in ignored
     assert file_barachat_2 not in ignored
     assert dir_feur in ignored
-    assert len(ignored) == 6
+    assert len(ignored) == 7
 
 
 def test__collect_site_files(tmp_path):

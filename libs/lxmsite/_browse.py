@@ -24,18 +24,13 @@ def read_siteignore(file_path: Path) -> list[Path]:
         list of absolute paths to existing files or directories.
     """
     ignored = [
-        file_path.parent / line
+        line
         for line in file_path.read_text(encoding="utf-8").splitlines()
         if line.strip(" ")
     ]
     ignored_paths = []
     for ignored_expr in ignored:
-        ignored_paths += glob.glob(
-            str(ignored_expr),
-            recursive=True,
-            # only in python 3.11+
-            # include_hidden=True,
-        )
+        ignored_paths += file_path.parent.glob(str(ignored_expr))
     return [Path(path) for path in ignored_paths]
 
 
