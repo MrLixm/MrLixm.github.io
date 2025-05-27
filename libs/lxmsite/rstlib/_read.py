@@ -1,5 +1,6 @@
 import logging
 import os
+import re
 from pathlib import Path
 from typing import Generator, Callable
 
@@ -47,10 +48,14 @@ def parse_metadata(document: DocumentType) -> dict[str, str]:
     for node in nodes:
         tagname = node.tagname.lower()
         # if custom fields (non-rst standard)
+        # https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#field-lists
         if tagname == "field":
             field_name, field_body = node.children
             key = field_name.astext()
             value = field_body.astext()
+            # line breaks from indented fields are preserved which we don't want
+            #   this turn '\n' into whitespace and '\n\n' into a single '\n'
+            value = re.sub(r"(?<!\n)\n(?!\n)", " ", value)
 
         # the only "compund" type element (with the above 'fields')
         elif tagname == "authors":  # author list
