@@ -79,10 +79,10 @@
           </div>
           <div class="metadata-tags">
             <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.5s">nuke</pre>
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.3s">resolve</pre>
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.2s">ACES</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.2s">resolve</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.5s">ACES</pre>
             <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.3s">tonemapping</pre>
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.7s">color-science</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.1s">color-science</pre>
           </div>
         </section>
         <span id="article-header-decoration"></span>
@@ -147,7 +147,7 @@ to go through the complexity of ACES ?</p>
 </nav>
 </aside>
 <section id="who-s-this-for">
-<h2><a class="toc-backref" href="#toc-entry-1" role="doc-backlink">Who's this for ?</a></h2>
+<h2><a class="toc-backref" href="#who-s-this-for" role="doc-backlink">Who's this for ?</a></h2>
 <p>My post mainly targets the VFX-CGI audience but OpenDRT work on any
 open-domain data (see also wide-dynamic-range, scene-linear); which includes photography
 and cinematography.</p>
@@ -169,7 +169,7 @@ personal projects that would like a quick solution for proper SDR-HDR export
 (not implying these are OpenDRT goals).</p>
 </section>
 <section id="introduction">
-<h2><a class="toc-backref" href="#toc-entry-2" role="doc-backlink">Introduction</a></h2>
+<h2><a class="toc-backref" href="#introduction" role="doc-backlink">Introduction</a></h2>
 <p>It's always a good idea to read the official documentation, the author explain it best
 isn't it ? So have a look at the tool repository first:</p>
 <div class="url-preview-box docutils container">
@@ -208,7 +208,7 @@ and should be graded.</p>
 </blockquote>
 </section>
 <section id="node-overview">
-<h2><a class="toc-backref" href="#toc-entry-3" role="doc-backlink">Node Overview</a></h2>
+<h2><a class="toc-backref" href="#node-overview" role="doc-backlink">Node Overview</a></h2>
 <p>As the tool is constantly changing, Jed's documentation is not up to date,
 and tneither this post will be.</p>
 <aside class="admonition caution">
@@ -289,7 +289,7 @@ close this topic.</div>
 <p>So for now, using the presets is, I think a good practice.</p>
 </section>
 <section id="nuke-installation">
-<h2><a class="toc-backref" href="#toc-entry-4" role="doc-backlink">Nuke Installation</a></h2>
+<h2><a class="toc-backref" href="#nuke-installation" role="doc-backlink">Nuke Installation</a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://raw.githubusercontent.com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk">Download the .nk file</a>
 (Right click on the page &gt; save as &gt; save it somewhere)</p></li>
@@ -308,7 +308,7 @@ a Resolve License.</p>
 </aside>
 </section>
 <section id="usage-in-nuke">
-<h2><a class="toc-backref" href="#toc-entry-5" role="doc-backlink">Usage in Nuke</a></h2>
+<h2><a class="toc-backref" href="#usage-in-nuke" role="doc-backlink">Usage in Nuke</a></h2>
 <p>Things will now get a bit complicated at first. The issue is that has the
 OpenDRT handle the scene -&gt; display conversion, this will collide with Nuke
 that try to do the same in the view-transform.</p>
@@ -326,7 +326,7 @@ further investigation needs to be done.</p>
 nuke's default config I should have use <span class="docutils literal">sRGB Display</span>.</p>
 </aside>
 <section id="revert-display">
-<h3><a class="toc-backref" href="#toc-entry-6" role="doc-backlink">#1 Revert Display</a></h3>
+<h3><a class="toc-backref" href="#revert-display" role="doc-backlink">#1 Revert Display</a></h3>
 <p>We let the DRT handle everything (with display-encoding), then we apply the
 invert transform that applied by Nuke:</p>
 <a class="reference external image-reference" href="nuke.revert.jpg">
@@ -336,7 +336,7 @@ invert transform that applied by Nuke:</p>
 node has the same <span class="docutils literal">in</span> parameters as the <span class="docutils literal">colorspace</span> one on the write node.</p>
 </section>
 <section id="nuke-display-encoding-disable">
-<h3><a class="toc-backref" href="#toc-entry-7" role="doc-backlink">#2 Nuke Display-encoding disable</a></h3>
+<h3><a class="toc-backref" href="#nuke-display-encoding-disable" role="doc-backlink">#2 Nuke Display-encoding disable</a></h3>
 <p>We disable Nuke's handling of the display-encoding. The DRT is the last step.</p>
 <a class="reference external image-reference" href="nuke.nuke_no-de.jpg">
 <img alt="Method with Nuke display-encoding disable" class="inline" src="nuke.nuke_no-de.jpg" />
@@ -345,7 +345,7 @@ node has the same <span class="docutils literal">in</span> parameters as the <sp
 when you need to preview a node upstream.</p>
 </section>
 <section id="opendrt-no-display-encoding">
-<h3><a class="toc-backref" href="#toc-entry-8" role="doc-backlink">#3 OpenDRT no Display-encoding</a></h3>
+<h3><a class="toc-backref" href="#opendrt-no-display-encoding" role="doc-backlink">#3 OpenDRT no Display-encoding</a></h3>
 <p>One good solution: the OpenDRT doesn't handle the display
 encoding but output closed-domain data ready for the display.
 Nuke apply the display-encoding as usually, writing data is the regular
@@ -357,7 +357,7 @@ output. Write node colorspace need to be choosen with this is mind.</p>
 </a>
 </section>
 <section id="opendrt-with-viewer-input-process-recommended">
-<h3><a class="toc-backref" href="#toc-entry-9" role="doc-backlink">#4 OpenDRT with Viewer Input Process (recommended)</a></h3>
+<h3><a class="toc-backref" href="#opendrt-with-viewer-input-process-recommended" role="doc-backlink">#4 OpenDRT with Viewer Input Process (recommended)</a></h3>
 <p>This is probably the best solution;</p>
 <p>OpenDRT handle everything, we disable Nuke view-transform but we will be
 using its <a class="reference external" href="https://learn.foundry.com/nuke/content/getting_started/using_interface/guides_masks_modes.html#InputProcessandViewerProcessControls">input process feature</a>.</p>
@@ -375,7 +375,7 @@ by checking <span class="docutils literal">raw data</span>.</p>
 </section>
 </section>
 <section id="conclusion">
-<h2><a class="toc-backref" href="#toc-entry-10" role="doc-backlink">Conclusion</a></h2>
+<h2><a class="toc-backref" href="#conclusion" role="doc-backlink">Conclusion</a></h2>
 <p>If you tried to compare the result to an ACES processed image you would have
 probably notice that the image-formation produce much more &quot;excepted&quot; result,
 among others, in strong colored highlights, which make OpenDRT a solid
@@ -397,8 +397,17 @@ on Github !</p>
 </main>
 <footer>
   
+    
+    <a class="rss" title="Link to the RSS feed so you can get notified of the latests posts using an RSS Reader." href="../blog.rss.xml">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <title>rss-box</title>
+    <path fill="currentColor" d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M7.5,15A1.5,1.5 0 0,0 6,16.5A1.5,1.5 0 0,0 7.5,18A1.5,1.5 0 0,0 9,16.5A1.5,1.5 0 0,0 7.5,15M6,10V12A6,6 0 0,1 12,18H14A8,8 0 0,0 6,10M6,6V8A10,10 0 0,1 16,18H18A12,12 0 0,0 6,6Z"/>
+</svg>
+      RSS Feed
+    </a>
+    
     <p>Static website <a href="../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-22T15:15</i> from commit <i>c7eb700</i></p>
+      Last built on <i>2025-05-27T17:44</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/327ef87">327ef87</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

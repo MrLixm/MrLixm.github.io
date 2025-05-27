@@ -1,0 +1,21 @@
+.column-split {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+
+    > div {
+        overflow: auto;
+        max-width: 100%;
+    }
+
+    img {
+        max-width: unset;
+        margin: 1rem 0;
+    }
+}
+@media screen and (max-width: 750px) {
+    .column-split {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+}

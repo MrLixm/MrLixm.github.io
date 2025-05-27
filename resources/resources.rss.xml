@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+        
+        <title>Liam Collod - resources</title>
+        <link>https://liamcollod.xyz/resources</link>
+        <description>Anything useful I created (that may overlap with this website work page).</description>
+        <docs>https://www.rssboard.org/rss-specification</docs>
+        <image>
+            <url>https://liamcollod.xyz/.static/images/cover-social.jpg</url>
+            <title>Liam Collod - resources</title>
+            <link>https://liamcollod.xyz/resources</link>
+        </image>
+        
+        <item>
+            <title>JDLL 2025</title>
+            <link>https://liamcollod.xyz/resources/jdll2025/</link>
+            <description>Ma participation aux journées du logiciel libre 2025 (en français).</description>
+            <pubDate>Wed, 21 May 2025 19:07:00</pubDate>
+        </item>
+        
+        <item>
+            <title>lxmpicturelab</title>
+            <link>https://liamcollod.xyz/resources/lxmpicturelab/</link>
+            <description>Comparison of different picture formation algorithms: native, TCAMv3, ARRIreveal, AgX, AgX.blender, AgXc, ACESv1.3-gm, ACESv2.0-gm, ACESv2.0, OpenDRT, 2499DRT, Kodak2383</description>
+            <pubDate>Mon, 17 Mar 2025 14:00:00</pubDate>
+        </item>
+        
+        <item>
+            <title>film-vs-digital asset chkpad2red</title>
+            <link>https://liamcollod.xyz/resources/chkpad2red/</link>
+            <description>assets for comparison of film photography rendering against arbitrary digital photography rendering</description>
+            <pubDate>Sat, 22 Feb 2025 14:00:00</pubDate>
+        </item>
+        
+        <item>
+            <title>My unusual film scanning workflow</title>
+            <link>https://liamcollod.xyz/resources/my-film-scanning-workflow/</link>
+            <description>Reviewing the software workflow I have been using for the past 2024 year to convert scanned negative to positive images.</description>
+            <pubDate>Fri, 10 Jan 2025 12:00:00</pubDate>
+        </item>
+        
+        <item>
+            <title>film-vs-digital asset chkpad1</title>
+            <link>https://liamcollod.xyz/resources/chkpad1/</link>
+            <description>assets for comparison of film photography rendering against arbitrary digital photography rendering</description>
+            <pubDate>Wed, 31 Jul 2024 16:54:00</pubDate>
+        </item>
+        
+        <item>
+            <title>Colour Plotting</title>
+            <link>https://liamcollod.xyz/resources/colour-plotting/</link>
+            <description>Web-app to plot colors, images and colorspaces in graphs.</description>
+            <pubDate>Mon, 26 Jun 2023 12:46:00</pubDate>
+        </item>
+        
+        <item>
+            <title>A Discord server for Coding in VFX</title>
+            <link>https://liamcollod.xyz/resources/vfx-coding-discord/</link>
+            <description>chat and find resources for programming in the vfx/anim industry</description>
+            <pubDate>Sat, 23 Oct 2021 22:59:00</pubDate>
+        </item>
+        
+        <item>
+            <title>Temperature To RGB</title>
+            <link>https://liamcollod.xyz/resources/temperature-to-rgb/</link>
+            <description>Web-app for converting Kelvin temperature to RGB colorspaces.</description>
+            <pubDate>Mon, 05 Apr 2021 10:37:00</pubDate>
+        </item>
+        
+    </channel>
+</rss>

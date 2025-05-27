@@ -8,13 +8,11 @@
   <link rel="icon" href="../../.static/icons/logo-lixm.svg" type="image/x-ico">
   
     <meta name="author" content="Liam Collod">
-  <meta name="description" content="How OpScript can be used to create a flexible solution for
-instancing.">
+  <meta name="description" content="How OpScript can be used to create a flexible solution for instancing.">
   <meta name="fediverse:creator" content="@liamcollod@mastodon.gamedev.place">
   <meta property="og:title" content="liam collod - Instancing in Katana">
   <meta property="og:type" content="website"><meta property="og:url" content="https://liamcollod.xyz/blog/katana_instancing/index.html">
-  <meta property="og:description" content="How OpScript can be used to create a flexible solution for
-instancing."><meta property="og:image" content="https://liamcollod.xyz/blog/katana_instancing/cover.jpg">
+  <meta property="og:description" content="How OpScript can be used to create a flexible solution for instancing."><meta property="og:image" content="https://liamcollod.xyz/blog/katana_instancing/cover.jpg">
   <meta property="og:image:alt" content="A decorative image with the post title.">
   <meta name="dcterms.created" content="2022-03-30T20:58:00">
   <meta name="dcterms.modified" content="2025-04-13T15:00:00">
@@ -81,17 +79,16 @@ instancing."><meta property="og:image" content="https://liamcollod.xyz/blog/kata
             <hr>
           </div>
           <div class="metadata-tags">
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.9s">katana</pre>
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.2s">instancing</pre>
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.5s">lua</pre>
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.3s">software</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.7s">katana</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.5s">instancing</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.8s">lua</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.8s">software</pre>
           </div>
         </section>
         <span id="article-header-decoration"></span>
         <h1>Instancing in Katana</h1>
         <section id="metadata-footer">
-          <p id="post-description" title="the post description">How OpScript can be used to create a flexible solution for
-instancing.</p>
+          <p id="post-description" title="the post description">How OpScript can be used to create a flexible solution for instancing.</p>
           <div class="metadata-essential">
               <hr>
               <span title="Date Created.">
@@ -183,7 +180,7 @@ if you spot big mistakes /  things to improve.</p>
 </div>
 </aside>
 <section id="intro">
-<h2><a class="toc-backref" href="#toc-entry-1" role="doc-backlink">Intro</a></h2>
+<h2><a class="toc-backref" href="#intro" role="doc-backlink">Intro</a></h2>
 <p>As Katana's motto states : <em>It’s all just a bunch of Attributes.</em> And it
 applies to instances too. They are just a bunch of locations with a defined
 list of attributes understood by your render-engine.
@@ -201,7 +198,7 @@ Additional attributes can also be set and used for shading to make the
 instance even more different than the source.</p>
 </section>
 <section id="instancing-methods">
-<h2><a class="toc-backref" href="#toc-entry-2" role="doc-backlink">Instancing Methods</a></h2>
+<h2><a class="toc-backref" href="#instancing-methods" role="doc-backlink">Instancing Methods</a></h2>
 <p>Instancing comes in different flavors, that, similarly to all things, have
 specific ups and downs. Your render-engine may also supply alternative ways to
 produce instances so be sure to check its documentation on the topic.</p>
@@ -223,7 +220,7 @@ https://support.foundry.com/hc/en-us/articles/360006999219</a>
 </div>
 </div>
 <section id="leaf-level">
-<h3><a class="toc-backref" href="#toc-entry-3" role="doc-backlink">Leaf-level</a></h3>
+<h3><a class="toc-backref" href="#leaf-level" role="doc-backlink">Leaf-level</a></h3>
 <p><em>(Never used this one)</em></p>
 <p><a class="reference external" href="https://support.foundry.com/hc/en-us/articles/360006999259">The Katana documentation</a> is pretty explicit.</p>
 <div class="split-50-50 docutils container">
@@ -244,7 +241,7 @@ location is the first one to instance 🙂.</p>
 <p><em>Would love to know in what case this one can be more pertinent than the other methods.</em></p>
 </section>
 <section id="hierarchical">
-<h3><a class="toc-backref" href="#toc-entry-4" role="doc-backlink">Hierarchical</a></h3>
+<h3><a class="toc-backref" href="#hierarchical" role="doc-backlink">Hierarchical</a></h3>
 <p>Each instance = one scene-graph location.</p>
 <div class="split-50-50 docutils container">
 <aside class="admonition danger">
@@ -260,7 +257,7 @@ issues. (pre-render)</p>
 </div>
 </section>
 <section id="array">
-<h3><a class="toc-backref" href="#toc-entry-5" role="doc-backlink">Array</a></h3>
+<h3><a class="toc-backref" href="#array" role="doc-backlink">Array</a></h3>
 <p>One single scene-graph location where each instance correspond to an index
 on each attribute.</p>
 <div class="split-50-50 docutils container">
@@ -282,7 +279,7 @@ anymore).)</p>
 </section>
 </section>
 <section id="instancing-in-practice">
-<h2><a class="toc-backref" href="#toc-entry-6" role="doc-backlink">Instancing in Practice</a></h2>
+<h2><a class="toc-backref" href="#instancing-in-practice" role="doc-backlink">Instancing in Practice</a></h2>
 <p>To start, there is a nice small example on the <a class="reference external" href="https://learn.foundry.com/katana/Content/ug/instancing/rendering_instances.html">official Katana documentation</a>
 . It explains how to create instances using mostly Katana nodes and one small
 OpScript to avoid stacking numerous <span class="docutils literal">AttributeSet</span> nodes.
@@ -308,7 +305,7 @@ For this what's better than having a look at the documentation :
 find the 3 instancing methods described again.</p>
 <p>Let's now start building the scene.</p>
 <section id="scene-preparation">
-<h3><a class="toc-backref" href="#toc-entry-7" role="doc-backlink">Scene-Preparation</a></h3>
+<h3><a class="toc-backref" href="#scene-preparation" role="doc-backlink">Scene-Preparation</a></h3>
 <p>For you to follow the tutorial, I will be providing you a few assets. Actually
 only a point-cloud, as to keep it simple, instances sources will be
 primitives.</p>
@@ -386,7 +383,7 @@ nodegraph is looking like this :</p>
 <p>Now it's time to have a look at OpScripting.</p>
 </section>
 <section id="opscript-preparation">
-<h3><a class="toc-backref" href="#toc-entry-8" role="doc-backlink">OpScript-Preparation</a></h3>
+<h3><a class="toc-backref" href="#opscript-preparation" role="doc-backlink">OpScript-Preparation</a></h3>
 <p>We are going to manipulate a lot of inputs and data and at some point, we
 will need to see what X variable is equal to, what is the result of X
 operation, etc
@@ -457,7 +454,7 @@ https://learn.foundry.com/katana/4.5/dev-guide/OpsAndOpScript/CookInterface/OpSc
 </div>
 </section>
 <section id="basic-instancing-hierarchical">
-<h3><a class="toc-backref" href="#toc-entry-9" role="doc-backlink">Basic Instancing : Hierarchical</a></h3>
+<h3><a class="toc-backref" href="#basic-instancing-hierarchical" role="doc-backlink">Basic Instancing : Hierarchical</a></h3>
 <p>For a first try, we will be using the OpScript provided on the Foundry's
 documentation. It's the most basic you can do which will be perfect for an
 introduction. It's the one for the hierarchical method.</p>
@@ -604,7 +601,7 @@ demo.hierarchical.basic.katana</a>
 </div>
 </section>
 <section id="basic-instancing-array">
-<h3><a class="toc-backref" href="#toc-entry-10" role="doc-backlink">Basic Instancing : Array</a></h3>
+<h3><a class="toc-backref" href="#basic-instancing-array" role="doc-backlink">Basic Instancing : Array</a></h3>
 <p>Before trying to go further with hierarchical we are going to have a look at
 the <span class="docutils literal">array</span> method. Keep the same scene, we will only need to change the
 OpScript.</p>
@@ -751,7 +748,7 @@ https://learn.foundry.com/katana/4.5/dev-guide/AttributeConventions/Instancing.h
 represented by one scene-graph location.</p>
 </section>
 <section id="full-instancing">
-<h3><a class="toc-backref" href="#toc-entry-11" role="doc-backlink">Full Instancing</a></h3>
+<h3><a class="toc-backref" href="#full-instancing" role="doc-backlink">Full Instancing</a></h3>
 <p>Aight' that was a quick first look at instancing, but as mentioned, we were
 not using all the exported attributes on our point-cloud. Supporting them
 requires extending the basics OpScripts we used but this will be too long
@@ -760,7 +757,7 @@ be using if you want to go down that road. Else you will find a fully working
 solution in the <a class="reference internal" href="#katana-uber-instancing">Katana Uber Instancing</a> section 😉.</p>
 </section>
 <section id="full-instancing-hierarchical">
-<h3><a class="toc-backref" href="#toc-entry-12" role="doc-backlink">Full Instancing : Hierarchical</a></h3>
+<h3><a class="toc-backref" href="#full-instancing-hierarchical" role="doc-backlink">Full Instancing : Hierarchical</a></h3>
 <p>Hierarchical is using single location per-instance, they can use the commonly
 used attributes for locations like <span class="docutils literal">xform</span>. This transformation attributes
 are described in the docs : <a class="reference external" href="https://learn.foundry.com/katana/4.5/dev-guide/AttributeConventions/Transformations.html">dev-guide/AttributeConventions/Transformations</a>. So pretty easy to implement, in pseudo-code :</p>
@@ -939,7 +936,7 @@ opscript.hierarchical.liam.lua</a>
 </div>
 </section>
 <section id="full-instancing-array">
-<h3><a class="toc-backref" href="#toc-entry-13" role="doc-backlink">Full Instancing : Array</a></h3>
+<h3><a class="toc-backref" href="#full-instancing-array" role="doc-backlink">Full Instancing : Array</a></h3>
 <p>Array is in a way more simple, you can just brainless copy the attributes
 from the point-cloud to the instance (if they are properly formatted).
 Make sure to <a class="reference external" href="https://learn.foundry.com/katana/4.5/dev-guide/AttributeConventions/Instancing.html">check the documentation</a> about what kind of
@@ -1006,9 +1003,9 @@ opscript.array.liam.lua</a>
 </section>
 </section>
 <section id="advanced-workflows">
-<h2><a class="toc-backref" href="#toc-entry-14" role="doc-backlink">Advanced workflows</a></h2>
+<h2><a class="toc-backref" href="#advanced-workflows" role="doc-backlink">Advanced workflows</a></h2>
 <section id="time-samples-and-motion-blur">
-<h3><a class="toc-backref" href="#toc-entry-15" role="doc-backlink">Time samples and Motion-blur</a></h3>
+<h3><a class="toc-backref" href="#time-samples-and-motion-blur" role="doc-backlink">Time samples and Motion-blur</a></h3>
 <p>An important topic that I actually only manage to understand very few time
 before publishing this article. To have motion-blur working on your instances
 (if there is movement), they need to store on attributes multiples samples that
@@ -1092,7 +1089,7 @@ like <a class="reference external" href="https://github.com/MrLixm/opscripting/t
 to see more context use of time-samples.</p>
 </section>
 <section id="instances-preview-in-the-viewer">
-<h3><a class="toc-backref" href="#toc-entry-16" role="doc-backlink">Instances preview in the Viewer</a></h3>
+<h3><a class="toc-backref" href="#instances-preview-in-the-viewer" role="doc-backlink">Instances preview in the Viewer</a></h3>
 <p>Since <strong>Katana 4.5</strong>, it is now possible to view <strong>instance array</strong> in the
 Viewer :</p>
 <ul class="simple">
@@ -1140,7 +1137,7 @@ instance-source to the instance
 to have already pre-generated an exactly similar-looking alembic.</p>
 </section>
 <section id="modifying-point-clouds-transforms">
-<h3><a class="toc-backref" href="#toc-entry-17" role="doc-backlink">Modifying point-clouds | Transforms</a></h3>
+<h3><a class="toc-backref" href="#modifying-point-clouds-transforms" role="doc-backlink">Modifying point-clouds | Transforms</a></h3>
 <p>You might stumble upon the case where you can't re-generate the point-cloud and
 you have to move it in Katana. But we can't use our good old <span class="docutils literal">Transform3D</span>
 friend here because, well, the transformations data is stored in geometry
@@ -1173,7 +1170,7 @@ ignores it, in render, the instances are properly transformed.)</p>
 </aside>
 </section>
 <section id="modifying-point-clouds-culling">
-<h3><a class="toc-backref" href="#toc-entry-18" role="doc-backlink">Modifying point-clouds | Culling</a></h3>
+<h3><a class="toc-backref" href="#modifying-point-clouds-culling" role="doc-backlink">Modifying point-clouds | Culling</a></h3>
 <p>Another need would be to prune points to reduce instances. Even if instancing
 improve performances , more instances still costs at render-time so you
 wanna make sure you are not rendering non-contributing instances.</p>
@@ -1213,7 +1210,7 @@ implemented.</p>
 </section>
 </section>
 <section id="katana-uber-instancing">
-<h2><a class="toc-backref" href="#toc-entry-19" role="doc-backlink">Katana Uber Instancing</a></h2>
+<h2><a class="toc-backref" href="#katana-uber-instancing" role="doc-backlink">Katana Uber Instancing</a></h2>
 <p>As we just saw, instancing can require in some cases quite some work before
 having a result. That's why I tried to produce a solution that would be very
 flexible with a very straightforward setup.</p>
@@ -1246,7 +1243,7 @@ necessary to use this tool. There is pretty extensive documentation that
 should cover everything you need to know.</p>
 </section>
 <section id="render-engines">
-<h2><a class="toc-backref" href="#toc-entry-20" role="doc-backlink">Render-Engines</a></h2>
+<h2><a class="toc-backref" href="#render-engines" role="doc-backlink">Render-Engines</a></h2>
 <p>Even if you are sure your instancing setup is correct, it might actually not
 be what your render-engine expect it to be. So golden rule, first read your
 renderer documentation carefully to see what is required, then if it's
@@ -1279,7 +1276,7 @@ for Arnold, 3Delight and Renderman.</p>
 <p><a class="reference external" href="https://github.com/MrLixm/KUI/blob/master/main/scenes/kui.tests.katana">https://github.com/MrLixm/KUI/blob/master/main/scenes/kui.tests.katana</a></p>
 </blockquote>
 <section id="redshift">
-<h3><a class="toc-backref" href="#toc-entry-21" role="doc-backlink">Redshift</a></h3>
+<h3><a class="toc-backref" href="#redshift" role="doc-backlink">Redshift</a></h3>
 <p>The production where I had to look for instancing was using Redshift,
 and unfortunately, it seems that, at that time, the instancing features where
 &quot;minimally&quot; implemented and some stuff was missing/broken.
@@ -1293,7 +1290,7 @@ still need to be in <span class="docutils literal">instance.arbitrary</span> or 
 </section>
 </section>
 <section id="outro">
-<h2><a class="toc-backref" href="#toc-entry-22" role="doc-backlink">Outro</a></h2>
+<h2><a class="toc-backref" href="#outro" role="doc-backlink">Outro</a></h2>
 <p>And that's a wrap. Very happy to have finally published this tutorial that was
 hanging around for 4 months already haha. A topic that I could have explored in
 this post is USD, which is an additional solution for instancing. But
@@ -1364,8 +1361,17 @@ https://discord.gg/KepWvn8</a>
 </main>
 <footer>
   
+    
+    <a class="rss" title="Link to the RSS feed so you can get notified of the latests posts using an RSS Reader." href="../blog.rss.xml">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <title>rss-box</title>
+    <path fill="currentColor" d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M7.5,15A1.5,1.5 0 0,0 6,16.5A1.5,1.5 0 0,0 7.5,18A1.5,1.5 0 0,0 9,16.5A1.5,1.5 0 0,0 7.5,15M6,10V12A6,6 0 0,1 12,18H14A8,8 0 0,0 6,10M6,6V8A10,10 0 0,1 16,18H18A12,12 0 0,0 6,6Z"/>
+</svg>
+      RSS Feed
+    </a>
+    
     <p>Static website <a href="../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-22T15:15</i> from commit <i>c7eb700</i></p>
+      Last built on <i>2025-05-27T17:44</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/327ef87">327ef87</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

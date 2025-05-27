@@ -80,10 +80,10 @@
             <hr>
           </div>
           <div class="metadata-tags">
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.2s">substance-painter</pre>
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.1s">color-science</pre>
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.3s">OCIO</pre>
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.8s">ACES</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.5s">substance-painter</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.4s">color-science</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.6s">OCIO</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.1s">ACES</pre>
           </div>
         </section>
         <span id="article-header-decoration"></span>
@@ -245,7 +245,7 @@ https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.htm
 </nav>
 </aside>
 <section id="color-managed-workflow">
-<h2><a class="toc-backref" href="#toc-entry-1" role="doc-backlink">Color-managed Workflow</a></h2>
+<h2><a class="toc-backref" href="#color-managed-workflow" role="doc-backlink">Color-managed Workflow</a></h2>
 <aside class="admonition note">
 <p class="admonition-title">note</p>
 <p>This part is aimed at beginners, but introduce a topic too vast for this
@@ -299,14 +299,14 @@ As an example, in the above diagram, to convert the <span class="docutils litera
 <span class="docutils literal">Workspace</span> data, we need to know how the <span class="docutils literal">Input</span> data is encoded (in our
 case, which colorspace).</p>
 <section id="data-types-color-and-scalar">
-<h3><a class="toc-backref" href="#toc-entry-2" role="doc-backlink">Data types: Color and Scalar</a></h3>
+<h3><a class="toc-backref" href="#data-types-color-and-scalar" role="doc-backlink">Data types: Color and Scalar</a></h3>
 <p>&quot;Where you start&quot; means first, what type of data are you manipulating ?</p>
 <p>There are only two types : <span class="docutils literal">color</span> and <span class="docutils literal">scalar</span>.</p>
 <p>It is important to know which one your data belongs to because the scalar
 one doesn't require your data to be color-managed and as such skip a
 complex part.</p>
 <section id="scalar">
-<h4><a class="toc-backref" href="#toc-entry-3" role="doc-backlink">Scalar</a></h4>
+<h4><a class="toc-backref" href="#scalar" role="doc-backlink">Scalar</a></h4>
 <p>Scalar data has no means to be displayed directly, the data store numbers
 that can be used to drive other types of data. We are only interested in the
 original value of these numbers and as such this kind of data <strong>must never
@@ -320,7 +320,7 @@ is color data. For example normal maps, even if colored, ARE scalar data.</p>
 </aside>
 </section>
 <section id="color">
-<h4><a class="toc-backref" href="#toc-entry-4" role="doc-backlink">Color</a></h4>
+<h4><a class="toc-backref" href="#color" role="doc-backlink">Color</a></h4>
 <p>Everything that is not scalar. Values stored are intended to be displayed
 directly. These values are always encoded in some colorspace and require to be
 decoded properly.</p>
@@ -328,7 +328,7 @@ decoded properly.</p>
 color, specular color, refraction color, every image displayed on the web, ...</p>
 </section>
 <section id="in-substance">
-<h4><a class="toc-backref" href="#toc-entry-5" role="doc-backlink">In Substance</a></h4>
+<h4><a class="toc-backref" href="#in-substance" role="doc-backlink">In Substance</a></h4>
 <p>In Substance you will find this separation depending on the channel you
 are working on. <a class="reference external" href="https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html#section5">The full list of color-managed channels is available here.</a></p>
 <p>As Substance is aware if the channel needs to be color-managed, some operations
@@ -341,7 +341,7 @@ specify the &quot;colorspace&quot; as &quot;raw&quot;, so no special decoding is
 </section>
 </section>
 <section id="workflow-sections">
-<h3><a class="toc-backref" href="#toc-entry-6" role="doc-backlink">Workflow Sections</a></h3>
+<h3><a class="toc-backref" href="#workflow-sections" role="doc-backlink">Workflow Sections</a></h3>
 <div class="center-block docutils container">
 <svg width="80%" height="80%" viewBox="0 0 630 153" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;">
     <path d="M15,97L153,97C160.732,97 167,103.268 167,111L167,138C167,145.732 160.732,152 153,152L15,152C7.268,152 1,145.732 1,138L1,111C1,103.268 7.268,97 15,97ZM246,97L384,97C391.732,97 398,103.268 398,111L398,138C398,145.732 391.732,152 384,152L246,152C238.268,152 232,145.732 232,138L232,111C232,103.268 238.268,97 246,97ZM246,1L384,1C391.732,1 398,7.268 398,15L398,42C398,49.732 391.732,56 384,56L246,56C238.268,56 232,49.732 232,42L232,15C232,7.268 238.268,1 246,1ZM477,97L615,97C622.732,97 629,103.268 629,111L629,138C629,145.732 622.732,152 615,152L477,152C469.268,152 463,145.732 463,138L463,111C463,103.268 469.268,97 477,97Z" style="fill:none;fill-rule:nonzero;stroke:currentColor;stroke-width:2px;"/>
@@ -376,7 +376,7 @@ specify the &quot;colorspace&quot; as &quot;raw&quot;, so no special decoding is
 </svg>
 </div>
 <section id="input">
-<h4><a class="toc-backref" href="#toc-entry-7" role="doc-backlink">Input</a></h4>
+<h4><a class="toc-backref" href="#input" role="doc-backlink">Input</a></h4>
 <p>Data that need to be processed, can be anything but in our case it is
 pixel data, like an image texture, a brushstroke, a procedural noise, ...</p>
 <p>If it is scalar, we don't need to decode it. We must specify that we don't
@@ -390,7 +390,7 @@ a transfer-function depending on the file format used.</p>
 See <a class="reference internal" href="#input-setup-in-sp">Input Setup in Sp</a> ..</p>
 </section>
 <section id="workspace">
-<h4><a class="toc-backref" href="#toc-entry-8" role="doc-backlink">Workspace</a></h4>
+<h4><a class="toc-backref" href="#workspace" role="doc-backlink">Workspace</a></h4>
 <p>Everything you create, modify go through it. We define how it is configured
 so we can always know &quot;where to go&quot; when transforming an Input.
 In sp this is the &quot;Working color space&quot;. In OCIO term it corresponds the
@@ -399,7 +399,7 @@ In sp this is the &quot;Working color space&quot;. In OCIO term it corresponds t
 <span class="docutils literal">scene_linear</span> one to use it as the Working Colorspace.</p>
 </section>
 <section id="display">
-<h4><a class="toc-backref" href="#toc-entry-9" role="doc-backlink">Display</a></h4>
+<h4><a class="toc-backref" href="#display" role="doc-backlink">Display</a></h4>
 <p>Once the data has been processed through the Workspace you might want to
 preview it. To do so, everybody will be using some kind of hardware display,
 usually a computer monitor. This might sound dumb but it is a critical step.
@@ -426,7 +426,7 @@ you can find at the top-right of your viewport.
 See <a class="reference internal" href="#display-setup-in-sp">Display Setup in Sp</a> .</p>
 </section>
 <section id="output">
-<h4><a class="toc-backref" href="#toc-entry-10" role="doc-backlink">Output</a></h4>
+<h4><a class="toc-backref" href="#output" role="doc-backlink">Output</a></h4>
 <p>But isn't the Display the Output ? Yes, it can be, if you are at the end of the
 chain. But here in sp, the end of the chain is our exported texture files. The
 Display only allow us to have a preview of how they could look.</p>
@@ -437,7 +437,7 @@ container (image format) you chose.</p>
 See <a class="reference internal" href="#output-setup-in-sp">Output Setup in Sp</a> .</p>
 </section>
 <section id="example">
-<h4><a class="toc-backref" href="#toc-entry-11" role="doc-backlink">Example</a></h4>
+<h4><a class="toc-backref" href="#example" role="doc-backlink">Example</a></h4>
 <p>To illustrate the theory here is a diagram representing a section of a
 potential VFX-pipeline. I hope this will not confuse you more than this topic
 already is.</p>
@@ -511,7 +511,7 @@ continue your exploration at the end of this article.</p>
 </section>
 </section>
 <section id="substance-setup-workflow">
-<h2><a class="toc-backref" href="#toc-entry-12" role="doc-backlink">Substance Setup &amp; Workflow</a></h2>
+<h2><a class="toc-backref" href="#substance-setup-workflow" role="doc-backlink">Substance Setup &amp; Workflow</a></h2>
 <a class="reference external image-reference" href="sp-project-legacy.jpg">
 <img alt="New project window with color-management tab" class="inline" src="sp-project-legacy.jpg" />
 </a>
@@ -519,7 +519,7 @@ continue your exploration at the end of this article.</p>
 As such, you will not find any options in the applications settings but in
 project ones.</p>
 <section id="new-project">
-<h3><a class="toc-backref" href="#toc-entry-13" role="doc-backlink">New Project</a></h3>
+<h3><a class="toc-backref" href="#new-project" role="doc-backlink">New Project</a></h3>
 <p>The first occurrence of these new options can be found on the <span class="docutils literal">New project</span>
 window. You will find a <span class="docutils literal">Color Management</span> sub-menu at the bottom.</p>
 <a class="reference external image-reference" href="sp-project-cm-options.jpg">
@@ -542,7 +542,7 @@ to use.</strong></p>
 </aside>
 </section>
 <section id="ocio-config">
-<h3><a class="toc-backref" href="#toc-entry-14" role="doc-backlink">OCIO config</a></h3>
+<h3><a class="toc-backref" href="#ocio-config" role="doc-backlink">OCIO config</a></h3>
 <a class="reference external image-reference" href="sp-project-OCIO-01.jpg">
 <img alt="New project window with OCIO options" class="inline" src="sp-project-OCIO-01.jpg" />
 </a>
@@ -584,7 +584,7 @@ sRGB linear workflow and do not wish to use an OCIO config in every DCC.
 You will still have enough control to have a proper color-managed workflow.</p>
 <p>Let's now see how you could load a custom OCIO config.</p>
 <section id="custom-config">
-<h4><a class="toc-backref" href="#toc-entry-15" role="doc-backlink">Custom config</a></h4>
+<h4><a class="toc-backref" href="#custom-config" role="doc-backlink">Custom config</a></h4>
 <a class="reference external image-reference" href="sp-project-ocio-custom.jpg">
 <img alt="New project window with OCIO option set with a custom config." class="inline" src="sp-project-ocio-custom.jpg" />
 </a>
@@ -605,7 +605,7 @@ see this message pop up :</p>
 the setup.</p>
 </section>
 <section id="environment-variable">
-<h4><a class="toc-backref" href="#toc-entry-16" role="doc-backlink">Environment variable</a></h4>
+<h4><a class="toc-backref" href="#environment-variable" role="doc-backlink">Environment variable</a></h4>
 <p>The above might be enough for individual artists but being in a pipeline
 environment requires other ways to set OCIO automatically.</p>
 <aside class="admonition note">
@@ -615,7 +615,7 @@ file it will take over to override and disable the UI settings.</p>
 </aside>
 <p>On Windows you have 2 ways to set environment variables :</p>
 <section id="global-settings">
-<h5><a class="toc-backref" href="#toc-entry-17" role="doc-backlink">Global Settings</a></h5>
+<h5><a class="toc-backref" href="#global-settings" role="doc-backlink">Global Settings</a></h5>
 <a class="reference external image-reference" href="ocio-env-global.jpg">
 <img alt="Windows creating the OCIO environment variable." class="inline" src="ocio-env-global.jpg" />
 </a>
@@ -627,7 +627,7 @@ overridden).</p>
 will be broken.</p>
 </section>
 <section id="set-locally-at-startup">
-<h5><a class="toc-backref" href="#toc-entry-18" role="doc-backlink">Set locally at startup</a></h5>
+<h5><a class="toc-backref" href="#set-locally-at-startup" role="doc-backlink">Set locally at startup</a></h5>
 <p>You defined the environment variable in a start-up script.
 This is the cleanest way to do it but means you can't use the Windows shortcut
 to start your software :</p>
@@ -653,7 +653,7 @@ No &quot;double-clicking&quot; on file to open them either.</div>
 </section>
 </section>
 <section id="substance-parameters-for-ocio-configs">
-<h4><a class="toc-backref" href="#toc-entry-19" role="doc-backlink">Substance parameters for OCIO configs</a></h4>
+<h4><a class="toc-backref" href="#substance-parameters-for-ocio-configs" role="doc-backlink">Substance parameters for OCIO configs</a></h4>
 <figure class="inline">
 <a class="reference external image-reference" href="sp-project-ocio-options.jpg">
 <img alt="Options for OCIO mode in sp.." class="inline" src="sp-project-ocio-options.jpg" />
@@ -704,7 +704,7 @@ read in Sp.</p>
 </section>
 </section>
 <section id="new-project-conclusion">
-<h3><a class="toc-backref" href="#toc-entry-20" role="doc-backlink">New Project : Conclusion</a></h3>
+<h3><a class="toc-backref" href="#new-project-conclusion" role="doc-backlink">New Project : Conclusion</a></h3>
 <p>Alright, to recap' everything for a new project you need :</p>
 <ol class="arabic simple">
 <li><p>Change the color-management mode to OCIO</p></li>
@@ -717,7 +717,7 @@ divided into the same sections explained in the theoretical part of this
 article (see <a class="reference internal" href="#color-managed-workflow">Color-managed Workflow</a>).</p>
 </section>
 <section id="workspace-setup-in-sp">
-<h3><a class="toc-backref" href="#toc-entry-21" role="doc-backlink">Workspace Setup in Sp</a></h3>
+<h3><a class="toc-backref" href="#workspace-setup-in-sp" role="doc-backlink">Workspace Setup in Sp</a></h3>
 <p>The Workspace, in software is actually an &quot;abstract&quot; section. It just
 represents the colorspace used as a reference, target or source for every color
 transformation. It is defined in the OCIO config and cannot be changed outside
@@ -738,7 +738,7 @@ config here)</p>
 <p>It is just good to know what is the colorspace being used here.</p>
 </section>
 <section id="display-setup-in-sp">
-<h3><a class="toc-backref" href="#toc-entry-22" role="doc-backlink">Display Setup in Sp</a></h3>
+<h3><a class="toc-backref" href="#display-setup-in-sp" role="doc-backlink">Display Setup in Sp</a></h3>
 <a class="reference external image-reference" href="sp-odt-default.jpg">
 <img alt="View-transform screenshot." class="inline" src="sp-odt-default.jpg" />
 </a>
@@ -787,7 +787,7 @@ justify why using Rec709+BT.1886 instead of sRGB.</p>
 wrote about this topic, I let you read this mind-blowing article from
 Chris Brejon <a class="reference external" href="https://chrisbrejon.com/articles/ocio-display-transforms-and-misconceptions/">OCIO, Display Transforms and Misconceptions</a>.</p>
 <section id="displaying-color-and-scalar-data">
-<h4><a class="toc-backref" href="#toc-entry-23" role="doc-backlink">Displaying Color and Scalar data</a></h4>
+<h4><a class="toc-backref" href="#displaying-color-and-scalar-data" role="doc-backlink">Displaying Color and Scalar data</a></h4>
 <p>Sp will handle it for you automatically, depending on the channel you
 are previewing.</p>
 <p><a class="reference external" href="https://substance3d.adobe.com/documentation/spdoc/color-management-223053233.html#section5">The full list of color-managed channels is available here.</a></p>
@@ -798,7 +798,7 @@ view-transform :</p>
 </a>
 </section>
 <section id="custom-user-channels">
-<h4><a class="toc-backref" href="#toc-entry-24" role="doc-backlink">Custom User Channels</a></h4>
+<h4><a class="toc-backref" href="#custom-user-channels" role="doc-backlink">Custom User Channels</a></h4>
 <p>If you are using a custom <span class="docutils literal">User</span> channel, you will have to manually
 specify if the channel is color-managed. (By default they are not)
 This is achieved by clicking on the gear icon &gt; <span class="docutils literal">Color channel</span>.</p>
@@ -812,14 +812,14 @@ forum.</a></p>
 </section>
 </section>
 <section id="input-setup-in-sp">
-<h3><a class="toc-backref" href="#toc-entry-25" role="doc-backlink">Input Setup in Sp</a></h3>
+<h3><a class="toc-backref" href="#input-setup-in-sp" role="doc-backlink">Input Setup in Sp</a></h3>
 <p>Texturing is all about mixing already existing images, with some carefully
 crafted paint stroke, and funky procedural resources. All of these, if they
 are color-data, have been created and saved with a specific colorspace.
 We will need to know and then specify this colorspace to sp so the OCIO
 processor can know if it needs conversion to the Workspace colorspace.</p>
 <section id="shelf-resources">
-<h4><a class="toc-backref" href="#toc-entry-26" role="doc-backlink">Shelf Resources</a></h4>
+<h4><a class="toc-backref" href="#shelf-resources" role="doc-backlink">Shelf Resources</a></h4>
 <p>In Sp this manipulation takes place, weirdly, on the images slots of each
 layer. You will not find any option to specify the colorspace in the shelf.</p>
 <div class="split-50-50 docutils container">
@@ -854,7 +854,7 @@ only work for one. If I take for example a colorspace name used in the ACES
 config this could give: <span class="docutils literal">bricks_wall_albedo_Utility - Linear - sRGB.exr</span>.</p>
 </section>
 <section id="the-color-picker">
-<h4><a class="toc-backref" href="#toc-entry-27" role="doc-backlink">The color-picker</a></h4>
+<h4><a class="toc-backref" href="#the-color-picker" role="doc-backlink">The color-picker</a></h4>
 <aside class="admonition note">
 <p class="admonition-title">note</p>
 <p>7.4.2 update changed the behavior of the color-picker with huge
@@ -995,7 +995,7 @@ Looking forward to next updates to reach the perfect color-picking
 experience haha.</p>
 </section>
 <section id="environment">
-<h4><a class="toc-backref" href="#toc-entry-28" role="doc-backlink">Environment</a></h4>
+<h4><a class="toc-backref" href="#environment" role="doc-backlink">Environment</a></h4>
 <p><span class="strikethrough">There is no direct option to modify the environment image colorspace.</span></p>
 <p>From 7.4.2 + you can find an option in the <span class="docutils literal">Display Settings</span> Menu, to change
 the environment colorspace being used.</p>
@@ -1014,14 +1014,14 @@ Environment</a>)</p></li>
 </aside>
 </section>
 <section id="masks">
-<h4><a class="toc-backref" href="#toc-entry-29" role="doc-backlink">Masks</a></h4>
+<h4><a class="toc-backref" href="#masks" role="doc-backlink">Masks</a></h4>
 <p>When you right-click on a mask you have the option to <span class="docutils literal">Export mask as File</span>.
 Don't worry, mask seems to always be considered as scalar and exported
 without any treatment.</p>
 </section>
 </section>
 <section id="output-setup-in-sp">
-<h3><a class="toc-backref" href="#toc-entry-30" role="doc-backlink">Output Setup in Sp</a></h3>
+<h3><a class="toc-backref" href="#output-setup-in-sp" role="doc-backlink">Output Setup in Sp</a></h3>
 <p>The Export Textures window didn't got much new. We doesn't have any options
 to apply a color-transformation at export time in the Window. The only options
 are the one available into the project settings.</p>
@@ -1047,11 +1047,11 @@ Interstingly, this colorspace <span class="docutils literal">raw</span> doesn't 
 </section>
 </section>
 <section id="aces-workflow">
-<h2><a class="toc-backref" href="#toc-entry-31" role="doc-backlink">ACES Workflow</a></h2>
+<h2><a class="toc-backref" href="#aces-workflow" role="doc-backlink">ACES Workflow</a></h2>
 <p>I'm not going to get into the what and the why, only the how. Let's keep the
 rest for a next (potential) article ?</p>
 <section id="aces-config-setup">
-<h3><a class="toc-backref" href="#toc-entry-32" role="doc-backlink">ACES - Config setup</a></h3>
+<h3><a class="toc-backref" href="#aces-config-setup" role="doc-backlink">ACES - Config setup</a></h3>
 <p>You could use the one shipped with Substance but I wouldn't recommend so.
 They are the ones with the hundred colorspaces that will just slow you down
 when you need to choose one.</p>
@@ -1089,17 +1089,17 @@ are the only ones that can't be modified per-case though; this is the only
 place you can change them.</p>
 </section>
 <section id="aces-what-to-do-when-working">
-<h3><a class="toc-backref" href="#toc-entry-33" role="doc-backlink">ACES - What to do when working</a></h3>
+<h3><a class="toc-backref" href="#aces-what-to-do-when-working" role="doc-backlink">ACES - What to do when working</a></h3>
 <p>I'm only going to give detailed explanations when something is specific to
 ACES. Meanwhile the explanations given in <a class="reference internal" href="#substance-setup-workflow">Substance Setup &amp; Workflow</a> still
 apply so make sure you properly understood this section.</p>
 <section id="aces-display">
-<h4><a class="toc-backref" href="#toc-entry-34" role="doc-backlink">ACES - Display</a></h4>
+<h4><a class="toc-backref" href="#aces-display" role="doc-backlink">ACES - Display</a></h4>
 <p>Not much new, use the view-transform that correspond to the display you are
 using. (In my case <span class="docutils literal">ACES - sRGB</span>, that behind the scene, uses <span class="docutils literal">Output - sRGB</span>)</p>
 </section>
 <section id="aces-inputs">
-<h4><a class="toc-backref" href="#toc-entry-35" role="doc-backlink">ACES - Inputs</a></h4>
+<h4><a class="toc-backref" href="#aces-inputs" role="doc-backlink">ACES - Inputs</a></h4>
 <p>For every external resource you import, you need to assign the correct
 input colorspace if the automatic one doesn't correspond. The usual rules
 for the ACES workflow apply.</p>
@@ -1107,7 +1107,7 @@ for the ACES workflow apply.</p>
 <img alt="ACES IDT Cheatsheet." class="inline" src="diagram-aces-idt.jpg" />
 </a>
 <section id="aces-environment">
-<h5><a class="toc-backref" href="#toc-entry-36" role="doc-backlink">ACES - Environment</a></h5>
+<h5><a class="toc-backref" href="#aces-environment" role="doc-backlink">ACES - Environment</a></h5>
 <p><span class="strikethrough">There is unfortunately no direct options to change environment's
 colorspace.</span></p>
 <p>From 7.4.2+ you can find an option in the <span class="docutils literal">Display Settings</span> Menu, to change
@@ -1137,7 +1137,7 @@ doesn't get properly converted and looks shifted.</p>
 </section>
 </section>
 <section id="aces-colorpicker">
-<h4><a class="toc-backref" href="#toc-entry-37" role="doc-backlink">ACES - Colorpicker</a></h4>
+<h4><a class="toc-backref" href="#aces-colorpicker" role="doc-backlink">ACES - Colorpicker</a></h4>
 <aside class="admonition note">
 <p class="admonition-title">note</p>
 <p>The screenshots in this section have not been updated to reflect change
@@ -1190,7 +1190,7 @@ and Chris <a class="reference external" href="https://chrisbrejon.com/cg-cinemat
 </blockquote>
 </section>
 <section id="aces-output">
-<h4><a class="toc-backref" href="#toc-entry-38" role="doc-backlink">ACES - Output</a></h4>
+<h4><a class="toc-backref" href="#aces-output" role="doc-backlink">ACES - Output</a></h4>
 <p>Do yourself a favour here and only care about EXR. <a class="reference external" href="https://www.elsksa.me/scientia/cgi-offline-rendering/file-format-debunk">You don't need anything
 else</a> and this is the file format recommended by the Academy for ACES
 data encoding.</p>
@@ -1209,7 +1209,7 @@ name. (and instead export the textures in a folder named ACEScg)</p>
 </section>
 </section>
 <section id="ocio-implementation-issues">
-<h2><a class="toc-backref" href="#toc-entry-39" role="doc-backlink">OCIO Implementation Issues</a></h2>
+<h2><a class="toc-backref" href="#ocio-implementation-issues" role="doc-backlink">OCIO Implementation Issues</a></h2>
 <aside class="admonition note">
 <p class="admonition-title">note</p>
 <p>The goal here is not to denigrate the dev team's works but rather to offer
@@ -1218,11 +1218,11 @@ explanations and solutions for improving the software.</p>
 the issues I mentionned !</p>
 </aside>
 <section id="display-issues">
-<h3><a class="toc-backref" href="#toc-entry-40" role="doc-backlink">Display Issues</a></h3>
+<h3><a class="toc-backref" href="#display-issues" role="doc-backlink">Display Issues</a></h3>
 <p>These explanations were made possible thanks to the Chris Brejon's article
 <a class="reference external" href="https://chrisbrejon.com/articles/ocio-display-transforms-and-misconceptions/">OCIO, Display Transforms and Misconceptions</a>.</p>
 <section id="display-components-mismatch">
-<h4><a class="toc-backref" href="#toc-entry-41" role="doc-backlink">Display components mismatch</a></h4>
+<h4><a class="toc-backref" href="#display-components-mismatch" role="doc-backlink">Display components mismatch</a></h4>
 <p>OCIO divide the Display section into 3 components :</p>
 <ul class="simple">
 <li><p><span class="docutils literal">Display</span> : the physical hardware you are using (monitor, TV, phone, ...).</p></li>
@@ -1279,7 +1279,7 @@ We should even get a third one for looks as we are going to see in the next
 section :</p>
 </section>
 <section id="partial-look-support">
-<h4><a class="toc-backref" href="#toc-entry-42" role="doc-backlink">Partial Look support</a></h4>
+<h4><a class="toc-backref" href="#partial-look-support" role="doc-backlink">Partial Look support</a></h4>
 <p>In above explanations where I mention OCIO Display is build with
 3 components, we now see that I didn't mention the last one yet: Looks.</p>
 <p>Looks is a color-tansformation performed in any colorspace aimed at
@@ -1332,7 +1332,7 @@ cropped name 😬 But at least it's working.</p>
 </section>
 </section>
 <section id="improving-the-substance-ocio-config">
-<h3><a class="toc-backref" href="#toc-entry-43" role="doc-backlink">Improving the Substance OCIO config</a></h3>
+<h3><a class="toc-backref" href="#improving-the-substance-ocio-config" role="doc-backlink">Improving the Substance OCIO config</a></h3>
 <p>The Substance OCIO config is an OCIO v1 configuration. I don't know
 what is the reason they decided to not use the v2 for their config because
 it could really helped having a cleaner and better config (even if the artist
@@ -1364,7 +1364,7 @@ Substance config. Have a look at the
 file to see the new features.</p>
 </section>
 <section id="issues-recap">
-<h3><a class="toc-backref" href="#toc-entry-44" role="doc-backlink">Issues Recap</a></h3>
+<h3><a class="toc-backref" href="#issues-recap" role="doc-backlink">Issues Recap</a></h3>
 <div class="line-block">
 <div class="line">This list aim at helping the potential Substance dev team members reading
 this, addressing the issues.</div>
@@ -1424,7 +1424,7 @@ shared-views.</p>
 </section>
 </section>
 <section id="conclusion">
-<h2><a class="toc-backref" href="#toc-entry-45" role="doc-backlink">Conclusion</a></h2>
+<h2><a class="toc-backref" href="#conclusion" role="doc-backlink">Conclusion</a></h2>
 <p>Damn that was a long one. Congrats if you stick to the end, I hope you
 now have an idea of how you could use OCIO in SubstancePainter. If not,
 don't hesitate to <a class="reference external" href="/pages/contact">contact</a> me to suggest how this
@@ -1437,7 +1437,7 @@ the bottom of this page.</p>
 Mari 👋</span> (2025 and still not there 💀)</p>
 </section>
 <section id="resources">
-<h2><a class="toc-backref" href="#toc-entry-46" role="doc-backlink">Resources</a></h2>
+<h2><a class="toc-backref" href="#resources" role="doc-backlink">Resources</a></h2>
 <div class="url-preview-box docutils container">
 <a class="reference external" href="https://hg2dc.com/">
 </a>
@@ -1511,7 +1511,7 @@ behind modern feature-film visual-effects and animation.</p>
 </div>
 </section>
 <section id="changelog">
-<h2><a class="toc-backref" href="#toc-entry-47" role="doc-backlink">Changelog</a></h2>
+<h2><a class="toc-backref" href="#changelog" role="doc-backlink">Changelog</a></h2>
 <ul class="simple">
 <li><p><span class="docutils literal"><span class="pre">17-12-2021</span></span>: fixed <a class="reference internal" href="#the-color-picker">The color-picker</a> section. <a class="reference external" href="https://community.acescentral.com/t/aces-and-substance-painter/2299/42">Discussion available here</a></p></li>
 <li><p><span class="docutils literal"><span class="pre">09-03-2022</span></span>: Updated article following 7.4.2 update.</p>
@@ -1536,8 +1536,17 @@ behind modern feature-film visual-effects and animation.</p>
 </main>
 <footer>
   
+    
+    <a class="rss" title="Link to the RSS feed so you can get notified of the latests posts using an RSS Reader." href="../blog.rss.xml">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <title>rss-box</title>
+    <path fill="currentColor" d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M7.5,15A1.5,1.5 0 0,0 6,16.5A1.5,1.5 0 0,0 7.5,18A1.5,1.5 0 0,0 9,16.5A1.5,1.5 0 0,0 7.5,15M6,10V12A6,6 0 0,1 12,18H14A8,8 0 0,0 6,10M6,6V8A10,10 0 0,1 16,18H18A12,12 0 0,0 6,6Z"/>
+</svg>
+      RSS Feed
+    </a>
+    
     <p>Static website <a href="../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-22T15:15</i> from commit <i>c7eb700</i></p>
+      Last built on <i>2025-05-27T17:44</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/327ef87">327ef87</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

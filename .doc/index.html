@@ -113,6 +113,7 @@
 <li><p><a class="reference internal" href="#cross-referencing" id="toc-entry-20">cross-referencing</a></p></li>
 </ul>
 </li>
+<li><p><a class="reference internal" href="#rss-feeds" id="toc-entry-21">Rss feeds</a></p></li>
 </ul>
 </div>
 </nav>
@@ -122,7 +123,7 @@ published online and every page correspond to a single html file.</p>
 <p>The published website is just HTML and CSS, that are generated using a custom
 workflow based on Python, rst and Jinja.</p>
 <section id="basics">
-<h2><a class="toc-backref" href="#toc-entry-1" role="doc-backlink">Basics</a></h2>
+<h2><a class="toc-backref" href="#basics" role="doc-backlink">Basics</a></h2>
 <p>The philoshophy for this website is that the source file structure represents
 the published site structure. It tries to be as explicit as possible.</p>
 <p>So let's say your website is published at <span class="docutils literal"><span class="pre">https://mywebsite.com</span></span>, then
@@ -146,7 +147,7 @@ allow to group and browse multiple pages.</p>
 may have unexpected consequences when being parsed.</p>
 </aside>
 <section id="siteignore-files">
-<h3><a class="toc-backref" href="#toc-entry-2" role="doc-backlink">.siteignore files</a></h3>
+<h3><a class="toc-backref" href="#siteignore-files" role="doc-backlink">.siteignore files</a></h3>
 <p>A .siteignore is a file that indicate which path must not be collected to build
 the site. It can be fond at root but also in any directory.</p>
 <p>It's file format is as follow:</p>
@@ -179,11 +180,11 @@ meaning that <span class="docutils literal"><span class="pre">blog/.template.htm
 <p>We then ignore <span class="docutils literal">blog/snippet.cpp</span>.</p>
 </section>
 <section id="shelf-feature">
-<h3><a class="toc-backref" href="#toc-entry-3" role="doc-backlink">shelf feature</a></h3>
+<h3><a class="toc-backref" href="#shelf-feature" role="doc-backlink">shelf feature</a></h3>
 <p>TBD</p>
 </section>
 <section id="build-process">
-<h3><a class="toc-backref" href="#toc-entry-4" role="doc-backlink">build process</a></h3>
+<h3><a class="toc-backref" href="#build-process" role="doc-backlink">build process</a></h3>
 <p>This is how the source file structure is parsed the site final file structure:</p>
 <ul class="simple">
 <li><p>collect all file paths in the source directory and ignore some paths using the .siteignore files.</p></li>
@@ -197,16 +198,16 @@ meaning that <span class="docutils literal"><span class="pre">blog/.template.htm
 </section>
 </section>
 <section id="creating-a-page">
-<h2><a class="toc-backref" href="#toc-entry-5" role="doc-backlink">Creating a page</a></h2>
+<h2><a class="toc-backref" href="#creating-a-page" role="doc-backlink">Creating a page</a></h2>
 <p>All pages MUST have an .rst file, even if it just have a title. You are then
 free to define its content using the standard rst syntax or to manually
 create the html with a template.</p>
 <section id="writing-rst-content">
-<h3><a class="toc-backref" href="#toc-entry-6" role="doc-backlink">writing rst content</a></h3>
+<h3><a class="toc-backref" href="#writing-rst-content" role="doc-backlink">writing rst content</a></h3>
 <p>See <a class="reference external" href="https://docutils.sourceforge.io/docs/user/rst/quickref.html">https://docutils.sourceforge.io/docs/user/rst/quickref.html</a>.</p>
 </section>
 <section id="page-metadata">
-<h3><a class="toc-backref" href="#toc-entry-7" role="doc-backlink">page metadata</a></h3>
+<h3><a class="toc-backref" href="#page-metadata" role="doc-backlink">page metadata</a></h3>
 <p>This are the fields that are understood as page metadata:</p>
 <table class="inline">
 <thead>
@@ -311,7 +312,7 @@ create the html with a template.</p>
 <p>See <span class="docutils literal">lxmsite._page</span> for the code implementation.</p>
 </section>
 <section id="rst-directives">
-<h3><a class="toc-backref" href="#toc-entry-8" role="doc-backlink">rst directives</a></h3>
+<h3><a class="toc-backref" href="#rst-directives" role="doc-backlink">rst directives</a></h3>
 <p>In extent to the builtin rst directives ( <a class="reference external" href="https://docutils.sourceforge.io/docs/ref/rst/directives.html">https://docutils.sourceforge.io/docs/ref/rst/directives.html</a> ), we provides
 additional directives, or edit the existing ones.</p>
 <p>Here is a quick directive's glossary as reminder:</p>
@@ -322,7 +323,7 @@ additional directives, or edit the existing ones.</p>
     content
 </pre>
 <section id="code-code-block">
-<h4><a class="toc-backref" href="#toc-entry-9" role="doc-backlink">code, code-block</a></h4>
+<h4><a class="toc-backref" href="#code-code-block" role="doc-backlink">code, code-block</a></h4>
 <p>You can embed code snippets with the <span class="docutils literal">code</span> and <span class="docutils literal"><span class="pre">code-block</span></span> directives. They use <a class="reference external" href="https://pygments.org/">pygments</a>
 to provide syntax highlighting.</p>
 <ul class="simple">
@@ -338,7 +339,7 @@ to provide syntax highlighting.</p>
 </pre>
 </section>
 <section id="admonitions">
-<h4><a class="toc-backref" href="#toc-entry-10" role="doc-backlink">admonitions</a></h4>
+<h4><a class="toc-backref" href="#admonitions" role="doc-backlink">admonitions</a></h4>
 <p>Admonitions are builtin to rst and there is no changes to them.</p>
 <blockquote>
 <div class="line-block">
@@ -359,7 +360,7 @@ add the class option with the type. Example:</p>
 <p>Pineapple do belongs on them.</p>
 </aside>
 <section id="highlight">
-<h5><a class="toc-backref" href="#toc-entry-11" role="doc-backlink">highlight</a></h5>
+<h5><a class="toc-backref" href="#highlight" role="doc-backlink">highlight</a></h5>
 <p>It is however possible to have an admonition without a title using the custom directive <span class="docutils literal">.. highlight::</span>:</p>
 <pre class="highlight literal-block" title="Block of code in rst language."><span class="p">..</span> <span class="ow">highlight</span><span class="p">::</span>
     <span class="nc">:class:</span> tip
@@ -373,7 +374,7 @@ add the class option with the type. Example:</p>
 </section>
 </section>
 <section id="url-preview">
-<h4><a class="toc-backref" href="#toc-entry-12" role="doc-backlink">url-preview</a></h4>
+<h4><a class="toc-backref" href="#url-preview" role="doc-backlink">url-preview</a></h4>
 <p>This is a customd directive which allow you to share links as &quot;static embeds&quot;, meaning they have the box with rich
 content that is prettier than just a link, but you actually have to write all the rich content yourself instead of
 having fetch using javascript.</p>
@@ -413,7 +414,7 @@ https://liamcollod.xyz</a>
 </div>
 </section>
 <section id="image-grid">
-<h4><a class="toc-backref" href="#toc-entry-13" role="doc-backlink">image-grid</a></h4>
+<h4><a class="toc-backref" href="#image-grid" role="doc-backlink">image-grid</a></h4>
 <p>When needing to display a lot of image in a non-sequential layout (so as a grid), you
 can use the <span class="docutils literal">.. <span class="pre">image-grid::</span></span> directive.</p>
 <p>It accept no argument, neither options and all works based on its content.</p>
@@ -439,7 +440,7 @@ must start with a 2+ spaced indent.</p>
 </pre>
 </section>
 <section id="image-gallery">
-<h4><a class="toc-backref" href="#toc-entry-14" role="doc-backlink">image-gallery</a></h4>
+<h4><a class="toc-backref" href="#image-gallery" role="doc-backlink">image-gallery</a></h4>
 <p>The <span class="docutils literal">.. <span class="pre">image-gallery::</span></span> is a more advanced directive to showcase images,
 their metdata and their caption.</p>
 <p>It's build upon a 2-column layout in which you choose to add images or their caption
@@ -455,7 +456,7 @@ independently.</p>
 and metadata. This is achieved by using another directive <span class="docutils literal">.. <span class="pre">image-frame::</span></span>.</p>
 <p>You add as much <span class="docutils literal"><span class="pre">image-frame</span></span> directive as there is image to showcase.</p>
 <section id="image-frame">
-<h5><a class="toc-backref" href="#toc-entry-15" role="doc-backlink">image-frame</a></h5>
+<h5><a class="toc-backref" href="#image-frame" role="doc-backlink">image-frame</a></h5>
 <p>This directive allow to declare an image, its identifier, and its metadata. It have
 2 &quot;modes&quot; to specify the metadata: inline in the rst file or retrieved from a meta file.
 The 2 modes can be used together where the inline metadata will override any metadata
@@ -501,7 +502,7 @@ relies on a meta file. However for that second image we add an extra metadata ke
 <p>Any metadata key defined in the meta file can be used in the directive content.</p>
 </aside>
 <section id="image-meta-file">
-<h6><a class="toc-backref" href="#toc-entry-16" role="doc-backlink">image .meta file</a></h6>
+<h6><a class="toc-backref" href="#image-meta-file" role="doc-backlink">image .meta file</a></h6>
 <p>A meta file allow to specify an image metadata as key: value pair with a quite
 human-friendly syntax (close to yaml but not yaml).</p>
 <p>The meta file name MUST the full image filename it characterize (including the file format suffix)
@@ -528,7 +529,7 @@ document and it will be ignored.</p>
 </section>
 </section>
 <section id="meta-json-files">
-<h2><a class="toc-backref" href="#toc-entry-17" role="doc-backlink">.meta.json files</a></h2>
+<h2><a class="toc-backref" href="#meta-json-files" role="doc-backlink">.meta.json files</a></h2>
 <p>We see previously that each rst page can define some metadata at its top. However
 specifying everytime some of those fields is a repetitive task. To adress this issue
 you can use meta files.</p>
@@ -562,7 +563,7 @@ when the previous value was a string, will cast the previous value to a list aut
 <p><em>The code logic can be found in</em> <span class="docutils literal">lmxsite._browse</span>.</p>
 </section>
 <section id="writing-page-html-templates">
-<h2><a class="toc-backref" href="#toc-entry-18" role="doc-backlink">Writing page html templates</a></h2>
+<h2><a class="toc-backref" href="#writing-page-html-templates" role="doc-backlink">Writing page html templates</a></h2>
 <p>All html templates are processed with <a class="reference external" href="https://jinja.palletsprojects.com/en/stable/">Jinja</a>.
 Refers to their documentation for how to write Jinja templates.</p>
 <p>In addition to the standard Jinja syntax, the following objects are available (some
@@ -585,7 +586,7 @@ explained in details after):</p>
 <li><p><span class="docutils literal">include_script_output</span>: function to include the output of a python script.</p></li>
 </ul>
 <section id="script-system">
-<h3><a class="toc-backref" href="#toc-entry-19" role="doc-backlink">script system</a></h3>
+<h3><a class="toc-backref" href="#script-system" role="doc-backlink">script system</a></h3>
 <p>The jinja syntax is not enough and you wish some part of the template was procedurally
 generated ? You can use the script include system to run an arbitrary python script
 that generates html (or actually anything).</p>
@@ -608,7 +609,7 @@ actually a function to call with the script path (relative to the template):</p>
 </pre>
 </section>
 <section id="cross-referencing">
-<h3><a class="toc-backref" href="#toc-entry-20" role="doc-backlink">cross-referencing</a></h3>
+<h3><a class="toc-backref" href="#cross-referencing" role="doc-backlink">cross-referencing</a></h3>
 <p>How to link to other html pages or static content ?</p>
 <p>First, reminder that all relative urls are relative to the page they are on.
 This mean that if you want to link to a resources based on its site root location,
@@ -628,14 +629,28 @@ instead. However just because this make links uglier you can use <span class="do
 that will shorten the links on publish; best of both worlds !</p>
 </section>
 </section>
+<section id="rss-feeds">
+<h2><a class="toc-backref" href="#rss-feeds" role="doc-backlink">Rss feeds</a></h2>
+<p>When creating a shelf, an rss feed will automatically be generated from that shelf as
+long as a template is specified in the site-config.</p>
+<p>The template is a regular jinja2 file that have access to the same <strong>filters</strong> as the
+page templates, but different <strong>variables</strong> which are:</p>
+<ul class="simple">
+<li><p><span class="docutils literal">URL_PATH</span>: the url path of the feed file; relative to the site root</p></li>
+<li><p><span class="docutils literal">Config</span>: the global site config used.</p></li>
+<li><p><span class="docutils literal">Shelf</span>: teh shelf object to generated the feed from</p></li>
+</ul>
+<p>The generated feed can be accessed at <span class="docutils literal">{shelf <span class="pre">url}/{shelf</span> <span class="pre">name}.rss.xml</span></span>.</p>
+</section>
 
   </article>
 
 </main>
 <footer>
   
+    
     <p>Static website <a href="."><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-22T15:15</i> from commit <i>c7eb700</i></p>
+      Last built on <i>2025-05-27T17:44</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/327ef87">327ef87</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

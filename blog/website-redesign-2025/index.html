@@ -37,6 +37,8 @@
   
   <link rel="stylesheet" href="../../.static/styles/shelf.css" />
   
+  <link rel="stylesheet" href="website-redesign-2025.css" />
+  
 </head>
 <body>
 <header>
@@ -75,7 +77,7 @@
             <hr>
           </div>
           <div class="metadata-tags">
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.9s">web-design</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.1s">web-design</pre>
           </div>
         </section>
         <span id="article-header-decoration"></span>
@@ -114,7 +116,8 @@
 <li><p><a class="reference internal" href="#building-the-code-library" id="toc-entry-3">Building the code library</a></p></li>
 <li><p><a class="reference internal" href="#redesign" id="toc-entry-4">Redesign</a></p>
 <ul>
-<li><p><a class="reference internal" href="#the-importance-of-typography" id="toc-entry-5">The importance of typography.</a></p></li>
+<li><p><a class="reference internal" href="#photography-portfolio" id="toc-entry-5">Photography portfolio</a></p></li>
+<li><p><a class="reference internal" href="#the-importance-of-typography" id="toc-entry-6">The importance of typography.</a></p></li>
 </ul>
 </li>
 </ul>
@@ -130,10 +133,10 @@ or doing their thing their own way. Anyway I got bored and a bit frustrated of w
 designed back in 2021 and wanted a change. It's my website I can do whatever the fuck
 I want <img alt="" class="emoji-role inline" src="../../.static/images/emojis/yes-cool.png" title="yes-cool" />.</p>
 <p>And I'm verry happy with what I achieved, a site that feels more personal, more funky
-and on which I have the whole control because I wrote (nearly) every single line
-of code that make it.</p>
+and on which I have the whole control because I wrote a lot of the code
+of code that it uses.</p>
 <section id="the-before">
-<h2><a class="toc-backref" href="#toc-entry-1" role="doc-backlink">The before</a></h2>
+<h2><a class="toc-backref" href="#the-before" role="doc-backlink">The before</a></h2>
 <p>I don't know shit about web-development if that its common to use &quot;backend&quot; and &quot;frontend&quot;
 to describe the different building blocks of a website. I like those word so I'll
 be using them to describe my whole website framework.</p>
@@ -159,7 +162,7 @@ published html website branch, not knowing which one shoudl be <span class="docu
 found out later that we usually put the html in a <span class="docutils literal"><span class="pre">gh-pages</span></span> branch).</p>
 </section>
 <section id="starting-over">
-<h2><a class="toc-backref" href="#toc-entry-2" role="doc-backlink">Starting over</a></h2>
+<h2><a class="toc-backref" href="#starting-over" role="doc-backlink">Starting over</a></h2>
 <p>The long-standing project was always to drop Pelican, it's a great tool for what it is
 designed, but I had a bigger scope, I wanted more freedom and I wanted control.
 Obviously because I'm a developer &quot;I can write it better for myself&quot; ! Which is true,
@@ -205,21 +208,25 @@ extra-complexity.</p>
 </aside>
 </section>
 <section id="building-the-code-library">
-<h2><a class="toc-backref" href="#toc-entry-3" role="doc-backlink">Building the code library</a></h2>
+<h2><a class="toc-backref" href="#building-the-code-library" role="doc-backlink">Building the code library</a></h2>
 <p>With that formalized, I knew what &quot;destination&quot; to code to, there was still the &quot;how do
 I get there&quot; to solve. This involved quite a bit more of research, trial and errors
 but I am too lazy to write a whole chapter about it so I'll be skipping that whole part
 <img alt="" class="emoji-role inline" src="../../.static/images/emojis/cat-sleepy-bb.webp" title="cat-sleepy-bb" />.</p>
 <p>You can get more information on the finished result by checking the <a class="reference external" href=".....docindex.html">documentation</a>.
 You will notice I share a lot of concepts with Pelican, but I implemented those my way.</p>
-<p>Just assume that after a few test or a very small version of my website I was satisified
+<p>One of the hardest part was understand the <span class="docutils literal">docutils</span> library. I would qualify the
+code as not very readable and not very-well documented which made it very hard to
+understand how to implement my own features. Seeing how complex the code is makes me
+wonder if picking rst as file format was the right choice ?</p>
+<p>Then after a few test or a very small version of my website I was satisified
 with the workflow and started re-building the website content. This was mostly
 copy/pasted and fixing all the previous website content so it all works with the new
 workflow.</p>
 <p>And only when the port over that I started bulding new stuff and redesigning the pages.</p>
 </section>
 <section id="redesign">
-<h2><a class="toc-backref" href="#toc-entry-4" role="doc-backlink">Redesign</a></h2>
+<h2><a class="toc-backref" href="#redesign" role="doc-backlink">Redesign</a></h2>
 <p>And now for the most fun part, what do I want my website to look like ?</p>
 <p>Even if I found
 the current design good enough and quite polished, I wanted a changes of values.
@@ -237,18 +244,112 @@ funny on my website, I can it's my website.</p>
 <p>My advantage is that I have some modest graphic-design skills, allowing me to be quite
 creative and make the whole process smoother and less frustrating. Still, where do I
 start ?</p>
+<section id="photography-portfolio">
+<h3><a class="toc-backref" href="#photography-portfolio" role="doc-backlink">Photography portfolio</a></h3>
 <p>If I look at my logbook, the first new design I come up with was a page to present
 a &quot;photography sessions&quot; (i.e. a bunch of shots grouped together). Not very interesting,
 but being able to add my photography portfolio was one of reason of that whole
 website renovation so I started by having a look at what I could do there.</p>
 <figure class="inline">
-<img alt="a 2 column layout with photo and text interleaved" class="inline" src="screenshot-draft-photography-session.jpg" />
+<img alt="a 2 column layout with photo and text interleaved" class="inline" src="screenshot-draft-photography-session.png" />
 <figcaption>
 <p>the initial design I drafted in Figma</p>
 </figcaption>
 </figure>
+<p>One of the key constraint in designing that portfolio page was the usage of captions.
+I write a caption for all my photography which acts as an alt-text for visually
+impaired people. I could just have implemented as <span class="docutils literal">alt</span> attributes on images but
+I spend so much time writing them that I don't see a reason to only make them visible
+to people with screen readers. As such I developed a system that allow me to arbitrarly
+place them in between images.</p>
+<p>Another issue with those captions is that because they act as alt-text, they become
+&quot;metadata&quot; of the image. But then where do I write it ? If I put it in the rst document
+this mean I couldn't use the image elsewhere with that caption. Embed the caption in the
+image metadata ? That's cumbersome because editing image metadata require external tools.
+My choice instead was to create an additional &quot;meta&quot; file for each image.
+I wanted the format to be very human friendly, so no json, but I didn't want an external
+dependency that yaml would have required. So I made my own very simple syntax. And
+now that have I have specific file for the caption, why not just take the opportunity to
+specify other type of metadata that I wish to display along the photography ?!</p>
+<p>Example of .meta file:</p>
+<pre class="highlight literal-block" title="Block of code in yaml language."><span class="nt">__format__</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2024-06</span>
+<span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">France - Lyon - Croix-Rousse</span>
+<span class="nt">film</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Kodak Portra 400 35mm</span>
+<span class="nt">lens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Minolta MD 35mm</span>
+<span class="nt">camera</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Minolta X-500</span>
+<span class="nt">caption</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">No Facho ! A powerfull message on the white wall of some private property.</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">Even more contrasty due to the intense sun there was on that day.</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">And it&#39;s understandable given the context, we are in middle of the french</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">legislative elections; the far right as menacing as ever.</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">Those message of resistance has been flourishing all over the neighbourhood.</span>
+</pre>
+<p>An interesting issue that came along the way was how to display images in fullscreen ?
+I.e. you click the image and it fill the screen height while reducing opacity for
+anything else. The easiest solution would probably be javascript but I really wanted
+to see how far I could go without using JS on my website at all.
+One of the solution I found was pretty satisfiying: <a class="reference external" href="https://sylvaindurand.org/overlay-image-in-pure-css/">https://sylvaindurand.org/overlay-image-in-pure-css/</a>.
+It's biggest drawback being that you have to duplicate the image, fortunately the way
+I add images is handled by a rst directive so duplicating content is hassleless.</p>
+<hr class="docutils" />
+<p>The next part of my photography portfolio was designing the landing page. Where the
+visitor can have a quick look at all my projects.
+I wanted something original, quite eye-catchy but that doesn't sacrifice picture
+presentation. I think I found the main direction pretty quickly as I remembered an
+incredible recent website that archived a lot of film box packaging: <a class="reference external" href="https://fp-archive.com/">https://fp-archive.com/</a>
+And on their I immediately stopped on the Fujifilm ones, of course because of their
+strong usage of green. Their packaging instantly became my main reference for designing
+the page.</p>
+<figure class="inline">
+<img alt="a photography of a flattened box of 120mm Fujichrome 100D" class="inline" src="photography-inspiration-1.png" />
+<figcaption>
+<p>Look at this color palette, gnnnnnn so good</p>
+</figcaption>
+</figure>
+<p>And this is the final wireframe design I sketched in Figma:</p>
+<img alt="screenshot of the design wireframe that inspire strongly from the previously mentioned packaging." class="inline" src="photography-figma-design.png" />
+<ul class="simple">
+<li><p>I had to somehow keep the iconic Fuji logo, that brings an important complementary
+color. I tried first to have my first + last name but it was not pretty and ended up
+only using my first name. I couldn't keep all the original logo characteristics because
+of the different letters so I aimed for something that feels like it but looks good
+on its own.</p></li>
+<li><p>the packaging has a lot of text but a photography portfolio usually doesn't. To add
+a bit more text I found the idea of translating some of the headings in other
+languages, as it's already the case on the reference. I choose french, my native
+language, with polish and italian that are some of my family origins.</p></li>
+<li><p>for the font I had to find something quite similar and was mostly limited by the
+free foundries I already had. I could probably have found better but ended-up
+using <a class="reference external" href="https://www.fontshare.com/fonts/clash-display">Clash Display</a>.</p></li>
+<li><p>I kept the popular &quot;square grid layout&quot; from social medias to display sessions. I
+don't like to have my images cropped but it allow for a more compact and tidy view.</p></li>
+</ul>
+<p>And this is what it looks like once implemented in html and css:</p>
+<img alt="screenshot of the final web page" class="inline" src="photography-site-screenshot.png" />
+<p>You can obviously check it by yourself by visiting <a class="reference external" href="../../work/photography/index.html">the page itself</a>
+(that may have changed since).</p>
+<div class="column-split docutils container">
+<img alt="screenshot of the page with smartphone dimensions" class="inline" src="photography-site-screenshot-responsive.png" style="width: 65%;" />
+<div class="docutils container">
+<p>One important difference is the background. I tried to reproduce the grainy feeling
+of the packaging's cardboard texture. This is done by mixing a bunch of svg noise with
+blending modes:</p>
+<pre class="highlight literal-block" title="Block of code in css language."><span class="nt">background</span><span class="o">:</span><span class="w"> </span><span class="nt">url</span><span class="o">(</span><span class="s2">&quot;noise.dust.dark.svg&quot;</span><span class="o">),</span><span class="w"> </span><span class="nt">url</span><span class="o">(</span><span class="s2">&quot;noise.dust.light.svg&quot;</span><span class="o">),</span><span class="w"> </span><span class="nt">url</span><span class="o">(</span><span class="s2">&quot;noise.svg&quot;</span><span class="o">),</span><span class="w"> </span><span class="nt">var</span><span class="o">(</span><span class="nt">--bg-color</span><span class="o">);</span>
+<span class="nt">background-blend-mode</span><span class="o">:</span><span class="w"> </span><span class="nt">normal</span><span class="o">,</span><span class="w"> </span><span class="nt">normal</span><span class="o">,</span><span class="w"> </span><span class="nt">overlay</span><span class="o">;</span>
+</pre>
+<p>The svg were generated with the help of <a class="reference external" href="https://noice.vercel.app/">https://noice.vercel.app/</a> and <a class="reference external" href="https://www.fffuel.co/nnnoise/">https://www.fffuel.co/nnnoise/</a>.</p>
+<p>⇐ The last tricky part for this page was making it responsive. As you can see the
+header relies a lot on horizontality which become quite limited on smartphones.</p>
+<p>I think I'm satisfied with the result but it's not fantastic, the &quot;fuji style&quot;
+logo is intended to be displayed in a corner which would have made a lot of
+vertical space wasted if implemented as such.</p>
+<p>The main heading wrapping is not very pretty but I think that's better than
+making it smaller to fit.</p>
+</div>
+</div>
+</section>
 <section id="the-importance-of-typography">
-<h3><a class="toc-backref" href="#toc-entry-5" role="doc-backlink">The importance of typography.</a></h3>
+<h3><a class="toc-backref" href="#the-importance-of-typography" role="doc-backlink">The importance of typography.</a></h3>
 <p>I am not very good with typography, but I do love them. I love endlessy scrolling fonts
 library or <a class="reference external" href="https://mastodon.gamedev.place/&#64;liamcollod/112388315897499867">visiting excentric designer website</a>
 to find the perfect typeface.</p>
@@ -264,6 +365,68 @@ because of the vendor-hosting ? Common you can just copy/paste a bunch of otf/tt
 and write 2 lines of css. The real reason was mostly that I didn't need anything fancy,
 the most popular fonts are in the Google catalogue and works just fine. But hey I said
 I want to get fancy for this website ! Time to go off-road ...</p>
+<p>I think my approach to pick fonts was the inverse of what designer usually do. I started
+to browse for fonts I like visually first, and the build the page style and design
+around that font; or at least get inspired from it.</p>
+<p>With the thousands of free fonts online it's hard to make a choice right ? Well
+amongst some of the type foundries I got some with really interesting vision: they are
+political.</p>
+<div class="url-preview-box docutils container">
+<a class="reference external" href="https://www.design-research.be/by-womxn/">
+</a>
+<div class="url-preview-image docutils container">
+<img alt="" class="inline" src="https://www.design-research.be/by-womxn/by-women-screenshot.png" />
+</div>
+<div class="url-preview-details docutils container">
+<p class="url-preview-title">⚧ LIBRE FONTS BY WOMXN</p>
+<div class="url-preview-subtitle docutils container">
+<a class="reference external" href="https://www.design-research.be/by-womxn/">
+https://www.design-research.be/by-womxn/</a>
+</div>
+<div class="url-preview-description docutils container">
+</div>
+</div>
+</div>
+<div class="url-preview-box docutils container">
+<a class="reference external" href="https://typotheque.genderfluid.space/fr">
+</a>
+<div class="url-preview-image docutils container">
+<img alt="" class="inline" src="https://typotheque.genderfluid.space/user/pages/02.mode-emploi/amie-intro2.webp" />
+</div>
+<div class="url-preview-details docutils container">
+<p class="url-preview-title">La typothèque Bye Bye Binary</p>
+<div class="url-preview-subtitle docutils container">
+<a class="reference external" href="https://typotheque.genderfluid.space/fr">
+https://typotheque.genderfluid.space/fr</a>
+</div>
+<div class="url-preview-description docutils container">
+</div>
+</div>
+</div>
+<p>And political is what I wanted my website to be more. I want to showcase the work of
+minorities. I want to highlight creators when I can. This is also the reason that
+all the decorative fonts on the index and work pages have their name and a link
+displayed next to them. They are such a crucial piece of puzzle for a website that
+they deserve credits.</p>
+<p>As of the time I'm writting this post, these are the fonts I ended up using:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pippin.gimp.org/0xA000/">0xA000</a>: picked for its unique style; I actually not ended up using it as much as I wanted.</p></li>
+<li><p><a class="reference external" href="https://typotheque.le75.be/">Barlow-Elastic</a></p></li>
+<li><p><a class="reference external" href="https://typotheque.genderfluid.space/fr/fontes/bbb-manifont-grotesk">BBBManifontGrotesk</a></p></li>
+<li><p><a class="reference external" href="https://www.fontshare.com/fonts/clash-display">ClashDisplay</a>: had to match the typography of the vintage Fujifilm packaging.</p></li>
+<li><p><a class="reference external" href="https://mother-type.de/fonts/coaster-sans">CoasterSans</a>: I love bold smooth fonts and I really wanted this one as heading at least once.</p></li>
+<li><p><a class="reference external" href="https://departuremono.com/">DepartureMono</a></p></li>
+<li><p><a class="reference external" href="https://typotheque.genderfluid.space/fr/fontes/escabeau">Escabeau</a></p></li>
+<li><p><a class="reference external" href="https://github.com/froyotam/ferrite-core">FerriteCoreDX</a></p></li>
+<li><p><a class="reference external" href="https://velvetyne.fr/degheest/ft88_fr.html">FT88</a>: the historical background was so cool</p></li>
+<li><p><a class="reference external" href="https://fonts.bunny.net/family/georama">Georama</a>: was already using the font on the old website; may replace in the future</p></li>
+<li><p><a class="reference external" href="https://montifonti.tilda.ws/mon_hugo">MonHugo</a></p></li>
+<li><p><a class="reference external" href="https://fonts.bunny.net/family/montserrat">Montserrat</a>: was already using the font on the old website; may replace in the future</p></li>
+<li><p><a class="reference external" href="https://github.com/JAMO-TYPEFACE/Orbit/tree/main">Orbit</a></p></li>
+<li><p><a class="reference external" href="https://fonts.bunny.net/family/source-code-pro">SourceCodePro</a>: was already using the font on the old website; may replace in the future</p></li>
+<li><p><a class="reference external" href="https://fonts.bunny.net/family/source-sans-pro">SourceSansPro</a>: was already using the font on the old website; may replace in the future</p></li>
+<li><p><a class="reference external" href="https://fonts.bunny.net/family/tiny5">Tiny5</a>: needed a really tiny pixel font</p></li>
+</ul>
 </section>
 </section>
 
@@ -272,8 +435,17 @@ I want to get fancy for this website ! Time to go off-road ...</p>
 </main>
 <footer>
   
+    
+    <a class="rss" title="Link to the RSS feed so you can get notified of the latests posts using an RSS Reader." href="../blog.rss.xml">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <title>rss-box</title>
+    <path fill="currentColor" d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M7.5,15A1.5,1.5 0 0,0 6,16.5A1.5,1.5 0 0,0 7.5,18A1.5,1.5 0 0,0 9,16.5A1.5,1.5 0 0,0 7.5,15M6,10V12A6,6 0 0,1 12,18H14A8,8 0 0,0 6,10M6,6V8A10,10 0 0,1 16,18H18A12,12 0 0,0 6,6Z"/>
+</svg>
+      RSS Feed
+    </a>
+    
     <p>Static website <a href="../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-22T15:15</i> from commit <i>c7eb700</i></p>
+      Last built on <i>2025-05-27T17:44</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/327ef87">327ef87</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

@@ -8,13 +8,11 @@
   <link rel="icon" href="../../.static/icons/logo-lixm.svg" type="image/x-ico">
   
     <meta name="author" content="Liam Collod">
-  <meta name="description" content="Making tx, rescaling image, displaying alembic content all as fast as
-a right click can be.">
+  <meta name="description" content="Making tx, rescaling image, displaying alembic content all as fast as a right click can be.">
   <meta name="fediverse:creator" content="@liamcollod@mastodon.gamedev.place">
   <meta property="og:title" content="liam collod - Creating custom context menu for Windows file explorer.">
   <meta property="og:type" content="website"><meta property="og:url" content="https://liamcollod.xyz/blog/windows-explorer-context-menu/index.html">
-  <meta property="og:description" content="Making tx, rescaling image, displaying alembic content all as fast as
-a right click can be."><meta property="og:image" content="https://liamcollod.xyz/blog/windows-explorer-context-menu/cover.jpg">
+  <meta property="og:description" content="Making tx, rescaling image, displaying alembic content all as fast as a right click can be."><meta property="og:image" content="https://liamcollod.xyz/blog/windows-explorer-context-menu/cover.jpg">
   <meta property="og:image:alt" content="a decorative image with a context menu">
   <meta name="dcterms.created" content="2023-01-29T21:15:00">
   <meta name="dcterms.modified" content="2025-04-12T12:17:00">
@@ -79,17 +77,16 @@ a right click can be."><meta property="og:image" content="https://liamcollod.xyz
             <hr>
           </div>
           <div class="metadata-tags">
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.4s">productivity</pre>
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.3s">arnold</pre>
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.6s">image-processing</pre>
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.4s">windows</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.7s">productivity</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.2s">arnold</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.2s">image-processing</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.3s">windows</pre>
           </div>
         </section>
         <span id="article-header-decoration"></span>
         <h1>Creating custom context menu for Windows file explorer.</h1>
         <section id="metadata-footer">
-          <p id="post-description" title="the post description">Making tx, rescaling image, displaying alembic content all as fast as
-a right click can be.</p>
+          <p id="post-description" title="the post description">Making tx, rescaling image, displaying alembic content all as fast as a right click can be.</p>
           <div class="metadata-essential">
               <hr>
               <span title="Date Created.">
@@ -202,7 +199,7 @@ Windows depths. But keep in mind the subject is not easy.</p>
 </nav>
 </aside>
 <section id="why">
-<h2><a class="toc-backref" href="#toc-entry-1" role="doc-backlink">Why ?</a></h2>
+<h2><a class="toc-backref" href="#why" role="doc-backlink">Why ?</a></h2>
 <p>You might have clicked on this article because you already knew it sounded
 like something you wanted to do at some point. But for the others why would
 you even need to add new actions to the context menu ?</p>
@@ -229,7 +226,7 @@ already allow you to more easily edit the context menu like <a class="reference 
 </aside>
 </section>
 <section id="command-line-interfaces-programs">
-<h2><a class="toc-backref" href="#toc-entry-2" role="doc-backlink">Command Line Interfaces programs</a></h2>
+<h2><a class="toc-backref" href="#command-line-interfaces-programs" role="doc-backlink">Command Line Interfaces programs</a></h2>
 <p>A Command Line Interface program is made to be interacted with from the command
 line, and not from a graphical interface like most programs. If you are not familiar
 with <abbr title="Command Line Interfaces">CLIs</abbr>, they are going to look very unpleasant
@@ -288,7 +285,7 @@ command <span class="docutils literal">maketx.exe <span class="pre">-u</span> <s
 needed by the third one.</p>
 </aside>
 <section id="maketx-exe">
-<h3><a class="toc-backref" href="#toc-entry-3" role="doc-backlink">maketx.exe</a></h3>
+<h3><a class="toc-backref" href="#maketx-exe" role="doc-backlink">maketx.exe</a></h3>
 <div class="url-preview-box docutils container">
 <a class="reference external" href="https://openimageio.readthedocs.io/en/latest/maketx.html#maketx">
 </a>
@@ -354,7 +351,7 @@ We can now have a look at how to create the context menu !</p>
 </section>
 </section>
 <section id="editing-the-registry-basics">
-<h2><a class="toc-backref" href="#toc-entry-4" role="doc-backlink">Editing the registry: Basics</a></h2>
+<h2><a class="toc-backref" href="#editing-the-registry-basics" role="doc-backlink">Editing the registry: Basics</a></h2>
 <p>Unfortunately, there is no really simple and easy way to add actions to the context menu
 (though there might be if you look for them on internet), at least for this article,
 we will have to edit the <a class="reference external" href="https://en.wikipedia.org/wiki/Windows_Registry">registry</a>.</p>
@@ -379,7 +376,7 @@ recommended to <a class="reference external" href="https://support.microsoft.com
 before any change.</p>
 </aside>
 <section id="creating-the-reg-file">
-<h3><a class="toc-backref" href="#toc-entry-5" role="doc-backlink">Creating the .reg file</a></h3>
+<h3><a class="toc-backref" href="#creating-the-reg-file" role="doc-backlink">Creating the .reg file</a></h3>
 <aside class="admonition note">
 <p class="admonition-title">Documentation</p>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Windows_Registry#.REG_files">https://en.wikipedia.org/wiki/Windows_Registry#.REG_files</a></p>
@@ -494,7 +491,7 @@ of maketx, cause we doesn't provide any argument. But let's move step by step
 and test what we already have.</p>
 </section>
 <section id="executing-the-reg-file">
-<h3><a class="toc-backref" href="#toc-entry-6" role="doc-backlink">Executing the .reg file</a></h3>
+<h3><a class="toc-backref" href="#executing-the-reg-file" role="doc-backlink">Executing the .reg file</a></h3>
 <p>Save your reg file from your text/code editor and double click on it. Windows
 will gift you 3 dialogs to accept, but that will be all you have to do.</p>
 <p>As a safety, let's manually check in the registry if it was registered. Open the
@@ -524,14 +521,14 @@ open it from the command line. And that's a task for the next section !</p>
 </section>
 </section>
 <section id="editing-the-registry-advanced">
-<h2><a class="toc-backref" href="#toc-entry-7" role="doc-backlink">Editing the registry: Advanced</a></h2>
+<h2><a class="toc-backref" href="#editing-the-registry-advanced" role="doc-backlink">Editing the registry: Advanced</a></h2>
 <p>The previous section allowed us to add a new simple action to the context menu,
 that just execute the application we gave it. But we are still missing plenty
 of use-cases, like how to keep the interface open in the case of a CLI, or even
 more importantly, how do we pass the path of the file we right-clicked on, to
 the command executed ?</p>
 <section id="calling-the-command-prompt">
-<h3><a class="toc-backref" href="#toc-entry-8" role="doc-backlink">Calling the command prompt</a></h3>
+<h3><a class="toc-backref" href="#calling-the-command-prompt" role="doc-backlink">Calling the command prompt</a></h3>
 <p>Let's address the issue we stopped the previous section at. As our tool is a CLI,
 it close once finished. But we want to keep its result visible. Manually the solution
 was to execute it from an existing command prompt window. And we will do exactly
@@ -557,7 +554,7 @@ But as intended, the window stays open because it was not opened by maketx but
 by us. Nice.</p>
 </section>
 <section id="retrieving-the-file-selected-in-the-command">
-<h3><a class="toc-backref" href="#toc-entry-9" role="doc-backlink">Retrieving the file selected in the command</a></h3>
+<h3><a class="toc-backref" href="#retrieving-the-file-selected-in-the-command" role="doc-backlink">Retrieving the file selected in the command</a></h3>
 <p>Probably the most interesting option for our context-menu. We selected a file
 by right-clicking, this mean we want to execute a program on it, by passing the
 path of this file to the program.</p>
@@ -583,7 +580,7 @@ properly converted to tx (if you selected an image format selected by maketx
 of course).</p>
 </section>
 <section id="passing-more-arguments">
-<h3><a class="toc-backref" href="#toc-entry-10" role="doc-backlink">Passing more arguments</a></h3>
+<h3><a class="toc-backref" href="#passing-more-arguments" role="doc-backlink">Passing more arguments</a></h3>
 <p>You remember at the beginning that I extracted the full command used by maketx
 on an existing .tx file ? There was a lot of additional arguments used.
 Let's add them. As on my side I am using maketx from the Arnold installation
@@ -605,7 +602,7 @@ I will remove all the argument that maketx will already add for me anyway
 still have a few improvements to make !</p>
 </section>
 <section id="creating-a-uninstall-reg-file">
-<h3><a class="toc-backref" href="#toc-entry-11" role="doc-backlink">Creating a &quot;uninstall&quot; reg file</a></h3>
+<h3><a class="toc-backref" href="#creating-a-uninstall-reg-file" role="doc-backlink">Creating a &quot;uninstall&quot; reg file</a></h3>
 <p>For now we have a single file that allow us to create the keys in the registry.
 But what if we want the inverse, meaning removing them ? All program can be
 installed and uninstalled, so it should be the same for our context-menu action.</p>
@@ -643,7 +640,7 @@ still be in the registry because you forgot to delete it !</p>
 </aside>
 </section>
 <section id="using-environment-variables-for-robustness">
-<h3><a class="toc-backref" href="#toc-entry-12" role="doc-backlink">Using environment variables for robustness</a></h3>
+<h3><a class="toc-backref" href="#using-environment-variables-for-robustness" role="doc-backlink">Using environment variables for robustness</a></h3>
 <p>In all the previous examples we have been using an absolute path to
 <span class="docutils literal">maketx.exe</span>. Let's imagine your directly picked the maketx located in your
 Maya Arnold installation, or whatever other DCC. What happens if you uninstall
@@ -706,7 +703,7 @@ Like for <span class="docutils literal">%1</span></p></li>
 <p>Hopefully you should never have to get back to your reg file to edit it now.</p>
 </section>
 <section id="creating-sub-menus">
-<h3><a class="toc-backref" href="#toc-entry-13" role="doc-backlink">Creating sub-menus</a></h3>
+<h3><a class="toc-backref" href="#creating-sub-menus" role="doc-backlink">Creating sub-menus</a></h3>
 <p>One feature that you might want to use, would be to have nested menus. For
 example the default &quot;Open With&quot; menu offer multiple options once hovered.</p>
 <p>With our example it would be nice to have multiple maketx options, one for
@@ -784,7 +781,7 @@ root will be counted until you reach <strong>the maximum of 16 menus</strong>. <
 </aside>
 </section>
 <section id="auto-generating-the-reg-files">
-<h3><a class="toc-backref" href="#toc-entry-14" role="doc-backlink">Auto-generating the .reg files</a></h3>
+<h3><a class="toc-backref" href="#auto-generating-the-reg-files" role="doc-backlink">Auto-generating the .reg files</a></h3>
 <p>For the more technical person that will be reading this article. I already
 simplified all the steps above by wrapping them up in python CLI.</p>
 <div class="url-preview-box docutils container">
@@ -816,7 +813,7 @@ to its design around json file. Up to you.</p>
 </section>
 </section>
 <section id="cool-use-cases-ideas-for-context-menus">
-<h2><a class="toc-backref" href="#toc-entry-15" role="doc-backlink">Cool use cases ideas for context-menus</a></h2>
+<h2><a class="toc-backref" href="#cool-use-cases-ideas-for-context-menus" role="doc-backlink">Cool use cases ideas for context-menus</a></h2>
 <p>Because maketx is not the only program that is cool to have available has a right
 click, here is a few ideas that could really boost your workflow !</p>
 <aside class="admonition warning">
@@ -831,10 +828,10 @@ in the command).</p>
 with whitespaces (tested and did not work properly for me). <a class="brackets" href="#footnote-8" id="footnote-reference-5" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a></p>
 </aside>
 <section id="maketx">
-<h3><a class="toc-backref" href="#toc-entry-16" role="doc-backlink">maketx</a></h3>
+<h3><a class="toc-backref" href="#maketx" role="doc-backlink">maketx</a></h3>
 <p>Even more of it !</p>
 <section id="txify-entire-folders">
-<h4><a class="toc-backref" href="#toc-entry-17" role="doc-backlink">txify entire folders</a></h4>
+<h4><a class="toc-backref" href="#txify-entire-folders" role="doc-backlink">txify entire folders</a></h4>
 <p>With what we saw we can quickly convert all the texture in a directory by selecting
 them all, and running the context-menu. But we could also implement this by
 selecting a directory and executing the context menu from it.</p>
@@ -877,7 +874,7 @@ command will be executed one after the other which will take much more time.</p>
 </pre>
 </section>
 <section id="colorspace-conversions">
-<h4><a class="toc-backref" href="#toc-entry-18" role="doc-backlink">colorspace conversions</a></h4>
+<h4><a class="toc-backref" href="#colorspace-conversions" role="doc-backlink">colorspace conversions</a></h4>
 <p>In the final maketx example you may have noticed I created an action that
 assume the source texture is sRGB &quot;Display&quot; encoded and is converted to sRGB Linear.
 It's pretty common to have colorspace conversion as all tx should be encoded
@@ -899,7 +896,7 @@ is already set properly <a class="brackets" href="#footnote-7" id="footnote-refe
 </section>
 </section>
 <section id="oiio-tool">
-<h3><a class="toc-backref" href="#toc-entry-19" role="doc-backlink">OIIO Tool</a></h3>
+<h3><a class="toc-backref" href="#oiio-tool" role="doc-backlink">OIIO Tool</a></h3>
 <p>I will start by the most useful of all (for a 3D artist at least). <a class="reference external" href="https://openimageio.readthedocs.io/en/latest/oiiotool.html#">oiiotool</a> is the CLI
 version of the OpenImageIO library and was designed to perform image-processing.</p>
 <p>Just have a look at the documentation and the <a class="reference external" href="https://openimageio.readthedocs.io/en/latest/oiiotool.html#oiiotool-tutorial-recipes">multiple examples it includes</a>
@@ -928,7 +925,7 @@ pip installed on your machine you can do a:</p>
 environment variable <span class="docutils literal">OIIOTOOL</span> as shown previously.</p>
 </aside>
 <section id="retrieving-image-statistic-and-metadata">
-<h4><a class="toc-backref" href="#toc-entry-20" role="doc-backlink">Retrieving image statistic and metadata</a></h4>
+<h4><a class="toc-backref" href="#retrieving-image-statistic-and-metadata" role="doc-backlink">Retrieving image statistic and metadata</a></h4>
 <p>Especially useful for OpenEXR files. To check what is stored inside.</p>
 <pre class="highlight literal-block" title="Block of code in ini language."><span class="na">Windows Registry Editor Version 5.00</span>
 
@@ -944,7 +941,7 @@ environment variable <span class="docutils literal">OIIOTOOL</span> as shown pre
 </pre>
 </section>
 <section id="rescaling-textures">
-<h4><a class="toc-backref" href="#toc-entry-21" role="doc-backlink">Rescaling textures</a></h4>
+<h4><a class="toc-backref" href="#rescaling-textures" role="doc-backlink">Rescaling textures</a></h4>
 <p>It is most common that you exported textures with large dimensions like
 4096x4096 and that you need to resize them as you don't need that much pixels.</p>
 <p>Again with oiiotool, as fast as right click can be !</p>
@@ -1032,7 +1029,7 @@ failed.</p>
 </aside>
 </section>
 <section id="converting-images-to-ico">
-<h4><a class="toc-backref" href="#toc-entry-22" role="doc-backlink">Converting images to .ico</a></h4>
+<h4><a class="toc-backref" href="#converting-images-to-ico" role="doc-backlink">Converting images to .ico</a></h4>
 <p>You saw that we needed to create <span class="docutils literal">.ico</span> file to give pretty icon to our
 context-menus, and it's annoying to go on some random website to convert your
 images. Let's automatize it too !</p>
@@ -1049,7 +1046,7 @@ images. Let's automatize it too !</p>
 the same image at different scales, but again OIIO make that pretty easy !</p>
 </section>
 <section id="convert-tx-back-to-another-format">
-<h4><a class="toc-backref" href="#toc-entry-23" role="doc-backlink">Convert .tx back to another format</a></h4>
+<h4><a class="toc-backref" href="#convert-tx-back-to-another-format" role="doc-backlink">Convert .tx back to another format</a></h4>
 <p>If you ever only received/find that there only the tx left for your asset, you
 can use oiitool to convert them to a more readable format !</p>
 <p>Here is just the .bat file where I convert them back to EXR :</p>
@@ -1078,7 +1075,7 @@ menu if this is more logical to you).</p>
 </section>
 </section>
 <section id="abcinfo">
-<h3><a class="toc-backref" href="#toc-entry-24" role="doc-backlink">ABCInfo</a></h3>
+<h3><a class="toc-backref" href="#abcinfo" role="doc-backlink">ABCInfo</a></h3>
 <p>Next one : retrieving information about an Alembic file without even opening
 it in a DCC. We will be using a CLI called <span class="docutils literal">abcinfo.exe</span>. <em>This CLI can only
 be found in Houdini installation</em> :</p>
@@ -1112,7 +1109,7 @@ use the icon packed in the .exe (if there is one). And we also leave the environ
 variable that still work just fine.</p>
 </section>
 <section id="ffmpeg">
-<h3><a class="toc-backref" href="#toc-entry-25" role="doc-backlink">ffmpeg</a></h3>
+<h3><a class="toc-backref" href="#ffmpeg" role="doc-backlink">ffmpeg</a></h3>
 <p>One of the most famous CLI. Powering most of the video-processing applications,
 <a class="reference external" href="https://ffmpeg.org/">ffmpeg</a> is an invaluable resource for anything video-related.</p>
 <p>As for oiiotool, the use-case for it are hundred and I will only show a few of them.
@@ -1120,7 +1117,7 @@ But at the opposite of oiiotool, <a class="reference external" href="https://www
 is much easier. Download it somewhere an create an environment variable
 (I picked the very original <span class="docutils literal">FFMPEG</span> for the name)</p>
 <section id="video-to-gif">
-<h4><a class="toc-backref" href="#toc-entry-26" role="doc-backlink">video to gif</a></h4>
+<h4><a class="toc-backref" href="#video-to-gif" role="doc-backlink">video to gif</a></h4>
 <p>An important problem while converting video to gif is disk size. GIF are cools,
 but can become very heavy if not optimized, and most website have file size limitations.</p>
 <p>So when doing a gif we always try to find a good quality/size compromise which
@@ -1249,7 +1246,7 @@ of them with just &quot;presets&quot; + 1 for the interactive + 1 for creating a
 sub-menu for presets !</p>
 </section>
 <section id="optimized-mp4-videos">
-<h4><a class="toc-backref" href="#toc-entry-27" role="doc-backlink">optimized mp4 videos</a></h4>
+<h4><a class="toc-backref" href="#optimized-mp4-videos" role="doc-backlink">optimized mp4 videos</a></h4>
 <p>One reason you migh want to use ffmpeg is to convert to one video format to another.
 You produced a &quot;master&quot; video, witht he highest quality possible, and you now
 want to share it on the web, which require encoding it in more optimized and
@@ -1353,7 +1350,7 @@ intermediate batch file :</p>
 </a>
 </section>
 <section id="image-sequence-to-video">
-<h4><a class="toc-backref" href="#toc-entry-28" role="doc-backlink">image sequence to video</a></h4>
+<h4><a class="toc-backref" href="#image-sequence-to-video" role="doc-backlink">image sequence to video</a></h4>
 <aside class="admonition note">
 <p class="admonition-title">note</p>
 <p>This kind of more complex script would be <a class="reference external" href="https://github.com/jedypod/generate-dailies">better written in python</a> but I'm
@@ -1488,7 +1485,7 @@ but it's the most simple solution and is not a big deal.</p></li>
 </section>
 </section>
 <section id="creating-directory-hierarchies">
-<h3><a class="toc-backref" href="#toc-entry-29" role="doc-backlink">Creating directory hierarchies</a></h3>
+<h3><a class="toc-backref" href="#creating-directory-hierarchies" role="doc-backlink">Creating directory hierarchies</a></h3>
 <p>Another common use case that doesn't involve any external program this time !
 Just creating directories. Imagine you are working in your project's directory
 and there is always that folder structure you always need to recreate. Let's
@@ -1538,7 +1535,7 @@ as a root key so it appear when you right click on the background of the file
 explorer.</p>
 </section>
 <section id="starting-different-version-of-the-same-dcc">
-<h3><a class="toc-backref" href="#toc-entry-30" role="doc-backlink">Starting different version of the same DCC</a></h3>
+<h3><a class="toc-backref" href="#starting-different-version-of-the-same-dcc" role="doc-backlink">Starting different version of the same DCC</a></h3>
 <p>Maybe you are working on multiple projects at the same time, requiring different
 software versions to be used. And you really would like to just double-click on
 your file to launch it. Well with what we learned you could at least create a
@@ -1573,7 +1570,7 @@ of cool workflow optimizations you could perform with customized context menus !
 </section>
 </section>
 <section id="troubleshooting">
-<h2><a class="toc-backref" href="#toc-entry-31" role="doc-backlink">Troubleshooting</a></h2>
+<h2><a class="toc-backref" href="#troubleshooting" role="doc-backlink">Troubleshooting</a></h2>
 <p>Most of the time it will be a character escaping issue.</p>
 <ul>
 <li><dl class="simple">
@@ -1605,7 +1602,7 @@ double escape them. Example :</p>
 <p>Do not hesitate to join the discord linked below and ask, if you have any more issue.</p>
 </section>
 <section id="changelog">
-<h2><a class="toc-backref" href="#toc-entry-32" role="doc-backlink">Changelog</a></h2>
+<h2><a class="toc-backref" href="#changelog" role="doc-backlink">Changelog</a></h2>
 <ul class="simple">
 <li><p><span class="docutils literal"><span class="pre">13-07-2023</span></span>: fixed some <span class="docutils literal">%1</span> argument not wrapped in quotes. Thanks to Slava.</p></li>
 <li><p><span class="docutils literal"><span class="pre">12-04-2025</span></span>:</p>
@@ -1617,7 +1614,7 @@ double escape them. Example :</p>
 </ul>
 </section>
 <section id="references">
-<h2><a class="toc-backref" href="#toc-entry-33" role="doc-backlink">References</a></h2>
+<h2><a class="toc-backref" href="#references" role="doc-backlink">References</a></h2>
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="footnote-1" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#footnote-reference-1">1</a><span class="fn-bracket">]</span></span>
@@ -1660,8 +1657,17 @@ double escape them. Example :</p>
 </main>
 <footer>
   
+    
+    <a class="rss" title="Link to the RSS feed so you can get notified of the latests posts using an RSS Reader." href="../blog.rss.xml">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <title>rss-box</title>
+    <path fill="currentColor" d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M7.5,15A1.5,1.5 0 0,0 6,16.5A1.5,1.5 0 0,0 7.5,18A1.5,1.5 0 0,0 9,16.5A1.5,1.5 0 0,0 7.5,15M6,10V12A6,6 0 0,1 12,18H14A8,8 0 0,0 6,10M6,6V8A10,10 0 0,1 16,18H18A12,12 0 0,0 6,6Z"/>
+</svg>
+      RSS Feed
+    </a>
+    
     <p>Static website <a href="../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-22T15:15</i> from commit <i>c7eb700</i></p>
+      Last built on <i>2025-05-27T17:44</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/327ef87">327ef87</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

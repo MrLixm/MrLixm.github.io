@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+        
+        <title>Liam Collod - photography</title>
+        <link>https://liamcollod.xyz/work/photography</link>
+        <description>My digital and film photography work.</description>
+        <docs>https://www.rssboard.org/rss-specification</docs>
+        <image>
+            <url>https://liamcollod.xyz/work/photography/cover-social.jpg</url>
+            <title>Liam Collod - photography</title>
+            <link>https://liamcollod.xyz/work/photography</link>
+        </image>
+        
+        <item>
+            <title>Parc de la Tête d&#39;Or</title>
+            <link>https://liamcollod.xyz/work/photography/2411tetedor/</link>
+            <description>Sometimes, waking up early has advantages.</description>
+            <pubDate>Wed, 05 Mar 2025 18:39:00</pubDate>
+        </item>
+        
+        <item>
+            <title>Delayed winter</title>
+            <link>https://liamcollod.xyz/work/photography/2411warm/</link>
+            <description>Throwback to November, which was still so warm and sunny.</description>
+            <pubDate>Fri, 17 Jan 2025 23:58:00</pubDate>
+        </item>
+        
+        <item>
+            <title>Reflective nights</title>
+            <link>https://liamcollod.xyz/work/photography/2412street/</link>
+            <description>Rain falling, city lights still shinning, but feels like twice as many.</description>
+            <pubDate>Tue, 07 Jan 2025 20:32:00</pubDate>
+        </item>
+        
+        <item>
+            <title>Night of lights</title>
+            <link>https://liamcollod.xyz/work/photography/2412nightoflights/</link>
+            <description>Illuminated by artists, crowded by curious, the city doesn&#39;t sleep anymore.</description>
+            <pubDate>Thu, 19 Dec 2024 21:32:00</pubDate>
+        </item>
+        
+        <item>
+            <title>Blues Hour</title>
+            <link>https://liamcollod.xyz/work/photography/2408blueshour/</link>
+            <description>It&#39;s getting melancolic around here.</description>
+            <pubDate>Mon, 28 Oct 2024 16:57:00</pubDate>
+        </item>
+        
+        <item>
+            <title>It&#39;s getting blurry</title>
+            <link>https://liamcollod.xyz/work/photography/2408itsgettingblurry/</link>
+            <description>through thick chemicals clouds, few light reach us, somehow forming, picture of empty places.</description>
+            <pubDate>Sun, 27 Oct 2024 16:57:00</pubDate>
+        </item>
+        
+        <item>
+            <title>Contrast</title>
+            <link>https://liamcollod.xyz/work/photography/2408contrast/</link>
+            <description>Lost in light or lost in shadows ? One slowly leaking into the another ...</description>
+            <pubDate>Mon, 21 Oct 2024 18:27:00</pubDate>
+        </item>
+        
+        <item>
+            <title>Golden Asphalt</title>
+            <link>https://liamcollod.xyz/work/photography/2406goldenasphalt/</link>
+            <description>Grey dull concrete ? Add a beam of sun or a touch of chlorophyle to mitigate. Shot at sunset. Results guaranteed.</description>
+            <pubDate>Wed, 24 Jul 2024 20:51:00</pubDate>
+        </item>
+        
+        <item>
+            <title>BBB</title>
+            <link>https://liamcollod.xyz/work/photography/2406bbb/</link>
+            <description>A blue block balad.</description>
+            <pubDate>Wed, 17 Jul 2024 21:47:00</pubDate>
+        </item>
+        
+        <item>
+            <title>Left in the Sun</title>
+            <link>https://liamcollod.xyz/work/photography/2406leftinthesun/</link>
+            <description>spots of interesting concrete, blazed by our star</description>
+            <pubDate>Tue, 16 Jul 2024 15:47:00</pubDate>
+        </item>
+        
+    </channel>
+</rss>
