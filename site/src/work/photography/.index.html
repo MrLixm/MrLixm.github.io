@@ -33,7 +33,7 @@
     <div class="photography-gallery">
       {%- for page in Shelf.iterate_children_by_last_created(reverse=True) %}
         {%- if page is not sameas(Page) %}
-          <a href="{{ page.url_path|mkpagerel }}">
+          <a href="{{ page.url_path|mkpagerel|prettylink }}">
             <div class="photography-gallery-item">
               <img src="{{ page.metadata.image|mksiterel(page.url_path)|mkpagerel }}" alt="{{ page.metadata.image_alt }}">
               <h3>{{ page.title }}</h3>
