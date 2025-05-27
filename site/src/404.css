@@ -1,0 +1,95 @@
+body {
+    background: url(".static/images/textures/white-noise.jpg") repeat center / 200px,
+    radial-gradient(59.74% 80.93% at 18.66% 3.98%, rgba(63, 255, 186, 0.20) 0%, rgba(0, 0, 0, 0.00) 100%),
+    radial-gradient(74.49% 50% at 50% 50%, rgba(128, 246, 225, 0.12) 0%, rgba(0, 0, 0, 0.12) 100%),
+    #0D1117;
+    background-blend-mode: overlay;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+h1 {
+    font-size: 8rem;
+    margin: 0;
+    mix-blend-mode: difference;
+    color: rgb(255, 203, 0);
+}
+p {
+    margin: 0;
+    font-family: "Elastic", sans-serif;
+}
+.subtitle {
+    font-size: 2rem;
+    font-weight: bold;
+}
+.kaomoji {
+    font-family: "BBBManifontGrotesk", monospace;
+}
+
+
+@keyframes frog-anim {
+    0% {
+        background: url("index/frog-anim/lego-frog.0001.png") no-repeat center;
+        background-size: 100%;
+    }
+    11.1% {
+        background: url("index/frog-anim/lego-frog.0002.png") no-repeat center;
+        background-size: 100%;
+    }
+    22.2% {
+        background: url("index/frog-anim/lego-frog.0003.png") no-repeat center;
+        background-size: 100%;
+    }
+    33.3% {
+        background: url("index/frog-anim/lego-frog.0004.png") no-repeat center;
+        background-size: 100%;
+    }
+    44.4% {
+        background: url("index/frog-anim/lego-frog.0005.png") no-repeat center;
+        background-size: 100%;
+    }
+    55.5% {
+        background: url("index/frog-anim/lego-frog.0006.png") no-repeat center;
+        background-size: 100%;
+    }
+    66.6% {
+        background: url("index/frog-anim/lego-frog.0007.png") no-repeat center;
+        background-size: 100%;
+    }
+    77.7% {
+        background: url("index/frog-anim/lego-frog.0008.png") no-repeat center;
+        background-size: 100%;
+    }
+    88.8% {
+        background: url("index/frog-anim/lego-frog.0009.png") no-repeat center;
+        background-size: 100%;
+    }
+    100% {
+        background: url("index/frog-anim/lego-frog.0001.png") no-repeat center;
+        background-size: 100%;
+    }
+}
+.frog-animated {
+    --frog-size: 40%;
+    position: absolute;
+    top: calc((100% - var(--frog-size)) / 2);
+    left: calc((100% - var(--frog-size)) / 2);
+    height: var(--frog-size);
+    width: var(--frog-size);
+    min-width: 40%;
+    overflow: clip;
+
+    z-index: -1;
+    animation: frog-anim 2s linear infinite;
+    filter: drop-shadow(0 0 180px rgba(46, 213, 72, 0.4));
+}
+@media screen and (max-width: 600px) {
+    .frog-animated {
+        --frog-size: 100%;
+    }
+}
