@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}liam collod - {{ Page.metadata.title }}{% endblock title %}</title>
   {%- if Page.metadata.icon %}
-  <link rel="icon" href="{{ Page.metadata.icon }}" type="image/x-ico">
+  <link rel="icon" href="{{ Page.metadata.icon|mksiterel|mksiteabs }}" type="image/x-ico">
   {% endif %}
   {%- for author in Page.metadata.authors %}
     <meta name="author" content="{{ author }}">
@@ -31,9 +31,11 @@
   {%- if Page.metadata.date_modified %}
   <meta name="dcterms.modified" content="{{ Page.metadata.date_modified.isoformat() }}">
   {%- endif %}
+  {% block stylesheets %}
   {% for stylesheet in Page.stylesheets %}
   <link rel="stylesheet" href="{{ stylesheet }}" />
   {% endfor %}
+  {% endblock %}
 </head>
 <body>
 <header>

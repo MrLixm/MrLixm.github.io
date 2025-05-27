@@ -1,4 +1,14 @@
 {% extends ".base.html" %}
+{% block stylesheets %}
+  {% for stylesheet in Page.stylesheets %}
+  {% if not stylesheet.startswith("http") %}
+  {# the 404 page might be called from a non-root location so all path need to be absolute #}
+  <link rel="stylesheet" href="/{{ stylesheet|mksiterel }}" />
+  {% else %}
+  <link rel="stylesheet" href="{{ stylesheet }}" />
+  {% endif %}
+  {% endfor %}
+{% endblock %}
 {% block main %}
   <h1>404</h1>
   <p class="subtitle">File not found</p>
