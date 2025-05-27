@@ -1,7 +1,7 @@
 :root {
     --bg-color: rgb(0, 0, 0);
     --color-blue-v: rgb(20, 37, 227);
-    --color-lime: rgb(190, 250, 24);
+    --color-lime: rgb(159, 247, 100);;
 }
 
 header #site-name {
@@ -244,7 +244,7 @@ section#introduction .bricks-frog {
     left: 716px;
     width: 77px;
     transform: rotate(-5deg);
-    filter: drop-shadow(5px 5px var(--color-lime)) drop-shadow(-5px -5px var(--color-blue-v));
+    filter: drop-shadow(5px 5px rgb(190, 250, 24)) drop-shadow(-5px -5px var(--color-blue-v));
 }
 section#introduction .bricks-frog:hover {
     transform: scale(1.1);
