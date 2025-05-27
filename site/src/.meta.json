@@ -1,5 +1,5 @@
 {
-  "image": "/.static/images/cover-social.jpg",
+  "image": ".static/images/cover-social.jpg",
   "stylesheets": [
     ".static/styles/themes/default.css",
     ".static/fonts/Montserrat/Montserrat.css",
