@@ -60,6 +60,12 @@
 </main>
 <footer>
   {% block footer %}
+    {% if Shelf and not Shelf.config.disable_rss %}
+    <a class="rss" title="Link to the RSS feed so you can get notified of the latests posts using an RSS Reader." href="{{ Shelf.rss_feed_url|mkpagerel }}">
+      {% include ".static/icons/rss.svg" %}
+      RSS Feed
+    </a>
+    {% endif %}
     <p>Static website <a href="{{ ".doc/index.html"|mkpagerel|prettylink }}"><i>hand-crafted</i></a> using 🐍 Python !
       Last built on <i>{{ Context.build_time.isoformat(timespec='minutes') }}</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/{{ Context.last_commit }}">{{ Context.last_commit }}</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>

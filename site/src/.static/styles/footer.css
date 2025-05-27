@@ -9,6 +9,16 @@ footer {
     opacity: 0.6;
     text-align: center;
 }
+footer .rss {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        width: 16px;
+        height: 16px;
+    }
+}
 footer i {
     font-family: var(--font-mono);
     font-size: 0.75rem;
@@ -16,18 +26,20 @@ footer i {
 }
 footer a, footer a:visited {
     text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-color: var(--color-WW);
     color: unset;
 }
 footer a:hover {
     text-decoration: underline;
 }
-footer p:nth-child(2) {
+footer p:last-child {
     font-size: 0.6rem;
 }
 footer p {
     margin: unset;
 }
-footer p:nth-child(2):hover {
+footer p:last-child:hover {
     animation-name: color-rainbow;
     animation-duration: 5s;
     animation-iteration-count: infinite;
