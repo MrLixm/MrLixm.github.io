@@ -82,6 +82,15 @@ class ShelfResource:
     def name(self):
         return Path(self.url_path).name
 
+    def get_index_page(self) -> PageResource | None:
+        """
+        Get the index page for this shelf, if it has been added as children.
+        """
+        try:
+            return next(page for page in self.children if self.is_index(page))
+        except StopIteration:
+            return None
+
     def is_index(self, page: PageResource) -> bool:
         """
         Return True if the page is to be used as the index page of the self it belongs to.

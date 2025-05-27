@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+        {% set index_page = Shelf.get_index_page() %}
+        <title>Liam Collod - {{ Shelf.name|e }}</title>
+        <link>{{ Shelf.url_path|mksiteabs }}</link>
+        <description>{{ index_page.metadata.description|e }}</description>
+        <docs>https://www.rssboard.org/rss-specification</docs>
+        <image>
+            <url>{{ index_page.metadata.image|mksiterel(index_page.url_path)|mksiteabs }}</url>
+            <title>Liam Collod - {{ Shelf.name }}</title>
+            <link>{{ Shelf.url_path|mksiteabs }}</link>
+        </image>
+        {% for page in Shelf.iterate_children_by_last_created(reverse=True, ignore_index=True) %}
+        <item>
+            <title>{{ page.title|e }}</title>
+            <link>{{ page.url_path|mksiteabs|prettylink }}</link>
+            <description>{{ page.metadata.description|e }}</description>
+            <pubDate>{{ page.metadata.date_created.strftime("%a, %d %b %Y %H:%M:%S") }}</pubDate>
+        </item>
+        {% endfor %}
+    </channel>
+</rss>

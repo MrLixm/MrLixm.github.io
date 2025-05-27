@@ -200,3 +200,35 @@ def render_page(
         shelf_library=shelf_library,
     )
     return renderer.render()
+
+
+def render_rss_feed(
+    template_name: str,
+    url_path: str,
+    shelf: ShelfResource,
+    site_config: SiteConfig,
+) -> str:
+    """
+    Generate a rss feed from a shelf.
+
+    Args:
+        template_name: jinja template path relative to template root
+        url_path: rss file url; relative to site root
+        shelf: shelf the feed is generated from
+        site_config:
+
+    Returns:
+        rendered template which can be writen to disk
+    """
+    jinja_env = get_jinja_env(
+        site_config=site_config,
+        page_rel_url=url_path,
+    )
+    template = jinja_env.get_template(template_name)
+    attributes = {
+        "URL_PATH": url_path,
+        "Config": site_config,
+        "Shelf": shelf,
+    }
+    content = template.render(**attributes)
+    return content

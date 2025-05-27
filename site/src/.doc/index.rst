@@ -569,3 +569,19 @@ While once published ``work/myproject/`` might resolve fine by the server,
 locally it will not and you will need to link ``work/myproject/index.html``
 instead. However just because this make links uglier you can use ``prettylink``
 that will shorten the links on publish; best of both worlds !
+
+Rss feeds
+---------
+
+When creating a shelf, an rss feed will automatically be generated from that shelf as
+long as a template is specified in the site-config.
+
+The template is a regular jinja2 file that have access to the same **filters** as the
+page templates, but different **variables** which are:
+
+- ``URL_PATH``: the url path of the feed file; relative to the site root
+- ``Config``: the global site config used.
+- ``Shelf``: teh shelf object to generated the feed from
+
+The generated feed can be accessed at ``{shelf url}/{shelf name}.rss.xml``.
+

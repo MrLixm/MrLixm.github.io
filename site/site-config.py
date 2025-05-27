@@ -32,6 +32,9 @@ REDIRECTIONS = {
 # jinja template path to use to render redirections page (relative to TEMPLATES_ROOT)
 REDIRECTIONS_TEMPLATE = ".redirect.html"
 
+# jinja template path to use to render rss feeds generated from shelves
+RSS_FEED_TEMPLATE = ".rss.xml.jinja2"
+
 # used for making some relative urls absolute
 SITE_URL = "https://liamcollod.xyz"
 # affect how the site is built (mainly urls), i.e. local preview or final web publish.

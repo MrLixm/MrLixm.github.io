@@ -30,6 +30,7 @@ class SiteConfig:
     HEADER_NAV: dict[str, str] = mkfield({"type": dict})
     REDIRECTIONS: dict[str, str] = mkfield({"type": dict})
     REDIRECTIONS_TEMPLATE: str = mkfield({"type": str})
+    RSS_FEED_TEMPLATE: str = mkfield({"type": str})
 
     def sanitize(self):
         """
