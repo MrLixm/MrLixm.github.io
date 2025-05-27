@@ -27,6 +27,11 @@ class ShelfConfig:
     list of page filenames that will be included in the final site but are not part of the procedural "browser" pages.
     """
 
+    disable_rss: bool = dataclasses.field(
+        default=False,
+        metadata={"type": bool, "required": False},
+    )
+
     def __post_init__(self):
         for field in dataclasses.fields(self):
             value = getattr(self, field.name)
@@ -81,6 +86,16 @@ class ShelfResource:
     @property
     def name(self):
         return Path(self.url_path).name
+
+    @property
+    def rss_feed_url(self) -> str:
+        """
+        Get the url to the rss feed file; relative to the site root.
+
+        Note that the file may not exists.
+        """
+        # TODO expose the filename as configurable in the ShelfConfig
+        return f"{self.url_path}/{self.name}.rss.xml"
 
     def get_index_page(self) -> PageResource | None:
         """

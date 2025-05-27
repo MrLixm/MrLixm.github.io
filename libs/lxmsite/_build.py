@@ -239,19 +239,21 @@ def build_redirection(
     dst_path.write_text(page_html, encoding="utf-8")
 
 
-def build_rss_feed(shelf: ShelfResource, site_config: SiteConfig) -> Path:
+def build_rss_feed(shelf: ShelfResource, site_config: SiteConfig) -> Path | None:
     """
     Create a rss feed file from a shelf.
     """
-    url_path = f"{shelf.url_path}/{shelf.name}.rss.xml"
-    dst_path = site_config.DST_ROOT / url_path
+    if not site_config.RSS_FEED_TEMPLATE or shelf.config.disable_rss:
+        return None
+
+    LOGGER.debug(f"┌ 📋 building rss feed for shelf '{shelf.name}'")
+    dst_path = site_config.DST_ROOT / shelf.rss_feed_url
     content = lxmsite.render_rss_feed(
+        shelf=shelf,
         template_name=site_config.RSS_FEED_TEMPLATE,
         site_config=site_config,
-        shelf=shelf,
-        url_path=url_path,
     )
-    LOGGER.debug(f"writing rss feed to '{dst_path}'")
+    LOGGER.debug(f"└ 📋 writing rss feed to '{dst_path}'")
     dst_path.write_text(content, encoding="utf-8")
     return dst_path
 
@@ -379,9 +381,7 @@ def build_site(
     )
 
     for shelf in shelves:
-        if config.RSS_FEED_TEMPLATE:
-            LOGGER.debug(f"📋 building rss feed for shelf '{shelf.name}'")
-            build_rss_feed(shelf=shelf, site_config=config)
+        build_rss_feed(shelf=shelf, site_config=config)
 
     stylesheet_paths = [
         Path(src_root, page.url_path, p).resolve()

@@ -203,18 +203,16 @@ def render_page(
 
 
 def render_rss_feed(
-    template_name: str,
-    url_path: str,
     shelf: ShelfResource,
+    template_name: str,
     site_config: SiteConfig,
 ) -> str:
     """
     Generate a rss feed from a shelf.
 
     Args:
-        template_name: jinja template path relative to template root
-        url_path: rss file url; relative to site root
         shelf: shelf the feed is generated from
+        template_name: jinja template path relative to template root
         site_config:
 
     Returns:
@@ -222,11 +220,11 @@ def render_rss_feed(
     """
     jinja_env = get_jinja_env(
         site_config=site_config,
-        page_rel_url=url_path,
+        page_rel_url=shelf.rss_feed_url,
     )
     template = jinja_env.get_template(template_name)
     attributes = {
-        "URL_PATH": url_path,
+        "URL_PATH": shelf.rss_feed_url,
         "Config": site_config,
         "Shelf": shelf,
     }
