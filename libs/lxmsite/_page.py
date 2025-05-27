@@ -151,6 +151,11 @@ def read_page(
         for path in default_stylesheets
     ]
 
+    # TODO maybe add a system of tokens like every value that starts with "//" get
+    #   expanded with mkpagerel. Instead of hardcoding keys that need expansion.
+    if "image" in src_metadata:
+        src_metadata["image"] = mkpagerel(src_metadata["image"], url_path)
+
     # page-defined metadata take priority over provided default metadata
     src_metadata.update(raw_metadata)
 

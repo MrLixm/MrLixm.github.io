@@ -3,5 +3,6 @@
     "work/photography/photography.css"
   ],
   "template": "work/photography/.photography.html",
-  "description": "A photography project by Liam Collod."
+  "description": "A photography project by Liam Collod.",
+  "image": "work/photography/cover-social.jpg"
 }
