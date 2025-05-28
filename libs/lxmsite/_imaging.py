@@ -1,5 +1,8 @@
 import logging
+import math
 from pathlib import Path
+
+import PIL.Image
 
 LOGGER = logging.getLogger(__name__)
 
@@ -59,3 +62,44 @@ def read_image_meta_file(file_path: Path) -> dict[str, str]:
             metadata[key] = value.strip(" ")
 
     return metadata
+
+
+def get_image_weight_ratio(image_path: Path, threshold=2) -> float:
+    with PIL.Image.open(image_path) as image:
+        size = image.size
+    npixels = size[0] * size[1]
+    weight = image_path.stat().st_size
+    return (weight**threshold / npixels) ** (1 / threshold) / 1000
+
+
+if __name__ == "__main__":
+
+    path = r"G:\personal\photo\workspace\outputs\241219_negscanTrip35\241219_negscanTrip35.1116.v0001.jpg"
+    print(f"=== {Path(path).name}")
+    print(round(get_image_weight_ratio(Path(path)), 2))
+
+    path = r"Z:\packages-dev\MrLixm.github.io\site\src\work\photography\2406leftinthesun\240702_negscan2406.867.v0001.jpg"
+    print(f"=== {Path(path).name}")
+    print(round(get_image_weight_ratio(Path(path)), 2))
+
+    path = (
+        r"Z:\packages-dev\MrLixm.github.io\site\src\.static\images\emojis\cat-nerd.png"
+    )
+    print(f"=== {Path(path).name}")
+    print(round(get_image_weight_ratio(Path(path)), 2))
+
+    path = r"Z:\packages-dev\MrLixm.github.io\site\src\blog\website-redesign-2025\photography-figma-design.png"
+    print(f"=== {Path(path).name}")
+    print(round(get_image_weight_ratio(Path(path)), 2))
+
+    path = r"Z:\packages-dev\MrLixm.github.io\site\src\blog\website-redesign-2025\screenshot-draft-photography-session.png"
+    print(f"=== {Path(path).name}")
+    print(round(get_image_weight_ratio(Path(path)), 2))
+
+    path = r"G:\personal\photo\workspace\outputs\250419_uriage\250419_uriage.0005.v0002.jpg"
+    print(f"=== {Path(path).name}")
+    print(round(get_image_weight_ratio(Path(path)), 2))
+
+    path = r"G:\personal\photo\workspace\outputs\250419_uriage\250419_uriage.0005.v0002..opti.jpg"
+    print(f"=== {Path(path).name}")
+    print(round(get_image_weight_ratio(Path(path)), 2))

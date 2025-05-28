@@ -7,6 +7,7 @@ from ._browse import collect_meta_files
 from ._browse import MetaFileCollection
 
 from ._imaging import read_image_meta_file
+from ._imaging import get_image_weight_ratio
 
 from . import rstlib
 

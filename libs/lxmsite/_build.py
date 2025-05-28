@@ -13,6 +13,7 @@ from lxmsite import MetaFileCollection
 from lxmsite import ShelfResource
 from lxmsite import ShelfLibrary
 from lxmsite import SiteConfig
+from lxmsite import get_image_weight_ratio
 from ._utils import gitget
 
 LOGGER = logging.getLogger(__name__)
@@ -393,6 +394,7 @@ def build_site(
     ]
 
     stime = time.time()
+    heavy_images = {}
     for static_path in static_paths:
         dst_path = Path(dst_root, static_path.relative_to(src_root))
         # we can't use Path.resolve because it resolves symlinks
@@ -413,6 +415,26 @@ def build_site(
                 LOGGER.debug(
                     f"📦⏭️ skipping copy of '{static_path}'; already up-to-date"
                 )
+
+        if dst_path.suffix.lower() in [".jpg", ".jpeg", ".png", ".webp"]:
+            try:
+                ratio = round(get_image_weight_ratio(dst_path, threshold=1.9), 1)
+            except Exception:
+                continue
+            if ratio > 1:
+                heavy_images[dst_path] = ratio
+
+    # sort by weight ratio
+    heavy_images = {
+        k: v for k, v in sorted(heavy_images.items(), key=lambda item: item[1])
+    }
+    heavy_images_msg = []
+    for heavy_image, ratio in heavy_images.items():
+        weight = heavy_image.stat().st_size / 1024 / 1024
+        heavy_images_msg += [f"[{weight:0>4.1f}MiB|ratio={ratio}] '{heavy_image}'"]
+    if heavy_images_msg:
+        msg = "\n- ".join(heavy_images_msg)
+        LOGGER.warning(f"🧱 found {len(heavy_images_msg)} heavy images:\n- {msg})")
 
     etime = time.time()
     LOGGER.debug(
