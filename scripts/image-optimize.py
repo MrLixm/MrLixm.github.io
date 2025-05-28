@@ -50,6 +50,7 @@ def main(argv: list[str] | None = None):
     argv = argv or sys.argv[1:]
     LOGGER.debug(f"started with argv={argv}")
     cli = get_cli(argv)
+    u_quality: int = cli.quality
     u_src_path: Path = cli.src_path
     u_max_size: str = cli.maxsize
     u_suffix: str = cli.suffix
@@ -79,7 +80,7 @@ def main(argv: list[str] | None = None):
             image.save(
                 dst_path,
                 "JPEG",
-                quality=90,
+                quality=u_quality,
                 subsampling=1,
             )
 

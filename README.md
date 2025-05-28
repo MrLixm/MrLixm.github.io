@@ -28,5 +28,5 @@ checking https://liamcollod.xyz/.doc.
 
 Usually called with 
 ```
---quality 60 --maxsize 1500x2500
+--quality 90 --maxsize 1500x2500
 ```
