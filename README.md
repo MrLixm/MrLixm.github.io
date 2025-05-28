@@ -21,3 +21,12 @@ checking https://liamcollod.xyz/.doc.
 - `site`: the source files for the site
 - `scripts`: individual scripts to perform action such as building the website.
   They make use of `site` and `lxmsite`.
+
+## scripts
+
+### [image-optimize.py](scripts/image-optimize.py)
+
+Usually called with 
+```
+--quality 60 --maxsize 1500x2500
+```
