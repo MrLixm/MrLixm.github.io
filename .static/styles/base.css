@@ -83,6 +83,20 @@ ul, ol {
     padding-inline-start: 15px;
 }
 
+
+li > p {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+li:first-child > p {
+    margin-top: inherit;
+    margin-bottom: 0.5rem;
+}
+li:last-child > p {
+    margin-top: 0.5rem;
+    margin-bottom: inherit;
+}
+
 /* description lists */
 /*https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dt*/
 dt {

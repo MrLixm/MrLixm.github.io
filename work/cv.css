@@ -10,6 +10,11 @@ body {
     margin-top: 5rem;
     margin-bottom: 2rem;
 }
+@media print {
+    .read-area {
+        margin: 5% 10%;
+    }
+}
 h2 {
     margin: 0;
     font-size: 1.2rem;
@@ -23,10 +28,16 @@ p.last-modified {
 }
 
 section#cv {
+    --border-width: 1px;
     margin: 1rem 0;
     padding: 1rem 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: var(--border-width) solid rgba(255, 255, 255, 0.1);
+    border-bottom: var(--border-width) solid rgba(255, 255, 255, 0.1);
+}
+@media print {
+    section#cv {
+        --border-width: 2px;
+    }
 }
 section#cv .primary {
     color: var(--color-primary);
@@ -131,14 +142,14 @@ div.l-cv-xp-col {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    border-left: 1px solid var(--color-primary);
+    border-left: var(--border-width) solid var(--color-primary);
     max-height: 100%;
 }
 div.l-cv-xp {
     margin-left: 20px;
 }
 div.l-cv-xp-content {
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: var(--border-width) solid rgba(255, 255, 255, 0.1);
     margin-left: 5px;
     padding-left: 10px;
 }
@@ -154,7 +165,7 @@ section#cv div.l-cv-xp h4 .l-cv-circle {
     display: inline-block;
     width: 17px;
     height: 17px;
-    border: 1px solid var(--color-primary);
+    border: var(--border-width) solid var(--color-primary);
     border-radius: 32px;
 }
 
@@ -193,7 +204,7 @@ section#cv div.l-cv-skills-box h3 {
 div.l-cv-skills-list {
     display: flex;
     justify-content: center;
-    border: 1px solid var(--color-primary);
+    border: var(--border-width) solid var(--color-primary);
     border-radius: 15px;
     padding: 1rem;
     gap: 2rem;
@@ -305,4 +316,12 @@ div.l-cv-education-box p {
 .hover-offset:hover {
     transform: translate(-10px, -10px);
     box-shadow: rgba(0, 0, 0, 0.5) 10px 10px;
+}
+.build-info {
+    color: var(--color-WW);
+    font-size: 0.7rem;
+
+    a {
+        color: var(--color-primary-WW);
+    }
 }

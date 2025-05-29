@@ -120,6 +120,7 @@
 <ul>
 <li><p><a class="reference internal" href="#photography-portfolio" id="toc-entry-5">Photography portfolio</a></p></li>
 <li><p><a class="reference internal" href="#the-importance-of-typography" id="toc-entry-6">The importance of typography.</a></p></li>
+<li><p><a class="reference internal" href="#making-a-c-v" id="toc-entry-7">Making a C.V.</a></p></li>
 </ul>
 </li>
 </ul>
@@ -136,10 +137,10 @@ designed back in 2021 and wanted a change. It's my website I can do whatever the
 I want <img alt="" class="emoji-role inline" src="../../.static/images/emojis/yes-cool.png" title="yes-cool" />.</p>
 <p>And I'm verry happy with what I achieved, a site that feels more personal, more funky
 and on which I have the whole control because I wrote a lot of the code
-of code that it uses.</p>
+that it uses.</p>
 <section id="the-before">
 <h2><a class="toc-backref" href="#the-before" role="doc-backlink">The before</a></h2>
-<p>I don't know shit about web-development if that its common to use &quot;backend&quot; and &quot;frontend&quot;
+<p>I don't know shit about web-development, if that its common to use &quot;backend&quot; and &quot;frontend&quot;
 to describe the different building blocks of a website. I like those word so I'll
 be using them to describe my whole website framework.</p>
 <ul class="simple">
@@ -225,33 +226,35 @@ wonder if picking rst as file format was the right choice ?</p>
 with the workflow and started re-building the website content. This was mostly
 copy/pasted and fixing all the previous website content so it all works with the new
 workflow.</p>
-<p>And only when the port over that I started bulding new stuff and redesigning the pages.</p>
+<p>And only when the port was over that I started bulding new stuff and redesigning the pages.</p>
 </section>
 <section id="redesign">
 <h2><a class="toc-backref" href="#redesign" role="doc-backlink">Redesign</a></h2>
-<p>And now for the most fun part, what do I want my website to look like ?</p>
+<p>Now for the most fun part, what do I want my website to looks like ?</p>
 <p>Even if I found
-the current design good enough and quite polished, I wanted a changes of values.
-I want to break up from a &quot;professional, clean&quot; aesthetic and make my website fun,
+the current design good enough and quite polished, I wanted a changes of values.</p>
+<blockquote>
+<p>I want to break up from a &quot;professional, clean&quot; aesthetic and make my website fun,
 I want it to be funky, kind of messy but still polished. It must feels like me: I am
 nerdy but I don't think I'm boring, I can be quite organized but also scatter in a lot
 of direction. I am colorful and I like green. Let me just put things that I find fun or
 funny on my website, I can it's my website.</p>
+</blockquote>
 <figure class="inline align-center">
-<img alt="screenshot of the new index page" class="inline" src="screenshot-new-index.jpg" />
+<img alt="screenshot of the new index page" class="inline" src="screenshot-new-index.png" />
 <figcaption>
 <p>The index page design exactly match those intentions.</p>
 </figcaption>
 </figure>
-<p>My advantage is that I have some modest graphic-design skills, allowing me to be quite
+<p>Luckly for me I have some modest graphic-design skills, allowing me to be quite
 creative and make the whole process smoother and less frustrating. Still, where do I
 start ?</p>
 <section id="photography-portfolio">
 <h3><a class="toc-backref" href="#photography-portfolio" role="doc-backlink">Photography portfolio</a></h3>
 <p>If I look at my logbook, the first new design I come up with was a page to present
 a &quot;photography sessions&quot; (i.e. a bunch of shots grouped together). Not very interesting,
-but being able to add my photography portfolio was one of reason of that whole
-website renovation so I started by having a look at what I could do there.</p>
+but being able to add my photography portfolio was one of the reason of that whole
+website renovation. So I started by having a look at what I could do there.</p>
 <figure class="inline">
 <img alt="a 2 column layout with photo and text interleaved" class="inline" src="screenshot-draft-photography-session.png" />
 <figcaption>
@@ -260,19 +263,20 @@ website renovation so I started by having a look at what I could do there.</p>
 </figure>
 <p>One of the key constraint in designing that portfolio page was the usage of captions.
 I write a caption for all my photography which acts as an alt-text for visually
-impaired people. I could just have implemented as <span class="docutils literal">alt</span> attributes on images but
-I spend so much time writing them that I don't see a reason to only make them visible
-to people with screen readers. As such I developed a system that allow me to arbitrarly
-place them in between images.</p>
+impaired people. I could just have implemented it as only <span class="docutils literal">alt</span> attributes on images
+but I spend so much time writing them that I don't see a reason to only make them
+visible to people with screen readers. Thus, I developed a system that allow me to
+arbitrarly place them in-between images.</p>
 <p>Another issue with those captions is that because they act as alt-text, they become
 &quot;metadata&quot; of the image. But then where do I write it ? If I put it in the rst document
 this mean I couldn't use the image elsewhere with that caption. Embed the caption in the
 image metadata ? That's cumbersome because editing image metadata require external tools.
 My choice instead was to create an additional &quot;meta&quot; file for each image.
 I wanted the format to be very human friendly, so no json, but I didn't want an external
-dependency that yaml would have required. So I made my own very simple syntax. And
-now that have I have specific file for the caption, why not just take the opportunity to
-specify other type of metadata that I wish to display along the photography ?!</p>
+dependency that yaml would have required. So I made my own very simple syntax (
+that fits in 38 lines).</p>
+<p>And now that have I have a specific file for the caption, why not also use it
+to specify other type of metadata that I wish to display along the photography ?</p>
 <p>Example of .meta file:</p>
 <pre class="highlight literal-block" title="Block of code in yaml language."><span class="nt">__format__</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2024-06</span>
@@ -286,6 +290,9 @@ specify other type of metadata that I wish to display along the photography ?!</
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">legislative elections; the far right as menacing as ever.</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">Those message of resistance has been flourishing all over the neighbourhood.</span>
 </pre>
+<p><em>Note that keys have no meaning (except for</em> <span class="docutils literal">caption</span> <em>) and I can add as much as
+I want in every file.</em></p>
+<hr class="docutils" />
 <p>An interesting issue that came along the way was how to display images in fullscreen ?
 I.e. you click the image and it fill the screen height while reducing opacity for
 anything else. The easiest solution would probably be javascript but I really wanted
@@ -293,6 +300,40 @@ to see how far I could go without using JS on my website at all.
 One of the solution I found was pretty satisfiying: <a class="reference external" href="https://sylvaindurand.org/overlay-image-in-pure-css/">https://sylvaindurand.org/overlay-image-in-pure-css/</a>.
 It's biggest drawback being that you have to duplicate the image, fortunately the way
 I add images is handled by a rst directive so duplicating content is hassleless.</p>
+<pre class="highlight literal-block" title="Block of code in html language."><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#2406bbb-240702_negscan2406.894.v0001&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">img</span> <span class="na">loading</span><span class="o">=</span><span class="s">&quot;lazy&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;...jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;...&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#_&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;img-fullscreen&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;2406bbb-240702_negscan2406.894.v0001&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">img</span> <span class="na">loading</span><span class="o">=</span><span class="s">&quot;lazy&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;...jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;...&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre>
+<pre class="highlight literal-block" title="Block of code in css language."><span class="p">.</span><span class="nc">img-fullscreen</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+<span class="w">    </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">fixed</span><span class="p">;</span>
+<span class="w">    </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">translate</span><span class="p">(</span><span class="mi">-50</span><span class="kt">%</span><span class="p">,</span><span class="w"> </span><span class="mi">-50</span><span class="kt">%</span><span class="p">);</span>
+<span class="w">    </span><span class="k">top</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
+<span class="w">    </span><span class="k">left</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
+<span class="w">    </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">vh</span><span class="p">;</span>
+<span class="w">    </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">vw</span><span class="p">;</span>
+<span class="w">    </span><span class="k">max-width</span><span class="p">:</span><span class="w"> </span><span class="kc">unset</span><span class="p">;</span>
+<span class="w">    </span><span class="k">z-index</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="w">    </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.95</span><span class="p">);</span>
+<span class="w">    </span><span class="k">opacity</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">visibility</span><span class="p">:</span><span class="w"> </span><span class="kc">hidden</span><span class="p">;</span>
+<span class="w">    </span><span class="k">transition</span><span class="p">:</span><span class="w"> </span><span class="k">opacity</span><span class="w"> </span><span class="mf">0.35</span><span class="kt">s</span><span class="p">;</span>
+
+<span class="w">    </span><span class="err">img</span><span class="w"> </span><span class="err">{</span>
+<span class="w">        </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+<span class="w">        </span><span class="k">object-fit</span><span class="p">:</span><span class="w"> </span><span class="kc">contain</span><span class="p">;</span>
+<span class="w">        </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="kt">rem</span><span class="p">;</span>
+<span class="w">        </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="err">}</span>
+<span class="p">.</span><span class="nc">img-fullscreen</span><span class="p">:</span><span class="nd">target</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">visibility</span><span class="p">:</span><span class="w"> </span><span class="kc">visible</span><span class="p">;</span>
+<span class="w">    </span><span class="k">opacity</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
 <hr class="docutils" />
 <p>The next part of my photography portfolio was designing the landing page. Where the
 visitor can have a quick look at all my projects.
@@ -349,6 +390,10 @@ vertical space wasted if implemented as such.</p>
 making it smaller to fit.</p>
 </div>
 </div>
+<p>But to conclude the work on the photography section of my site, I had to upload
+everything I shot and already published on other socials. And I think that was the
+most annoying task. I can spend an hour just to add a single session. Picking the
+images, the layout, rewriting some captions, ...</p>
 </section>
 <section id="the-importance-of-typography">
 <h3><a class="toc-backref" href="#the-importance-of-typography" role="doc-backlink">The importance of typography.</a></h3>
@@ -359,20 +404,20 @@ to find the perfect typeface.</p>
 browsing Google Fonts. Just because it's convenient and easy to integrate in your website.
 But fuck Google, I haven't migrated from Gmail to <a class="reference external" href="https://tuta.com/">Tuta</a> just to
 have those blood-suckers also squatting my website. Fortunately I discovered a
-workaround a few weeks ago: <a class="reference external" href="https://fonts.bunny.net/">https://fonts.bunny.net/</a>. It's has convenient as google
-font to use, has all google fonts, but is not google. It just sucks for fiding fonts.</p>
+workaround a few weeks ago: <a class="reference external" href="https://fonts.bunny.net/">https://fonts.bunny.net/</a>. It's as convenient as google
+font to use, has all google fonts, but is not google. It just sucks for finding fonts.</p>
 <p>Still, why I am being so lazy ? I just said I love browsing fonts, I have bookmarked
 quite a few typographic website so why do I stick with the &quot;google font library&quot; ? Just
 because of the vendor-hosting ? Common you can just copy/paste a bunch of otf/ttf/woff
 and write 2 lines of css. The real reason was mostly that I didn't need anything fancy,
 the most popular fonts are in the Google catalogue and works just fine. But hey I said
-I want to get fancy for this website ! Time to go off-road ...</p>
+I want to get fancy for this website ! Time to go off-road ... <img alt="" class="emoji-role inline" src="../../.static/images/emojis/malicious-intentions.png" title="malicious-intentions" /></p>
 <p>I think my approach to pick fonts was the inverse of what designer usually do. I started
 to browse for fonts I like visually first, and the build the page style and design
 around that font; or at least get inspired from it.</p>
 <p>With the thousands of free fonts online it's hard to make a choice right ? Well
-amongst some of the type foundries I got some with really interesting vision: they are
-political.</p>
+amongst some of the type foundries I got some with a really interesting feature: they
+are political.</p>
 <div class="url-preview-box docutils container">
 <a class="reference external" href="https://www.design-research.be/by-womxn/">
 </a>
@@ -410,7 +455,7 @@ minorities. I want to highlight creators when I can. This is also the reason tha
 all the decorative fonts on the index and work pages have their name and a link
 displayed next to them. They are such a crucial piece of puzzle for a website that
 they deserve credits.</p>
-<p>As of the time I'm writting this post, these are the fonts I ended up using:</p>
+<p>And as of the time I'm writting this post, these are the fonts I ended up using:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://pippin.gimp.org/0xA000/">0xA000</a>: picked for its unique style; I actually not ended up using it as much as I wanted.</p></li>
 <li><p><a class="reference external" href="https://typotheque.le75.be/">Barlow-Elastic</a></p></li>
@@ -430,6 +475,39 @@ they deserve credits.</p>
 <li><p><a class="reference external" href="https://fonts.bunny.net/family/tiny5">Tiny5</a>: needed a really tiny pixel font</p></li>
 </ul>
 </section>
+<section id="making-a-c-v">
+<h3><a class="toc-backref" href="#making-a-c-v" role="doc-backlink">Making a C.V.</a></h3>
+<p>A C.V. is often asked for any job candidature, and you know how asking for files
+online is still a mess. However having it as an html page means you can just drop a link
+which is quite convenient ! Still, we need the .pdf because not all automated forms
+expect an url and will ask a file, .pdf having the most chance of being opened.</p>
+<p>One cool trick I learned is that you can easily export html to pdf using your browser !
+Press <span class="docutils literal">ctrl+p</span> (print shortcut), instead of a printer choose &quot;Export as PDF&quot; and voilà.</p>
+<img alt="screenshot of the &quot;print&quot; window from Firefox, with my cv in a A4 format." class="inline" src="cv-save_to_pdf.png" />
+<p>However you might run in formatting issue now. If the cv is part of our website we
+dont want the navigation bar or the footer.
+My solution was to create 2 cv pages, one for browsing from the site with the usual
+navigation. The other I called &quot;full screen&quot; which is just the cv content. It was
+quite straightforward to build using Jinja template inheritance to avoid duplicating
+code.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="../../work/cv.html">cv.html</a></p></li>
+<li><p><a class="reference external" href="../../work/cv.fullscreen.html">cv.fullscreen.html</a></p></li>
+</ul>
+<p>Another trick I found is for styling, because you might not want a screen wide
+html page to be layout the same as a A4-like document. There I use the special CSS
+media query <span class="docutils literal">print</span>:</p>
+<pre class="highlight literal-block" title="Block of code in css language."><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="nt">print</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c">/* we need much smaller horizontal margin when &quot;printing&quot; */</span>
+<span class="w">    </span><span class="p">.</span><span class="nc">read-area</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="kt">%</span><span class="w"> </span><span class="mi">10</span><span class="kt">%</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre>
+<p>Also because I had to reduce the overall document scale in the dialog to have it fit,
+graphics that were 1px thin like borders became barely visible. I used the same css
+trick above to make all borders 2px wide when &quot;printing&quot;.</p>
+</section>
 </section>
 
   </article>
@@ -447,7 +525,7 @@ they deserve credits.</p>
     </a>
     
     <p>Static website <a href="../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-27T18:11</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/2c4aa3c">2c4aa3c</a></i></p>
+      Last built on <i>2025-05-29T11:49</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/2ce951f">2ce951f</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>
