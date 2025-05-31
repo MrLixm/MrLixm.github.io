@@ -9,10 +9,13 @@ h1 {
 }
 @media screen and (max-width: 630px) {
     h1 {
-        font-size: 6rem;
+        font-size: 4rem;
     }
     main {
         padding: 0 15px 0 15px;
+    }
+    div.title p {
+        font-size: 2rem;
     }
 }
 main {
@@ -82,17 +85,21 @@ div.button a {
     background-color: unset;
     border: unset;
 }
-
-
 div.button img {
     transition: transform .2s;
     width: 100px;
     height: 100px;
     filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.2));
 }
-
 div.button img:hover {
     transform: scale(1.2);
+}
+
+@media screen and (max-width: 630px) {
+    div.buttons {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 div.about {
