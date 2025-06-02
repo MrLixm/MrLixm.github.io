@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from lxmsite import PageResource
+from lxmsite._utils import mkpagerel
 
 LOGGER = logging.getLogger(__name__)
 
@@ -83,6 +84,21 @@ class ShelfResource:
     config: ShelfConfig
     children: list[PageResource]
 
+    def iterate(self, ignore_index: bool = False):
+        """
+        Return only children that are supposed to be parsed.
+
+        Use ``self.children`` to return all children.
+        """
+        for child in self.children:
+            if self.is_ignored(child):
+                continue
+            if ignore_index and self.is_index(child):
+                continue
+            if child.status == child.status.unlisted:
+                continue
+            yield child
+
     @property
     def name(self):
         return Path(self.url_path).name
@@ -112,7 +128,14 @@ class ShelfResource:
         """
         if page not in self.children:
             return False
-        return f"{self.url_path}/{page.slug}" == page.url_path
+        return f"{self.url_path}/index.html" == page.url_path
+
+    def is_ignored(self, page: PageResource) -> bool:
+        """
+        Determine if the given page is marked as ignored in the shelf config.
+        """
+        page_rel_url = mkpagerel(page.url_path, self.url_path + "/.shelf")
+        return page_rel_url in self.config.ignored_pages
 
     def iterate_children_by_last_created(
         self,
@@ -130,11 +153,11 @@ class ShelfResource:
                 return ""
             return page.metadata.date_created.isoformat()
 
-        for child in sorted(self.children, key=_sorter, reverse=reverse):
-            if ignore_index and self.is_index(child):
-                continue
-            if child.status == child.status.unlisted:
-                continue
+        for child in sorted(
+            self.iterate(ignore_index=ignore_index),
+            key=_sorter,
+            reverse=reverse,
+        ):
             yield child
 
     def group_children_by_metadata(
@@ -153,9 +176,7 @@ class ShelfResource:
             mapping of metadata value: list of pages
         """
         groups = {}
-        for child in self.children:
-            if ignore_index and self.is_index(child):
-                continue
+        for child in self.iterate(ignore_index=ignore_index):
             value = child.metadata.get(metadata_name)
             groups.setdefault(value, []).append(child)
 

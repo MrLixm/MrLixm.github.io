@@ -1,5 +1,5 @@
-from lxmsite._templating import mkpagerel
-from lxmsite._templating import mksiterel
+from lxmsite._utils import mkpagerel
+from lxmsite._utils import mksiterel
 
 
 def test__mkpagerel():
