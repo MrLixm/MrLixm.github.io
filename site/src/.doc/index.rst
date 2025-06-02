@@ -1,7 +1,7 @@
-Site Developer Documentation
-############################
+Developer Documentation
+#######################
 
-:description: The developer documentation for building this html site.
+:description: The documentation that explains how this website is generated and modified.
 
 .. container:: nav-button
 
@@ -9,51 +9,80 @@ Site Developer Documentation
 
 .. contents:: Table Of Contents
 
-This is a static website, meaning all its content is generated before being
-published online and every page correspond to a single html file.
+This website is built using ``lxmsite``, a custom made Python library that allow
+to convert a bunch of files to a *static website*.
 
-The published website is just HTML and CSS, that are generated using a custom
-workflow based on Python, rst and Jinja.
+.. tip::
+
+    A *static website* have all its content structure generated before being
+    published online. Every page correspond to a single html file on the server.
+
+``lxmsite`` will generate a website that is made only of HTML and CSS. The
+"source files" are a mix of :abbr:`rst <Restructured Text>`, HTML Jinja templates and
+other custom file formats.
+
+You don't need to actually know Python to use ``lxmsite`` (unless you want to
+extends its feature).
 
 Basics
 ------
 
-The philoshophy for this website is that the source file structure represents
+The central concept for this website is that the source file structure represents
 the published site structure. It tries to be as explicit as possible.
 
-So let's say your website is published at ``https://mywebsite.com``, then
-``https://mywebsite.com/blog/index.html`` implies there must be a
-``/blog/index.rst`` file. Same for ``https://mywebsite.com/images/art.jpg`` which
-implies ``images/art.jpg`` must exist in the source file structure.
+.. code-block::
+
+    source/                        >  published/
+        index.rst                  >      index.html
+        index.css                  >      index.css
+        blog/                      >      blog/
+            article1.rst           >          article1.html
+            article1-image.jpg     >          article1-image.jpg
+
+.. caution::
+
+    All paths/urls are assumed to NOT have whitespaces. Adding whitespaces
+    may lead to unexpected consequences during build.
+
+So let's say your website is published at ``https://site.com``:
+
+- then ``https://site.com/blog/index.html`` implies there must be a
+  ``/blog/index.rst`` file.
+- Same for ``https://site.com/images/art.jpg`` which
+  implies ``images/art.jpg`` must exist in the source file structure.
 
 .. hint::
 
-    A common convention for the web is that ``https://mywebsite.com/blog`` will redirect
-    to ``https://mywebsite.com/blog/index.html`` which is why you will usually
+    It is possible to exclude some file in the source hierarchy to be collected.
+    This is achieved using the custom ``.siteignore`` mechanism.
+
+.. hint::
+
+    A common convention for the web is that ``site.com/blog`` will redirect
+    to ``site.com/blog/index.html`` which is why you will usually
     create an ``index.rst`` file in every directory.
 
     (this convention depends on the web server serving your files).
 
+When you have a basic file structure created, you may want to build the site. ``lxmsite``
+comes with a build function but it is more convenient to use the
+`build script <https://github.com/MrLixm/MrLixm.github.io/blob/main/scripts/build-site.py>`_
+(a CLI).
 
-It is possible to exclude some file in the source hierarchy to be collected.
-This is achieved using the ``.siteignore`` mechanism.
+That build script only require on input: a path to the *site config file*.
 
-Another feature which affect the file structure is *shelves*. A shelf will
-allow to group and browse multiple pages.
-
-.. caution::
-
-    All paths/urls are assumed to be made without whitespace. Adding whitespace
-    may have unexpected consequences when being parsed.
+The *site config file* is a python file that include a bunch of global variables that
+describe how the site must be built. This include what is the source directory
+(``SRC_ROOT``) or which directory you want to build it to (``DST_ROOT``).
 
 
 .siteignore files
 =================
 
 A .siteignore is a file that indicate which path must not be collected to build
-the site. It can be fond at root but also in any directory.
+the site. It can be found at root but also in any sub-directory.
 
-It's file format is as follow:
+The file format works as follow:
 
 - each line defines a "path expression" which resolves to multiple paths to ignore.
 - a line can be empty
@@ -61,8 +90,10 @@ It's file format is as follow:
 - *path expression* MUST be relative to the .siteignore file directory
 - *path expression* may resolve to non-existing paths
 
-.siteignore files are cumulative, this means that their paths are made absolute
-then grouped together and its this list which is used to ignore paths.
+.. highlight::
+
+    .siteignore files are cumulative, this means that their paths are made absolute
+    then grouped together and its this list which is used to ignore paths.
 
 Example::
 
@@ -82,14 +113,51 @@ Example::
 In the above we have an expression at root that will ignore all html files
 that starts with a dot, the ``**`` is a glob pattern which express recursion,
 meaning that ``blog/.template.html`` will be ignored. We will also ignore
-``somestuff.txt`` but NOT ``resource.txt``.
-
-We then ignore ``blog/snippet.cpp``.
+``somestuff.txt`` but NOT ``resource.txt``. We then ignore ``blog/snippet.cpp``.
 
 shelf feature
 =============
 
-TBD
+A shelf indicate a directory contains a bunch of page you want to "group" together.
+For example: a portfolio, a blog, a news-feed.
+
+You create a shelf by simpy adding a ``.shelf`` file to the root directory.
+
+Currently the shelf can be used in 2 ways:
+
+1. It allow to iterate through its children page from a Jinja template.
+    You can retrieve a ``ShelfResource`` instance using the ``Shelf`` variable
+    in your Jinja template context. The object proivides different method to browse
+    its page, on which you can loop using Jinja ``{% for %}`` clause.
+
+2. It allow to auto-create an rss feed from all the children pages.
+    `RSS <https://en.wikipedia.org/wiki/RSS>`_ is the most naive way to allow visitor
+    to "suscribe" to a website and get notified for updates. Here, adding a new page
+    will add a new item to the RSS feed, which will notify suscribers a new page
+    has been published.
+
+The ``.shelf`` file acts as a config and have a few options to change the shelf behavior.
+Its content is a custom syntax which follow the given rules:
+
+- each lines defines an option to configure
+- an option CANNOT span multiple lines
+- a line might be empty
+- an option is specified as ``key: value`` with optional whitespace around the ``:``.
+
+  - *key* must be one of the available pre-defined option keys.
+  - *value* must be a valid python object (so a string must be quoted for example).
+
+And the following option keys are supported:
+
+=================  ========== ===========
+name               type        description
+=================  ========== ===========
+``ignored_pages``  list[str]  List of relative page url to not include in browse methods (relative to the shelf file).
+``disable_rss``    bool       True to disable the auto-generation of an rss feed.
+=================  ========== ===========
+
+
+
 
 
 build process
@@ -101,7 +169,8 @@ This is how the source file structure is parsed the site final file structure:
 - read and convert rst file as pages
 - collect shelves
 - render pages with their template and write to disk
-- write shelves pages to disk
+- build redirection pages
+- build shelves rss feed
 - copy static resources
 
 See ``lxmsite._build`` for the code implementation.
@@ -128,7 +197,7 @@ This are the fields that are understood as page metadata:
 name               description
 =================  ===========
 ``authors``        Comma separated list of person who authored the page. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name
-``tags``           List of tags matching the page topics
+``tags``           Comma separated list of arbitrary labels matching the page topics
 ``language``       Language of the page. As standardized by https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang and https://www.w3.org/International/articles/language-tags/
 ``title``          Additional override if the rst file title is not desired. See https://ogp.me/#metadata
 ``type``           Caracterize the kind of content of the page. As standardized by https://ogp.me/#types
@@ -142,7 +211,15 @@ name               description
 ``status``         either ``published`` (no effect) or ``unlisted`` (will be excluded from being listed in its parent shelf)
 =================  ===========
 
-Some extra fields may be used depending on the context:
+.. important::
+
+    None of the field are when read by the code mandatory but:
+
+    - ``date_created`` is required when using Shelf and parsing children pages by last created.
+    - ``template`` is required when building the page to html
+
+Some extra fields may be used depending on the context (whose existence is
+only defined in some html template):
 
 blog context:
     =============  ===========
@@ -182,8 +259,8 @@ See ``lxmsite._page`` for the code implementation.
 rst directives
 ==============
 
-In extent to the builtin rst directives ( https://docutils.sourceforge.io/docs/ref/rst/directives.html ), we provides
-additional directives, or edit the existing ones.
+In extent to the builtin rst directives ( https://docutils.sourceforge.io/docs/ref/rst/directives.html ),
+we provide additional directives, or edit the existing ones.
 
 Here is a quick directive's glossary as reminder:
 
@@ -574,14 +651,14 @@ Rss feeds
 ---------
 
 When creating a shelf, an rss feed will automatically be generated from that shelf as
-long as a template is specified in the site-config.
+long as a template is specified in the site-config using ``RSS_FEED_TEMPLATE``.
 
 The template is a regular jinja2 file that have access to the same **filters** as the
 page templates, but different **variables** which are:
 
 - ``URL_PATH``: the url path of the feed file; relative to the site root
 - ``Config``: the global site config used.
-- ``Shelf``: teh shelf object to generated the feed from
+- ``Shelf``: the shelf object to generated the feed from
 
 The generated feed can be accessed at ``{shelf url}/{shelf name}.rss.xml``.
 

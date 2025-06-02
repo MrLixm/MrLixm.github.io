@@ -60,11 +60,17 @@ lists
 Bullet lists:
 
 - This is item 1
+
+  - nested bullet list
+  - nest2
+
 - This is item 2
 
 - Bullets are "-", "*" or "+".
   Continuing text must be aligned
   after the bullet and whitespace.
+
+  - nested bullet list
 
 Enumerated lists:
 
