@@ -104,8 +104,8 @@ class ImageGalleryFrame(Directive):
 
         image_path, image_id, label_id, caption, metadata = self._get_image_attributes()
 
-        labeloptions = {"ids": [label_id], "for": image_id}
-        labelnode = docutils.nodes.caption(**labeloptions)
+        labeloptions = {"ids": [label_id], "classes": ["caption"]}
+        labelnode = docutils.nodes.container(**labeloptions)
         # content is RST formatted so parse it too.
         self.state.nested_parse(caption, self.content_offset, labelnode)
 

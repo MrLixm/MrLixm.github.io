@@ -58,13 +58,13 @@ section#article-header {
     /* we use the <code> element to isolate the direction arrow <>∧∨ that are only useful
     for the non-responsive layout */
 
-    label code {
+    .caption code {
         font-size: 1.5rem;
     }
 }
 .image-gallery .responsive {
 
-    label code {
+    .caption code {
         display: none;
     }
 }
