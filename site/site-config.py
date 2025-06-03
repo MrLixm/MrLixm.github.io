@@ -55,3 +55,9 @@ DEFAULT_DOCUTILS_SETTINGS = {
     # custom :emoji: role
     "emojis_dir": SRC_ROOT / ".static" / "images" / "emojis",
 }
+
+PAGEFIND_CONFIG = {
+    "element": "#search",
+    "showSubResults": True,
+    "showImages": False,
+}

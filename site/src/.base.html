@@ -35,6 +35,8 @@
   {% for stylesheet in Page.stylesheets %}
   <link rel="stylesheet" href="{{ stylesheet }}" />
   {% endfor %}
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+  <script src="/pagefind/pagefind-ui.js"></script>
   {% endblock %}
 </head>
 <body>
@@ -52,6 +54,16 @@
         {% endfor %}
       </ul>
     </nav>
+    <div id="search"></div>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            new PagefindUI({
+            {% for k, v in Config.PAGEFIND_CONFIG.items() %}
+                {{ k }}: {{ v|tojson }},
+            {% endfor %}
+            });
+        });
+    </script>
   {% endblock %}
 </header>
 <main>

@@ -31,6 +31,7 @@ class SiteConfig:
     REDIRECTIONS: dict[str, str] = mkfield({"type": dict})
     REDIRECTIONS_TEMPLATE: str = mkfield({"type": str})
     RSS_FEED_TEMPLATE: str = mkfield({"type": str})
+    PAGEFIND_CONFIG: dict = mkfield({"type": dict})
 
     def sanitize(self):
         """

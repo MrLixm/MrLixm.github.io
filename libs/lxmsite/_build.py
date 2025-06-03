@@ -1,6 +1,7 @@
 import datetime
 import logging
 import os
+import runpy
 import shutil
 import time
 import traceback
@@ -259,6 +260,19 @@ def build_rss_feed(shelf: ShelfResource, site_config: SiteConfig) -> Path | None
     return dst_path
 
 
+def build_search(dst_root: Path):
+    env_backup = os.environ.copy()
+    os.environ["PAGEFIND_SITE"] = str(dst_root)
+    try:
+        runpy.run_module("pagefind")
+    except SystemExit as excp:
+        if excp.code:
+            LOGGER.error("error while running 'pagefind'")
+    finally:
+        os.environ.clear()
+        os.environ.update(env_backup)
+
+
 def build_site(
     config: lxmsite.SiteConfig,
     symlink_stylesheets: bool,
@@ -380,6 +394,9 @@ def build_site(
     LOGGER.debug(
         f"⌛ built {len(config.REDIRECTIONS)} redirection pages in {etime - stime:.2f} seconds"
     )
+
+    LOGGER.debug(f"🔎 building search feature")
+    build_search(dst_root=dst_root)
 
     for shelf in shelves:
         build_rss_feed(shelf=shelf, site_config=config)

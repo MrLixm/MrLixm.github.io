@@ -1,5 +1,7 @@
 :root {
     --bg-color: rgb(0, 0, 0);
+    --bg-color-M: rgb(10, 10, 10);
+    --bg-color-MM: rgb(20, 20, 20);
     --color-blue-v: rgb(20, 37, 227);
     --color-lime: rgb(159, 247, 100);;
 }

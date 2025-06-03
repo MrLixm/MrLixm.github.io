@@ -662,3 +662,7 @@ page templates, but different **variables** which are:
 
 The generated feed can be accessed at ``{shelf url}/{shelf name}.rss.xml``.
 
+Search feature
+--------------
+
+Implemented through https://pagefind.app/
