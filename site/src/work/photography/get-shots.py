@@ -23,10 +23,11 @@ def build_column(
         metadata = lxmsite.read_image_meta_file(meta_path)
         image_path = Path(str(meta_path).removesuffix(".meta"))
         image_url = image_path.relative_to(site_root).as_posix()
-        caption = metadata.get("caption", "")
+        caption = metadata.pop("caption", "")
         caption = jinja2.filters.escape(caption)
         image_id = image_path.parent.name + "-" + image_path.stem
-        img_node = f'<img loading="lazy" src={{{{"{image_url}"|mkpagerel}}}} alt="{caption}" title="{caption}">'
+        metadata_str = "\n".join([f"- {mn}: {mv}" for mn, mv in metadata.items()])
+        img_node = f'<img loading="lazy" src={{{{"{image_url}"|mkpagerel}}}} alt="{caption}" title="{caption}\n{"-"*20}\nMetadata:\n{metadata_str}">'
         template += [
             '  <div class="shot-item">',
             f'    <a href="#{image_id}">{img_node}</a>',
