@@ -15,6 +15,8 @@ from lxmsite import ShelfResource
 from lxmsite import ShelfLibrary
 from lxmsite import SiteConfig
 from lxmsite import get_image_weight_ratio
+from lxmsite import read_image_opti_file
+from lxmsite import ImageOptimizer
 from ._utils import gitget
 
 LOGGER = logging.getLogger(__name__)
@@ -410,6 +412,18 @@ def build_site(
         Path(src_root, p).resolve() for p in config.DEFAULT_STYLESHEETS
     ]
 
+    image_to_optimize: dict[Path, ImageOptimizer] = {}
+    for static_path in static_paths.copy():
+        if static_path.suffix == ".opti":
+            image_path = Path(str(static_path).removesuffix(".opti"))
+            if not image_path.exists():
+                continue
+            static_paths.remove(static_path)
+            LOGGER.debug(f"reading opti file '{static_path}'")
+            opti_config = read_image_opti_file(static_path)
+            image_to_optimize[image_path] = opti_config
+    LOGGER.debug(f"🖼️ found {len(image_to_optimize)} image to optimize")
+
     stime = time.time()
     heavy_images = {}
     for static_path in static_paths:
@@ -424,6 +438,17 @@ def build_site(
                 dst_path.unlink()
             LOGGER.debug(f"📦 os.symlink({static_path}, {dst_path})")
             os.symlink(static_path, dst_path)
+
+        elif static_path in image_to_optimize:
+            opti_config = image_to_optimize[static_path]
+            if opti_config.target_file_suffix:
+                dst_path = dst_path.with_suffix(opti_config.target_file_suffix)
+            LOGGER.debug(f"┌ 🖼️ optimize({static_path}, {dst_path})")
+            presize = static_path.stat().st_size / 1024 / 1024
+            opti_config.optimize(src_path=static_path, dst_path=dst_path)
+            postsize = dst_path.stat().st_size / 1024 / 1024
+            LOGGER.debug(f"└ 🖼️ optimized from {presize:.1f}MiB to {postsize:.1f}MiB")
+
         else:
             if is_file_newer(static_path, dst_path):
                 LOGGER.debug(f"📦 shutil.copy({static_path}, {dst_path})")

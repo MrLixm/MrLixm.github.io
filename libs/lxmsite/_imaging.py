@@ -1,6 +1,8 @@
+import dataclasses
+import json
 import logging
-import math
 from pathlib import Path
+from typing import Any
 
 import PIL.Image
 
@@ -70,6 +72,61 @@ def get_image_weight_ratio(image_path: Path, threshold=2) -> float:
     npixels = size[0] * size[1]
     weight = image_path.stat().st_size
     return (weight**threshold / npixels) ** (1 / threshold) / 1000
+
+
+@dataclasses.dataclass
+class ImageOptimizer:
+    convert_mode: str | None = None
+    """
+    Optional Pillow conversion mode to conver to. Usually "RGB" to convert RGBA pngs.
+    """
+
+    target_format: str | None = None
+    """
+    name of a format supported by Pillow to write the optimized file as.
+    
+    same as source file if not specified.
+    """
+
+    target_file_suffix: str | None = None
+    """
+    suffix for the optimized file written to disk.
+    
+    same as source file if not specified.
+    """
+
+    format_kwargs: dict[str, Any] = dataclasses.field(default_factory=dict)
+    """
+    Pillow compatible kwargs for the given `target_format`
+    """
+
+    max_dimensions: tuple[int, int] | None = None
+    """
+    Optional maximum pixel dimensions the image must not be larger than while
+    preserving its aspect-ratio.
+    """
+
+    def optimize(self, src_path: Path, dst_path: Path):
+        """
+        Optimize the given image to the given location using this config.
+        """
+        with PIL.Image.open(src_path) as image:
+            if self.convert_mode:
+                image = image.convert(self.convert_mode)
+            if self.max_dimensions:
+                image.thumbnail(self.max_dimensions)
+            LOGGER.debug(f"writing '{dst_path}'")
+            image.save(dst_path, self.target_format, **self.format_kwargs)
+
+
+def read_image_opti_file(file_path: Path) -> ImageOptimizer:
+    """
+    Get an ImageOptimizer instance seirlized from the given file.
+    """
+    asdict = json.loads(file_path.read_text(encoding="utf-8"))
+    if "max_dimensions" in asdict:
+        asdict["max_dimensions"] = tuple(asdict["max_dimensions"])
+    return ImageOptimizer(**asdict)
 
 
 if __name__ == "__main__":

@@ -666,3 +666,26 @@ Search feature
 --------------
 
 Implemented through https://pagefind.app/
+
+Optimize images
+---------------
+
+You can have image automatically optimized at build time by using opti files:
+
+- the file must be named exactly as the image it optimize with the additional ``.opti`` suffix.
+
+  - example: ``/src/img.png`` > ``/src/img.png.opti``
+
+- the file content follow the JSON file format syntax
+
+- JSON content is a shallow tree of pre-defined keys that are defined below. All keys are optional.
+
+======================= ===================
+name                    description
+======================= ===================
+``convert_mode``        Optional Pillow conversion mode to conver to. Usually "RGB" to convert RGBA pngs.
+``target_format``       name of a format supported by Pillow to write the optimized file as.
+``target_file_suffix``  suffix for the optimized file written to disk.
+``format_kwargs``       Pillow compatible kwargs for the given `target_format`.
+``max_dimensions``      Optional maximum pixel dimensions the image must not be larger than while.
+======================= ===================
