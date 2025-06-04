@@ -143,7 +143,17 @@ class TemplateRenderer:
             )
 
         script_template = self._run_script(script_path=script_path)
-        script_template = self.jinja_env.from_string(script_template)
+        try:
+            script_template = self.jinja_env.from_string(script_template)
+        except jinja2.TemplateSyntaxError as error:
+            faulty_line = script_template.splitlines()[error.lineno - 1]
+            raise jinja2.TemplateSyntaxError(
+                message=f"{error} in line '{faulty_line}'",
+                lineno=error.lineno,
+                name=error.name,
+                filename=error.filename,
+            ) from error
+
         new_renderer = dataclasses.replace(self, template=script_template)
         return new_renderer.render()
 
