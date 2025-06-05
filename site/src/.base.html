@@ -49,9 +49,9 @@
     <nav class="main-nav" aria-label="Main menu">
       <ul>
         {% for navname, navlink in Config.HEADER_NAV.items() %}
-        <!-- the duplicated span is a trick to change font-weight on hover -->
         <li title="{{ navname }}" class="{% if Page.url_path.startswith(navname.lower()) %}active{% endif %}">
           <a href="{{ navlink|mkpagerel|prettylink }}">
+            <!-- the duplicated span is a trick to change font-weight on hover -->
             <span>{{ navname }}</span><span>{{ navname }}</span>
           </a>
         </li>

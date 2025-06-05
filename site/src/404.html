@@ -10,6 +10,14 @@
   {% endfor %}
 {% endblock %}
 {% block main %}
+  <!-- the 404 page might be called from a non-root location so all path need
+  to be absolute. And we are sure there is no absolute link on the 404 page. -->
+  <script>
+    let anchors = document.getElementsByTagName("a");
+    for (let i = 0; i < anchors.length; i++) {
+        anchors[i].href = "/" + anchors[i].getAttribute("href")
+    }
+  </script>
   <h1>404</h1>
   <p class="subtitle">File not found</p>
   <p><i>It may have been moved somewhere else, or the url is invalid.</i></p>
