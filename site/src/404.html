@@ -10,8 +10,8 @@
   {% endfor %}
 {% endblock %}
 {% block main %}
-  <!-- the 404 page might be called from a non-root location so all path need
-  to be absolute. And we are sure there is no absolute link on the 404 page. -->
+  <!-- the 404 page might be called from a non-root location so all path need to be
+  absolute. And we are sure there is no absolute link on the header (content before this script). -->
   <script>
     let anchors = document.getElementsByTagName("a");
     for (let i = 0; i < anchors.length; i++) {
@@ -23,4 +23,21 @@
   <p><i>It may have been moved somewhere else, or the url is invalid.</i></p>
   <p class="kaomoji">(@~@)</p>
   <span class="frog-animated"></span>
+  <audio id="wontyoutakemeto" src="{{"WONT-YOU-TAKE-ME-TO.mp3"|mksiteabs}}" loop></audio>
+  <input class="play" type="button" value="✨ play funky music ✨" onclick="playAudio()"/>
+  <a class="audio-credit" href="https://korbly.tumblr.com/post/187060500406/this-took-me-an-hour-well-spent-original-post-by">audio edit by korbly</a>
+  {# https://stackoverflow.com/a/64647742/13806195 #}
+  <script>
+    var audio = document.getElementById("wontyoutakemeto")
+    var isPlaying = false;
+    audio.pause()
+    function playAudio(){
+      if (isPlaying) {
+        audio.pause();
+      } else {
+        audio.play();
+      }
+      isPlaying = !isPlaying;
+    }
+  </script>
 {% endblock %}
