@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'PubliFluorNormale';
+    src: url('PubliFluorNormale.woff') format('woff'),
+    url('PubliFluorNormale.otf') format('opentype');
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+}

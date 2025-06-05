@@ -15,7 +15,9 @@
         <aside class="font-info" title="the typeface in use on the right > ">
           <a href="https://montifonti.tilda.ws/mon_hugo">Mon Hugo*</a>
         </aside>
-        <p title="my job title">vfx artist <wbr><span>software developer</span></p>
+        <p title="my job title">vfx artist
+          <wbr>
+          <span>software developer</span></p>
       </div>
       <div id="self-description">
         <aside class="font-info" title="the typeface in use on the right > ">
@@ -72,7 +74,9 @@
           </a>
         </div>
       </div>
-      <a href="#"><div id="maxi-frog"></div></a>
+      <a href="#">
+        <div id="maxi-frog"></div>
+      </a>
       <div class="decorations">
         <pre class="lut-numbers">
 TITLE "Kodak 2383"
@@ -138,7 +142,9 @@ LUT_3D_INPUT_RANGE 0.0 1.0
         <img class="bricks-plate" src="index/lego-bricks.plate.png" alt="decorative lego bricks image">
         <img class="bricks-1x1" src="index/lego-bricks.1x1.png" alt="decorative lego bricks image">
         <img class="bricks-2x4" src="index/lego-bricks.2x4.png" alt="decorative lego bricks image">
-        <div class="bricks-frog"><a href="#maxi-frog"><img src="index/lego-bricks.frog.png" alt="decorative lego bricks image"></a></div>
+        <div class="bricks-frog">
+          <a href="#maxi-frog"><img src="index/lego-bricks.frog.png" alt="decorative lego bricks image"></a>
+        </div>
         <div class="negative-box"></div>
         <div class="glass-box">
           <a class="font-info" href="https://github.com/JAMO-TYPEFACE/Orbit">* the font indicating the font is Orbit</a>
@@ -216,6 +222,17 @@ LUT_3D_INPUT_RANGE 0.0 1.0
           </li>
         {% endfor %}
       </ul>
+    </div>
+  </section>
+  <section id="guestbook" aria-label="Visitor sketch book">
+    <div class="information">
+      <a href="#guestbook"><h2>Guest{% for char in "(sketch)" %}<span class="c{{ loop.index }}">{{ char }}</span>{% endfor %}book</h2></a>
+      <p>visitors who wished to leave a drawing !</p>
+      <p class="responsive-warning">(page best viewed on desktop)</p>
+      <a class="submission" href="https://liamcollod.notion.site/Liam-s-visitor-sketchbook-20225ce99d378060b132dc5b4ad5e09b?pvs=74">→ sends yours here ←</a>
+    </div>
+    <div class="board">
+      {{ include_script_output("index/guestbook/get-images.py") }}
     </div>
   </section>
 {%- endblock %}
