@@ -75,6 +75,8 @@
   
   
 
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+  <script src="/pagefind/pagefind-ui.js"></script>
 </head>
 <body>
 <header>
@@ -86,17 +88,33 @@
     <nav class="main-nav" aria-label="Main menu">
       <ul>
         
-        <!-- the duplicated span is a trick to change font-weight on hover -->
-        <li title="Work" class=""><a href="work/"><span>Work</span><span>Work</span></a></li>
+        <li title="Work" class="">
+          <a href="work/">
+            <!-- the duplicated span is a trick to change font-weight on hover -->
+            <span>Work</span><span>Work</span>
+          </a>
+        </li>
         
-        <!-- the duplicated span is a trick to change font-weight on hover -->
-        <li title="Blog" class=""><a href="blog/"><span>Blog</span><span>Blog</span></a></li>
+        <li title="Blog" class="">
+          <a href="blog/">
+            <!-- the duplicated span is a trick to change font-weight on hover -->
+            <span>Blog</span><span>Blog</span>
+          </a>
+        </li>
         
-        <!-- the duplicated span is a trick to change font-weight on hover -->
-        <li title="Resources" class=""><a href="resources/"><span>Resources</span><span>Resources</span></a></li>
+        <li title="Resources" class="">
+          <a href="resources/">
+            <!-- the duplicated span is a trick to change font-weight on hover -->
+            <span>Resources</span><span>Resources</span>
+          </a>
+        </li>
         
-        <!-- the duplicated span is a trick to change font-weight on hover -->
-        <li title="Contact" class=""><a href="contact"><span>Contact</span><span>Contact</span></a></li>
+        <li title="Contact" class="">
+          <a href="contact">
+            <!-- the duplicated span is a trick to change font-weight on hover -->
+            <span>Contact</span><span>Contact</span>
+          </a>
+        </li>
         
       </ul>
     </nav>
@@ -117,18 +135,43 @@
   
 </header>
 <main>
+  <!-- the 404 page might be called from a non-root location so all path need to be
+  absolute. And we are sure there is no absolute link on the header (content before this script). -->
+  <script>
+    let anchors = document.getElementsByTagName("a");
+    for (let i = 0; i < anchors.length; i++) {
+        anchors[i].href = "/" + anchors[i].getAttribute("href")
+    }
+  </script>
   <h1>404</h1>
   <p class="subtitle">File not found</p>
   <p><i>It may have been moved somewhere else, or the url is invalid.</i></p>
   <p class="kaomoji">(@~@)</p>
   <span class="frog-animated"></span>
+  <audio id="wontyoutakemeto" src="https://liamcollod.xyz/WONT-YOU-TAKE-ME-TO.mp3" loop></audio>
+  <input class="play" type="button" value="✨ play funky music ✨" onclick="playAudio()"/>
+  <a class="audio-credit" href="https://korbly.tumblr.com/post/187060500406/this-took-me-an-hour-well-spent-original-post-by">audio edit by korbly</a>
+  
+  <script>
+    var audio = document.getElementById("wontyoutakemeto")
+    var isPlaying = false;
+    audio.pause()
+    function playAudio(){
+      if (isPlaying) {
+        audio.pause();
+      } else {
+        audio.play();
+      }
+      isPlaying = !isPlaying;
+    }
+  </script>
 
 </main>
 <footer>
   
     
     <p>Static website <a href=".doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-06-05T21:23</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/98b4c3f">98b4c3f</a></i></p>
+      Last built on <i>2025-06-05T23:48</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/8d9899f" target="_blank">8d9899f</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

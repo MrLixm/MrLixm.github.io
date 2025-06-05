@@ -42,7 +42,7 @@ def generate(template_renderer: lxmsite.TemplateRenderer) -> str:
         rotation = random.randrange(-200, 200) / 10
         variables = f"--drawing-left:{left}%;--drawing-top:{top}%;--drawing-rotation:{rotation}deg;"
         if link:
-            template += [f'  <a href="{link}">']
+            template += [f'  <a href="{link}" target="_blank">']
         img_attrs = [
             'class="drawing"',
             f'id="drawing-{image_path.stem}-{index}"'
