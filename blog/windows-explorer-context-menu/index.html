@@ -40,6 +40,8 @@
   
   <link rel="stylesheet" href="../../.static/styles/shelf.css" />
   
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+  <script src="/pagefind/pagefind-ui.js"></script>
   
 </head>
 <body>
@@ -66,6 +68,20 @@
         
       </ul>
     </nav>
+    <div id="search"></div>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            new PagefindUI({
+            
+                element: "#search",
+            
+                showSubResults: true,
+            
+                showImages: false,
+            
+            });
+        });
+    </script>
   
 </header>
 <main>
@@ -79,10 +95,10 @@
             <hr>
           </div>
           <div class="metadata-tags">
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.6s">productivity</pre>
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.1s">arnold</pre>
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.3s">image-processing</pre>
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.1s">windows</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.8s">productivity</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.3s">arnold</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.1s">image-processing</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.4s">windows</pre>
           </div>
         </section>
         <span id="article-header-decoration"></span>
@@ -1669,7 +1685,7 @@ double escape them. Example :</p>
     </a>
     
     <p>Static website <a href="../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-29T11:49</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/2ce951f">2ce951f</a></i></p>
+      Last built on <i>2025-06-05T21:23</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/98b4c3f">98b4c3f</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

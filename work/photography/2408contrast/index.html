@@ -35,6 +35,8 @@
   
   <link rel="stylesheet" href="../photography.css" />
   
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+  <script src="/pagefind/pagefind-ui.js"></script>
   
 </head>
 <body>
@@ -61,6 +63,20 @@
         
       </ul>
     </nav>
+    <div id="search"></div>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            new PagefindUI({
+            
+                element: "#search",
+            
+                showSubResults: true,
+            
+                showImages: false,
+            
+            });
+        });
+    </script>
   
 </header>
 <main>
@@ -87,8 +103,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image1" id="label1"><p><code>∧</code> A visit from the tiny world, most probably lost in ours. Little lady on its leaf, lost in an ocean of light. Tiny but hard to miss, when you wear that uncommon punchy red dress, nicely contrasting with the chlorophyll.</p>
-</label>
+<div class="caption docutils container" id="label1">
+<p><code>∧</code> A visit from the tiny world, most probably lost in ours. Little lady on its leaf, lost in an ocean of light. Tiny but hard to miss, when you wear that uncommon punchy red dress, nicely contrasting with the chlorophyll.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image4-fullscreen">
 <img alt="" class="inline" id="image4" src="240917_negscan2408.9650.v0001.jpg" />
@@ -104,8 +121,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image4" id="label4"><p><code>∧</code> A pond full of water lilly, some with flowers. But we barely distinguish them from the water their floating on. It's so dim, so cold, yet they are reflecting what seems to be a strong light source. Even weirder a soft band of intense red is striking the picture in half.</p>
-</label>
+<div class="caption docutils container" id="label4">
+<p><code>∧</code> A pond full of water lilly, some with flowers. But we barely distinguish them from the water their floating on. It's so dim, so cold, yet they are reflecting what seems to be a strong light source. Even weirder a soft band of intense red is striking the picture in half.</p>
+</div>
 </div>
 <div class="column right docutils container" style="width: 50%">
 <div class="image-wrapper docutils container">
@@ -123,8 +141,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image2" id="label2"><p><code>∧</code> bright lights, muddy shadow, no in between.  Neon light covered in foliage, plants emerging from darkness. Why is its shinning green ? Bright sky above, too bright even, unsettling ...</p>
-</label>
+<div class="caption docutils container" id="label2">
+<p><code>∧</code> bright lights, muddy shadow, no in between.  Neon light covered in foliage, plants emerging from darkness. Why is its shinning green ? Bright sky above, too bright even, unsettling ...</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image3-fullscreen">
 <img alt="" class="inline" id="image3" src="240917_negscan2408.943.v0001.jpg" />
@@ -140,8 +159,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image3" id="label3"><p><code>∧</code> Emerging from the dark, barely lit by a soft cold light source, was clumps of what seemed to be dried leaves. Hard to guess but it's actually orchidae flowers in bad shape. And then we have the light leak. Ferrociously blasting a stripe of the scene with an intense agressive red.</p>
-</label>
+<div class="caption docutils container" id="label3">
+<p><code>∧</code> Emerging from the dark, barely lit by a soft cold light source, was clumps of what seemed to be dried leaves. Hard to guess but it's actually orchidae flowers in bad shape. And then we have the light leak. Ferrociously blasting a stripe of the scene with an intense agressive red.</p>
+</div>
 </div>
 <div class="column responsive docutils container">
 <div class="image-wrapper docutils container">
@@ -159,8 +179,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image1" id="label1"><p><code>∧</code> A visit from the tiny world, most probably lost in ours. Little lady on its leaf, lost in an ocean of light. Tiny but hard to miss, when you wear that uncommon punchy red dress, nicely contrasting with the chlorophyll.</p>
-</label>
+<div class="caption docutils container" id="label1">
+<p><code>∧</code> A visit from the tiny world, most probably lost in ours. Little lady on its leaf, lost in an ocean of light. Tiny but hard to miss, when you wear that uncommon punchy red dress, nicely contrasting with the chlorophyll.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image2-fullscreen">
 <img alt="" class="inline" id="image2" src="240917_negscan2408.966.v0001.jpg" />
@@ -176,8 +197,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image2" id="label2"><p><code>∧</code> bright lights, muddy shadow, no in between.  Neon light covered in foliage, plants emerging from darkness. Why is its shinning green ? Bright sky above, too bright even, unsettling ...</p>
-</label>
+<div class="caption docutils container" id="label2">
+<p><code>∧</code> bright lights, muddy shadow, no in between.  Neon light covered in foliage, plants emerging from darkness. Why is its shinning green ? Bright sky above, too bright even, unsettling ...</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image3-fullscreen">
 <img alt="" class="inline" id="image3" src="240917_negscan2408.943.v0001.jpg" />
@@ -193,8 +215,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image3" id="label3"><p><code>∧</code> Emerging from the dark, barely lit by a soft cold light source, was clumps of what seemed to be dried leaves. Hard to guess but it's actually orchidae flowers in bad shape. And then we have the light leak. Ferrociously blasting a stripe of the scene with an intense agressive red.</p>
-</label>
+<div class="caption docutils container" id="label3">
+<p><code>∧</code> Emerging from the dark, barely lit by a soft cold light source, was clumps of what seemed to be dried leaves. Hard to guess but it's actually orchidae flowers in bad shape. And then we have the light leak. Ferrociously blasting a stripe of the scene with an intense agressive red.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image4-fullscreen">
 <img alt="" class="inline" id="image4" src="240917_negscan2408.9650.v0001.jpg" />
@@ -210,8 +233,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image4" id="label4"><p><code>∧</code> A pond full of water lilly, some with flowers. But we barely distinguish them from the water their floating on. It's so dim, so cold, yet they are reflecting what seems to be a strong light source. Even weirder a soft band of intense red is striking the picture in half.</p>
-</label>
+<div class="caption docutils container" id="label4">
+<p><code>∧</code> A pond full of water lilly, some with flowers. But we barely distinguish them from the water their floating on. It's so dim, so cold, yet they are reflecting what seems to be a strong light source. Even weirder a soft band of intense red is striking the picture in half.</p>
+</div>
 </div>
 </div>
 
@@ -230,7 +254,7 @@
     </a>
     
     <p>Static website <a href="../../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-29T11:49</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/2ce951f">2ce951f</a></i></p>
+      Last built on <i>2025-06-05T21:23</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/98b4c3f">98b4c3f</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

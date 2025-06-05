@@ -8,11 +8,11 @@
   <link rel="icon" href="https://liamcollod.xyz/.static/icons/logo-lixm.svg" type="image/x-ico">
   
     <meta name="author" content="Liam Collod">
-  <meta name="description" content="Finally had all the time I needed to rebuild and redesign my website.">
+  <meta name="description" content="New year, new (http) me.">
   <meta name="fediverse:creator" content="@liamcollod@mastodon.gamedev.place">
   <meta property="og:title" content="liam collod - Renovating this website (2025)">
   <meta property="og:type" content="website"><meta property="og:url" content="https://liamcollod.xyz/blog/website-redesign-2025/index.html">
-  <meta property="og:description" content="Finally had all the time I needed to rebuild and redesign my website."><meta property="og:image" content="https://liamcollod.xyz/.static/images/cover-social.jpg">
+  <meta property="og:description" content="New year, new (http) me."><meta property="og:image" content="https://liamcollod.xyz/.static/images/cover-social.jpg">
   <meta name="dcterms.created" content="2025-05-03T11:21:00">
   
   
@@ -40,6 +40,8 @@
   
   <link rel="stylesheet" href="website-redesign-2025.css" />
   
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+  <script src="/pagefind/pagefind-ui.js"></script>
   
 </head>
 <body>
@@ -66,6 +68,20 @@
         
       </ul>
     </nav>
+    <div id="search"></div>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            new PagefindUI({
+            
+                element: "#search",
+            
+                showSubResults: true,
+            
+                showImages: false,
+            
+            });
+        });
+    </script>
   
 </header>
 <main>
@@ -79,13 +95,13 @@
             <hr>
           </div>
           <div class="metadata-tags">
-            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.3s">web-design</pre>
+            <pre class="metadata-tag floating-up" title="a post keyword" style="animation-delay: 0.7s">web-design</pre>
           </div>
         </section>
         <span id="article-header-decoration"></span>
         <h1>Renovating this website (2025)</h1>
         <section id="metadata-footer">
-          <p id="post-description" title="the post description">Finally had all the time I needed to rebuild and redesign my website.</p>
+          <p id="post-description" title="the post description">New year, new (http) me.</p>
           <div class="metadata-essential">
               <hr>
               <span title="Date Created.">
@@ -121,36 +137,39 @@
 <li><p><a class="reference internal" href="#photography-portfolio" id="toc-entry-5">Photography portfolio</a></p></li>
 <li><p><a class="reference internal" href="#the-importance-of-typography" id="toc-entry-6">The importance of typography.</a></p></li>
 <li><p><a class="reference internal" href="#making-a-c-v" id="toc-entry-7">Making a C.V.</a></p></li>
+<li><p><a class="reference internal" href="#search-bar" id="toc-entry-8">Search Bar</a></p></li>
+<li><p><a class="reference internal" href="#other-stuff" id="toc-entry-9">Other stuff</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#custom-domain-and-tech-independence" id="toc-entry-10">Custom domain and tech independence</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getting-rid-of-gmail" id="toc-entry-11">Getting rid of gmail</a></p></li>
+<li><p><a class="reference internal" href="#improving-how-i-manage-my-passwords" id="toc-entry-12">Improving how I manage my passwords</a></p></li>
+<li><p><a class="reference internal" href="#nuking-facebook-fuck-you-zuckenberg" id="toc-entry-13">Nuking facebook (fuck you Zuckenberg)</a></p></li>
+<li><p><a class="reference internal" href="#custom-domain-for-my-website" id="toc-entry-14">Custom domain for my website</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
 </nav>
 </aside>
-<p>This april 2025 I lost my job due to the Technicolor collapse, left with an impressive
-amount of time I decided to tackle a long standing project of mine: entirely
-renovating this website.</p>
+<p>This April 2025 I lost my job due to the <a class="reference external" href="https://variety.com/2025/artisans/global/technicolor-collapse-shockwaves-vfx-1236326607/">Technicolor collapse</a>
+, left with an impressive amount of time I decided to tackle a long standing
+project of mine: entirely renovating this website.</p>
 <p>Why though ? I already had a pretty decent website. Well as much as moth are attracted
 by your bedroom lights, programmer are attracted to writing new code over and over again,
 or doing their thing their own way. Anyway I got bored and a bit frustrated of what I
 designed back in 2021 and wanted a change. It's my website I can do whatever the fuck
 I want <img alt="" class="emoji-role inline" src="../../.static/images/emojis/yes-cool.png" title="yes-cool" />.</p>
-<p>And I'm verry happy with what I achieved, a site that feels more personal, more funky
-and on which I have the whole control because I wrote a lot of the code
-that it uses.</p>
+<p>And I'm verry happy with what I achieved, it's not just a backend change, it's also a
+change of direction for what I want to communicate. It feels more personal, more funky
+and also more political.</p>
 <section id="the-before">
 <h2><a class="toc-backref" href="#the-before" role="doc-backlink">The before</a></h2>
-<p>I don't know shit about web-development, if that its common to use &quot;backend&quot; and &quot;frontend&quot;
-to describe the different building blocks of a website. I like those word so I'll
-be using them to describe my whole website framework.</p>
-<ul class="simple">
-<li><p><span class="docutils literal">frontend</span>: I assume this is the visible part of the website, what you are directly
-interacting with on the web.</p></li>
-<li><p><span class="docutils literal">backend</span>: this is whatever is used to generate the frontend</p></li>
-</ul>
 <p>In 2021 I decided to base my whole website on the <a class="reference external" href="https://docs.getpelican.com/en/latest/">Pelican</a>
 framework: &quot;a static site generator, written in Python&quot;. At that time I mainly wanted a
-blog, and I knew how to code in python so it was all I needed to get started. It's a
+blog, and I was familiar with Python (not that you need it for Pelican)
+so it was all I needed to get started. It's a
 really great tool because if you don't know the basics of the web, everything is abstract
 as python config and .rst/.md files. And it's decently extendable.</p>
 <p>Pelican propose &quot;themes&quot; to style your website, I initially went with <a class="reference external" href="https://mcss.mosra.cz/">https://mcss.mosra.cz/</a>
@@ -161,8 +180,11 @@ customize the website with my own sauce.</p>
 I was started to get familiar with git at the time and it's just free. Because I was
 getting familiar with it, the workflow was quite messy for some time. Especially
 the branchs where I swapped multiple time the source pelican website branch and the
-published html website branch, not knowing which one shoudl be <span class="docutils literal">dev</span> or <span class="docutils literal">main</span> (and
+published html website branch, not knowing which one should be <span class="docutils literal">dev</span> or <span class="docutils literal">main</span> (and
 found out later that we usually put the html in a <span class="docutils literal"><span class="pre">gh-pages</span></span> branch).</p>
+<p>As for the site design I aimed for something that feels polished, serious and
+professional. There was not that much unique content, mostly a blog, a custom index
+and a contact page.</p>
 </section>
 <section id="starting-over">
 <h2><a class="toc-backref" href="#starting-over" role="doc-backlink">Starting over</a></h2>
@@ -189,8 +211,8 @@ my code and publish it for the web at the same place and that is good for me now
 html files is tempting. But writing long blog post and tutorials with html syntax is
 really painful. Which is why the Pelican design to use an human-friendly source format
 like restructuredText or Markdown and translate it to html is a great idea. And I want
-to keep it. But I still want to be able to just write a whole page in html if I wanted
-to.</p></li>
+to keep it. <em>But I still want to be able to just write a whole page in html if I wanted
+to.</em></p></li>
 </ul>
 <aside class="admonition">
 <p class="admonition-title">restructuredText or Markdown ?</p>
@@ -200,13 +222,13 @@ maintain. The choice was already made because I picked rst with Pelican, which w
 preferred by the m.css extension I was using.
 Still, if I need to write my own code to convert rst to html, I found out that
 rst design was more prone to this task and also more prone to be extended (with its
-concept of directives).</p>
+concept of <em>directives</em>).</p>
 </aside>
 <aside class="admonition">
 <p class="admonition-title">What about dynamic web pages ?</p>
 <p>Pelican and m.css showed me that static sites are fine for my need. I don't need
 Javascript or any other language to dynamically generate content on my website.
-Whatver I publish on my side is what the user will see. I don't need the
+Whatever I publish on my side is what the user will see. I don't need the
 extra-complexity.</p>
 </aside>
 </section>
@@ -216,12 +238,15 @@ extra-complexity.</p>
 I get there&quot; to solve. This involved quite a bit more of research, trial and errors
 but I am too lazy to write a whole chapter about it so I'll be skipping that whole part
 <img alt="" class="emoji-role inline" src="../../.static/images/emojis/cat-sleepy-bb.webp" title="cat-sleepy-bb" />.</p>
-<p>You can get more information on the finished result by checking the <a class="reference external" href=".....docindex.html">documentation</a>.
+<p>You can get more information on the finished result by checking the <a class="reference external" href="../../.doc/index.html">documentation</a>
+or the <a class="reference external" href="https://github.com/MrLixm/MrLixm.github.io/tree/main/libs/lxmsite">Github repo</a>.
 You will notice I share a lot of concepts with Pelican, but I implemented those my way.</p>
-<p>One of the hardest part was understand the <span class="docutils literal">docutils</span> library. I would qualify the
+<p>One of the hardest part was understanding the <span class="docutils literal">docutils</span> library. I would qualify the
 code as not very readable and not very-well documented which made it very hard to
 understand how to implement my own features. Seeing how complex the code is makes me
-wonder if picking rst as file format was the right choice ?</p>
+wonder if picking rst as file format was the right choice ?
+(I'm very tented to write my own markup syntax but that's not an exercice I already
+done and will probably become another rabbit-hole).</p>
 <p>Then after a few test or a very small version of my website I was satisified
 with the workflow and started re-building the website content. This was mostly
 copy/pasted and fixing all the previous website content so it all works with the new
@@ -238,7 +263,9 @@ the current design good enough and quite polished, I wanted a changes of values.
 I want it to be funky, kind of messy but still polished. It must feels like me: I am
 nerdy but I don't think I'm boring, I can be quite organized but also scatter in a lot
 of direction. I am colorful and I like green. Let me just put things that I find fun or
-funny on my website, I can it's my website.</p>
+funny on my website; I can, it's my website.
+But also let's not forget that for a website to be really personal, it means it must
+be political. Not just a facade: how really do you treat with other human beings.</p>
 </blockquote>
 <figure class="inline align-center">
 <img alt="screenshot of the new index page" class="inline" src="screenshot-new-index.png" />
@@ -413,7 +440,7 @@ and write 2 lines of css. The real reason was mostly that I didn't need anything
 the most popular fonts are in the Google catalogue and works just fine. But hey I said
 I want to get fancy for this website ! Time to go off-road ... <img alt="" class="emoji-role inline" src="../../.static/images/emojis/malicious-intentions.png" title="malicious-intentions" /></p>
 <p>I think my approach to pick fonts was the inverse of what designer usually do. I started
-to browse for fonts I like visually first, and the build the page style and design
+to browse for fonts I like visually first, and then build the page style and design
 around that font; or at least get inspired from it.</p>
 <p>With the thousands of free fonts online it's hard to make a choice right ? Well
 amongst some of the type foundries I got some with a really interesting feature: they
@@ -457,7 +484,7 @@ displayed next to them. They are such a crucial piece of puzzle for a website th
 they deserve credits.</p>
 <p>And as of the time I'm writting this post, these are the fonts I ended up using:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://pippin.gimp.org/0xA000/">0xA000</a>: picked for its unique style; I actually not ended up using it as much as I wanted.</p></li>
+<li><p><a class="reference external" href="https://pippin.gimp.org/0xA000/">0xA000</a>: picked for its unique &quot;tech&quot; style; I actually not ended up using it as much as I wanted.</p></li>
 <li><p><a class="reference external" href="https://typotheque.le75.be/">Barlow-Elastic</a></p></li>
 <li><p><a class="reference external" href="https://typotheque.genderfluid.space/fr/fontes/bbb-manifont-grotesk">BBBManifontGrotesk</a></p></li>
 <li><p><a class="reference external" href="https://www.fontshare.com/fonts/clash-display">ClashDisplay</a>: had to match the typography of the vintage Fujifilm packaging.</p></li>
@@ -470,6 +497,7 @@ they deserve credits.</p>
 <li><p><a class="reference external" href="https://montifonti.tilda.ws/mon_hugo">MonHugo</a></p></li>
 <li><p><a class="reference external" href="https://fonts.bunny.net/family/montserrat">Montserrat</a>: was already using the font on the old website; may replace in the future</p></li>
 <li><p><a class="reference external" href="https://github.com/JAMO-TYPEFACE/Orbit/tree/main">Orbit</a></p></li>
+<li><p><a class="reference external" href="http://publifluor.osp.kitchen/">PubliFluor</a></p></li>
 <li><p><a class="reference external" href="https://fonts.bunny.net/family/source-code-pro">SourceCodePro</a>: was already using the font on the old website; may replace in the future</p></li>
 <li><p><a class="reference external" href="https://fonts.bunny.net/family/source-sans-pro">SourceSansPro</a>: was already using the font on the old website; may replace in the future</p></li>
 <li><p><a class="reference external" href="https://fonts.bunny.net/family/tiny5">Tiny5</a>: needed a really tiny pixel font</p></li>
@@ -508,6 +536,337 @@ media query <span class="docutils literal">print</span>:</p>
 graphics that were 1px thin like borders became barely visible. I used the same css
 trick above to make all borders 2px wide when &quot;printing&quot;.</p>
 </section>
+<section id="search-bar">
+<h3><a class="toc-backref" href="#search-bar" role="doc-backlink">Search Bar</a></h3>
+<p>I think finding information is a critical part for most websites. Maybe not that
+critical for small personal websites but it can be frustrating for the user to
+lost himself on your site, or even for you if you write resources that are never found.</p>
+<p>Yet finding content was kept at the minimum viable level for this redesign: a clear
+nav bar and structure. I actually removed some navigation compared to what Pelican
+was offering me.</p>
+<p>But at the last minute someone <a class="reference external" href="https://types.pl/&#64;quat/114615740350510081">shared on Mastodon</a>
+exactly what I was looking for:</p>
+<div class="url-preview-box docutils container">
+<a class="reference external" href="https://pagefind.app/">
+</a>
+<div class="url-preview-image docutils container">
+<img alt="" class="inline" src="https://pagefind.app/og.png" />
+</div>
+<div class="url-preview-details docutils container">
+<p class="url-preview-title">Pagefind | Pagefind — Static low-bandwidth search at scale</p>
+<div class="url-preview-subtitle docutils container">
+<a class="reference external" href="https://pagefind.app/">
+https://pagefind.app/</a>
+</div>
+<div class="url-preview-description docutils container">
+</div>
+</div>
+</div>
+<p>A search function for static sites ! And it can be pip installed. Most impressive
+is that as hinted by the mastodon post author, it only took a few dozen of minutes
+to have fully integrated in this website (few more to squash some bugs and polish
+the style) !</p>
+</section>
+<section id="other-stuff">
+<h3><a class="toc-backref" href="#other-stuff" role="doc-backlink">Other stuff</a></h3>
+<p>I added a resources page. It's goal overlap a bit with the blog and work pages but I
+think it's a large enough need that it required its own page. Also it replace the
+previous subpage &quot;asset&quot; that I created for 2 specific cases. I made sure to
+redirect those to their new <span class="docutils literal">resources</span> location.</p>
+<p>Compared to Pelican I removed the tags/author/categories pages that allowed to browse
+all the blog post with that specific field. I didn't feel it bring much value for now
+as I don;t have that much content. But I know finding information is an important feature
+so I plan to at elast implement some form of global search later.</p>
+<p>Oh and I added small easter-eggs all around 👀 (as in, you need an interaction to
+find them).</p>
+</section>
+</section>
+<section id="custom-domain-and-tech-independence">
+<h2><a class="toc-backref" href="#custom-domain-and-tech-independence" role="doc-backlink">Custom domain and tech independence</a></h2>
+<p>While redoing my website, I also decided it was time to do a little bit of cleaning
+in my &quot;cyber-life&quot;. There was 2 main topic I wanted to tackle for a long time but whose
+expanded in scope quickly. Which made me realised why I didn't do it sooner: it takes
+a lot of time and there's a lot of uncertainty you need to navigate.</p>
+<section id="getting-rid-of-gmail">
+<h3><a class="toc-backref" href="#getting-rid-of-gmail" role="doc-backlink">Getting rid of gmail</a></h3>
+<p>I don't think it's necessary to explain why one would want to get rid of Google, or at
+least I'm too lazy to put the effort into an explanation.
+But those bastard doesn't align with my values and I don't want
+anymore to justify giving credits to fascist simply for my personal confort.</p>
+<p>Amongst the alternative I stumbled upon <a class="reference external" href="https://tuta.com/">Tuta</a> and
+<a class="reference external" href="https://proton.me/mail">Proton Mail</a>. Proton unfortunately had a <a class="reference external" href="https://pivot-to-ai.com/2024/07/18/proton-mail-goes-ai-security-focused-userbase-goes-what-on-earth/">few backlashes</a>
+in the previous year that made me quite mitigated.
+Though I have been given some <a class="reference external" href="https://medium.com/&#64;ovenplayer/does-proton-really-support-trump-a-deeper-analysis-and-surprising-findings-aed4fee4305e">contradictory sources</a>
+I went with Tuta (and I skip over the other alternatives I haven't really looked into).</p>
+<p>Changing your email provider is a big thing, this mean that in theory you need to
+inform all websites, entity and person to use that new email adress. Imagine
+the new provider you choose suck ? You will have to go through all that mess again
+to migrate back ?
+Well there's a solution: routing your email through a custom domain. All email
+providers provides you a custom domain, like <span class="docutils literal">username&#64;gmail.com</span> or
+<span class="docutils literal">username&#64;tuta.io</span> but some allow you to use your own.</p>
+<div class="url-preview-box docutils container">
+<a class="reference external" href="https://growyourown.services/a-beginners-guide-to-creating-and-using-your-own-domain-name/">
+</a>
+<div class="url-preview-image docutils container">
+<img alt="" class="inline" src="https://growyourown.services/wp-content/uploads/2024/04/gyos1processedsmallv3VariationSmall.jpg" />
+</div>
+<div class="url-preview-details docutils container">
+<p class="url-preview-title">A beginner’s guide to creating and using your own domain name</p>
+<div class="url-preview-subtitle docutils container">
+<a class="reference external" href="https://growyourown.services/a-beginners-guide-to-creating-and-using-your-own-domain-name/">
+https://growyourown.services/a-beginners-guide-to-creating-and-using-your-own-domain-name/</a>
+</div>
+<div class="url-preview-description docutils container">
+</div>
+</div>
+</div>
+<p>Owning a custom domain was a first for me, I had a lot of questions but it ended-up
+okay of an experience. I went with <a class="reference external" href="https://www.gandi.net/en">Gandi</a> as domain
+provider (they are french-based) and bought <span class="docutils literal">liamcollod.xyz</span> (11€ for 2years).
+I then followed the Tuta instructions to use it as custom domain for my email, that
+way I could have as much email adresseses I want on that domain. However after doing
+a bunch of tests, and email update on some websites I found one issue: the <span class="docutils literal">.xyz</span>
+top-domain is more prone to be blocked by spam filters 😨 That's really bad if you send
+a mail and you can't know if it end-up in the recipient spam that he may never check ...
+(I also learn that some filters blocks new domains for the first month after their creation).
+Welp, I had to buy another domain <span class="docutils literal">liamcollod.eu</span>. It seems that anyway, except for
+the bigger email provider domains, everything is a potential spam for some.</p>
+<p>Now that I have a custom domain, I need to pick the email adress I want to use,
+because the domain is only the part right to the <span class="docutils literal">&#64;</span>, you need to pick a left part.
+And the magic is that you can setup as much as you want ! For example I picked
+<span class="docutils literal">contact&#64;liamcollod.eu</span> as a general email address. But I have another one that
+looks like <span class="docutils literal">heyo&#64;liamcollod.eu</span> that I will only give to my relatives and mutuals.
+Depending on how your email providers works, you can also setup aliases, an infinity of
+email adresses that can be unique per website you create an account on !</p>
+<p>That's one advantage, the other is that I can now
+change email provider (like if I decide to finally go from Tuta to Proton Mail)
+without having to update my email adress anywhere.
+I just need to update a few settings on my domain provider to tell to redirect
+the mail from Tuta to Proton. My email stays <span class="docutils literal">contact&#64;liamcollod.eu</span>.</p>
+<aside class="admonition important">
+<p class="admonition-title">important</p>
+<p>Note that you &quot;own the email&quot; as long as you pay the domain provider (Gandi for me).
+So it's not a &quot;free unlimited hack&quot;, you are still dependent on the will of
+a third party for your email to exists.</p>
+</aside>
+<aside class="admonition note">
+<p class="admonition-title">note</p>
+<p>Before you go with Tuta, here's a few thing I have spotted (which are not a blocker
+for me but may be for you):</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.reddit.com/r/tutanota/comments/wlrf1s/automatically_email_forwarding/">No automatic mail forwarding</a>.</p></li>
+<li><p>No &quot;favorite this mail&quot; system. You can however since recently created labels on mail.</p></li>
+<li><p>Inbox rules system is quite basic.</p></li>
+<li><p>Accounts <em>on the free tier</em> are deleted if not used for 6 month.</p></li>
+<li><p>You can only use their client app (desktop and mobile) due to the encryption.</p>
+<ul>
+<li><p>Which implies you can't add your emails from other providers (but you can
+switch between multiple Tuta accounts).</p></li>
+</ul>
+</li>
+</ul>
+<p>For now I am quite pleased with the user experience (it feels polished) and would
+definitively recommend them as long as your need are pretty simple.</p>
+</aside>
+<p>Gmail was my main Google dependency. I didn't get rid of it as I can't just stop using
+my 12 years-old email address but it feels good to know I may just delete it and
+it will not be catastrophic. Slowly, I am building alternatives and that makes me
+confident.</p>
+<p>The next step is getting rid of other Google dependencies, luckly my usage was
+already pretty small:</p>
+<ul class="simple">
+<li><p><span class="docutils literal">Google Calendar</span>: replaced by Tuta Calendar !</p></li>
+<li><p><span class="docutils literal">Google Authentificator</span>: gone now, see next section !</p></li>
+<li><p><span class="docutils literal">Google Drive</span>: never used, I was already on Mega since years.</p></li>
+<li><p><span class="docutils literal">Google Sheets</span>: not simple, there's not that much resources online. Excel is not
+not a solution. I'm just using it for accountability so I may explore solutions
+outside the traditional spreadsheet format.</p></li>
+<li><p><span class="docutils literal">YouTube</span>: well it's hard to get rid of this one but I'm still investigating.</p></li>
+<li><p><span class="docutils literal">Google Maps</span>: I need to start using <a class="reference external" href="https://www.openstreetmap.org">OpenStreetMap</a>
+but I don't know how robust their
+&quot;itinary&quot; feature is (and also how much solid is their local business referencing
+and reviewing).</p></li>
+</ul>
+<p>To be continued ...</p>
+</section>
+<section id="improving-how-i-manage-my-passwords">
+<h3><a class="toc-backref" href="#improving-how-i-manage-my-passwords" role="doc-backlink">Improving how I manage my passwords</a></h3>
+<p>Until know, my method was the good old physical notebook of passwords. Very secure
+but quite dangerous (I only have ony copy!) and inpractical (always take a few seconds
+to find the password for the exact site you need).</p>
+<p>I might be digital-tech-savy, I don't know much about cyber-security if the very basics.
+So it's quite hard to navigate amongst all the possibility to store a password. Should I
+really trust a password manager ? How can it fail to protect my data ?</p>
+<p>I still can't answer those questions because as much as I like to go in depth for each
+topic I explore, I already had too much on my plate and just went on relying on
+what the majority use: <a class="reference external" href="https://bitwarden.com/">Bitwarden</a> (with the help of a few
+<a class="reference external" href="https://tuta.com/blog/best-password-manager">comparison articles</a>).</p>
+<p>From what I understand, it's basically an encrypted database that is stored on some
+company cloud. Only you can decrypt the database with your master password. So it better
+be a good password, but the only one you have to remember !</p>
+<p>While looking at password manager I also discovered another concept: passphrases.</p>
+<figure class="inline">
+<a class="reference external image-reference" href="https://xkcd.com/936/">
+<img alt="a full transcript is available at https://xkcd.com/936/" class="inline" src="xkcd-passphrases.png" />
+</a>
+</figure>
+<p>I don't know how hard I should trust those but it seems quite reliable so I gave it a go.</p>
+<p>To generate a passphrase I found:</p>
+<div class="url-preview-box docutils container">
+<a class="reference external" href="https://diceware.dmuth.org/">
+</a>
+<div class="url-preview-image docutils container">
+<img alt="" class="inline" src="https://diceware.dmuth.org/assets/img/dice.jpg" />
+</div>
+<div class="url-preview-details docutils container">
+<p class="url-preview-title">Diceware Password Generator</p>
+<div class="url-preview-subtitle docutils container">
+<a class="reference external" href="https://diceware.dmuth.org/">
+https://diceware.dmuth.org/</a>
+</div>
+<div class="url-preview-description docutils container">
+<p>Tired of forgetting passwords?  We got you covered!  All passwords consist of real words, chosen at random.</p>
+</div>
+</div>
+</div>
+<p>But also a slighty different generator with a very nice user interface:</p>
+<div class="url-preview-box docutils container">
+<a class="reference external" href="https://strongphrase.net/">
+</a>
+<div class="url-preview-image docutils container">
+<img alt="" class="inline" src="strongphrases.net.png" />
+</div>
+<div class="url-preview-details docutils container">
+<p class="url-preview-title">StrongPhrase.net</p>
+<div class="url-preview-subtitle docutils container">
+<a class="reference external" href="https://strongphrase.net/">
+https://strongphrase.net/</a>
+</div>
+<div class="url-preview-description docutils container">
+<p>Create a memorable, strong passphrase to use with your password manager, computer, etc.</p>
+</div>
+</div>
+</div>
+<p>And <a class="reference external" href="https://bitwarden.com/password-generator/">bitwarden password generator</a>
+also offers passphrases.</p>
+<p>With that it was time to start the big update ! Going through every website I had
+on my notebook and update the password and email, registering them in Bitwarden.</p>
+<ul class="simple">
+<li><p>I didn't registred all the websites in my password manager: the ~5 most critical
+are still in my physical notebook.</p></li>
+<li><p>I actually didn't update all the website I ever had an account on. I made a list and
+sorted them by importance, only updating the most used. For the other I will update
+them progressively, when login back to them.</p></li>
+</ul>
+<p>For few of this websites, I had <abbr title="2 Factor Authentification">2FA</abbr> in place. Until
+now I was using Google Authentificator to managed my codes but I want to get rid of
+Google. Again, I search for some comparison with alternatives and end up on
+<a class="reference external" href="https://getaegis.app">Aegis</a>. Most importantly it allow to export your tokens
+as backup. I can loose my smartphone and not become locked-out of those important
+accounts.</p>
+</section>
+<section id="nuking-facebook-fuck-you-zuckenberg">
+<h3><a class="toc-backref" href="#nuking-facebook-fuck-you-zuckenberg" role="doc-backlink">Nuking facebook (fuck you Zuckenberg)</a></h3>
+<p>With how Meta decided aiming at being one the leaders of the new techno-fascist empire
+the USA are building I came to the conclusion I also want to delete my Facebook account.
+I haven't used Facebook for years so I'm lucky that's not a big deal for me.</p>
+<p>I check if there is anything to backup, maybe a few photos, ha wait ... messenger.
+I still have one group of friend using it.</p>
+<p>“Ask them to migrate to another platform”, worth a try, expect I know they are lazy
+bastard and that creating a new account on a new app just for one group chat with
+me is too much. I will have to convince them with time, but in the meanwhile I
+need another solution right now.</p>
+<p>And I already have another solution. A year ago when Meta had to offer Facebook-less
+messenger account to its user after an EU law I did created one. So let’s check it out.</p>
+<p>First thing I want to check is can I share my messenger contact easily ? I ask my
+partner to search for my account on messenger, as if they wanted to contact me, but
+they only find my facebook-linked account. Hmm, how do you share and find a
+messenger account, there must be some kind of user name or identifier right ? And
+indeed there is, you are supposed to have a messenger username that allow to share
+you account using a <span class="docutils literal"><span class="pre">https://m.me/</span></span> link. Expect mine is empty. Like I don’t have
+an username 😵‍ Well lucky for me there is an option to edit your username,
+let’s give that a try.</p>
+<p>However whatever username I try to put in the field just give me an error, not
+“username taken” or anything explicit, just no it’s not possible, for anything
+goofy or serious that I try. So I look at their documentation that explains what
+is allowed as username but all my attempts match their requirements so what
+is going on ??</p>
+<p>Turns out that from a reddit post, its because my account don’t have a verified
+phone number, so I can’t edit my username ! And they obviously don't tell you !</p>
+<p>Ok let’s add a phone number then. I go my account settings &gt; personal information
+&gt; add phone number, enter my phone number … huh ? The “Next” button is greyed-out
+and I can’t click it. Again whatever phone number I fill I just can’t validate it.
+Absolutely crazy ! And can’t find what is the reason this time. I give up for
+today and will try again tomorrow ...</p>
+<p>Next day, but you know what never mind, let’s nuke the account and start from scratch.
+Wait what !? 30 days before the account is deleted ? and if its cancelled if I
+login with it ? Well I will have to use another email address in the meanwhile but fine.</p>
+<p>Ok so new account, after deleting the other one I’m automatically put on a screen
+which ask me to login with my existing Facebook account or another one, I try to
+click &quot;Another Account&quot;, I get a new login page but also a button to create a new
+account at the bottom (I would have expected it to be hidden elsewhere). Great
+finally something straightforward, so create account, without Facebook option, I
+choose to use my phone number over my email, all good, until the step I must submit
+my confirmation code that is sent to my phone number. Waiting 1,5,10min nothing.
+And there is no option to ask to send another code. Unlucky or just another
+intentional blocker ?
+Well let’s go back a few step until it ask the phone number again and refill
+everything ... same issue I never receive the code.</p>
+<p>Fuck this, let’s cancel the whole process and go back on the login screen,
+I get a popup that ask me if I really want to cancel the account creation,
+so yes. Let’s try agaaaain, create a new account ... huh ? Now I get redirected
+to a webpage that tells me it’s not possible to create a new account at this
+moment !!?? Welp time to give up and come back later.</p>
+<p>Turns out I just had to close the messenger app to retry the account creation,
+but I still get blocked in the end at the phone verification step ...</p>
+<p>You want to know how the story ends ? I retry 3 days later to create a new account
+and this time everything works without issue 💀</p>
+</section>
+<section id="custom-domain-for-my-website">
+<h3><a class="toc-backref" href="#custom-domain-for-my-website" role="doc-backlink">Custom domain for my website</a></h3>
+<p>I explained how I acquired 2 custom domains in <a class="reference external" href="#getting-rid-of-gmail">Getting rid of gmail</a>
+and their usage for my emails, but it is most evident that the main other reason you
+want a custom domain is for your website.</p>
+<p>I didn't use my <span class="docutils literal">.xyz</span> domain for email because of spam detection, but this should
+be less of a problem for a website url. And <span class="docutils literal">.xyz</span> is much more relevant than
+<span class="docutils literal">.eu</span> for my profile (3d space coordinates ...) !
+Therefore I want my website to be accessible at  <span class="docutils literal">liamcollod.xyz</span>.</p>
+<aside class="admonition highlight-block">
+<p>I'm a big noob with how internet works so I also learned that <span class="docutils literal">www.liamcollod.xyz</span>
+is a subdomain of <span class="docutils literal">liamcollod.xyz</span>, which just redirects to it. One may not even
+set it up but it was recommended as people may be familiar with starting all
+website adresses with <span class="docutils literal">www</span>.</p>
+</aside>
+<p>To use that domain, I had a first look at the <a class="reference external" href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site">GitHub documentation</a>.
+My first issue is that the documentation explain the how, but not really the why
+or showcase the end-result. Like what is an apex-domain ? I just want to use my
+custom domain for my <span class="docutils literal">Mrlixm.github.io</span> repository, not the other repository
+where I host other sites.</p>
+<p>Cross-referencing information from <a class="reference external" href="https://insidemordecai.com/custom-domains-with-github-pages/">different sites</a>
+I decide to just follow all the steps and just see what it does:</p>
+<ol class="arabic simple">
+<li><p>I configure the apex domain</p></li>
+<li><p>I update the repo with the CNAME file</p></li>
+<li><p>I configure the <span class="docutils literal">www</span> subdomain</p></li>
+</ol>
+<p>First step was without issue but step 2. and 3. were more complicated. For 2., this file
+is automatically created by GitHub when you edit the repository settings
+as they tell you to do. But it is created as a new commit on the <span class="docutils literal"><span class="pre">gh-pages</span></span> branch
+(or whatever is published to github pages), which will be lost when I deploy a new site
+version. What need to be done is add the CNAME file (with its correct content) to the
+source branch and make sure that when I deploy the site, it is copied at the root.</p>
+<p>For 3. it was a mix of different problems:</p>
+<ul class="simple">
+<li><p>I wrongly set the CNAME record on Gandi side, I was missing the dot at the end of the value (<span class="docutils literal">mrlixm.github.io.</span>)</p></li>
+<li><p>The DNS propagataion was quite slow, the subdomain only worked the next day; after
+I spend one hour double checking I did everything correctly.</p></li>
+</ul>
+<p>The end-result is that all my other repository also got my custom domain;
+like <a class="reference external" href="https://mrlixm.github.io/picture-lab-lxm/">https://mrlixm.github.io/picture-lab-lxm/</a> redirects to <a class="reference external" href="https://liamcollod.xyz/picture-lab-lxm/">https://liamcollod.xyz/picture-lab-lxm/</a>.
+I didn't really want for this but I also don't want to spend more time on this, so
+I just leave it as it is.</p>
+</section>
 </section>
 
   </article>
@@ -525,7 +884,7 @@ trick above to make all borders 2px wide when &quot;printing&quot;.</p>
     </a>
     
     <p>Static website <a href="../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-29T11:49</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/2ce951f">2ce951f</a></i></p>
+      Last built on <i>2025-06-05T21:23</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/98b4c3f">98b4c3f</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

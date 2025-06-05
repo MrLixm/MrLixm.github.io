@@ -3,6 +3,30 @@ header {
     align-items: center;
     justify-items: center;
     padding: 15px 3%;
+
+    /* search plugin https://pagefind.app/docs/ui-usage/#customising-the-styles */
+    --pagefind-ui-scale: 0.6;
+    --pagefind-ui-primary: var(--color);
+    --pagefind-ui-text: var(--color);
+    --pagefind-ui-background: var(--bg-color-MM);
+    --pagefind-ui-border: var(--bg-color-MM);
+    --pagefind-ui-tag: var(--bg-color-MM);
+    --pagefind-ui-drawer-background: var(--bg-color);
+    --pagefind-ui-border-width: 1px;
+}
+header div#search {
+    position: absolute;
+    max-width: 400px;
+    width: 23%;
+    right: 5%;
+    top: 15px;
+    z-index: 10;
+
+    .pagefind-ui__drawer {
+        background: linear-gradient(transparent, var(--pagefind-ui-drawer-background) 10%);
+        padding: 0 1rem 1rem;
+        border-radius: var(--radius-S);
+    }
 }
 header > * {
     grid-column-start: 1;
@@ -100,5 +124,16 @@ header nav li:hover span:first-child {
 
     header nav ul {
         justify-content: space-evenly;
+    }
+
+    header div#search {
+        position: initial;
+        max-width: 400px;
+        width: 95%;
+
+        .pagefind-ui__drawer {
+            padding-left: 0;
+            padding-right: 0;
+        }
     }
 }

@@ -41,6 +41,8 @@
   
   <link rel="stylesheet" href="../../.static/fonts/Tiny5/Tiny5.css" />
   
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+  <script src="/pagefind/pagefind-ui.js"></script>
   
 </head>
 <body>
@@ -67,6 +69,20 @@
         
       </ul>
     </nav>
+    <div id="search"></div>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            new PagefindUI({
+            
+                element: "#search",
+            
+                showSubResults: true,
+            
+                showImages: false,
+            
+            });
+        });
+    </script>
   
 </header>
 <main>
@@ -74,8 +90,8 @@
     <section id="article-header">
         <p id="post-category" title="the post category">asset</p>
       <div class="metadata-tags">
-          <pre class="metadata-tag" title="a post keyword" style="animation-delay: 0.8s">film-photography</pre>
-          <pre class="metadata-tag" title="a post keyword" style="animation-delay: 0.3s">color-science</pre>
+          <pre class="metadata-tag" title="a post keyword" style="animation-delay: 0.7s">film-photography</pre>
+          <pre class="metadata-tag" title="a post keyword" style="animation-delay: 0.2s">color-science</pre>
       </div>
       <h1>film-vs-digital asset chkpad1</h1>
         <p id="post-description" title="the post description">assets for comparison of film photography rendering against arbitrary digital photography rendering</p>
@@ -150,7 +166,7 @@ as it could be replaced in the future.</p>
     </a>
     
     <p>Static website <a href="../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-29T11:49</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/2ce951f">2ce951f</a></i></p>
+      Last built on <i>2025-06-05T21:23</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/98b4c3f">98b4c3f</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

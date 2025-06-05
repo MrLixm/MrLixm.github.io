@@ -35,6 +35,8 @@
   
   <link rel="stylesheet" href="../photography.css" />
   
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+  <script src="/pagefind/pagefind-ui.js"></script>
   
 </head>
 <body>
@@ -61,6 +63,20 @@
         
       </ul>
     </nav>
+    <div id="search"></div>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            new PagefindUI({
+            
+                element: "#search",
+            
+                showSubResults: true,
+            
+                showImages: false,
+            
+            });
+        });
+    </script>
   
 </header>
 <main>
@@ -87,10 +103,12 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image4" id="label4"><p><code>∧</code> I looked up and slighty above me was this opened window. Emerging from the shadow of the interior I noticed some tropical plants that probably occupy the most luminous place of the apartment. This led me to press the shutter. Now that I can view the result I really like how the film stock rendered the blue of the sky reflecting on the window, which go in pair with the typical french blue street sign attached on the left.</p>
-</label>
-<label class="caption" for="image3" id="label3"><p><code>∨</code> Ivy is an incredible plant. Eating up as much space as possible while defying gravity. This clump was interesting too shoot as being a very dense clump on a small area of a big white house, with a strong sun beam right on it ! Some stone walls in the foreground nicely layer the picture and give some charm to the composition.</p>
-</label>
+<div class="caption docutils container" id="label4">
+<p><code>∧</code> I looked up and slighty above me was this opened window. Emerging from the shadow of the interior I noticed some tropical plants that probably occupy the most luminous place of the apartment. This led me to press the shutter. Now that I can view the result I really like how the film stock rendered the blue of the sky reflecting on the window, which go in pair with the typical french blue street sign attached on the left.</p>
+</div>
+<div class="caption docutils container" id="label3">
+<p><code>∨</code> Ivy is an incredible plant. Eating up as much space as possible while defying gravity. This clump was interesting too shoot as being a very dense clump on a small area of a big white house, with a strong sun beam right on it ! Some stone walls in the foreground nicely layer the picture and give some charm to the composition.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image3-fullscreen">
 <img alt="" class="inline" id="image3" src="240702_negscan2406.880.v0002.jpg" />
@@ -123,8 +141,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image2" id="label2"><p><code>∧</code> Not a beauty shot per say, a dusty scooter was parked outside next to some tagged trash bins. A probably broken suitcase was also left rotten there. However the old stone wall and massive wooden portal with a vivid sky blue color nicely brings some interest in this mundane scene. For some reason I found the frame of the film fitting for this shot and didn't cropped it out.</p>
-</label>
+<div class="caption docutils container" id="label2">
+<p><code>∧</code> Not a beauty shot per say, a dusty scooter was parked outside next to some tagged trash bins. A probably broken suitcase was also left rotten there. However the old stone wall and massive wooden portal with a vivid sky blue color nicely brings some interest in this mundane scene. For some reason I found the frame of the film fitting for this shot and didn't cropped it out.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image1-fullscreen">
 <img alt="" class="inline" id="image1" src="240702_negscan2406.867.v0001.jpg" />
@@ -140,8 +159,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image1" id="label1"><p><code>∧</code> No Facho ! A powerfull message on the white wall of some private property. Even more contrasty due to the intense sun there was on that day. And it's understandable given the context, we are in middle of the french legislative elections; the far right as menacing as ever. Those message of resistance has been flourishing all over the neighbourhood.</p>
-</label>
+<div class="caption docutils container" id="label1">
+<p><code>∧</code> No Facho ! A powerfull message on the white wall of some private property. Even more contrasty due to the intense sun there was on that day. And it's understandable given the context, we are in middle of the french legislative elections; the far right as menacing as ever. Those message of resistance has been flourishing all over the neighbourhood.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image5-fullscreen">
 <img alt="" class="inline" id="image5" src="240702_negscan2406.883.v0001.jpg" />
@@ -157,8 +177,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image5" id="label5"><p><code>∧</code> Turning around the corner I quickly notice the big window of what is maybe a studio or other working place. The large piece of glass were covered in dust and most interestingly a lot of tropical plants left behind them. I took the shot parallel to the window creating nice straight geometrical shape that works well with the wall architecture.</p>
-</label>
+<div class="caption docutils container" id="label5">
+<p><code>∧</code> Turning around the corner I quickly notice the big window of what is maybe a studio or other working place. The large piece of glass were covered in dust and most interestingly a lot of tropical plants left behind them. I took the shot parallel to the window creating nice straight geometrical shape that works well with the wall architecture.</p>
+</div>
 </div>
 <div class="column responsive docutils container">
 <div class="image-wrapper docutils container">
@@ -176,8 +197,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image1" id="label1"><p><code>∧</code> No Facho ! A powerfull message on the white wall of some private property. Even more contrasty due to the intense sun there was on that day. And it's understandable given the context, we are in middle of the french legislative elections; the far right as menacing as ever. Those message of resistance has been flourishing all over the neighbourhood.</p>
-</label>
+<div class="caption docutils container" id="label1">
+<p><code>∧</code> No Facho ! A powerfull message on the white wall of some private property. Even more contrasty due to the intense sun there was on that day. And it's understandable given the context, we are in middle of the french legislative elections; the far right as menacing as ever. Those message of resistance has been flourishing all over the neighbourhood.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image2-fullscreen">
 <img alt="" class="inline" id="image2" src="240702_negscan2406.870.v0001.jpg" />
@@ -193,8 +215,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image2" id="label2"><p><code>∧</code> Not a beauty shot per say, a dusty scooter was parked outside next to some tagged trash bins. A probably broken suitcase was also left rotten there. However the old stone wall and massive wooden portal with a vivid sky blue color nicely brings some interest in this mundane scene. For some reason I found the frame of the film fitting for this shot and didn't cropped it out.</p>
-</label>
+<div class="caption docutils container" id="label2">
+<p><code>∧</code> Not a beauty shot per say, a dusty scooter was parked outside next to some tagged trash bins. A probably broken suitcase was also left rotten there. However the old stone wall and massive wooden portal with a vivid sky blue color nicely brings some interest in this mundane scene. For some reason I found the frame of the film fitting for this shot and didn't cropped it out.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image3-fullscreen">
 <img alt="" class="inline" id="image3" src="240702_negscan2406.880.v0002.jpg" />
@@ -210,8 +233,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image3" id="label3"><p><code>∨</code> Ivy is an incredible plant. Eating up as much space as possible while defying gravity. This clump was interesting too shoot as being a very dense clump on a small area of a big white house, with a strong sun beam right on it ! Some stone walls in the foreground nicely layer the picture and give some charm to the composition.</p>
-</label>
+<div class="caption docutils container" id="label3">
+<p><code>∨</code> Ivy is an incredible plant. Eating up as much space as possible while defying gravity. This clump was interesting too shoot as being a very dense clump on a small area of a big white house, with a strong sun beam right on it ! Some stone walls in the foreground nicely layer the picture and give some charm to the composition.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image4-fullscreen">
 <img alt="" class="inline" id="image4" src="240702_negscan2406.882.v0001.jpg" />
@@ -227,8 +251,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image4" id="label4"><p><code>∧</code> I looked up and slighty above me was this opened window. Emerging from the shadow of the interior I noticed some tropical plants that probably occupy the most luminous place of the apartment. This led me to press the shutter. Now that I can view the result I really like how the film stock rendered the blue of the sky reflecting on the window, which go in pair with the typical french blue street sign attached on the left.</p>
-</label>
+<div class="caption docutils container" id="label4">
+<p><code>∧</code> I looked up and slighty above me was this opened window. Emerging from the shadow of the interior I noticed some tropical plants that probably occupy the most luminous place of the apartment. This led me to press the shutter. Now that I can view the result I really like how the film stock rendered the blue of the sky reflecting on the window, which go in pair with the typical french blue street sign attached on the left.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image5-fullscreen">
 <img alt="" class="inline" id="image5" src="240702_negscan2406.883.v0001.jpg" />
@@ -244,8 +269,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image5" id="label5"><p><code>∧</code> Turning around the corner I quickly notice the big window of what is maybe a studio or other working place. The large piece of glass were covered in dust and most interestingly a lot of tropical plants left behind them. I took the shot parallel to the window creating nice straight geometrical shape that works well with the wall architecture.</p>
-</label>
+<div class="caption docutils container" id="label5">
+<p><code>∧</code> Turning around the corner I quickly notice the big window of what is maybe a studio or other working place. The large piece of glass were covered in dust and most interestingly a lot of tropical plants left behind them. I took the shot parallel to the window creating nice straight geometrical shape that works well with the wall architecture.</p>
+</div>
 </div>
 </div>
 
@@ -264,7 +290,7 @@
     </a>
     
     <p>Static website <a href="../../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-29T11:49</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/2ce951f">2ce951f</a></i></p>
+      Last built on <i>2025-06-05T21:23</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/98b4c3f">98b4c3f</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

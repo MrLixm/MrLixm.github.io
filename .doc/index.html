@@ -4,14 +4,14 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>liam collod - Site Developer Documentation</title>
+  <title>liam collod - Developer Documentation</title>
   <link rel="icon" href="https://liamcollod.xyz/.static/icons/logo-lixm.svg" type="image/x-ico">
   
-  <meta name="description" content="The developer documentation for building this html site.">
+  <meta name="description" content="The documentation that explains how this website is generated and modified.">
   <meta name="fediverse:creator" content="@liamcollod@mastodon.gamedev.place">
-  <meta property="og:title" content="liam collod - Site Developer Documentation">
+  <meta property="og:title" content="liam collod - Developer Documentation">
   <meta property="og:type" content="website"><meta property="og:url" content="https://liamcollod.xyz/.doc/index.html">
-  <meta property="og:description" content="The developer documentation for building this html site."><meta property="og:image" content="https://liamcollod.xyz/.static/images/cover-social.jpg">
+  <meta property="og:description" content="The documentation that explains how this website is generated and modified."><meta property="og:image" content="https://liamcollod.xyz/.static/images/cover-social.jpg">
   
   
   <link rel="stylesheet" href="../.static/styles/themes/default.css" />
@@ -34,6 +34,8 @@
   
   <link rel="stylesheet" href="doc.css" />
   
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+  <script src="/pagefind/pagefind-ui.js"></script>
   
 </head>
 <body>
@@ -60,12 +62,26 @@
         
       </ul>
     </nav>
+    <div id="search"></div>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            new PagefindUI({
+            
+                element: "#search",
+            
+                showSubResults: true,
+            
+                showImages: false,
+            
+            });
+        });
+    </script>
   
 </header>
 <main>
-  <article class="read-area">
-    <h1>Site Developer Documentation</h1>
-    <p>The developer documentation for building this html site.</p>
+  <article class="read-area" data-pagefind-ignore>
+    <h1>Developer Documentation</h1>
+    <p>The documentation that explains how this website is generated and modified.</p>
     <div class="nav-button docutils container">
 <p><a class="reference external" href="test.html">&lt; previous page</a> <a class="reference external" href="test.html">next page &gt;</a></p>
 </div>
@@ -116,43 +132,72 @@
 </ul>
 </li>
 <li><p><a class="reference internal" href="#rss-feeds" id="toc-entry-21">Rss feeds</a></p></li>
+<li><p><a class="reference internal" href="#search-feature" id="toc-entry-22">Search feature</a></p></li>
+<li><p><a class="reference internal" href="#optimize-images" id="toc-entry-23">Optimize images</a></p></li>
 </ul>
 </div>
 </nav>
 </aside>
-<p>This is a static website, meaning all its content is generated before being
-published online and every page correspond to a single html file.</p>
-<p>The published website is just HTML and CSS, that are generated using a custom
-workflow based on Python, rst and Jinja.</p>
+<p>This website is built using <span class="docutils literal">lxmsite</span>, a custom made Python library that allow
+to convert a bunch of files to a <em>static website</em>.</p>
+<aside class="admonition tip">
+<p class="admonition-title">tip</p>
+<p>A <em>static website</em> have all its content structure generated before being
+published online. Every page correspond to a single html file on the server.</p>
+</aside>
+<p><span class="docutils literal">lxmsite</span> will generate a website that is made only of HTML and CSS. The
+&quot;source files&quot; are a mix of <abbr title="Restructured Text">rst</abbr>, HTML Jinja templates and
+other custom file formats.</p>
+<p>You don't need to actually know Python to use <span class="docutils literal">lxmsite</span> (unless you want to
+extends its feature).</p>
 <section id="basics">
 <h2><a class="toc-backref" href="#basics" role="doc-backlink">Basics</a></h2>
-<p>The philoshophy for this website is that the source file structure represents
+<p>The central concept for this website is that the source file structure represents
 the published site structure. It tries to be as explicit as possible.</p>
-<p>So let's say your website is published at <span class="docutils literal"><span class="pre">https://mywebsite.com</span></span>, then
-<span class="docutils literal"><span class="pre">https://mywebsite.com/blog/index.html</span></span> implies there must be a
-<span class="docutils literal">/blog/index.rst</span> file. Same for <span class="docutils literal"><span class="pre">https://mywebsite.com/images/art.jpg</span></span> which
-implies <span class="docutils literal">images/art.jpg</span> must exist in the source file structure.</p>
+<pre class="highlight literal-block" title="Block of code in None language.">source/                        &gt;  published/
+    index.rst                  &gt;      index.html
+    index.css                  &gt;      index.css
+    blog/                      &gt;      blog/
+        article1.rst           &gt;          article1.html
+        article1-image.jpg     &gt;          article1-image.jpg
+</pre>
+<aside class="admonition caution">
+<p class="admonition-title">caution</p>
+<p>All paths/urls are assumed to NOT have whitespaces. Adding whitespaces
+may lead to unexpected consequences during build.</p>
+</aside>
+<p>So let's say your website is published at <span class="docutils literal"><span class="pre">https://site.com</span></span>:</p>
+<ul class="simple">
+<li><p>then <span class="docutils literal"><span class="pre">https://site.com/blog/index.html</span></span> implies there must be a
+<span class="docutils literal">/blog/index.rst</span> file.</p></li>
+<li><p>Same for <span class="docutils literal"><span class="pre">https://site.com/images/art.jpg</span></span> which
+implies <span class="docutils literal">images/art.jpg</span> must exist in the source file structure.</p></li>
+</ul>
 <aside class="admonition hint">
 <p class="admonition-title">hint</p>
-<p>A common convention for the web is that <span class="docutils literal"><span class="pre">https://mywebsite.com/blog</span></span> will redirect
-to <span class="docutils literal"><span class="pre">https://mywebsite.com/blog/index.html</span></span> which is why you will usually
+<p>It is possible to exclude some file in the source hierarchy to be collected.
+This is achieved using the custom <span class="docutils literal">.siteignore</span> mechanism.</p>
+</aside>
+<aside class="admonition hint">
+<p class="admonition-title">hint</p>
+<p>A common convention for the web is that <span class="docutils literal">site.com/blog</span> will redirect
+to <span class="docutils literal">site.com/blog/index.html</span> which is why you will usually
 create an <span class="docutils literal">index.rst</span> file in every directory.</p>
 <p>(this convention depends on the web server serving your files).</p>
 </aside>
-<p>It is possible to exclude some file in the source hierarchy to be collected.
-This is achieved using the <span class="docutils literal">.siteignore</span> mechanism.</p>
-<p>Another feature which affect the file structure is <em>shelves</em>. A shelf will
-allow to group and browse multiple pages.</p>
-<aside class="admonition caution">
-<p class="admonition-title">caution</p>
-<p>All paths/urls are assumed to be made without whitespace. Adding whitespace
-may have unexpected consequences when being parsed.</p>
-</aside>
+<p>When you have a basic file structure created, you may want to build the site. <span class="docutils literal">lxmsite</span>
+comes with a build function but it is more convenient to use the
+<a class="reference external" href="https://github.com/MrLixm/MrLixm.github.io/blob/main/scripts/build-site.py">build script</a>
+(a CLI).</p>
+<p>That build script only require on input: a path to the <em>site config file</em>.</p>
+<p>The <em>site config file</em> is a python file that include a bunch of global variables that
+describe how the site must be built. This include what is the source directory
+(<span class="docutils literal">SRC_ROOT</span>) or which directory you want to build it to (<span class="docutils literal">DST_ROOT</span>).</p>
 <section id="siteignore-files">
 <h3><a class="toc-backref" href="#siteignore-files" role="doc-backlink">.siteignore files</a></h3>
 <p>A .siteignore is a file that indicate which path must not be collected to build
-the site. It can be fond at root but also in any directory.</p>
-<p>It's file format is as follow:</p>
+the site. It can be found at root but also in any sub-directory.</p>
+<p>The file format works as follow:</p>
 <ul class="simple">
 <li><p>each line defines a &quot;path expression&quot; which resolves to multiple paths to ignore.</p></li>
 <li><p>a line can be empty</p></li>
@@ -160,8 +205,10 @@ the site. It can be fond at root but also in any directory.</p>
 <li><p><em>path expression</em> MUST be relative to the .siteignore file directory</p></li>
 <li><p><em>path expression</em> may resolve to non-existing paths</p></li>
 </ul>
+<aside class="admonition highlight-block">
 <p>.siteignore files are cumulative, this means that their paths are made absolute
 then grouped together and its this list which is used to ignore paths.</p>
+</aside>
 <p>Example:</p>
 <pre class="literal-block">.siteignore
    **/.*.html
@@ -178,12 +225,65 @@ blog/
 <p>In the above we have an expression at root that will ignore all html files
 that starts with a dot, the <span class="docutils literal">**</span> is a glob pattern which express recursion,
 meaning that <span class="docutils literal"><span class="pre">blog/.template.html</span></span> will be ignored. We will also ignore
-<span class="docutils literal">somestuff.txt</span> but NOT <span class="docutils literal">resource.txt</span>.</p>
-<p>We then ignore <span class="docutils literal">blog/snippet.cpp</span>.</p>
+<span class="docutils literal">somestuff.txt</span> but NOT <span class="docutils literal">resource.txt</span>. We then ignore <span class="docutils literal">blog/snippet.cpp</span>.</p>
 </section>
 <section id="shelf-feature">
 <h3><a class="toc-backref" href="#shelf-feature" role="doc-backlink">shelf feature</a></h3>
-<p>TBD</p>
+<p>A shelf indicate a directory contains a bunch of page you want to &quot;group&quot; together.
+For example: a portfolio, a blog, a news-feed.</p>
+<p>You create a shelf by simpy adding a <span class="docutils literal">.shelf</span> file to the root directory.</p>
+<p>Currently the shelf can be used in 2 ways:</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>It allow to iterate through its children page from a Jinja template.</dt>
+<dd><p>You can retrieve a <span class="docutils literal">ShelfResource</span> instance using the <span class="docutils literal">Shelf</span> variable
+in your Jinja template context. The object proivides different method to browse
+its page, on which you can loop using Jinja <span class="docutils literal">{% for %}</span> clause.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>It allow to auto-create an rss feed from all the children pages.</dt>
+<dd><p><a class="reference external" href="https://en.wikipedia.org/wiki/RSS">RSS</a> is the most naive way to allow visitor
+to &quot;suscribe&quot; to a website and get notified for updates. Here, adding a new page
+will add a new item to the RSS feed, which will notify suscribers a new page
+has been published.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>The <span class="docutils literal">.shelf</span> file acts as a config and have a few options to change the shelf behavior.
+Its content is a custom syntax which follow the given rules:</p>
+<ul class="simple">
+<li><p>each lines defines an option to configure</p></li>
+<li><p>an option CANNOT span multiple lines</p></li>
+<li><p>a line might be empty</p></li>
+<li><p>an option is specified as <span class="docutils literal">key: value</span> with optional whitespace around the <span class="docutils literal">:</span>.</p>
+<ul>
+<li><p><em>key</em> must be one of the available pre-defined option keys.</p></li>
+<li><p><em>value</em> must be a valid python object (so a string must be quoted for example).</p></li>
+</ul>
+</li>
+</ul>
+<p>And the following option keys are supported:</p>
+<table class="inline">
+<thead>
+<tr><th class="head"><p>name</p></th>
+<th class="head"><p>type</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr><td><p><span class="docutils literal">ignored_pages</span></p></td>
+<td><p>list[str]</p></td>
+<td><p>List of relative page url to not include in browse methods (relative to the shelf file).</p></td>
+</tr>
+<tr><td><p><span class="docutils literal">disable_rss</span></p></td>
+<td><p>bool</p></td>
+<td><p>True to disable the auto-generation of an rss feed.</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="build-process">
 <h3><a class="toc-backref" href="#build-process" role="doc-backlink">build process</a></h3>
@@ -193,7 +293,8 @@ meaning that <span class="docutils literal"><span class="pre">blog/.template.htm
 <li><p>read and convert rst file as pages</p></li>
 <li><p>collect shelves</p></li>
 <li><p>render pages with their template and write to disk</p></li>
-<li><p>write shelves pages to disk</p></li>
+<li><p>build redirection pages</p></li>
+<li><p>build shelves rss feed</p></li>
 <li><p>copy static resources</p></li>
 </ul>
 <p>See <span class="docutils literal">lxmsite._build</span> for the code implementation.</p>
@@ -222,7 +323,7 @@ create the html with a template.</p>
 <td><p>Comma separated list of person who authored the page. See <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name">https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name</a></p></td>
 </tr>
 <tr><td><p><span class="docutils literal">tags</span></p></td>
-<td><p>List of tags matching the page topics</p></td>
+<td><p>Comma separated list of arbitrary labels matching the page topics</p></td>
 </tr>
 <tr><td><p><span class="docutils literal">language</span></p></td>
 <td><p>Language of the page. As standardized by <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang">https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang</a> and <a class="reference external" href="https://www.w3.org/International/articles/language-tags/">https://www.w3.org/International/articles/language-tags/</a></p></td>
@@ -259,7 +360,16 @@ create the html with a template.</p>
 </tr>
 </tbody>
 </table>
-<p>Some extra fields may be used depending on the context:</p>
+<aside class="admonition important">
+<p class="admonition-title">important</p>
+<p>None of the field are when read by the code mandatory but:</p>
+<ul class="simple">
+<li><p><span class="docutils literal">date_created</span> is required when using Shelf and parsing children pages by last created.</p></li>
+<li><p><span class="docutils literal">template</span> is required when building the page to html</p></li>
+</ul>
+</aside>
+<p>Some extra fields may be used depending on the context (whose existence is
+only defined in some html template):</p>
 <dl>
 <dt>blog context:</dt>
 <dd><table class="inline">
@@ -315,8 +425,8 @@ create the html with a template.</p>
 </section>
 <section id="rst-directives">
 <h3><a class="toc-backref" href="#rst-directives" role="doc-backlink">rst directives</a></h3>
-<p>In extent to the builtin rst directives ( <a class="reference external" href="https://docutils.sourceforge.io/docs/ref/rst/directives.html">https://docutils.sourceforge.io/docs/ref/rst/directives.html</a> ), we provides
-additional directives, or edit the existing ones.</p>
+<p>In extent to the builtin rst directives ( <a class="reference external" href="https://docutils.sourceforge.io/docs/ref/rst/directives.html">https://docutils.sourceforge.io/docs/ref/rst/directives.html</a> ),
+we provide additional directives, or edit the existing ones.</p>
 <p>Here is a quick directive's glossary as reminder:</p>
 <pre class="highlight literal-block" title="Block of code in rst language."><span class="p">..</span> <span class="ow">directivename</span><span class="p">::</span> argument1 argument2
     <span class="nc">:option1:</span>
@@ -634,15 +744,56 @@ that will shorten the links on publish; best of both worlds !</p>
 <section id="rss-feeds">
 <h2><a class="toc-backref" href="#rss-feeds" role="doc-backlink">Rss feeds</a></h2>
 <p>When creating a shelf, an rss feed will automatically be generated from that shelf as
-long as a template is specified in the site-config.</p>
+long as a template is specified in the site-config using <span class="docutils literal">RSS_FEED_TEMPLATE</span>.</p>
 <p>The template is a regular jinja2 file that have access to the same <strong>filters</strong> as the
 page templates, but different <strong>variables</strong> which are:</p>
 <ul class="simple">
 <li><p><span class="docutils literal">URL_PATH</span>: the url path of the feed file; relative to the site root</p></li>
 <li><p><span class="docutils literal">Config</span>: the global site config used.</p></li>
-<li><p><span class="docutils literal">Shelf</span>: teh shelf object to generated the feed from</p></li>
+<li><p><span class="docutils literal">Shelf</span>: the shelf object to generated the feed from</p></li>
 </ul>
 <p>The generated feed can be accessed at <span class="docutils literal">{shelf <span class="pre">url}/{shelf</span> <span class="pre">name}.rss.xml</span></span>.</p>
+</section>
+<section id="search-feature">
+<h2><a class="toc-backref" href="#search-feature" role="doc-backlink">Search feature</a></h2>
+<p>Implemented through <a class="reference external" href="https://pagefind.app/">https://pagefind.app/</a></p>
+</section>
+<section id="optimize-images">
+<h2><a class="toc-backref" href="#optimize-images" role="doc-backlink">Optimize images</a></h2>
+<p>You can have image automatically optimized at build time by using opti files:</p>
+<ul class="simple">
+<li><p>the file must be named exactly as the image it optimize with the additional <span class="docutils literal">.opti</span> suffix.</p>
+<ul>
+<li><p>example: <span class="docutils literal">/src/img.png</span> &gt; <span class="docutils literal">/src/img.png.opti</span></p></li>
+</ul>
+</li>
+<li><p>the file content follow the JSON file format syntax</p></li>
+<li><p>JSON content is a shallow tree of pre-defined keys that are defined below. All keys are optional.</p></li>
+</ul>
+<table class="inline">
+<thead>
+<tr><th class="head"><p>name</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr><td><p><span class="docutils literal">convert_mode</span></p></td>
+<td><p>Optional Pillow conversion mode to conver to. Usually &quot;RGB&quot; to convert RGBA pngs.</p></td>
+</tr>
+<tr><td><p><span class="docutils literal">target_format</span></p></td>
+<td><p>name of a format supported by Pillow to write the optimized file as.</p></td>
+</tr>
+<tr><td><p><span class="docutils literal">target_file_suffix</span></p></td>
+<td><p>suffix for the optimized file written to disk.</p></td>
+</tr>
+<tr><td><p><span class="docutils literal">format_kwargs</span></p></td>
+<td><p>Pillow compatible kwargs for the given <cite>target_format</cite>.</p></td>
+</tr>
+<tr><td><p><span class="docutils literal">max_dimensions</span></p></td>
+<td><p>Optional maximum pixel dimensions the image must not be larger than while.</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 
   </article>
@@ -652,7 +803,7 @@ page templates, but different <strong>variables</strong> which are:</p>
   
     
     <p>Static website <a href="."><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-29T11:49</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/2ce951f">2ce951f</a></i></p>
+      Last built on <i>2025-06-05T21:23</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/98b4c3f">98b4c3f</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

@@ -35,6 +35,8 @@
   
   <link rel="stylesheet" href="../photography.css" />
   
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+  <script src="/pagefind/pagefind-ui.js"></script>
   
 </head>
 <body>
@@ -61,6 +63,20 @@
         
       </ul>
     </nav>
+    <div id="search"></div>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            new PagefindUI({
+            
+                element: "#search",
+            
+                showSubResults: true,
+            
+                showImages: false,
+            
+            });
+        });
+    </script>
   
 </header>
 <main>
@@ -87,10 +103,12 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image5" id="label5"><p><code>∧</code> Lost against a sea of concrete and noisy band of asphalt are those flower boxes. At this time of the day, a strong but soft sun is turning those pale flowers into a vivid bouquet. The perfect contrast contrast with the cold shadows of the road down there. Snapping the picture right at the good time, a black car is passing in the background, its deep red taillight more noticeable than the vehicle itself.</p>
-</label>
-<label class="caption" for="image2" id="label2"><p><code>∨</code> End of the day on the city, people are riding back from work to their home, leading quite some traffic on this popular uphill. On a bridge above it, I capture that line of car. But its no borring road, there is a lot vegetations all around it catching some of the last warmth sun beams. Barely noticeable in the background, we can see the taller building of the financial district that nealy merge with the clear blue sky.</p>
-</label>
+<div class="caption docutils container" id="label5">
+<p><code>∧</code> Lost against a sea of concrete and noisy band of asphalt are those flower boxes. At this time of the day, a strong but soft sun is turning those pale flowers into a vivid bouquet. The perfect contrast contrast with the cold shadows of the road down there. Snapping the picture right at the good time, a black car is passing in the background, its deep red taillight more noticeable than the vehicle itself.</p>
+</div>
+<div class="caption docutils container" id="label2">
+<p><code>∨</code> End of the day on the city, people are riding back from work to their home, leading quite some traffic on this popular uphill. On a bridge above it, I capture that line of car. But its no borring road, there is a lot vegetations all around it catching some of the last warmth sun beams. Barely noticeable in the background, we can see the taller building of the financial district that nealy merge with the clear blue sky.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image2-fullscreen">
 <img alt="" class="inline" id="image2" src="240702_negscan2406.890.v0001.jpg" />
@@ -106,8 +124,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image1" id="label1"><p><code>∨</code> You go down the stair and get greeted by an incredible sunny view. The sun is blasting that building so strong we don't even distinguish it from the sky ! If it was not for the bushy vegetation all around, indicating its silouhette. Vegetation which is actually so lushy we could fear that the car parked near would be quickly covered by it. The place really doesn't feel like a city, small messy and sloping building dispersed through vegation, it feels confy.</p>
-</label>
+<div class="caption docutils container" id="label1">
+<p><code>∨</code> You go down the stair and get greeted by an incredible sunny view. The sun is blasting that building so strong we don't even distinguish it from the sky ! If it was not for the bushy vegetation all around, indicating its silouhette. Vegetation which is actually so lushy we could fear that the car parked near would be quickly covered by it. The place really doesn't feel like a city, small messy and sloping building dispersed through vegation, it feels confy.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image1-fullscreen">
 <img alt="" class="inline" id="image1" src="240702_negscan2406.888.v0001.jpg" />
@@ -123,12 +142,14 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image4" id="label4"><p><code>&gt;</code> Some funky architecture on the side of a window-less building. Two archs whose seems to not be that recent, catching some of an end-of-day sun. Also noticeable is that foregound, highly out-of-focus but which outline what seems to be a barbed wire fence. There is not much noticeable element in that shot but colors are all over it, with avery pastel palette going from a golden yellow to a washed purple and some very dark greens.</p>
-</label>
+<div class="caption docutils container" id="label4">
+<p><code>&gt;</code> Some funky architecture on the side of a window-less building. Two archs whose seems to not be that recent, catching some of an end-of-day sun. Also noticeable is that foregound, highly out-of-focus but which outline what seems to be a barbed wire fence. There is not much noticeable element in that shot but colors are all over it, with avery pastel palette going from a golden yellow to a washed purple and some very dark greens.</p>
+</div>
 </div>
 <div class="column right docutils container" style="width: 45%">
-<label class="caption" for="image6" id="label6"><p><code>∨</code> End of the day is the perfect time for film photography (and even photography in general), the kid playground had beautiful golden color everywhere, embracing it all in warmness. Some bushy plants form a nicely layered foreground which match the vivid green color of the slides in the back. Slides whose shinny metal is reflecting the sun at the right angle, creating a tiny flare and bringing even more sun into the picture.</p>
-</label>
+<div class="caption docutils container" id="label6">
+<p><code>∨</code> End of the day is the perfect time for film photography (and even photography in general), the kid playground had beautiful golden color everywhere, embracing it all in warmness. Some bushy plants form a nicely layered foreground which match the vivid green color of the slides in the back. Slides whose shinny metal is reflecting the sun at the right angle, creating a tiny flare and bringing even more sun into the picture.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image6-fullscreen">
 <img alt="" class="inline" id="image6" src="240702_negscan2406.897.v0001.jpg" />
@@ -144,8 +165,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image3" id="label3"><p><code>∨</code> It's the end of a hot summer day. A tired sun is brushing the top of taller buildings in its warmth. Swallows are swimming through the big blue sky spotted with delicate cloud clumps. I pointed the camera up, that building had the perfect lighting, with a sun beaming perfectly the beautiful brick chimney at its top.</p>
-</label>
+<div class="caption docutils container" id="label3">
+<p><code>∨</code> It's the end of a hot summer day. A tired sun is brushing the top of taller buildings in its warmth. Swallows are swimming through the big blue sky spotted with delicate cloud clumps. I pointed the camera up, that building had the perfect lighting, with a sun beaming perfectly the beautiful brick chimney at its top.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image3-fullscreen">
 <img alt="" class="inline" id="image3" src="240702_negscan2406.891.v0004.jpg" />
@@ -193,8 +215,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image5" id="label5"><p><code>∧</code> Lost against a sea of concrete and noisy band of asphalt are those flower boxes. At this time of the day, a strong but soft sun is turning those pale flowers into a vivid bouquet. The perfect contrast contrast with the cold shadows of the road down there. Snapping the picture right at the good time, a black car is passing in the background, its deep red taillight more noticeable than the vehicle itself.</p>
-</label>
+<div class="caption docutils container" id="label5">
+<p><code>∧</code> Lost against a sea of concrete and noisy band of asphalt are those flower boxes. At this time of the day, a strong but soft sun is turning those pale flowers into a vivid bouquet. The perfect contrast contrast with the cold shadows of the road down there. Snapping the picture right at the good time, a black car is passing in the background, its deep red taillight more noticeable than the vehicle itself.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image6-fullscreen">
 <img alt="" class="inline" id="image6" src="240702_negscan2406.897.v0001.jpg" />
@@ -210,8 +233,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image6" id="label6"><p><code>∨</code> End of the day is the perfect time for film photography (and even photography in general), the kid playground had beautiful golden color everywhere, embracing it all in warmness. Some bushy plants form a nicely layered foreground which match the vivid green color of the slides in the back. Slides whose shinny metal is reflecting the sun at the right angle, creating a tiny flare and bringing even more sun into the picture.</p>
-</label>
+<div class="caption docutils container" id="label6">
+<p><code>∨</code> End of the day is the perfect time for film photography (and even photography in general), the kid playground had beautiful golden color everywhere, embracing it all in warmness. Some bushy plants form a nicely layered foreground which match the vivid green color of the slides in the back. Slides whose shinny metal is reflecting the sun at the right angle, creating a tiny flare and bringing even more sun into the picture.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image2-fullscreen">
 <img alt="" class="inline" id="image2" src="240702_negscan2406.890.v0001.jpg" />
@@ -227,8 +251,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image2" id="label2"><p><code>∨</code> End of the day on the city, people are riding back from work to their home, leading quite some traffic on this popular uphill. On a bridge above it, I capture that line of car. But its no borring road, there is a lot vegetations all around it catching some of the last warmth sun beams. Barely noticeable in the background, we can see the taller building of the financial district that nealy merge with the clear blue sky.</p>
-</label>
+<div class="caption docutils container" id="label2">
+<p><code>∨</code> End of the day on the city, people are riding back from work to their home, leading quite some traffic on this popular uphill. On a bridge above it, I capture that line of car. But its no borring road, there is a lot vegetations all around it catching some of the last warmth sun beams. Barely noticeable in the background, we can see the taller building of the financial district that nealy merge with the clear blue sky.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image3-fullscreen">
 <img alt="" class="inline" id="image3" src="240702_negscan2406.891.v0004.jpg" />
@@ -244,8 +269,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image3" id="label3"><p><code>∨</code> It's the end of a hot summer day. A tired sun is brushing the top of taller buildings in its warmth. Swallows are swimming through the big blue sky spotted with delicate cloud clumps. I pointed the camera up, that building had the perfect lighting, with a sun beaming perfectly the beautiful brick chimney at its top.</p>
-</label>
+<div class="caption docutils container" id="label3">
+<p><code>∨</code> It's the end of a hot summer day. A tired sun is brushing the top of taller buildings in its warmth. Swallows are swimming through the big blue sky spotted with delicate cloud clumps. I pointed the camera up, that building had the perfect lighting, with a sun beaming perfectly the beautiful brick chimney at its top.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image4-fullscreen">
 <img alt="" class="inline" id="image4" src="240702_negscan2406.892.v0001.jpg" />
@@ -261,8 +287,9 @@
 <li class="camera" title="camera"><p>Minolta X-5000</p></li>
 </ul>
 </div>
-<label class="caption" for="image4" id="label4"><p><code>&gt;</code> Some funky architecture on the side of a window-less building. Two archs whose seems to not be that recent, catching some of an end-of-day sun. Also noticeable is that foregound, highly out-of-focus but which outline what seems to be a barbed wire fence. There is not much noticeable element in that shot but colors are all over it, with avery pastel palette going from a golden yellow to a washed purple and some very dark greens.</p>
-</label>
+<div class="caption docutils container" id="label4">
+<p><code>&gt;</code> Some funky architecture on the side of a window-less building. Two archs whose seems to not be that recent, catching some of an end-of-day sun. Also noticeable is that foregound, highly out-of-focus but which outline what seems to be a barbed wire fence. There is not much noticeable element in that shot but colors are all over it, with avery pastel palette going from a golden yellow to a washed purple and some very dark greens.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image1-fullscreen">
 <img alt="" class="inline" id="image1" src="240702_negscan2406.888.v0001.jpg" />
@@ -278,8 +305,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image1" id="label1"><p><code>∨</code> You go down the stair and get greeted by an incredible sunny view. The sun is blasting that building so strong we don't even distinguish it from the sky ! If it was not for the bushy vegetation all around, indicating its silouhette. Vegetation which is actually so lushy we could fear that the car parked near would be quickly covered by it. The place really doesn't feel like a city, small messy and sloping building dispersed through vegation, it feels confy.</p>
-</label>
+<div class="caption docutils container" id="label1">
+<p><code>∨</code> You go down the stair and get greeted by an incredible sunny view. The sun is blasting that building so strong we don't even distinguish it from the sky ! If it was not for the bushy vegetation all around, indicating its silouhette. Vegetation which is actually so lushy we could fear that the car parked near would be quickly covered by it. The place really doesn't feel like a city, small messy and sloping building dispersed through vegation, it feels confy.</p>
+</div>
 </div>
 </div>
 
@@ -298,7 +326,7 @@
     </a>
     
     <p>Static website <a href="../../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-29T11:49</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/2ce951f">2ce951f</a></i></p>
+      Last built on <i>2025-06-05T21:23</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/98b4c3f">98b4c3f</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

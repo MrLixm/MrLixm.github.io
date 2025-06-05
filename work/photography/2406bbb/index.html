@@ -35,6 +35,8 @@
   
   <link rel="stylesheet" href="../photography.css" />
   
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+  <script src="/pagefind/pagefind-ui.js"></script>
   
 </head>
 <body>
@@ -61,6 +63,20 @@
         
       </ul>
     </nav>
+    <div id="search"></div>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            new PagefindUI({
+            
+                element: "#search",
+            
+                showSubResults: true,
+            
+                showImages: false,
+            
+            });
+        });
+    </script>
   
 </header>
 <main>
@@ -87,8 +103,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image1" id="label1"><p><code>∧</code> Just a pretty view from the city, from when you climb the Croix-Rousse hill. You walk down and reach this dead-end, offering you this peaceful view. Lush vegetation at its end but you can pierce through, there a small messy stair hidden there.</p>
-</label>
+<div class="caption docutils container" id="label1">
+<p><code>∧</code> Just a pretty view from the city, from when you climb the Croix-Rousse hill. You walk down and reach this dead-end, offering you this peaceful view. Lush vegetation at its end but you can pierce through, there a small messy stair hidden there.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image3-fullscreen">
 <img alt="" class="inline" id="image3" src="240702_negscan2406.893.v0001.jpg" />
@@ -104,8 +121,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image3" id="label3"><p><code>∧</code> Through the grillin was this cut corner of garden, barely maintained and covered in vegetation. You could nearly miss the table set left there, despite its vivid color and mismatched chairs. I would definitively sit there for a cup of tea, as long as you are fine with ignoring the pesky photographer that would find you frame-worthy.</p>
-</label>
+<div class="caption docutils container" id="label3">
+<p><code>∧</code> Through the grillin was this cut corner of garden, barely maintained and covered in vegetation. You could nearly miss the table set left there, despite its vivid color and mismatched chairs. I would definitively sit there for a cup of tea, as long as you are fine with ignoring the pesky photographer that would find you frame-worthy.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image5-fullscreen">
 <img alt="" class="inline" id="image5" src="240702_negscan2406.900.v0001.jpg" />
@@ -121,8 +139,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image5" id="label5"><p><code>∧</code> Cities sucks because they are no place for animals, while walking where building are smaller and street narrower will probably get you the pleasure of meeting friendly cats. Like this gang of colorful fluff balls squatting this wobbly alley. Funnily I missed focus and made the void-like cat even more void-like, &quot;him you shall not distinguish, shape-less body made of antimatter (except for the cute milky spots)&quot;.</p>
-</label>
+<div class="caption docutils container" id="label5">
+<p><code>∧</code> Cities sucks because they are no place for animals, while walking where building are smaller and street narrower will probably get you the pleasure of meeting friendly cats. Like this gang of colorful fluff balls squatting this wobbly alley. Funnily I missed focus and made the void-like cat even more void-like, &quot;him you shall not distinguish, shape-less body made of antimatter (except for the cute milky spots)&quot;.</p>
+</div>
 </div>
 <div class="column right docutils container" style="width: 50%">
 <div class="image-wrapper docutils container">
@@ -140,8 +159,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image2" id="label2"><p><code>∧</code> All around the school playground was this tall barrer of thin tubes with an exceptionally vivid blue color. Each of the tubes were spread wide enough so you could see what was going on on the other side while fulfilling its purpose of preventing the children from escaping and unleaching chaos in the city (that what school are for right ?). However empty of any children at that time, are left purposeless two trays on a pair of wheel , with a similarly vivid blue color. All around, a bunch of tree are reflecting the sky of an end of the day, usually called &quot;blue hour&quot;, which really is here !</p>
-</label>
+<div class="caption docutils container" id="label2">
+<p><code>∧</code> All around the school playground was this tall barrer of thin tubes with an exceptionally vivid blue color. Each of the tubes were spread wide enough so you could see what was going on on the other side while fulfilling its purpose of preventing the children from escaping and unleaching chaos in the city (that what school are for right ?). However empty of any children at that time, are left purposeless two trays on a pair of wheel , with a similarly vivid blue color. All around, a bunch of tree are reflecting the sky of an end of the day, usually called &quot;blue hour&quot;, which really is here !</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image4-fullscreen">
 <img alt="" class="inline" id="image4" src="240702_negscan2406.894.v0001.jpg" />
@@ -157,8 +177,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image4" id="label4"><p><code>∧</code> Beware beast ! But who it is ? The biped creature holding its one eye or the cautious ball of fur questioning if he should not disapear quickly in the surrounding vegetation ? I would argue the biped with its green head is probably scarier than the fur ball that blends well with the residential concrete but you can't really judge this as only one of the two was framed here !</p>
-</label>
+<div class="caption docutils container" id="label4">
+<p><code>∧</code> Beware beast ! But who it is ? The biped creature holding its one eye or the cautious ball of fur questioning if he should not disapear quickly in the surrounding vegetation ? I would argue the biped with its green head is probably scarier than the fur ball that blends well with the residential concrete but you can't really judge this as only one of the two was framed here !</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image6-fullscreen">
 <img alt="" class="inline" id="image6" src="240702_negscan2406.901.v0001.jpg" />
@@ -174,8 +195,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image6" id="label6"><p><code>∧</code> Bro is chill af. Though, the gravel doesn't seems the most confortable place to chill, but you can probably be careless for stones when you have that much fur. It make you hard to miss you though, warm clouded shape, sprinkled by few milky spots. But is it really a problem for a cat ? When it make you more prone of getting useful human attention.</p>
-</label>
+<div class="caption docutils container" id="label6">
+<p><code>∧</code> Bro is chill af. Though, the gravel doesn't seems the most confortable place to chill, but you can probably be careless for stones when you have that much fur. It make you hard to miss you though, warm clouded shape, sprinkled by few milky spots. But is it really a problem for a cat ? When it make you more prone of getting useful human attention.</p>
+</div>
 </div>
 <div class="column responsive docutils container">
 <div class="image-wrapper docutils container">
@@ -193,8 +215,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image2" id="label2"><p><code>∧</code> All around the school playground was this tall barrer of thin tubes with an exceptionally vivid blue color. Each of the tubes were spread wide enough so you could see what was going on on the other side while fulfilling its purpose of preventing the children from escaping and unleaching chaos in the city (that what school are for right ?). However empty of any children at that time, are left purposeless two trays on a pair of wheel , with a similarly vivid blue color. All around, a bunch of tree are reflecting the sky of an end of the day, usually called &quot;blue hour&quot;, which really is here !</p>
-</label>
+<div class="caption docutils container" id="label2">
+<p><code>∧</code> All around the school playground was this tall barrer of thin tubes with an exceptionally vivid blue color. Each of the tubes were spread wide enough so you could see what was going on on the other side while fulfilling its purpose of preventing the children from escaping and unleaching chaos in the city (that what school are for right ?). However empty of any children at that time, are left purposeless two trays on a pair of wheel , with a similarly vivid blue color. All around, a bunch of tree are reflecting the sky of an end of the day, usually called &quot;blue hour&quot;, which really is here !</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image1-fullscreen">
 <img alt="" class="inline" id="image1" src="240702_negscan2406.886.v0001.jpg" />
@@ -210,8 +233,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image1" id="label1"><p><code>∧</code> Just a pretty view from the city, from when you climb the Croix-Rousse hill. You walk down and reach this dead-end, offering you this peaceful view. Lush vegetation at its end but you can pierce through, there a small messy stair hidden there.</p>
-</label>
+<div class="caption docutils container" id="label1">
+<p><code>∧</code> Just a pretty view from the city, from when you climb the Croix-Rousse hill. You walk down and reach this dead-end, offering you this peaceful view. Lush vegetation at its end but you can pierce through, there a small messy stair hidden there.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image3-fullscreen">
 <img alt="" class="inline" id="image3" src="240702_negscan2406.893.v0001.jpg" />
@@ -227,8 +251,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image3" id="label3"><p><code>∧</code> Through the grillin was this cut corner of garden, barely maintained and covered in vegetation. You could nearly miss the table set left there, despite its vivid color and mismatched chairs. I would definitively sit there for a cup of tea, as long as you are fine with ignoring the pesky photographer that would find you frame-worthy.</p>
-</label>
+<div class="caption docutils container" id="label3">
+<p><code>∧</code> Through the grillin was this cut corner of garden, barely maintained and covered in vegetation. You could nearly miss the table set left there, despite its vivid color and mismatched chairs. I would definitively sit there for a cup of tea, as long as you are fine with ignoring the pesky photographer that would find you frame-worthy.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image4-fullscreen">
 <img alt="" class="inline" id="image4" src="240702_negscan2406.894.v0001.jpg" />
@@ -244,8 +269,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image4" id="label4"><p><code>∧</code> Beware beast ! But who it is ? The biped creature holding its one eye or the cautious ball of fur questioning if he should not disapear quickly in the surrounding vegetation ? I would argue the biped with its green head is probably scarier than the fur ball that blends well with the residential concrete but you can't really judge this as only one of the two was framed here !</p>
-</label>
+<div class="caption docutils container" id="label4">
+<p><code>∧</code> Beware beast ! But who it is ? The biped creature holding its one eye or the cautious ball of fur questioning if he should not disapear quickly in the surrounding vegetation ? I would argue the biped with its green head is probably scarier than the fur ball that blends well with the residential concrete but you can't really judge this as only one of the two was framed here !</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image5-fullscreen">
 <img alt="" class="inline" id="image5" src="240702_negscan2406.900.v0001.jpg" />
@@ -261,8 +287,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image5" id="label5"><p><code>∧</code> Cities sucks because they are no place for animals, while walking where building are smaller and street narrower will probably get you the pleasure of meeting friendly cats. Like this gang of colorful fluff balls squatting this wobbly alley. Funnily I missed focus and made the void-like cat even more void-like, &quot;him you shall not distinguish, shape-less body made of antimatter (except for the cute milky spots)&quot;.</p>
-</label>
+<div class="caption docutils container" id="label5">
+<p><code>∧</code> Cities sucks because they are no place for animals, while walking where building are smaller and street narrower will probably get you the pleasure of meeting friendly cats. Like this gang of colorful fluff balls squatting this wobbly alley. Funnily I missed focus and made the void-like cat even more void-like, &quot;him you shall not distinguish, shape-less body made of antimatter (except for the cute milky spots)&quot;.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image6-fullscreen">
 <img alt="" class="inline" id="image6" src="240702_negscan2406.901.v0001.jpg" />
@@ -278,8 +305,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image6" id="label6"><p><code>∧</code> Bro is chill af. Though, the gravel doesn't seems the most confortable place to chill, but you can probably be careless for stones when you have that much fur. It make you hard to miss you though, warm clouded shape, sprinkled by few milky spots. But is it really a problem for a cat ? When it make you more prone of getting useful human attention.</p>
-</label>
+<div class="caption docutils container" id="label6">
+<p><code>∧</code> Bro is chill af. Though, the gravel doesn't seems the most confortable place to chill, but you can probably be careless for stones when you have that much fur. It make you hard to miss you though, warm clouded shape, sprinkled by few milky spots. But is it really a problem for a cat ? When it make you more prone of getting useful human attention.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image7-fullscreen">
 <img alt="" class="inline" id="image7" src="240702_negscan2406.902.v0003.jpg" />
@@ -295,8 +323,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image7" id="label7"><p><code>∧</code> Wandering through the narrow street of a residential neighbourhood, I passed a corner and immediatly saw there was a shot to take here. You got this very brutalist house facade in that sloppy street, large flat concrete surface with a massive red &quot;2&quot; sign made out of tiles. Some bushes appearing over the wall. The door was open revealing some stairs going higher up. I absolutely loved the place right away and I'm very happy to have it captured.</p>
-</label>
+<div class="caption docutils container" id="label7">
+<p><code>∧</code> Wandering through the narrow street of a residential neighbourhood, I passed a corner and immediatly saw there was a shot to take here. You got this very brutalist house facade in that sloppy street, large flat concrete surface with a massive red &quot;2&quot; sign made out of tiles. Some bushes appearing over the wall. The door was open revealing some stairs going higher up. I absolutely loved the place right away and I'm very happy to have it captured.</p>
+</div>
 </div>
 </div>
 
@@ -315,7 +344,7 @@
     </a>
     
     <p>Static website <a href="../../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-29T11:49</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/2ce951f">2ce951f</a></i></p>
+      Last built on <i>2025-06-05T21:23</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/98b4c3f">98b4c3f</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

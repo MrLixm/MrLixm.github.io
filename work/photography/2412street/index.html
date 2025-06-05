@@ -35,6 +35,8 @@
   
   <link rel="stylesheet" href="../photography.css" />
   
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+  <script src="/pagefind/pagefind-ui.js"></script>
   
 </head>
 <body>
@@ -61,6 +63,20 @@
         
       </ul>
     </nav>
+    <div id="search"></div>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            new PagefindUI({
+            
+                element: "#search",
+            
+                showSubResults: true,
+            
+                showImages: false,
+            
+            });
+        });
+    </script>
   
 </header>
 <main>
@@ -87,8 +103,9 @@
 <li class="camera" title="camera"><p>Nikon F100</p></li>
 </ul>
 </div>
-<label class="caption" for="image1" id="label1"><p><code>&gt;</code> &quot;What a lovely street&quot;, I went as few seconds later I was setting up the tripod to shoot it. Obviously the cobble plays a lot, I love how much character it gives over the traditional flat asphalt. But the most interesting was that little one level tall building, squeezed at the back of the street between large walls of much taller buildings. Today being the 8th of December, its occupant placed candles at every window as the tradition wants, giving it even more charm. I was not the only one who find that piece of scenery worth the look, as I was about to take the shot, someone walked in the street and stopped to look at the small building for a second, hence triggering me to finally release the shutter and take the shot.</p>
-</label>
+<div class="caption docutils container" id="label1">
+<p><code>&gt;</code> &quot;What a lovely street&quot;, I went as few seconds later I was setting up the tripod to shoot it. Obviously the cobble plays a lot, I love how much character it gives over the traditional flat asphalt. But the most interesting was that little one level tall building, squeezed at the back of the street between large walls of much taller buildings. Today being the 8th of December, its occupant placed candles at every window as the tradition wants, giving it even more charm. I was not the only one who find that piece of scenery worth the look, as I was about to take the shot, someone walked in the street and stopped to look at the small building for a second, hence triggering me to finally release the shutter and take the shot.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image3-fullscreen">
 <img alt="" class="inline" id="image3" src="241209_negscan2412.1111.v0001.jpg" />
@@ -104,8 +121,9 @@
 <li class="camera" title="camera"><p>Nikon F100</p></li>
 </ul>
 </div>
-<label class="caption" for="image4" id="label4"><p><code>&gt;</code> You may know I like green, so I had to take a shot at this beautiful sign I stumbled upon while taking the other night shots. It reads a simple &quot;Le Limonadier&quot; in a kind of vintage yellow font which nicely contrast with the intense green background. All wrapped in a simple circle shape with a white light outline spilling on the wall it is attached to.</p>
-</label>
+<div class="caption docutils container" id="label4">
+<p><code>&gt;</code> You may know I like green, so I had to take a shot at this beautiful sign I stumbled upon while taking the other night shots. It reads a simple &quot;Le Limonadier&quot; in a kind of vintage yellow font which nicely contrast with the intense green background. All wrapped in a simple circle shape with a white light outline spilling on the wall it is attached to.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image5-fullscreen">
 <img alt="" class="inline" id="image5" src="241209_negscan2412.1086.v0001.jpg" />
@@ -121,12 +139,14 @@
 <li class="camera" title="camera"><p>Nikon F100</p></li>
 </ul>
 </div>
-<label class="caption" for="image5" id="label5"><p><code>∧</code> A narrow passage stuck between building. You think it could looks creepy at this time of the night, but its not that dark. A vintage lamp hung at the ceilling is shining strong as it can and reveals the silhouette of a couple holding hands, nicely silhouetted by the bright store-front of a &quot;Tabac&quot; in the background. Not that dark, lovely actually !</p>
-</label>
+<div class="caption docutils container" id="label5">
+<p><code>∧</code> A narrow passage stuck between building. You think it could looks creepy at this time of the night, but its not that dark. A vintage lamp hung at the ceilling is shining strong as it can and reveals the silhouette of a couple holding hands, nicely silhouetted by the bright store-front of a &quot;Tabac&quot; in the background. Not that dark, lovely actually !</p>
+</div>
 </div>
 <div class="column right docutils container" style="width: 60%">
-<label class="caption" for="image2" id="label2"><p><code>&lt;</code> Despite the biting cold of December the mood is festive. It's the light celebration day here in Lyon and people are looking for some warmth at the snack bar installed along the river. The scene is so stunning, where stands' garlands blend between warm and cold splash of lights, creating beautiful reflections in the wet asphalt.</p>
-</label>
+<div class="caption docutils container" id="label2">
+<p><code>&lt;</code> Despite the biting cold of December the mood is festive. It's the light celebration day here in Lyon and people are looking for some warmth at the snack bar installed along the river. The scene is so stunning, where stands' garlands blend between warm and cold splash of lights, creating beautiful reflections in the wet asphalt.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image1-fullscreen">
 <img alt="" class="inline" id="image1" src="241209_negscan2412.1110.v0002.jpg" />
@@ -142,8 +162,9 @@
 <li class="camera" title="camera"><p>Nikon F100</p></li>
 </ul>
 </div>
-<label class="caption" for="image3" id="label3"><p><code>&lt;</code> Everybody home, street are mostly empty, if not for the late buses still going on. It would be quite dark without the street lamps whose light slowly fade in the fog of the night. The atmosphere gets unfriendly as invisible clouds start spraying a thin rain over it all. It's getting very cold so, maybe it's time to get home ? But there something in that atmosphere that feels captivating, and you decide to stay for a few seconds more ...</p>
-</label>
+<div class="caption docutils container" id="label3">
+<p><code>&lt;</code> Everybody home, street are mostly empty, if not for the late buses still going on. It would be quite dark without the street lamps whose light slowly fade in the fog of the night. The atmosphere gets unfriendly as invisible clouds start spraying a thin rain over it all. It's getting very cold so, maybe it's time to get home ? But there something in that atmosphere that feels captivating, and you decide to stay for a few seconds more ...</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image4-fullscreen">
 <img alt="" class="inline" id="image4" src="241209_negscan2412.1090.v0002.jpg" />
@@ -176,8 +197,9 @@
 <li class="camera" title="camera"><p>Nikon F100</p></li>
 </ul>
 </div>
-<label class="caption" for="image1" id="label1"><p><code>&gt;</code> &quot;What a lovely street&quot;, I went as few seconds later I was setting up the tripod to shoot it. Obviously the cobble plays a lot, I love how much character it gives over the traditional flat asphalt. But the most interesting was that little one level tall building, squeezed at the back of the street between large walls of much taller buildings. Today being the 8th of December, its occupant placed candles at every window as the tradition wants, giving it even more charm. I was not the only one who find that piece of scenery worth the look, as I was about to take the shot, someone walked in the street and stopped to look at the small building for a second, hence triggering me to finally release the shutter and take the shot.</p>
-</label>
+<div class="caption docutils container" id="label1">
+<p><code>&gt;</code> &quot;What a lovely street&quot;, I went as few seconds later I was setting up the tripod to shoot it. Obviously the cobble plays a lot, I love how much character it gives over the traditional flat asphalt. But the most interesting was that little one level tall building, squeezed at the back of the street between large walls of much taller buildings. Today being the 8th of December, its occupant placed candles at every window as the tradition wants, giving it even more charm. I was not the only one who find that piece of scenery worth the look, as I was about to take the shot, someone walked in the street and stopped to look at the small building for a second, hence triggering me to finally release the shutter and take the shot.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image2-fullscreen">
 <img alt="" class="inline" id="image2" src="241209_negscan2412.1105.v0002.jpg" />
@@ -193,8 +215,9 @@
 <li class="camera" title="camera"><p>Nikon F100</p></li>
 </ul>
 </div>
-<label class="caption" for="image2" id="label2"><p><code>&lt;</code> Despite the biting cold of December the mood is festive. It's the light celebration day here in Lyon and people are looking for some warmth at the snack bar installed along the river. The scene is so stunning, where stands' garlands blend between warm and cold splash of lights, creating beautiful reflections in the wet asphalt.</p>
-</label>
+<div class="caption docutils container" id="label2">
+<p><code>&lt;</code> Despite the biting cold of December the mood is festive. It's the light celebration day here in Lyon and people are looking for some warmth at the snack bar installed along the river. The scene is so stunning, where stands' garlands blend between warm and cold splash of lights, creating beautiful reflections in the wet asphalt.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image3-fullscreen">
 <img alt="" class="inline" id="image3" src="241209_negscan2412.1111.v0001.jpg" />
@@ -210,8 +233,9 @@
 <li class="camera" title="camera"><p>Nikon F100</p></li>
 </ul>
 </div>
-<label class="caption" for="image3" id="label3"><p><code>&lt;</code> Everybody home, street are mostly empty, if not for the late buses still going on. It would be quite dark without the street lamps whose light slowly fade in the fog of the night. The atmosphere gets unfriendly as invisible clouds start spraying a thin rain over it all. It's getting very cold so, maybe it's time to get home ? But there something in that atmosphere that feels captivating, and you decide to stay for a few seconds more ...</p>
-</label>
+<div class="caption docutils container" id="label3">
+<p><code>&lt;</code> Everybody home, street are mostly empty, if not for the late buses still going on. It would be quite dark without the street lamps whose light slowly fade in the fog of the night. The atmosphere gets unfriendly as invisible clouds start spraying a thin rain over it all. It's getting very cold so, maybe it's time to get home ? But there something in that atmosphere that feels captivating, and you decide to stay for a few seconds more ...</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image4-fullscreen">
 <img alt="" class="inline" id="image4" src="241209_negscan2412.1090.v0002.jpg" />
@@ -227,8 +251,9 @@
 <li class="camera" title="camera"><p>Nikon F100</p></li>
 </ul>
 </div>
-<label class="caption" for="image4" id="label4"><p><code>&gt;</code> You may know I like green, so I had to take a shot at this beautiful sign I stumbled upon while taking the other night shots. It reads a simple &quot;Le Limonadier&quot; in a kind of vintage yellow font which nicely contrast with the intense green background. All wrapped in a simple circle shape with a white light outline spilling on the wall it is attached to.</p>
-</label>
+<div class="caption docutils container" id="label4">
+<p><code>&gt;</code> You may know I like green, so I had to take a shot at this beautiful sign I stumbled upon while taking the other night shots. It reads a simple &quot;Le Limonadier&quot; in a kind of vintage yellow font which nicely contrast with the intense green background. All wrapped in a simple circle shape with a white light outline spilling on the wall it is attached to.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image5-fullscreen">
 <img alt="" class="inline" id="image5" src="241209_negscan2412.1086.v0001.jpg" />
@@ -244,8 +269,9 @@
 <li class="camera" title="camera"><p>Nikon F100</p></li>
 </ul>
 </div>
-<label class="caption" for="image5" id="label5"><p><code>∧</code> A narrow passage stuck between building. You think it could looks creepy at this time of the night, but its not that dark. A vintage lamp hung at the ceilling is shining strong as it can and reveals the silhouette of a couple holding hands, nicely silhouetted by the bright store-front of a &quot;Tabac&quot; in the background. Not that dark, lovely actually !</p>
-</label>
+<div class="caption docutils container" id="label5">
+<p><code>∧</code> A narrow passage stuck between building. You think it could looks creepy at this time of the night, but its not that dark. A vintage lamp hung at the ceilling is shining strong as it can and reveals the silhouette of a couple holding hands, nicely silhouetted by the bright store-front of a &quot;Tabac&quot; in the background. Not that dark, lovely actually !</p>
+</div>
 </div>
 </div>
 
@@ -264,7 +290,7 @@
     </a>
     
     <p>Static website <a href="../../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-29T11:49</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/2ce951f">2ce951f</a></i></p>
+      Last built on <i>2025-06-05T21:23</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/98b4c3f">98b4c3f</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

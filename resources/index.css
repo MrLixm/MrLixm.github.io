@@ -10,6 +10,12 @@ body {
 a, a:visited, a:hover {
     color: inherit;
 }
+header {
+    --pagefind-ui-background: rgb(4, 17, 6);
+    --pagefind-ui-border: rgb(19, 168, 54);;
+    --pagefind-ui-drawer-background: rgb(2, 8, 2);
+    --pagefind-ui-border-radius: 0px;
+}
 
 header #site-name {
     font-family: "Tiny5", monospace;

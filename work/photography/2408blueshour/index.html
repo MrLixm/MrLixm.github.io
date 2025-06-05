@@ -37,6 +37,8 @@
   
   <link rel="stylesheet" href="2408blueshour.css" />
   
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+  <script src="/pagefind/pagefind-ui.js"></script>
   
 </head>
 <body>
@@ -63,6 +65,20 @@
         
       </ul>
     </nav>
+    <div id="search"></div>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            new PagefindUI({
+            
+                element: "#search",
+            
+                showSubResults: true,
+            
+                showImages: false,
+            
+            });
+        });
+    </script>
   
 </header>
 <main>
@@ -89,13 +105,14 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image2" id="label2"><p><code>⇑</code> Rigid geometry of stairs,</p>
+<div class="caption docutils container" id="label2">
+<p><code>⇑</code> Rigid geometry of stairs,</p>
 <p>through messy vegetation.</p>
 <p>The sun is about to leave,</p>
 <p>but still warmer than ever,</p>
 <p>projecting messy shadows</p>
 <p>on the cold old concrete.</p>
-</label>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image3-fullscreen">
 <img alt="" class="inline" id="image3" src="240917_negscan2408.952.v0001.jpg" />
@@ -111,7 +128,8 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image4" id="label4"><p><code>⇒</code> Day reaching its end,</p>
+<div class="caption docutils container" id="label4">
+<p><code>⇒</code> Day reaching its end,</p>
 <p>You sit under the tree,</p>
 <p>And free the mind from distraction.</p>
 <p>You look up at the leaves,</p>
@@ -120,11 +138,12 @@
 <p>there's just black, and blues,</p>
 <p>no more room for the doubts,</p>
 <p>Is that peace you feel ?</p>
-</label>
+</div>
 </div>
 <div class="column right docutils container" style="width: 55%">
-<label class="caption" for="image1" id="label1"><p><code>⇓</code> It feels so cold, yet so warm. The light is getting thin, but still painting splash of warmth here and there. Take your turn on the used bench, to breath for a minute. But make sure you sit on the right side to catch the last sun beam. You wouldn't want to feel cold, wouldn't you ?</p>
-</label>
+<div class="caption docutils container" id="label1">
+<p><code>⇓</code> It feels so cold, yet so warm. The light is getting thin, but still painting splash of warmth here and there. Take your turn on the used bench, to breath for a minute. But make sure you sit on the right side to catch the last sun beam. You wouldn't want to feel cold, wouldn't you ?</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image1-fullscreen">
 <img alt="" class="inline" id="image1" src="240917_negscan2408.963.v0001.jpg" />
@@ -140,8 +159,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image3" id="label3"><p><code>⇐</code> This corner of the park was pretty mundane, a large gravel aread ending on a small forest of bamboo. And at this time of the day there's not much visible. But stronger than ever, a small beam of light came to pierce through the surrounding vegetation to light a spot of ground. And just like that the small corner suddenly become worth looking at. A beautiful contrast of warm sun and peaceful shadows with splashs of chlorophyles emerging from it.</p>
-</label>
+<div class="caption docutils container" id="label3">
+<p><code>⇐</code> This corner of the park was pretty mundane, a large gravel aread ending on a small forest of bamboo. And at this time of the day there's not much visible. But stronger than ever, a small beam of light came to pierce through the surrounding vegetation to light a spot of ground. And just like that the small corner suddenly become worth looking at. A beautiful contrast of warm sun and peaceful shadows with splashs of chlorophyles emerging from it.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image4-fullscreen">
 <img alt="" class="inline" id="image4" src="240917_negscan2408.961.v0001.jpg" />
@@ -174,8 +194,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image1" id="label1"><p><code>⇓</code> It feels so cold, yet so warm. The light is getting thin, but still painting splash of warmth here and there. Take your turn on the used bench, to breath for a minute. But make sure you sit on the right side to catch the last sun beam. You wouldn't want to feel cold, wouldn't you ?</p>
-</label>
+<div class="caption docutils container" id="label1">
+<p><code>⇓</code> It feels so cold, yet so warm. The light is getting thin, but still painting splash of warmth here and there. Take your turn on the used bench, to breath for a minute. But make sure you sit on the right side to catch the last sun beam. You wouldn't want to feel cold, wouldn't you ?</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image2-fullscreen">
 <img alt="" class="inline" id="image2" src="240917_negscan2408.964.v0001.jpg" />
@@ -191,13 +212,14 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image2" id="label2"><p><code>⇑</code> Rigid geometry of stairs,</p>
+<div class="caption docutils container" id="label2">
+<p><code>⇑</code> Rigid geometry of stairs,</p>
 <p>through messy vegetation.</p>
 <p>The sun is about to leave,</p>
 <p>but still warmer than ever,</p>
 <p>projecting messy shadows</p>
 <p>on the cold old concrete.</p>
-</label>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image3-fullscreen">
 <img alt="" class="inline" id="image3" src="240917_negscan2408.952.v0001.jpg" />
@@ -213,8 +235,9 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image3" id="label3"><p><code>⇐</code> This corner of the park was pretty mundane, a large gravel aread ending on a small forest of bamboo. And at this time of the day there's not much visible. But stronger than ever, a small beam of light came to pierce through the surrounding vegetation to light a spot of ground. And just like that the small corner suddenly become worth looking at. A beautiful contrast of warm sun and peaceful shadows with splashs of chlorophyles emerging from it.</p>
-</label>
+<div class="caption docutils container" id="label3">
+<p><code>⇐</code> This corner of the park was pretty mundane, a large gravel aread ending on a small forest of bamboo. And at this time of the day there's not much visible. But stronger than ever, a small beam of light came to pierce through the surrounding vegetation to light a spot of ground. And just like that the small corner suddenly become worth looking at. A beautiful contrast of warm sun and peaceful shadows with splashs of chlorophyles emerging from it.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image4-fullscreen">
 <img alt="" class="inline" id="image4" src="240917_negscan2408.961.v0001.jpg" />
@@ -230,7 +253,8 @@
 <li class="camera" title="camera"><p>Minolta X-500</p></li>
 </ul>
 </div>
-<label class="caption" for="image4" id="label4"><p><code>⇒</code> Day reaching its end,</p>
+<div class="caption docutils container" id="label4">
+<p><code>⇒</code> Day reaching its end,</p>
 <p>You sit under the tree,</p>
 <p>And free the mind from distraction.</p>
 <p>You look up at the leaves,</p>
@@ -239,7 +263,7 @@
 <p>there's just black, and blues,</p>
 <p>no more room for the doubts,</p>
 <p>Is that peace you feel ?</p>
-</label>
+</div>
 </div>
 </div>
 
@@ -258,7 +282,7 @@
     </a>
     
     <p>Static website <a href="../../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-29T11:49</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/2ce951f">2ce951f</a></i></p>
+      Last built on <i>2025-06-05T21:23</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/98b4c3f">98b4c3f</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

@@ -34,6 +34,8 @@
   
   <link rel="stylesheet" href="doc.css" />
   
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+  <script src="/pagefind/pagefind-ui.js"></script>
   
 </head>
 <body>
@@ -60,10 +62,24 @@
         
       </ul>
     </nav>
+    <div id="search"></div>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            new PagefindUI({
+            
+                element: "#search",
+            
+                showSubResults: true,
+            
+                showImages: false,
+            
+            });
+        });
+    </script>
   
 </header>
 <main>
-  <article class="read-area">
+  <article class="read-area" data-pagefind-ignore>
     <h1>css workbench page</h1>
     <p>test rst>html + css by providing all possible use-cases.</p>
     <div class="nav-button docutils container">
@@ -142,11 +158,20 @@ Its wings are too small to get its fat little body off the ground.</p>
 <h2><a class="toc-backref" href="#lists" role="doc-backlink">lists</a></h2>
 <p>Bullet lists:</p>
 <ul class="simple">
-<li><p>This is item 1</p></li>
+<li><p>This is item 1</p>
+<ul>
+<li><p>nested bullet list</p></li>
+<li><p>nest2</p></li>
+</ul>
+</li>
 <li><p>This is item 2</p></li>
 <li><p>Bullets are &quot;-&quot;, &quot;*&quot; or &quot;+&quot;.
 Continuing text must be aligned
-after the bullet and whitespace.</p></li>
+after the bullet and whitespace.</p>
+<ul>
+<li><p>nested bullet list</p></li>
+</ul>
+</li>
 </ul>
 <p>Enumerated lists:</p>
 <ol class="arabic simple" start="3">
@@ -643,9 +668,10 @@ def read_image(path: Path) -&gt; oiio.ImageBuf:
 </div>
 </div>
 <div class="column right docutils container" style="width: 65%">
-<label class="caption" for="image1" id="label1"><p>some of the text descrption of the image
+<div class="caption docutils container" id="label1">
+<p>some of the text descrption of the image
 that can span multiple lines</p>
-</label>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image2-fullscreen">
 <img alt="" class="inline" id="image2" src="../.static/images/cover-social.jpg" />
@@ -660,9 +686,10 @@ that can span multiple lines</p>
 <li class="lens" title="lens"><p>Minolta MD 35mm</p></li>
 </ul>
 </div>
-<label class="caption" for="image2" id="label2"><p>some of the text descrption of the image
+<div class="caption docutils container" id="label2">
+<p>some of the text descrption of the image
 that can span multiple lines</p>
-</label>
+</div>
 </div>
 <div class="column responsive docutils container">
 <div class="image-wrapper docutils container">
@@ -679,9 +706,10 @@ that can span multiple lines</p>
 <li class="lens" title="lens"><p>Minolta MD 35mm</p></li>
 </ul>
 </div>
-<label class="caption" for="image1" id="label1"><p>some of the text descrption of the image
+<div class="caption docutils container" id="label1">
+<p>some of the text descrption of the image
 that can span multiple lines</p>
-</label>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image2-fullscreen">
 <img alt="" class="inline" id="image2" src="../.static/images/cover-social.jpg" />
@@ -696,9 +724,10 @@ that can span multiple lines</p>
 <li class="lens" title="lens"><p>Minolta MD 35mm</p></li>
 </ul>
 </div>
-<label class="caption" for="image2" id="label2"><p>some of the text descrption of the image
+<div class="caption docutils container" id="label2">
+<p>some of the text descrption of the image
 that can span multiple lines</p>
-</label>
+</div>
 </div>
 </div>
 </section>
@@ -832,7 +861,7 @@ interpreted as body elements.</p>
   
     
     <p>Static website <a href="."><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-29T11:49</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/2ce951f">2ce951f</a></i></p>
+      Last built on <i>2025-06-05T21:23</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/98b4c3f">98b4c3f</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

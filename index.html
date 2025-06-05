@@ -48,6 +48,12 @@
   
   <link rel="stylesheet" href="../.static/fonts/MonHugo/MonHugo.css" />
   
+  <link rel="stylesheet" href="../.static/fonts/PubliFluor/PubliFluor.css" />
+  
+  <link rel="stylesheet" href="../.static/fonts/IndieFlower/IndieFlower.css" />
+  
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+  <script src="/pagefind/pagefind-ui.js"></script>
   
 </head>
 <body>
@@ -74,6 +80,20 @@
         
       </ul>
     </nav>
+    <div id="search"></div>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            new PagefindUI({
+            
+                element: "#search",
+            
+                showSubResults: true,
+            
+                showImages: false,
+            
+            });
+        });
+    </script>
   
 </header>
 <main>
@@ -92,7 +112,9 @@
         <aside class="font-info" title="the typeface in use on the right > ">
           <a href="https://montifonti.tilda.ws/mon_hugo">Mon Hugo*</a>
         </aside>
-        <p title="my job title">vfx artist <wbr><span>software developer</span></p>
+        <p title="my job title">vfx artist
+          <wbr>
+          <span>software developer</span></p>
       </div>
       <div id="self-description">
         <aside class="font-info" title="the typeface in use on the right > ">
@@ -149,7 +171,9 @@
           </a>
         </div>
       </div>
-      <a href="#"><div id="maxi-frog"></div></a>
+      <a href="#">
+        <div id="maxi-frog"></div>
+      </a>
       <div class="decorations">
         <pre class="lut-numbers">
 TITLE "Kodak 2383"
@@ -215,7 +239,9 @@ LUT_3D_INPUT_RANGE 0.0 1.0
         <img class="bricks-plate" src="index/lego-bricks.plate.png" alt="decorative lego bricks image">
         <img class="bricks-1x1" src="index/lego-bricks.1x1.png" alt="decorative lego bricks image">
         <img class="bricks-2x4" src="index/lego-bricks.2x4.png" alt="decorative lego bricks image">
-        <div class="bricks-frog"><a href="#maxi-frog"><img src="index/lego-bricks.frog.png" alt="decorative lego bricks image"></a></div>
+        <div class="bricks-frog">
+          <a href="#maxi-frog"><img src="index/lego-bricks.frog.png" alt="decorative lego bricks image"></a>
+        </div>
         <div class="negative-box"></div>
         <div class="glass-box">
           <a class="font-info" href="https://github.com/JAMO-TYPEFACE/Orbit">* the font indicating the font is Orbit</a>
@@ -636,12 +662,32 @@ LUT_3D_INPUT_RANGE 0.0 1.0
       </ul>
     </div>
   </section>
+  <section id="guestbook" aria-label="Visitor sketch book">
+    <div class="information">
+      <a href="#guestbook"><h2>Guest<span class="c1">(</span><span class="c2">s</span><span class="c3">k</span><span class="c4">e</span><span class="c5">t</span><span class="c6">c</span><span class="c7">h</span><span class="c8">)</span>book</h2></a>
+      <p>visitors who wished to leave a drawing !</p>
+      <p class="responsive-warning">(page best viewed on desktop)</p>
+      <a class="submission" href="https://liamcollod.notion.site/Liam-s-visitor-sketchbook-20225ce99d378060b132dc5b4ad5e09b?pvs=74">→ sends yours here ←</a>
+    </div>
+    <div class="board">
+        <a href="https://bsky.app/profile/emperorjonx.bsky.social">
+    <img class="drawing" id="drawing-Batman-0"src="index/guestbook/Batman.png" alt="It&#39;s JONX BABY" title="Created by Batman !" style="--drawing-left:44%;--drawing-top:48%;--drawing-rotation:-18.0deg;">
+  </a>
+    <img class="drawing" id="drawing-Feldt-1"src="index/guestbook/Feldt.png" alt="An anarchist and mad proud owl with a mad pride flag in her beak. Behind we can see a text &#34;radical animal&#34;. Stay punk and wear masks." title="Created by Feldt !" style="--drawing-left:25%;--drawing-top:64%;--drawing-rotation:-13.4deg;">
+  <a href="https://bsky.app/profile/alicosaurus.bsky.social">
+    <img class="drawing" id="drawing-AliSaurus-2"src="index/guestbook/AliSaurus.png" alt="A frog that is also Viktor from Arcane, holding a Hextech Gem and looking at you really tired." title="Created by AliSaurus !" style="--drawing-left:68%;--drawing-top:5%;--drawing-rotation:4.8deg;">
+  </a>
+  <a href="https://linktr.ee/SashaCoulon">
+    <img class="drawing" id="drawing-LagoNyx-3"src="index/guestbook/LagoNyx.png" alt="A cartoony brown pillbug with big blue eyes curled up and crying (mood)." title="Created by LagoNyx !" style="--drawing-left:54%;--drawing-top:42%;--drawing-rotation:-6.4deg;">
+  </a>
+    </div>
+  </section>
 </main>
 <footer>
   
     
     <p>Static website <a href=".doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-29T11:49</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/2ce951f">2ce951f</a></i></p>
+      Last built on <i>2025-06-05T21:23</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/98b4c3f">98b4c3f</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

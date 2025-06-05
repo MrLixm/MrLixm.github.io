@@ -18,7 +18,7 @@ body {
         line-height: 1.9rem;
         text-align: center;
     }
-    label {
+    .caption {
         font-family: "Spectral", serif;
     }
     img {

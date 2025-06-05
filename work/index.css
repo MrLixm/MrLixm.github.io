@@ -1,5 +1,7 @@
 :root {
-    --bg-color: black;
+    --bg-color: rgb(0,0,0);
+    --bg-color-M: rgb(10, 10, 10);
+    --bg-color-MM: rgb(20, 20, 20);
     --color: rgb(250, 250, 250);
 }
 * {

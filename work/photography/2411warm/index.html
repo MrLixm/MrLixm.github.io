@@ -35,6 +35,8 @@
   
   <link rel="stylesheet" href="../photography.css" />
   
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+  <script src="/pagefind/pagefind-ui.js"></script>
   
 </head>
 <body>
@@ -61,6 +63,20 @@
         
       </ul>
     </nav>
+    <div id="search"></div>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            new PagefindUI({
+            
+                element: "#search",
+            
+                showSubResults: true,
+            
+                showImages: false,
+            
+            });
+        });
+    </script>
   
 </header>
 <main>
@@ -86,8 +102,9 @@
 <li class="lens" title="lens"><p>Minolta MD 35mm</p></li>
 </ul>
 </div>
-<label class="caption" for="image3" id="label3"><p><code>∨</code> We are in November but it doesn't feel like it. There's this gorgeous flowerbed bathing in the sun which looks so goood. It has plants of all shapes and forms, but colors only alternate between the vivid red of flowers and the freshness of the chlorophyll. You have spiky kind of yucca, dense grapes of flowers, smooth textured leaves and dense actinomorphic flowers. A healthy salad of plants to calm whatever mess is going on in your life.</p>
-</label>
+<div class="caption docutils container" id="label3">
+<p><code>∨</code> We are in November but it doesn't feel like it. There's this gorgeous flowerbed bathing in the sun which looks so goood. It has plants of all shapes and forms, but colors only alternate between the vivid red of flowers and the freshness of the chlorophyll. You have spiky kind of yucca, dense grapes of flowers, smooth textured leaves and dense actinomorphic flowers. A healthy salad of plants to calm whatever mess is going on in your life.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image3-fullscreen">
 <img alt="" class="inline" id="image3" src="241229_negscan2411.1155.v0001.jpg" />
@@ -102,12 +119,14 @@
 <li class="lens" title="lens"><p>Minolta MD 35mm</p></li>
 </ul>
 </div>
-<label class="caption" for="image4" id="label4"><p><code>&gt;</code> &quot;Boring&quot; could describe this corner of garden, but I think it's not. There's not much going on but there a lot too. A mix of textures and shapes, sun playing with shadows. You have floating ivy leaves covering the ground, scattered pine needles and soft small flowers piercing through. And over this vegetation carpet, sit a single fallen dead leaf as an outsider.</p>
-</label>
+<div class="caption docutils container" id="label4">
+<p><code>&gt;</code> &quot;Boring&quot; could describe this corner of garden, but I think it's not. There's not much going on but there a lot too. A mix of textures and shapes, sun playing with shadows. You have floating ivy leaves covering the ground, scattered pine needles and soft small flowers piercing through. And over this vegetation carpet, sit a single fallen dead leaf as an outsider.</p>
+</div>
 </div>
 <div class="column right docutils container" style="width: 60%">
-<label class="caption" for="image1" id="label1"><p><code>&lt;</code> If buildings had a texture this one would feel quite funky but interesting for sure. You got the usual large windows surface of modern buildings but it get interesting with the railway circling it at each floor, which gets punctually traversed by big smooth tubes going to the roof. A weird mix of order and chaos.</p>
-</label>
+<div class="caption docutils container" id="label1">
+<p><code>&lt;</code> If buildings had a texture this one would feel quite funky but interesting for sure. You got the usual large windows surface of modern buildings but it get interesting with the railway circling it at each floor, which gets punctually traversed by big smooth tubes going to the roof. A weird mix of order and chaos.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image2-fullscreen">
 <img alt="" class="inline" id="image2" src="241229_negscan2411.1157.v0002.jpg" />
@@ -122,8 +141,9 @@
 <li class="lens" title="lens"><p>Minolta MD 35mm</p></li>
 </ul>
 </div>
-<label class="caption" for="image2" id="label2"><p><code>∧</code> Look up ! Rising from dense clumps of leaves, swarming with sun, emerges the very spiky corner of a house, perfect geometric shape cut out against an immaculate open sky. There's lot of light, there's quite some shadow, few in between, the kind of place you could just sit at and let your mind lost itself to the relaxing sound of birds chirping.</p>
-</label>
+<div class="caption docutils container" id="label2">
+<p><code>∧</code> Look up ! Rising from dense clumps of leaves, swarming with sun, emerges the very spiky corner of a house, perfect geometric shape cut out against an immaculate open sky. There's lot of light, there's quite some shadow, few in between, the kind of place you could just sit at and let your mind lost itself to the relaxing sound of birds chirping.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image4-fullscreen">
 <img alt="" class="inline" id="image4" src="241229_negscan2411.1162.v0001.jpg" />
@@ -154,8 +174,9 @@
 <li class="lens" title="lens"><p>Minolta MD 35mm</p></li>
 </ul>
 </div>
-<label class="caption" for="image1" id="label1"><p><code>&lt;</code> If buildings had a texture this one would feel quite funky but interesting for sure. You got the usual large windows surface of modern buildings but it get interesting with the railway circling it at each floor, which gets punctually traversed by big smooth tubes going to the roof. A weird mix of order and chaos.</p>
-</label>
+<div class="caption docutils container" id="label1">
+<p><code>&lt;</code> If buildings had a texture this one would feel quite funky but interesting for sure. You got the usual large windows surface of modern buildings but it get interesting with the railway circling it at each floor, which gets punctually traversed by big smooth tubes going to the roof. A weird mix of order and chaos.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image2-fullscreen">
 <img alt="" class="inline" id="image2" src="241229_negscan2411.1157.v0002.jpg" />
@@ -170,8 +191,9 @@
 <li class="lens" title="lens"><p>Minolta MD 35mm</p></li>
 </ul>
 </div>
-<label class="caption" for="image2" id="label2"><p><code>∧</code> Look up ! Rising from dense clumps of leaves, swarming with sun, emerges the very spiky corner of a house, perfect geometric shape cut out against an immaculate open sky. There's lot of light, there's quite some shadow, few in between, the kind of place you could just sit at and let your mind lost itself to the relaxing sound of birds chirping.</p>
-</label>
+<div class="caption docutils container" id="label2">
+<p><code>∧</code> Look up ! Rising from dense clumps of leaves, swarming with sun, emerges the very spiky corner of a house, perfect geometric shape cut out against an immaculate open sky. There's lot of light, there's quite some shadow, few in between, the kind of place you could just sit at and let your mind lost itself to the relaxing sound of birds chirping.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image3-fullscreen">
 <img alt="" class="inline" id="image3" src="241229_negscan2411.1155.v0001.jpg" />
@@ -186,8 +208,9 @@
 <li class="lens" title="lens"><p>Minolta MD 35mm</p></li>
 </ul>
 </div>
-<label class="caption" for="image3" id="label3"><p><code>∨</code> We are in November but it doesn't feel like it. There's this gorgeous flowerbed bathing in the sun which looks so goood. It has plants of all shapes and forms, but colors only alternate between the vivid red of flowers and the freshness of the chlorophyll. You have spiky kind of yucca, dense grapes of flowers, smooth textured leaves and dense actinomorphic flowers. A healthy salad of plants to calm whatever mess is going on in your life.</p>
-</label>
+<div class="caption docutils container" id="label3">
+<p><code>∨</code> We are in November but it doesn't feel like it. There's this gorgeous flowerbed bathing in the sun which looks so goood. It has plants of all shapes and forms, but colors only alternate between the vivid red of flowers and the freshness of the chlorophyll. You have spiky kind of yucca, dense grapes of flowers, smooth textured leaves and dense actinomorphic flowers. A healthy salad of plants to calm whatever mess is going on in your life.</p>
+</div>
 <div class="image-wrapper docutils container">
 <a class="reference external image-reference" href="#image4-fullscreen">
 <img alt="" class="inline" id="image4" src="241229_negscan2411.1162.v0001.jpg" />
@@ -202,8 +225,9 @@
 <li class="lens" title="lens"><p>Minolta MD 35mm</p></li>
 </ul>
 </div>
-<label class="caption" for="image4" id="label4"><p><code>&gt;</code> &quot;Boring&quot; could describe this corner of garden, but I think it's not. There's not much going on but there a lot too. A mix of textures and shapes, sun playing with shadows. You have floating ivy leaves covering the ground, scattered pine needles and soft small flowers piercing through. And over this vegetation carpet, sit a single fallen dead leaf as an outsider.</p>
-</label>
+<div class="caption docutils container" id="label4">
+<p><code>&gt;</code> &quot;Boring&quot; could describe this corner of garden, but I think it's not. There's not much going on but there a lot too. A mix of textures and shapes, sun playing with shadows. You have floating ivy leaves covering the ground, scattered pine needles and soft small flowers piercing through. And over this vegetation carpet, sit a single fallen dead leaf as an outsider.</p>
+</div>
 </div>
 </div>
 
@@ -222,7 +246,7 @@
     </a>
     
     <p>Static website <a href="../../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-05-29T11:49</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/2ce951f">2ce951f</a></i></p>
+      Last built on <i>2025-06-05T21:23</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/98b4c3f">98b4c3f</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>
