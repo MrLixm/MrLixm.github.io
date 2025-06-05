@@ -50,7 +50,11 @@
       <ul>
         {% for navname, navlink in Config.HEADER_NAV.items() %}
         <!-- the duplicated span is a trick to change font-weight on hover -->
-        <li title="{{ navname }}" class="{% if Page.url_path.startswith(navname.lower()) %}active{% endif %}"><a href="{{ navlink|mkpagerel|prettylink }}"><span>{{ navname }}</span><span>{{ navname }}</span></a></li>
+        <li title="{{ navname }}" class="{% if Page.url_path.startswith(navname.lower()) %}active{% endif %}">
+          <a href="{{ navlink|mkpagerel|prettylink }}">
+            <span>{{ navname }}</span><span>{{ navname }}</span>
+          </a>
+        </li>
         {% endfor %}
       </ul>
     </nav>
@@ -81,7 +85,7 @@
     </a>
     {% endif %}
     <p>Static website <a href="{{ ".doc/index.html"|mkpagerel|prettylink }}"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>{{ Context.build_time.isoformat(timespec='minutes') }}</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/{{ Context.last_commit }}">{{ Context.last_commit }}</a></i></p>
+      Last built on <i>{{ Context.build_time.isoformat(timespec='minutes') }}</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/{{ Context.last_commit }}" target="_blank">{{ Context.last_commit }}</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   {% endblock %}
 </footer>
