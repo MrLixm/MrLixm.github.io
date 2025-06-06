@@ -1,3 +1,8 @@
+:root {
+    --font-A: "BBBManifontGrotesk", sans-serif;
+    --font-B: "PubliFluorNormale", sans-serif;
+    --color: rgb(174, 203, 178);
+}
 .column-split {
     display: flex;
     flex-direction: row;
@@ -19,3 +24,27 @@
         align-items: center;
     }
 }
+
+img.inline {
+    border-radius: var(--radius-S);
+}
+
+.font-display { font-size: 1.2rem;}
+.f-0xa000{ font-family: "0xA000", var(--font-A)}
+.f-barlow{ font-family: "Barlow", var(--font-A)}
+.f-bbbmanifontgrotesk{ font-family: "BBBManifontGrotesk", var(--font-A)}
+.f-clashdisplay{ font-family: "ClashDisplay", var(--font-A)}
+.f-coastersans{ font-family: "CoasterSans", var(--font-A)}
+.f-departuremono{ font-family: "DepartureMono", var(--font-A)}
+.f-escabeau{ font-family: "Escabeau", var(--font-A)}
+.f-ferritecoredx{ font-family: "FerriteCoreDX", var(--font-A)}
+.f-ft88{ font-family: "FT88", var(--font-A)}
+.f-georama{ font-family: "Georama", var(--font-A)}
+.f-indieflower{ font-family: "Indie Flower", var(--font-A)}
+.f-monhugo{ font-family: "Mon Hugo in", var(--font-A)}
+.f-montserrat{ font-family: "Montserrat", var(--font-A)}
+.f-orbit{ font-family: "Orbit", var(--font-A)}
+.f-publifluor{ font-family: "PubliFluorNormale", var(--font-A)}
+.f-sourcecodepro{ font-family: "Source Code Pro", var(--font-A)}
+.f-sourcesanspro{ font-family: "Source Sans Pro", var(--font-A)}
+.f-tiny5{ font-family: "Tiny5", var(--font-A)}

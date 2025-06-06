@@ -4,13 +4,20 @@
         
         <title>Liam Collod - blog</title>
         <link>https://liamcollod.xyz/blog</link>
-        <description>This is my blog :)</description>
+        <description>Where I write whatever I have in mind :)</description>
         <docs>https://www.rssboard.org/rss-specification</docs>
         <image>
             <url>https://liamcollod.xyz/.static/images/cover-social.jpg</url>
             <title>Liam Collod - blog</title>
             <link>https://liamcollod.xyz/blog</link>
         </image>
+        
+        <item>
+            <title>Renovating this website (2025)</title>
+            <link>https://liamcollod.xyz/blog/website-redesign-2025/</link>
+            <description>New year, new (http) me.</description>
+            <pubDate>Fri, 06 Jun 2025 19:12:00</pubDate>
+        </item>
         
         <item>
             <title>Creating custom context menu for Windows file explorer.</title>
