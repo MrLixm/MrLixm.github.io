@@ -9,6 +9,8 @@
         <p id="post-description" title="the post description">{{ Page.metadata.description }}</p>
       {%- endif %}
     </section>
+    {%- block page_content %}
     {{ Page.html_content }}
+    {%- endblock %}
   </article>
 {% endblock %}
