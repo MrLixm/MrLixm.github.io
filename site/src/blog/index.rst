@@ -1,7 +1,7 @@
 Blog
 ####
 
-:description: This is my blog :)
+:description: Where I write whatever I have in mind :)
 :template: blog/.index.html
 :stylesheets:
     +.index.css,
