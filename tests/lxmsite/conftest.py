@@ -27,4 +27,5 @@ def default_site_config(tmp_path: Path) -> SiteConfig:
         REDIRECTIONS={},
         REDIRECTIONS_TEMPLATE="",
         RSS_FEED_TEMPLATE="",
+        PAGEFIND_CONFIG={},
     )
