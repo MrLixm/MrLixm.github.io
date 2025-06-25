@@ -5,6 +5,7 @@ import markdown
 
 from ._extensions import ExtractTitleTreeprocessor
 from ._extensions import MetadataPreprocessor
+from ._extensions import UrlPreviewDirective
 
 
 @dataclasses.dataclass
@@ -36,8 +37,10 @@ def read_markdown(
     title_extractor.register(1)
 
     meta_extractor = MetadataPreprocessor(reader)
-    meta_extractor.register()
     meta_extractor.register(10)
+
+    urlpreview_directive = UrlPreviewDirective(reader.parser)
+    urlpreview_directive.register(50)
 
     html = reader.convert(content)
 
