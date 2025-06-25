@@ -24,5 +24,5 @@ class ExtractTitleTreeprocessor(markdown.treeprocessors.Treeprocessor):
             break
         return root
 
-    def register(self) -> None:
-        self.md.treeprocessors.register(self, "extract_title", priority=1)
+    def register(self, priority: int) -> None:
+        self.md.treeprocessors.register(self, "extract_title", priority)

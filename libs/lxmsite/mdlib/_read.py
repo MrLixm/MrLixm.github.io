@@ -33,10 +33,11 @@ def read_markdown(
     )
 
     title_extractor = ExtractTitleTreeprocessor(reader)
-    title_extractor.register()
+    title_extractor.register(1)
 
     meta_extractor = MetadataPreprocessor(reader)
     meta_extractor.register()
+    meta_extractor.register(10)
 
     html = reader.convert(content)
 

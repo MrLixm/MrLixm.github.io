@@ -207,3 +207,6 @@ class BaseDirectiveBlock(markdown.blockprocessors.BlockProcessor):
             options=options,
             content=content or None,
         )
+
+    def register(self, priority):
+        self.parser.blockprocessors.register(self, self.name, priority)

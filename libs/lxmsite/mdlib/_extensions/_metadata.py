@@ -47,5 +47,5 @@ class MetadataPreprocessor(markdown.preprocessors.Preprocessor):
         self.metadata = meta
         return lines_buffer + lines
 
-    def register(self) -> None:
-        self.md.preprocessors.register(self, "meta", priority=27)
+    def register(self, priority: int) -> None:
+        self.md.preprocessors.register(self, "meta", priority)
