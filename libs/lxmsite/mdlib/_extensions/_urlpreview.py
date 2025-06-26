@@ -150,7 +150,8 @@ class UrlPreviewDirective(Directive.BaseDirectiveBlock):
 
         node_content = ElementTree.Element("div")
         node_content.set("class", f"{self.cssclass_prefix}-description")
-        self.parser.parseChunk(node_content, directive.content)
+        if directive.content:
+            self.parser.parseChunk(node_content, directive.content)
 
         # if path to image file is given
         if u_image:
@@ -162,7 +163,7 @@ class UrlPreviewDirective(Directive.BaseDirectiveBlock):
 
         # if instead we give a svg, read the svg file content
         elif u_svg:
-            svg_path = Path(u_svg).resolve()
+            svg_path = self.md.mk_path_abs(u_svg)
             try:
                 svg_data = svg_path.read_text("utf-8")
             except Exception as error:

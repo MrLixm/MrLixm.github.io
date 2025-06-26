@@ -3,30 +3,22 @@ from pathlib import Path
 from xml.etree import ElementTree
 
 from markdown.inlinepatterns import InlineProcessor
+from .._md import LxmMarkdown
 
 
 class EmojiInlineProcessor(InlineProcessor):
     """
     Args:
         emojis_dir: filesystem path to an existing directory with emoji image insides.
-        relative_root:
-            fileystem path to an existing directory with the same root as the emojis_dir
-            and that will be used to create relative image uris.
         md: markdown parser instance
     """
 
     PATTERN = r":emoji:\(([+\-\w]+)\)"
+    md: LxmMarkdown
 
-    def __init__(
-        self,
-        emojis_dir: Path,
-        relative_root: Path,
-        md=None,
-    ):
-
+    def __init__(self, emojis_dir: Path, md: LxmMarkdown):
         super().__init__(self.PATTERN, md=md)
         self._emojis_dir = emojis_dir
-        self._relative_root = relative_root
 
     def _get_emoji_path(self, name: str) -> Path:
         if not self._emojis_dir.exists():
@@ -50,7 +42,7 @@ class EmojiInlineProcessor(InlineProcessor):
         alt_text: str = alt_text_path.read_text() if alt_text_path.exists() else ""
 
         # make path relative
-        emoji_path = Path(os.path.relpath(emoji_path, self._relative_root))
+        emoji_path = Path(os.path.relpath(emoji_path, self.md.paths_root))
 
         node = ElementTree.Element("img")
         node.set("src", emoji_path.as_posix())

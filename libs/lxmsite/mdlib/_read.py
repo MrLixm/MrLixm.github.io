@@ -2,8 +2,8 @@ import dataclasses
 import logging
 from pathlib import Path
 
-import markdown
 
+from ._md import LxmMarkdown
 from ._extensions import ExtractTitleTreeprocessor
 from ._extensions import MetadataPreprocessor
 from ._extensions import UrlPreviewDirective
@@ -31,7 +31,8 @@ def read_markdown(
         settings: docutils settings overrides
     """
     content = file_path.read_text(encoding="utf-8")
-    reader = markdown.Markdown(
+    reader = LxmMarkdown(
+        paths_root=file_path.parent,
         extension_configs=settings,
         output_format="xhtml",
         tab_length=4,
@@ -48,11 +49,7 @@ def read_markdown(
 
     emojis_dir: Path = settings.get("emojis", {}).get("directory")
     if emojis_dir:
-        emoji_processor = EmojiInlineProcessor(
-            emojis_dir=emojis_dir,
-            relative_root=file_path.parent,
-            md=reader,
-        )
+        emoji_processor = EmojiInlineProcessor(emojis_dir=emojis_dir, md=reader)
         emoji_processor.register(52)
     else:
         LOGGER.warning(

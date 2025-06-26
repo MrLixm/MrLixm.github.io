@@ -7,6 +7,8 @@ from typing import TypeVar, Generic, Any
 import markdown.blockprocessors
 from xml.etree import ElementTree
 
+from lxmsite.mdlib._md import LxmMarkdown
+
 T = TypeVar("T")
 
 
@@ -120,6 +122,11 @@ class BaseDirectiveBlock(markdown.blockprocessors.BlockProcessor):
                     f"Developer missed implementation of class variable '{var}'"
                 )
         return super().__new__(cls)
+
+    @property
+    def md(self) -> LxmMarkdown:
+        # noinspection PyTypeChecker
+        return self.parser.md
 
     def test(self, parent: ElementTree.Element, block: str):
         pattern = re.compile(rf"\.\. {self.name}::")
