@@ -10,6 +10,6 @@ def test__read__mddoc1(resources_dir):
         "description": "this is some very long text that wraps multiple line to test the multiline feature.",
         "reminder": "drink water !",
     }
-    assert document.html.startswith("<h1>hello")
+    assert document.html.startswith('<h1 id="hello-world-and-mom">hello')
     assert document.html.endswith("great</p>")
     print(document.html)

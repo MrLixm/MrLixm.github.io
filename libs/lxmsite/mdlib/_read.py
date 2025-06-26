@@ -33,6 +33,7 @@ def read_markdown(
     content = file_path.read_text(encoding="utf-8")
     reader = LxmMarkdown(
         paths_root=file_path.parent,
+        extensions=["toc"],
         extension_configs=settings,
         output_format="xhtml",
         tab_length=4,
