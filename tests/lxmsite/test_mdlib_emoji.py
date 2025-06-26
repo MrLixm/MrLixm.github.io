@@ -1,5 +1,6 @@
 import markdown
 
+from lxmsite.mdlib import LxmMarkdown
 from lxmsite.mdlib._extensions import EmojiInlineProcessor
 
 
@@ -17,8 +18,8 @@ def test__EmojiInlineProcessor(tmp_path):
         "rather not have those around their creations :emoji:(explosion)\n"
     )
 
-    reader = markdown.Markdown()
-    directive = EmojiInlineProcessor(emoji_dir, relative_root=tmp_path, md=reader)
+    reader = LxmMarkdown(paths_root=tmp_path)
+    directive = EmojiInlineProcessor(emoji_dir, md=reader)
     directive.register(1)
 
     result = reader.convert(text1)
