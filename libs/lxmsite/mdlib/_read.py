@@ -1,4 +1,5 @@
 import dataclasses
+import logging
 from pathlib import Path
 
 import markdown
@@ -6,6 +7,9 @@ import markdown
 from ._extensions import ExtractTitleTreeprocessor
 from ._extensions import MetadataPreprocessor
 from ._extensions import UrlPreviewDirective
+from ._extensions import EmojiInlineProcessor
+
+LOGGER = logging.getLogger(__name__)
 
 
 @dataclasses.dataclass
@@ -41,6 +45,19 @@ def read_markdown(
 
     urlpreview_directive = UrlPreviewDirective(reader.parser)
     urlpreview_directive.register(50)
+
+    emojis_dir: Path = settings.get("emojis", {}).get("directory")
+    if emojis_dir:
+        emoji_processor = EmojiInlineProcessor(
+            emojis_dir=emojis_dir,
+            relative_root=file_path.parent,
+            md=reader,
+        )
+        emoji_processor.register(52)
+    else:
+        LOGGER.warning(
+            "no emojis/directory specific in settings; disabling emojis extension."
+        )
 
     html = reader.convert(content)
 
