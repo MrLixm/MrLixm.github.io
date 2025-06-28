@@ -5,6 +5,9 @@
     that wraps multiple line 
     to test the multiline feature.
 :reminder:drink water !
+:multi-line2:
+    but now we start on the next line !
+    what do you think ?
 
 What could we learn today ?
 

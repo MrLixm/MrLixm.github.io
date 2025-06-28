@@ -28,7 +28,9 @@ class MetadataPreprocessor(markdown.preprocessors.Preprocessor):
 
             # check if the line is a continuation of the previous line
             if last_key and line.startswith("  "):
-                meta[last_key] = meta[last_key] + " " + line.strip(" ")
+                previous = meta[last_key]
+                prefix = " " if previous else ""
+                meta[last_key] = previous + prefix + line.strip(" ")
                 continue
 
             line_split = line.split(":", 2)
