@@ -89,7 +89,7 @@ class ParsedDirective:
     """
 
 
-class BaseDirectiveBlock(markdown.blockprocessors.BlockProcessor):
+class BaseDirective:
     """
     A block processor to parse rst-like directives from a Markdown document.
 
@@ -124,11 +124,10 @@ class BaseDirectiveBlock(markdown.blockprocessors.BlockProcessor):
         return super().__new__(cls)
 
     @property
-    def md(self) -> LxmMarkdown:
-        # noinspection PyTypeChecker
-        return self.parser.md
+    def _tab_length(self):
+        return 4
 
-    def test(self, parent: ElementTree.Element, block: str):
+    def is_block_directive_start(self, block: str) -> bool:
         pattern = re.compile(rf"\.\. {self.name}::")
         return True if pattern.match(block) else False
 
@@ -158,7 +157,7 @@ class BaseDirectiveBlock(markdown.blockprocessors.BlockProcessor):
                 continue
 
             # check if the directive has ended (we are not in the indent)
-            if not block.startswith(" " * self.tab_length):
+            if not block.startswith(" " * self._tab_length):
                 blocks.insert(0, block)
                 break
 
@@ -177,7 +176,7 @@ class BaseDirectiveBlock(markdown.blockprocessors.BlockProcessor):
                     continue
 
                 # check if the line is part of a multi-line option
-                if line.startswith(" " * self.tab_length * 2):
+                if line.startswith(" " * self._tab_length * 2):
                     if not previous_option:
                         content += sline + "\n"
                         continue
@@ -214,6 +213,24 @@ class BaseDirectiveBlock(markdown.blockprocessors.BlockProcessor):
             options=options,
             content=content or None,
         )
+
+
+class BaseDirectiveBlock(
+    markdown.blockprocessors.BlockProcessor,
+    BaseDirective,
+    abc.ABC,
+):
+    @property
+    def md(self) -> LxmMarkdown:
+        # noinspection PyTypeChecker
+        return self.parser.md
+
+    @property
+    def _tab_length(self):
+        return self.tab_length
+
+    def test(self, parent: ElementTree.Element, block: str):
+        return self.is_block_directive_start(block)
 
     def register(self, priority):
         self.parser.blockprocessors.register(self, self.name, priority)

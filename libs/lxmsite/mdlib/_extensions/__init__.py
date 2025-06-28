@@ -1,4 +1,5 @@
 from . import directive
+from .directive import BaseDirective
 from .directive import BaseDirectiveBlock
 from ._title import ExtractTitleTreeprocessor
 from ._metadata import MetadataPreprocessor
