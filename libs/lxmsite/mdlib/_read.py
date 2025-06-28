@@ -9,6 +9,7 @@ from ._extensions import MetadataPreprocessor
 from ._extensions import UrlPreviewDirective
 from ._extensions import EmojiInlineProcessor
 from ._extensions import IncludeDirectivePreprocessor
+from ._extensions import PatcherTreeprocessor
 
 LOGGER = logging.getLogger(__name__)
 
@@ -48,6 +49,7 @@ def read_markdown(
             "toc",
             # external
             "pymdownx.superfences",
+            "pymdownx.highlight",
         ],
         extension_configs=settings,
         output_format="xhtml",
@@ -75,6 +77,17 @@ def read_markdown(
         LOGGER.warning(
             "no emojis/directory specific in settings; disabling emojis extension."
         )
+
+    table_classes: list[str] = settings.get("patcher", {}).get("table_classes", [])
+    code_classes: list[str] = settings.get("patcher", {}).get("code_classes", [])
+    link_headings: bool = settings.get("patcher", {}).get("link_headings", True)
+    patcher_proc = PatcherTreeprocessor(
+        md=reader,
+        table_classes=table_classes,
+        code_classes=code_classes,
+        link_headings=link_headings,
+    )
+    patcher_proc.register(1)
 
     html = reader.convert(content)
 

@@ -1,5 +1,4 @@
-Resources
-#########
+# Resources
 
 :description: Anything useful I created (that may overlap with this website work page).
 :template: resources/.index.html

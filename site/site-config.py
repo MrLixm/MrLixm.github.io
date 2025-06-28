@@ -42,18 +42,18 @@ PUBLISH_MODE = False
 
 
 # from https://github.com/getpelican/pelican/blob/main/pelican/readers.py#L253
-DEFAULT_DOCUTILS_SETTINGS = {
-    "initial_header_level": "2",
-    "syntax_highlight": "short",
-    "language_code": "en",
-    "halt_level": 2,
-    "traceback": True,
-    "warning_stream": io.StringIO(),
-    "embed_stylesheet": False,
-    "input_encoding": "utf-8",
-    "table_style": "inline",
-    # custom :emoji: role
-    "emojis_dir": SRC_ROOT / ".static" / "images" / "emojis",
+DEFAULT_MARKDOWN_SETTINGS = {
+    "emojis": {
+        "directory": SRC_ROOT / ".static" / "images" / "emojis",
+    },
+    "patcher": {
+        "table_classes": ["inline"],
+        "code_classes": ["inline"],
+        "link_headings": True,
+    },
+    "pymdownx.highlight": {
+        "linenums_style": "pymdownx-inline",
+    },
 }
 
 PAGEFIND_CONFIG = {

@@ -18,7 +18,7 @@ def default_site_config(tmp_path: Path) -> SiteConfig:
         SRC_ROOT=tmp_path / "src",
         DST_ROOT=tmp_path / "dst",
         TEMPLATES_ROOT=tmp_path / "templates",
-        DEFAULT_DOCUTILS_SETTINGS={},
+        DEFAULT_MARKDOWN_SETTINGS={},
         SITE_URL="www.site.fr",
         PUBLISH_MODE=False,
         DEFAULT_PAGE_ICON="",

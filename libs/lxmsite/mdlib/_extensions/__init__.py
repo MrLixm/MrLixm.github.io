@@ -6,3 +6,4 @@ from ._metadata import MetadataPreprocessor
 from ._urlpreview import UrlPreviewDirective
 from ._emojis import EmojiInlineProcessor
 from ._include import IncludeDirectivePreprocessor
+from ._patcher import PatcherTreeprocessor

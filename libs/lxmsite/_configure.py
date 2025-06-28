@@ -22,7 +22,7 @@ class SiteConfig:
     SRC_ROOT: Path = mkfield({"type": Path})
     DST_ROOT: Path | None = mkfield({"type": (Path, type(None))})
     TEMPLATES_ROOT: Path = mkfield({"type": Path})
-    DEFAULT_DOCUTILS_SETTINGS: dict = mkfield({"type": dict})
+    DEFAULT_MARKDOWN_SETTINGS: dict = mkfield({"type": dict})
     SITE_URL: str = mkfield({"type": str})
     PUBLISH_MODE: bool = mkfield({"type": bool})
     DEFAULT_PAGE_ICON: str = mkfield({"type": str})

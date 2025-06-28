@@ -2,10 +2,10 @@
 /* docutils specific elements */
 
 /* tables */
-table p {
+.src-md table.inline p {
     margin: unset;
 }
-table.inline {
+.src-md table.inline {
     max-width: 100%;
     min-width: 70%;
     width: max-content;
@@ -15,46 +15,66 @@ table.inline {
     margin: 1rem auto;
 
 }
-table.inline th,
-table.inline td {
+.src-md table.inline th,
+.src-md table.inline td {
     vertical-align: middle;
     padding: 0.8em;
 }
-table.inline th {
+.src-md table.inline th {
     background-color: var(--bg-color-MM);
     border-bottom: 2px solid var(--color-WW);
 }
-table.inline tr {
+.src-md table.inline tr {
     background-color: var(--bg-color-M);
 }
-table.inline tr:hover {
+.src-md table.inline tr:hover {
     background-color: var(--bg-color-MM);
 }
-table.inline td {
+.src-md table.inline td {
     border: 1px solid transparent;
     border-left: 2px solid var(--bg-color-MM)
 }
-table.inline ul {
+.src-md table.inline ul {
     padding-inline-start: 15px;
 }
 
 /* code blocks */
-pre.literal-block {
+/* XXX: we assume linenums_style=pymdownx-inline */
+.src-md div.highlight {
+    margin: 1rem 0;
+}
+.src-md div.highlight > pre {
     font-family: var(--font-mono);
     font-size: 0.85rem;
     background-color: var(--bg-color-M);
     border: 1px solid var(--bg-color-MM);
     border-radius: var(--radius-S);
     padding: 1rem;
-    margin: 1rem 0;
+    margin: unset;
     overflow: auto;
 }
-pre.literal-block .linenos {
+.src-md div.highlight .linenos {
     color: var(--color-WW);
+}
+.src-md div.highlight span.filename {
+    position: relative;
+    display: block;
+    padding: 0.5rem;
+    width: 100%;
+    /* cover the top rounded corner of the <pre> below */
+    top: 5px;
+    background-color: var(--bg-color-MM);
+    text-align: left;
+    color: var(--color-WW);
+    font-weight: bold;
+}
+.src-md div.highlight [data-linenos]:before {
+    /* make the line number visible */
+    content: attr(data-linenos);
 }
 
 /* inline code */
-span.docutils.literal {
+.src-md code.inline {
     font-family: var(--font-mono);
     font-size: 0.85rem;
     background-color: var(--bg-color-MM);
@@ -65,7 +85,7 @@ span.docutils.literal {
 }
 
 /* admonitions */
-aside.admonition {
+div.admonition {
     position: relative;
     border-radius: var(--radius-S);
     background-color: var(--bg-color-M);
@@ -73,6 +93,10 @@ aside.admonition {
     /* top slightly bigger to account for title exceeding block height */
     padding: 1.3rem 1rem 1rem;
     margin: 1.4rem 0 1rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 
     .admonition-title {
         position: absolute;
@@ -85,15 +109,11 @@ aside.admonition {
         margin: 0;
     }
 
-    > *:nth-child(2) {
-        margin-top: 0;
-    }
-
-    > *:last-child {
-        margin-bottom: 0;
+    > * {
+        margin: 0;
     }
 }
-aside.admonition.highlight-block {
+div.admonition.highlight-block {
     /* doesn't have title so no need for extra margin/padding */
     margin-top: 1rem;
     padding: 1rem;
@@ -102,51 +122,51 @@ aside.admonition.highlight-block {
         margin-top: 0;
     }
 }
-aside.admonition.danger,
-aside.admonition.error {
+div.admonition.danger,
+div.admonition.error {
     border-color: var(--color-negative);
 
     .admonition-title {
         color: var(--color-negative);
     }
 }
-aside.admonition.attention,
-aside.admonition.important {
+div.admonition.attention,
+div.admonition.important {
     border-color: var(--color-attention);
 
     .admonition-title {
         color: var(--color-attention);
     }
 }
-aside.admonition.caution {
+div.admonition.caution {
     border-color: var(--color-caution);
 
     .admonition-title {
         color: var(--color-caution);
     }
 }
-aside.admonition.hint {
+div.admonition.hint {
     border-color: var(--color-hint);
 
     .admonition-title {
         color: var(--color-hint);
     }
 }
-aside.admonition.note {
+div.admonition.note {
     border-color: var(--color-info);
 
     .admonition-title {
         color: var(--color-info);
     }
 }
-aside.admonition.tip {
+div.admonition.tip {
     border-color: var(--color-positive);
 
     .admonition-title {
         color: var(--color-positive);
     }
 }
-aside.admonition.warning {
+div.admonition.warning {
     border-color: var(--color-warning);
 
     .admonition-title {
@@ -154,44 +174,44 @@ aside.admonition.warning {
     }
 }
 
-aside.admonition pre.literal-block,
-aside.admonition span.docutils.literal {
+div.admonition pre.literal-block,
+div.admonition span.docutils.literal {
     background-color: var(--bg-color);
 }
 
 /* images */
-img.inline {
+.src-md img {
     display: block;
 }
-img.inline.align-left,
-figure.align-left {
+.src-md img.align-left,
+.src-md figure.align-left {
     margin: unset;
     align-items: start;
 }
-img.inline.align-right,
-figure.align-right {
+.src-md img.align-right,
+.src-md figure.align-right {
     margin-left: auto;
     align-items: end;
 }
-img.inline.align-center,
-figure.align-center {
+.src-md img.align-center,
+.src-md figure.align-center {
     margin: auto;
     align-items: center;
 }
-img.inline.align-right,
-figure.align-right {
+.src-md img.align-right,
+.src-md figure.align-right {
     margin-left: auto;
     align-items: end;
 }
-figure.align-center img {
+.src-md figure.align-center img {
     margin: auto;
 }
-figure.align-right img {
+.src-md figure.align-right img {
     margin-left: auto;
 }
 
 /* table of contents */
-nav.contents {
+.src-md nav.toc {
     position: relative;
     padding: 1rem;
     margin: 3rem 0 2rem;
@@ -256,7 +276,7 @@ nav.contents {
         left: 2%;
     }
 
-    nav.contents {
+    .src-md aside.toc-wrapper nav.toc {
         position: sticky;
         padding: 0 0 0 1rem;
         margin: 10px 0 0;
@@ -278,7 +298,7 @@ nav.contents {
         }
     }
 
-    nav.contents > .toc-list {
+    .src-md aside.toc-wrapper nav.toc > .toc-list {
         padding-left: 1rem;
 
         max-height: 60vh;
@@ -306,10 +326,7 @@ nav.contents {
 }
 
 
-.footnote > * {
-    display: inline-block;
-}
-.footnote-list {
+.src-md .footnote {
     font-size: 0.75rem;
 
     > * {
@@ -337,6 +354,10 @@ nav.contents {
         bottom: 0;
         left: 0;
         right: 0;
+    }
+
+    p {
+        margin: unset;
     }
 }
 .url-preview-box:hover {
@@ -466,12 +487,15 @@ nav.contents {
         margin-bottom: var(--image-gallery-spacing);
         width: 100%;
     }
+
     p {
         margin: 0.6rem 0;
     }
+
     p:first-child {
         margin-top: var(--image-gallery-spacing);
     }
+
     p:last-child {
         margin-bottom: var(--image-gallery-spacing);
     }
@@ -593,7 +617,7 @@ nav.contents {
     }
 }
 
-/* custom @emoji: role */
+/* custom :emoji: role */
 .emoji-role.inline {
     display: inline;
     vertical-align: middle;

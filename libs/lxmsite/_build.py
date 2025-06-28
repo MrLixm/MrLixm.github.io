@@ -92,7 +92,7 @@ def parse_pages(
     static_paths: list[Path] = []
 
     for src_path in site_files:
-        if src_path.suffix == ".rst":
+        if src_path.suffix == ".md":
             # retrieve default metadata for the page
             default_meta = meta_collection.get_path_meta(src_path)
 

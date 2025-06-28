@@ -13,14 +13,14 @@ def test__read__mddoc1(resources_dir):
     }
     assert document.html == (
         "<p>What could we learn today ?</p>\n"
-        '<h2 id="introduction">introduction</h2>\n'
+        '<h2 id="introduction"><a href="#introduction">introduction</a></h2>\n'
         "<p>probably some interesting stuff</p>\n"
-        '<h2 id="examples">examples</h2>\n'
+        '<h2 id="examples"><a href="#examples">examples</a></h2>\n'
         "<p>SOme examples to scrumble</p>\n"
         '<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;hello world&quot;</span><span class="p">)</span>\n'
         "</code></pre></div>\n"
-        '<h3 id="making-smoothies">making smoothies</h3>\n'
+        '<h3 id="making-smoothies"><a href="#making-smoothies">making smoothies</a></h3>\n'
         "<p>blending the latent smoothness of the fruits</p>\n"
-        '<h2 id="conclusion">conclusion</h2>\n'
+        '<h2 id="conclusion"><a href="#conclusion">conclusion</a></h2>\n'
         "<p>this was not great</p>"
     )

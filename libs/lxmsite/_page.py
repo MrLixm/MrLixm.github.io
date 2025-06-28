@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from lxmsite import SiteConfig
-from . import rstlib
+from . import mdlib
 from ._utils import mkpagerel
 
 LOGGER = logging.getLogger(__name__)
@@ -130,20 +130,21 @@ def read_page(
     site_config: SiteConfig,
     default_metadata: dict[str, str],
 ) -> PageResource:
-    publisher = rstlib.read_rst(
-        file_path,
-        settings=site_config.DEFAULT_DOCUTILS_SETTINGS,
+
+    parsed = mdlib.read_markdown(
+        file_path=file_path,
+        settings=site_config.DEFAULT_MARKDOWN_SETTINGS,
     )
-    parts = publisher.writer.parts
-    content = str(parts.get("body"))
-    title = str(parts.get("title"))
+    title = parsed.title
+    content = parsed.html
+    content = '<div class="src-md">\n' + content + "\n</div>"
 
     src_root = site_config.SRC_ROOT
     url_path: Path = file_path.relative_to(src_root)
     url_path: Path = url_path.with_suffix(".html")
     url_path: str = url_path.as_posix()
 
-    raw_metadata = rstlib.parse_metadata(publisher.document)
+    raw_metadata = parsed.metadata
     src_metadata = default_metadata.copy()
     default_stylesheets = unserialize_stylesheets(src_metadata.pop("stylesheets", ""))
     default_stylesheets = [

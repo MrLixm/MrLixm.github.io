@@ -40,7 +40,7 @@ def test__Shelf__repo1(resources_dir, default_site_config):
 
     pages = [
         read_page(file_path=page, site_config=default_site_config, default_metadata={})
-        for page in root_dir.glob("**/*.rst")
+        for page in root_dir.glob("**/*.md")
     ]
     assert len(pages) == 5
     shelf_url = root_dir.name
@@ -50,6 +50,9 @@ def test__Shelf__repo1(resources_dir, default_site_config):
     assert index_page
     assert index_page.url_path == "repo1/index.html"
     assert index_page.title == "Home"
+    assert index_page.html_content == (
+        '<div class="src-md">\n<p>lorem ipsum something ...</p>\n</div>'
+    )
 
     assert len(list(shelf.iterate())) == 4
     assert len(list(shelf.iterate(ignore_index=True))) == 3

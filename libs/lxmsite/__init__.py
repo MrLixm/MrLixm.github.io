@@ -11,7 +11,7 @@ from ._imaging import read_image_opti_file
 from ._imaging import ImageOptimizer
 from ._imaging import get_image_weight_ratio
 
-from . import rstlib
+from . import mdlib
 
 from ._configure import SiteConfig
 

@@ -131,6 +131,7 @@ class UrlPreviewDirective(Directive.BaseDirectiveBlock):
 
         node_url = ElementTree.Element("a")
         node_url.set("href", u_url)
+        node_url.set("class", "reference")
 
         node_div_image = ElementTree.Element("div")
         node_div_image.set("class", f"{self.cssclass_prefix}-image")
@@ -147,6 +148,7 @@ class UrlPreviewDirective(Directive.BaseDirectiveBlock):
 
         node_subtitle_url = ElementTree.Element("a")
         node_subtitle_url.set("href", u_url)
+        node_subtitle_url.text = u_url
 
         node_content = ElementTree.Element("div")
         node_content.set("class", f"{self.cssclass_prefix}-description")

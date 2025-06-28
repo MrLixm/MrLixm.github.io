@@ -27,14 +27,14 @@ some paragraph
     assert result == (
         "<p>some heading</p>\n"
         '<div class="url-preview-box">'
-        '<a href="https://liamcollod.xyz"></a>'
+        '<a class="reference" href="https://liamcollod.xyz"></a>'
         '<div class="url-preview-image"><img alt="" src="./cover.jpg" /></div>\n'
         '<div class="url-preview-details">\n'
         '<div class="url-preview-title">\n'
         "<p>check my cool website !</p>\n"
         "</div>\n"
         '<div class="url-preview-subtitle">'
-        '<a href="https://liamcollod.xyz"></a>'
+        '<a href="https://liamcollod.xyz">https://liamcollod.xyz</a>'
         "</div>\n"
         '<div class="url-preview-description">\n'
         "<p>I spent a lot of time designing it 🥺</p>\n"
