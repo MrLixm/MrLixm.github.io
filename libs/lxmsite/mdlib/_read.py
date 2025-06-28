@@ -8,6 +8,7 @@ from ._extensions import ExtractTitleTreeprocessor
 from ._extensions import MetadataPreprocessor
 from ._extensions import UrlPreviewDirective
 from ._extensions import EmojiInlineProcessor
+from ._extensions import IncludeDirectivePreprocessor
 
 LOGGER = logging.getLogger(__name__)
 
@@ -44,6 +45,10 @@ def read_markdown(
 
     meta_extractor = MetadataPreprocessor(reader)
     meta_extractor.register(10)
+
+    include_directive = IncludeDirectivePreprocessor(reader)
+    # really need to be executed before all others
+    include_directive.register(900)
 
     urlpreview_directive = UrlPreviewDirective(reader.parser)
     urlpreview_directive.register(50)
