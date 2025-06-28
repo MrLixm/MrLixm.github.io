@@ -19,6 +19,10 @@ probably some interesting stuff
 
 SOme examples to scrumble
 
+```python
+print("hello world")
+```
+
 ### making smoothies
 
 blending the latent smoothness of the fruits

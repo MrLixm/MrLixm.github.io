@@ -21,7 +21,8 @@ class ExtractTitleTreeprocessor(markdown.treeprocessors.Treeprocessor):
         for element in root:
             if element.tag == "h1":
                 self.title = aggregate_children_text(element)
-            break
+                root.remove(element)
+                break
         return root
 
     def register(self, priority: int) -> None:
