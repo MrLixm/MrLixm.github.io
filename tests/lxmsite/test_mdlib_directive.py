@@ -52,7 +52,7 @@ def test__BaseDirectiveBlock__mddoc2(resources_dir):
     doc2 = doc2path.read_text("utf-8")
     result = reader.convert(doc2)
 
-    assert len(directive_test1_results) == 4
+    assert len(directive_test1_results) == 5
     assert len(directive_test2_results) == 3
     assert len(directive_test3_results) == 2
 
@@ -60,20 +60,26 @@ def test__BaseDirectiveBlock__mddoc2(resources_dir):
 
     assert directive_test1_results[0].arguments == ["arg1", "arg2"]
     assert directive_test1_results[0].options == {"option1": "valueA"}
-    assert directive_test1_results[0].content == "content line 1\ncontent line 3"
+    assert directive_test1_results[0].content == "content line 1\n\ncontent line 3"
 
     assert directive_test1_results[1].arguments == ["arg3", "arg4"]
     assert directive_test1_results[1].options == {"option1": "defaultA"}
-    assert directive_test1_results[1].content == "content line 1\ncontent line 3"
+    assert directive_test1_results[1].content == "content line 1\n\ncontent line 3"
 
     assert directive_test1_results[2].arguments == ["arg5", "arg6"]
     assert directive_test1_results[2].options == {"option1": "defaultA"}
-    assert directive_test1_results[2].content == "content line 1\ncontent line 3"
+    assert directive_test1_results[2].content == "content line 1\n\ncontent line 3"
 
     assert directive_test1_results[3].arguments == ["arg7", "arg8"]
     assert directive_test1_results[3].options == {"option1": "defaultA"}
     assert directive_test1_results[3].content == (
-        "    content line 1\ncontent line 3\n    content line4\ncontent line5"
+        "content line 1\n\ncontent line 3\n    content line4\ncontent line5"
+    )
+
+    assert directive_test1_results[4].arguments == ["arg9", "arg10"]
+    assert directive_test1_results[4].options == {"option1": "valueP"}
+    assert directive_test1_results[4].content == (
+        "t2 content line 1\nt2 content line 2\n\nt2 content line 4\n    t2 content line5\nt2 content line6"
     )
 
     # test2

@@ -162,6 +162,11 @@ class BaseDirective:
                 blocks.insert(0, block)
                 break
 
+            # because block strip empty line and we want to keep them in the content
+            if content:
+                content = content.rstrip("\n\n") + "\n\n" + block
+                continue
+
             for line in block.splitlines():
 
                 sline = line.strip(" ")
@@ -187,14 +192,19 @@ class BaseDirective:
                     )
                     continue
 
-                content += sline + "\n"
+                content += line + "\n"
                 continue
+
+            # block ended; reflect it in the content so it ends by '\n\n'
+            if content:
+                content += "\n"
 
         content = content.rstrip("\n")
         if not content and self.expected_content:
             raise DirectiveContentError(
                 f"Expected content got none for directive '{first_line}'"
             )
+        content = "\n".join([line[self._tab_length :] for line in content.split("\n")])
 
         for option_name, option in self.options_schema.items():
             if option_name in options:

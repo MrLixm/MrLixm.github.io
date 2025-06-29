@@ -33,6 +33,16 @@ Time to test directives.
     content line5
 
 
+.. test1:: arg9 arg10
+    :option1: valueP
+
+    t2 content line 1
+    t2 content line 2
+
+    t2 content line 4
+        t2 content line5
+    t2 content line6
+
 intermediate text before test2
 
 .. test2:: 
