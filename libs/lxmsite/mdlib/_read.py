@@ -10,6 +10,7 @@ from ._extensions import UrlPreviewDirective
 from ._extensions import EmojiInlineProcessor
 from ._extensions import IncludeDirectivePreprocessor
 from ._extensions import PatcherTreeprocessor
+from ._extensions import ImageGridDirective
 
 LOGGER = logging.getLogger(__name__)
 
@@ -77,6 +78,9 @@ def read_markdown(
         LOGGER.warning(
             "no emojis/directory specific in settings; disabling emojis extension."
         )
+
+    imagegrid = ImageGridDirective(reader.parser)
+    imagegrid.register(55)
 
     table_classes: list[str] = settings.get("patcher", {}).get("table_classes", [])
     code_classes: list[str] = settings.get("patcher", {}).get("code_classes", [])

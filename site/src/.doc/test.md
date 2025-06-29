@@ -361,7 +361,7 @@ Testing `.. image-grid::`
 link-images enable
 
 .. image-grid::
-    :link-images:
+    :link-images: true
 
     ../.static/images/cover-social.jpg
     ../.static/images/profile-picture.jpg

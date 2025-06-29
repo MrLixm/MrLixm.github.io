@@ -7,3 +7,4 @@ from ._urlpreview import UrlPreviewDirective
 from ._emojis import EmojiInlineProcessor
 from ._include import IncludeDirectivePreprocessor
 from ._patcher import PatcherTreeprocessor
+from ._image_grid import ImageGridDirective
