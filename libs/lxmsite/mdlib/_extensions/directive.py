@@ -147,8 +147,9 @@ class BaseDirective:
 
         options: dict[str, Any] = {}
         content: str = ""
-
         previous_option: str | None = None
+        lvl1_indent = " " * self._tab_length
+        lvl2_indent = lvl1_indent * 2
 
         while blocks:
             block = blocks.pop(0)
@@ -157,7 +158,7 @@ class BaseDirective:
                 continue
 
             # check if the directive has ended (we are not in the indent)
-            if not block.startswith(" " * self._tab_length):
+            if not block.startswith(lvl1_indent):
                 blocks.insert(0, block)
                 break
 
@@ -176,9 +177,9 @@ class BaseDirective:
                     continue
 
                 # check if the line is part of a multi-line option
-                if line.startswith(" " * self._tab_length * 2):
+                if line.startswith(lvl2_indent):
                     if not previous_option:
-                        content += sline + "\n"
+                        content += lvl1_indent + sline + "\n"
                         continue
                     newline = "\n" if block.startswith(line) else " "
                     options[previous_option] = (
