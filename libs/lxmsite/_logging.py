@@ -2,6 +2,8 @@ import enum
 import logging
 import sys
 
+import lxmsite
+
 
 class LogColors(enum.Enum):
     reset = "\x1b[0m"
@@ -76,9 +78,11 @@ def configure_logging(
     Configure the builtin python logging with custom settings.
     """
     logging.basicConfig(
-        level=level,
+        level=logging.WARNING,
         stream=sys.stdout,
     )
+    logger = logging.getLogger(lxmsite.__name__)
+    logger.setLevel(level)
     log_format = "{level_color}{levelname: <7} {black_bold}| {asctime} {name: <25} |{reset}{level_color} {message}"
     log_formatter = ColoredFormatter(
         fmt=log_format,
