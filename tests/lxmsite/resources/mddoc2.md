@@ -8,13 +8,13 @@ Time to test directives.
 .. test1:: arg1 arg2
     :option1: valueA
 
-    content line 1
+    content: line 1:
 
     content line 3
 
 .. test1:: arg3 arg4
 
-    content line 1
+    content: line 1:
 
     content line 3
 

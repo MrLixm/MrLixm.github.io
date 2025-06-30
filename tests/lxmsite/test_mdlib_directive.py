@@ -60,11 +60,11 @@ def test__BaseDirectiveBlock__mddoc2(resources_dir):
 
     assert directive_test1_results[0].arguments == ["arg1", "arg2"]
     assert directive_test1_results[0].options == {"option1": "valueA"}
-    assert directive_test1_results[0].content == "content line 1\n\ncontent line 3"
+    assert directive_test1_results[0].content == "content: line 1:\n\ncontent line 3"
 
     assert directive_test1_results[1].arguments == ["arg3", "arg4"]
     assert directive_test1_results[1].options == {"option1": "defaultA"}
-    assert directive_test1_results[1].content == "content line 1\n\ncontent line 3"
+    assert directive_test1_results[1].content == "content: line 1:\n\ncontent line 3"
 
     assert directive_test1_results[2].arguments == ["arg5", "arg6"]
     assert directive_test1_results[2].options == {"option1": "defaultA"}

@@ -171,7 +171,7 @@ class BaseDirective:
 
                 sline = line.strip(" ")
                 line_split = sline.split(":", 2)
-                if len(line_split) == 3:
+                if sline.startswith(":") and len(line_split) == 3:
                     _, name, value = line_split
                     if name not in self.options_schema:
                         raise DirectiveOptionError(
