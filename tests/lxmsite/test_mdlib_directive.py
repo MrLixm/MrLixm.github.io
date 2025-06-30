@@ -106,7 +106,7 @@ def test__BaseDirectiveBlock__mddoc2(resources_dir):
 
     assert directive_test2_results[2].arguments == []
     assert directive_test2_results[2].options == {
-        "option1": "this is some very long text that wraps multiple line\nto test the multiline feature.",
+        "option1": "this is some very long text\nthat wraps multiple line\n\nto test the multiline feature.",
         "option2": "valueG",
     }
     assert directive_test2_results[2].content is None

@@ -198,7 +198,7 @@ class BaseDirective:
                     if not previous_option:
                         content += lvl1_indent + sline + "\n"
                         continue
-                    newline = "\n" if block.startswith(line) else " "
+                    newline = "\n\n" if block.startswith(line) else "\n"
                     options[previous_option] = (
                         options[previous_option] + newline + sline
                     )
