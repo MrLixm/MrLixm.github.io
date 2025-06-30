@@ -192,8 +192,8 @@ class BaseDirective:
                     )
                     continue
 
-                content += line + "\n"
-                continue
+                content += block
+                break
 
             # block ended; reflect it in the content so it ends by '\n\n'
             if content:

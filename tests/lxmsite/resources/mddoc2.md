@@ -43,6 +43,15 @@ Time to test directives.
         t2 content line5
     t2 content line6
 
+.. test1:: arg11 arg12
+    :option1: valueK
+
+    .. test2::
+        :option1: value1
+        :option2: value2
+
+    woopsie
+
 intermediate text before test2
 
 .. test2:: 

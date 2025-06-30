@@ -52,7 +52,7 @@ def test__BaseDirectiveBlock__mddoc2(resources_dir):
     doc2 = doc2path.read_text("utf-8")
     result = reader.convert(doc2)
 
-    assert len(directive_test1_results) == 5
+    assert len(directive_test1_results) == 6
     assert len(directive_test2_results) == 3
     assert len(directive_test3_results) == 2
 
@@ -80,6 +80,12 @@ def test__BaseDirectiveBlock__mddoc2(resources_dir):
     assert directive_test1_results[4].options == {"option1": "valueP"}
     assert directive_test1_results[4].content == (
         "t2 content line 1\nt2 content line 2\n\nt2 content line 4\n    t2 content line5\nt2 content line6"
+    )
+
+    assert directive_test1_results[5].arguments == ["arg11", "arg12"]
+    assert directive_test1_results[5].options == {"option1": "valueK"}
+    assert directive_test1_results[5].content == (
+        ".. test2::\n    :option1: value1\n    :option2: value2\n\nwoopsie"
     )
 
     # test2
