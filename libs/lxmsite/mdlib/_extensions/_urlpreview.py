@@ -170,7 +170,8 @@ class UrlPreviewDirective(Directive.BaseDirectiveBlock):
                 svg_data = svg_path.read_text("utf-8")
             except Exception as error:
                 raise Directive.DirectiveOptionError(
-                    f"Cannot read SVG file '{svg_path}' provided by the svg option as '{u_svg}': {error}"
+                    directive=self,
+                    message=f"Cannot read SVG file '{svg_path}' provided by the svg option as '{u_svg}': {error}",
                 ) from error
 
             # add color option to stylesheet of the image container

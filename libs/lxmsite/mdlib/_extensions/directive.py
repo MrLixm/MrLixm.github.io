@@ -55,15 +55,25 @@ class BoolOption(BaseOption[bool]):
         return True if value in ["true", "1"] else False
 
 
-class DirectiveArgumentError(Exception):
+class BaseDirectiveError(Exception):
+    def __init__(self, directive: "BaseDirective", message: str):
+        self.directive = directive
+        super().__init__(message)
+
+    def __str__(self):
+        base = super().__str__()
+        return f"[directive={self.directive.name}] " + base
+
+
+class DirectiveArgumentError(BaseDirectiveError):
     pass
 
 
-class DirectiveOptionError(Exception):
+class DirectiveOptionError(BaseDirectiveError):
     pass
 
 
-class DirectiveContentError(Exception):
+class DirectiveContentError(BaseDirectiveError):
     pass
 
 
@@ -140,8 +150,9 @@ class BaseDirective:
         arguments = [] if arguments[0] == "" else arguments
         if not len(arguments) == self.expected_arguments:
             raise DirectiveArgumentError(
-                f"Expected {self.expected_arguments} arguments, "
-                f"got {len(arguments)}: '{arguments}'"
+                directive=self,
+                message=f"Expected {self.expected_arguments} arguments, "
+                f"got {len(arguments)}: '{arguments}'",
             )
         blocks[0] = blocks[0].removeprefix(first_line).removeprefix("\n")
 
@@ -175,7 +186,8 @@ class BaseDirective:
                     _, name, value = line_split
                     if name not in self.options_schema:
                         raise DirectiveOptionError(
-                            f"Specified unknown option '{sline}'"
+                            directive=self,
+                            message=f"Specified unknown option '{sline}' from block '{block}'",
                         )
                     options[name] = value.strip(" ")
                     previous_option = name
@@ -202,7 +214,8 @@ class BaseDirective:
         content = content.rstrip("\n")
         if not content and self.expected_content:
             raise DirectiveContentError(
-                f"Expected content got none for directive '{first_line}'"
+                directive=self,
+                message=f"Expected content got none for directive '{first_line}'",
             )
         content = "\n".join([line[self._tab_length :] for line in content.split("\n")])
 
@@ -213,8 +226,9 @@ class BaseDirective:
                     options[option_name] = option.unserialize(option_value)
                 except Exception as error:
                     raise DirectiveOptionError(
-                        f"Could not unserialize option '{option_name}' with value "
-                        f"'{option_value}' as '{type(option).__name__}': {error}"
+                        directive=self,
+                        message=f"Could not unserialize option '{option_name}' with value "
+                        f"'{option_value}' as '{type(option).__name__}': {error}",
                     ) from error
             else:
                 options[option_name] = copy.copy(option.default)
