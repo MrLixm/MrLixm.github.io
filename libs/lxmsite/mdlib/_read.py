@@ -11,6 +11,7 @@ from ._extensions import EmojiInlineProcessor
 from ._extensions import IncludeDirectivePreprocessor
 from ._extensions import PatcherTreeprocessor
 from ._extensions import ImageGridDirective
+from ._extensions import ImageGalleryDirective
 
 LOGGER = logging.getLogger(__name__)
 
@@ -81,6 +82,9 @@ def read_markdown(
 
     imagegrid = ImageGridDirective(reader.parser)
     imagegrid.register(55)
+
+    imagegallery = ImageGalleryDirective(reader.parser)
+    imagegallery.register(56)
 
     table_classes: list[str] = settings.get("patcher", {}).get("table_classes", [])
     code_classes: list[str] = settings.get("patcher", {}).get("code_classes", [])

@@ -392,14 +392,14 @@ Testing `.. image-gallery::`
         that can span multiple lines
 
     .. image-frame:: image2 label2 ../.static/images/cover-social.jpg
-       :metadata:
-            date: 2024-11 early morning
-            location: France - Lyon - Parc de la Tete d’Or
-            film: 35mm Kodak Gold 200
-            lens: Minolta MD 35mm
-
-       some of the text descrption of the image
-       that can span multiple lines
+        :metadata:
+             date: 2024-11 early morning
+             location: France - Lyon - Parc de la Tete d’Or
+             film: 35mm Kodak Gold 200
+             lens: Minolta MD 35mm
+ 
+        some of the text descrption of the image
+        that can span multiple lines
 
 
 ### url-preview
