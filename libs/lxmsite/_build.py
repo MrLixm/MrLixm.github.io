@@ -401,7 +401,12 @@ def build_site(
     build_search(dst_root=dst_root)
 
     for shelf in shelves:
-        build_rss_feed(shelf=shelf, site_config=config)
+        try:
+            build_rss_feed(shelf=shelf, site_config=config)
+        except Exception as error:
+            LOGGER.exception(f"└ 📋⚠️ cannot render rss feed: {error}")
+            errors.append(error)
+            continue
 
     stylesheet_paths = [
         Path(src_root, page.url_path, p).resolve()
