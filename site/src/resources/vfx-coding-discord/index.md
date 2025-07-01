@@ -1,5 +1,4 @@
-A Discord server for Coding in VFX
-##################################
+# A Discord server for Coding in VFX
 
 :description: chat and find resources for programming in the vfx/anim industry
 :image: cover.png
@@ -15,9 +14,7 @@ in the vfx industry. There's usually not much discussion on it but there is a lo
 
 Examples of resources tags:
 
-.. highlight::
-    :class: hint
-
+!!! hint ""
     ``python``, ``c++``, ``osl``, ``lua``, ``pipeline``, ``memes``
 
     ``Qt``, ``PySide``, ``Maya``, ``Houdini``, ``Nuke``, ``Katana``, ``Mari``, ``Substance``
@@ -27,5 +24,5 @@ Examples of resources tags:
     :svg: logo.svg
     :svg-size: 86
 
-    .. image:: https://discord.com/api/guilds/718106101773500527/widget.png
+    ![number of Discord members online](https://discord.com/api/guilds/718106101773500527/widget.png)
 

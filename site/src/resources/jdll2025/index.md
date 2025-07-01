@@ -1,5 +1,4 @@
-JDLL 2025
-#########
+# JDLL 2025
 
 :description: Ma participation aux journées du logiciel libre 2025 (in french).
 :date-created: 2025-05-21T19:07
@@ -10,7 +9,7 @@ JDLL 2025
 :language: fr
 
 Du 24 au 25 mai 2025 ce tenait l'évenement annuel des
-`Journées du Logiciel Libre <https://jdll.org/>`_ à Lyon.
+[Journées du Logiciel Libre](https://jdll.org/) à Lyon.
 J'ai découvert l'évènement cette année même, et très accroché par le concept j'ai
 rapidement réfléchis à des sujets de discussion pour finalement candidater en tant
 que présentateur:

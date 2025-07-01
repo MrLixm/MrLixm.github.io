@@ -1,5 +1,4 @@
-film-vs-digital asset chkpad1
-#############################
+# film-vs-digital asset chkpad1
 
 :description: assets for comparison of film photography rendering against arbitrary digital photography rendering
 :image: cover.jpg
@@ -9,15 +8,15 @@ film-vs-digital asset chkpad1
 :category: asset
 :tags: film-photography, color-science
 
-.. figure:: cover.jpg
-    :alt: screenshot of the Nuke interface with the 2 digitial and film image viewed alongside their waveform and vectorscope
-    :align: center
+<figure class="align-center">
+    <img src="cover.jpg" alt="screenshot of the Nuke interface with the 2 digital and film image viewed alongside their waveform and vectorscope">
+    <figcaption>Digital image generated using AgXc-v1.0.0 image-rendering.</figcaption>
+</figure>
 
-    Digital image generated using AgXc-v1.0.0 image-rendering
 
 - Instructions and details provided in a README.md file.
 - Assets are shared "as is" without any guarantee
-- For licensing inquirees please `contact me <../../contact.html>`_ .
+- For licensing inquirees please [contact me](../../contact.html).
 
 You can download the assets there:
 
@@ -28,7 +27,6 @@ You can download the assets there:
 
     .zip hosted on mega.nz
 
-.. caution::
-
+!!! caution
     Please share the link to this website and not the link to the mega download
     as it could be replaced in the future.
