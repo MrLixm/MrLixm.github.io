@@ -57,9 +57,9 @@ some paragraph
         '<div class="image-gallery">\n'
         '<div class="column left" style="width: 35%">\n'
         '<div class="image-wrapper"><a href="#image1-fullscreen"><img alt="" '
-        'id="image1" src="../.static/profile-picture.jpg.meta" /></a><a '
+        'id="image1" src="../.static/profile-picture.jpg" /></a><a '
         'class="img-fullscreen" href="#_" id="image1-fullscreen"><img alt="" '
-        'id="image1" src="../.static/profile-picture.jpg.meta" /></a><ul '
+        'id="image1" src="../.static/profile-picture.jpg" /></a><ul '
         'class="metadata">\n'
         '<li class="date" title="date">\n'
         "<p>2024-11 early morning</p>\n"
@@ -99,9 +99,9 @@ some paragraph
         "</div>\n"
         '<div class="column responsive">\n'
         '<div class="image-wrapper"><a href="#image1-fullscreen"><img alt="" '
-        'id="image1" src="../.static/profile-picture.jpg.meta" /></a><a '
+        'id="image1" src="../.static/profile-picture.jpg" /></a><a '
         'class="img-fullscreen" href="#_" id="image1-fullscreen"><img alt="" '
-        'id="image1" src="../.static/profile-picture.jpg.meta" /></a><ul '
+        'id="image1" src="../.static/profile-picture.jpg" /></a><ul '
         'class="metadata">\n'
         '<li class="date" title="date">\n'
         "<p>2024-11 early morning</p>\n"

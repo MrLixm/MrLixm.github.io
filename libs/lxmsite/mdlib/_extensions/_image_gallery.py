@@ -80,15 +80,14 @@ class ImageGalleryFrameDirective(Directive.BaseDirectiveBlock):
     def _parse_image(self, parsed: Directive.ParsedDirective):
         image_id, label_id, image_uri = parsed.arguments
 
-        image_abs_path = self.md.mk_path_abs(Path(image_uri))
-
         metadata = {}
 
         if image_uri.endswith(".meta"):
+            image_abs_path = self.md.mk_path_abs(Path(image_uri))
             meta_path = image_abs_path
-            image_abs_path = image_abs_path.with_name(
-                image_abs_path.name.removesuffix(".meta")
-            )
+            image_uri = image_uri.removesuffix(".meta")
+            image_abs_path = self.md.mk_path_abs(Path(image_uri))
+
             if not image_abs_path.exists():
                 LOGGER.warning(
                     f"Meta file path refers to a non-existing image path '{image_abs_path}'"
