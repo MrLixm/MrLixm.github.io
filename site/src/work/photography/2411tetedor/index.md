@@ -1,5 +1,4 @@
-Parc de la Tête d'Or
-====================
+# Parc de la Tête d'Or
 
 :description: Sometimes, waking up early has advantages.
 :image: 241229_negscan2411.1177.v0001.jpg
@@ -13,20 +12,20 @@ Parc de la Tête d'Or
 
     .. image-frame:: image1 label1 241229_negscan2411.1177.v0001.jpg.meta
 
-        :code:`<` {caption}
+        `<` {caption}
 
     .. image-frame:: image2 label2 241229_negscan2411.1176.v0001.jpg.meta
 
-        :code:`<` {caption}
+        `<` {caption}
 
     .. image-frame:: image3 label3 241229_negscan2411.1178.v0001.jpg.meta
 
-        :code:`∧` {caption}
+        `∧` {caption}
 
     .. image-frame:: image4 label4 241229_negscan2411.1175.v0001.jpg.meta
 
-        :code:`>` {caption}
+        `>` {caption}
 
     .. image-frame:: image5 label5 241229_negscan2411.1174.v0001.jpg.meta
 
-        :code:`>` {caption}
+        `>` {caption}

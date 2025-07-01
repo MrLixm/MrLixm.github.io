@@ -1,5 +1,4 @@
-Blues Hour
-==========
+# Blues Hour
 
 :description: It's getting melancolic around here.
 :image: 240917_negscan2408.963.v0001.jpg
@@ -15,16 +14,16 @@ Blues Hour
 
     .. image-frame:: image1 label1 240917_negscan2408.963.v0001.jpg.meta
 
-        :code:`⇓` {caption}
+        `⇓` {caption}
 
     .. image-frame:: image2 label2 240917_negscan2408.964.v0001.jpg.meta
 
-        :code:`⇑` {caption}
+        `⇑` {caption}
 
     .. image-frame:: image3 label3 240917_negscan2408.952.v0001.jpg.meta
 
-        :code:`⇐` {caption}
+        `⇐` {caption}
 
     .. image-frame:: image4 label4 240917_negscan2408.961.v0001.jpg.meta
 
-        :code:`⇒` {caption}
+        `⇒` {caption}

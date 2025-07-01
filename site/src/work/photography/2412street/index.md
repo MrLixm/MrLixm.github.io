@@ -1,5 +1,4 @@
-Reflective nights
-=================
+# Reflective nights
 
 :description: Rain falling, city lights still shinning, but feels like twice as many.
 :image: 241209_negscan2412.1110.v0002.jpg
@@ -14,20 +13,20 @@ Reflective nights
 
     .. image-frame:: image1 label1 241209_negscan2412.1110.v0002.jpg.meta
 
-        :code:`>` {caption}
+        `>` {caption}
 
     .. image-frame:: image2 label2 241209_negscan2412.1105.v0002.jpg.meta
 
-        :code:`<` {caption}
+        `<` {caption}
 
     .. image-frame:: image3 label3 241209_negscan2412.1111.v0001.jpg.meta
 
-        :code:`<` {caption}
+        `<` {caption}
 
     .. image-frame:: image4 label4 241209_negscan2412.1090.v0002.jpg.meta
 
-        :code:`>` {caption}
+        `>` {caption}
 
     .. image-frame:: image5 label5 241209_negscan2412.1086.v0001.jpg.meta
 
-        :code:`∧` {caption}
+        `∧` {caption}

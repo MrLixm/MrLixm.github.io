@@ -1,5 +1,4 @@
-It's getting blurry
-===================
+# It's getting blurry
 
 :description: through thick chemicals clouds, few light reach us, somehow forming, picture of empty places.
 :image: 240917_negscan2408.947.v0001.jpg
@@ -14,24 +13,24 @@ It's getting blurry
 
     .. image-frame:: image1 label1 240917_negscan2408.947.v0001.jpg.meta
 
-        :code:`∨` {caption}
+        `∨` {caption}
 
     .. image-frame:: image2 label2 240917_negscan2408.949.v0001.jpg.meta
 
-        :code:`∧` {caption}
+        `∧` {caption}
 
     .. image-frame:: image3 label3 240917_negscan2408.959.v0001.jpg.meta
 
-        :code:`<` {caption}
+        `<` {caption}
 
     .. image-frame:: image4 label4 240917_negscan2408.955.v0001.jpg.meta
 
-        :code:`>` {caption}
+        `>` {caption}
 
     .. image-frame:: image5 label5 240917_negscan2408.960.v0001.jpg.meta
 
-        :code:`∨` {caption}
+        `∨` {caption}
 
     .. image-frame:: image6 label6 240917_negscan2408.958.v0001.jpg.meta
 
-        :code:`∨` {caption}
+        `∨` {caption}

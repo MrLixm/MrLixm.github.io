@@ -61,7 +61,11 @@ section#article-header {
     for the non-responsive layout */
 
     .caption code {
+        padding: unset;
+        margin: unset;
         font-size: 1.5rem;
+        font-weight: 300;
+        background-color: transparent;
     }
 }
 .image-gallery .responsive {

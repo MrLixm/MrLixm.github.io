@@ -1,5 +1,4 @@
-Delayed winter
-==============
+# Delayed winter
 
 :description: Throwback to November, which was still so warm and sunny.
 :image: 241229_negscan2411.1157.v0002.jpg
@@ -13,17 +12,17 @@ Delayed winter
 
     .. image-frame:: image1 label1 241229_negscan2411.1154.v0001.jpg.meta
 
-        :code:`<` {caption}
+        `<` {caption}
 
     .. image-frame:: image2 label2 241229_negscan2411.1157.v0002.jpg.meta
 
-        :code:`∧` {caption}
+        `∧` {caption}
 
     .. image-frame:: image3 label3 241229_negscan2411.1155.v0001.jpg.meta
 
-        :code:`∨` {caption}
+        `∨` {caption}
 
     .. image-frame:: image4 label4 241229_negscan2411.1162.v0001.jpg.meta
 
-        :code:`>` {caption}
+        `>` {caption}
 
