@@ -32,7 +32,8 @@ a.reference:before {
     display: inline-block;
 }
 a.footnote-ref:before,
-a.footnote-backref:before {
+a.footnote-backref:before,
+a:not(a img):before {
     content: unset;
     background: unset;
 }
