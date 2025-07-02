@@ -56,6 +56,32 @@ some paragraph
         "<p>some paragraph</p>"
     )
 
+    text2 = """
+some heading
+
+.. include:: file1.py
+    :code: python {title="file1.py"}
+    :lines: 4
+
+some paragraph
+
+    """
+
+    result = reader.convert(text2)
+    assert result == (
+        "<p>some heading</p>\n"
+        '<div class="highlight"><span '
+        'class="filename">file1.py</span><pre><span></span><code><span '
+        'class="k">def</span><span class="w"> </span><span '
+        'class="nf">read_image</span><span class="p">(</span><span '
+        'class="n">path</span><span class="p">:</span> <span '
+        'class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> '
+        '<span class="n">oiio</span><span class="o">.</span><span '
+        'class="n">ImageBuf</span><span class="p">:</span>\n'
+        "</code></pre></div>\n"
+        "<p>some paragraph</p>"
+    )
+
 
 def test__IncludeDirectivePreprocessor__nested_markdown(tmp_path):
 

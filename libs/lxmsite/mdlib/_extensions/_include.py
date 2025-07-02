@@ -61,18 +61,18 @@ class IncludeDirectivePreprocessor(Preprocessor, Directive.BaseDirective):
         file_content = file_path.read_text(encoding=u_encoding)
 
         file_lines = file_content.splitlines()
+        new_lines = []
         if not u_lines:
-            pass
+            new_lines = file_lines
         elif len(u_lines.split(":")) == 2:
             line_start, line_end = u_lines.split(":")
-            file_lines = file_lines[int(line_start) : int(line_end)]
+            new_lines = file_lines[int(line_start) : int(line_end)]
         else:
-            lines = map(int, u_lines.strip(",").split(","))
-            file_lines = [
-                line for index, line in enumerate(file_lines) if index in lines
-            ]
+            lines = list(map(int, u_lines.strip(",").split(",")))
+            for index, line in enumerate(file_lines):
+                if index + 1 in lines:
+                    new_lines.append(line)
 
-        new_lines = file_lines
         if u_code:
             new_lines = [f"```{u_code}"] + new_lines + ["```"]
         elif u_literal:
