@@ -109,7 +109,7 @@ class UrlPreviewDirective(Directive.BaseDirectiveBlock):
         "title": Directive.StrOption(""),
         "image": Directive.StrOption(""),
         "svg": Directive.StrOption(""),
-        "svg-size": SizeOption((-1, -1)),
+        "svg-size": SizeOption(tuple()),
         "color": Directive.StrOption(""),
     }
     cssclass_prefix = "url-preview"
