@@ -1,5 +1,4 @@
-CGI-related white-papers database
-#################################
+# CGI-related white-papers database
 
 :description: *" 70+ white-papers conveniently ordered for you "*
 :image: cover.jpg
@@ -11,7 +10,7 @@ CGI-related white-papers database
 
 As an artist, I found white-papers absolutely fascinating and so useful
 to understand how the software we are using are built.
-Even if platform like the `ACM digital library <https://dl.acm.org>`_ regroup
+Even if platform like the [ACM digital library](https://dl.acm.org) regroup
 most of them, it can be hard to find only the pertinent one when you are
 interested only about CGI in a VFX context.
 
@@ -22,9 +21,10 @@ context, in a Notion database :
     :title: CGI-White-Papers
     :image: https://images.pexels.com/photos/240163/pexels-photo-240163.jpeg
 
-| I tried to keep most of them as "free" but some of them might be locked
- behind a paywall...
-| As I'm someone that definitively think core knowledge should be lock behind
- a paywall I would absolutely NOT recommend to use `Sci-hub <https://sci-hub
- .mksa.top/>`_ to find a free illegal version of these paid papers. (here is
- the full url to be sure you doen't visit it https://sci-hub.mksa.top/).
+I tried to keep most of them as "free" but some of them might be locked
+behind a paywall...
+
+As I'm someone that definitively think core knowledge should be lock behind
+a paywall I would absolutely NOT recommend to use [Sci-hub](https://sci-hub.mksa.top/)
+to find a free illegal version of these paid papers (here is
+the full url to be sure you doesn't visit it <https://sci-hub.mksa.top/>).
