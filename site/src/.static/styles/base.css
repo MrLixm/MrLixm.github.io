@@ -80,9 +80,15 @@ blockquote {
     border-left: 2px solid var(--color-WW);
     color: var(--color-W);
     margin: 1rem 5px;
-    padding: 0.1rem 0;
-    padding-left: 2rem;
+    padding: 0 0 0 1.5rem;
     font-style: italic;
+
+    > *:first-child {
+        margin-top: 0;
+    }
+    > *:last-child {
+        margin-bottom: 0;
+    }
 }
 
 ul, ol {
