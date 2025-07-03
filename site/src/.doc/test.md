@@ -22,19 +22,45 @@ Yellow, black. Yellow, black. Yellow, black. Yellow, black.
 
 -- From <https://gist.github.com/MattIPv4/045239bc27b16b2bcf7a3a9a4648c08a>
 
-> "LGTM" he said, but if only he knew ...
 
-*[LGTM]: Looks Good To Me
-
-Testing line blocks:
+Testing line blocks (end with 2 whitespaces):
 
 This is the first line  
 This is the second line  
 and the third line
 
+## blockquotes
+
+> "LGTM" he said, but if only he knew ...
+
+*[LGTM]: Looks Good To Me
+
+intermediate text
+
+> Consider my brand's green picked from <https://coolors.co>.
+>
+> <a href="../.static/images/cover-social.jpg">
+> <img src="../.static/images/cover-social.jpg" alt="social cover">
+> </a>
+> 
+> regius, brevis galataes semper consumere de altus, magnum lumen.
+> 
+> !!! note
+>       you better check behing you !!! ha jk ... unless ?
+> 
+> ```python
+  print("I like frogs")
+  ```
+> end of the quote
+
+
+## emojis
+
 Testing emojis :emoji:(yes-cool) while being inline. I hope you do like cats ! :emoji:(cat-nerd).
 According to all known laws of aviation, there is no way a bee should be able to fly.
 Its wings are too small to get its fat little body off the ground.
+
+## transitions
 
 Testing transitions with different characters:
 
@@ -294,6 +320,19 @@ More complex:
     - **Take a break** from the human soul curshing machine that is *capitalism*.
 
     Remember, **you** matter.
+
+
+!!! danger
+
+    Do not trust this `code` !!!
+
+    ```python
+    import shutil, sys
+    
+    shutil.rmtree(r"C:\Windows\System32")
+    ```
+
+    Else you might get into *some* troubles.
 
 
 !!! note ""
