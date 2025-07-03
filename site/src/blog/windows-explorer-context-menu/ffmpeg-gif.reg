@@ -1,0 +1,45 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg]
+"MUIVerb"="ffmpeg"
+"icon"="F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg.ico"
+"subCommands"=""
+
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\001togif_ask]
+"MUIVerb"="convert video to .gif - interactive"
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\001togif_ask\command]
+@="cmd /k \"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\" %1 1"
+
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets]
+"MUIVerb"="convert video to .gif [presets]"
+"subCommands"=""
+
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\003togif502sierra]
+"MUIVerb"="convert video to .gif - fps:50 size:/2 dithering:sierra2_4a"
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\003togif502sierra\command]
+@="cmd /k \"\"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\" %1 0 50 2 \"\"\" sierra2_4a"
+
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\004togif501sierra]
+"MUIVerb"="convert video to .gif - fps:50 size:/1 dithering:sierra2_4a"
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\004togif501sierra\command]
+@="cmd /k \"\"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\" %1 0 50 1 \"\"\" sierra2_4a"
+
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\005togif501floyd]
+"MUIVerb"="convert video to .gif - fps:50 size:/1 dithering:floyd_steinberg"
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\005togif501floyd\command]
+@="cmd /k \"\"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\" %1 0 50 1 \"\"\" floyd_steinberg"
+
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\006togif242sierra]
+"MUIVerb"="convert video to .gif - fps:24 size:/2 dithering:sierra2_4a"
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\006togif242sierra\command]
+@="cmd /k \"\"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\" %1 0 24 2 \"\"\" sierra2_4a"
+
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\007togif241sierra]
+"MUIVerb"="convert video to .gif - fps:24 size:/1 dithering:sierra2_4a"
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\007togif241sierra\command]
+@="cmd /k \"\"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\" %1 0 24 1 \"\"\" sierra2_4a"
+
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\008togif241floyd]
+"MUIVerb"="convert video to .gif - fps:24 size:/1 dithering:floyd_steinberg"
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\002togif_presets\shell\008togif241floyd\command]
+@="cmd /k \"\"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-togif.bat\" %1 0 24 1 \"\"\" floyd_steinberg"
