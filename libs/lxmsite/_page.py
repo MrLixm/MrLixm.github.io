@@ -79,7 +79,7 @@ class PageStatus(enum.Enum):
 @dataclasses.dataclass
 class PageResource:
     """
-    A page is a rst document that will be translated to a single web page.
+    A page is a markdown document that will be translated to a single web page.
 
     A page may be child of zero or one shelf.
     """

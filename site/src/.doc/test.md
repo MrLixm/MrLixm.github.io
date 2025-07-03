@@ -1,6 +1,6 @@
 # css workbench page
 
-:description: test rst>html + css by providing all possible use-cases.
+:description: test markdown>html + css by providing all possible use-cases.
 
 <div class="nav-button" markdown="1">
 
@@ -50,7 +50,7 @@ intermediate text
 > 
 > ```python
   print("I like frogs")
-  ```
+> ```
 > end of the quote
 
 
@@ -198,7 +198,7 @@ A large table:
 | `authors`     | Comma separated list of person who authored the page. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name                                                  |
 | `keywords`    | List of tags matching the page topics                                                                                                                                          |
 | `language`    | Language of the page. As standardized by https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang and https://www.w3.org/International/articles/language-tags/ |
-| `title`       | Additional override if the rst file title is not desired. See https://ogp.me/#metadata                                                                                         |
+| `title`       | Additional override if the markdown file title is not desired. See https://ogp.me/#metadata                                                                                         |
 | `type`        | Caracterize the kind of content of the page. As standardized by https://ogp.me/#types                                                                                          |
 | `image`       | Relative file path to the image to use as cover for the page. See https://ogp.me/#metadata                                                                                     |
 | `description` | Short, human-readable summary of the page content. See https://ogp.me/#optional                                                                                                |

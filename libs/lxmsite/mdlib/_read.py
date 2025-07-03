@@ -28,10 +28,10 @@ def read_markdown(
     settings: dict,
 ) -> Document:
     """
-    Parse a rst file as a docutils Publisher
+    Parse a markdown file as a docutils Publisher
 
     Args:
-        file_path: fileysstem path to an existing rst file.
+        file_path: fileysstem path to an existing markdown file.
         settings: docutils settings overrides
     """
     content = file_path.read_text(encoding="utf-8")
