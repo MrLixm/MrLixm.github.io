@@ -174,8 +174,8 @@ div.admonition.warning {
     }
 }
 
-div.admonition pre.literal-block,
-div.admonition span.docutils.literal {
+div.admonition .highlight > pre,
+div.admonition code.inline {
     background-color: var(--bg-color);
 }
 
