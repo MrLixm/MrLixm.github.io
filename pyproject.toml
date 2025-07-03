@@ -8,8 +8,6 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.10,<=3.11"
 dependencies = [
-    "docutils-stubs==0.0.22",
-    "docutils>=0.21.2",
     "jinja2>=3.1.6",
     "pygments>=2.19.1",
     "pillow>=11.1.0",
