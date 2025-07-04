@@ -111,7 +111,7 @@
 }
 
 /* admonitions */
-div.admonition {
+.src-md div.admonition {
     position: relative;
     border-radius: var(--radius-S);
     background-color: var(--bg-color-M);
@@ -139,7 +139,7 @@ div.admonition {
         margin: 0;
     }
 }
-div.admonition.highlight-block {
+.src-md div.admonition.highlight-block {
     /* doesn't have title so no need for extra margin/padding */
     margin-top: 1rem;
     padding: 1rem;
@@ -148,51 +148,51 @@ div.admonition.highlight-block {
         margin-top: 0;
     }
 }
-div.admonition.danger,
-div.admonition.error {
+.src-md div.admonition.danger,
+.src-md div.admonition.error {
     border-color: var(--color-negative);
 
     .admonition-title {
         color: var(--color-negative);
     }
 }
-div.admonition.attention,
-div.admonition.important {
+.src-md div.admonition.attention,
+.src-md div.admonition.important {
     border-color: var(--color-attention);
 
     .admonition-title {
         color: var(--color-attention);
     }
 }
-div.admonition.caution {
+.src-md div.admonition.caution {
     border-color: var(--color-caution);
 
     .admonition-title {
         color: var(--color-caution);
     }
 }
-div.admonition.hint {
+.src-md div.admonition.hint {
     border-color: var(--color-hint);
 
     .admonition-title {
         color: var(--color-hint);
     }
 }
-div.admonition.note {
+.src-md div.admonition.note {
     border-color: var(--color-info);
 
     .admonition-title {
         color: var(--color-info);
     }
 }
-div.admonition.tip {
+.src-md div.admonition.tip {
     border-color: var(--color-positive);
 
     .admonition-title {
         color: var(--color-positive);
     }
 }
-div.admonition.warning {
+.src-md div.admonition.warning {
     border-color: var(--color-warning);
 
     .admonition-title {
