@@ -3,6 +3,7 @@
 :description: New year, new (http) me.
 :image: screenshot-new-index.jpg
 :date-created: 2025-06-06T19:12
+:date-modified: 2025-07-03T21:10
 :category: meta
 :tags: web-design, gafam
 :authors: Liam Collod
@@ -110,9 +111,8 @@ That is the most simple need.
     content in. Pelican offers both but I can only stick to one and have less code to
     maintain. The choice was already made because I picked rst with Pelican, which was
     preferred by the m.css extension I was using.
-    Still, if I need to write my own code to convert rst to HTML, I found out that
-    rst design was more prone to this task and also more prone to be extended (with its
-    concept of *directives*).
+    However, you are going to see later that I endedup-changing my mind after finishing
+    the redesign: I dropped the RestructuredText syntax for Markdown.
 
 !!! admonition "What about dynamic web pages ?"
     Pelican and m.css showed me that static sites are fine for my need. I don't need
@@ -142,7 +142,7 @@ wonder if picking rst as file format was the right choice ?
 I'm very tented to write my own markup syntax but that's not an exercice I already
 done and will probably become another rabbit-hole. Instead I think I will (at a later time)
 just have a look at other file-format and their parsing libraries to find something
-that have decent code that I'm confident in understanding.
+that have decent code that I'm confident in understanding. *( :emoji:(cat-nerd) UPDATED: see section below)*
 
 Then after a few tests on a very small version of my website I was satisified
 with the workflow and started re-building the website content. This was mostly
@@ -150,6 +150,34 @@ copy/pasting and fixing all the previous website content so it all works with th
 workflow.
 
 And only when the port was over that I started bulding new stuff and redesigning the pages.
+
+### friendship ended with rst, now markdown is my best friend
+
+Welp guess what ? Less than 1 month after concluding this post and the website redesign
+I went like "fuck it, docutils really sucks, what are the alternatives". I took a deeper
+look at the [Markdown Python library](https://python-markdown.github.io/), ran a few tests
+and quickly concluded that their API was adressing all the issues I had with docutils:
+
+-   the parsing architecture is simpler, more decoupling between modules which makes it 
+    easier to unitest
+-   the code is more readable and modern
+-   it's easy to extend and there is plenty of examples
+
+With the added bonus that Markdown is much more popular (so more tools and
+resources are to be found) and simpler to write (fuck the rst underlined headers
+and double quotes for inline code). I also like the feature where you can just raw-dog
+insert html in the markdown and that's fine. Markdown is only written to be converted
+to html anyway so it make sense to have a hybrid approach to writing html.
+
+One thing I kept from rst is directives because I find them really clever. They allow
+to have a consistent way of extending the language while being still very flexible. 
+Consistency being one argument against the various markdown extensions, that all offer
+different syntaxes. So I built a basic directive parser that way I could keep all my 
+custom directives I designed for rst.
+You can check it out at:
+
+> [`libs/lxmsite/mdlib/_extensions/directive.py`](https://github.com/MrLixm/MrLixm.github.io/tree/main/libs/lxmsite/mdlib/_extensions/directive.py).
+
 
 ## Redesign
 
@@ -518,7 +546,7 @@ all the blog post with that specific field. I didn't feel it bring much value fo
 as I don't have that much content. It is kind of replaced by the search feature.
 
 I added RSS support. Well Pelican actually had it, though it was Atom feed, which I
-never used or checked anyway. Using https://everest-pipkin.com/teaching/handmadeRSS
+never used or checked anyway. Using <https://everest-pipkin.com/teaching/handmadeRSS>
 and the [official documentation](https://www.rssboard.org/rss-specification) I made
 sure anyone could suscribe to some pages (blog, photography and resources) by
 autogenerating rss feeds as part of the build system.
@@ -842,5 +870,7 @@ chat about anything with you on [Mastodon](https://mastodon.gamedev.place/@liamc
 
 Until later !
 
+## Changelog
 
+- `04/07/25`: added [friendship ended with rst, now markdown is my best friend](#friendship-ended-with-rst-now-markdown-is-my-best-friend)
 
