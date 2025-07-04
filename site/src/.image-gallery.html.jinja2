@@ -1,0 +1,27 @@
+{%- for column, configuration in Columns.items() %}
+  <div class="column {{ column }}" style="width: {{ configuration["width"] }}%">
+    {%- for child in configuration["children"] %}
+      {%- if child["type"] == "image" %}
+        <div class="image-wrapper {{ child["classes"] }}">
+          <a href="#{{ child["id"] }}-fullscreen">
+            <img alt="" id="{{ child["id"] }}" src="{{ child["uri"] }}">
+          </a>
+          <a class="img-fullscreen" href="#_" id="{{ child["id"] }}-fullscreen">
+            <img alt="" src="{{ child["uri"] }}">
+          </a>
+          <ul class="metadata">
+            {%- for meta_key, meta_value in child["metadata"].items() %}
+              <li class="{{ meta_key }}" title="{{ meta_key }}">
+                <p>{{ meta_value }}</p>
+              </li>
+            {%- endfor %}
+          </ul>
+        </div>
+      {% else %}
+        <div  class="caption {{ child["classes"] }}" id="{{ child["id"] }}">
+            {{ child["caption"] }}
+        </div>
+      {%- endif %}
+    {%- endfor %}
+  </div>
+{%- endfor %}

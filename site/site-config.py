@@ -54,6 +54,10 @@ DEFAULT_MARKDOWN_SETTINGS = {
     "pymdownx.highlight": {
         "linenums_style": "pymdownx-inline",
     },
+    "image_gallery": {
+        "default_template": ".image-gallery.html.jinja2",
+        "jinja_templates_root": SRC_ROOT,
+    },
 }
 
 PAGEFIND_CONFIG = {

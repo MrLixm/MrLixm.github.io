@@ -1,7 +1,10 @@
-import dataclasses
+import copy
 import logging
 from pathlib import Path
 from xml.etree import ElementTree
+
+import jinja2
+from markdown.blockparser import BlockParser
 
 from lxmsite import read_image_meta_file
 from . import directive as Directive
@@ -21,7 +24,6 @@ def _read_metadata_option(serialized: str | None) -> dict[str, str]:
     if not serialized:
         return metadata
 
-    print(repr(serialized))
     for line in serialized.splitlines():
         if not line.strip(" "):
             continue
@@ -31,33 +33,23 @@ def _read_metadata_option(serialized: str | None) -> dict[str, str]:
     return metadata
 
 
-@dataclasses.dataclass
-class ParsedImage:
-    uri: str
-    image_id: str
-    label_id: str
-    metadata: dict[str, str]
-    caption: str
-
-
 class ImageNode(ElementTree.Element):
     def __init__(
         self,
+        uri: str,
         image_id: str,
         label_id: str,
-        image_node: ElementTree.Element,
-        label_node: ElementTree.Element,
+        metadata: dict[str, str],
+        caption: str,
         classes: list[str],
     ):
         super().__init__("div")
+        self.uri = uri
         self.image_id = image_id
         self.label_id = label_id
-        self.image_node = image_node
-        self.label_node = label_node
-        self.set("class", " ".join(classes))
-
-        self.append(self.image_node)
-        self.append(self.label_node)
+        self.metadata = metadata
+        self.caption = caption
+        self.classes = classes
 
 
 class ImageGalleryFrameDirective(Directive.BaseDirectiveBlock):
@@ -112,72 +104,27 @@ class ImageGalleryFrameDirective(Directive.BaseDirectiveBlock):
         else:
             caption = metadata.pop("caption", "")
 
-        return ParsedImage(
+        # // parse caption as markdown, to html
+        # we need a new md instance as we are currently parsing a document using it
+        reader = copy.deepcopy(self.md)
+        reader.reset()
+        caption = reader.convert(caption)
+
+        classes = parsed.options["classes"]
+
+        return ImageNode(
             uri=image_uri,
             image_id=image_id,
             label_id=label_id,
             metadata=metadata,
             caption=caption,
+            classes=classes,
         )
 
     def run(self, parent, blocks):
         directive = self.parse_blocks(blocks)
-        image = self._parse_image(directive)
-        option_classes = " ".join(directive.options["classes"])
-
-        labelnode = ElementTree.Element("div")
-        labelnode.set("id", image.label_id)
-        labelnode.set("class", "caption" + option_classes)
-        # caption is markdown formatted so parse it too
-        self.parser.parseChunk(labelnode, image.caption)
-
-        imgnode = ElementTree.Element("img")
-        imgnode.set("src", image.uri)
-        imgnode.set("alt", "")
-        imgnode.set("id", image.image_id)
-
-        metadatanode = ElementTree.Element("ul")
-        metadatanode.set("class", "metadata")
-        for metadata_key, metadata_value in image.metadata.items():
-            itemnode = ElementTree.Element("li")
-            itemnode.set("title", metadata_key)
-            itemnode.set("class", metadata_key)
-
-            valuenode = ElementTree.Element("p")
-            valuenode.text = metadata_value
-
-            itemnode.append(valuenode)
-            metadatanode.append(itemnode)
-
-        wrap_node = ElementTree.Element("div")
-        wrap_node.set("class", "image-wrapper" + option_classes)
-        # the link system is made to have fullscreen image on click
-        # inspired from https://sylvaindurand.org/overlay-image-in-pure-css/
-        link_id = f"{image.image_id}-fullscreen"
-        link_node = ElementTree.Element("a")
-        link_node.set("href", f"#{link_id}")
-
-        link_overlay_node = ElementTree.Element("a")
-        link_overlay_node.set("href", "#_")
-        link_overlay_node.set("class", "img-fullscreen")
-        link_overlay_node.set("id", link_id)
-
-        img_overlay_node = imgnode
-
-        link_node.append(imgnode)
-        link_overlay_node.append(img_overlay_node)
-        wrap_node.append(link_node)
-        wrap_node.append(link_overlay_node)
-        wrap_node.append(metadatanode)
-
-        topnode = ImageNode(
-            image_id=image.image_id,
-            label_id=image.label_id,
-            image_node=wrap_node,
-            label_node=labelnode,
-            classes=["image-gallery-frame"],
-        )
-        parent.append(topnode)
+        image_node = self._parse_image(directive)
+        parent.append(image_node)
 
 
 class ImageGalleryDirective(Directive.BaseDirectiveBlock):
@@ -198,7 +145,32 @@ class ImageGalleryDirective(Directive.BaseDirectiveBlock):
         "right": StrArrayOption2([]),
         "left-width": Directive.IntOption(50),
         "right-width": Directive.IntOption(50),
+        "template": Directive.StrOption(""),
     }
+
+    def __init__(
+        self,
+        default_class: str,
+        default_template: str,
+        jinja_templates_root: Path,
+        parser: BlockParser,
+    ):
+        super().__init__(parser)
+        self._default_class = default_class
+        self._default_template = default_template
+        self._jinja_templates_root = jinja_templates_root
+
+    @staticmethod
+    def convert_image_node_to_dict(current_id: str, image_node: ImageNode):
+        node_type = "image" if current_id == image_node.image_id else "label"
+        return {
+            "type": node_type,
+            "id": current_id,
+            "uri": image_node.uri,
+            "metadata": image_node.metadata,
+            "caption": image_node.caption,
+            "classes": " ".join(image_node.classes),
+        }
 
     def run(self, parent, blocks):
         directive = self.parse_blocks(blocks)
@@ -208,29 +180,14 @@ class ImageGalleryDirective(Directive.BaseDirectiveBlock):
         u_right: list[str] = directive.options["right"]
         u_left_width: int = directive.options["left-width"]
         u_right_width: int = directive.options["right-width"]
-
-        topnode_classes = ["image-gallery"] + u_classes
-        topnode = ElementTree.Element("div")
-        topnode.set("class", " ".join(topnode_classes))
-
-        leftnode = ElementTree.Element("div")
-        leftnode.set("class", "column left")
-        leftnode.set("style", f"width: {u_left_width}%")
-
-        rightnode = ElementTree.Element("div")
-        rightnode.set("class", "column right")
-        rightnode.set("style", f"width: {u_right_width}%")
-
-        responsivenode = ElementTree.Element("div")
-        responsivenode.set("class", "column responsive")
+        u_template: str = directive.options["template"]
 
         # // retrieve the images to layout
         #   which are specified in the content as directives
 
         content_buf = ElementTree.Element("div")
         self.parser.parseChunk(content_buf, directive.content)
-        node_by_id: dict[str, ElementTree.Element] = {}
-        image_nodes: list[ImageNode] = []
+        node_by_id: dict[str, ImageNode] = {}
         for content_child in content_buf:
             if not isinstance(content_child, ImageNode):
                 continue
@@ -238,14 +195,29 @@ class ImageGalleryDirective(Directive.BaseDirectiveBlock):
                 raise ValueError(f"duplicated image id for {content_child.image_id}")
             if content_child.label_id in node_by_id:
                 raise ValueError(f"duplicated label id for {content_child.label_id}")
-            node_by_id[content_child.image_id] = content_child.image_node
-            node_by_id[content_child.label_id] = content_child.label_node
-            image_nodes.append(content_child)
+
+            node_by_id[content_child.image_id] = content_child
+            node_by_id[content_child.label_id] = content_child
 
         if not node_by_id:
             raise ValueError(f"No image frame found in content '{directive.content}'")
 
         # // layout images created in content based on their id associated to left or right
+
+        configuration = {
+            "left": {
+                "width": u_left_width,
+                "children": [],
+            },
+            "right": {
+                "width": u_right_width,
+                "children": [],
+            },
+            "responsive": {
+                "width": 100,
+                "children": [],
+            },
+        }
 
         for left_id in u_left:
             matching_node = node_by_id.get(left_id, None)
@@ -253,7 +225,8 @@ class ImageGalleryDirective(Directive.BaseDirectiveBlock):
                 raise ValueError(
                     f"Invalid '{left_id}' id given for :left: option: no image-frame with that id found."
                 )
-            leftnode.append(matching_node)
+            node_config = self.convert_image_node_to_dict(left_id, matching_node)
+            configuration["left"]["children"].append(node_config)
 
         for right_id in u_right:
             matching_node = node_by_id.get(right_id, None)
@@ -261,14 +234,27 @@ class ImageGalleryDirective(Directive.BaseDirectiveBlock):
                 raise ValueError(
                     f"Invalid '{right_id}' id given for :right: option: no image-frame with that id found."
                 )
-            rightnode.append(matching_node)
+            node_config = self.convert_image_node_to_dict(right_id, matching_node)
+            configuration["right"]["children"].append(node_config)
 
-        for image_node in image_nodes:
-            # we could copy, but instance seems to be able to have multiple parent
-            responsivenode.append(image_node.image_node)
-            responsivenode.append(image_node.label_node)
+        for node_id, image_node in node_by_id.items():
+            node_config = self.convert_image_node_to_dict(node_id, image_node)
+            configuration["responsive"]["children"].append(node_config)
 
-        topnode.extend([leftnode, rightnode, responsivenode])
+        jinja_env = jinja2.Environment(
+            undefined=jinja2.StrictUndefined,
+            loader=jinja2.FileSystemLoader(self._jinja_templates_root),
+        )
+        template_name = u_template or self._default_template
+        template = jinja_env.get_template(template_name)
+
+        configuration = {"Columns": configuration}
+        output = template.render(**configuration)
+
+        topnode_classes = [self._default_class] + u_classes
+        topnode = ElementTree.Element("div")
+        topnode.set("class", " ".join(topnode_classes))
+        topnode.text = self.parser.md.htmlStash.store(output)
         parent.append(topnode)
 
     def register(self, priority):
