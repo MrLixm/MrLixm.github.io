@@ -236,7 +236,7 @@ the registry Editor we specify how we want to edit in the file. The advantages a
 ### Creating the .reg file
 
 !!! note "Documentation"
-    https://en.wikipedia.org/wiki/Windows_Registry#.REG_files
+    <https://en.wikipedia.org/wiki/Windows_Registry#.REG_files>
 
 As a first step, create a blank new file like a `.txt` and just replace the
 extension with `.reg` (you might need to display file extension in the View
