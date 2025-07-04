@@ -20,7 +20,25 @@ Yellow, black. Yellow, black. Yellow, black. Yellow, black.
 **Let's shake it up a little.**
 `Barry`! Breakfast is **ready**!
 
--- From <https://gist.github.com/MattIPv4/045239bc27b16b2bcf7a3a9a4648c08a>
+> From <https://gist.github.com/MattIPv4/045239bc27b16b2bcf7a3a9a4648c08a>
+
+|                                                     |                                   |
+|-----------------------------------------------------|-----------------------------------|
+| yep, [`this is a link`](https://liamcollod.xyz) !   | *italic text **and bold** text ?* |
+| *yep, [`this is a link`](https://liamcollod.xyz) !* | **bold text *and italic* text**   |
+| `[this is a link](https://liamcollod.xyz)`          |                                   |
+
+!!! note
+
+    `UWU world`, *huh* ? are you sure ? [check my website](https://liamcollod.xyz)
+
+    **NEVER EXECUTE**:
+
+    ```python
+    import shutil, sys
+    
+    shutil.rmtree(r"C:\Windows\System32")
+    ```
 
 
 Testing line blocks (end with 2 whitespaces):
@@ -43,7 +61,7 @@ intermediate text
 > <img src="../.static/images/cover-social.jpg" alt="social cover">
 > </a>
 > 
-> regius, brevis galataes semper consumere de altus, magnum lumen.
+> regius, **brevis** `galataes` _semper_ ~~consumere~~ de altus, magnum lumen.
 > 
 > !!! note
 >       you better check behing you !!! ha jk ... unless ?
