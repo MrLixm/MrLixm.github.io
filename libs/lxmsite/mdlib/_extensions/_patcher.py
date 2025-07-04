@@ -30,6 +30,12 @@ class PatcherTreeprocessor(markdown.treeprocessors.Treeprocessor):
                 current_class = element.get("class", "")
                 new_class = self._table_classes + " " + current_class
                 element.set("class", new_class.strip(" "))
+                # remove element
+                root[:] = [child for i, child in enumerate(root) if i is not index]
+                wrapper = ElementTree.Element("div")
+                wrapper.set("class", "table-wrapper")
+                wrapper.append(element)
+                root.insert(index, wrapper)
 
             elif element.tag == "code" and self._code_classes:
                 current_class = element.get("class", "")

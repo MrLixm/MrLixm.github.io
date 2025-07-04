@@ -222,6 +222,17 @@ A large table:
 | `description` | Short, human-readable summary of the page content. See https://ogp.me/#optional                                                                                                |
 
 
+A large table with code (that don't wrap)
+
+|                        |                                                                                                          |
+|------------------------|----------------------------------------------------------------------------------------------------------|
+| All Files              | `CHEATING_TO_MAKE_IT_LONGER\HKEY_CURRENT_USER\Software\Classes\*\shell\`                                 |
+| By File Extension      | `CHEATING_TO_MAKE_IT_LONGER\HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\{EXTENSION}\shell` |
+| Directories            | `CHEATING_TO_MAKE_IT_LONGER\HKEY_CURRENT_USER\Software\Classes\Directory\shell`                          |
+| Directories Background | `CHEATING_TO_MAKE_IT_LONGER\HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell`               |
+| Drive                  | `CHEATING_TO_MAKE_IT_LONGER\HKEY_CURRENT_USER\Software\Classes\Drive\shell`                              |
+
+
 ## code blocks
 
 And now some code:
