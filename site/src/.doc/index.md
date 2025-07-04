@@ -1,14 +1,14 @@
+<div class="nav-button" markdown="1">
+
+[previous page](test.html) 
+
+[next page](test.html)
+
+</div>
+
 # Developer Documentation
 
 :description: The documentation that explains how this website is generated and modified.
-
-<div class="nav-button" markdown="1">
-
-[previous page](index.html) 
-
-[next page](index.html)
-
-</div>
 
 [TOC]
 
