@@ -105,6 +105,10 @@
     padding: 2px 5px;
     text-wrap: nowrap;
 }
+.src-md a > code.inline {
+    color: inherit;
+    border-left: 1px solid var(--color-primary-WW);
+}
 
 /* admonitions */
 div.admonition {
@@ -196,8 +200,11 @@ div.admonition.warning {
     }
 }
 
-div.admonition .highlight > pre,
-div.admonition code.inline {
+/* fix code background for some elements */
+.src-md div.admonition .highlight > pre,
+.src-md div.admonition code.inline,
+.src-md td .highlight > pre,
+.src-md td code.inline {
     background-color: var(--bg-color);
 }
 
