@@ -570,8 +570,8 @@ Example with a xform matrix attribute :
 }
 ```
 
-All the code you saw in the `Instancing In Practice`_ section (except the
-Basic Array one) doesn't take account of multiple time samples and just gets
+All the code you saw in the [Instancing In Practice](#instancing-in-practice) section
+(except the Basic Array one) doesn't take account of multiple time samples and just gets
 the nearest sample at 0.0. And you better know if you need to support
 motion-blur before writing anything (I have to rewrite a good chunk of KUI
 because of not knowing about it).

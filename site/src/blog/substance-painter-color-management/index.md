@@ -174,7 +174,7 @@ using.
 
 In sp the Display section is handled by the `view-transform` dropdown, that
 you can find at the top-right of your viewport.
-See `Display Setup in Sp`_ .
+See [Display Setup in Sp](#display-setup-in-sp) .
 
 #### Output
 
@@ -341,7 +341,7 @@ In my opinion only the `Substance` config is interesting here.
 The 2 ACES ones are the "default" dev configs with the hundred of
 colorspaces you will never need. It is better to use a lightweight ACES
 config like [the one from CAVE academy][]. 
-(see `ACES Workflow`_section)
+(see [ACES Workflow](#aces-workflow) section)
 
 The `Substance` config will be a good fit if you are using the traditional
 sRGB linear workflow and do not wish to use an OCIO config in every DCC.
@@ -900,7 +900,7 @@ place you can change them.
 ### ACES - What to do when working
 
 I'm only going to give detailed explanations when something is specific to
-ACES. Meanwhile the explanations given in `Substance Setup & Workflow`_ still
+ACES. Meanwhile the explanations given in [Substance Setup & Workflow](#substance-setup--workflow) still
 apply so make sure you properly understood this section.
 
 #### ACES - Display
@@ -959,7 +959,7 @@ But what if I want to import an already converted ACEScg HDRI ?
     The screenshots in this section have not been updated to reflect change
     in the 7.4.2 update. Explanations still apply.
 
-Everything in `The color-picker`_ section applies here. You can just except
+Everything in [The color-picker](#the-color-picker) section applies here. You can just except
 more odd behavior as a wider-gamut and more complex view-transform will not
 play well with it. The first potential issue that came to my mind is the
 combinaison of 0-1 clamping + ACES ODT : If you are picking a pure value of
@@ -1045,7 +1045,7 @@ name. (and instead export the textures in a folder named ACEScg)
 ### Display Issues
 
 These explanations were made possible thanks to the Chris Brejon's article
-`OCIO, Display Transforms and Misconceptions`_.
+[OCIO, Display Transforms and Misconceptions](https://chrisbrejon.com/articles/ocio-display-transforms-and-misconceptions/).
 
 #### Display components mismatch
 
