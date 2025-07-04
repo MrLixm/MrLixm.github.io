@@ -1,6 +1,28 @@
 /*===========================================================================*/
 /* markdown-parsed specific elements */
 
+
+.src-md a:before {
+    content: "";
+    background: url("../icons/link-vertical.svg") no-repeat bottom;
+    background-size: contain;
+    width: 0.8rem;
+    height: 0.7rem;
+    display: inline-block;
+}
+.src-md a.footnote-ref:before,
+.src-md a.footnote-backref:before,
+.src-md a:has(img):before,
+.src-md h1 a:before,
+.src-md h2 a:before,
+.src-md h3 a:before,
+.src-md h4 a:before,
+.src-md h5 a:before,
+.src-md h6 a:before {
+    content: unset;
+    background: unset;
+}
+
 /* tables */
 .src-md table.inline p {
     margin: unset;

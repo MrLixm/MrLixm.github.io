@@ -22,22 +22,6 @@ a:hover {
     color: var(--color-primary-M);
 }
 
-p a:before,
-figcaption a:before,
-a.reference:before {
-    content: "";
-    background: url("../icons/link-vertical.svg") no-repeat bottom;
-    background-size: contain;
-    width: 0.8rem;
-    height: 0.7rem;
-    display: inline-block;
-}
-a.footnote-ref:before,
-a.footnote-backref:before,
-a:has(img):before {
-    content: unset;
-    background: unset;
-}
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-B);
     font-weight: 800;
