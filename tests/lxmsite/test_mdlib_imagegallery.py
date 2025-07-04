@@ -57,8 +57,7 @@ some paragraph
     reader = LxmMarkdown(paths_root=src_dir)
     directive = ImageGalleryDirective(
         default_class="image-gallery",
-        default_template=dst_template.name,
-        jinja_templates_root=templates_dir,
+        default_template=dst_template,
         parser=reader.parser,
     )
     directive.register(20)
@@ -175,10 +174,10 @@ some paragraph
 
 def test__ImageGalleryDirective__template_option(tmp_path, resources_dir):
 
-    templates_dir = tmp_path / "templates"
-    templates_dir.mkdir()
+    subdir = tmp_path / "placeholder"
+    subdir.mkdir()
 
-    template_2 = templates_dir / "template2.html"
+    template_2 = tmp_path / "template2.html"
     template_2.write_text("<p>{{Columns['left']['children'][0]['id']}}</p>")
 
     text1 = """
@@ -189,7 +188,7 @@ some heading
     :right: label1, image2, label2
     :left-width: 35
     :right-width: 65
-    :template: template2.html
+    :template: ../template2.html
 
     .. image-frame:: image1 label1 ../.static/cover-social.jpg
 
@@ -202,11 +201,10 @@ some paragraph
 
     """
 
-    reader = LxmMarkdown(paths_root=tmp_path)
+    reader = LxmMarkdown(paths_root=subdir)
     directive = ImageGalleryDirective(
         default_class="image-gallery",
-        default_template="",
-        jinja_templates_root=templates_dir,
+        default_template=None,
         parser=reader.parser,
     )
     directive.register(20)

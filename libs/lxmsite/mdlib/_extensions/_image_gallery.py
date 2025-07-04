@@ -151,14 +151,12 @@ class ImageGalleryDirective(Directive.BaseDirectiveBlock):
     def __init__(
         self,
         default_class: str,
-        default_template: str,
-        jinja_templates_root: Path,
+        default_template: Path | None,
         parser: BlockParser,
     ):
         super().__init__(parser)
         self._default_class = default_class
         self._default_template = default_template
-        self._jinja_templates_root = jinja_templates_root
 
     @staticmethod
     def convert_image_node_to_dict(current_id: str, image_node: ImageNode):
@@ -241,12 +239,26 @@ class ImageGalleryDirective(Directive.BaseDirectiveBlock):
             node_config = self.convert_image_node_to_dict(node_id, image_node)
             configuration["responsive"]["children"].append(node_config)
 
+        if u_template:
+            template_path = self.md.mk_path_abs(Path(u_template))
+            template = template_path.name
+            template_root = template_path.parent
+        elif self._default_template:
+            template = self._default_template.name
+            template_root = self._default_template.parent
+        else:
+            LOGGER.warning(
+                f"{type(self).__name__}: no :template: option, neither default_template "
+                f"attribute specified: cannot render directive with jinja."
+            )
+            return False
+
         jinja_env = jinja2.Environment(
             undefined=jinja2.StrictUndefined,
-            loader=jinja2.FileSystemLoader(self._jinja_templates_root),
+            loader=jinja2.FileSystemLoader(template_root),
         )
-        template_name = u_template or self._default_template
-        template = jinja_env.get_template(template_name)
+        LOGGER.debug(f"jinja_env.get_template('{template}') ; (root='{template_root}')")
+        template = jinja_env.get_template(template)
 
         configuration = {"Columns": configuration}
         output = template.render(**configuration)

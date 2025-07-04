@@ -359,7 +359,7 @@ Example:
 #### image-gallery
 
 The `.. image-gallery::` is a more advanced directive to showcase images,
-their metdata and their caption.
+their metqdata and their caption.
 
 It's build upon a 2-column layout in which you choose to add images or their caption
 independently.
@@ -370,6 +370,35 @@ The directive have no arguments and expect 4 mandatory options:
 - `:right:` comma separated list of items id to add to the right column (in order).
 - `:left-width:` a single float, the width in percent of the left column
 - `:right-width:` a single float, the width in percent of the right column
+
+You can specify one optional option:
+
+-   `:template:` a path relative to the file that correspond to an html Jinja template to render.
+    *(Note that the template root become the parent directory of the template)*
+
+    -   The template have access to a single `Columns` variable. The variable is a dict
+        with the following structure:
+        
+        ```python
+        Columns = {
+            "left": {
+                "width": int,
+                "children": [
+                    {
+                        "type": str,
+                        "id": str,
+                        "uri": str,
+                        "metadata": dict[str, str],
+                        "caption": str,
+                        "classes": str,
+                    },
+                    ...
+                ]
+            }, 
+            "right": {...}, 
+            "responsive": {...}
+        }
+        ```
 
 The content will allow to specify which image to display and configure their caption
 and metadata. This is achieved by using another directive `.. image-frame::`.

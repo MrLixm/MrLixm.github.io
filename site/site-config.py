@@ -55,8 +55,7 @@ DEFAULT_MARKDOWN_SETTINGS = {
         "linenums_style": "pymdownx-inline",
     },
     "image_gallery": {
-        "default_template": ".image-gallery.html.jinja2",
-        "jinja_templates_root": SRC_ROOT,
+        "default_template": SRC_ROOT / ".image-gallery.html.jinja2",
     },
 }
 

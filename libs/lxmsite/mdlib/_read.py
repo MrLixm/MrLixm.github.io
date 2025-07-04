@@ -84,21 +84,12 @@ def read_markdown(
     imagegrid.register(55)
 
     default_template = settings.get("image_gallery", {}).get("default_template")
-    jinja_templates_root = settings.get("image_gallery", {}).get("jinja_templates_root")
-    if default_template and jinja_templates_root:
-        imagegallery = ImageGalleryDirective(
-            default_class="image-gallery",
-            default_template=default_template,
-            jinja_templates_root=jinja_templates_root,
-            parser=reader.parser,
-        )
-        imagegallery.register(56)
-    else:
-        LOGGER.warning(
-            f"skipping registering of {ImageGalleryDirective.__name__}: "
-            f"missing configuration 'image_gallery.default_template' and/or "
-            f"'image_gallery.jinja_templates_root'."
-        )
+    imagegallery = ImageGalleryDirective(
+        default_class="image-gallery",
+        default_template=default_template,
+        parser=reader.parser,
+    )
+    imagegallery.register(56)
 
     table_classes: list[str] = settings.get("patcher", {}).get("table_classes", [])
     code_classes: list[str] = settings.get("patcher", {}).get("code_classes", [])
