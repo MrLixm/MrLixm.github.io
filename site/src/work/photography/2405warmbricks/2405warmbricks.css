@@ -1,0 +1,35 @@
+/*:root {*/
+/*    --color: black;*/
+/*    --color-W: rgb(10,10,10);*/
+/*    --color-WW: rgb(20,20,20);*/
+/*    --color-WWW: rgb(30,30,30);*/
+/*}*/
+:root {
+    --font-A: "BBBManifontGrotesk", sans-serif;
+    --color: rgb(229, 226, 220);
+    --color-WW: rgb(215, 211, 204);
+    --color-WWW: rgb(197, 193, 185);
+}
+body {
+    /*background: linear-gradient(#1a160e, black);*/
+    /*background: url(../noise.dust.light.svg), url(../noise.svg), linear-gradient(135deg, #f2af2e, #e69707);*/
+    background: linear-gradient(rgba(189, 126, 10, 0.5), rgba(143, 94, 2, 0.5)), url("lego-background.jpg") repeat;
+}
+
+p {
+    text-shadow: rgb(47, 29, 3) 0 0 15px;
+}
+header {
+    background: linear-gradient(rgb(179, 133, 43) 20%, rgba(179, 133, 43, 0.5));
+}
+
+footer {
+    background: linear-gradient(rgba(161, 121, 43, 0.5), rgb(161, 121, 43) 50%);
+}
+
+.image-gallery img {
+    border: 20px solid white;
+}
+.image-gallery .img-fullscreen img {
+    border: unset;
+}
