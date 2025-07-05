@@ -63,7 +63,7 @@ def main(argv: list[str] | None = None):
             "\n"
             f"    .. image-frame:: image{index} label{index} {meta_path.name}\n"
             "\n"
-            "        :code:`<>∧∨` {caption}\n"
+            "        `<>∧∨` {caption}\n"
         )
 
     print(directive_str)
