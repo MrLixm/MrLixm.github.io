@@ -6,6 +6,7 @@
 .read-area {
     /* give a bit more space than blog post and others */
     margin: 0 25vw;
+    margin-bottom: 100px;
 
     .image-gallery .left .metadata,
     .image-gallery .right .metadata {
