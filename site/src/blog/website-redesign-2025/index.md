@@ -632,6 +632,7 @@ the mail from Tuta to Proton. My email stays `contact@liamcollod.eu`.
     - You can only use their client app (desktop and mobile) due to the encryption.
         - Which implies you can't add your emails from other providers (but you can
           switch between multiple Tuta accounts).
+    - JULY 2025 UPDATE: [tuta is associated with some shitty problematic ai company 🫠](https://mastodon.art/@enriquericos/114845745048290364)
 
     For now I am quite pleased with the user experience (it feels polished) and would
     definitively recommend them as long as your need are pretty simple.
@@ -872,5 +873,7 @@ Until later !
 
 ## Changelog
 
-- `04/07/25`: added [friendship ended with rst, now markdown is my best friend](#friendship-ended-with-rst-now-markdown-is-my-best-friend)
+- `04/07/25`: 
+  - added [friendship ended with rst, now markdown is my best friend](#friendship-ended-with-rst-now-markdown-is-my-best-friend)
+  - added [one new red-flag about Tuta](#getting-rid-of-gmail)
 
