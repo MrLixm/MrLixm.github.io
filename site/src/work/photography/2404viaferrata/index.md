@@ -3,7 +3,7 @@
 :description: Defying gravity and nature.
 :image: 240426_negscan24.729.v0001.jpg
 :date-created: 2024-04-27T12:07
-:stylesheets: +2404sollieres.css
+:stylesheets: +2404viaferrata.css
 
 .. image-gallery::
     :left: image4, label4, image2, label2
