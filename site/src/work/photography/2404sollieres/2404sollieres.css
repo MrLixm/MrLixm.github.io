@@ -1,0 +1,16 @@
+body {
+
+    background: url("../noise.dust.dark.svg"),
+    url("../noise.svg"),
+    radial-gradient(ellipse at 50% 20%, rgba(127, 86, 178, 1) 0%, rgba(0, 0, 0, 0) 100%),
+    linear-gradient(0deg, rgb(22, 44, 32) 0%, rgb(56, 72, 44) 100%);
+    background-blend-mode: multiply, overlay;
+}
+.image-gallery {
+    flex-direction: column;
+    gap: 0;
+
+    .left .metadata {
+        left: -50%;
+    }
+}
