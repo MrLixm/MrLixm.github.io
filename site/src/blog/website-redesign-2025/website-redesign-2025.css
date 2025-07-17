@@ -25,26 +25,26 @@
     }
 }
 
-img.inline {
+img {
     border-radius: var(--radius-S);
 }
 
 .font-display { font-size: 1.2rem;}
-.f-0xa000{ font-family: "0xA000-Pixelated", var(--font-A)}
-.f-barlow{ font-family: "Elastic", var(--font-A)}
-.f-bbbmanifontgrotesk{ font-family: "BBBManifontGrotesk", var(--font-A)}
-.f-clashdisplay{ font-family: "ClashDisplay", var(--font-A)}
-.f-coastersans{ font-family: "CoasterSans", var(--font-A)}
-.f-departuremono{ font-family: "DepartureMono", var(--font-A)}
-.f-escabeau{ font-family: "Escabeau", var(--font-A)}
-.f-ferritecoredx{ font-family: "FerriteCoreDX", var(--font-A)}
-.f-ft88{ font-family: "FT88-Regular", var(--font-A)}
-.f-georama{ font-family: "Georama", var(--font-A)}
-.f-indieflower{ font-family: "Indie Flower", var(--font-A)}
-.f-monhugo{ font-family: "MonHugo-in", var(--font-A)}
-.f-montserrat{ font-family: "Montserrat", var(--font-A)}
-.f-orbit{ font-family: "Orbit", var(--font-A)}
-.f-publifluor{ font-family: "PubliFluorNormale", var(--font-A)}
-.f-sourcecodepro{ font-family: "Source Code Pro", var(--font-A)}
-.f-sourcesanspro{ font-family: "Source Sans Pro", var(--font-A)}
-.f-tiny5{ font-family: "Tiny5", var(--font-A)}
+.f-0xA000 { font-family: "0xA000-Pixelated", var(--font-A)}
+.f-BarlowElastic { font-family: "Elastic", var(--font-A)}
+.f-BBBManifontGrotesk { font-family: "BBBManifontGrotesk", var(--font-A)}
+.f-ClashDisplay { font-family: "ClashDisplay", var(--font-A)}
+.f-CoasterSans { font-family: "CoasterSans", var(--font-A)}
+.f-DepartureMono { font-family: "DepartureMono", var(--font-A)}
+.f-Escabeau { font-family: "Escabeau", var(--font-A)}
+.f-FerriteCoreDX { font-family: "FerriteCoreDX", var(--font-A)}
+.f-FT88 { font-family: "FT88-Regular", var(--font-A)}
+.f-Georama { font-family: "Georama", var(--font-A)}
+.f-IndieFlower { font-family: "Indie Flower", var(--font-A)}
+.f-MonHugo { font-family: "MonHugo-in", var(--font-A)}
+.f-Montserrat { font-family: "Montserrat", var(--font-A)}
+.f-Orbit { font-family: "Orbit", var(--font-A)}
+.f-PubliFluor { font-family: "PubliFluorNormale", var(--font-A)}
+.f-SourceCodePro { font-family: "Source Code Pro", var(--font-A)}
+.f-SourceSansPro { font-family: "Source Sans Pro", var(--font-A)}
+.f-Tiny5 { font-family: "Tiny5", var(--font-A)}

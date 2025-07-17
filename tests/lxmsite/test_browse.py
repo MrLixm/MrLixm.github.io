@@ -94,17 +94,17 @@ def test__collect_site_files(tmp_path):
 def test__collect_shelves(tmp_path):
 
     file1 = mkfile(tmp_path, "abc.txt")
-    file2 = mkfile(tmp_path, "file2.rst")
+    file2 = mkfile(tmp_path, "file2.md")
     file3 = mkfile(tmp_path, "image.jpg")
 
     dir_blog = mkdir(tmp_path, "blog")
     shelf_blog = mkfile(dir_blog, ".shelf", 'default_template: "blog.html"')
-    file_blog_2 = mkfile(dir_blog, "post2.rst")
+    file_blog_2 = mkfile(dir_blog, "post2.md")
     file_blog_3 = mkfile(dir_blog, "image.jpg")
 
     dir_blog_post1 = mkdir(dir_blog, "post1")
     sitignore_post1 = mkfile(dir_blog_post1, ".siteignore", "block.html")
-    file_blog_post1 = mkfile(dir_blog_post1, "index.rst")
+    file_blog_post1 = mkfile(dir_blog_post1, "index.md")
     file_blog_post2 = mkfile(dir_blog_post1, "block.html")
 
     collected = lxmsite.collect_site_files(tmp_path)

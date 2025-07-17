@@ -8,7 +8,7 @@ https://liamcollod.xyz/.
 It is fully built by me in Python as a static site that relies only on standard html
 and css to work.
 
-Content is authored with a mix of .rst files and html jinja templates.
+Content is authored with a mix of markdown files and html jinja templates.
 
 You can get more information on the authoring process by
 checking https://liamcollod.xyz/.doc.

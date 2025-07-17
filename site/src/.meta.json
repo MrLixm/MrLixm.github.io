@@ -9,7 +9,7 @@
     ".static/styles/header.css",
     ".static/styles/footer.css",
     ".static/styles/base.css",
-    ".static/styles/rst.css"
+    ".static/styles/md.css"
   ],
   "template": ".base.html"
 }

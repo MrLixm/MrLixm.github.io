@@ -1,0 +1,21 @@
+:root {
+    --bg-color: rgb(232, 228, 198);
+    --bg-color-M: rgb(208, 205, 175);
+    --bg-color-MM: rgb(217, 209, 178);
+    --color: rgb(10, 10, 10);
+    --color-W: rgb(20, 20, 20);
+    --color-WW: rgb(30, 30, 30);
+}
+.image-gallery {
+
+    justify-content: center;
+
+    .right {
+        display: none;
+    }
+
+    img {
+        border: 25px solid #f3f0f0;
+    }
+
+}

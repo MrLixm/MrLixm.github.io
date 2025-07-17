@@ -92,7 +92,7 @@ def parse_pages(
     static_paths: list[Path] = []
 
     for src_path in site_files:
-        if src_path.suffix == ".rst":
+        if src_path.suffix == ".md":
             # retrieve default metadata for the page
             default_meta = meta_collection.get_path_meta(src_path)
 
@@ -401,7 +401,12 @@ def build_site(
     build_search(dst_root=dst_root)
 
     for shelf in shelves:
-        build_rss_feed(shelf=shelf, site_config=config)
+        try:
+            build_rss_feed(shelf=shelf, site_config=config)
+        except Exception as error:
+            LOGGER.exception(f"└ 📋⚠️ cannot render rss feed: {error}")
+            errors.append(error)
+            continue
 
     stylesheet_paths = [
         Path(src_root, page.url_path, p).resolve()
