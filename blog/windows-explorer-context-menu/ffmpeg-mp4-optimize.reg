@@ -1,0 +1,23 @@
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\009mp4_ask]
+"MUIVerb"="convert source to optimized .mp4 - interactive"
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\009mp4_ask\command]
+@="cmd /k \"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-mp4-optimize.bat\" %1 1"
+
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets]
+"MUIVerb"="convert source to optimized .mp4 [presets]"
+"subCommands"=""
+
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets\shell\011mp4_preset2]
+"MUIVerb"="convert .mp4 - fps:24 size:1920 quality:medium:film:18"
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets\shell\011mp4_preset2\command]
+@="cmd /k \"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-mp4-optimize.bat\" %1 0 24 medium film 18 1920 -opti"
+
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets\shell\012mp4_preset1]
+"MUIVerb"="convert .mp4 - fps:24 size:1920 quality:slower:film:12"
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets\shell\012mp4_preset1\command]
+@="cmd /k \"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-mp4-optimize.bat\" %1 0 24 slower film 12 1920 -opti"
+
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets\shell\013mp4_preset3]
+"MUIVerb"="convert .mp4 - fps:24 size:1920 quality:fast:film:23"
+[HKEY_CURRENT_USER\Software\Classes\*\shell\ffmpeg\shell\010mp4_presets\shell\013mp4_preset3\command]
+@="cmd /k \"F:\\softwares\\os\\config\\contextmenus\\ffmpeg\\ffmpeg-mp4-optimize.bat\" %1 0 24 fast film 23 1920 -opti"

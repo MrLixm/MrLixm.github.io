@@ -21,20 +21,7 @@ a:visited {
 a:hover {
     color: var(--color-primary-M);
 }
-a.reference:before,
-a.brackets:before,
-a.citation-reference:before {
-    content: "";
-    background: url("../icons/link-vertical.svg") no-repeat bottom;
-    background-size: contain;
-    width: 0.8rem;
-    height: 0.7rem;
-    display: inline-block;
-}
-a.image-reference:before {
-    content: unset;
-    background: unset;
-}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-B);
     font-weight: 800;
@@ -78,9 +65,15 @@ blockquote {
     border-left: 2px solid var(--color-WW);
     color: var(--color-W);
     margin: 1rem 5px;
-    padding: 0.1rem 0;
-    padding-left: 2rem;
+    padding: 0 0 0 1.5rem;
     font-style: italic;
+
+    > *:first-child {
+        margin-top: 0;
+    }
+    > *:last-child {
+        margin-bottom: 0;
+    }
 }
 
 ul, ol {

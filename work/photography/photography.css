@@ -6,6 +6,7 @@
 .read-area {
     /* give a bit more space than blog post and others */
     margin: 0 25vw;
+    margin-bottom: 100px;
 
     .image-gallery .left .metadata,
     .image-gallery .right .metadata {
@@ -16,12 +17,19 @@
 @media screen and (max-width: 1350px) {
     .read-area {
         margin: 0 20vw;
+        margin-bottom: 100px;
 
         .image-gallery .left .metadata,
         .image-gallery .right .metadata {
             /* prevent triggering overflow in parent because too wide */
             max-width: calc(20vw - 2.5rem);
         }
+    }
+}
+@media screen and (max-width: 600px) {
+    .read-area {
+        margin: 0 8%;
+        margin-bottom: 100px;
     }
 }
 
@@ -61,7 +69,11 @@ section#article-header {
     for the non-responsive layout */
 
     .caption code {
+        padding: unset;
+        margin: unset;
         font-size: 1.5rem;
+        font-weight: 300;
+        background-color: transparent;
     }
 }
 .image-gallery .responsive {

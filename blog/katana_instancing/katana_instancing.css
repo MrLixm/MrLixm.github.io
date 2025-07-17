@@ -1,14 +1,16 @@
-.inline-label {
+.src-md code.txt-dl,
+.src-md code.txt-ai,
+.src-md code.txt-prman {
     padding: 1px 4px;
     border-radius: 2px;
 }
-.inline-label.delight {
+.src-md code.txt-dl {
     background-color: rgba(218, 62, 62, 0.76)
 }
-.inline-label.arnold {
+.src-md code.txt-ai {
     background-color: rgba(40, 180, 183, 0.8)
 }
-.inline-label.prman {
+.src-md code.txt-prman {
     background-color: rgba(37, 147, 224, 0.76)
 }
 

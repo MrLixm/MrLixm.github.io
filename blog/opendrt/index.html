@@ -33,7 +33,7 @@
   
   <link rel="stylesheet" href="../../.static/styles/base.css" />
   
-  <link rel="stylesheet" href="../../.static/styles/rst.css" />
+  <link rel="stylesheet" href="../../.static/styles/md.css" />
   
   <link rel="stylesheet" href="../blog.css" />
   
@@ -144,73 +144,64 @@
         </section>
       </div>
     </section>
-    <p>With the Academy Color Encoding System (ACES) becoming more and more
+    <div class="src-md">
+<p>With the Academy Color Encoding System (ACES) becoming more and more
 omnipresent, it's important to not become lock behind its choices. There is a lot to
-discuss on the subject but we will only focus on using the tool for now, and leave the
+discuss on the subject. but we will only focus on using the tool for now, and leave the
 theory for another day.</p>
-<p>If most people get into ACES, it's mainly for its &quot;filmic&quot; looks (provided by
+<p>If most people get into ACES, it's mainly for its "filmic" looks (provided by
 the RRT), rather than its color-management workflow.
 And that is understandable, as individual artists, you most of the time, only
 care about having the prettiest image possible at the end.</p>
 <p>So what if you got a well-formed and pleasing image at the end without having
 to go through the complexity of ACES ?</p>
-<aside class="admonition important">
+<div class="admonition important">
 <p class="admonition-title">2025 update</p>
 <p>The tool has received a major update to 1.0.0 in 2025, this article might be outdated.</p>
-</aside>
-<aside class="toc-wrapper sidebar">
-<nav class="contents" id="table-of-contents">
-<p class="topic-title"><a class="reference internal" href="#top">Table Of Contents</a></p>
-<div class="toc-list docutils container">
-<ul class="simple">
-<li><p><a class="reference internal" href="#who-s-this-for" id="toc-entry-1">Who's this for ?</a></p></li>
-<li><p><a class="reference internal" href="#introduction" id="toc-entry-2">Introduction</a></p></li>
-<li><p><a class="reference internal" href="#node-overview" id="toc-entry-3">Node Overview</a></p></li>
-<li><p><a class="reference internal" href="#nuke-installation" id="toc-entry-4">Nuke Installation</a></p></li>
-<li><p><a class="reference internal" href="#usage-in-nuke" id="toc-entry-5">Usage in Nuke</a></p>
+</div>
+<aside class="toc-wrapper sidebar"><nav class="toc"><p class="topic-title">Table Of Contents</p><div class="toc-list">
 <ul>
-<li><p><a class="reference internal" href="#revert-display" id="toc-entry-6">#1 Revert Display</a></p></li>
-<li><p><a class="reference internal" href="#nuke-display-encoding-disable" id="toc-entry-7">#2 Nuke Display-encoding disable</a></p></li>
-<li><p><a class="reference internal" href="#opendrt-no-display-encoding" id="toc-entry-8">#3 OpenDRT no Display-encoding</a></p></li>
-<li><p><a class="reference internal" href="#opendrt-with-viewer-input-process-recommended" id="toc-entry-9">#4 OpenDRT with Viewer Input Process (recommended)</a></p></li>
+<li><a href="#opendrt-a-cool-alternative-to-aces">OpenDRT : a cool alternative to ACES</a><ul>
+<li><a href="#whos-this-for">Who's this for ?</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#node-overview">Node Overview</a></li>
+<li><a href="#nuke-installation">Nuke Installation</a></li>
+<li><a href="#usage-in-nuke">Usage in Nuke</a><ul>
+<li><a href="#1-revert-display">#1 Revert Display</a></li>
+<li><a href="#2-nuke-display-encoding-disable">#2 Nuke Display-encoding disable</a></li>
+<li><a href="#3-opendrt-no-display-encoding">#3 OpenDRT no Display-encoding</a></li>
+<li><a href="#4-opendrt-with-viewer-input-process-recommended">#4 OpenDRT with Viewer Input Process (recommended)</a></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#conclusion" id="toc-entry-10">Conclusion</a></p></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
 </ul>
 </div>
-</nav>
-</aside>
-<section id="who-s-this-for">
-<h2><a class="toc-backref" href="#who-s-this-for" role="doc-backlink">Who's this for ?</a></h2>
+</nav></aside><h2 id="whos-this-for"><a href="#whos-this-for">Who's this for ?</a></h2>
 <p>My post mainly targets the VFX-CGI audience but OpenDRT work on any
 open-domain data (see also wide-dynamic-range, scene-linear); which includes photography
 and cinematography.</p>
-<p>You should be familiar with a &quot;scene-linear workflow&quot;:</p>
-<pre class="literal-block">render (.exr) -&gt; compositing/postprod (linear) -&gt; display output (jpg,mp4,...)</pre>
+<p>You should be familiar with a "scene-linear workflow":</p>
+<p><code class="inline">render (.exr) -&gt; compositing/postprod (linear) -&gt; display output (jpg,mp4,...)</code></p>
 <p>OpenDRT implementation is only available as a Nuke Gizmo and
 through Davinci Resolve DCTL feature (on paid licenses) which imply you
 are using one of these dccs.</p>
-<aside class="admonition important">
+<div class="admonition important">
 <p class="admonition-title">2025 update</p>
-<p>OpenDRT is now available as OCIO config directly from <a class="reference external" href="https://github.com/jedypod/open-display-transform/releases/">Jed repository</a> but you can also
-check <a class="reference external" href="https://github.com/chrisbrejon/OpenDRT-OCIO-Config">Chris Brejon configs</a>.</p>
-</aside>
-<p><span class="strikethrough">No OCIO support, this means you will have with your traditional workflow in
+<p>OpenDRT is now available as OCIO config directly from <a href="https://github.com/jedypod/open-display-transform/releases/">Jed repository</a>
+but you can also check <a href="https://github.com/chrisbrejon/OpenDRT-OCIO-Config">Chris Brejon configs</a>.</p>
+</div>
+<p>No OCIO support, this means you will have with your traditional workflow in
 your rendering DCC and only be able to preview the final image in your
-post-prod one which is not the most ideal workflow.</span></p>
+post-prod one which is not the most ideal workflow.{.strikethrough}</p>
 <p>With all of that, I consider my post to be aimed at individual artist doing
 personal projects that would like a quick solution for proper SDR-HDR export
 (not implying these are OpenDRT goals).</p>
-</section>
-<section id="introduction">
-<h2><a class="toc-backref" href="#introduction" role="doc-backlink">Introduction</a></h2>
+<h2 id="introduction"><a href="#introduction">Introduction</a></h2>
 <p>It's always a good idea to read the official documentation, the author explain it best
 isn't it ? So have a look at the tool repository first:</p>
-<div class="url-preview-box docutils container">
-<a class="reference external" href="https://github.com/jedypod/open-display-transform">
-</a>
-<div class="url-preview-image docutils container">
-<svg height="64" width="64" width="24" height="24" viewBox="0 0 24 24" fill="none"
+<div class="url-preview-box"><a class="reference" href="https://github.com/jedypod/open-display-transform"></a><div class="url-preview-image"><svg height="64" width="64" width="24" height="24" viewBox="0 0 24 24" fill="none"
      xmlns="http://www.w3.org/2000/svg">
     <g clip-path="url(#clip0_519_128)">
         <path d="M12 0C10.4241 0 8.86371 0.318095 7.4078 0.936124C5.95189 1.55415 4.62902 2.46001 3.51472 3.60198C1.26428 5.90829 0 9.03631 0 12.2979C0 17.7336 3.444 22.3453 8.208 23.981C8.808 24.0793 9 23.6981 9 23.3661C9 23.0832 9 22.3084 9 21.2877C5.676 22.0256 4.968 19.6398 4.968 19.6398C4.416 18.2132 3.636 17.832 3.636 17.832C2.544 17.0695 3.72 17.0941 3.72 17.0941C4.92 17.1802 5.556 18.3608 5.556 18.3608C6.6 20.2301 8.364 19.6767 9.048 19.3815C9.156 18.5822 9.468 18.0411 9.804 17.7336C7.14 17.4262 4.344 16.3685 4.344 11.683C4.344 10.318 4.8 9.22344 5.58 8.35029C5.46 8.04284 5.04 6.76386 5.7 5.10364C5.7 5.10364 6.708 4.77159 9 6.35803C9.948 6.08747 10.98 5.9522 12 5.9522C13.02 5.9522 14.052 6.08747 15 6.35803C17.292 4.77159 18.3 5.10364 18.3 5.10364C18.96 6.76386 18.54 8.04284 18.42 8.35029C19.2 9.22344 19.656 10.318 19.656 11.683C19.656 16.3808 16.848 17.4139 14.172 17.7213C14.604 18.1025 15 18.8527 15 19.9964C15 21.6443 15 22.9725 15 23.3661C15 23.6981 15.192 24.0916 15.804 23.981C20.568 22.333 24 17.7336 24 12.2979C24 10.6829 23.6896 9.08376 23.0866 7.59171C22.4835 6.09966 21.5996 4.74395 20.4853 3.60198C19.371 2.46001 18.0481 1.55415 16.5922 0.936124C15.1363 0.318095 13.5759 0 12 0Z"
@@ -223,13 +214,12 @@ isn't it ? So have a look at the tool repository first:</p>
     </defs>
 </svg>
 </div>
-<div class="url-preview-details docutils container">
-<p class="url-preview-title">OpenDRT repository.</p>
-<div class="url-preview-subtitle docutils container">
-<a class="reference external" href="https://github.com/jedypod/open-display-transform">
-https://github.com/jedypod/open-display-transform</a>
+<div class="url-preview-details">
+<div class="url-preview-title">
+<p>OpenDRT repository.</p>
 </div>
-<div class="url-preview-description docutils container">
+<div class="url-preview-subtitle"><a href="https://github.com/jedypod/open-display-transform">https://github.com/jedypod/open-display-transform</a></div>
+<div class="url-preview-description">
 <p>Download on github.</p>
 </div>
 </div>
@@ -240,192 +230,192 @@ https://github.com/jedypod/open-display-transform</a>
 closed-domain : the display. This implies its output can look very neutral
 and should be graded.</p>
 </blockquote>
-</section>
-<section id="node-overview">
-<h2><a class="toc-backref" href="#node-overview" role="doc-backlink">Node Overview</a></h2>
+<h2 id="node-overview"><a href="#node-overview">Node Overview</a></h2>
 <p>As the tool is constantly changing, Jed's documentation is not up to date,
 and tneither this post will be.</p>
-<aside class="admonition caution">
-<p class="admonition-title">caution</p>
-<p>All the examples are using OpenDRT version <span class="docutils literal">0.0.90b2</span> which is a legacy version
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>All the examples are using OpenDRT version <code class="inline">0.0.90b2</code> which is a legacy version
 as of 2025 !</p>
-</aside>
-<p>The first option is to tell the tool in which <span class="docutils literal">gamut</span> your input is.
+</div>
+<p>The first option is to tell the tool in which <code class="inline">gamut</code> your input is.
 The input is expected to be linearly encoded.</p>
-<div class="odrt-split docutils container">
-<a class="reference external image-reference" href="nuke.opendrt.jpg">
-<img alt="OpenDRT global overview" class="inline" src="nuke.opendrt.jpg" style="width: 280.14px; height: 344.30999999999995px;" />
-</a>
-<div class="docutils container">
+<div class="odrt-split">
+<p><a href="nuke.opendrt.jpg">
+<img src="nuke.opendrt.jpg" alt="OpenDRT global overview" width="100%">
+</a></p>
+<div>
 <p>You then have a bunch of presets that will tweak the knobs for you
 based on your target display encoding.</p>
-<p><span class="docutils literal">Lw</span> : this is the nits level of the target display and shouldn't be
-used as a creative adjustment.</p>
-<aside class="admonition hint">
-<p class="admonition-title">hint</p>
+<ul>
+<li><code class="inline">Lw</code>: this is the nits level of the target display and shouldn't be
+used as a creative adjustment.</li>
+</ul>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
 <p>100nits is the value defined as per the
-<a class="reference external" href="https://www.itu.int/dms_pubrec/itu-r/rec/bt/R-REC-BT.2035-0-201307-I!!PDF-E.pdf">ITU-R  BT.2035</a>
+<a href="https://www.itu.int/dms_pubrec/itu-r/rec/bt/R-REC-BT.2035-0-201307-I!!PDF-E.pdf">ITU-R  BT.2035</a>
 specifications and should represent the peak-white value of a
 display in a dim surround.</p>
-</aside>
-<p><span class="docutils literal">surround</span> : the luminance level of the viewing environment.</p>
-<blockquote>
-<ul class="simple">
-<li><p><span class="docutils literal">dark</span> : theatrical viewing environment.</p></li>
-<li><p><span class="docutils literal">dim</span>: &quot;home theater&quot; (low light condition).</p></li>
-<li><p><span class="docutils literal">average</span>: desktop/office average surround.</p></li>
+</div>
+<ul>
+<li><code class="inline">surround</code>: the luminance level of the viewing environment.<ul>
+<li><code class="inline">dark</code> : theatrical viewing environment.</li>
+<li><code class="inline">dim</code>: "home theater" (low light condition).</li>
+<li><code class="inline">average</code>: desktop/office average surround.</li>
 </ul>
-</blockquote>
+</li>
+</ul>
 </div>
 </div>
-<p><span class="docutils literal">dechroma</span> : this one is more &quot;subjective&quot;, allowing to control
+<ul>
+<li>
+<p><code class="inline">dechroma</code> : this one is more "subjective", allowing to control
 the amount of chrominance compression that should be applied on values
 reaching display maximum (R,G,B=1.0). If HDR imagery needs to be
 produced, this can be lowered (as the target domain (hdr) has more
 volume to express chroma)</p>
-<p><span class="docutils literal">saturation</span> : Expand chroma on the bottom values after the compression by
-the dechroma.
-See more <a class="reference external" href="https://community.acescentral.com/t/proposal-for-resolving-the-conflict-beween-swappable-core-rendering-vs-doing-everything-in-lmt/4012/9">here</a> .</p>
-<p><span class="docutils literal">whitepoint</span> : (from doc) Sets the creative whitepoint. This allows
+</li>
+<li>
+<p><code class="inline">saturation</code> : Expand chroma on the bottom values after the compression by
+the dechroma. See more <a href="https://community.acescentral.com/t/proposal-for-resolving-the-conflict-beween-swappable-core-rendering-vs-doing-everything-in-lmt/4012/9">here</a>.</p>
+</li>
+<li>
+<p><code class="inline">whitepoint</code> : (from doc) Sets the creative whitepoint. This allows
 you to creatively set the whitepoint of your display rendering if
 you want it to be different than the technical whitepoint of your
 display device. For example, if you set this to D55, neutral colors will
 be rendered as a warmer hue compared to the default D65.</p>
-<p><span class="docutils literal">display encoding</span> : <em>see below explanations</em></p>
+</li>
+<li>
+<p><code class="inline">display encoding</code> : <em>see below explanations</em></p>
+</li>
+</ul>
 <blockquote>
 <ul>
-<li><p>The <span class="docutils literal">eotf</span> should correspond to the transfer-function used by the
-targeted display.</p>
-<aside class="admonition hint">
-<p class="admonition-title">hint</p>
-<p><a class="reference external" href="https://www.itu.int/dms_pubrec/itu-r/rec/bt/R-REC-BT.1886-0-201103-I!!PDF-E.pdf">BT.1886</a>
-, the default value, correspond to a 2.4 power function,
-which is the standard for Rec.709. For the average of user display you should use <span class="docutils literal">sRGB Display</span>.</p>
-</aside>
-</li>
-<li><p>The <span class="docutils literal">gamut</span> correspond once again to the gamut that the targeted display
-is calibrated to (reminder that sRGB use the same gamut as Rec.709).</p></li>
+<li>The <code class="inline">eotf</code> should correspond to the transfer-function used by the
+  targeted display.</li>
+</ul>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p><a href="https://www.itu.int/dms_pubrec/itu-r/rec/bt/R-REC-BT.1886-0-201103-I!!PDF-E.pdf">BT.1886</a>
+  , the default value, correspond to a 2.4 power function,
+  which is the standard for Rec.709. For the average of user display you should use <code class="inline">sRGB Display</code>.</p>
+</div>
+<ul>
+<li>The <code class="inline">gamut</code> correspond once again to the gamut that the targeted display
+  is calibrated to (reminder that sRGB use the same gamut as Rec.709).</li>
 </ul>
 </blockquote>
-<p>To adjust these settings properly <strong>you have to know the targeted display</strong>
-<strong>+ user</strong> :</p>
+<p>To adjust these settings properly <strong>you have to know the targeted display + user</strong> :</p>
 <p>The issue is that with today range of displays, this is a rather difficult one
 to average (until you have the full-control on the display the image is
 going to be viewed on).</p>
-<div class="line-block">
-<div class="line">In the case of web publishing, for example, the average user will probably
+<p>In the case of web publishing, for example, the average user will probably
 have a SDR display, sRGB encoded, with an average white peak of 100 nits and
-used in an office environment that can be brighter than a <span class="docutils literal">dim</span> surround.
-If we add smartphones to the equation, thing will get messy ...</div>
-<div class="line">I'm still digging on the subject trying to gather more info and as such will
-close this topic.</div>
-</div>
+used in an office environment that can be brighter than a <code class="inline">dim</code> surround.
+If we add smartphones to the equation, thing will get messy ...
+I'm still digging on the subject trying to gather more info and as such will
+close this topic.</p>
 <p>So for now, using the presets is, I think a good practice.</p>
-</section>
-<section id="nuke-installation">
-<h2><a class="toc-backref" href="#nuke-installation" role="doc-backlink">Nuke Installation</a></h2>
-<ol class="arabic simple">
-<li><p><a class="reference external" href="https://raw.githubusercontent.com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk">Download the .nk file</a>
-(Right click on the page &gt; save as &gt; save it somewhere)</p></li>
-<li><p>Import the .nk file: File &gt; Insert Comp Nodes</p></li>
+<h2 id="nuke-installation"><a href="#nuke-installation">Nuke Installation</a></h2>
+<ol>
+<li>
+<p><a href="https://raw.githubusercontent.com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk">Download the .nk file</a>
+   (Right click on the page &gt; save as &gt; save it somewhere).</p>
+</li>
+<li>
+<p>Import the .nk file: File &gt; Insert Comp Nodes</p>
+</li>
 </ol>
 <p>Or alternatively :</p>
-<ol class="arabic simple">
-<li><p><a class="reference external" href="https://raw.githubusercontent.com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk">Open the .nk</a>
-file and copy all of his content <span class="docutils literal">(ctrl+a, ctrl+c)</span></p></li>
-<li><p>Paste in Nuke <span class="docutils literal">(ctrl+v)</span></p></li>
+<ol>
+<li>
+<p><a href="https://raw.githubusercontent.com/jedypod/open-display-transform/main/display-transforms/nuke/OpenDRT.nk">Open the .nk</a>
+    file and copy all of his content <code class="inline">(ctrl+a, ctrl+c)</code>.</p>
+</li>
+<li>
+<p>Paste in Nuke <code class="inline">(ctrl+v)</code></p>
+</li>
 </ol>
-<aside class="admonition note">
-<p class="admonition-title">note</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>I am only showing how you to use it in Nuke as I don't have access to
 a Resolve License.</p>
-</aside>
-</section>
-<section id="usage-in-nuke">
-<h2><a class="toc-backref" href="#usage-in-nuke" role="doc-backlink">Usage in Nuke</a></h2>
+</div>
+<h2 id="usage-in-nuke"><a href="#usage-in-nuke">Usage in Nuke</a></h2>
 <p>Things will now get a bit complicated at first. The issue is that has the
 OpenDRT handle the scene -&gt; display conversion, this will collide with Nuke
 that try to do the same in the view-transform.</p>
-<p>I found 4 different solutions that achieve the same result. I think the last
-one is recommend to use but it's good to have other example that might help to
+<p>I found 4 different solutions that achieve the same result. I would recommend the last
+one to use, but it's good to have other example that might help to
 understand how everything works.</p>
-<aside class="admonition warning">
-<p class="admonition-title">warning</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <p>I didn't test any of these solutions with HDR display-encoding so
 further investigation needs to be done.</p>
-</aside>
-<aside class="admonition note">
-<p class="admonition-title">note</p>
-<p>I will keep the defaut <span class="docutils literal">BT.1886</span> value for the eotf, but to match the
-nuke's default config I should have use <span class="docutils literal">sRGB Display</span>.</p>
-</aside>
-<section id="revert-display">
-<h3><a class="toc-backref" href="#revert-display" role="doc-backlink">#1 Revert Display</a></h3>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>I will keep the defaut <code class="inline">BT.1886</code> value for the eotf, but to match the
+nuke's default config I should have use <code class="inline">sRGB Display</code>.</p>
+</div>
+<h3 id="1-revert-display"><a href="#1-revert-display">#1 Revert Display</a></h3>
 <p>We let the DRT handle everything (with display-encoding), then we apply the
 invert transform that applied by Nuke:</p>
-<a class="reference external image-reference" href="nuke.revert.jpg">
-<img alt="Revert Display method in Nuke" class="inline" src="nuke.revert.jpg" />
-</a>
-<p>Writing the data is as before. You just have to be sure that the <span class="docutils literal">Colorspace</span>
-node has the same <span class="docutils literal">in</span> parameters as the <span class="docutils literal">colorspace</span> one on the write node.</p>
-</section>
-<section id="nuke-display-encoding-disable">
-<h3><a class="toc-backref" href="#nuke-display-encoding-disable" role="doc-backlink">#2 Nuke Display-encoding disable</a></h3>
+<p><a href="nuke.revert.jpg">
+<img src="nuke.revert.jpg" alt="Revert Display method in Nuke">
+</a></p>
+<p>Writing the data is as before. You just have to be sure that the <code class="inline">Colorspace</code>
+node has the same <code class="inline">in</code> parameters as the <code class="inline">colorspace</code> one on the write node.</p>
+<h3 id="2-nuke-display-encoding-disable"><a href="#2-nuke-display-encoding-disable">#2 Nuke Display-encoding disable</a></h3>
 <p>We disable Nuke's handling of the display-encoding. The DRT is the last step.</p>
-<a class="reference external image-reference" href="nuke.nuke_no-de.jpg">
-<img alt="Method with Nuke display-encoding disable" class="inline" src="nuke.nuke_no-de.jpg" />
-</a>
+<p><a href="nuke.nuke_no-de.jpg">
+<img src="nuke.nuke_no-de.jpg" alt=" Method with Nuke display-encoding disable">
+</a></p>
 <p>This means the Nuke view-transform is always off which can be incovenient
 when you need to preview a node upstream.</p>
-</section>
-<section id="opendrt-no-display-encoding">
-<h3><a class="toc-backref" href="#opendrt-no-display-encoding" role="doc-backlink">#3 OpenDRT no Display-encoding</a></h3>
+<h3 id="3-opendrt-no-display-encoding"><a href="#3-opendrt-no-display-encoding">#3 OpenDRT no Display-encoding</a></h3>
 <p>One good solution: the OpenDRT doesn't handle the display
 encoding but output closed-domain data ready for the display.
 Nuke apply the display-encoding as usually, writing data is the regular
 workflow.</p>
 <p>Be careful as OpenDRT still handle the gamut conversion from the input to the
 output. Write node colorspace need to be choosen with this is mind.</p>
-<a class="reference external image-reference" href="nuke.drt_no-de.jpg">
-<img alt="Method with OpenDRT display-encoding disable." class="inline" src="nuke.drt_no-de.jpg" />
-</a>
-</section>
-<section id="opendrt-with-viewer-input-process-recommended">
-<h3><a class="toc-backref" href="#opendrt-with-viewer-input-process-recommended" role="doc-backlink">#4 OpenDRT with Viewer Input Process (recommended)</a></h3>
+<p><a href="nuke.drt_no-de.jpg">
+<img src="nuke.drt_no-de.jpg" alt="Method with OpenDRT display-encoding disable.">
+</a></p>
+<h3 id="4-opendrt-with-viewer-input-process-recommended"><a href="#4-opendrt-with-viewer-input-process-recommended">#4 OpenDRT with Viewer Input Process (recommended)</a></h3>
 <p>This is probably the best solution;</p>
 <p>OpenDRT handle everything, we disable Nuke view-transform but we will be
-using its <a class="reference external" href="https://learn.foundry.com/nuke/content/getting_started/using_interface/guides_masks_modes.html#InputProcessandViewerProcessControls">input process feature</a>.</p>
+using its <a href="https://learn.foundry.com/nuke/content/getting_started/using_interface/guides_masks_modes.html#InputProcessandViewerProcessControls">input process feature</a>.</p>
 <p>This will allow to always have the OpenDRT active no matter what node we are
-previewing <span class="warning-color">(this can be inconvenient when viewing scalar data like
-alpha, think to disable the input-process in that case)</span>.</p>
-<a class="reference external image-reference" href="nuke.ip.jpg">
-<img alt="Method with OpenDRT + Nuke Input Process" class="inline" src="nuke.ip.jpg" />
-</a>
+previewing <em class="warning">(this can be inconvenient when viewing scalar data like
+alpha, think to disable the input-process in that case)</em>.</p>
+<p><a href="nuke.ip.jpg">
+<img src="nuke.ip.jpg" alt="Method with OpenDRT + Nuke Input Process">
+</a></p>
 <p>We don't actually need the node used as input-process to be connected to
 anything but here <strong>I'm making sure it's connected before the write node</strong>, so
 OpenDRT get baked in at export.</p>
 <p>As OpenDRT handled the display encoding we can turn it off on the write node
-by checking <span class="docutils literal">raw data</span>.</p>
-</section>
-</section>
-<section id="conclusion">
-<h2><a class="toc-backref" href="#conclusion" role="doc-backlink">Conclusion</a></h2>
+by checking <code class="inline">raw data</code>.</p>
+<h2 id="conclusion"><a href="#conclusion">Conclusion</a></h2>
 <p>If you tried to compare the result to an ACES processed image you would have
-probably notice that the image-formation produce much more &quot;excepted&quot; result,
+probably notice that the image-formation produce much more "excepted" result,
 among others, in strong colored highlights, which make OpenDRT a solid
 candidate at better image-formation and a peak of what could be used in the
 future.</p>
-<aside class="admonition hint">
-<p class="admonition-title">hint</p>
-<p>You can compare OpenDRT rendering against ACES using <a class="reference external" href="https://mrlixm.github.io/picture-lab-lxm/">https://mrlixm.github.io/picture-lab-lxm/</a>.</p>
-</aside>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>You can compare OpenDRT rendering against ACES using <a href="https://mrlixm.github.io/picture-lab-lxm/">https://mrlixm.github.io/picture-lab-lxm/</a>.</p>
+</div>
 <p>Even if it's current form kind of break the purpose of a consistant
 color-managed system across DCCs, it is a nice solution for individuals and
 looks very promising.</p>
-<p>⭐ Make sure to star <a class="reference external" href="https://github.com/jedypod/open-display-transform">Jed's repository</a>
+<p>⭐ Make sure to star <a href="https://github.com/jedypod/open-display-transform">Jed's repository</a>
 on Github !</p>
-</section>
-
+</div>
   </article>
 
 </main>
@@ -441,7 +431,7 @@ on Github !</p>
     </a>
     
     <p>Static website <a href="../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-06-06T21:14</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/9c04147" target="_blank">9c04147</a></i></p>
+      Last built on <i>2025-07-17T23:29</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/af8127b" target="_blank">af8127b</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>
