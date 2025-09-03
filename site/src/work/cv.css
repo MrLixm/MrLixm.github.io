@@ -178,6 +178,7 @@ div.l-cv-xp a {
 }
 div.l-cv-xp ul {
     padding-inline-start: 20px;
+    margin: 0.5rem 0;
 }
 div.l-cv-xp li {
     list-style-type: none;
