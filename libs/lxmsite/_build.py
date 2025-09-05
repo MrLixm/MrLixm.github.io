@@ -1,5 +1,7 @@
+import concurrent.futures
 import datetime
 import logging
+import multiprocessing
 import os
 import runpy
 import shutil
@@ -75,6 +77,32 @@ def fmterr(ctx: str, error: Exception):
     )
 
 
+def _parse_page(
+    page_path: Path,
+    site_config: SiteConfig,
+    meta_collection: MetaFileCollection,
+) -> PageResource | Exception:
+    default_meta = meta_collection.get_path_meta(page_path)
+
+    # will actually not log when using concurrent.futures.ProcessPoolExecutor
+    LOGGER.debug(f"reading page '{page_path}'")
+    LOGGER.debug(f"└ default_meta={default_meta}")
+    try:
+        page = lxmsite.read_page(
+            file_path=page_path,
+            site_config=site_config,
+            default_metadata=default_meta,
+        )
+    except Exception as error:
+        return error
+
+    return page
+
+
+def _parser(args):
+    return _parse_page(*args)
+
+
 class ExceptionStack(Exception):
     def __init__(self, errors: list[Exception]):
         self.errors: list[Exception] = errors
@@ -90,24 +118,16 @@ def parse_pages(
     """
     errors: list[Exception] = []
     pages: dict[Path, PageResource] = {}
+    mapping = [(path, site_config, meta_collection) for path in page_paths]
 
-    for page_path in page_paths:
-        # retrieve default metadata for the page
-        default_meta = meta_collection.get_path_meta(page_path)
-
-        LOGGER.debug(f"reading page '{page_path}'")
-        LOGGER.debug(f"└ default_meta={default_meta}")
-        try:
-            page = lxmsite.read_page(
-                file_path=page_path,
-                site_config=site_config,
-                default_metadata=default_meta,
-            )
-        except Exception as error:
-            LOGGER.error(f"{fmterr(str(page_path), error)}")
-            errors.append(error)
-            continue
-        pages[page_path] = page
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        results = executor.map(_parser, mapping, chunksize=2)
+        for page_path, page in zip(page_paths, results):
+            if isinstance(page, Exception):
+                LOGGER.error(f"{fmterr(str(page_path), page)}")
+                errors.append(page)
+                continue
+            pages[page_path] = page
 
     if errors:
         raise ExceptionStack(errors)
@@ -309,11 +329,11 @@ def build_site(
         for path in site_files
         if not (path in shelf_files) and not (path in meta_paths)
     ]
-
     # collect pages and static files
-    stime = time.time()
     page_paths: list[Path] = [path for path in site_files if path.suffix == ".md"]
     static_paths: list[Path] = [path for path in site_files if path not in page_paths]
+
+    stime = time.time()
     # mapping of "absolute path": "Page instance"
     pages: dict[Path, PageResource] = {}
     try:
@@ -325,9 +345,7 @@ def build_site(
     except ExceptionStack as error:
         errors += error.errors
     etime = time.time()
-    LOGGER.debug(
-        f"⌛ parsed pages from {len(site_files)} files in {etime - stime:.2f} seconds"
-    )
+    LOGGER.debug(f"⌛ parsed {len(page_paths)} pages in {etime - stime:.2f} seconds")
 
     # collect shelves and their associated pages
     shelves: list[ShelfResource] = []
