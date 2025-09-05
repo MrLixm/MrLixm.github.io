@@ -307,10 +307,12 @@ def build_site(
         collection of errors if any (that are already logged).
     """
     errors: list[Exception] = []
+    benchmarks: dict[str, float] = {}
 
     src_root = config.SRC_ROOT
     dst_root = config.DST_ROOT
 
+    stime = time.time()
     site_files = lxmsite.collect_site_files(src_root)
     LOGGER.debug(f"🗂️ collected {len(site_files)} site files")
 
@@ -332,6 +334,8 @@ def build_site(
     # collect pages and static files
     page_paths: list[Path] = [path for path in site_files if path.suffix == ".md"]
     static_paths: list[Path] = [path for path in site_files if path not in page_paths]
+    etime = time.time()
+    benchmarks[f"collected {len(site_files)} site file"] = etime - stime
 
     stime = time.time()
     # mapping of "absolute path": "Page instance"
@@ -345,8 +349,9 @@ def build_site(
     except ExceptionStack as error:
         errors += error.errors
     etime = time.time()
-    LOGGER.debug(f"⌛ parsed {len(page_paths)} pages in {etime - stime:.2f} seconds")
+    benchmarks[f"parsed {len(page_paths)} pages"] = etime - stime
 
+    stime = time.time()
     # collect shelves and their associated pages
     shelves: list[ShelfResource] = []
     page_by_shelves: dict[Path, ShelfResource] = {}
@@ -360,6 +365,8 @@ def build_site(
         errors += error.errors
 
     shelf_library = ShelfLibrary(shelves=shelves)
+    etime = time.time()
+    benchmarks[f"parsed {len(shelves)} shelves"] = etime - stime
 
     # write html pages to disk
     stime = time.time()
@@ -384,7 +391,7 @@ def build_site(
             continue
 
     etime = time.time()
-    LOGGER.debug(f"⌛ built {len(pages)} page in {etime - stime:.2f} seconds")
+    benchmarks[f"built {len(pages)} pages"] = etime - stime
 
     # build redirections pages
     stime = time.time()
@@ -408,20 +415,27 @@ def build_site(
             continue
 
     etime = time.time()
-    LOGGER.debug(
-        f"⌛ built {len(config.REDIRECTIONS)} redirection pages in {etime - stime:.2f} seconds"
-    )
+    benchmarks[f"built {len(config.REDIRECTIONS)} redirection pages"] = etime - stime
 
+    stime = time.time()
     LOGGER.debug(f"🔎 building search feature")
     build_search(dst_root=dst_root)
+    etime = time.time()
+    benchmarks[f"built search feature"] = etime - stime
 
+    stime = time.time()
+    rss_feeds = []
     for shelf in shelves:
         try:
-            build_rss_feed(shelf=shelf, site_config=config)
+            rss_feed = build_rss_feed(shelf=shelf, site_config=config)
         except Exception as error:
             LOGGER.exception(f"└ 📋⚠️ cannot render rss feed: {error}")
             errors.append(error)
             continue
+        rss_feeds.append(rss_feed)
+
+    etime = time.time()
+    benchmarks[f"built {len(rss_feeds)} rss feeds"] = etime - stime
 
     stylesheet_paths: dict[Path, list[str]] = {}
     for page in pages.values():
@@ -487,6 +501,15 @@ def build_site(
             if ratio > 1:
                 heavy_images[dst_path] = ratio
 
+    etime = time.time()
+    benchmarks[f"built {len(static_paths)} static paths"] = etime - stime
+
+    LOGGER.info("⌛ build process time statistics:")
+    for source, duration in benchmarks.items():
+        LOGGER.info(f"  └ {duration:.2f}s | {source}")
+
+    # // POST_BUILD CHECKS:
+
     # sort by weight ratio
     heavy_images = {
         k: v for k, v in sorted(heavy_images.items(), key=lambda item: item[1])
@@ -505,10 +528,5 @@ def build_site(
             LOGGER.warning(
                 f"🔍 found non-existing stylesheet path '{path}' referenced in {sources}."
             )
-
-    etime = time.time()
-    LOGGER.debug(
-        f"⌛ built {len(static_paths)} static paths in {etime - stime:.2f} seconds"
-    )
 
     return errors
