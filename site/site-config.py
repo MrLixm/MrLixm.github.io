@@ -1,7 +1,4 @@
-import io
 from pathlib import Path
-
-import lxmsite
 
 THISDIR = Path(__file__).parent
 
