@@ -81,43 +81,38 @@ class ExceptionStack(Exception):
 
 
 def parse_pages(
-    site_files: list[Path],
+    page_paths: list[Path],
     site_config: SiteConfig,
     meta_collection: MetaFileCollection,
-) -> tuple[dict[Path, PageResource], list[Path]]:
+) -> dict[Path, PageResource]:
     """
-    Convert site file structure to page objects and find additional static files.
+    Read from disk the given path files as pages objects.
     """
     errors: list[Exception] = []
     pages: dict[Path, PageResource] = {}
-    static_paths: list[Path] = []
 
-    for src_path in site_files:
-        if src_path.suffix == ".md":
-            # retrieve default metadata for the page
-            default_meta = meta_collection.get_path_meta(src_path)
+    for page_path in page_paths:
+        # retrieve default metadata for the page
+        default_meta = meta_collection.get_path_meta(page_path)
 
-            LOGGER.debug(f"reading page '{src_path}'")
-            LOGGER.debug(f"└ default_meta={default_meta}")
-            try:
-                page = lxmsite.read_page(
-                    file_path=src_path,
-                    site_config=site_config,
-                    default_metadata=default_meta,
-                )
-            except Exception as error:
-                LOGGER.error(f"{fmterr(str(src_path), error)}")
-                errors.append(error)
-                continue
-            pages[src_path] = page
-
-        else:
-            static_paths.append(src_path)
+        LOGGER.debug(f"reading page '{page_path}'")
+        LOGGER.debug(f"└ default_meta={default_meta}")
+        try:
+            page = lxmsite.read_page(
+                file_path=page_path,
+                site_config=site_config,
+                default_metadata=default_meta,
+            )
+        except Exception as error:
+            LOGGER.error(f"{fmterr(str(page_path), error)}")
+            errors.append(error)
+            continue
+        pages[page_path] = page
 
     if errors:
         raise ExceptionStack(errors)
 
-    return pages, static_paths
+    return pages
 
 
 def parse_shelves(
@@ -317,12 +312,13 @@ def build_site(
 
     # collect pages and static files
     stime = time.time()
+    page_paths: list[Path] = [path for path in site_files if path.suffix == ".md"]
+    static_paths: list[Path] = [path for path in site_files if path not in page_paths]
     # mapping of "absolute path": "Page instance"
     pages: dict[Path, PageResource] = {}
-    static_paths: list[Path] = []
     try:
-        pages, static_paths = parse_pages(
-            site_files=site_files,
+        pages = parse_pages(
+            page_paths=page_paths,
             site_config=config,
             meta_collection=meta_collection,
         )
