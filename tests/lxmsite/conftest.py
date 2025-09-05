@@ -22,7 +22,6 @@ def default_site_config(tmp_path: Path) -> SiteConfig:
         SITE_URL="www.site.fr",
         PUBLISH_MODE=False,
         DEFAULT_PAGE_ICON="",
-        DEFAULT_STYLESHEETS=[],
         HEADER_NAV={},
         REDIRECTIONS={},
         REDIRECTIONS_TEMPLATE="",

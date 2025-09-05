@@ -419,12 +419,6 @@ def build_site(
                 page.url_path
             )
 
-    for path in config.DEFAULT_STYLESHEETS:
-        resolved_stylesheet_path = Path(src_root, path).resolve()
-        stylesheet_paths.setdefault(resolved_stylesheet_path, []).append(
-            "://site-config"
-        )
-
     image_to_optimize: dict[Path, ImageOptimizer] = {}
     for static_path in static_paths.copy():
         if static_path.suffix == ".opti":
