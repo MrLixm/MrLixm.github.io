@@ -18,6 +18,7 @@ from lxmsite import get_image_weight_ratio
 from lxmsite import read_image_opti_file
 from lxmsite import ImageOptimizer
 from ._utils import gitget
+from ._utils import mksiterel
 
 LOGGER = logging.getLogger(__name__)
 
@@ -408,14 +409,21 @@ def build_site(
             errors.append(error)
             continue
 
-    stylesheet_paths = [
-        Path(src_root, page.url_path, p).resolve()
-        for page in pages.values()
-        for p in page.stylesheets
-    ]
-    stylesheet_paths += [
-        Path(src_root, p).resolve() for p in config.DEFAULT_STYLESHEETS
-    ]
+    stylesheet_paths: dict[Path, list[str]] = {}
+    for page in pages.values():
+        for path in page.stylesheets:
+            resolved_stylesheet_path = Path(
+                src_root, mksiterel(path, page.url_path)
+            ).resolve()
+            stylesheet_paths.setdefault(resolved_stylesheet_path, []).append(
+                page.url_path
+            )
+
+    for path in config.DEFAULT_STYLESHEETS:
+        resolved_stylesheet_path = Path(src_root, path).resolve()
+        stylesheet_paths.setdefault(resolved_stylesheet_path, []).append(
+            "://site-config"
+        )
 
     image_to_optimize: dict[Path, ImageOptimizer] = {}
     for static_path in static_paths.copy():
@@ -482,6 +490,13 @@ def build_site(
     if heavy_images_msg:
         msg = "\n- ".join(heavy_images_msg)
         LOGGER.warning(f"🧱 found {len(heavy_images_msg)} heavy images:\n- {msg})")
+
+    for path, sources in stylesheet_paths.items():
+        if not path.exists():
+            sources = "'" + "', '".join(sources) + "'"
+            LOGGER.warning(
+                f"🔍 found non-existing stylesheet path '{path}' referenced in {sources}."
+            )
 
     etime = time.time()
     LOGGER.debug(
