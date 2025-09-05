@@ -10,7 +10,7 @@ import traceback
 from pathlib import Path
 
 import lxmsite
-from lxmsite import PageResource
+from lxmsite import PageResource, SiteGlobalContext
 from lxmsite import PageMetadata
 from lxmsite import MetaFileCollection
 from lxmsite import ShelfResource
@@ -83,24 +83,22 @@ def _parse_page(
     meta_collection: MetaFileCollection,
 ) -> PageResource | Exception:
     default_meta = meta_collection.get_path_meta(page_path)
-
     # will actually not log when using concurrent.futures.ProcessPoolExecutor
     LOGGER.debug(f"reading page '{page_path}'")
     LOGGER.debug(f"└ default_meta={default_meta}")
-    try:
-        page = lxmsite.read_page(
-            file_path=page_path,
-            site_config=site_config,
-            default_metadata=default_meta,
-        )
-    except Exception as error:
-        return error
-
+    page = lxmsite.read_page(
+        file_path=page_path,
+        site_config=site_config,
+        default_metadata=default_meta,
+    )
     return page
 
 
-def _parser(args):
-    return _parse_page(*args)
+def _page_parser(args):
+    try:
+        return _parse_page(*args)
+    except Exception as error:
+        return error
 
 
 class ExceptionStack(Exception):
@@ -121,7 +119,7 @@ def parse_pages(
     mapping = [(path, site_config, meta_collection) for path in page_paths]
 
     with concurrent.futures.ProcessPoolExecutor() as executor:
-        results = executor.map(_parser, mapping, chunksize=2)
+        results = executor.map(_page_parser, mapping, chunksize=2)
         for page_path, page in zip(page_paths, results):
             if isinstance(page, Exception):
                 LOGGER.error(f"{fmterr(str(page_path), page)}")
@@ -198,6 +196,8 @@ def build_page(
     Returns:
         absolute path to the created html file
     """
+    LOGGER.debug(f"┌ 📃 building page '{page.url_path}'")
+
     template = page.html_template
     if not template:
         raise ValueError(f"No template specified on page '{page.url_path}'.")
@@ -217,6 +217,54 @@ def build_page(
     LOGGER.debug(f"└ writing page '{dst_path}'")
     dst_path.write_text(page_html, encoding="utf-8")
     return dst_path
+
+
+def _page_builder(args):
+    try:
+        return build_page(*args)
+    except Exception as error:
+        return error
+
+
+def build_pages(
+    pages: dict[Path, PageResource],
+    page_by_shelves: dict[Path, ShelfResource],
+    shelf_library: ShelfLibrary,
+    dst_root: Path,
+    site_config: SiteConfig,
+    build_context: SiteGlobalContext,
+) -> list[Path]:
+    errors: list[Exception] = []
+    built_pages: list[Path] = []
+
+    mapping = [
+        (
+            page,
+            # TODO verify nested shelves support and add it or not
+            page_by_shelves.get(page_path),
+            shelf_library,
+            dst_root,
+            site_config,
+            build_context,
+        )
+        for page_path, page in pages.items()
+    ]
+
+    # XXX: I have observed threading doesn't help with perfs for this function
+    #   but I leave it for now.
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        results = executor.map(_page_builder, mapping, chunksize=6)
+        for page, build_path in zip(pages.values(), results):
+            if isinstance(build_path, Exception):
+                LOGGER.error(f"└ {fmterr(str(page), build_path)}")
+                errors.append(build_path)
+                continue
+            built_pages.append(build_path)
+
+    if errors:
+        raise ExceptionStack(errors)
+
+    return built_pages
 
 
 def build_redirection(
@@ -363,35 +411,26 @@ def build_site(
         )
     except ExceptionStack as error:
         errors += error.errors
-
     shelf_library = ShelfLibrary(shelves=shelves)
     etime = time.time()
     benchmarks[f"parsed {len(shelves)} shelves"] = etime - stime
 
     # write html pages to disk
     stime = time.time()
-    built_pages = []
-    for page_path, page in pages.items():
-        LOGGER.debug(f"┌ 📃 building page '{page.url_path}'")
-        # TODO verify nested shelves support and add it or not
-        parent_shelf: ShelfResource | None = page_by_shelves.get(page_path)
-        try:
-            built_page = build_page(
-                page=page,
-                shelf=parent_shelf,
-                shelf_library=shelf_library,
-                dst_root=dst_root,
-                site_config=config,
-                build_context=build_context,
-            )
-            built_pages.append(built_page)
-        except Exception as error:
-            LOGGER.error(f"└ {fmterr(str(page), error)}")
-            errors.append(error)
-            continue
-
+    built_pages: list[Path] = []
+    try:
+        built_pages = build_pages(
+            pages=pages,
+            page_by_shelves=page_by_shelves,
+            shelf_library=shelf_library,
+            dst_root=dst_root,
+            site_config=config,
+            build_context=build_context,
+        )
+    except ExceptionStack as error:
+        errors += error.errors
     etime = time.time()
-    benchmarks[f"built {len(pages)} pages"] = etime - stime
+    benchmarks[f"built {len(built_pages)} pages"] = etime - stime
 
     # build redirections pages
     stime = time.time()
