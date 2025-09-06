@@ -386,6 +386,7 @@ def build_site(
     benchmarks[f"collected {len(site_files)} site file"] = etime - stime
 
     stime = time.time()
+    LOGGER.info(f"📃 parsing {len(page_paths)} page paths")
     # mapping of "absolute path": "Page instance"
     pages: dict[Path, PageResource] = {}
     try:
@@ -417,6 +418,7 @@ def build_site(
 
     # write html pages to disk
     stime = time.time()
+    LOGGER.info(f"📃 building {len(pages)} pages")
     built_pages: list[Path] = []
     try:
         built_pages = build_pages(
@@ -457,7 +459,7 @@ def build_site(
     benchmarks[f"built {len(config.REDIRECTIONS)} redirection pages"] = etime - stime
 
     stime = time.time()
-    LOGGER.debug(f"🔎 building search feature")
+    LOGGER.info(f"🔎 building search feature")
     build_search(dst_root=dst_root)
     etime = time.time()
     benchmarks[f"built search feature"] = etime - stime
@@ -499,6 +501,7 @@ def build_site(
     LOGGER.debug(f"🖼️ found {len(image_to_optimize)} image to optimize")
 
     stime = time.time()
+    LOGGER.info(f"📦 processing {len(static_paths)} static paths")
     heavy_images = {}
     for static_path in static_paths:
         dst_path = Path(dst_root, static_path.relative_to(src_root))
