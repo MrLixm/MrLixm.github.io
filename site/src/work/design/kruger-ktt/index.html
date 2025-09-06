@@ -1,0 +1,101 @@
+{% extends ".base.html" %}
+{% block main %}
+  <div class="read-area">
+    <div class="rspsv-flex">
+      <section id="introduction">
+        <span class="sup-heading">KRUGER's</span>
+        <div class="heading">
+          <h1>KTT</h1>
+          <img class="houdini-node" src="houdini-node.svg" alt="A Houdini node shape with the Houdini icon">
+        </div>
+        <span class="sub-heading">toolset icon design</span>
+        <p>July 2025 - September 2025</p>
+        <div id="project-description">
+          <p>
+            Kruger trusted me for designing the icons required for each
+            of his custom nodes that are part of his "KTT" toolset. The toolset
+            allows for advanced 3d terrain creation in the
+            <a href="https://www.sidefx.com/products/houdini/">Houdini</a> software.
+            I was in charge of designing the main logo and the icons for each of the 50 nodes.
+          </p>
+          <p>
+            The project was especially interesting because it was not the usual allegoric
+            icons where you need to represent an action. Instead, we focus on the result
+            of the action, and for a tool that generates terrains, this mean creating a lot
+            of small environment scenes !
+          </p>
+          <p>
+            The icons are usually viewed at very small size so it was tricky to make
+            such detailed scenes readable in all contexts.
+          </p>
+          <p>You can get the toolset at
+            <a href="https://samk9632.gumroad.com/l/KTTforHoudini">https://samk9632.gumroad.com/l/KTTforHoudini</a>.
+          </p>
+        </div>
+      </section>
+      <section id="main-logo">
+        <div id="logo-variants" class="rspsv-flex">
+          <img
+            src="logo/ktt-logo-Y-shot-stone-dark.svg"
+            alt="the KTT logo in its fully stylized version. It displays the 'KTT' txt in a clean aesthetic and the top bar of the K evolve into a mountain outline. The background looks like the logo is over a stone tile.">
+          <div class="logo-grid">
+            <img src="logo/ktt-logo-Y-shot-light.svg" alt="the ktt logo with a simple light background">
+            <img src="logo/ktt-logo-Y-shot-stone-circle.svg" alt="the ktt logo with a stone-themed light background">
+            <img src="logo/ktt-logo-Y-shot-dark.svg" alt="the ktt logo with a simple dark background">
+            <img src="logo/ktt-logo-Y-shot-stone-circle-dark.svg" alt="the ktt logo with a stone-themed dark background">
+          </div>
+        </div>
+        <div>
+          <h2>main logo</h2>
+          <p>
+            We knew it was kind of mandatory to put a mountain in the logo. This
+            is the result of the second full iteration amongst all the prototypes.
+          </p>
+        </div>
+        <div class="background"></div>
+      </section>
+    </div>
+    <section id="nodes-icons">
+      <div class="icon-grid">
+        {{ include_script_output("list-icons.py") }}
+      </div>
+    </section>
+    <section id="in-context">
+      <h2>in context</h2>
+      <p>
+        This is how the nodes looks in Houdini when zoomed in. Keep in mind they are
+        usually viewed at even smaller scale !
+      </p>
+      <div class="node-grid">
+        <img src="screenshots/houdini-node-cacher.jpg" alt="A screenshot of the cacher node in houdini">
+        <img src="screenshots/houdini-node-dunes.jpg" alt="A screenshot of the dunes node in houdini">
+        <img src="screenshots/houdini-node-mask-by-color.jpg" alt="A screenshot of the mask-by-color node in houdini">
+        <img src="screenshots/houdini-node-mountain.jpg" alt="A screenshot of the mountain node in houdini">
+        <img src="screenshots/houdini-node-thermal-erosion.jpg" alt="A screenshot of the thermal-erosion node in houdini">
+      </div>
+      <p>
+        Also, here is 2 random details about Houdini node's icons:
+      </p>
+      <ul>
+        <li>images must have an embed ICC profile, else they will be displayed darker.</li>
+        <li>the ideal size for PNG icons is 49x49px; SVG is also supported but have a slightly aliased rendering.</li>
+      </ul>
+      <div class="background"></div>
+    </section>
+    <section id="design-explorations">
+      <h2>logo design explorations</h2>
+      <div class="rspsv-flex" id="sketches">
+        <img src="ktt-logo-sketches-2.png" alt="screenshot of a digital canvas with different logo explorations">
+        <img src="ktt-logo-sketches.jpg" alt="some snapshots of my physical sketchbook with some initial logo shape explorations">
+      </div>
+      <div class="rspsv-flex" id="logo-iteration-1">
+        <p>This is the first full iteration of the logo which we discarded in the end.</p>
+        <img src="logo/ktt-logo-shot-light.svg" alt="the first KTT logo iteration with a light theme.">
+        <img src="logo/ktt-logo-shot-color.svg" alt="the first KTT logo iteration with a rocky colored theme.">
+        <img src="logo/ktt-logo-shot-strata.256px.png" alt="the first KTT logo iteration with a strata background and the same colored theme.">
+        <div class="spacer"></div>
+      </div>
+      <div class="background"></div>
+    </section>
+  </div>
+{% endblock %}

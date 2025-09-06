@@ -1,0 +1,285 @@
+:root {
+    --bg-color-W: rgb(198, 198, 198);
+    --bg-color: rgb(214, 214, 214);
+    --bg-color-M: rgb(220, 220, 220);
+    --bg-color-MM: rgb(229, 229, 229);
+
+    --color-W: rgb(0, 0, 0);
+    --color: rgb(5, 5, 5);
+    --color-M: rgb(25, 25, 25);
+    --color-MM: rgb(100, 100, 100);
+
+    --color-primary: rgb(238, 102, 12);
+
+    --color-hou-bg: rgb(48, 48, 48);
+}
+body {
+    background-color: var(--bg-color);
+    margin: 0;
+}
+main {
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: unset;
+}
+a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+h2 {
+    font-size: 50px;
+    font-weight: 700;
+    margin: 0 0 2rem 0;
+}
+
+.read-area {
+    position: relative;
+    /* give a bit more space than blog post and others */
+    margin: 50px 10vw 100px;
+    font-family: "Source Sans Pro", sans-serif;
+}
+@media screen and (max-width: 1050px) {
+    .read-area {
+        margin: 50px 8vw 100px;
+
+    }
+}
+
+.rspsv-flex {
+    display: flex;
+    flex-direction: row;
+}
+.read-area > .rspsv-flex:first-child {
+    gap: 4rem;
+    padding-bottom: 4rem;
+}
+@media screen and (max-width: 1050px) {
+    .rspsv-flex {
+        flex-direction: column;
+    }
+    .read-area > .rspsv-flex:first-child {
+        gap: 0;
+    }
+}
+
+section#introduction {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-bottom: 4rem;
+
+    h1 {
+        font-size: 150px;
+        font-weight: 900;
+        margin: -0.2em 0;
+    }
+
+    .heading {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10%;
+    }
+
+    .sup-heading {
+        font-size: 50px;
+        font-weight: 700;
+    }
+
+    .sub-heading {
+        font-size: 50px;
+    }
+
+    > p {
+        margin: 0;
+    }
+
+    #project-description {
+        margin: 1rem 0;
+    }
+
+    .houdini-node {
+        width: 220px;
+    }
+
+}
+section#main-logo {
+    position: relative;
+    padding: 4rem 10% 2rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    color: var(--color-MM);
+
+    h2 {
+        font-size: 30px;
+    }
+
+    #logo-variants {
+        gap: 3rem;
+        margin-bottom: 2rem;
+    }
+
+    #logo-variants > img {
+        width: 256px;
+    }
+
+    .logo-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        width: max-content;
+    }
+
+    .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 80vw;
+        height: 100%;
+        background-color: var(--bg-color-MM);
+        border: 2px solid var(--bg-color-W);
+        border-radius: 15px;
+    }
+}
+@media screen and (max-width: 1400px) {
+    section#main-logo .rspsv-flex {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+@media screen and (max-width: 1050px) {
+    section#main-logo {
+        padding: 2rem 10% 1rem 2rem;
+    }
+
+    section#main-logo .logo-grid {
+        gap: 1rem;
+    }
+}
+
+section#nodes-icons {
+
+    padding: 4rem 0;
+
+    .icon-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+}
+section#in-context {
+
+    position: relative;
+    padding: 4rem 0;
+    color: var(--bg-color);
+
+    .node-grid {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+
+    .node-grid img {
+        height: 128px;
+        display: block;
+    }
+
+    .background {
+        position: absolute;
+        top: 0;
+        left: -10vw;
+        z-index: -1;
+        width: 110vw;
+        height: 100%;
+        background-color: var(--color-hou-bg);
+    }
+}
+
+section#design-explorations {
+
+    position: relative;
+    padding: 4rem 0;
+
+    div#sketches {
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        border: 2px solid var(--bg-color-W);
+        border-left-width: 0;
+        border-right-width: 0;
+        padding: 2rem;
+    }
+
+    div#sketches img[src*="sketches-2.png"] {
+        width: 25%;
+        height: 25%;
+    }
+
+    div#sketches img[src*="sketches.jpg"] {
+        width: 85%;
+        height: 85%;
+    }
+
+    div#logo-iteration-1 {
+        padding: 2rem;
+        align-items: center;
+        border: 2px solid var(--bg-color-W);
+        border-left-width: 0;
+        border-right-width: 0;
+        color: var(--color-MM);
+    }
+
+    div#logo-iteration-1 p {
+        margin: 1rem;
+    }
+
+    div#logo-iteration-1 img {
+        min-width: 200px;
+        max-width: 200px;
+        border: 1px solid var(--bg-color-W);
+        border-top-width: 0;
+        border-bottom-width: 0;
+        padding: 0 1rem;
+    }
+
+    div#logo-iteration-1 .spacer {
+        width: 100%;
+    }
+
+    .background {
+        position: absolute;
+        top: 0;
+        left: -10vw;
+        z-index: -1;
+        width: 110vw;
+        height: 100%;
+        /*background: radial-gradient(circle, var(--bg-color-M) 10%, transparent 11%), radial-gradient(circle at bottom left, var(--bg-color-M) 5%, transparent 6%), radial-gradient(circle at bottom right, var(--bg-color-M) 5%, transparent 6%), radial-gradient(circle at top left, var(--bg-color-M) 5%, transparent 6%), radial-gradient(circle at top right, var(--bg-color-M) 5%, transparent 6%);*/
+        background: repeating-linear-gradient(90deg, var(--bg-color-M) 0, var(--bg-color-M) 5%, transparent 0, transparent 50%), repeating-linear-gradient(180deg, var(--bg-color-M) 0, var(--bg-color-M) 5%, transparent 0, transparent 50%);
+        /*background-color: var(--bg-color-MM);*/
+        background-size: 1.5em 1.5em;
+    }
+
+}
+@media screen and (max-width: 1050px) {
+    section#design-explorations div#logo-iteration-1,
+    section#design-explorations div#sketches {
+        padding: 1rem;
+    }
+
+    section#design-explorations div#sketches img[src] {
+        width: 100%;
+    }
+
+    section#design-explorations div#logo-iteration-1 img {
+        padding: 1rem;
+    }
+}
