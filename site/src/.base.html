@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}liam collod - {{ Page.metadata.title }}{% endblock title %}</title>
+  <title>{% block title %}{{ Page.metadata.title }} - Liam Collod{% endblock title %}</title>
   {%- if Page.metadata.icon %}
   <link rel="icon" href="{{ Page.metadata.icon|mksiterel|mksiteabs }}" type="image/x-ico">
   {% endif %}
