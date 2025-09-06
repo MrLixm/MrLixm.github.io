@@ -31,13 +31,15 @@ def mkdir(dirpath: Path):
 
     Used instead of mkdir(parent=true) just to get the LOGGER call for each directory created.
     """
-    if dirpath.exists():
-        return
     # make sure parents are created first
     if not dirpath.parent.exists():
         mkdir(dirpath.parent)
+    if dirpath.exists():
+        return
+
     LOGGER.debug(f"mkdir({dirpath})")
-    dirpath.mkdir()
+    # use 'exist_ok' because found some race conditions when executed in thread
+    dirpath.mkdir(exist_ok=True)
 
 
 def is_file_newer(source: Path, target: Path):
@@ -118,7 +120,7 @@ def parse_pages(
     pages: dict[Path, PageResource] = {}
     mapping = [(path, site_config, meta_collection) for path in page_paths]
 
-    with concurrent.futures.ProcessPoolExecutor() as executor:
+    with concurrent.futures.ThreadPoolExecutor() as executor:
         results = executor.map(_page_parser, mapping, chunksize=2)
         for page_path, page in zip(page_paths, results):
             if isinstance(page, Exception):
@@ -252,7 +254,7 @@ def build_pages(
 
     # XXX: I have observed threading doesn't help with perfs for this function
     #   but I leave it for now.
-    with concurrent.futures.ProcessPoolExecutor() as executor:
+    with concurrent.futures.ThreadPoolExecutor() as executor:
         results = executor.map(_page_builder, mapping, chunksize=6)
         for page, build_path in zip(pages.values(), results):
             if isinstance(build_path, Exception):
