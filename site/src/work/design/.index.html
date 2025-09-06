@@ -1,0 +1,17 @@
+{% extends ".base.html" %}
+{% block main %}
+  <div class="read-area">
+    <h1>Design</h1>
+    <p class="sub-heading">{{ Page.metadata.description }}</p>
+    <div class="design-gallery">
+      {%- for page in Shelf.iterate_children_by_last_created(reverse=True, ignore_index=True) %}
+        <a href="{{ page.url_path|mkpagerel|prettylink }}">
+          <div class="design-gallery-item">
+            <img src="{{ page.metadata.image|mksiterel(page.url_path)|mkpagerel }}" alt="{{ page.metadata.image_alt }}">
+            <h3>{{ page.title }}</h3>
+          </div>
+        </a>
+      {%- endfor %}
+    </div>
+  </div>
+{% endblock %}
