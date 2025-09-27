@@ -1,7 +1,7 @@
 # Tiny Twinkly Toads
 
 :description: A closer look at creatures of the other world.
-:image: 2509.dig.s5iix.meuse.P1001411.v0001.jpg
+:image: 2509.dig.s5iix.meuse.P1001411.v0002.jpg
 :date-created: 2025-09-26T21:47
 :stylesheets: +2507toads.css
 
