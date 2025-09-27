@@ -1,0 +1,10 @@
+@import url(https://fonts.bunny.net/css?family=spectral:400i);
+
+:root {
+    --color: rgb(168,154,120);
+    --color-W: rgb(152, 139, 108);
+}
+.image-gallery {
+    font-weight: 400;
+    font-family: "Spectral", serif;
+}
