@@ -9,7 +9,7 @@
   </section>
   {{ Page.html_content }}
   <section id="resource-library">
-    {%- for category, pages in Shelf.group_children_by_metadata("category", ignore_index=True).items() %}
+    {%- for category, pages in Shelf.group_children_by_metadata("category", ignore_index=True, sort_by_date=-1).items() %}
       <h2>{{ category }}</h2>
       <div class="resource-category-library">
         {%- for page in pages %}

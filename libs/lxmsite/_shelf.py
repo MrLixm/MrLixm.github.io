@@ -164,6 +164,7 @@ class ShelfResource:
         self,
         metadata_name: str,
         ignore_index: bool = False,
+        sort_by_date: int = 0,
     ) -> dict[Any, list[PageResource]]:
         """
         Return children grouped by their value for the given metadata.
@@ -171,16 +172,25 @@ class ShelfResource:
         Args:
             metadata_name: valid name of a metadata for pages.
             ignore_index: if True do not yield the page that is index of the shelf
+            sort_by_date: 1 to sort page by date created, -1 to reverse the order, 0 to left sorted by name
 
         Returns:
             mapping of metadata value: list of pages
         """
+        if sort_by_date:
+            children = self.iterate_children_by_last_created(
+                reverse=sort_by_date == -1,
+                ignore_index=ignore_index,
+            )
+        else:
+            children = self.iterate(ignore_index=ignore_index)
+
         groups = {}
-        for child in self.iterate(ignore_index=ignore_index):
+        for child in children:
             value = child.metadata.get(metadata_name)
             groups.setdefault(value, []).append(child)
 
-        return groups
+        return dict(sorted(groups.items()))
 
 
 @dataclasses.dataclass
