@@ -11,6 +11,7 @@ import lxmsite
 
 LOGGER = logging.getLogger(Path(__file__).stem)
 lxmsite.configure_logging()
+LOGGER.setLevel(logging.DEBUG)
 
 THISDIR = Path(__file__).parent
 BUILDSCRIPT_PATH = THISDIR / "build-site.py"
