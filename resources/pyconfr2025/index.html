@@ -105,9 +105,9 @@
     <section id="article-header">
         <p id="post-category" title="the post category">learning</p>
       <div class="metadata-tags">
-          <pre class="metadata-tag" title="a post keyword" style="animation-delay: 0.5s">programming</pre>
+          <pre class="metadata-tag" title="a post keyword" style="animation-delay: 0.1s">programming</pre>
           <pre class="metadata-tag" title="a post keyword" style="animation-delay: 0.4s">python</pre>
-          <pre class="metadata-tag" title="a post keyword" style="animation-delay: 0.7s">web-dev</pre>
+          <pre class="metadata-tag" title="a post keyword" style="animation-delay: 0.1s">web-dev</pre>
       </div>
       <h1>PyConFR 2025</h1>
         <p id="post-description" title="the post description">Ma participation à la Python Convention FR 2025 (in french).</p>
@@ -152,6 +152,128 @@ J'ai choisis d'y animer un atelier: <em>Créer un petit site web statique et plu
 <div class="url-preview-description"></div>
 </div>
 </div>
+<p>Et voici les ressources additionelles. Merci à tout le monde d'etre venu et désolé pour 
+le chaos technique, j'espere que ces quelques ressources vous permetrons d'explorer ca à
+votre rythme.</p>
+<p>Pour approndir comment un site web fonctionne je recommende vraiment la documentation
+Mozilla qui est aussi traduite en francais !</p>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works">https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works</a></li>
+</ul>
+<h2 id="jinja"><a href="#jinja">Jinja</a></h2>
+<p><a href="https://jinja.palletsprojects.com/en/stable/">https://jinja.palletsprojects.com/en/stable/</a></p>
+<p>Example de template html jinja:</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>PyCon Demo<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>{{ PAGE_TITLE|escape }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>voici une liste d&#39;images:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    {% for img_path in IMGS %}
+        <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;{{ img_path }}&quot;</span><span class="p">&gt;</span>
+    {% endfor %}
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+<p>Example de recette de build de template:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">jinja2</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">templates_root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
+
+<span class="n">imgs_root</span> <span class="o">=</span> <span class="n">templates_root</span> <span class="o">/</span> <span class="s2">&quot;imgs&quot;</span>
+<span class="n">imgs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">imgs_root</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.jpg&quot;</span><span class="p">))</span>
+<span class="c1"># les urls HTML ne supported pas les path absolus, nous devons convertir en relatif</span>
+<span class="n">imgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">img</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="n">templates_root</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">imgs</span><span class="p">]</span>
+
+<span class="n">jinja_env</span> <span class="o">=</span> <span class="n">jinja2</span><span class="o">.</span><span class="n">Environment</span><span class="p">(</span>
+    <span class="n">undefined</span><span class="o">=</span><span class="n">jinja2</span><span class="o">.</span><span class="n">StrictUndefined</span><span class="p">,</span>
+    <span class="n">loader</span><span class="o">=</span><span class="n">jinja2</span><span class="o">.</span><span class="n">FileSystemLoader</span><span class="p">(</span><span class="n">templates_root</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">template</span> <span class="o">=</span> <span class="n">jinja_env</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s2">&quot;template_name...&quot;</span><span class="p">)</span>
+
+<span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># mapping de variables globale propagees dans le template</span>
+    <span class="c1"># mettez ce que vous voulez</span>
+    <span class="s2">&quot;PAGE_TITLE&quot;</span><span class="p">:</span> <span class="s2">&quot;PyCon démo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;IMGS&quot;</span><span class="p">:</span> <span class="n">imgs</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># &#39;content&#39; est une str qu&#39;il faut ensuite sauvegarder sur disque</span>
+<span class="n">content</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="o">**</span><span class="n">attributes</span><span class="p">)</span>
+
+<span class="c1"># reste la logique de comment ecrire l&#39;html et lancer le serveur ...</span>
+</code></pre></div>
+<h2 id="markdown-vers-html"><a href="#markdown-vers-html">Markdown vers HTML</a></h2>
+<p><em>Partie qu'on a pas eu le temps de voir</em></p>
+<p>En utilisant <a href="https://python-markdown.github.io/">https://python-markdown.github.io/</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">markdown</span>
+
+<span class="c1"># voir la doc pour les settings dispo</span>
+<span class="n">settings</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">markdown_file_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
+<span class="n">markdown_content</span> <span class="o">=</span> <span class="n">markdown_file_path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+<span class="n">html</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span>
+    <span class="n">markdown_content</span><span class="p">,</span>
+    <span class="c1"># regardez dans la doc quel extensions sont necessaire pour vous,</span>
+    <span class="c1"># les extensions permettent de rajouter de nouvelle facon d&#39;ecrire</span>
+    <span class="c1"># du markdown et sont vraiment pratiques.</span>
+    <span class="n">extensions</span><span class="o">=</span><span class="p">[</span>
+        <span class="c1"># builtins.extra</span>
+        <span class="s2">&quot;abbr&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;attr_list&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;def_list&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fenced_code&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;footnotes&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;md_in_html&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tables&quot;</span><span class="p">,</span>
+        <span class="c1"># builtins</span>
+        <span class="s2">&quot;admonition&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;toc&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="n">extension_configs</span><span class="o">=</span><span class="n">settings</span><span class="p">,</span>
+    <span class="n">output_format</span><span class="o">=</span><span class="s2">&quot;xhtml&quot;</span><span class="p">,</span>
+    <span class="n">tab_length</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<h2 id="heberger-son-site"><a href="#heberger-son-site">Heberger son site</a></h2>
+<ul>
+<li><a href="https://docs.github.com/en/pages">https://docs.github.com/en/pages</a><ul>
+<li>gratuit pas vraiment de limitation</li>
+<li>soucis ethique: GitHub est gerer par Microsoft et il n'hesistent pas a entrainer 
+  leur IA sur le contenu hebergé sur GitHub.</li>
+</ul>
+</li>
+<li><a href="https://codeberg.page/">https://codeberg.page/</a><ul>
+<li>comme GitHub CodeBerg est une platforme plus ethique</li>
+<li>marqué comme experimentale sur leur site</li>
+</ul>
+</li>
+<li><a href="https://neocities.org/">https://neocities.org/</a><ul>
+<li>Assez connu, inlus aussi un editeur HTML en ligne.</li>
+<li>necessaire de apyer pour mettre un nom de domaine personalisé</li>
+</ul>
+</li>
+</ul>
+<p>Alternative queer (https://eldritch.cafe/@zorume/115247647232654326):</p>
+<ul>
+<li><a href="https://besties.house/">https://besties.house/</a> qui gère:</li>
+<li><a href="https://pages.gay/">https://pages.gay/</a> pour les sites</li>
+<li>et <a href="https://git.gay/">https://git.gay/</a> comme forge git</li>
+</ul>
+<p>Et pour faire du "self-host" c'est aussi possible de louer un ordinateur, appelé VPS
+et d'utiliser <a href="https://yunohost.org/">YunoHost</a> pour gerer le systeme. YunoHost rend le processus 
+beaucoup moins technique.</p>
+<ul>
+<li>Pour trouver un VPS: <a href="https://european-alternatives.eu/category/vps-virtual-private-server-hosters">https://european-alternatives.eu/category/vps-virtual-private-server-hosters</a></li>
+<li>L'app YunoHost a installer pour gerer un site web: <a href="https://apps.yunohost.org/app/my_webapp">https://apps.yunohost.org/app/my_webapp</a></li>
+</ul>
 </div>
   </article>
 
@@ -168,7 +290,7 @@ J'ai choisis d'y animer un atelier: <em>Créer un petit site web statique et plu
     </a>
     
     <p>Static website <a href="../../.doc/"><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-10-30T15:07</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/8df9586" target="_blank">8df9586</a></i></p>
+      Last built on <i>2025-11-01T19:01</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/22b0628" target="_blank">22b0628</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>
