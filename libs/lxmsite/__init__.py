@@ -18,7 +18,6 @@ from ._configure import SiteConfig
 from ._page import PageResource
 from ._page import PageMetadata
 from ._page import PageStatus
-from ._page import read_page
 
 from ._shelf import ShelfConfig
 from ._shelf import ShelfResource
@@ -28,5 +27,8 @@ from ._templating import render_page
 from ._templating import render_rss_feed
 from ._templating import SiteGlobalContext
 from ._templating import TemplateRenderer
+
+from . import mdlib
+from ._reader import read_page
 
 from ._build import build_site
