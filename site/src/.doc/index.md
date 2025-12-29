@@ -258,6 +258,33 @@ A directive is structured as:
     content
 ```
 
+#### include
+
+Inject the content of a file in the Markdown document.
+
+If no option is provided, the content is assumed to be a Markdown document that need parsing.
+
+Available options are:
+
+* `code`: the text will be wrapped in a superfence code blocks and the value will be appened to the header.
+* `lines`:
+  an expression that describe the lines to extract from the file.
+  It can either be 2 integer seprated by a colon: that's a start-end range
+  (you can use negative number, where -1 indicate the last line).
+  Or it can be multiple integer separated by a comma, which correspond each to an individual line.
+* `encoding`: the file encoding used for reading.
+* `literal`:
+  will import the content and wraps it in a <div>. the value
+  are appened as attributes of the div tag.
+
+Example:
+
+```rst
+.. include:: myfile.py
+    :code: python {linenums="1" title="myfile.py"}
+    :lines: 5-10
+```
+
 #### code blocks
 
 You can embed code snippets with the [superfence syntax](https://facelessuser.github.io/pymdown-extensions/extensions/superfences/). 
