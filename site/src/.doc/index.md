@@ -594,7 +594,7 @@ be stored anywhere but you need to specify its path relative to the template it 
 in). Inside, you only need to declare one mandatory function:
 
 ```python
-def generate(template_renderer: lxmsite.TemplateRenderer) -> str:
+def generate(template_renderer: lxmsite.PageTemplateRenderer) -> str:
     # your implementation here
     pass
 ```

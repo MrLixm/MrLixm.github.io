@@ -26,7 +26,7 @@ from ._shelf import ShelfLibrary
 from ._templating import render_page
 from ._templating import render_rss_feed
 from ._templating import SiteGlobalContext
-from ._templating import TemplateRenderer
+from ._templating import PageTemplateRenderer
 
 from . import mdlib
 from ._reader import read_page

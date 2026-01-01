@@ -3,7 +3,7 @@ import logging
 from pathlib import Path
 
 from lxmsite import SiteConfig
-from . import mdlib
+from lxmsite import mdlib
 from lxmsite import PageResource
 from lxmsite import PageMetadata
 from lxmsite import PageStatus

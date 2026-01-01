@@ -10,64 +10,9 @@ from lxmsite import SiteConfig
 from lxmsite import PageResource
 from lxmsite import ShelfResource
 from lxmsite import ShelfLibrary
-from ._utils import slugify
-from ._utils import mkpagerel
-from ._utils import mksiterel
+from lxmsite._templating import get_jinja_env
 
 LOGGER = logging.getLogger(__name__)
-
-
-def get_jinja_env(
-    site_config: SiteConfig,
-    page_rel_url: str,
-) -> jinja2.Environment:
-
-    def _mksiteabs_(_path_: str) -> str:
-        """
-        Convert the given site-relative url to absolute.
-        """
-        if _path_.startswith("http"):
-            # already absolute path
-            return _path_
-        return f"{site_config.SITE_URL}/{_path_.lstrip('/')}"
-
-    def _mksiterel_(_path_: str, _page_path_=page_rel_url) -> str:
-        if _path_.startswith("/"):
-            # already relative to site root
-            return _path_
-        if _path_.startswith("http"):
-            # cannot make relative, absolute path
-            return _path_
-        return mksiterel(_path_, _page_path_)
-
-    def _mkpagerel_(_path_: str, _page_path_=page_rel_url) -> str:
-        if _path_.startswith("http"):
-            # cannot make relative, absolute path
-            return _path_
-        return mkpagerel(_path_, _page_path_)
-
-    def _format_link_(_link_: str) -> str:
-        """
-        Make site cross-linking prettier by removing file format suffix on publish.
-        """
-        # XXX: this works on GitHub pages !!! no guarantee for other host
-        if site_config.PUBLISH_MODE:
-            if _link_.endswith("index.html"):
-                formatted = _link_.removesuffix("index.html")
-                return formatted if formatted else "."
-            return _link_.removesuffix(".html")
-        return _link_
-
-    jinja_env = jinja2.Environment(
-        undefined=jinja2.StrictUndefined,
-        loader=jinja2.FileSystemLoader(site_config.TEMPLATES_ROOT),
-    )
-    jinja_env.filters["slugify"] = slugify
-    jinja_env.filters["mksiteabs"] = _mksiteabs_
-    jinja_env.filters["mksiterel"] = _mksiterel_
-    jinja_env.filters["mkpagerel"] = _mkpagerel_
-    jinja_env.filters["prettylink"] = _format_link_
-    return jinja_env
 
 
 @dataclasses.dataclass
@@ -78,7 +23,7 @@ class SiteGlobalContext:
 
 
 @dataclasses.dataclass
-class TemplateRenderer:
+class PageTemplateRenderer:
     template: jinja2.Template
     template_path: Path
     jinja_env: jinja2.Environment
@@ -96,7 +41,7 @@ class TemplateRenderer:
             the output of the script, a jinja template as str
         """
         func_signature_template = (
-            "def generate(template_renderer: lxmsite.TemplateRenderer) -> str:"
+            "def generate(template_renderer: lxmsite.PageTemplateRenderer) -> str:"
         )
 
         LOGGER.debug(f">>> running script '{script_path}'")
@@ -112,7 +57,7 @@ class TemplateRenderer:
         template_renderer = dataclasses.replace(self)
 
         LOGGER.debug(
-            f">>> running 'generate(template_renderer=<TemplateRenderer {id(self)}>)'"
+            f">>> running 'generate(template_renderer=<PageTemplateRenderer {id(self)}>)'"
         )
         try:
             script_template = script_func(template_renderer=template_renderer)
@@ -195,11 +140,13 @@ def render_page(
 
     """
     jinja_env = get_jinja_env(
-        site_config=site_config,
         page_rel_url=page.url_path,
+        site_url=site_config.SITE_URL,
+        publish_mode=site_config.PUBLISH_MODE,
+        templates_root=site_config.TEMPLATES_ROOT,
     )
     template = jinja_env.get_template(template_name)
-    renderer = TemplateRenderer(
+    renderer = PageTemplateRenderer(
         template=template,
         template_path=Path(template.filename),
         jinja_env=jinja_env,
@@ -210,33 +157,3 @@ def render_page(
         shelf_library=shelf_library,
     )
     return renderer.render()
-
-
-def render_rss_feed(
-    shelf: ShelfResource,
-    template_name: str,
-    site_config: SiteConfig,
-) -> str:
-    """
-    Generate a rss feed from a shelf.
-
-    Args:
-        shelf: shelf the feed is generated from
-        template_name: jinja template path relative to template root
-        site_config:
-
-    Returns:
-        rendered template which can be writen to disk
-    """
-    jinja_env = get_jinja_env(
-        site_config=site_config,
-        page_rel_url=shelf.rss_feed_url,
-    )
-    template = jinja_env.get_template(template_name)
-    attributes = {
-        "URL_PATH": shelf.rss_feed_url,
-        "Config": site_config,
-        "Shelf": shelf,
-    }
-    content = template.render(**attributes)
-    return content

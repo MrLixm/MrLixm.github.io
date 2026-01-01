@@ -9,6 +9,9 @@
       <option name="HTML_TEXT_WRAP" value="0" />
       <option name="HTML_ALIGN_ATTRIBUTES" value="false" />
     </HTMLCodeStyleSettings>
+    <Python>
+      <option name="OPTIMIZE_IMPORTS_ALWAYS_SPLIT_FROM_IMPORTS" value="true" />
+    </Python>
     <codeStyleSettings language="HTML">
       <option name="RIGHT_MARGIN" value="120" />
       <option name="SOFT_MARGINS" value="120" />
