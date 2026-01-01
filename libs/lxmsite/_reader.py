@@ -30,9 +30,11 @@ def read_page(
     default_metadata: dict[str, str],
 ) -> PageResource:
 
+    md_doc = file_path.read_text(encoding="utf-8")
     parsed = mdlib.read_markdown(
-        file_path=file_path,
-        settings=site_config.DEFAULT_MARKDOWN_SETTINGS,
+        source=md_doc,
+        paths_root=file_path.parent,
+        extension_settings=site_config.DEFAULT_MARKDOWN_SETTINGS,
     )
     title = parsed.title
     content = parsed.html

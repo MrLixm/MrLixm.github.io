@@ -24,19 +24,20 @@ class Document:
 
 
 def read_markdown(
-    file_path: Path,
-    settings: dict,
+    source: str,
+    paths_root: Path,
+    extension_settings: dict,
 ) -> Document:
     """
-    Parse a markdown file as a docutils Publisher
+    Parse a Markdown document and return it as a html document.
 
     Args:
-        file_path: fileysstem path to an existing markdown file.
-        settings: docutils settings overrides
+        source: a text document in Markdown format
+        paths_root: a directory to use for resolving relative paths found in document
+        extension_settings: optional configuration settings for the markdown extensions
     """
-    content = file_path.read_text(encoding="utf-8")
     reader = LxmMarkdown(
-        paths_root=file_path.parent,
+        paths_root=paths_root,
         extensions=[
             # builtins.extra
             "abbr",
@@ -53,7 +54,7 @@ def read_markdown(
             "pymdownx.superfences",
             "pymdownx.highlight",
         ],
-        extension_configs=settings,
+        extension_configs=extension_settings,
         output_format="xhtml",
         tab_length=4,
     )
@@ -71,7 +72,7 @@ def read_markdown(
     urlpreview_directive = UrlPreviewDirective(reader.parser)
     urlpreview_directive.register(50)
 
-    emojis_dir: Path = settings.get("emojis", {}).get("directory")
+    emojis_dir: Path = extension_settings.get("emojis", {}).get("directory")
     if emojis_dir:
         emoji_processor = EmojiInlineProcessor(emojis_dir=emojis_dir, md=reader)
         emoji_processor.register(52)
@@ -83,7 +84,9 @@ def read_markdown(
     imagegrid = ImageGridDirective(reader.parser)
     imagegrid.register(55)
 
-    default_template = settings.get("image_gallery", {}).get("default_template")
+    default_template = extension_settings.get("image_gallery", {}).get(
+        "default_template"
+    )
     imagegallery = ImageGalleryDirective(
         default_class="image-gallery",
         default_template=default_template,
@@ -91,9 +94,15 @@ def read_markdown(
     )
     imagegallery.register(56)
 
-    table_classes: list[str] = settings.get("patcher", {}).get("table_classes", [])
-    code_classes: list[str] = settings.get("patcher", {}).get("code_classes", [])
-    link_headings: bool = settings.get("patcher", {}).get("link_headings", True)
+    table_classes: list[str] = extension_settings.get("patcher", {}).get(
+        "table_classes", []
+    )
+    code_classes: list[str] = extension_settings.get("patcher", {}).get(
+        "code_classes", []
+    )
+    link_headings: bool = extension_settings.get("patcher", {}).get(
+        "link_headings", True
+    )
     patcher_proc = PatcherTreeprocessor(
         md=reader,
         table_classes=table_classes,
@@ -102,7 +111,7 @@ def read_markdown(
     )
     patcher_proc.register(1)
 
-    html = reader.convert(content)
+    html = reader.convert(source)
 
     return Document(
         title=title_extractor.title,

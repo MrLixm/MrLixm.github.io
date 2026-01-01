@@ -3,7 +3,8 @@ import lxmsite.mdlib
 
 def test__read__mddoc1(resources_dir):
     doc1 = resources_dir / "mddoc1.md"
-    document = lxmsite.mdlib.read_markdown(doc1, settings={})
+    doc1_txt = doc1.read_text("utf-8")
+    document = lxmsite.mdlib.read_markdown(doc1_txt, doc1.parent, extension_settings={})
     assert document.title == "hello world ! (and mom)"
     assert document.metadata == {
         "image": "somepath.jpg",
