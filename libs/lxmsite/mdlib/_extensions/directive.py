@@ -98,6 +98,11 @@ class ParsedDirective:
     optional arbitrary multi-line text that can contain additional markdown to be parsed.
     """
 
+    indent: int
+    """
+    the number of indent characters the directive was started with
+    """
+
 
 class BaseDirective:
     """
@@ -138,7 +143,7 @@ class BaseDirective:
         return 4
 
     def is_block_directive_start(self, block: str) -> bool:
-        pattern = re.compile(rf"\.\. {self.name}::")
+        pattern = re.compile(rf" *\.\. {self.name}::")
         return True if pattern.match(block) else False
 
     def parse_blocks(self, blocks: list[str]) -> ParsedDirective:
@@ -146,6 +151,7 @@ class BaseDirective:
         Iterate and mutate the given blocks to extract the first directive it finds.
         """
         first_line = blocks[0].splitlines()[0]
+        global_indent = len(first_line) - len(first_line.lstrip())
         arguments: list[str] = first_line.split("::")[-1].strip(" ").split(" ")
         arguments = [] if arguments[0] == "" else arguments
         if not len(arguments) == self.expected_arguments:
@@ -159,7 +165,7 @@ class BaseDirective:
         options: dict[str, Any] = {}
         content: str = ""
         previous_option: str | None = None
-        lvl1_indent = " " * self._tab_length
+        lvl1_indent = " " * (self._tab_length + global_indent)
         lvl2_indent = lvl1_indent * 2
 
         while blocks:
@@ -178,7 +184,9 @@ class BaseDirective:
                 content = content.rstrip("\n\n") + "\n\n" + block
                 continue
 
-            for line in block.splitlines():
+            leftovers: list[str] = []
+
+            for index, line in enumerate(block.splitlines()):
 
                 sline = line.strip(" ")
                 line_split = sline.split(":", 2)
@@ -204,12 +212,24 @@ class BaseDirective:
                     )
                     continue
 
+                # check if the next line is not part of the directive, but was not parsed
+                # as block because the new lines have an indent in-between
+                if len(line) - len(line.lstrip()) == global_indent:
+                    leftovers = block.splitlines()[index:]
+                    break
+
                 content += block
                 break
 
             # block ended; reflect it in the content so it ends by '\n\n'
             if content:
                 content += "\n"
+
+            # any line that is not part of the directive but was
+            # part of the same block as the directive
+            if leftovers:
+                blocks.insert(0, "\n".join(leftovers))
+                break
 
         content = content.rstrip("\n")
         if not content and self.expected_content:
@@ -237,6 +257,7 @@ class BaseDirective:
             arguments=arguments,
             options=options,
             content=content or None,
+            indent=global_indent,
         )
 
 
