@@ -92,7 +92,9 @@ class IncludeDirectivePreprocessor(Preprocessor, Directive.BaseDirective):
             blocks.insert(0, block)
             directive = self.parse_blocks(blocks)
             directive_new_lines = self.parse_directive(directive)
-            directive_new_blocks = "\n".join(directive_new_lines).split("\n\n")
+            indent = " " * directive.indent
+            directive_new_blocks: str = indent + f"\n{indent}".join(directive_new_lines)
+            directive_new_blocks: list[str] = directive_new_blocks.split("\n\n")
             blocks[:] = directive_new_blocks + blocks
 
         new_lines = "\n\n".join(new_blocks).split("\n")

@@ -168,3 +168,44 @@ some paragraph
         "\n"
         "<p>some paragraph</p>"
     )
+
+
+def test__IncludeDirectivePreprocessor__indented(tmp_path):
+
+    file1path = tmp_path / "file1.svg"
+    file1path.write_text("""<svg width="64" height="64"></svg>""")
+
+    text1 = """
+some heading
+
+!!! hint "indented block"
+
+    first admonition line
+
+    .. include:: file1.svg
+        :literal: class="center-block"
+    
+    will this work ?
+
+some paragraph
+    """
+
+    reader = LxmMarkdown(paths_root=tmp_path, extensions=["admonition"])
+    directive = IncludeDirectivePreprocessor(reader)
+    directive.register(900)
+
+    result = reader.convert(text1)
+
+    print(result)
+    assert result == (
+        "<p>some heading</p>\n"
+        '<div class="admonition hint">\n'
+        '<p class="admonition-title">indented block</p>\n'
+        "<p>first admonition line</p>\n"
+        '<p><div class="center-block">\n'
+        '<svg width="64" height="64"></svg>\n'
+        "</div></p>\n"
+        "<p>will this work ?</p>\n"
+        "</div>\n"
+        "<p>some paragraph</p>"
+    )
