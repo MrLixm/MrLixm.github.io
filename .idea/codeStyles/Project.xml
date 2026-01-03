@@ -9,6 +9,9 @@
       <option name="HTML_TEXT_WRAP" value="0" />
       <option name="HTML_ALIGN_ATTRIBUTES" value="false" />
     </HTMLCodeStyleSettings>
+    <Markdown>
+      <option name="FORCE_ONE_SPACE_AFTER_LIST_BULLET" value="false" />
+    </Markdown>
     <Python>
       <option name="OPTIMIZE_IMPORTS_ALWAYS_SPLIT_FROM_IMPORTS" value="true" />
     </Python>
