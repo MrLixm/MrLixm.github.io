@@ -26,12 +26,18 @@ class EmojiInlineProcessor(InlineProcessor):
                 f"Provided emojis_dir '{self._emojis_dir}' does not exist.'"
             )
 
-        emoji_path: list[Path] = list(self._emojis_dir.glob(f"{name}.*"))
+        emoji_paths: dict[str, Path] = {
+            path.suffix: path for path in self._emojis_dir.glob(f"{name}.*")
+        }
+        emoji_path: Path = (
+            emoji_paths.get(".png")
+            or emoji_paths.get(".webp")
+            or emoji_paths.get(".jpg")
+        )
         if not emoji_path:
             raise ValueError(
                 f"No emoji with name '{name}' found in '{self._emojis_dir}'"
             )
-        emoji_path: Path = emoji_path[0]
         return emoji_path
 
     def handleMatch(self, m, data):
