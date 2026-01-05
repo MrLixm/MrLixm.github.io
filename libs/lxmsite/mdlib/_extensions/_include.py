@@ -39,6 +39,7 @@ class IncludeDirectivePreprocessor(Preprocessor, Directive.BaseDirective):
     options_schema = {
         "code": Directive.StrOption(""),
         "lines": Directive.StrOption(""),
+        "target": Directive.StrOption(""),
         "encoding": Directive.StrOption("utf-8"),
         "literal": Directive.StrOption(""),
     }
@@ -51,6 +52,7 @@ class IncludeDirectivePreprocessor(Preprocessor, Directive.BaseDirective):
         u_lines: str = directive.options["lines"].strip(" ")
         u_encoding: str = directive.options["encoding"]
         u_literal: bool = directive.options["literal"]
+        u_target: str = directive.options["target"]
 
         file_path = self.md.mk_path_abs(u_file)
         if not file_path.exists():
@@ -75,7 +77,16 @@ class IncludeDirectivePreprocessor(Preprocessor, Directive.BaseDirective):
 
         if u_code:
             new_lines = [f"```{u_code}"] + new_lines + ["```"]
+            if u_target:
+                new_lines = (
+                    [f'<a href="{u_target}" class="included">'] + new_lines + [f"</a>"]
+                )
+
         elif u_literal:
+            if u_target:
+                new_lines = (
+                    [f'<a href="{u_target}" class="included">'] + new_lines + [f"</a>"]
+                )
             new_lines = [f"<div {u_literal}>"] + new_lines + ["</div>"]
 
         return new_lines

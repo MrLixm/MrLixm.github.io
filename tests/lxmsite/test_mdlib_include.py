@@ -170,6 +170,57 @@ some paragraph
     )
 
 
+def test__IncludeDirectivePreprocessor__target(tmp_path):
+
+    file1path = tmp_path / "file1.md"
+    file1path.write_text(
+        """
+**hello** from file1
+"""
+    )
+
+    text1 = """
+some heading
+
+.. include:: file1.md
+    :literal: class="somestuff"
+    :target: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+
+some paragraph
+
+.. include:: file1.md
+    :code: markdown
+    :target: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+
+some footer
+
+    """
+
+    reader = LxmMarkdown(paths_root=tmp_path, extensions=["pymdownx.superfences"])
+    directive = IncludeDirectivePreprocessor(reader)
+    directive.register(200)
+
+    result = reader.convert(text1)
+
+    print(result)
+    assert result == (
+        "<p>some heading</p>\n"
+        '<div class="somestuff">\n'
+        '<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="included">\n'
+        "\n"
+        "**hello** from file1\n"
+        "</a>\n"
+        "</div>\n"
+        "\n"
+        "<p>some paragraph</p>\n"
+        '<p><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="included">\n'
+        '<div class="highlight"><pre><span></span><code><span class="gs">**hello**</span> from file1\n'
+        "</code></pre></div>\n"
+        "</a></p>\n"
+        "<p>some footer</p>"
+    )
+
+
 def test__IncludeDirectivePreprocessor__indented(tmp_path):
 
     file1path = tmp_path / "file1.svg"
