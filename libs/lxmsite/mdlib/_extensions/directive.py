@@ -150,7 +150,16 @@ class BaseDirective:
         """
         Iterate and mutate the given blocks to extract the first directive it finds.
         """
-        first_line = blocks[0].splitlines()[0]
+        blocks[:] = "\n\n".join(blocks).split("\n")
+        directive = self.parse_lines(lines=blocks)
+        blocks[:] = "\n".join(blocks).split("\n\n")
+        return directive
+
+    def parse_lines(self, lines: list[str]) -> ParsedDirective:
+        """
+        Iterate and mutate the given lines to extract the first directive it finds.
+        """
+        first_line = lines.pop(0)
         global_indent = len(first_line) - len(first_line.lstrip())
         arguments: list[str] = first_line.split("::")[-1].strip(" ").split(" ")
         arguments = [] if arguments[0] == "" else arguments
@@ -160,76 +169,64 @@ class BaseDirective:
                 message=f"Expected {self.expected_arguments} arguments, "
                 f"got {len(arguments)}: '{arguments}'",
             )
-        blocks[0] = blocks[0].removeprefix(first_line).removeprefix("\n")
 
         options: dict[str, Any] = {}
         content: str = ""
+        previous_line = None
         previous_option: str | None = None
         lvl1_indent = " " * (self._tab_length + global_indent)
         lvl2_indent = lvl1_indent * 2
 
-        while blocks:
-            block = blocks.pop(0)
+        while lines:
 
-            if not block:
+            if previous_line is not None:
+                previous_line = line
+            line = lines.pop(0)
+            if previous_line is None:
+                previous_line = line
+
+            if not line:
+                if content:
+                    content += "\n"
                 continue
 
             # check if the directive has ended (we are not in the indent)
-            if not block.startswith(lvl1_indent):
-                blocks.insert(0, block)
+            if not line.startswith(lvl1_indent):
+                lines.insert(0, line)
+                if previous_line.strip() == "":
+                    lines.insert(0, previous_line)
                 break
 
-            # because block strip empty line and we want to keep them in the content
             if content:
-                content = content.rstrip("\n\n") + "\n\n" + block
+                content += line + "\n"
                 continue
 
-            leftovers: list[str] = []
-
-            for index, line in enumerate(block.splitlines()):
-
-                sline = line.strip(" ")
-                line_split = sline.split(":", 2)
-                if sline.startswith(":") and len(line_split) == 3:
-                    _, name, value = line_split
-                    if name not in self.options_schema:
-                        raise DirectiveOptionError(
-                            directive=self,
-                            message=f"Specified unknown option '{sline}' from block '{block}'",
-                        )
-                    options[name] = value.strip(" ")
-                    previous_option = name
-                    continue
-
-                # check if the line is part of a multi-line option
-                if line.startswith(lvl2_indent):
-                    if not previous_option:
-                        content += lvl1_indent + sline + "\n"
-                        continue
-                    newline = "\n\n" if block.startswith(line) else "\n"
-                    options[previous_option] = (
-                        options[previous_option] + newline + sline
+            sline = line.strip(" ")
+            line_split = sline.split(":", 2)
+            if sline.startswith(":") and len(line_split) == 3:
+                _, name, value = line_split
+                if name not in self.options_schema:
+                    raise DirectiveOptionError(
+                        directive=self,
+                        message=f"Specified unknown option '{name}' from '{sline}'",
                     )
+                options[name] = value.strip(" ")
+                previous_option = name
+                continue
+
+            # check if the line is part of a multi-line option
+            if line.startswith(lvl2_indent):
+                if not previous_option:
+                    content += lvl1_indent + sline + "\n"
                     continue
 
-                # check if the next line is not part of the directive, but was not parsed
-                # as block because the new lines have an indent in-between
-                if len(line) - len(line.lstrip()) == global_indent:
-                    leftovers = block.splitlines()[index:]
-                    break
+                newline = "\n" if previous_line.strip() else "\n\n"
+                options[previous_option] = options[previous_option] + newline + sline
+                continue
 
-                content += block
-                break
-
-            # block ended; reflect it in the content so it ends by '\n\n'
-            if content:
-                content += "\n"
-
-            # any line that is not part of the directive but was
-            # part of the same block as the directive
-            if leftovers:
-                blocks.insert(0, "\n".join(leftovers))
-                break
+            previous_option = None
+            content += line + "\n"
+            continue
 
         content = content.rstrip("\n")
         if not content and self.expected_content:

@@ -51,8 +51,10 @@ section if desired.
 We can break the workflow into 4 sections : 
 `Input`, `Workspace`, `Display` and `Output`
 
+<div class="center-block">
 .. include:: diagramA.svg
-    :literal: class="center-block"
+</div>
+
 
 You transfer `data` between each of these section. Data that must be
 potentially decoded and then encoded, depending on what the section required.
@@ -116,8 +118,9 @@ specify the "colorspace" as "raw", so no special decoding is applied.
 
 ### Workflow Sections
 
+<div class="center-block">
 .. include:: diagramA.svg
-    :literal: class="center-block"
+</div>
 
 #### Input
 

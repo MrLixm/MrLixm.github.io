@@ -125,9 +125,11 @@ the 2 floating points formats.
     which rely on splitting the original value in 3 components. Here is a handy 
     cheatsheet but *you don't need to understand it* at all for this post:
 
+    <div class="diagram">
+    <a href="diagram-bitdepth-encoding-dark.svg">
     .. include:: diagram-bitdepth-encoding-dark.svg
-        :literal: class="diagram"
-        :target: diagram-bitdepth-encoding-dark.svg
+    </a>
+    </div>
 
     You can use <https://float.exposed> to get a live breakdown for any float value.
 
@@ -155,9 +157,11 @@ possible value than float.
 
 !!! admonition ""
 
+    <div class="diagram">
+    <a href="diagram-bitdepth-values-dark.svg">
     .. include:: diagram-bitdepth-values-dark.svg
-        :literal: class="diagram"
-        :target: diagram-bitdepth-values-dark.svg
+    </a>
+    </div>
 
     In the above diagram, we can see that half-float allow to express 15360 steps between
     the 0 and 1 range. While the 32bit float bitdepth allow ~ 1 billions steps. If we
@@ -189,9 +193,11 @@ same data that were initially compressed. While lossy is the opposite and means 
 of the original data will be lost, but it's acceptable because it does not have
 an important visual impact.
 
+<div class="diagram">
+<a href="diagram-compression-dark.svg">
 .. include:: diagram-compression-dark.svg
-    :literal: class="diagram"
-    :target: diagram-compression-dark.svg
+</a>
+</div>
 
 For the contenders I am just going to list their names, and let you refer to [the
 OpenEXR documentation](https://openexr.com/en/latest/TechnicalIntroduction.html#data-compression) 
@@ -365,9 +371,11 @@ how the original area is split in "chunk" of pixels before being stored:
 -   `tiles`: the area is split in smaller areas of an arbitrary size
     -   this is the only layout compatible with [mipmapping](#mip-mapping) [^8].
 
+<div class="diagram">
+<a href="diagram-layout-dark.svg">
 .. include:: diagram-layout-dark.svg
-    :literal: class="diagram"
-    :target: diagram-layout-dark.svg
+</a>
+</div>
 
 The purpose of those chunks is optimizing the reading step. Depending on the context
 you might not want to read all the image pixels at once, but only some portions to 

@@ -280,7 +280,7 @@ Available options are:
 Example:
 
 ```rst
-.. include:: myfile.py
+#.. include:: myfile.py
     :code: python {linenums="1" title="myfile.py"}
     :lines: 5-10
 ```

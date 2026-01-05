@@ -18,8 +18,7 @@
 .src-md h3 a:before,
 .src-md h4 a:before,
 .src-md h5 a:before,
-.src-md h6 a:before,
-.src-md a.included:before {
+.src-md h6 a:before {
     content: unset;
     background: unset;
 }

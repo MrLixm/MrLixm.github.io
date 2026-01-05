@@ -505,8 +505,9 @@ With `include` directive:
 
 As literal:
 
+<div>
 .. include:: snippet.py
-    :literal:
+</div>
 
 ## the end
 
