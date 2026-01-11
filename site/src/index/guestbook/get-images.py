@@ -32,7 +32,7 @@ def generate(template_renderer: lxmsite.PageTemplateRenderer) -> str:
         caption = meta.get("caption", "")
         link = meta.get("link", "")
         author = meta.get("author", "")
-        # index = meta.get("index", random.randint(0, len(metadatas) - 1))
+        index = int(meta.get("index", random.randint(0, len(metadatas) - 1)))
         if not author:
             author = image_path.stem
 
