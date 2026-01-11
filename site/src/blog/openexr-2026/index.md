@@ -7,19 +7,30 @@
 :tags: vfx, image-processing
 :authors: Liam Collod
 :stylesheets: +openexr-2026.css
+:status: unlisted
 
 [TOC]
 
 !!! caution "reader expectations"
 
-    This article tries to stay accessible to a majority of computer-toucher. Some
-    concepts mentioned are technically complex but are not necessary to understand
-    for fully understanding this post. I expect the main audience to be vfx artists
-    that are already aware of the file format, but people totally outside this field
+    This article tries to stay accessible to a majority of computer-toucher :emoji:(neocat-laptop-owo).
+    Some concepts mentioned are technically complex but are not necessary to understand
+    for fully appreciating the other explanations. 
+    I expect the main audience to be vfx artists that are already aware of the 
+    file format, but people totally outside this field
     could also hopefully enjoy the explanations.
 
-    You are at least familiar with the basics on how digital images are structured 
-    (2D pixels layout, RGB model).
+    I assume you are at least familiar with [the basics](<https://xkcd.com/2501/>) on 
+    how digital images are structured (2D pixels layout, RGB model).
+
+!!! hint "vfx ?"
+    
+    In this context "vfx" refers to the visual effect industry, which rely on
+    computer generated imagery, for the realisation of movies and video-productions.
+    We tend to split this industry as "vfx" and "animation", the first one relying
+    on cgi to extend live-action footage, and the latter using only cgi (note the
+    border is thin nowadays where some movies like Avatar are more animated movie
+    than live-action).
 
 
 If you put your nose into the file structure of any visual effect project, you
@@ -45,6 +56,14 @@ Its clearly not features, [OpenEXR](https://openexr.com) is full of them:
 It's neither its access to it, OpenEXR is one of the oldest open-source software
 of the vfx-industry (2003), currently maintained by the [ASWF](https://www.aswf.io/), and 
 provides API through C++,C and Python[^1]
+
+!!! note "origin story"
+
+    I recommend to have a look at the origin story 
+    which was published in 3 parts over on the ASWF website (in short interviews form): 
+    [part1](https://www.aswf.io/news/aswf-deep-dive-openexr-origin-story-part-1/),
+    [part2](https://www.aswf.io/news/aswf-deep-dive-openexr-origin-story-part-2/),
+    [part3](https://www.aswf.io/news/aswf-deep-dive-openexr-origin-story-part-3/).
 
 Well a part of the answer is in the last bullet point: it's a format to store 
 high dynamic range imagery in a floating point encoding. What this mean ? Well if we are
@@ -79,28 +98,77 @@ It's merely an intermediate file that store the raw energy recording of the came
 So that's why OpenEXR is so niche, and you will probably never see it supported by
 a web-browser or mentioned as an alternative to jpg or png. It serves a different purpose.
 
-Yet this format is an incredible piece of technology which packs so much feature, which
+Yet this format is an incredible piece of technology which packs so much features, and
 by reviewing them I hope will make you appreciate all their subtelties.
 
-## some more background
+## color-management
 
-I don't want this post to become a wikipedia-like resume so we are going to skip over
-most of it, but I do recommend to have a look at the origin story which was published
-in 3 parts over on the ASWF website (in short interviews form): 
-[part1](https://www.aswf.io/news/aswf-deep-dive-openexr-origin-story-part-1/),
-[part2](https://www.aswf.io/news/aswf-deep-dive-openexr-origin-story-part-2/),
-[part3](https://www.aswf.io/news/aswf-deep-dive-openexr-origin-story-part-3/).
+Because we are storing images, or rather "pixel data", we need to talk about colors.
 
-Another interesting part of context is that OpenEXR is mainly used programmatically
-through [OpenImageIO](https://openimageio.readthedocs.io), which is another standard
-vfx library. In part because it has much more robust python bindings than OpenEXR,
-but also because it provides an abstract interface for reading and writing a lot of 
-other file formats. You can check the [example at the end of this post](#a-short-code-example).
+!!! admonition "questions that keeps me up at night"
+
+    But it's also hard to talk about it because both "images" and "colors" are very broad 
+    term that doesn't mean anything specific. What is the boundaries between an image
+    and not an image ? Is it a grid of pixel values ? Is an SVG an image in that case ?
+    Is a Photoshop scene file an image ? A power-point presentation a format to store multiple images ?
+    If you could load an .mp3 into an image-viewer would and somehow turns it into a pixel
+    grid would that mean the .mp3 file is an image ?
+
+    When does a color starts to exist ? Is there color in a black and white image ?
+    If this text can be a color: `83CF9F` can any text become a color ? If color is only
+    an invention of our brain can it exist in a computer ?
+
+[//]: # (TODO scrap all the below, focus only on OpenEXR)
+
+### color-management basics
+
+If you take a pixel value with no context, it's just a bunch of number, probably
+a sequence of 3 numbers, and numbers can be turned into anything (like this page that
+is just a bunch of 0 and 1 that you can read because we taught sand to do math [^17]).
+
+If you color-manage it, you are **labeling** it as part of a broader 
+model. Those values become relative to a specific system. A system about colors, which is
+driven by the [CIE](https://en.wikipedia.org/wiki/International_Commission_on_Illumination) standard.
+
+<div class="diagram">
+.. include:: diagram-colormanagement-mapping.svg
+</div>
+
+The goal of such system is tring to create consistent color-reproduction across
+devices. Any physical device may capture and represent "color" differently,
+so we try to have their characteristics fit in delimited boxes, that way we can convert between each 
+other, allowing image data to be viewed the same across different devices. We call
+those boxes "Color spaces"
+
+But you may also not want to color-manage anything, because those pixels are supposed to be 
+relative to another system. In that case we say the data is *not* color-managed.
+
+<div class="column-split">
+<figure>
+    <img src="displacement-demo.png" alt="A screenshot of the Blender interface: a sphere is being rendered, which looks liek a snowman head. Next to it we can see a black and white 2d texture.">
+    <figcaption>Example of a simple 0-1 texture rendered in Blender as displacement on a sphere.</figcaption>
+</figure>
+<p>
+For example take a <i>displacement texture</i>, which is used in 3D to move the vertices of
+a mesh based on the value of the pixel at the position of the vertex. The texture only
+need one channel of data because we only need to provide one axis of the movement: the
+vertex can only go "up" or "down". In pixels values we can map this behavior using values
+< 0 for "down" and > 0 for up, a value of 0.0 meaning "don't move it". For such image 
+there is no color management needed, there is no color at all, you can "view" the image
+, but it was not made to be viewed. The values only correspond to the amount to 
+displace the vertices by in the 3d space. This is why when such texture is imported,
+you want to make sure it's interpreted "as is".
+</p>
+</div>
+
+[//]: # (openexr store intermediate image; linear physical data)
+[//]: # (about metadata)
+[//]: # (when reading, colrospace transform usually happen on all channels.part, be carefull)
 
 
-## which bitdepth to choose ?
+## bitdepth
 
-Probably the simplest choice, OpenEXR support 3 of them [^5], but we can really only
+A choice that should not be that complicated, OpenEXR support 3 of them [^5], but we can really only
 use two: 
 
 - 16bits float (half)
@@ -120,10 +188,17 @@ the 2 floating points formats.
 
     -   with _integers_ (3,4,5,...).
     -   with _floats_ (0.25,0.2536,1.23,156.3, ...). 
+ 
+    The most important point to remember being that mathematical floats can have an 
+    infinite decimal representation (like π (pi)), yet
+    we need store numbers in the computer within finite bounds. Which is why we have
+    designed [a clever system](https://en.wikipedia.org/wiki/IEEE_754) allowing us to
+    represent a lot of float values efficiently, but not all ! With 32bit of precision
+    we can store `0.5` perfectly, but cannot store `0.6`, only `0.600000023841857910156`
+    :emoji:(neocat-googly).
 
-    For OpenEXR only floats interest us, and making a float is [a clever system](https://en.wikipedia.org/wiki/IEEE_754)
-    which rely on splitting the original value in 3 components. Here is a handy 
-    cheatsheet but *you don't need to understand it* at all for this post:
+    Here is a quite dense cheatsheet breaking down how floats encoding works, but 
+    *you don't need to understand it* at all for this post:
 
     <div class="diagram">
     <a href="diagram-bitdepth-encoding-dark.svg">
@@ -152,28 +227,47 @@ to 65504.0. And if you think you have no image that can reach such range, it's
 possible to find such high values in sunny HDRIs [^6] or even depth buffer (zdepth) 
 of very large scenes. Yet we can agree this is pretty rare.
 
-But the more subtle limitation is precision, where half have less "gap" between each
-possible value than float.
+But the more subtle limitation is precision, where _half_ have less "gap" between each
+possible code value than _float_.
 
-!!! admonition ""
+<figure>
+<div class="diagram">
+<a href="diagram-bitdepth-values-dark.svg">
+.. include:: diagram-bitdepth-values-dark.svg
+</a>
+</div>
+<figcaption>
+In the above diagram, we can see that half-float allow to express 15360 steps between
+the 0 and 1 range. While the 32bit float bitdepth allow ~ 1 billions steps. If we
+compare 16bits float to its integer counterpart we can see that we have 4 times less 
+possible values if our data is between the 0-1 range.
+</figcaption>
+</figure>
 
-    <div class="diagram">
-    <a href="diagram-bitdepth-values-dark.svg">
-    .. include:: diagram-bitdepth-values-dark.svg
-    </a>
-    </div>
 
-    In the above diagram, we can see that half-float allow to express 15360 steps between
-    the 0 and 1 range. While the 32bit float bitdepth allow ~ 1 billions steps. If we
-    compare 16bits float to its integer counterpart we can see that we have 4 times less 
-    possible values if our data is between the 0-1 range.
+!!! warning "log encoding"
+
+    And the above diagram is why you DON'T want to store log-encoded data (usally from
+    cameras) in an half exr. Because log encoding limit the data to the 0-1 range but
+    most of it actually fit in an even narrower range. Here's an example using the
+    ["Helen & John" image](https://www.arri.com/en/learn-help/learn-help-camera-system/camera-sample-footage-reference-image#tab-294302) from ARRI.
+
+    ![An histogram plot of a log-encoded picture which shows most of the code values are between 0.1 and 0.4](plot.histogram.helenjohn.png)
+
+    In the above the data mostly fit in the 0.09 - 0.45 range, using [float.exposed](https://float.exposed)
+    we can calculate that this range have about 2414 code values available at _half_ 
+    bitdepth! [^13]
+    Which is way less than the 4096 values available when using 12bits integers bitdepths.
+    And for comparison 32bit _float_ would have ~ 19 millions code value available. [^14]
+
+    So you could still store log-data in a 32bit float exr file. Not that it's 
+    recommended because OpenEXR was designed for storing linear data, but you could
+    get away with it (mind the pitfalls). [^15]
 
 
-The last consideration to have for making the choice requires to know how was the data 
-generated ? Because you need as much precision on disk only if the data stored in 
-memory need as much.
+!!! tip "as an artist"
 
-[//]: # (TODO storing log in EXR)
+    - textures
 
 
 ## compression algorithms
@@ -234,7 +328,7 @@ The whole generation and plotting workflow is wrapped in python script that you 
 find at <https://github.com/MrLixm/benchmark-openexr>.
 
 
-## storing multiple layers.
+## storing multiple layers
 
 One of the most convenient feature of OpenEXR is allowing you to store as much pixel
 data as needed. You are not limited to R,G,B and a potential Alpha channel. Thus, you
@@ -305,7 +399,7 @@ Each part can also have as many channels as it needs. In the above example we al
 the prefix convention in channels names, but we could just have renamed the part
 with the layer name, and kept channels names one letter long.
 
-### multi-file, multi-channel or multi-part ?
+### multi-file, multi-channel or multi-part?
 
 As you can see we have a lot of flexibility. However there is actually only one solution
 that really matters for our use-case. 
@@ -355,7 +449,7 @@ is the orginal image in full resolution, and each subsequent part is smaller.
 But it's also possible to store multiple mipmap for each individual part (only if the data 
 is stored in a tiled layout [^4]) !
 
-[//]: # (TODO make example of file with multiple levels and a "fuck ai" text)
+![a bunch of sucessfully smaller frogs that can't stand A.I. so much they are burning](demo-mipmap.png)
 
 However, as an artist it's probably something you will never have to do, being a rather
 automated process handled by the render-engine. See [Maketx - Arnold User Guide](https://help.autodesk.com/view/ARNOL/ENU/?guid=arnold_user_guide_ac_textures_ac_textures_maketx_html)
@@ -394,13 +488,12 @@ speed up the process.
     </figcaption>
 </figure>
 
-!!! tip "choice as an artist"
+!!! tip "🎨 as an artist"
 
     The choice mostly depends on which software will read your exr. Scanline
     is a safe default. It doesn't even matter for 3d render-engine because they
-    rely on the own inetrmediate texture format (eg, .tx, .tex) which already
+    rely on their own intermediate texture format (eg, .tx, .tex) which already
     encode the original in the proper optimized layout.
-
 
 ## unusual formats
 
@@ -427,9 +520,6 @@ basically an image with pixel values of 1 where is the object, and 0 where it's 
     <figcaption>Example where we change the [scene](https://download.blender.org/archive/gallery/blender-splash-screens/blender-2-81/) stand's wood color to green.</figcaption>
 </figure>
 
-
-[//]: # (TODO add image of mask of an object of the scene)
-
 How do you create that mask ? And to go even further how could you make sure to have a
 mask for every object in the scene ? There are methods that would involve rendering a 
 second image where 3d objects are shaded with a constant uniform color that you could
@@ -443,8 +533,12 @@ those past 20 years is *cryptomatte*.
     SIGGRAPH 2015 poster
 
 Cryptomatte is a mapping of your scene object collection to each pixel of the rendered 
-image. Which allow operation such as "create a mask for every object whose name starts 
-with a `Background` prefix". 
+image. Each object receive a unique ID, which is then set on all the pixel the object
+is visible. This allows very human-friendly operation such as 
+"create a mask for every object whose name starts with a `Background` prefix". Keep in
+mind those operations relies on the proper definition of a *manifest*. Because we can
+only store numbers in pixel values, the manifest take care of mapping the pixel value
+to a string of text.
 
 <figure>
     <video controls width="100%">
@@ -459,9 +553,9 @@ with a `Background` prefix".
 
 We can usually find 3 types of cryptomatte:
 
-- "object": each scene mesh have a unique id.
-- "asset": meshes are grouped using a common parent which receive a unique id (less common).
-- "material": objects with the same material have the same id.
+- "object": each scene mesh have a unique ID.
+- "asset": meshes are grouped using a common parent which receive a unique ID.
+- "material": objects with the same material have the same ID.
 
 But it's basically up to the 3d render-engine to decide how to split/group objects in 
 the scene, cryptomatte is just [a standard](https://github.com/Psyop/Cryptomatte/blob/master/specification/cryptomatte_specification.pdf)
@@ -469,23 +563,26 @@ that say how to encode and decode those information.
 
 And speaking of encoding, if cryptomatte files are standard OpenEXR files that could 
 be read by any OpenEXR reader, you would still need a specific plugin implementation
-to meaningfully read the data (we use a special node in the previous Nuke example).
-Because traditional image-processing operations relies on the number value in each 
+to *meaningfully* read the data (we use a special node in the previous Nuke example).
+Because traditional image-processing operations relies on the numbered value in each 
 pixel, here pixel values doesn't make sense until you map them with their corresponding 
 "text".
 
 Here's how cryptomatte are encoded in an OpenEXR file:
 
-[//]: # (TODO add diagram)
 <figure markdown="span">
-    <img src="" alt="A diagram showcasing the hierarchy of data in an OpenEXR file">
-    <figcaption>
-    Cryptomatte works with a rank system where each rank is a different "depth" of
-    transparency. Each rank need 2 channel of data, meaning we use the 4 standard RGBA
-    channels to encode 2 ranks for optimization of space.
-    Then we rely on the OpenEXR [multi-channel](#multi-channel) feature to store as much
-    ranks as we need (default is 6)[^12].
-    </figcaption>
+<div class="diagram">
+<a href="diagram-cryptomatte-encoding-dark.svg">
+.. include:: diagram-cryptomatte-encoding-dark.svg
+</a>
+</div>
+<figcaption markdown="span">
+Cryptomatte works with a rank system where each rank is a different "depth" of
+transparency. Each rank need 2 channel of data, meaning we use the 4 standard RGBA
+channels to encode 2 ranks for optimization of space.
+Then we rely on the OpenEXR [multi-channel](#multi-channel) feature to store as much
+ranks as we need (default is 6)[^12].
+</figcaption>
 </figure>
 
 
@@ -497,19 +594,29 @@ Here's how cryptomatte are encoded in an OpenEXR file:
 
 It could really have been its own independent file format, but because we could qualify
 it as an AOV (a different representation of the same scene and frame), it was 
-probably more convenient to store it in the same file format as the other AOVs. Thus
-also making it easier for software to implement it support, without having to add a new
-external dependency to their stack [^10].
+probably more convenient to store it in the same file format as the other AOVs: OpenEXR.
+Thus also making it easier for software to implement its support, without having to add 
+a new external dependency to their stack [^10].
 
-A few note ot be aware of:
+!!! tip "🎨 as an artist"
 
-- Make sure cryptomatte channels are encoded with 32bits [^11]
-- Make sure cryptomatte channels are not color-managed when written/read
-- It's possible to sometime find the cryptomatte saved in its own exr file.
-- Cryptomatte support transparency but not refraction (glass-like materials)
+    -   make sure cryptomatte channels are encoded with 32bits (float) [^11].
+    -   make sure cryptomatte channels are not color-managed when written/read [^11].
+    -   as long as you ensure the 2 previous points, you don't have to store the cryptomattes
+        in a separate exr file. But sometimes the render-engine doesn't give you the 
+        choice to use different bitdepth by channel so it become the only solution.
+    -   the `manifest` which allow to pick "names" instead of float values can either be
+        stored fully in the metadata, or in a sidecar file next to the exr. In the later
+        case make sure it's not missing.
+    -   cryptomatte support transparency but not refraction (glass-like materials).
+    -   most render engines don't support volumetrics objects in cryptomattes.
+    -   a last limitation to be aware of: _"Because the depth ordering, transparency and 
+        color of each object is not stored, objects isolated using Cryptomatte will 
+        have contaminated edge colors and incorrect alpha values."_ [^11]
 
-[//]: # (TODO: how to debug cryptomatte)
-
+If cryptomatte have quickly raised itself as a must-have in the compositor toolbox,
+you might want to have a look at the next section about deep, which did bring its own
+batch of improvements on solving the matte problem.
 
 ### deep
 
@@ -552,6 +659,7 @@ If you ever had an .exr file, but wish you had another file format. Or the oppos
 
 We are going to use the [OpenImageIO](https://openimageio.readthedocs.io) library which
 have first-class support for OpenEXR, and nowadays is pretty straightforward to install.
+However, those instructions assume you are familiar with [command line programs](https://en.wikipedia.org/wiki/Command-line_interface).
 
 The first option will be to use their command line tool `oiiotool`. The tool is provided
 with the python wheels so if you are not really into c++ library compilation, we can 
@@ -599,12 +707,14 @@ need to apply the transfer function:
 oiiotool "image.exr" --colorconvert lin_srgb srgb_display -o "image.jpg"
 
 # in the above we are using oiiotool default OCIO config, you can check the available
-# colorspace with
+# colorspace with:
 oiiotool --colorconfiginfo
 ```
 
 Have a look at the [oiiotool documentation](https://openimageio.readthedocs.io/en/v3.1.8.0/oiiotool.html#oiiotool-commands-for-color-management)
 to check the other options for color-management.
+
+---
 
 Next use-case, what if we wanted a particular layer of our exr to be saved to the jpg ?
 By default, only the RGB channels are saved (jpg have no alpha).
@@ -671,11 +781,14 @@ oiiotool "image.jpg" --compression "dwaa:30" -d float --tile 16 16 --colorconver
 
 TBD
 
+[//]: # (blender doesn't allow to export multipart exr ?)
+[//]: # (channels name are prefixed with the view layer)
+[//]: # (when picking half bitdepth some channels are forced to float, but not all needed (cryptomatte)
 
 ## closing words
 
 This post took much time before coming to life, and I am relieved it is now. 
-It started from the initial idea that it woudl be cool to benchmark and compare various
+It started from the initial idea that it would be cool to benchmark and compare various
 file formats used in vfx. Idea wich I had since deep-diving the first time in OpenEXR,
 back in 2020. It's only in 2024 that I started to do some first benchmarks around OpenEXR,
 but relied on `oiiotool` for writing and tried to benchmark Nuke for reading.
@@ -687,6 +800,7 @@ during those 2025 Christmas holiday I finally had time to have a play with it. C
 *[AOVs]: Arbitrary Output Variables
 *[API]: Abstract Programming Interface
 *[DCC]: Digital Content Creation (software)
+*[compositor]: person doing compositing (the artistic 2D step after rendering)
 
 [^1]: The provided Python API has limitations and you would rather use the Python bindings
     of other libraries like [OpenImageIO](https://openimageio.readthedocs.io/).
@@ -696,8 +810,12 @@ during those 2025 Christmas holiday I finally had time to have a play with it. C
 [^5]: <https://openexr.com/en/latest/TechnicalIntroduction.html#image-channels-and-sampling-rates>
 [^6]: page 69 (5.8.3 Maximum Range) <https://blog.selfshadow.com/publications/s2016-shading-course/unity/s2016_pbs_unity_hdri_notes.pdf>
 [^7]: last Florian's quote <https://www.aswf.io/news/aswf-deep-dive-openexr-origin-story-part-1/>
-[^8]: https://openexr.com/en/latest/TechnicalIntroduction.html#scan-lines
-[^9]: https://openexr.com/en/latest/DeepIDsSpecification.html#deep-id-basics
-[^10]: this section is personal speculations
-[^11]: https://openexr.com/en/latest/DeepIDsSpecification.html#cryptomatte-comparison
-[^12]: page 2 (Channel contents) https://github.com/Psyop/Cryptomatte/blob/master/specification/cryptomatte_specification.pdf
+[^8]: <https://openexr.com/en/latest/TechnicalIntroduction.html#scan-lines>
+[^9]: <https://openexr.com/en/latest/DeepIDsSpecification.html#deep-id-basics>
+[^10]: mostly personal speculations; also see (page 3; section 2.2) <https://dl.acm.org/doi/epdf/10.1145/3233085.3233086> 
+[^11]: <https://openexr.com/en/latest/DeepIDsSpecification.html#cryptomatte-comparison>
+[^12]: page 2 (Channel contents) <https://github.com/Psyop/Cryptomatte/blob/master/specification/cryptomatte_specification.pdf>
+[^13]: 0.09(exponent=11,significand=451); 0.45(exponent=13,significand=819); (13-11) * 1023 - 451 + 819
+[^14]: 0.09(exponent=123,significand=3690988); 0.45(exponent=125,significand=6710886); (125-123) * (2<sup>23</sup>-1) - 3690988 + 6710886
+[^15]: [Nick Porcino on ASWF Slack](https://academysoftwarefdn.slack.com/archives/CMLRW4N73/p1698333341750709)
+[^17]: can't find back the source of this meme but if you don't get it sand=silicon=computer
