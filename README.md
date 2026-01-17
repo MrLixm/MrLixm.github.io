@@ -24,9 +24,20 @@ checking https://liamcollod.xyz/.doc.
 
 ## scripts
 
-### [image-optimize.py](scripts/image-optimize.py)
+### [jpg-image-optimize.py](scripts/jpg-image-optimize.py)
+
+Convert any image to an optimized jpg.
 
 Usually called with 
 ```
 --quality 90 --maxsize 1500x2500
 ```
+
+### [webp-image-optimize.py](scripts/webp-image-optimize.py)
+
+Convert any image to an optimized webp.
+
+To use mostly for png source images. Keep jpgs as is.
+
+This script require [oiiotool](https://openimageio.readthedocs.io/en/v3.1.8.0/oiiotool.html)
+whose executable path set in the `OIIOTOOL` environment variable.
