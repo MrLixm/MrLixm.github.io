@@ -11,6 +11,10 @@
 
 [TOC]
 
+!!! warning
+
+    WORK IN PROGRESS BLOG POST
+
 !!! caution "reader expectations"
 
     This article tries to stay accessible to a majority of computer-toucher :emoji:(neocat-laptop-owo).
