@@ -43,7 +43,7 @@ def get_cli(argv: list[str]) -> argparse.Namespace:
         "--maxsize",
         type=str,
         default=None,
-        help="maximum dimensions the image must have; specified as {width}x{height}",
+        help="maximum dimensions the image must have; specified as {width}x{height} where one dimension can be 0 to have it auto",
     )
     parser.add_argument(
         "--suffix",
@@ -60,14 +60,14 @@ def oiio_export(
     dst_path: Path,
     compression: int,
     lossless: bool,
-    resize: tuple[int, int] | None = None,
+    resize: str | None = None,
 ):
     command = [
         str(OIIOTOOL),
         str(src_path),
     ]
     if resize:
-        command += ["--resize", f"{resize[0]}x{resize[1]}"]
+        command += ["--resize", resize]
 
     if lossless:
         compression = f"lossless:{compression}"
@@ -89,8 +89,6 @@ def main(argv: list[str] | None = None):
     u_max_size: str = cli.maxsize
     u_suffix: str = cli.suffix
     u_lossless: bool = cli.lossless
-    max_size = u_max_size.split("x") if u_max_size else None
-    max_size = (int(max_size[0]), int(max_size[1])) if max_size else None
 
     if u_src_path.is_file():
         paths = [u_src_path]
@@ -110,7 +108,7 @@ def main(argv: list[str] | None = None):
             dst_path=dst_path,
             compression=u_quality,
             lossless=u_lossless,
-            resize=max_size,
+            resize=u_max_size,
         )
 
         postsize = dst_path.stat().st_size / 1024 / 1024
