@@ -76,10 +76,30 @@ So viewing a `.exr` file is actually quite confusing, you never just blast the p
 the display, there must always be some form of interpration to perform, which depends on
 the initial context the pixel data was generated from.
 
-[//]: # (TODO Example with 3 picture:)
-[//]: # (  1. this is an EXR whose pixel are directly sent to the monitor)
-[//]: # (  2. this an EXR whose pixel have been converted to the correct colorspace &#40;sRGB standard)
-[//]: # (  3. this an EXR whose pixel have been converted as it was authored)
+<div class="column-split">
+<figure>
+<img src="exr-demo-incorrect.png" alt="A colorful 3d scene with a green dragon statue that shifts to yellow.">
+<figcaption>
+this is an exr whose pixels are directly sent to the monitor with no color transformation.
+</figcaption>
+</figure>
+<figure>
+<img src="exr-demo-correct.png" alt="The same scene but objects have better color hue.">
+<figcaption>
+this is an exr whose pixels have been converted to the correct colorspace (sRGB standard).
+</figcaption>
+</figure>
+<figure>
+<img src="exr-demo-expected.png" alt="The same scene but with more pleasing highlights rendering">
+<figcaption>
+this is an exr whose pixels have been converted with the same transform it was authored with.
+</figcaption>
+</figure>
+</div>
+
+In the above, the second and third example required to know in which colorspace
+the data was encoded with, and the third example required to know what was the transform,
+and a reading software capabale of re-applying the transform.
 
 > But why are we even't bothering with this intermediate state ? Can't we just get the 
 final image in a very high quality format ? 
@@ -101,75 +121,9 @@ a web-browser or mentioned as an alternative to jpg or png. It serves a differen
 Yet this format is an incredible piece of technology which packs so much features, and
 by reviewing them I hope will make you appreciate all their subtelties.
 
-## color-management
-
-Because we are storing images, or rather "pixel data", we need to talk about colors.
-
-!!! admonition "questions that keeps me up at night"
-
-    But it's also hard to talk about it because both "images" and "colors" are very broad 
-    term that doesn't mean anything specific. What is the boundaries between an image
-    and not an image ? Is it a grid of pixel values ? Is an SVG an image in that case ?
-    Is a Photoshop scene file an image ? A power-point presentation a format to store multiple images ?
-    If you could load an .mp3 into an image-viewer would and somehow turns it into a pixel
-    grid would that mean the .mp3 file is an image ?
-
-    When does a color starts to exist ? Is there color in a black and white image ?
-    If this text can be a color: `83CF9F` can any text become a color ? If color is only
-    an invention of our brain can it exist in a computer ?
-
-[//]: # (TODO scrap all the below, focus only on OpenEXR)
-
-### color-management basics
-
-If you take a pixel value with no context, it's just a bunch of number, probably
-a sequence of 3 numbers, and numbers can be turned into anything (like this page that
-is just a bunch of 0 and 1 that you can read because we taught sand to do math [^17]).
-
-If you color-manage it, you are **labeling** it as part of a broader 
-model. Those values become relative to a specific system. A system about colors, which is
-driven by the [CIE](https://en.wikipedia.org/wiki/International_Commission_on_Illumination) standard.
-
-<div class="diagram">
-.. include:: diagram-colormanagement-mapping.svg
-</div>
-
-The goal of such system is tring to create consistent color-reproduction across
-devices. Any physical device may capture and represent "color" differently,
-so we try to have their characteristics fit in delimited boxes, that way we can convert between each 
-other, allowing image data to be viewed the same across different devices. We call
-those boxes "Color spaces"
-
-But you may also not want to color-manage anything, because those pixels are supposed to be 
-relative to another system. In that case we say the data is *not* color-managed.
-
-<div class="column-split">
-<figure>
-    <img src="displacement-demo.png" alt="A screenshot of the Blender interface: a sphere is being rendered, which looks liek a snowman head. Next to it we can see a black and white 2d texture.">
-    <figcaption>Example of a simple 0-1 texture rendered in Blender as displacement on a sphere.</figcaption>
-</figure>
-<p>
-For example take a <i>displacement texture</i>, which is used in 3D to move the vertices of
-a mesh based on the value of the pixel at the position of the vertex. The texture only
-need one channel of data because we only need to provide one axis of the movement: the
-vertex can only go "up" or "down". In pixels values we can map this behavior using values
-< 0 for "down" and > 0 for up, a value of 0.0 meaning "don't move it". For such image 
-there is no color management needed, there is no color at all, you can "view" the image
-, but it was not made to be viewed. The values only correspond to the amount to 
-displace the vertices by in the 3d space. This is why when such texture is imported,
-you want to make sure it's interpreted "as is".
-</p>
-</div>
-
-[//]: # (openexr store intermediate image; linear physical data)
-[//]: # (about metadata)
-[//]: # (when reading, colrospace transform usually happen on all channels.part, be carefull)
-
-
 ## bitdepth
 
-A choice that should not be that complicated, OpenEXR support 3 of them [^5], but we can really only
-use two: 
+OpenEXR support 3 of them [^5], but we can really only use two: 
 
 - 16bits float (half)
 - 32bits float (float)
@@ -182,14 +136,17 @@ the 2 floating points formats.
 !!! hint "some bitdepth basics"
 
     If you are not familiar with bitdepth or "color depth" for images, it's a parameter
-    which drive the "amount" of color you can store in an image. The amount being driven
-    by the number of bits used to represent a value. Alongside the number of bits
-    which are mostly a power of 2 (8,16,32), there is two ways of expressing the value:
+    which drive the "amount" of color you can store in an image. Where the "amount"
+    is indicated by a number of bits. Bits are mostly a power of 2 (8,16,32).
+    Alongside this number there is two ways of expressing a value:
 
     -   with _integers_ (3,4,5,...).
     -   with _floats_ (0.25,0.2536,1.23,156.3, ...). 
  
-    The most important point to remember being that mathematical floats can have an 
+    Both have a maximum and a minimum value, the difference being the step possible
+    between each value. We will focus on floats because that what OpenEXR was designed for.
+
+    One important point to remember being that mathematical floats can have an 
     infinite decimal representation (like π (pi)), yet
     we need store numbers in the computer within finite bounds. Which is why we have
     designed [a clever system](https://en.wikipedia.org/wiki/IEEE_754) allowing us to
@@ -228,7 +185,8 @@ possible to find such high values in sunny HDRIs [^6] or even depth buffer (zdep
 of very large scenes. Yet we can agree this is pretty rare.
 
 But the more subtle limitation is precision, where _half_ have less "gap" between each
-possible code value than _float_.
+possible code value than _float_ (and remember that float fomats have more decimal 
+precision closer to 0, which get worse as you get further from it).
 
 <figure>
 <div class="diagram">
@@ -265,9 +223,15 @@ possible values if our data is between the 0-1 range.
     get away with it (mind the pitfalls). [^15]
 
 
-!!! tip "as an artist"
+!!! tip "as a vfx artist"
 
-    - textures
+    -   usually for textures:
+        - albedo/base-color/specular-roughness/masks: `16bit float`
+        - normal/displacement/height: `32bit float`
+    -   for AOVs:
+        - make sure z-depth/normals/p-ref/p-world/cryptomatte are `32bit float`
+    -   if you receive an exr with a log and 16bit encoding, warn the sender it must
+        at least be `32bit` or a 12bit+ integer format.
 
 
 ## compression algorithms
@@ -339,7 +303,7 @@ Those representations are usually provided by the 3d render-engine and allow to 
 tweak the image in 2d space without having to wait for expensive 3d calculations.
 You can see AOVs like "layers" of the final combined image.
 
-[//]: # (TODO add AOVs image example)
+![A rendered 3d scene with 4 example AOVs next to it.](demo-aovs.png)
 
 So now imagine you have 3 layers of pixel data you want to store, for a total of 8 channels:
 
@@ -436,6 +400,13 @@ I *most-cases* because multi-file can still be preferred. Some software doesn't 
 you to write a multi-part file AND allow each part to specify a different bitdepth or
 compression algorithm, or it simply does not support multi-part or even multi-channel 
 at all (hello Photoshop :emoji:(cat-weeee)).
+
+!!! warning
+
+    Be careful when reading a multi-channel/part exr as the reading options usually applies 
+    the same on all part/channels. For example the colorspace conversion, which you
+    don't want on non-color managed channels.
+
 
 ### mip-mapping
 
@@ -598,7 +569,7 @@ probably more convenient to store it in the same file format as the other AOVs: 
 Thus also making it easier for software to implement its support, without having to add 
 a new external dependency to their stack [^10].
 
-!!! tip "🎨 as an artist"
+!!! tip "🎨 as vfx artist"
 
     -   make sure cryptomatte channels are encoded with 32bits (float) [^11].
     -   make sure cryptomatte channels are not color-managed when written/read [^11].
@@ -675,7 +646,7 @@ And then the `oiiotool` executable is in `/any/directory/OpenImageIO/bin`.
 `oiiotool` already have an [extensive documentation](https://openimageio.readthedocs.io/en/v3.1.8.0/oiiotool.html)
 but let's check a few example.
 
-#### convert from exr
+#### oiiotool - convert from exr
 
 The most basic oiiotool command to convert from one format to another:
 
@@ -746,7 +717,7 @@ documentation](https://openimageio.readthedocs.io/en/v3.1.8.0/oiiotool.html#spli
 already have an example you can check.
 
 
-#### convert to exr
+#### oiiotool - convert to exr
 
 And for the other way around, pretty much the same logic and problematics:
 
@@ -779,11 +750,202 @@ oiiotool "image.jpg" --compression "dwaa:30" -d float --tile 16 16 --colorconver
 
 ### with Blender !
 
-TBD
+Because everyone and their grandmother have heard about Blender, and you [can just get
+it for free](https://www.blender.org/download/). If Blender is quite capable, do
+not expect advanced capabilities and keep in mind Blender will mostly cover the OpenEXR 
+basics.
 
-[//]: # (blender doesn't allow to export multipart exr ?)
-[//]: # (channels name are prefixed with the view layer)
-[//]: # (when picking half bitdepth some channels are forced to float, but not all needed (cryptomatte)
+!!! caution
+
+    The explanations below assume Blender 5.0 and may change in the future.
+    Older version are not recommended either because 
+    [5.0 added](https://developer.blender.org/docs/release_notes/5.0/pipeline_io/#images)
+    multi-part OpenEXR support for writing, and brings improvement to the Compositor worflow.
+
+#### Blender - reading
+
+To view OpenEXR file with Blender, you will need to use [the Image Editor](https://docs.blender.org/manual/en/latest/editors/compositor.html).
+
+- open the Image Editor from the editor type menu (in the top-left of a panel).
+- open an exr file by clicking "Open" (top-center of the panel, folder icon).
+
+<figure>
+<img src="blender-exr-read.png" alt="A screenshot of the Blender interface with an OpenEXR file opened in the image editor.">
+<figcaption>
+You can change the currently visible layer and channels from the top right menus. If
+the image is multi-part you will get an extra menu to pick the part to display.
+</figcaption>
+</figure>
+
+However, make sure that the file is properly color-managed:
+
+<figure markdown="span">
+<img src="blender-exr-read-colormanagement.png" alt="A screenshot of the Blender interface with an OpenEXR file opened in the image editor.">
+<figcaption markdown="span">
+Open the right hiden panel by pressing `N`, then go the `Image` section. You can select
+the colorspace that match your file encoding.
+</figcaption>
+</figure>
+
+By defaut the Image Editor is not synchronized with the scene global color-management.
+If you need more control on how the image is rendered you might want to check `View as Render`
+in the image panel you opened previously with the `N` key. Once this is checked you can
+go to the `Color Management` properties of the global scene (Render panel on the right then scroll down). 
+The default transform in Blender is `AgX` but your exr file have probably 
+been authored with a different transform. 
+If you don't need a transform, select "Standard" (which is the transform used when `View as Render` is unchecked).
+
+!!! tip "color picking"
+
+    If you want to color pick a value on the image, you can just press left or right click
+    and a band with the value at cursor position will appear at the bottom.
+
+#### Blender - writing
+
+There's 2 method to export an exr out of Blender:
+
+1. use the `Save As` menu next to an image (external or a scene render)
+2. use [the Compositor](https://docs.blender.org/manual/en/latest/editors/compositor.html).
+
+The first one is pretty straightforward, you get a file export dialog, you pick OpenEXR
+as a file format, tweak the encoding options according to what we explained before
+and you are done. 
+
+![screenshot of the Blender "Save As" file dialog](blender-save-as.png)
+
+!!! caution
+
+    If you are saving a Blender render with AOVs or re-encoding an existing
+    OpenEXR you may want to change the "Media Type" to "Multi-Layer EXR" else only the 
+    usual RGBA channels will be writen !
+
+The second method is where we need more explanations, but give us more control to build
+our file:
+
+- open the Compositor from the editor type menu (in the top-left of a panel).
+- create a nodegraph by clicking "New" (top-center of the panel).
+- delete the default "Render Layer" node that is created
+
+!!! warning
+
+    Make sure there is no "Render Layers" node in the nodegraph, else when rendering
+    the nodegraph, a 3d render of the scene will also be triggered !  (You can also
+    just mute the node with `M`).
+
+If we create an exr file means we need some initial pixel data to store. So we have to 
+import some existing images, but you could totally create some data directly
+from Blender using the nodes ! 
+
+<figure>
+<img src="blender-compositor-neocat.png" alt="A screenshot of the Blender interface with the Compositor open. We have 3 nodes, an Image Input, a File Output and the Viewer node.">
+<figcaption>
+A simple import/export+preview example with a silly emoji from <a href="https://volpeon.ink/">Volpeon</a>
+</figcaption>
+</figure>
+
+!!! hint "Previewing streams"
+
+    In the above example, the Viewer setup is optional, but if you still want to preview
+    the image data you can:
+    
+    - create a Viewer node if you don't already have one
+    - connect it to the pixel stream you want to preview
+    - optionA: enable the `Backdrop` button on the top-right of the panel (use `Alt` + MMB to move the backdrop).
+    - optionB: open a new "Image Editor" panel, on the top-center menus click on the left picture icon, then select "Viewer Node".
+
+To import an image you can create an `Image` node (RMB > Add > Input > Image) and click
+the `Open` button on the node. If you import an OpenEXR image with multiple layers you
+will notice:
+
+- the parts can be selected from a new "Layer" dropdown on the Image node
+- the channels are grouped by layer and assigned an output port on the node
+
+<figure>
+<img src="blender-multi-layer-ports.png" alt="A screenshot of the Blender interface with the Compositor open. We have 2 image nodes one with a multi-part image and the other with a multi-channel image.">
+<figcaption>
+The top node is multi-part and have a "Layer" menu while the bottom node is multichannel and have 5 output ports.
+</figcaption>
+</figure>
+
+!!! caution "Colorspaces"
+
+    You may notice that the colorspace dropdown will affect ALL channels and parts
+    which may not be desireable if some channels have non-color-managed data. The
+    solution is to use a non-color-managed colorspace (`Non-Color` is the Blender default)
+    for the Image node, and then create a `Convert Colorspace` node for each channel 
+    that need to be color converted. Or you may also not want any color-conversion
+    at all if you just want to import and export the data without editing it.
+
+    <figure>
+    <img src="blender-channels-colormanagement.png" alt="A screenshot of the Blender interface with the Compositor open. We have a multi-channel image nodes where only 3 ports out of 5 have a Convert Colorspace node connected.">
+    <figcaption>
+    Here is an example where we convert linear-sRGB color channel to ACEScg before writing.
+    </figcaption>
+    </figure>
+
+And lastly, to actually export an exr file, we will create a "File Output" node 
+(RMB > Add > Output > File Output). In opposite to most nodes which can be tweaked
+in the nodegraph, this one require you to open its Node Properties panel: press `N` to
+open the right side-panel, then go into the "Node" tab. There we can:
+
+<div class="column-split" markdown="1">
+<img src="blender-file-output.png" alt="Screenshot of the Blender Compsitor with a File Output node Properties panel opened.">
+<div markdown="1">
+-   pick an output directory.
+-   pick a filename (you don't need to put the file extension suffix).
+-   pick the type of image to export:
+    - `Image`: one image on disk for each layer.
+    - `Multi-Layer`: layers are saved in the same multi-part or multi-channel exr file.
+-   configure the image format encoding options.
+    - if `Interleave` is checked, you will get a multi-channel exr, else a multi-part exr is created.
+-   configure the layers to exports (see below).
+
+> Make sure to check [the node documentation](https://docs.blender.org/manual/en/latest/compositing/types/output/file_output.html) 
+> for a detailed breakdown.
+</div>
+</div>
+
+
+!!! tip
+
+    File paths in Blender can contains tokens which are replaced when rendering, you can
+    get the full list of them here: <https://docs.blender.org/manual/en/latest/files/file_paths.html>.
+
+When we talk about layer in the File Output context, we refer to a group of multiple
+related pixel channels. They are represented by a single stream in the nodegraph, 
+going from port to port on nodes.
+The File Output node allow to create [3 different types](https://docs.blender.org/manual/en/latest/compositing/compositor_system.html#type)
+of layers. Those basically represent the amount of channels in a layer but also have
+some implifications of the encoding configuration in the exr file:
+
+| type   | channels | suffix in exr        | forced bitdepth | color-managed |
+|--------|----------|----------------------|-----------------|---------------|
+| float  | 1        | `.V`                 | float           | no            |
+| color  | 4        | `.R`,`.G`,`.B`,`.A`  | no              | yes           |
+| vector | 4        | `.X`,`.Y`,`.Z`,`.W`  | float           | no            |
+
+The name you give to the layer will be used to prefix the channel names, and if you
+export a multi-part exr, it will *also* be set for the part's `name` attribute.
+
+!!! admonition "Metadata"
+
+    Unfortunately the Compositor doesn't let you modify metadata. The only control
+    you have is adding specific keys in the _Output Properties_ of the scene (panel on the right).
+    There is [a Metadata section](https://docs.blender.org/manual/en/latest/render/output/properties/metadata.html)
+    which mostly allow to add or not some specific 
+    information about the scene. **You probably want to uncheck all the metadata options
+    if you are not exporting a Blender render**. 
+    The only "free" field is the "Note" which will be
+    saved with the same name in the exr metadata.
+
+    When exporting a multi-part exr, only the first part will have this extra metadata.
+
+Once your nodegraph is configured as desired, you can write the image by starting a
+render (`F12` key or `Render > Render Image` menu at the top left). 
+The "Blender Render" window will open but will display
+an empty image. However, if you check the export directory, our exr file will be writen. 
+Yes this is not intuitive :emoji:(neocat-googly).
+
 
 ## closing words
 
@@ -795,12 +957,14 @@ but relied on `oiiotool` for writing and tried to benchmark Nuke for reading.
 Without a commercial license, the project just ended-up in the bin of unfinished project.
 But around the same time I gave it up, OpenEXR devs released `exrmetrics` and it's only
 during those 2025 Christmas holiday I finally had time to have a play with it. Crazy how 
-"productive" people become if you gave them free time instead of work time ?
+"productive" people become if you gave them free time instead of work time :emoji:(cat-think) ?
 
 *[AOVs]: Arbitrary Output Variables
 *[API]: Abstract Programming Interface
 *[DCC]: Digital Content Creation (software)
 *[compositor]: person doing compositing (the artistic 2D step after rendering)
+*[MMB]: middle mouse button (scroll-wheel click)
+*[RMB]: right mouse button (right-click)
 
 [^1]: The provided Python API has limitations and you would rather use the Python bindings
     of other libraries like [OpenImageIO](https://openimageio.readthedocs.io/).

@@ -30,3 +30,13 @@
         margin: 0;
     }
 }
+@media screen and (max-width: 1000px) {
+    .src-md .column-split {
+        flex-direction: column;
+
+        img {
+            max-width: 450px;
+        }
+
+    }
+}
