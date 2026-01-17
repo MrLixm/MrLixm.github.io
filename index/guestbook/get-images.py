@@ -9,7 +9,7 @@ LOGGER = logging.getLogger(__name__)
 THISDIR = Path(__file__).parent
 
 
-def generate(template_renderer: lxmsite.TemplateRenderer) -> str:
+def generate(template_renderer: lxmsite.PageTemplateRenderer) -> str:
     site_root = template_renderer.site_config.SRC_ROOT
     template = []
 
@@ -32,7 +32,7 @@ def generate(template_renderer: lxmsite.TemplateRenderer) -> str:
         caption = meta.get("caption", "")
         link = meta.get("link", "")
         author = meta.get("author", "")
-        # index = meta.get("index", random.randint(0, len(metadatas) - 1))
+        index = int(meta.get("index", random.randint(0, len(metadatas) - 1)))
         if not author:
             author = image_path.stem
 

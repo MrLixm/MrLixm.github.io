@@ -29,6 +29,9 @@
     overflow: auto;
     display: block;
 }
+.src-md table.inline a {
+    text-wrap: nowrap;
+}
 .src-md table.inline p {
     margin: unset;
 }

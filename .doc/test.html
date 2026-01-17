@@ -204,7 +204,7 @@ and the third line</p>
 end of the quote</p>
 </blockquote>
 <h2 id="emojis"><a href="#emojis">emojis</a></h2>
-<p>Testing emojis <img alt="" class="emoji-role inline" src="../.static/images/emojis/yes-cool.png" title="yes-cool" /> while being inline. I hope you do like cats ! <img alt="" class="emoji-role inline" src="../.static/images/emojis/cat-nerd.png" title="cat-nerd" />.
+<p>Testing emojis <img alt="An emoji with sunglasses, a big smile and a thumbs up." class="emoji-role inline" src="../.static/images/emojis/yes-cool.webp" title="yes-cool" /> while being inline. I hope you do like cats ! <img alt="A very nerdy cat staring at you with its big glasses." class="emoji-role inline" src="../.static/images/emojis/cat-nerd.webp" title="cat-nerd" />.
 According to all known laws of aviation, there is no way a bee should be able to fly.
 Its wings are too small to get its fat little body off the ground.</p>
 <h2 id="transitions"><a href="#transitions">transitions</a></h2>
@@ -764,13 +764,18 @@ that can span multiple lines</p>
 <span class="linenos" data-linenos="9 "></span>    <span class="k">return</span> <span class="n">oiio</span><span class="o">.</span><span class="n">ImageBuf</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
 </code></pre></div>
 <p>As literal:</p>
-<p>from pathlib import Path
-import OpenImageIO as oiio</p>
-<p>def read_image(path: Path) -&gt; oiio.ImageBuf:
+<div>
+from pathlib import Path
+import OpenImageIO as oiio
+
+
+def read_image(path: Path) -> oiio.ImageBuf:
     """
     Read given image from disk as oiio buffer.
     """
-    return oiio.ImageBuf(str(path))</p>
+    return oiio.ImageBuf(str(path))
+</div>
+
 <h2 id="the-end"><a href="#the-end">the end</a></h2>
 <p>You have reached the end of the testing page.</p>
 <nav class="toc"><p class="topic-title">Table Of Contents</p><div class="toc-list">
@@ -818,7 +823,7 @@ import OpenImageIO as oiio</p>
   
     
     <p>Static website <a href="."><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-11-01T19:01</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/22b0628" target="_blank">22b0628</a></i></p>
+      Last built on <i>2026-01-17T18:22</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/9d687a5" target="_blank">9d687a5</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

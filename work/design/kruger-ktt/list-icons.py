@@ -7,7 +7,7 @@ import lxmsite
 THIS_DIR = Path(__file__).parent
 
 
-def generate(template_renderer: lxmsite.TemplateRenderer) -> str:
+def generate(template_renderer: lxmsite.PageTemplateRenderer) -> str:
     site_root = template_renderer.site_config.SRC_ROOT
 
     icons_dir = THIS_DIR / "icons"

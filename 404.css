@@ -55,43 +55,43 @@ input.play:hover {
 
 @keyframes frog-anim {
     0% {
-        background: url("index/frog-anim/lego-frog.0001.png") no-repeat center;
+        background: url("index/frog-anim/lego-frog.0001.webp") no-repeat center;
         background-size: 100%;
     }
     11.1% {
-        background: url("index/frog-anim/lego-frog.0002.png") no-repeat center;
+        background: url("index/frog-anim/lego-frog.0002.webp") no-repeat center;
         background-size: 100%;
     }
     22.2% {
-        background: url("index/frog-anim/lego-frog.0003.png") no-repeat center;
+        background: url("index/frog-anim/lego-frog.0003.webp") no-repeat center;
         background-size: 100%;
     }
     33.3% {
-        background: url("index/frog-anim/lego-frog.0004.png") no-repeat center;
+        background: url("index/frog-anim/lego-frog.0004.webp") no-repeat center;
         background-size: 100%;
     }
     44.4% {
-        background: url("index/frog-anim/lego-frog.0005.png") no-repeat center;
+        background: url("index/frog-anim/lego-frog.0005.webp") no-repeat center;
         background-size: 100%;
     }
     55.5% {
-        background: url("index/frog-anim/lego-frog.0006.png") no-repeat center;
+        background: url("index/frog-anim/lego-frog.0006.webp") no-repeat center;
         background-size: 100%;
     }
     66.6% {
-        background: url("index/frog-anim/lego-frog.0007.png") no-repeat center;
+        background: url("index/frog-anim/lego-frog.0007.webp") no-repeat center;
         background-size: 100%;
     }
     77.7% {
-        background: url("index/frog-anim/lego-frog.0008.png") no-repeat center;
+        background: url("index/frog-anim/lego-frog.0008.webp") no-repeat center;
         background-size: 100%;
     }
     88.8% {
-        background: url("index/frog-anim/lego-frog.0009.png") no-repeat center;
+        background: url("index/frog-anim/lego-frog.0009.webp") no-repeat center;
         background-size: 100%;
     }
     100% {
-        background: url("index/frog-anim/lego-frog.0001.png") no-repeat center;
+        background: url("index/frog-anim/lego-frog.0001.webp") no-repeat center;
         background-size: 100%;
     }
 }

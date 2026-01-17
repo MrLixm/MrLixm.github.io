@@ -116,6 +116,7 @@
 <li><a href="#writing-markdown-content">writing markdown content</a></li>
 <li><a href="#page-metadata">page metadata</a></li>
 <li><a href="#custom-markdown-syntax">custom markdown syntax</a><ul>
+<li><a href="#include">include</a></li>
 <li><a href="#code-blocks">code blocks</a></li>
 <li><a href="#admonitions">admonitions</a></li>
 <li><a href="#url-preview">url-preview</a></li>
@@ -442,6 +443,27 @@ from the RestructuredText language.</p>
 
     content
 </code></pre></div>
+<h4 id="include"><a href="#include">include</a></h4>
+<p>Inject the content of a file in the Markdown document.</p>
+<p>If no option is provided, the content is assumed to be a Markdown document that need parsing.</p>
+<p>Available options are:</p>
+<ul>
+<li><code class="inline">code</code>: the text will be wrapped in a superfence code blocks and the value will be appened to the header.</li>
+<li><code class="inline">lines</code>:
+  an expression that describe the lines to extract from the file.
+  It can either be 2 integer seprated by a colon: that's a start-end range
+  (you can use negative number, where -1 indicate the last line).
+  Or it can be multiple integer separated by a comma, which correspond each to an individual line.</li>
+<li><code class="inline">encoding</code>: the file encoding used for reading.</li>
+<li><code class="inline">literal</code>:
+  will import the content and wraps it in a <div>. the value
+  are appened as attributes of the div tag.</li>
+</ul>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="p">..</span> <span class="ow">include</span><span class="p">::</span> myfile.py
+    <span class="nc">:code:</span> python {linenums=&quot;1&quot; title=&quot;myfile.py&quot;}
+    <span class="nc">:lines:</span> 5-10
+</code></pre></div>
 <h4 id="code-blocks"><a href="#code-blocks">code blocks</a></h4>
 <p>You can embed code snippets with the <a href="https://facelessuser.github.io/pymdown-extensions/extensions/superfences/">superfence syntax</a>. </p>
 <p>It uses <a href="https://pygments.org/">pygments</a> to provide syntax highlighting.</p>
@@ -694,7 +716,7 @@ that generates html (or actually anything).</p>
 <p>To create a script, create a standard python file next to the template (can actually
 be stored anywhere but you need to specify its path relative to the template it is used
 in). Inside, you only need to declare one mandatory function:</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="n">template_renderer</span><span class="p">:</span> <span class="n">lxmsite</span><span class="o">.</span><span class="n">TemplateRenderer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="n">template_renderer</span><span class="p">:</span> <span class="n">lxmsite</span><span class="o">.</span><span class="n">PageTemplateRenderer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="c1"># your implementation here</span>
     <span class="k">pass</span>
 </code></pre></div>
@@ -795,7 +817,7 @@ page templates, but different <strong>variables</strong> which are:</p>
   
     
     <p>Static website <a href="."><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2025-11-01T19:01</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/22b0628" target="_blank">22b0628</a></i></p>
+      Last built on <i>2026-01-17T18:22</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/9d687a5" target="_blank">9d687a5</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>
