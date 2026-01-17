@@ -424,7 +424,7 @@ is the orginal image in full resolution, and each subsequent part is smaller.
 But it's also possible to store multiple mipmap for each individual part (only if the data 
 is stored in a tiled layout [^4]) !
 
-![a bunch of sucessfully smaller frogs that can't stand A.I. so much they are burning](demo-mipmap.png)
+![a bunch of sucessfully smaller frogs that can't stand A.I. so much they are burning](demo-mipmap.webp)
 
 However, as an artist it's probably something you will never have to do, being a rather
 automated process handled by the render-engine. See [Maketx - Arnold User Guide](https://help.autodesk.com/view/ARNOL/ENU/?guid=arnold_user_guide_ac_textures_ac_textures_maketx_html)
