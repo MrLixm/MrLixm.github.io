@@ -1,0 +1,74 @@
+{% extends "work/vfx/.vfx.html" %}
+{% block main %}
+  {{ super() }}
+  <div class="read-area">
+    <div class="body-layout">
+      <section id="artwork">
+        <img src="main.jpg" id="main-render" alt="Up in the sky there was the cloud farm. Collecting clouds and packing them up in wooden boxes before sending them down there. It was not an easy task, you had to bear the constant wind and a strong sun reflected by a deep blue sky. Quite a surreal job.">
+      </section>
+      <section id="description">
+        <p>
+          My last personal 3d project was 5 years ago. Not anymore. It all started from
+          a technical
+          <a href="../../../blog/openexr-2026">blog post</a> and the need to understand
+          more some concept with practice. Then find way to illustrate those concepts to others.
+          <br>
+          But where do you even start ? And even how ? All the software I learnt to use for my job
+          are behind paywalls. Blender ? It doesn't support the specific feature I need to showcase.
+          I found my answer in
+          <a href="https://www.gafferhq.org/">Gaffer</a> which I had on my todo list
+          since forever. Paired with
+          <a href="https://renderman.pixar.com/">RenderMan</a> and there goes my
+          software workflow for 0€. Still what do I want to show ? How do I even craft the assets ?
+          I went with the most time-saving solution: relying on Megascans. And the dumbest way
+          possible, no concept, no planning, just assembling pre-made asset together until I
+          get something interesting. My only constraints were that I had to have some volumetrics
+          and a motion-blurred object. And slowly, a concept appeared: a cloud farm; up-in the sky
+          they are harvesting clouds...
+        </p>
+        <b>Credits:</b>
+        <ul>
+          <li>photogrametric assets:
+            <a href="https://quixel.com/megascans/home/">Quixel Megascans</a></li>
+          <li>clouds: <a href="https://www.artstation.com/samk_9632">Samuel Krug</a>;
+            <a href="https://www.disneyanimation.com/resources/clouds/">Disney Animation</a>
+          </li>
+          <li>milk bottle:
+            <a href="https://renderman.pixar.com/cookies-and-milk">Harsh Agrawal</a>
+          </li>
+        </ul>
+        <b>Download:</b>
+        <p>If you want to play with it, or use it for testing purposes you can download the source render:</p>
+        <a href="render.exr" download="cloud-farm.liamcollod.deep.exr">render.exr (8.7MB)</a>
+        <p>It's a half-float deep exr with the usual RGBA channels and the 2 extra Z channels for deep.</p>
+        <p>The above .exr file is licensed under the following terms:</p>
+        <code class="license">
+          You are free to use the file provided "as is" without warranty of any kind, as long as:<br>
+          - you are an individual human being<br>
+          - you are not any of a misogynist, racist, fascist,
+            terf, queerphobe, bigot, antisemitic, islamophobe, genocide-denialer, history-negasionist piece of shit.<br>
+          - you do not support any individual or entities matching the previous criterias.<br>
+          - the file is not used for the purpose of training or improving machine learning algorithms.<br>
+          - this page url is included as credit in any work making use of the file.<br>
+        </code>
+      </section>
+    </div>
+    <section id="breakdown">
+      <h2>breakdown</h2>
+      <div class="body-layout">
+        <figure id="breakdown-progress">
+          <video muted loop autoplay controls>
+            <source src="breakdown.progress.mp4" type="video/mp4">
+          </video>
+          <figcaption>progress as seen through my
+            <abbr title="Interactive Preview Render">IPR</abbr> window
+          </figcaption>
+        </figure>
+        <figure>
+          <img src="breakdown.gaffer.png" alt="A screenshot of the Gaffer interface with the scene loaded.">
+          <figcaption>Screenshot of the scene in Gaffer; with a probably very non-optimized node-graph layout.</figcaption>
+        </figure>
+      </div>
+    </section>
+  </div>
+{% endblock %}

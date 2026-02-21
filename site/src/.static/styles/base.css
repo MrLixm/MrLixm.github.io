@@ -142,6 +142,19 @@ figcaption p {
     }
 }
 
+nav.breadcrumbs {
+    display: flex;
+    justify-content: center;
+    font-size: 0.8rem;
+
+    a {
+        color: var(--color);
+    }
+    a:hover {
+        color: var(--color-primary);
+    }
+}
+
 
 .strikethrough {
     text-decoration: line-through;
