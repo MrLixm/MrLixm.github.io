@@ -39,6 +39,7 @@ def read_page(
     title = parsed.title
     content = parsed.html
     content = '<div class="src-md">\n' + content + "\n</div>"
+    html_blocks = parsed.blocks
 
     src_root = site_config.SRC_ROOT
     url_path: Path = file_path.relative_to(src_root)
@@ -116,6 +117,7 @@ def read_page(
         status=status,
         url_path=url_path,
         html_content=content,
+        html_blocks=html_blocks,
         html_template=template,
         stylesheets=stylesheets,
     )

@@ -27,6 +27,10 @@ print("hello world")
 
 blending the latent smoothness of the fruits
 
+<div id="smoothies">
+idk
+</div>
+
 ## conclusion
 
 this was not great

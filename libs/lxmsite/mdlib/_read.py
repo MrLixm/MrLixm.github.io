@@ -2,6 +2,9 @@ import dataclasses
 import logging
 from pathlib import Path
 
+import lxml.etree
+
+import markdown.serializers
 
 from ._md import LxmMarkdown
 from ._extensions import ExtractTitleTreeprocessor
@@ -21,6 +24,7 @@ class Document:
     title: str
     metadata: dict[str, str]
     html: str
+    blocks: dict[str, str]
 
 
 def read_markdown(
@@ -113,8 +117,20 @@ def read_markdown(
 
     html = reader.convert(source)
 
+    # we shallow parse the html to build a shallow list of elements at root by id
+    blocks_by_id = {}
+    parser = lxml.etree.HTMLParser()
+    root_element = lxml.etree.fromstring(html, parser)
+    child_elements = list(root_element[0]) if root_element is not None else []
+    for child in child_elements:
+        child_id = child.attrib.get("id")
+        if child_id:
+            block_html = markdown.serializers.to_html_string(child)
+            blocks_by_id[child_id] = block_html.strip("\n")
+
     return Document(
         title=title_extractor.title,
         html=html,
         metadata=meta_extractor.metadata,
+        blocks=blocks_by_id,
     )

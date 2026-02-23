@@ -85,7 +85,17 @@ class PageResource:
     """
     relative to the site root
     """
+
     html_content: str
+    """
+    The page content serialized as html.
+    """
+
+    html_blocks: dict[str, str] = dataclasses.field(default_factory=dict)
+    """
+    A mapping of block identifier: block html
+    """
+
     html_template: str | None = None
     """
     path of the template to use relative to the config TEMPLATE_ROOT

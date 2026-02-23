@@ -582,6 +582,45 @@ explained in details after):
 - `ShelfLibrary`: collection of all shelves the site has.
 - `include_script_output`: function to include the output of a python script.
 
+### the Page object
+
+This object is an instance of `lxmsite.PageResource` so you can check the object code
+to see the available attributes in details.
+
+```
+Page.title
+Page.metadata
+Page.url_path
+Page.html_content
+Page.html_blocks
+Page.html_template
+Page.status
+Page.stylesheets
+```
+
+#### Page.html_blocks
+
+When parsing the markdown file, the runtime will collect any html entity which have an
+`id` attribute defined and store it's id mapped to its html content.
+
+For example if you have the following markdown file:
+
+```markdown
+# demo
+
+a block example
+
+<div id="demo-block">
+<p>hello world</p>
+</div>
+```
+
+then `Page.html_blocks` will be equal to:
+
+```python
+Page.html_blocks = {"demo-block": '<div id="demo-block">\n<p>hello world</p>\n</div>'}
+```
+
 
 ### script system
 
