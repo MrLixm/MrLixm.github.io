@@ -1,0 +1,71 @@
+:root {
+    --bg-color-W: rgb(255, 255, 255);
+    --bg-color: rgb(252, 252, 252);
+    --bg-color-M: rgb(242, 242, 242);
+    --bg-color-MM: rgb(232, 232, 232);
+
+    --color-W: rgb(0, 0, 0);
+    --color: rgb(5, 5, 5);
+    --color-M: rgb(25, 25, 25);
+    --color-MM: rgb(100, 100, 100);
+
+    --color-primary-WWW: rgb(22, 67, 75);
+    --color-primary-WW: rgb(39, 112, 128);
+    --color-primary-W: rgb(62, 147, 173);
+    --color-primary: rgb(25, 160, 190);
+}
+
+h2 {
+    border-bottom: 1px solid var(--bg-color-MM);
+    margin: 3rem 0;
+}
+
+.src-md a:before {
+    background: url("../../../.static/icons/link-vertical.dark.svg") no-repeat bottom;
+    background-size: contain;
+}
+
+.grid-row {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+#main-render {
+    margin: auto;
+    border: 2rem solid white;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.05);
+}
+#breakdown-progress {
+    max-width: 400px;
+}
+
+.license {
+    padding: 1rem;
+    border-radius: 6px;
+    color: var(--color-MM);
+    background-color: var(--bg-color-MM);
+
+    *:first-child {
+        margin-top: 0;
+    }
+    *:last-child {
+        margin-bottom: 0;
+    }
+}
+img[src^="breakdown.gaffer"] {
+    width: 100%;
+    height: 100%;
+}
+video {
+    max-width: 100%;
+}
+
+@media screen and (max-width: 1000px) {
+    #main-render {
+        border-width: 1rem;
+    }
+    .grid-row {
+        flex-direction: column;
+    }
+}

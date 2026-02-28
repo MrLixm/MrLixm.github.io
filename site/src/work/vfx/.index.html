@@ -1,0 +1,28 @@
+{% extends ".base.html" %}
+{% block main %}
+  <div class="artwork-gallery">
+    <section class="title">
+      <h1>VFX</h1>
+      <p class="sub-heading">{{ Page.metadata.description }}</p>
+    </section>
+    {%- for page in Shelf.iterate_children_by_last_created(reverse=True, ignore_index=True) %}
+      <a href="{{ page.url_path|mkpagerel|prettylink }}">
+        <div class="artwork-gallery-item">
+          <div class="gallery-item-header">
+            <div class="decoration decoleft"></div>
+            <h2>{{ page.title }}</h2>
+            <div class="decorations">
+              <div class="decoration decoA"></div>
+              <div class="decoration decoB"></div>
+              <div class="decoration decoC"></div>
+            </div>
+          </div>
+          <img src="{{ page.metadata.image|mksiterel(page.url_path)|mkpagerel }}" alt="{{ page.metadata.image_alt }}">
+          {%- if page.metadata.date_created %}
+            <time datetime="{{ page.metadata.date_created.isoformat() }}">{{ page.metadata.date_created.strftime("%d %B %Y") }}</time>
+          {% endif %}
+        </div>
+      </a>
+    {%- endfor %}
+  </div>
+{% endblock %}

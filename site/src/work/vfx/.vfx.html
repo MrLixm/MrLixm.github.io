@@ -1,7 +1,42 @@
 {% extends ".base.html" %}
 {% block title %}{{ Page.metadata.title }} - VFX - Liam Collod{% endblock %}
 {% block main %}
-<nav class="breadcrumbs">
-<a class="back-index" href="{{ "work/vfx/index.html"|mkpagerel|prettylink }}">/ back to vfx /</a>
-</nav>
+  {% block main_content %}
+    <div class="read-area src-md">
+      {%- if "post-header" in Page.html_blocks %}
+        {{ Page.html_blocks["post-header"] }}
+      {%- endif %}
+      <section id="post-body">
+        {%- if "post-main" in Page.html_blocks %}
+          {{ Page.html_blocks["post-main"] }}
+        {%- endif %}
+        {%- if "post-description" in Page.html_blocks %}
+          <section id="post-sidebar">
+            <nav class="breadcrumbs">
+              <a class="back-index" href="{{ "work/vfx/index.html"|mkpagerel|prettylink }}">/ back to vfx /</a>
+            </nav>
+            <h1>{{ Page.title }}</h1>
+            {%- if Page.metadata.date_created %}
+              <span class="date-icon" title="Date Created.">
+              {% include '.static/icons/calendar.svg' %}
+              <time datetime="{{ Page.metadata.date_created.isoformat() }}">{{ Page.metadata.date_created.strftime("%d %B %Y") }}</time>
+              </span>
+            {%- endif %}
+            {{ Page.html_blocks["post-description"] }}
+            {%  if "software" in Page.metadata.extras %}
+              <h3 id="software">Software</h3>
+              <div class="software-tags">
+              {% for software in Page.metadata.extras["software"].split(",") %}
+                <span class="software-{{ software }}">{{ software }}</span>
+              {% endfor %}
+              </div>
+            {% endif %}
+          </section>
+        {%- endif %}
+      </section>
+      {%- if "post-footer" in Page.html_blocks %}
+        {{ Page.html_blocks["post-footer"] }}
+      {%- endif %}
+    </div>
+  {% endblock %}
 {% endblock %}

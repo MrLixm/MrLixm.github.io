@@ -1,0 +1,6 @@
+{
+  "template": "work/vfx/.vfx.html",
+  "stylesheets": [
+    "work/vfx/vfx.css"
+  ]
+}
