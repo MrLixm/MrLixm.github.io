@@ -19,6 +19,7 @@ from lxmsite import SiteConfig
 from lxmsite import get_image_weight_ratio
 from lxmsite import read_image_opti_file
 from lxmsite import ImageOptimizer
+from . import PageStatus
 from ._utils import gitget
 from ._utils import mksiterel
 
@@ -401,6 +402,13 @@ def build_site(
         errors += error.errors
     etime = time.time()
     benchmarks[f"parsed {len(page_paths)} pages"] = etime - stime
+    if config.PUBLISH_MODE:
+        # filter out pages that are asked to not be published
+        pages = {
+            path: page
+            for path, page in pages.items()
+            if page.status != PageStatus.unpublished
+        }
 
     stime = time.time()
     # collect shelves and their associated pages

@@ -95,7 +95,7 @@ class ShelfResource:
                 continue
             if ignore_index and self.is_index(child):
                 continue
-            if child.status == child.status.unlisted:
+            if child.status != child.status.published:
                 continue
             yield child
 

@@ -176,7 +176,7 @@ create the html with a template.
 
 ### writing markdown content
 
-The official markdown synatx is supported: <https://daringfireball.net/projects/markdown/syntax.>
+The official markdown syntax is supported: <https://daringfireball.net/projects/markdown/syntax.>
 
 ### page metadata
 
@@ -196,7 +196,7 @@ Those are the fields that are understood as page metadata:
 | `date-modified` | Date at which the page was last modified. Format is `YYYY-MM-DDThh:mm`. See <https://en.wikipedia.org/wiki/ISO_8601>                                                               |
 | `template`      | Relative file path to the html template to use for rendering the page.                                                                                                             |
 | `stylesheets`   | Comma separated list of stylesheet path relative to the page. Prefix with a + to inherit the parent stylesheets.                                                                   |
-| `status`        | either `published` (no effect) or `unlisted` (will be excluded from being listed in its parent shelf)                                                                              |
+| `status`        | either `published` (default); `unlisted` or `unpublished`.                                                                                                                         |
 
 
 !!! important
@@ -239,6 +239,19 @@ A field is specified under the page title as `:field-name: value`. Example:
     - All file paths refer to the built site, not files in the source directory.
 
 See `lxmsite._page` for the code implementation.
+
+### status
+
+This field allow to control the page visibility:
+
+- `published`: the default, page is visible and included everywhere.
+- `unlisted`: the page is accessible but is not listed in shelves.
+- `unpublished`: the page is accessible in local build but become ignored on publish.
+  - keep in mind that the side medias next to the page are still published
+
+!!! note
+
+    Only the blog section display the status under the page title.
 
 
 ### custom markdown syntax

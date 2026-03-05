@@ -51,6 +51,9 @@
           {%- if Page.status == Page.status.unlisted %}
           <span class="post-status-unlisted" title="post status">unlisted</span>
           {%- endif  %}
+          {%- if Page.status == Page.status.unpublished %}
+          <span class="post-status-unpublished" title="post status">unpublished</span>
+          {%- endif  %}
         </section>
       </div>
     </section>

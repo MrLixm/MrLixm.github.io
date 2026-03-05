@@ -7,7 +7,7 @@
 :tags: vfx, image-processing
 :authors: Liam Collod
 :stylesheets: +openexr-2026.css
-:status: unlisted
+:status: unpublished
 
 [TOC]
 

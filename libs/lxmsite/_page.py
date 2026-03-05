@@ -65,9 +65,18 @@ class PageMetadata:
 
 class PageStatus(enum.Enum):
     published = enum.auto()
+    """
+    page is public with no restrictions
+    """
+
     unlisted = enum.auto()
     """
     page is built and published but not listed in shelf
+    """
+
+    unpublished = enum.auto()
+    """
+    page is ignored during publish build; else is considered 'unlisted' in local
     """
 
 
