@@ -1,4 +1,4 @@
-*.md
-*.pdf
-*.txt
-*.license
+**/*.md
+**/*.pdf
+**/*.txt
+**/*.license
