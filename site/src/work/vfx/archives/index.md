@@ -121,6 +121,10 @@ This is when the cringe levels get a bit lower, even if I'm still in my CoD GFX 
     I think it was one of the firt times I used Substance Designer to create some textures.
     </figcaption>
 </figure>
+<figure>
+    <img src="2016.dare-scene.jpg" alt="">
+    <figcaption>Random shitty abstract wallpaper for the same CoD team.</figcaption>
+</figure>
 <div class="grid-row">
     <figure>
         <img src="2016.cotw.jpg" alt="">
