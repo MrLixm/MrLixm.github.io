@@ -1,0 +1,139 @@
+:root {
+    --bg-color-W: rgb(0, 0, 0);
+    --bg-color: rgb(0, 0, 0);
+    --bg-color-M: rgb(10, 10, 10);
+    --bg-color-MM: rgb(20, 20, 20);
+
+    --color-W: rgb(245, 245, 245);
+    --color: rgb(215, 215, 215);
+    --color-M: rgb(205, 205, 205);
+    --color-MM: rgb(150, 150, 150);
+}
+
+.read-area {
+    display: flex;
+    flex-direction: column;
+    margin: 3rem;
+}
+
+nav.breadcrumbs {
+    font-size: 0.8rem;
+
+    a {
+        color: var(--color);
+    }
+    a:hover {
+        color: var(--color-primary);
+    }
+}
+
+figure {
+    margin: 0 auto 3rem auto;
+    text-align: center;
+
+    img {
+        margin: auto;
+    }
+
+    figcaption {
+        margin-top: 0.5rem;
+        color: var(--color-MM);
+    }
+
+    video {
+        width: 100%;
+    }
+
+}
+
+.grid-row {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+@media screen and (max-width: 1000px) {
+    .grid-row {
+        flex-direction: column;
+    }
+}
+
+#software {
+    font-size: 1rem;
+}
+
+.software-tags {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 5px;
+
+    span {
+        background-color: var(--bg-color-MM);
+        padding: 4px 8px;
+        border-radius: 8px;
+    }
+}
+
+#post-header {
+}
+#post-body {
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+}
+#post-main {
+    flex-shrink: 3;
+    width: 100%;
+}
+#post-sidebar {
+    top: 5%;
+    position: sticky;
+    align-self: start;
+    overflow: auto;
+    width: 540px;
+    height: 90vh;
+
+    padding: 3rem;
+    border-radius: 3px;
+    background-color: var(--bg-color-M);
+
+    h1 {
+        margin: 0.5rem 0;
+    }
+
+    .date-icon {
+        color: var(--color-MM);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        svg {
+            width: 16px;
+        }
+    }
+
+    .post-description {
+        overflow: auto;
+    }
+}
+#post-footer {
+}
+
+@media screen and (max-width: 1000px) {
+
+    .read-area {
+        margin: 1rem;
+    }
+
+    #post-body {
+        flex-direction: column-reverse;
+    }
+    #post-sidebar {
+        position: relative;
+        width: unset;
+        height: unset;
+
+        padding: 1.5rem;
+    }
+}

@@ -223,22 +223,17 @@
 .src-md img.align-left,
 .src-md figure.align-left {
     margin: unset;
-    align-items: start;
-}
-.src-md img.align-right,
-.src-md figure.align-right {
-    margin-left: auto;
-    align-items: end;
+    text-align: left;
 }
 .src-md img.align-center,
 .src-md figure.align-center {
     margin: auto;
-    align-items: center;
+    text-align: center;
 }
 .src-md img.align-right,
 .src-md figure.align-right {
     margin-left: auto;
-    align-items: end;
+    text-align: right;
 }
 .src-md figure.align-center img {
     margin: auto;

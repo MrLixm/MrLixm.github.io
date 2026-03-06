@@ -115,6 +115,7 @@
 <li><a href="#creating-a-page">Creating a page</a><ul>
 <li><a href="#writing-markdown-content">writing markdown content</a></li>
 <li><a href="#page-metadata">page metadata</a></li>
+<li><a href="#status">status</a></li>
 <li><a href="#custom-markdown-syntax">custom markdown syntax</a><ul>
 <li><a href="#include">include</a></li>
 <li><a href="#code-blocks">code blocks</a></li>
@@ -132,6 +133,10 @@
 </li>
 <li><a href="#metajson-files">.meta.json files</a></li>
 <li><a href="#writing-page-html-templates">Writing page html templates</a><ul>
+<li><a href="#the-page-object">the Page object</a><ul>
+<li><a href="#pagehtml_blocks">Page.html_blocks</a></li>
+</ul>
+</li>
 <li><a href="#script-system">script system</a></li>
 <li><a href="#cross-referencing">cross-referencing</a></li>
 </ul>
@@ -304,7 +309,7 @@ Its content is a custom syntax which follow the given rules:</p>
 free to define its content using the standard markdown syntax or to manually
 create the html with a template.</p>
 <h3 id="writing-markdown-content"><a href="#writing-markdown-content">writing markdown content</a></h3>
-<p>The official markdown synatx is supported: <a href="https://daringfireball.net/projects/markdown/syntax.">https://daringfireball.net/projects/markdown/syntax.</a></p>
+<p>The official markdown syntax is supported: <a href="https://daringfireball.net/projects/markdown/syntax.">https://daringfireball.net/projects/markdown/syntax.</a></p>
 <h3 id="page-metadata"><a href="#page-metadata">page metadata</a></h3>
 <p>Those are the fields that are understood as page metadata:</p>
 <div class="table-wrapper"><table class="inline">
@@ -365,7 +370,7 @@ create the html with a template.</p>
 </tr>
 <tr>
 <td><code class="inline">status</code></td>
-<td>either <code class="inline">published</code> (no effect) or <code class="inline">unlisted</code> (will be excluded from being listed in its parent shelf)</td>
+<td>either <code class="inline">published</code> (default); <code class="inline">unlisted</code> or <code class="inline">unpublished</code>.</td>
 </tr>
 </tbody>
 </table>
@@ -432,6 +437,18 @@ only defined in some html template):</p>
 </ul>
 </div>
 <p>See <code class="inline">lxmsite._page</code> for the code implementation.</p>
+<h3 id="status"><a href="#status">status</a></h3>
+<p>This field allow to control the page visibility:</p>
+<ul>
+<li><code class="inline">published</code>: the default, page is visible and included everywhere.</li>
+<li><code class="inline">unlisted</code>: the page is accessible but is not listed in shelves.</li>
+<li><code class="inline">unpublished</code>: the page is accessible in local build but become ignored on publish.</li>
+<li>keep in mind that the side medias next to the page are still published</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only the blog section display the status under the page title.</p>
+</div>
 <h3 id="custom-markdown-syntax"><a href="#custom-markdown-syntax">custom markdown syntax</a></h3>
 <p>In extent to the builtin markdown syntax we provide additional features.</p>
 <p>Some of those feature are implemented as "directives" which is the same concept copied
@@ -709,6 +726,33 @@ explained in details after):</p>
 <li><code class="inline">ShelfLibrary</code>: collection of all shelves the site has.</li>
 <li><code class="inline">include_script_output</code>: function to include the output of a python script.</li>
 </ul>
+<h3 id="the-page-object"><a href="#the-page-object">the Page object</a></h3>
+<p>This object is an instance of <code class="inline">lxmsite.PageResource</code> so you can check the object code
+to see the available attributes in details.</p>
+<div class="highlight"><pre><span></span><code>Page.title
+Page.metadata
+Page.url_path
+Page.html_content
+Page.html_blocks
+Page.html_template
+Page.status
+Page.stylesheets
+</code></pre></div>
+<h4 id="pagehtml_blocks"><a href="#pagehtml_blocks">Page.html_blocks</a></h4>
+<p>When parsing the markdown file, the runtime will collect any html entity which have an
+<code class="inline">id</code> attribute defined and store it's id mapped to its html content.</p>
+<p>For example if you have the following markdown file:</p>
+<div class="highlight"><pre><span></span><code><span class="gh"># demo</span>
+
+a block example
+
+&lt;div id=&quot;demo-block&quot;&gt;
+&lt;p&gt;hello world&lt;/p&gt;
+&lt;/div&gt;
+</code></pre></div>
+<p>then <code class="inline">Page.html_blocks</code> will be equal to:</p>
+<div class="highlight"><pre><span></span><code><span class="n">Page</span><span class="o">.</span><span class="n">html_blocks</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;demo-block&quot;</span><span class="p">:</span> <span class="s1">&#39;&lt;div id=&quot;demo-block&quot;&gt;</span><span class="se">\n</span><span class="s1">&lt;p&gt;hello world&lt;/p&gt;</span><span class="se">\n</span><span class="s1">&lt;/div&gt;&#39;</span><span class="p">}</span>
+</code></pre></div>
 <h3 id="script-system"><a href="#script-system">script system</a></h3>
 <p>The jinja syntax is not enough and you wish some part of the template was procedurally
 generated ? You can use the script include system to run an arbitrary python script
@@ -817,7 +861,7 @@ page templates, but different <strong>variables</strong> which are:</p>
   
     
     <p>Static website <a href="."><i>hand-crafted</i></a> using 🐍 Python !
-      Last built on <i>2026-01-17T18:22</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/9d687a5" target="_blank">9d687a5</a></i></p>
+      Last built on <i>2026-03-07T00:28</i> from commit <i><a href="https://github.com/MrLixm/MrLixm.github.io/commit/d23921b" target="_blank">d23921b</a></i></p>
     <p>By using this website you agree black/trans/everyone's lives matter 🏳️‍🌈. Otherwise, fuck off.</p>
   
 </footer>

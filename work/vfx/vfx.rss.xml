@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+        
+        <title>Liam Collod - vfx</title>
+        <link>https://liamcollod.xyz/work/vfx</link>
+        <description>My vfx/cg/3D work.</description>
+        <docs>https://www.rssboard.org/rss-specification</docs>
+        <image>
+            <url>https://liamcollod.xyz/.static/images/cover-social.jpg</url>
+            <title>Liam Collod - vfx</title>
+            <link>https://liamcollod.xyz/work/vfx</link>
+        </image>
+        
+        <item>
+            <title>The Cloud-Farm</title>
+            <link>https://liamcollod.xyz/work/vfx/2026-cloud-farm/</link>
+            <description>My first personal project since a long time.</description>
+            <pubDate>Fri, 30 Jan 2026 00:08:00</pubDate>
+        </item>
+        
+        <item>
+            <title>The Offering (2023)</title>
+            <link>https://liamcollod.xyz/work/vfx/2023-the-offering/</link>
+            <description>My first movie credit ! A classical horror movie with a sick humanoid goat monster.</description>
+            <pubDate>Fri, 23 Jun 2023 20:33:00</pubDate>
+        </item>
+        
+        <item>
+            <title>Witches (2021)</title>
+            <link>https://liamcollod.xyz/work/vfx/2021-witches/</link>
+            <description>Witches is the second animated shot-movie project I worked on at CpasDec.</description>
+            <pubDate>Fri, 24 Sep 2021 18:38:00</pubDate>
+        </item>
+        
+        <item>
+            <title>2021 Demoreel</title>
+            <link>https://liamcollod.xyz/work/vfx/2021-demoreel/</link>
+            <description>My first and only demoreel.</description>
+            <pubDate>Fri, 24 Sep 2021 16:09:00</pubDate>
+        </item>
+        
+        <item>
+            <title>Give me the plant</title>
+            <link>https://liamcollod.xyz/work/vfx/2020-give-me-the-plant/</link>
+            <description>A small star-wars themed personal project.</description>
+            <pubDate>Sun, 20 Dec 2020 20:30:00</pubDate>
+        </item>
+        
+        <item>
+            <title>2020 Projects</title>
+            <link>https://liamcollod.xyz/work/vfx/2020-random-projects/</link>
+            <description>Various project I did through the last year, mostly unfinished.</description>
+            <pubDate>Tue, 29 Sep 2020 22:34:00</pubDate>
+        </item>
+        
+        <item>
+            <title>Procedural-only Shader Experiment</title>
+            <link>https://liamcollod.xyz/work/vfx/2020-procedural-tank-shader/</link>
+            <description>Creating a fully procedural tank material in Arnold.</description>
+            <pubDate>Tue, 07 Jul 2020 00:54:00</pubDate>
+        </item>
+        
+        <item>
+            <title>VANS Nasa Shoes</title>
+            <link>https://liamcollod.xyz/work/vfx/2019-vans-nasa-shoes/</link>
+            <description>A full cg reproduction of a shoe model.</description>
+            <pubDate>Fri, 27 Sep 2019 23:37:00</pubDate>
+        </item>
+        
+        <item>
+            <title>DOOM Wallpaper</title>
+            <link>https://liamcollod.xyz/work/vfx/2019-doom-wallpaper/</link>
+            <description>Hyped by the E3 and the latest trailer from Doom I decided to make this wallpaper.</description>
+            <pubDate>Wed, 12 Jun 2019 17:54:00</pubDate>
+        </item>
+        
+        <item>
+            <title>Scifi Revolver</title>
+            <link>https://liamcollod.xyz/work/vfx/2019-scifi-revolver/</link>
+            <description>Gun asset done as part of a large environment project.</description>
+            <pubDate>Mon, 27 May 2019 19:27:00</pubDate>
+        </item>
+        
+        <item>
+            <title>Winchester 1873</title>
+            <link>https://liamcollod.xyz/work/vfx/2019-winchester/</link>
+            <description>Winchester 1873 full aspect cg shot for a school assignment.</description>
+            <pubDate>Wed, 20 Feb 2019 21:11:00</pubDate>
+        </item>
+        
+        <item>
+            <title>Lichen Smart Material</title>
+            <link>https://liamcollod.xyz/work/vfx/2019-lichen-smartmat/</link>
+            <description>Lichen rock surface smart material for Substance Painter.</description>
+            <pubDate>Fri, 08 Feb 2019 21:05:00</pubDate>
+        </item>
+        
+        <item>
+            <title>Lego BrickIt models</title>
+            <link>https://liamcollod.xyz/work/vfx/2019-lego-brickit/</link>
+            <description>Having fun with the BrickIt plugin in Maya.</description>
+            <pubDate>Sat, 05 Jan 2019 20:21:00</pubDate>
+        </item>
+        
+        <item>
+            <title>BIC Lighter</title>
+            <link>https://liamcollod.xyz/work/vfx/2018-bic-lighter/</link>
+            <description>A school-work shading practice.</description>
+            <pubDate>Fri, 09 Nov 2018 22:31:00</pubDate>
+        </item>
+        
+        <item>
+            <title>Green Scissors</title>
+            <link>https://liamcollod.xyz/work/vfx/2018-green-scissors/</link>
+            <description>A school-work modeling and shading practice.</description>
+            <pubDate>Fri, 09 Nov 2018 22:05:00</pubDate>
+        </item>
+        
+        <item>
+            <title>archives</title>
+            <link>https://liamcollod.xyz/work/vfx/archives/</link>
+            <description>An archive of my old (cringe) cg work.</description>
+            <pubDate>Mon, 01 Jan 2018 00:00:00</pubDate>
+        </item>
+        
+    </channel>
+</rss>

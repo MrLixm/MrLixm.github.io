@@ -9,13 +9,21 @@ img.blog-cover {
     border-radius: var(--radius-S);
     margin-bottom: 2rem;
 }
-.post-status-unlisted {
+.post-status-unlisted,
+.post-status-unpublished {
     margin: auto;
     padding: 5px;
     border-radius: var(--radius-S);
+    text-align: center;
+    opacity: 0.8;
+}
+.post-status-unlisted {
     border: 1px solid var(--color-attention);
     background-color: var(--color-attention-WW);
     color: var(--color-attention);
-    text-align: center;
-    opacity: 0.8;
+}
+.post-status-unpublished {
+    border: 1px solid var(--color-negative);
+    background-color: var(--color-negative-WW);
+    color: var(--color-negative);
 }
