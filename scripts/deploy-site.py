@@ -155,6 +155,7 @@ def main(argv: list[str] | None = None):
     git_last_commit = gitget(["rev-parse", "HEAD"], cwd=git_dir)
     git_current_branch = gitget(["branch", "--show-current"], cwd=git_dir)
     git_remote_status = gitget(["status", "--short", "--b", "--porcelain"], cwd=git_dir)
+    git_remote_url = gitget(["remote", "get-url", "origin"], cwd=git_dir)
 
     if git_current_branch != "main":
         errexit(f"expected current git branch to be 'main'; got '{git_current_branch}'")
@@ -185,12 +186,15 @@ def main(argv: list[str] | None = None):
 
         tmp_dir = Path(tmp_dir)
         clone_dir = tmp_dir / "repo"
+        LOGGER.debug(f"cloning to '{clone_dir}'")
         # note: the clone preserve the currently active branch/commit
         gitc(
             ["clone", "--local", "--no-hardlinks", str(git_dir), str(clone_dir)],
             cwd=tmp_dir,
         )
         git_dir = clone_dir
+        LOGGER.debug(f"changing origin to '{git_remote_url}'")
+        gitc(["remote", "set-url", "origin", git_remote_url], cwd=git_dir)
 
         # // prepare site config
 
