@@ -181,48 +181,54 @@ def main(argv: list[str] | None = None):
 
     # // clone repo in a temp dir to remove all uncommited changes so they are not deployed
 
-    tmp_dir = Path(tempfile.mkdtemp(prefix="mrlixm.github.io-"))
-    clone_dir = tmp_dir / "repo"
-    # note: the clone preserve the currently active branch/commit
-    gitc(["clone", "--local", str(git_dir), str(clone_dir)], cwd=tmp_dir)
-    git_dir = clone_dir
+    with tempfile.TemporaryDirectory(prefix="mrlixm.github.io-") as tmp_dir:
 
-    # // prepare site config
-
-    site_config_path = git_dir / site_config_path_rel
-    LOGGER.info(f"🧾 reading site config '{site_config_path}'")
-    config = lxmsite.SiteConfig.from_path(site_config_path)
-    config.sanitize()
-    LOGGER.debug(config.debug())
-    config.PUBLISH_MODE = True
-    config.DST_ROOT = build_dir
-
-    # // start the build and publish
-
-    with publish_context(build_dir, git_dir, commit_msg=commit_msgs, dry_run=False):
-        LOGGER.info(f"🔨 building site to '{build_dir}'")
-        errors = lxmsite.build_site(
-            config=config,
-            symlink_stylesheets=False,
+        tmp_dir = Path(tmp_dir)
+        clone_dir = tmp_dir / "repo"
+        # note: the clone preserve the currently active branch/commit
+        gitc(
+            ["clone", "--local", "--no-hardlinks", str(git_dir), str(clone_dir)],
+            cwd=tmp_dir,
         )
-        eicon = "⚠️" if errors else "✅"
-        etime = time.time() - stime
-        LOGGER.info(f"{eicon} site build finished in {etime:.1f}s.")
-        if errors:
-            errors_str = "\n - ".join(map(str, errors))
-            errexit(f"{len(errors)} errors generated during build:\n - {errors_str}")
+        git_dir = clone_dir
 
-        answer = input(
-            f"you are about to deploy the website to '{config.SITE_URL}'; "
-            f"do you wish to continue [y/N] ?"
-        )
-        if answer.lower() not in ["y", "yes"]:
-            errexit(f"deploy aborted by user")
+        # // prepare site config
+
+        site_config_path = git_dir / site_config_path_rel
+        LOGGER.info(f"🧾 reading site config '{site_config_path}'")
+        config = lxmsite.SiteConfig.from_path(site_config_path)
+        config.sanitize()
+        LOGGER.debug(config.debug())
+        config.PUBLISH_MODE = True
+        config.DST_ROOT = build_dir
+
+        # // start the build and publish
+
+        with publish_context(build_dir, git_dir, commit_msg=commit_msgs, dry_run=False):
+            LOGGER.info(f"🔨 building site to '{build_dir}'")
+            errors = lxmsite.build_site(
+                config=config,
+                symlink_stylesheets=False,
+            )
+            eicon = "⚠️" if errors else "✅"
+            etime = time.time() - stime
+            LOGGER.info(f"{eicon} site build finished in {etime:.1f}s.")
+            if errors:
+                errors_str = "\n - ".join(map(str, errors))
+                errexit(
+                    f"{len(errors)} errors generated during build:\n - {errors_str}"
+                )
+
+            answer = input(
+                f"you are about to deploy the website to '{config.SITE_URL}'; "
+                f"do you wish to continue [y/N] ?"
+            )
+            if answer.lower() not in ["y", "yes"]:
+                errexit(f"deploy aborted by user")
 
     LOGGER.info(
         f"site deployed at '{config.SITE_URL}'; check it again in a few minutes."
     )
-    shutil.rmtree(tmp_dir, ignore_errors=True)
 
 
 if __name__ == "__main__":
