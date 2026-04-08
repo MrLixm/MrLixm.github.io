@@ -63,7 +63,7 @@ provides API through C++,C and Python[^1]
 
 !!! note "origin story"
 
-    I recommend to have a look at the origin story 
+    I recommend to have a look at the origin story of the file format
     which was published in 3 parts over on the ASWF website (in short interviews form): 
     [part1](https://www.aswf.io/news/aswf-deep-dive-openexr-origin-story-part-1/),
     [part2](https://www.aswf.io/news/aswf-deep-dive-openexr-origin-story-part-2/),
@@ -102,8 +102,8 @@ this is an exr whose pixels have been converted with the same transform it was a
 </div>
 
 In the above, the second and third example required to know in which colorspace
-the data was encoded with, and the third example required to know what was the transform,
-and a reading software capabale of re-applying the transform.
+the data was encoded with. The third example required to know what was the transform,
+and a reading software capable of re-applying the transform.
 
 > But why are we even't bothering with this intermediate state ? Can't we just get the 
 final image in a very high quality format ? 
@@ -127,7 +127,10 @@ by reviewing them I hope will make you appreciate all their subtelties.
 
 ## bitdepth
 
-OpenEXR support 3 of them [^5], but we can really only use two: 
+Let's start with one of the most limited configuration of OpenEXR files, but which understanding
+properly is not that simple.
+
+OpenEXR support 3 types of bitdeph [^5], but we can really only use two: 
 
 - 16bits float (half)
 - 32bits float (float)
@@ -148,7 +151,7 @@ the 2 floating points formats.
     -   with _floats_ (0.25,0.2536,1.23,156.3, ...). 
  
     Both have a maximum and a minimum value, the difference being the step possible
-    between each value. We will focus on floats because that what OpenEXR was designed for.
+    between each value. We will focus on floats because that's what OpenEXR was designed for.
 
     One important point to remember being that mathematical floats can have an 
     infinite decimal representation (like π (pi)), yet
@@ -175,7 +178,7 @@ the 2 floating points formats.
 
 
 The choice between float and half-float is the same as answering the question "how much
-data to I need to store". And if we even have to make the choice it's because 32bit cost
+data do I need to store". And if we even have to make the choice it's because 32bit cost
 us quite some space on disk, while 16bit will take less space + read and write faster.
 
 However as much simple the question is, I find it rather hard to provide clear guidelines
@@ -189,7 +192,7 @@ possible to find such high values in sunny HDRIs [^6] or even depth buffer (zdep
 of very large scenes. Yet we can agree this is pretty rare.
 
 But the more subtle limitation is precision, where _half_ have less "gap" between each
-possible code value than _float_ (and remember that float fomats have more decimal 
+possible code value than _float_ (and remember that float formats have more decimal 
 precision closer to 0, which get worse as you get further from it).
 
 <figure>
@@ -229,13 +232,12 @@ possible values if our data is between the 0-1 range.
 
 !!! tip "as a vfx artist"
 
-    -   usually for textures:
-        - albedo/base-color/specular-roughness/masks: `16bit float`
-        - normal/displacement/height: `32bit float`
-    -   for AOVs:
-        - make sure z-depth/normals/p-ref/p-world/cryptomatte are `32bit float`
+    -   all forms of textures can be `16bit float`, yes including normals and displacement [^18].
+    -   same goes for AOVs, all can be `16bit float`, except for:
+        - those with pixel values relative to scene world units like z-depth/p-ref/p-world:
+        - cryptomatte
     -   if you receive an exr with a log and 16bit encoding, warn the sender it must
-        at least be `32bit` or a 12bit+ integer format.
+        at least be `32bit float` or a 12bit+ integer format.
 
 
 ## compression algorithms
@@ -319,7 +321,8 @@ How can you achieve this with OpenEXR ?
 
 ### multi-file
 
-You store each layer in a separate OpenEXR file, for a total of 3 files. 
+You store each layer in a separate OpenEXR file, for a total of 3 files. Each
+file use a simple multi-channel layout.
 
 ```yaml
 myimage_main.exr:
@@ -367,6 +370,28 @@ Each part can also have as many channels as it needs. In the above example we al
 the prefix convention in channels names, but we could just have renamed the part
 with the layer name, and kept channels names one letter long.
 
+!!! caution
+
+    Multi-part was not initially designed to store fully arbitrary images but rather
+    a collection of layers which are supposed to be "variants"/related to a same image
+    (which perfectly fit the definition of AOVs). [^21] You can see an enforcement of 
+    this constraint in the below metadata section.
+
+
+#### multi-part metadata
+
+All parts can have their own independent collection of metadata. But there is some
+catch around this feature:
+
+-   it is not uncommon the first part (usually R,G,B(,A)) define more metadata because
+    the reading software may only use the metadata of the first part for all the other parts.
+-   some metadata keys are not supposed to be different between the parts [^20]:
+    - `displayWindow`
+    - `timecode`
+    - `pixelAspectRatio`
+    - `chromaticities`
+
+
 ### multi-file, multi-channel or multi-part?
 
 As you can see we have a lot of flexibility. However there is actually only one solution
@@ -376,6 +401,7 @@ that really matters for our use-case.
 files as you have layers. And it's totally possible we reach the hundred of AOVs by image
 on some productions ! Quite complicated to import and manage so much files in our "reading software".
 
+[//]: # (TODO verify this)
 *Multi-channel* has one massive drawback which is performances. When reading the file,
 the software MUST read all the channels, to then be able to group them by layer using their names.
 Imagine you have 100 AOVs with at least 3 channels for each ...
@@ -573,13 +599,17 @@ probably more convenient to store it in the same file format as the other AOVs: 
 Thus also making it easier for software to implement its support, without having to add 
 a new external dependency to their stack [^10].
 
-!!! tip "🎨 as vfx artist"
+!!! tip "🎨 as a vfx artist"
+
+    Here's a few tips for debugging cryptomattes that won't read properly and anything
+    else you should remember.
 
     -   make sure cryptomatte channels are encoded with 32bits (float) [^11].
     -   make sure cryptomatte channels are not color-managed when written/read [^11].
-    -   as long as you ensure the 2 previous points, you don't have to store the cryptomattes
+    -   make sure cryptomatte channels are not encoded with a lossy compression (like dwaa).
+    -   as long as you ensure the 3 previous points, you don't have to store the cryptomattes
         in a separate exr file. But sometimes the render-engine doesn't give you the 
-        choice to use different bitdepth by channel so it become the only solution.
+        choice to use different bitdepth/compression by channel so it become the only solution.
     -   the `manifest` which allow to pick "names" instead of float values can either be
         stored fully in the metadata, or in a sidecar file next to the exr. In the later
         case make sure it's not missing.
@@ -589,13 +619,219 @@ a new external dependency to their stack [^10].
         color of each object is not stored, objects isolated using Cryptomatte will 
         have contaminated edge colors and incorrect alpha values."_ [^11]
 
+!!! warning "manifest metadata"
+
+    The manifest map every pixel value to an entity in your 3d scene. For large scenes
+    this mean the manifest will be very huge and may become a bottleneck when reading !
+    For large manifest it is best to have it writen as a side-car file. That way it is
+    only read when actually used.
+
 If cryptomatte have quickly raised itself as a must-have in the compositor toolbox,
-you might want to have a look at the next section about deep, which did bring its own
-batch of improvements on solving the matte problem.
+you might want to have a look at one of the next section on deep ID, which did bring 
+its own batch of improvements on solving the matte problem.
 
 ### deep
 
+Deep exr is another crazy niche feature of vfx that only an extreme need of control
+and granularity made necessary. And even in this industry itself it's niche. If big 
+studios have all adopted it, some of it constraints make it harder to adopt for
+smaller studios and a wider audience of vfx artists.
+
+<div class="column-split">
+<figure>
+<img src="deep-cloudfarm.jpg" alt="A fictional 3d scene of a 'cloud farm' up in the sky.">
+<figcaption>
+"The cloud farm": a 3d scene rendered with deep. The image has nothing special
+when displayed as a regular image.
+</figcaption>
+</figure>
+<figure>
+<img src="deep-cloudfarm-3dview.jpg" alt="The same scene viewed as a cloud of colored points in a 3d space.">
+<figcaption>
+The same render but previewed in a 3d space where each point represent a
+deep pixel sample. 
+</figcaption>
+</figure>
+</div>
+
+So what it is ? Deep try to bridge the gap between 2D and 3D by storing more than 
+two-dimensional data in pixels, we get a third dimension: the depth relative to the camera.
+But it's more than just a single value of depth we are storing, we can already have this
+by exporting the common Z-Depth AOV. The special behavior with deep is that for each pixel
+we are exporting multiple samples of depth based on the different scene objects that
+contribute to this pixel. And each of this sample also store the surface original color and opacity.
+
+Yet, you might still be wondering how does multiple objects at different depth, can contribute all to a single pixel ? 
+There's 2 case where this happens:
+
+#### surfaces with transparency
+
+The most obvious: the surface is transparent, you can partially see through other
+objects behind. You would maybe think of glass materials first, but glass is actually
+a very tricky kind of materials where because of refraction, deep (and other AOVs)
+cannot "see through". So refraction is not transparency, actual transparent materials
+are less common, but it can be foliage, fabric, some plastics or volumetrics. 
+Actually volumetrics surfaces likes cloud, smoke, fire, ... are one reason deep was designed ! [^19]
+But transparency may also happen because of motion-blur (when an object moves too
+fast it get "smeared", and you can partially see the object behind it), or because
+of depth of field (objects get blurrier based on their distance to the camera and the focus point).
+
+<div class="column-split">
+<figure>
+<img src="deep-cloudfarm-annotations.jpg" alt="The same 'cloud farm' scene but annotated with the previously listed surfaces.">
+<figcaption>
+"The cloud farm" scene which depicts different types of surface with transparency.
+Rendered as a deep exr.
+</figcaption>
+</figure>
+<figure>
+<img src="deep-cloudfarm-samples.jpg" alt="The same 'cloud farm' scene but we visualize the deep samples in each pixel starting from green, and whose get warmer the more samples there is.">
+<figcaption>
+A "heatmap" visualisation of the deep samples stored in each pixel. Warmer pixels means more samples are stored (maximum is 35).
+</figcaption>
+</figure>
+</div>
+
+#### pixel filtering
+
+Because of how graphics rendering works, 2 objects may share a same pixel. 
+Imagine you have a scene with a green sphere and half of a blue cube behind it, 
+the other half visible on the left.
+You draw a virtual grid of pixel over this scene. 
+What happens at the area where both objects intersect visually ? How do you decide
+which color the pixel should take. The naive way is to have the pixel take the color of
+the object which most cover the pixel. However, this will generate a non-pleasing
+aliased look. Instead, all 3d render-engine relies on filtering to produce 
+smoother rendering. In our case the pixel color will mix between green and blue, 
+thus we will need 2 depth samples to represent that pixel !
+
+!!! hint
+
+    this is why in the previous "heatmap" example all objects have their outline
+    visible, because all the outlines need 2 deep sample while the interior area
+    only need one !
+
+<div class="diagram">
+<a href="deep-filtering-diagram.svg">
+.. include:: deep-filtering-diagram.svg
+</a>
+</div>
+
+#### why deep ?
+
+Hopefully you now understand why deep is called "deep" and its core concept behind it.
+Yet you might still be wondering why do we even need this ? Why do we need such precise
+amount of data about the pixels we rendered ? And the answer is tied to the very complex
+workflow we have for rendering 3d scenes.
+
+All high-end workflows involve splitting your 3d scene in "layers" where only some parts
+of the scene are made visible on each layer. Each layer is exported as a separate image
+which are then merged together during _compositing_. 
+
+<figure markdown="span" class="align-center">
+<img src="deep-layering-demo.webp" alt="A funky scene where a mad-scientist looking furret is soldering some boards in a workshop.">
+<figcaption markdown="span">
+Traditional 2D layering example with the ['Sole Mates'](https://dpel.aswf.io/solemates/) scene where 3 layers have been rendered.
+</figcaption>
+</figure>
+
+The reasons we have to split our scene in layers are technical and productive:
+
+- _technical_ because it can make the rendering of heavy scene easier: instead of
+  rendering a massive scene at once, you split it in optimized chunks. It can also
+  be for compositing where isolating some parts can make some operations easier.
+
+- _productive_ because it reduces the amount of rendering needed when assets get changed
+  during the production. If the change is small enough you can just re-render the layer
+  with the changed asset without having to re-render the other layers.
+
+But now the issue appears in merging those layers, there can be all sorts of problems 
+that may arise depending on the context, mostly concerning edges and depth ordering, 
+including all the transparent surfaces we discussed previously.
+
+And this is where deep comes into play. Because each pixel is aware of its depth and
+the other values behind and in front of it, you can realise a perfect merging that
+doesn't even require you to properly order the merge of the layers.
+
+#### using deep
+
 TBD
+
+- huge filesize
+- issue w/ deep recolor
+
+#### Deep ID
+
+Deep ID is the next solution to solve the same problem as [cryptomatte](#cryptomatte):
+creating pixel perfect 2D mask to isolate 3D objects.
+
+I will not expand a lot on it because the OpenEXR documentation already have a great
+overview of this feature: <https://openexr.com/en/latest/DeepIDsSpecification.html>.
+
+[//]: # (TODO try to have a render comparison ?)
+
+Deep ID was originally described in the 2018 paper 
+["A Scheme for Storing Object ID Manifests in OpenEXR Images"](https://dl.acm.org/doi/epdf/10.1145/3233085.3233086)
+and later implemented officialy in [OpenEXR v3.0.0](https://openexr.com/en/latest/news.html#april-1-2021-openexr-and-imath-v3-0-released)
+in 2021. However, if this release standardised a method to define Deep IDs, some custom
+workflow were already in place before. Like [Guerilla's 2016 paper](http://guerillarender.com/publications/openexrid.pdf)
+or even [VRay Render ID approach](https://documentation.chaos.com/space/VMAYA/111739844/Render+ID)
+which supports deep output.
+
+Even if it's already been 5 years since it's official support in the OpenEXR format,
+there seems to only be two publicly available render engine which supports it: 
+[MoonRay](https://docs.openmoonray.org/user-reference/scene-objects/scene-variables/SceneVariables/#deep_id_attribute_names)
+and [RenderMan 27](https://rmanwiki-27.pixar.com/space/REN27/542238759/RenderMan+27.0#Image-Outputs-and-Displays).
+And neither Nuke, the standard for compositing, seems to have native support for it. 
+So we can assume studios using it are all relying on custom proprietary tools and plugins.
+
+
+#### learning more about deep
+
+Deep was implemented in the OpenEXR format in the [2012 v2.0.0 major version](https://openexr.com/en/latest/news.html#april-9-2013-openexr-v2-0-released).
+
+.. url-preview:: https://www.fxguide.com/fxfeatured/the-art-of-deep-compositing/
+    :title:  The art of deep compositing 
+    :image: https://www.fxguide.com/wp-content/uploads/2014/02/deep_featured2.jpg
+
+    A very detailed investigation on how deep came to life and was used in studio around
+    the world around 2014.
+
+.. url-preview:: https://graphics.stanford.edu/papers/deepshadows/
+    :title: Deep Shadow Maps 
+    :image: http://graphics.stanford.edu/papers/deepshadows/fig1a.gif
+
+    The paper for the original 2000s technique that deep is based on.
+
+.. url-preview:: https://openexr.com/en/latest/TheoryDeepPixels.html
+    :title: Theory of Deep Samples
+    :image: https://openexr.com/en/latest/_static/openexr-horizontal-color.png
+
+    This document derives the techniques for splitting and combining two non-solid samples of equal depth and thickness.
+
+.. url-preview:: https://dl.acm.org/doi/epdf/10.1145/2791261.2791266
+    :title: Improved Deep Image Compositing Using Subpixel Masks
+    
+    2015 DreamWorks Animation Technical Report.
+    Also see the [presentation slides](https://research.dreamworks.com/wp-content/uploads/2018/07/Improved_Deep_Compositing_DWA_2015_Slides-1.pdf).
+
+.. url-preview:: https://github.com/charlesangus/DeepC
+    :title: charlesangus/DeepC - GitHub
+    :image: https://github.com/charlesangus/DeepC/blob/master/icons/anglerfish_icon_large.png?raw=true
+
+    An open-source suite of deep compositing tools for Foundry's Nuke. Provide more
+    compositing operations compatible with the deep workflow.
+
+
+## putting it all together
+
+TBD
+
+[//]: # (TODO)
+
+- each part/channel may have different bitdepth
+- each part may have different compression
+
 
 ## manipulating .exr files
 
@@ -624,11 +860,15 @@ list of the free ones I have strongly heard about, or at least tried a few times
 | [Oculante](https://github.com/woelper/oculante)                 | basic (RGBA)    | a small cross-platform image-viewer                                                                                                     |                                      |
 | [PureRef](https://www.pureref.com/)                             | basic (RGBA)    | a image whiteboard popular with artists                                                                                                 |                                      |
 
-And special mention to [Nuke](https://www.foundry.com/products/nuke-family), which is a
-whole paid compositing software, but it has a free non-commercial version and provides 
-a very good OpenEXR support.
+With a special mention to:
 
-### programmatic conversion with OIIO
+-   [Nuke](https://www.foundry.com/products/nuke-family), which is a
+    whole paid compositing software, but it has a free non-commercial version and provides 
+    a best-in-class OpenEXR support (including Deep and Cryptomatte).
+-   [HDRView](https://wkjarosz.github.io/hdrview/) which has a web version, super useful
+    if you need to quickly open an exr on any machine without installing any software.
+
+### programmatic conversion with oiiotool
 
 If you ever had an .exr file, but wish you had another file format. Or the opposite !
 
@@ -649,6 +889,49 @@ And then the `oiiotool` executable is in `/any/directory/OpenImageIO/bin`.
 
 `oiiotool` already have an [extensive documentation](https://openimageio.readthedocs.io/en/v3.1.8.0/oiiotool.html)
 but let's check a few example.
+
+#### oiiotool - display exr information
+
+This is probably my most used command, including for non-exr files, because it allows
+you to very quickly get an overall look at *everything* stored in the image.
+
+```bash
+# this will display condensed information
+oiiotool --info "image.exr"
+# this will also display metadata
+oiiotool --info -v "image.exr"
+# this will display everything for every part of the exr
+oiiotool --info -v -a "image.exr"
+```
+
+Here's a truncated example output of `--info -v -a`:
+
+```shell
+image.exr : 2048 x 1080, 5 channel, half openexr
+    3 subimages: 2048x1080 [h,h,h,h,h], 2048x1080 [h], 2048x1080 [h,h,h]
+ subimage  0: 2048 x 1080, 5 channel, half openexr
+    channel list: R, G, B, A, luma
+    compression: "zips"
+    DateTime: "2026:02:13 23:05:59"
+    name: "subimage00"
+    PixelAspectRatio: 1
+    screenWindowCenter: 0, 0
+    screenWindowWidth: 1
+    Software: "OpenImageIO 3.1.10.0 : 09078EFEE7B261D80CCE7E6FBCD789E38D728421"
+    oiio:ColorSpace: "lin_rec709"
+    oiio:subimagename: "subimage00"
+    oiio:subimages: 3
+    openexr:chunkCount: 1080
+    openexr:lineOrder: "increasingY"
+ subimage  1: ...
+```
+
+!!! tip "Add as context-menu"
+
+    This is my most used command because I can call it so easily on any image file.
+    And to call it so easily I added a menu option in the context-menu of my windows
+    explorer ! I have a [whole blog post on this topic here](../windows-explorer-context-menu).
+
 
 #### oiiotool - convert from exr
 
@@ -752,6 +1035,27 @@ And how we can fine-tune our exr configuration:
 oiiotool "image.jpg" --compression "dwaa:30" -d float --tile 16 16 --colorconvert srgb_display lin_srgb -o "image.jpg"
 ```
 
+### programmatic conversion with Python
+
+We are going to use the same [OpenImageIO](https://openimageio.readthedocs.io) library 
+but now rely on the Python bindings rather than the CLI tool.
+
+Assuming you are familiar with Python packaging system you can just `pip install OpenImageIO`
+in any virtual environment, which will allow you to `import OpenImageIO` in your script.
+
+Then for writing the i.o. logic I recommended to first have a look at the [python examples
+from the documentation](https://openimageio.readthedocs.io/en/v3.1.8.0/pythonbindings.html#python-recipes).
+
+Specifically for exr I have a bunch of scripts on my [image-processing git repository](https://github.com/MrLixm/image-processing-lxm):
+
+| script                                                                                                                                | description                                                             |
+|---------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| [exr-multichannel-to-multipart.py](https://github.com/MrLixm/image-processing-lxm/blob/main/scripts/exr-multichannel-to-multipart.py) | Convert a multichannel exr to multipart.                                |
+| [exr-multipart-to-multichannel.py](https://github.com/MrLixm/image-processing-lxmblob//main/scripts/exr-multipart-to-multichannel.py) | Convert a multipart exr to multichannel.                                |
+| [exr-recompress.py](https://github.com/MrLixm/image-processing-lxm/blob/main/scripts/exr-recompress.py)                               | Change the compression/bitdepth of the given exr.                       |
+| [exr-cryptomatte-optimize.py](https://github.com/MrLixm/image-processing-lxm/blob/main/scripts/exr-cryptomatte-optimize.py)           | Convert cryptomatte manifest embed in an exr metadata to a sidecar file |
+
+
 ### with Blender !
 
 Because everyone and their grandmother have heard about Blender, and you [can just get
@@ -765,6 +1069,11 @@ basics.
     Older version are not recommended either because 
     [5.0 added](https://developer.blender.org/docs/release_notes/5.0/pipeline_io/#images)
     multi-part OpenEXR support for writing, and brings improvement to the Compositor worflow.
+
+!!! note
+
+    Notably Blender doesn't support [deep](#deep) exrs. They can be read but all deep
+    samples are discarded, and you can't render deep images neither.
 
 #### Blender - reading
 
@@ -963,10 +1272,16 @@ But around the same time I gave it up, OpenEXR devs released `exrmetrics` and it
 during those 2025 Christmas holiday I finally had time to have a play with it. Crazy how 
 "productive" people become if you gave them free time instead of work time :emoji:(cat-think) ?
 
+If vfx is not something you are familiar with and would like to explore
+the topic further, I recommend to have a look
+at ["NO CGI" is really just INVISIBLE CGI (1/5)](https://youtu.be/7ttG90raCNo?list=PLgdTaHO8FLEve_XFiRBEcOSkRdd-Txjne).
+And if you understand french and have the patience of bearing more of me there's
+my [talk about open-source in vfx at the JDLL 2025](../../resources/jdll2025).
+
 *[AOVs]: Arbitrary Output Variables
 *[API]: Abstract Programming Interface
 *[DCC]: Digital Content Creation (software)
-*[compositor]: person doing compositing (the artistic 2D step after rendering)
+*[compositor]: person doing compositing (the artistic 2D task after rendering)
 *[MMB]: middle mouse button (scroll-wheel click)
 *[RMB]: right mouse button (right-click)
 
@@ -980,10 +1295,14 @@ during those 2025 Christmas holiday I finally had time to have a play with it. C
 [^7]: last Florian's quote <https://www.aswf.io/news/aswf-deep-dive-openexr-origin-story-part-1/>
 [^8]: <https://openexr.com/en/latest/TechnicalIntroduction.html#scan-lines>
 [^9]: <https://openexr.com/en/latest/DeepIDsSpecification.html#deep-id-basics>
-[^10]: mostly personal speculations; also see (page 3; section 2.2) <https://dl.acm.org/doi/epdf/10.1145/3233085.3233086> 
+[^10]: mostly personal speculations; but backed up by (page 3; section 2.2) <https://dl.acm.org/doi/epdf/10.1145/3233085.3233086> 
 [^11]: <https://openexr.com/en/latest/DeepIDsSpecification.html#cryptomatte-comparison>
 [^12]: page 2 (Channel contents) <https://github.com/Psyop/Cryptomatte/blob/master/specification/cryptomatte_specification.pdf>
 [^13]: 0.09(exponent=11,significand=451); 0.45(exponent=13,significand=819); (13-11) * 1023 - 451 + 819
 [^14]: 0.09(exponent=123,significand=3690988); 0.45(exponent=125,significand=6710886); (125-123) * (2<sup>23</sup>-1) - 3690988 + 6710886
 [^15]: [Nick Porcino on ASWF Slack](https://academysoftwarefdn.slack.com/archives/CMLRW4N73/p1698333341750709)
 [^17]: can't find back the source of this meme but if you don't get it sand=silicon=computer
+[^18]: Larry Gritz on ASWF slack <https://academysoftwarefdn.slack.com/archives/CMLRW4N73/p1768862541517599?thread_ts=1768856231.215109&cid=CMLRW4N73>
+[^19]: "The story moves now to New Zealand and Australia" section <https://www.fxguide.com/fxfeatured/the-art-of-deep-compositing/>
+[^20]: Peter Hillman: https://academysoftwarefdn.slack.com/archives/CMLRW4N73/p1681789171043379?thread_ts=1680655079.505659&cid=CMLRW4N73
+[^21]: Peter Hillman: https://academysoftwarefdn.slack.com/archives/CMLRW4N73/p1681849883260599?thread_ts=1680655079.505659&cid=CMLRW4N73
