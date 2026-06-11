@@ -1,6 +1,6 @@
 # C.V.
 
 :description: Get details on my professional career.
-:date-modified: 2025-09-04 00:19
+:date-modified: 2026-06-11 21:45
 :template: work/.cv.html
 :stylesheets: +cv.css
